@@ -1,0 +1,3 @@
+%h1 New Proposal for #{event}
+= simple_form_for proposal, url: event_proposals_path(event_id: event) do |f|
+  = render partial: 'form', locals: {f: f}

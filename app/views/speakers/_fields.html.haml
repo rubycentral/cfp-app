@@ -1,0 +1,22 @@
+.speaker.clearfix
+  = f.simple_fields_for :speakers, f.object.speakers do |speaker_fields|
+    - speaker = speaker_fields.object.decorate
+    = link_to (edit_profile_path) do
+      = speaker.gravatar
+      %h4
+        = speaker.name_and_email
+        %br
+        .help-block.small Edit my profile
+
+    .clearfix
+    %p
+      This information will be
+      %strong hidden
+      from the review committee.
+
+    = speaker_fields.hidden_field :person_id, value: speaker.person_id
+
+    = speaker_fields.input :bio, maxlength: :lookup,
+      placeholder: 'Bio for the event program.',
+      input_html: { value: speaker.bio, rows: 4 },
+      hint: 'Bio is limited to 500 characters.'

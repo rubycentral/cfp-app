@@ -1,0 +1,26 @@
+%header
+  %h2 Participant invitations
+  .pull-right= new_participant_invitation_button
+
+.row
+  %table.table.table-striped
+    %tr
+      %th Email
+      %th State
+      %th Slug
+      %th Role
+      %th
+
+    - participant_invitations.each do |participant_invitation|
+      %tr
+        %td= participant_invitation.email
+        %td= participant_invitation.state
+        %td= participant_invitation.slug
+        %td= participant_invitation.role
+        %td= link_to 'Remove',
+          organizer_event_participant_invitation_path(event, participant_invitation),
+          method: :delete,
+          data: { confirm: 'Are you sure?' },
+          class: 'btn btn-danger btn-xs'
+
+= render partial: 'organizer/participant_invitations/new_dialog', locals: { event: event }

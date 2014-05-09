@@ -1,0 +1,31 @@
+.row
+  .col-md-11
+    %h1
+      = event
+      %small= event.status
+  .col-md-1
+    .share.pull-right= event.tweet_button
+  .col-md-8
+    - if event.past_open? || event.open?
+      = markdown(event.guidelines)
+    - elsif event.closes_at?
+      %p
+        Closed at
+        %strong= event.closes_at(:long_with_zone)
+  .col-md-4
+    - if event.open?
+      %p= link_to 'Submit a proposal', new_proposal_path(slug: event.slug), class: 'btn btn-primary'
+      - if event.closes_at?
+        %p
+          Closes at
+          %strong= event.closes_at(:long_with_zone)
+        %p
+          %strong
+            = time_ago_in_words(event.closes_at)
+            left
+          to submit your proposal!
+    - if event.proposals.count > 5
+      .stats
+        %h2 CFP Stats
+        = pluralize(event.proposals.count, 'proposal')
+        = event.line_chart

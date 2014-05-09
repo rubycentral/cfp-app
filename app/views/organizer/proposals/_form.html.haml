@@ -1,0 +1,14 @@
+= simple_form_for proposal, url: [ :organizer, event, proposal ] do |f|
+  .row
+    %fieldset.col-md-6
+      = proposal.title_input(f)
+      = proposal.abstract_input(f)
+
+      = f.select :review_tags,
+        options_for_select(event.review_tags, proposal.object.review_tags),
+        {}, {class: 'multiselect review-tags', multiple: true}
+
+      = render partial: 'speakers/fields', locals: { f: f }
+
+      .form-submit.clearfix
+        %button.pull-right.btn.btn-primary.btn-lg{:type => "submit"} Save

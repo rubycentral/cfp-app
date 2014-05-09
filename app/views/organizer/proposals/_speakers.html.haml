@@ -1,0 +1,6 @@
+- speakers.each do |speaker|
+  %b
+    = link_to(speaker.name,
+      organizer_event_speaker_path(speaker.proposal.event, speaker))
+  %p
+    = speaker.bio

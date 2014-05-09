@@ -1,0 +1,11 @@
+- unless proposal.has_speaker?(current_user)
+  = form_for [:reviewer, event, proposal, rating], remote: true do |f|
+    .form-group
+      = f.label :score, "Rating"
+      = f.select :score, (1..5).to_a, {include_blank: rating.new_record?}, {class: 'form-control', onchange: '$(this).trigger("submit.rails");', disabled: proposal.withdrawn?}
+%dl.dl-horizontal.ratings_list
+  %dt.text-success Average rating:
+  %dd.text-success= number_with_precision(proposal.average_rating, precision: 1)
+  - proposal.ratings.each do |rating|
+    %dt= "#{rating.person.name}:"
+    %dd= rating.score

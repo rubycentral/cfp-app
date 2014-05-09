@@ -1,0 +1,15 @@
+development:
+    adapter: postgresql
+    database: cfp_app_development
+    host: localhost
+    username: <%= ENV['POSTGRES_USER'] %>
+    pool: 5
+    timeout: 5000
+
+test:
+    adapter: postgresql
+    database: cfp_app_test
+    host: localhost
+    username: <%= ENV['POSTGRES_USER'] %>
+    pool: 5
+    timeout: 5000

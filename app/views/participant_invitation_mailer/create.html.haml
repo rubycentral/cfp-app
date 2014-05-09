@@ -1,0 +1,21 @@
+%p Hi there!
+
+%p
+  You've been invited to participate in a Call for Proposals for the event
+  #{@participant_invitation.event} as the role #{@participant_invitation.role}.
+
+%p
+  = link_to 'Click here to accept.',
+    accept_participant_invitation_url(@participant_invitation.slug,
+      @participant_invitation.token)
+  You'll be prompted to create an account if you don't already have one.
+
+%p= link_to 'Click here to decline.',
+  refuse_participant_invitation_url(@participant_invitation.slug,
+    @participant_invitation.token)
+
+%p
+  You can view the event #{link_to 'here', event_url(@event.slug)}.
+
+%p
+  The #{@event.name} Program Committee

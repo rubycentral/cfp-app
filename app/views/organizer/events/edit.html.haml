@@ -1,0 +1,4 @@
+%h1
+  Edit #{event}
+= form_for event, url: organizer_event_path(event), html: {role: 'form'} do |f|
+  = render partial: 'admin/events/form', locals: {f: f}

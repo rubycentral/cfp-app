@@ -1,0 +1,19 @@
+- if comments.empty?
+  None
+
+- comments.order(:created_at).each do |comment|
+  .comment{ class: choose_class_for(comment) }
+    =markdown(comment.body)
+
+    - if comment.person.present?
+      .meta
+        %small{ title: comment.created_at.to_s }
+          #{proposal.has_speaker?(comment.person) ? 'speaker' : comment.person.name} - #{comment.created_at.strftime('%-d %b @ %H:%M')}
+
+= form_for comments.new do |f|
+  = f.hidden_field :proposal_id
+  .form-group
+    = f.text_area :body, class: 'form-control', placeholder: 'Add your comment', rows: 13
+  %button.btn.btn-success.save-comment(type="submit")
+    %span.glyphicon.glyphicon-ok
+    Comment

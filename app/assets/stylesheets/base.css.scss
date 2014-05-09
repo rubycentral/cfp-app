@@ -1,0 +1,186 @@
+body {
+  padding-top: 70px;
+}
+.alert {
+  margin-top: 20px;
+}
+
+.form-submit {
+  border-top: 1px solid #ccc;
+  margin: 1em 0 5em;
+  padding-top: 1em;
+}
+.help-block {
+  font-size: 0.9em;
+}
+.share {
+  font-size: 12px;
+}
+.proposal {
+  margin-bottom: 1em;
+}
+.speaker {
+  margin-top: 2em;
+}
+.speaker img, .speaker-image {
+  margin: 0 0.5em 0.8em 0;
+}
+.tag-list input {
+  vertical-align: top;
+}
+.participant {
+  margin-bottom:1em;
+}
+
+h4 {
+  margin-top: 0;
+}
+.toolbox {
+  margin-bottom: 1em;
+}
+.invitation button {
+  margin-left: 1em;
+}
+.service {
+  margin-bottom: 1em;
+}
+
+.remove-speaker {
+  margin-top: 10px;
+  width: 80px;
+}
+h3.tags {
+  margin: 0 0 0.75em 0;
+}
+
+.field_with_errors .form-control {
+  background-color: #edd1d1;
+}
+
+.admin_nav {
+  margin: 9px -35px 0 0;
+  position: relative;
+  right: -20px;
+  .glyphicon-cog {
+    font-size: 20px;
+    color: black;
+  }
+}
+
+.navbar-inverse .navbar-nav > li > a.review_nav {
+  color: #E6E600;
+}
+
+.navbar-inverse .navbar-nav > li > a.review_nav:hover,
+.navbar-inverse .navbar-nav > li > a.review_nav:focus,
+.navbar-inverse .navbar-nav > .open > a.review_nav,
+.navbar-inverse .navbar-nav > .open > a.review_nav:hover,
+.navbar-inverse .navbar-nav > .open > a.review_nav:focus {
+  color: Yellow;
+}
+
+.navbar-inverse .navbar-nav > li > a.organize_nav {
+  color: #E69400;
+}
+
+.navbar-inverse .navbar-nav > li > a.organize_nav:hover,
+.navbar-inverse .navbar-nav > li > a.organize_nav:focus,
+.navbar-inverse .navbar-nav > .open > a.organize_nav,
+.navbar-inverse .navbar-nav > .open > a.organize_nav:hover,
+.navbar-inverse .navbar-nav > .open > a.organize_nav:focus {
+  color: Orange;
+}
+
+.user-dropdown-gravatar {
+  width: 25px;
+}
+
+// demographic notification
+
+#gravatar-alert-container {
+  display: block;
+}
+
+#gravatar-alert {
+  position: absolute;
+  z-index: 1;
+  top: 31px;
+  left: 31px;
+  color: #d9534f;
+}
+
+.tooltip-inner {
+  margin-top: 4px;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  color: #a94442;
+}
+
+.tooltip-arrow {
+  display: none;
+}
+
+// end demographic notification
+
+@mixin icon-generic {
+  background-size: 25px 25px;
+  background-repeat: no-repeat;
+  vertical-align: middle;
+  display: inline-block;
+  height: 25px;
+  width: 25px;
+}
+
+.icon-twitter {
+  background-image: url(twitter_32.png);
+  @include icon-generic;
+}
+
+.icon-github {
+  background-image: url(github_32.png);
+  @include icon-generic;
+}
+
+// Consider breaking the following into modules
+
+//datatables
+.datatable {
+  tr.updated td {
+    background-color: lighten(#dff0d8, 5%);
+  }
+  .form-control {
+    padding: 3px;
+    height: inherit;
+  }
+  td, th { text-align: center; }
+}
+
+// Back Button
+#organizer-speakers-index,
+#organizer-proposals-index {
+  h2 {
+    float: left;
+  }
+  #back_link {
+    margin-bottom: 20px;
+  }
+
+  #download_link {
+    margin-top: 5px;
+  }
+}
+
+#back_link {
+  float: right;
+  margin-top: 33px;
+}
+
+#columns {
+  float: left;
+
+  li {
+    display: block;
+    &:first-child { padding-left: 5px; }
+    padding-bottom: 3px;
+  }
+}

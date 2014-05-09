@@ -1,0 +1,29 @@
+#organizer-speakers-index
+  %h2
+    = event
+    Speakers
+  =link_to(organizer_event_path(event), id: "back_link", class: "btn btn-primary") do
+    &laquo; Return to Event
+
+  .row
+    .col-md-12
+      %table#organizer-speakers.datatable.table.table-striped.speaker-list
+        %thead
+          %tr
+            %th
+            %th
+            %th
+            %th
+          %tr
+            %th Name
+            %th Email
+            %th Proposal Title
+            %th Proposal Status
+        %tbody
+          - proposals.each do |proposal|
+            - proposal.speakers.each do |speaker|
+              %tr
+                %td= speaker.person.name
+                %td= speaker.person.email
+                %td= link_to proposal.title, reviewer_event_proposal_path(event, proposal)
+                %td= proposal.state_label(small: true)

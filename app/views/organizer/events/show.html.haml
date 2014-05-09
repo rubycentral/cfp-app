@@ -1,0 +1,77 @@
+.event
+  .row
+    %header
+      .col-sm-3
+        %h2= event
+      .col-sm-5.col-sm-offset-4
+        #event-actions-top.pull-right
+          = link_to 'Proposals', organizer_event_proposals_path(event), class: "btn btn-default"
+          = link_to 'Program', organizer_event_program_path(event), class: "btn btn-default"
+          = link_to "Schedule", organizer_event_sessions_path(event), class: "btn btn-default"
+          = link_to 'Edit Event', edit_organizer_event_path(event), class: 'btn btn-primary'
+  .row
+    .col-sm-4
+      %h4 Event Details
+      %dl.dl-horizontal
+        %dt Url:
+        %dd
+          %a{ href: event.url }#{event.url}
+        %dt Slug:
+        %dd #{event.slug}
+        %dt Email:
+        %dd #{event.contact_email}
+        %dt Guidelines:
+        %dd= link_to "Guidelines", event_path(slug: event.slug)
+      %dl.dl-horizontal
+        %dt CFP Opens:
+        %dd #{event.opens_at}
+
+        %dt CFP Closes:
+        %dd #{event.closes_at}
+
+        .subset
+          %dt Days Remaining:
+          %dd #{event.cfp_days_remaining}
+
+        %dt Event Start:
+        %dd #{event.start_date}
+
+        %dt Event End:
+        %dd #{event.end_date}
+    .col-sm-4
+      %h4 Proposal Stats
+      %dl.dl-horizontal
+        %dt Total:
+        %dd #{event.proposals.count}
+        .subset
+          %dt Reviewed:
+          %dd #{event.proposals.rated.count} (#{event.reviewed_percent})
+        %dt Accepted:
+        %dd #{event.proposals.accepted.count}
+        .subset
+          %dt Confirmed:
+          %dd #{event.proposals.accepted.confirmed.count} (#{event.confirmed_percent})
+        .subset
+          %dt Scheduled:
+          %dd #{event.proposals.scheduled.count} (#{event.scheduled_percent})
+        %dt Waitlisted:
+        %dd #{event.proposals.waitlisted.count}
+        .subset
+          %dt Confirmed:
+          %dd #{event.proposals.waitlisted.confirmed.count} (#{event.waitlisted_percent})
+    .col-sm-4
+      %h4 Tracks
+      -if event.track_count.present?
+        - event.track_count.sort_by{|k,v| v}.reverse.each_slice(8).to_a.each do |row|
+          %ul#columns.list-inline
+            -row.each do |name, count|
+              %li
+                .label.label-success
+                  = name
+                  = count
+      -else
+        %p No Tracks
+
+  = render partial: 'participants',
+    locals: { event: event, participants: participants,
+      rating_counts: rating_counts }

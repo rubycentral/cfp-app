@@ -1,0 +1,21 @@
+.event
+  .row
+    .col-sm-8
+      %h2= "#{event} Sessions"
+  #content
+    %ul#tabs.nav.nav-tabs{"data-tabs" => "tabs"}
+      %li.active
+        %a{"data-toggle" => "tab", href: "#session", id: 'sessions-tab'} Sessions
+      %li
+        %a{"data-toggle" => "tab", href: "#adddetails"} Rooms and Tracks
+    .tab-content
+      #session.tab-pane.active
+        .row
+          .col-md-12
+            #sessions= render partial: 'sessions'
+      #adddetails.tab-pane
+        .row
+          .col-md-10
+            = render partial: 'rooms'
+          .col-md-2
+            = render partial: 'tracks'

@@ -1,0 +1,31 @@
+%h1 Your Dashboard
+.row
+  .col-md-8.proposals
+    %h2 Proposals
+    - if proposals.empty?
+      %h3 You don't have any proposals.
+    - proposals.each do |event, talks|
+      %h3
+        = link_to event.name, event_path(event.slug)
+        %small= event.state
+        - if event.open?
+          = link_to 'Submit a proposal', new_proposal_path(slug: event.slug), class: 'btn btn-primary pull-right'
+      %ul
+        - talks.each do |proposal|
+          %li.proposal
+            = proposal.public_state(small: true)
+            = link_to proposal.title, proposal_path(slug: proposal.event.slug, uuid: proposal)
+            %p= truncate(proposal.abstract, length: 80)
+  .col-md-4.invitations
+    %h2 Invitations
+    %ul.unstyled
+      - invitations.each do |invitation|
+        %li
+          = invitation.state_label
+          = invitation.proposal.title
+          - if invitation.pending?
+            (
+            = invitation.refuse_button(small: true)
+            |
+            = invitation.accept_button(small: true)
+            )

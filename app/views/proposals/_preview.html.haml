@@ -1,0 +1,5 @@
+#proposal-preview.panel.panel-default{ data: { 'remote-url' => parse_edit_field_proposal_path(event.slug) } }
+  .panel-heading
+    %h2.panel-title Preview
+  .panel-body
+    = render partial: 'proposals/contents', locals: { proposal: proposal }

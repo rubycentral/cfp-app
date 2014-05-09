@@ -1,0 +1,37 @@
+.row
+  %fieldset.col-md-6
+    = proposal.title_input(f)
+    = proposal.abstract_input(f)
+
+    %h3 For Review Committee
+    %p.help-block
+      This content will
+      %strong only
+      be visible to the review committee.
+
+    = f.input :details, input_html: { class: 'watched', rows: 10 },
+      placeholder: 'Explain the theme and flow of your talk. What are the intended audience takeways?',
+      hint: 'Include any pertinent details such as outlines, outcomes or intended audience.'
+
+    = f.input :pitch, input_html: { class: 'watched', rows: 5 },
+      placeholder: 'Why is this talk pertinent? What is your involvement in the topic?',
+      hint: 'Explain why this talk should be considered and what makes you qualified to speak on the topic.'
+
+  %fieldset.col-md-6
+    %p
+      Read the #{link_to 'guidelines', event_path(event.slug)} to maximize
+      your chance of approval. Refrain from including any information that
+      would allow a reviewer to identify you. All fields support
+      %a{href: 'https://help.github.com/articles/github-flavored-markdown'}
+        GitHub Flavored Markdown.
+
+    = f.select :tags,
+      options_for_select(event.proposal_tags, proposal.object.tags),
+      {}, {class: 'multiselect proposal-tags', multiple: true }
+
+    = render partial: 'speakers/fields', locals: { f: f }
+
+    = render partial: 'preview', locals: { proposal: proposal }
+
+    .form-submit.clearfix
+      %button.pull-right.btn.btn-primary.btn-lg{:type => "submit"} Save

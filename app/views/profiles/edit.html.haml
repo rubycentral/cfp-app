@@ -1,0 +1,65 @@
+= form_for current_user, url: profile_path, html: {role: 'form'} do |f|
+  .row
+    %fieldset.col-md-4
+      %h2 Your Profile
+      %p
+        This information will be
+        %strong hidden
+        from the review committee, but will be shown on the program if your proposal is accepted.
+      .form-group
+        = f.label :name
+        = f.text_field :name, class: 'form-control', placeholder: 'Your name'
+      %p
+        = f.label :bio
+        = f.text_area :bio, class: 'form-control', placeholder: 'Enter your bio', rows: 7, maxlength: 500
+        %p.help-block Bio is limited to 500 characters.
+    %fieldset.col-md-4
+      %h2 Identity Services
+      %p
+        Email is only used for notifications on proposal feedback and acceptance into the program.
+      .form-group
+        = f.label :email
+        = f.email_field :email, class: 'form-control', placeholder: 'Your email address'
+      - if Rails.env.development?
+        .service
+          - if current_user.connected?('developer')
+            %button.btn.btn-success
+              %i.glyphicon.glyphicon-user
+              | Connected via Developer
+          - else
+            = link_to '/auth/developer', class: 'btn btn-default' do
+              %i.glyphicon.glyphicon-user
+              | Connect via Developer
+      .service
+        - if current_user.connected?('github')
+          %button.btn.btn-success
+            %i.icon-github
+            | Connected via GitHub
+        - else
+          = link_to '/auth/github', class: 'btn btn-default' do
+            %i.icon-github
+            | Connect to GitHub
+      .service
+        - if current_user.connected?('twitter')
+          %button.btn.btn-success
+            %i.icon-twitter
+            | Connected via Twitter
+        - else
+          = link_to '/auth/twitter', class: 'btn btn-default' do
+            %i.icon-twitter
+            | Connect to Twitter
+    %fieldset.col-md-3
+      %h2 Demographics
+      %p
+        This information is entirely
+        %strong optional
+        and will be
+        %strong hidden
+        from the review committee.
+        - Person::DEMOGRAPHIC_TYPES.each do |type, value|
+          .form-group
+            = f.label demographic_label(type)
+            = f.select type, value, { include_blank: true }, { class: 'form-control' }
+
+  .row.col-md-12.form-submit
+    %button.pull-right.btn.btn-success{:type => "submit"} Save

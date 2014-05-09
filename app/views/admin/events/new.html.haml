@@ -1,0 +1,3 @@
+%h1 Create a new event
+= form_for event, url: admin_events_path, html: {role: 'form'} do |f|
+  = render partial: 'form', locals: {f: f}

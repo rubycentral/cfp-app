@@ -1,0 +1,13 @@
+%fieldset
+  = form_for proposal, url: reviewer_event_proposal_path(event, proposal), html: {role: 'form'} do |f|
+    .form-group
+      .tag-list
+        = f.label :review_tags
+        - tag_count = event.review_tags.count
+        - if tag_count > 0
+          = f.select :review_tags,
+            options_for_select(event.review_tags, proposal.object.review_tags),
+            {}, { class: 'multiselect review-tags', multiple: true }
+          %button.pull-right.btn.btn-success{:type => "submit"} Update
+        - else
+          None

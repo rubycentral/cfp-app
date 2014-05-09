@@ -1,0 +1,4 @@
+%h1 Edit #{proposal.title} for #{event}
+
+= simple_form_for proposal, url: proposal_path(event.slug, proposal) do |f|
+  = render partial: 'form', locals: {f: f}

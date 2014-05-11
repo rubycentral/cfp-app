@@ -3,7 +3,7 @@
 ### Overview
 This is a Ruby on Rails application that can be deployed to manage a conference's call for proposal (CFP) and program. It was written by Ruby Central to run the CFPs for RailsConf and RubyConf. We've open sourced it so other organizers can use it themselves.
 
-Features:
+### Features:
   -  blind proposal review process
   -  detailed analytics about the state of the CFP
   -  role specific interfaces for simplified reviewing and organizing
@@ -19,7 +19,7 @@ Reviewers have tools to browse proposals, tag, leave feedback where necessary an
 
 Organizers can perform all tasks of a reviewer in addition to managing reviewers, curating program, sending acceptance emails, and creating schedule. The final program and schedule can then be exported via JSON or CSV.
 
-Other Features:
+### Other Features:
   -  anonymous speakers to reviewers messaging
   -  internal reviewer to reviewer messaging
   -  customizable email notification on proposal state change (acceptance, waitlisting or rejection)

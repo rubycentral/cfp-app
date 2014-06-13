@@ -89,7 +89,7 @@ describe Proposal do
     it "returns true if the state matches the method" do
       state_method_map.each do |state, method|
         proposal = create(:proposal, state: state)
-        expect(proposal.public_send(method)).to be_true
+        expect(proposal.public_send(method)).to be_truthy
       end
     end
 
@@ -102,7 +102,7 @@ describe Proposal do
         end
 
         proposal = create(:proposal, state: state)
-        expect(proposal.public_send(method)).to be_true
+        expect(proposal.public_send(method)).to be_truthy
       end
     end
   end
@@ -165,7 +165,7 @@ describe Proposal do
 
       it "doesn't change a SUBMITTED proposal" do
         proposal = create(:proposal, state: SUBMITTED)
-        expect(proposal.finalize).to be_false
+        expect(proposal.finalize).to be_falsey
         expect(proposal.reload.state).to eq(SUBMITTED)
       end
     end
@@ -484,11 +484,11 @@ describe Proposal do
 
     it "returns true if person has rated the proposal" do
       create(:rating, person: reviewer, proposal: proposal)
-      expect(proposal.was_rated_by_person?(reviewer)).to be_true
+      expect(proposal.was_rated_by_person?(reviewer)).to be_truthy
     end
 
     it "returns false if person has not rated the proposal" do
-      expect(proposal.was_rated_by_person?(reviewer)).to be_false
+      expect(proposal.was_rated_by_person?(reviewer)).to be_falsey
     end
   end
 

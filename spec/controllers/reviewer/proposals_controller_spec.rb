@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Reviewer::ProposalsController do
+describe Reviewer::ProposalsController, type: :controller do
 
   let(:proposal) { create(:proposal) }
   let(:event) { proposal.event }

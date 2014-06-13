@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Organizer::TracksController do
+describe Organizer::TracksController, type: :controller do
   let(:event) { create(:event) }
   before { login(create(:organizer, event: event)) }
 

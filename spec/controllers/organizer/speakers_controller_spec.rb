@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Organizer::SpeakersController do
+describe Organizer::SpeakersController, type: :controller do
   let(:event) { create(:event) }
 
   describe "GET 'speaker_emails'" do

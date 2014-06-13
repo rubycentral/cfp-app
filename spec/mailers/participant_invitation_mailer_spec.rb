@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe ParticipantInvitationMailer do
+describe ParticipantInvitationMailer, type: :mailer do
   describe "create" do
     let(:invitation) { create(:participant_invitation) }
     let(:mail) { ParticipantInvitationMailer.create(invitation) }

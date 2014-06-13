@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ProfilesController do
+describe ProfilesController, type: :controller do
   describe 'PUT #update' do
     let(:user) { create(:person) }
     let(:params) {

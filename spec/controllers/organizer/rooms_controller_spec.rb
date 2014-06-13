@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Organizer::RoomsController do
+describe Organizer::RoomsController, type: :controller do
   let(:event) { create(:event) }
   before { login(create(:organizer, event: event)) }
 

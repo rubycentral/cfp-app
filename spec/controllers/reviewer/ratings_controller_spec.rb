@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Reviewer::RatingsController do
+describe Reviewer::RatingsController, type: :controller do
   let(:proposal) { create(:proposal) }
   let(:event) { proposal.event }
   let(:reviewer) { create(:person, :reviewer) }

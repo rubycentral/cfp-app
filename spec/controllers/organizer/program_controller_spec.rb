@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Organizer::ProgramController do
+describe Organizer::ProgramController, type: :controller do
   let(:event) { create(:event) }
 
   describe "GET #show" do

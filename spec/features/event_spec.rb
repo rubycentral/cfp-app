@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature "Listing events for different roles" do
   let(:event) { create(:event, state: 'open') }

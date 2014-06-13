@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe PersonDecorator do
   describe "#proposal_path" do

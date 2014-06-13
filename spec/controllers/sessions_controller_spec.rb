@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe SessionsController do
+describe SessionsController, type: :controller do
   describe '#create' do
     let(:auth_hash) { double("OmniAuth::AuthHash") }
     let(:user) { build_stubbed(:person) }

@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe CommentsController do
+describe CommentsController, type: :controller do
   describe "POST #create" do
     let(:proposal) { build_stubbed(:proposal, uuid: 'abc123') }
     let(:person) { build_stubbed(:person) }

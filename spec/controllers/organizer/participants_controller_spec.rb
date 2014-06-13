@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Organizer::ParticipantsController do
+describe Organizer::ParticipantsController, type: :controller do
   describe 'POST #create' do
     let(:event) { create(:event) }
     let(:organizer_user) { create(:person) }

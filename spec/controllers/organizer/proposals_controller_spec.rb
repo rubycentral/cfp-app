@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Organizer::ProposalsController do
+describe Organizer::ProposalsController, type: :controller do
 
   let(:event) { create(:event) }
   let(:person) do

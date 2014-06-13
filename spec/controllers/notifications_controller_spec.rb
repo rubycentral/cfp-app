@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe NotificationsController do
+describe NotificationsController, type: :controller do
   let(:person) { create(:person) }
   before { login(person) }
 

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Notification do
   describe ".create_for" do
@@ -8,7 +8,7 @@ describe Notification do
       expect {
         Notification.create_for(people)
       }.to change { Notification.count }.by(people.count)
-      people.each { |p| expect(p).to have(1).notification }
+      people.each { |p| expect(p.notifications.size).to eq(1) }
     end
 
     it "sets the notification's message" do

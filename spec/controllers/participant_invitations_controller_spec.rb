@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe ParticipantInvitationsController do
+describe ParticipantInvitationsController, type: :controller do
   let(:invitation) { create(:participant_invitation, role: 'organizer') }
 
   describe "GET 'accept'" do

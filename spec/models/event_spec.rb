@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Event do
   describe "live scope" do
@@ -66,7 +66,7 @@ describe Event do
     second_event = build :event, name: "First"
     expect(first_event).to be_valid
     expect(second_event).to_not be_valid
-    expect(second_event).to have(1).error_on(:slug)
+    expect(second_event.errors[:slug].size).to eq(1)
   end
 
   describe '#valid_proposal_tags=' do

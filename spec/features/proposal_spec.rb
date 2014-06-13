@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature "Proposals" do
   let(:user) { create(:person) }
@@ -98,7 +98,7 @@ feature "Proposals" do
       end
 
       it "marks the proposal as confirmed" do
-        expect(proposal.reload.confirmed?).to be_true
+        expect(proposal.reload.confirmed?).to be_truthy
       end
 
       it "redirects the user to the proposal page" do

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 def select_demographics(args)
   select(args[:gender], from: 'person[gender]')

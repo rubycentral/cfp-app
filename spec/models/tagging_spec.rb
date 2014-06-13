@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Tagging do
   describe '.tags_string_to_array' do

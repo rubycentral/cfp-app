@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature "Event Dashboard" do
   let(:event) { create(:event, name: "My Event") }

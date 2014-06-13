@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe ProposalsController do
+describe ProposalsController, type: :controller do
   let(:event) { create(:event) }
 
   describe 'GET #new' do

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature "Organizers can manage participants" do
   let(:event) { create(:event) }

@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Organizer::SessionsController do
+describe Organizer::SessionsController, type: :controller do
   let(:event) { create(:event) }
   before { login(create(:organizer, event: event)) }
 

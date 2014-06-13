@@ -1,5 +1,5 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Organizer::SchedulesController do
+describe Organizer::SchedulesController, type: :controller do
 
 end

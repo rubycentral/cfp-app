@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature "User's can interact with notifications" do
   let!(:person) { create(:person) }

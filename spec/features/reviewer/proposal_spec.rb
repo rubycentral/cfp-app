@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature "Review Proposals" do
   let(:event) { create(:event, state: 'open') }

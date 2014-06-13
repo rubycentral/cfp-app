@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe ProposalsController, type: :controller do
   let(:event) { create(:event) }

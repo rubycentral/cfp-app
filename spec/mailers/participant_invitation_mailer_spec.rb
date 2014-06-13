@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 describe ParticipantInvitationMailer, type: :mailer do
   describe "create" do

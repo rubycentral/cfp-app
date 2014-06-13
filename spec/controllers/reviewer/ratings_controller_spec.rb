@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Reviewer::RatingsController, type: :controller do
   let(:proposal) { create(:proposal) }

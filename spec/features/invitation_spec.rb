@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'Speaker Invitations' do
   let(:second_speaker_email) { 'second_speaker@example.com' }

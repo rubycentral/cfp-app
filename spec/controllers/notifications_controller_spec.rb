@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe NotificationsController, type: :controller do
   let(:person) { create(:person) }

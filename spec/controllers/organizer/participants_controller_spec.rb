@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Organizer::ParticipantsController, type: :controller do
   describe 'POST #create' do

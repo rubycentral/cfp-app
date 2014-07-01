@@ -4,7 +4,7 @@ This is a Ruby on Rails application that you can deploy to manage your conferenc
 
 The CFP app is not the conference website but just to place for potential speakers to submit talks for your CFP.  You'll end up pointing those interested in submitting a talk to your deployed version of this application.  From there speakers can submit their talk, track their talk's progress and update their profile and talk details as need be.  As an organizer you can have a group of reviewers that blindly look over proposals, give feedback, tag and rate them.  You can have a different group of organizers that then sift through talks, curate your program, send out acceptance emails and manage the program.  We'll get into the details of the specifics of all of these things below.
 
-The app was written with a Heroku deployment stack in mind.  The only two add-ons you'll need is a database and an email sending service.  We used SendGrid but it shouldn't matter.  You can deploy it wherever you'd like assuming it can run Ruby 2.1 and Rails 4.1 with a postgres database and an SMTP listener.
+The app was written with a Heroku deployment stack in mind.  The only two add-ons you'll need is a database and an email sending service.  We used SendGrid but it shouldn't matter.  You can deploy it wherever you'd like assuming it can run Ruby 2.1.2 and Rails 4.1.2 with a postgres database and an SMTP listener.
 
 
 ## Setup
@@ -36,9 +36,9 @@ NOTE: Seed will make an admin user with an email of an@admin.com to get started.
 ### Environment variables
     POSTGRES_USER (dev/test only)
     MAIL_HOST (production only)
+    SECRET_TOKEN (production only)
     GITHUB_KEY
     GITHUB_SECRET
-    SECRET_TOKEN
     TWITTER_KEY
     TWITTER_SECRET
 

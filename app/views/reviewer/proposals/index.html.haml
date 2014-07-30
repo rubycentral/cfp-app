@@ -44,14 +44,24 @@
             %th Rated?
         %tbody
           - proposals.each do |proposal|
-            %tr
-              %td= proposal.average_rating
-              %td= proposal.score_for(current_user)
-              %td= proposal.ratings.size
-              %td= proposal.title_link
-              %td= proposal.tags
-              %td= proposal.review_tags
-              %td= proposal.comment_count
-              %td= proposal.created_at
-              %td= proposal.updated_at
-              %td= proposal.ratings.present?
+            %tr{ class: "proposal-#{proposal.id}" }
+              %td.average-rating
+                = proposal.average_rating if proposal.score_for(current_user).present?
+              %td.my-rating
+                = proposal.score_for(current_user)
+              %td.ratings-count
+                = proposal.ratings.size
+              %td.title
+                = proposal.title_link
+              %td.tags
+                = proposal.tags
+              %td.review-tags
+                = proposal.review_tags
+              %td.comment-count
+                = proposal.comment_count
+              %td.created-at
+                = proposal.created_at
+              %td.updated-at
+                = proposal.updated_at
+              %td.is-rated
+                = proposal.ratings.present?

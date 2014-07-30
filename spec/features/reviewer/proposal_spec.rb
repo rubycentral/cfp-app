@@ -39,6 +39,25 @@ feature "Review Proposals" do
       expect(page).to have_text("First Proposal")
       expect(page).to have_text("Second Proposal")
     end
+
+    it "only shows the average rating if you've rated it" do
+      # logged-in user rates `proposal` as a 4
+      reviewer_person.ratings.create(proposal: proposal, score: 4)
+
+      # someone else has rated `proposal2` as a 4
+      other_reviewer = create(:participant, :reviewer, event: event).person
+      other_reviewer.ratings.create(proposal: proposal2, score: 4)
+
+      visit reviewer_event_proposals_path(event)
+
+      within(".proposal-#{proposal.id}") do
+        expect(page).to have_content("4.0")
+      end
+
+      within(".proposal-#{proposal2.id}") do
+        expect(page).to_not have_content("4.0")
+      end
+    end
   end
 
   context "When the reviewer submits a proposal" do

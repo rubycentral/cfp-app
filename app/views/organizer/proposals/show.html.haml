@@ -24,7 +24,7 @@
 
     .col-md-4
       %h3 Other Proposals
-      = render partial: 'other_proposals', locals: { event: event, speakers: speakers, current_proposal: proposal }
+      = render partial: 'other_proposals', locals: { event: event, other_proposals: other_proposals }
       %h3 Speakers
       %section
         = render partial: 'organizer/proposals/speakers', locals: { speakers: proposal.speakers }

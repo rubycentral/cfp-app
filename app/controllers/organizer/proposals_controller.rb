@@ -33,8 +33,18 @@ class Organizer::ProposalsController < Organizer::ApplicationController
   end
 
   def show
+    other_proposals = []
+    @proposal.speakers.each do |speaker|
+      speaker.proposals.each do |p|
+        if p.id != @proposal.id && p.event_id == @event.id
+          other_proposals << p
+        end
+      end
+    end
+
     render locals: {
       speakers: @proposal.speakers.decorate,
+      other_proposals: Organizer::ProposalsDecorator.decorate(other_proposals),
       rating: current_user.rating_for(@proposal)
     }
   end

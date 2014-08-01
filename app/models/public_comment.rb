@@ -18,12 +18,13 @@ class PublicComment < Comment
   # 2. If a a reviewer/organizer leaves a comment,
   #      only the speakers get an in app and email notification.
   def create_notifications
-    message = "#{person.name} has commented on #{proposal.title}"
 
     if person.reviewer_for_event?(proposal.event)
       people = proposal.speakers.map(&:person)
+      message = "#{person.name} has commented on #{proposal.title}"
     else
       people = proposal.reviewers
+      message = "The author has commented on #{proposal.title}"
     end
 
     Notification.create_for(people, proposal: proposal, message: message)

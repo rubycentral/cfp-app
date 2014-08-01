@@ -1,70 +1,100 @@
 require 'rails_helper'
 
 describe PublicComment do
-
   describe "#create" do
-
     context "when speaker creates PublicComment" do
+      let(:speaker) { proposal.speakers.first.person }
 
-      it "should should create Notification for organizers" do
-        proposal = create(:proposal, :with_organizer_public_comment, :with_speaker)
-        organizer = Participant.for_event(proposal.event).organizer.first.person
+      describe "for organizers who have commented" do
+        let(:proposal) { create(:proposal, :with_organizer_public_comment, :with_speaker) }
+        let(:organizer) { Participant.for_event(proposal.event).organizer.first.person }
+        it "creates a notification" do
+          expect {
+            proposal.public_comments.create(attributes_for(:comment, person: speaker))
+          }.to change {
+            organizer.reload.notifications.count
+          }.by(1)
+        end
 
-        expect {
-          proposal.public_comments.create(attributes_for(:comment, person: proposal.speakers.first.person))
-        }.to change(Notification, :count).by(1)
-
-        expect(Notification.last.person).to eq(organizer)
+        it "does not show the name of the speaker" do
+          proposal.public_comments.create(attributes_for(:comment, person: speaker))
+          expect(organizer.reload.notifications.last.message).to_not match(speaker.name)
+        end
       end
 
-      it "should should create Notification for reviewers" do
-        proposal = create(:proposal, :with_reviewer_public_comment, :with_speaker)
-        reviewer = Participant.for_event(proposal.event).reviewer.first.person
+      describe "for reviewers who have commented" do
+        let(:proposal) { create(:proposal, :with_reviewer_public_comment, :with_speaker) }
+        let(:reviewer) { Participant.for_event(proposal.event).reviewer.first.person }
 
-        expect {
-          proposal.public_comments.create(attributes_for(:comment, person: proposal.speakers.first.person))
-        }.to change(Notification, :count).by(1)
+        it "creates a notification" do
+          expect {
+            proposal.public_comments.create(attributes_for(:comment, person: speaker))
+          }.to change {
+            reviewer.reload.notifications.count
+          }.by(1)
+        end
 
-        expect(Notification.last.person).to eq(reviewer)
+        it "does not show the name of the speaker" do
+          proposal.public_comments.create(attributes_for(:comment, person: speaker))
+          expect(reviewer.reload.notifications.last.message).to_not match(speaker.name)
+        end
       end
 
-      it "should not create a notification for an organizer who hasn't commented" do
-        proposal = create(:proposal, :with_speaker)
-        create(:organizer, event: proposal.event)
+      describe "for organizers who have NOT commented" do
+        let(:proposal) { create(:proposal, :with_speaker) }
 
-        expect {
-          proposal.public_comments.create(attributes_for(:comment, person: proposal.speakers.first.person))
-        }.to_not change(Notification, :count)
+        it "does not create a notification" do
+          organizer = create(:organizer, event: proposal.event)
+
+          expect {
+            proposal.public_comments.create(attributes_for(:comment, person: speaker))
+          }.to_not change {
+            organizer.reload.notifications.count
+          }
+        end
       end
 
-      it "should not create a notification for a reviewer who hasn't commented" do
-        proposal = create(:proposal, :with_speaker)
-        create(:person, :reviewer)
+      describe "for reviewers who have NOT commented" do
+        let(:proposal) { create(:proposal, :with_speaker) }
 
-        expect {
-          proposal.public_comments.create(attributes_for(:comment, person: proposal.speakers.first.person))
-        }.to_not change(Notification, :count)
+        it "does not create a notification" do
+          reviewer = create(:person, :reviewer)
+
+          expect {
+            proposal.public_comments.create(attributes_for(:comment, person: speaker))
+          }.to_not change {
+            reviewer.reload.notifications.count
+          }
+        end
       end
 
-      it "should not notify an organizer who has commented on a different proposal" do
-        proposal = create(:proposal, :with_speaker)
-        create(:proposal, :with_organizer_public_comment, event: proposal.event)
+      describe "for organizers who have commented on a different proposal" do
+        let(:proposal) { create(:proposal, :with_speaker) }
 
-        expect {
-          proposal.public_comments.create(attributes_for(:comment, person: proposal.speakers.first.person))
-        }.to_not change(Notification, :count)
+        it "does not create a notification" do
+          other_proposal = create(:proposal, :with_organizer_public_comment, event: proposal.event)
+          reviewer_who_commented = other_proposal.public_comments.first.person
+
+          expect {
+            proposal.public_comments.create(attributes_for(:comment, person: speaker))
+          }.to_not change {
+            reviewer_who_commented.reload.notifications.count
+          }
+        end
       end
 
-      it "should notify an organizer who has rated a proposal" do
-        proposal = create(:proposal, :with_speaker)
-        organizer = create(:organizer, event: proposal.event)
-        create(:rating, proposal: proposal, person: organizer)
+      describe "for organizers who have rated the proposal" do
+        it "creates a notification" do
+          proposal = create(:proposal, :with_speaker)
+          organizer = create(:organizer, event: proposal.event)
+          create(:rating, proposal: proposal, person: organizer)
 
-        expect {
-          proposal.public_comments.create(attributes_for(:comment, person: proposal.speakers.first.person))
-        }.to change(Notification, :count).by(1)
+          expect {
+            proposal.public_comments.create(attributes_for(:comment, person: proposal.speakers.first.person))
+          }.to change(Notification, :count).by(1)
 
-        expect(Notification.last.person).to eq(organizer)
+          expect(Notification.last.person).to eq(organizer)
+        end
       end
     end
 

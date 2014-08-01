@@ -45,10 +45,14 @@ class Person < ActiveRecord::Base
   end
 
   def self.create_for_service(service, auth)
+    email = auth['info']['email'].blank? ? nil : auth['info']['email']
     person = create({
       name:  auth['info']['name'],
-      email: auth['info']['email']
+      email: email
     })
+    unless person.valid?
+      Rails.logger.warn "UNEXPECTED! Person is not valid - Errors: #{person.errors.messages}"
+    end
     person.services << service
     person
   end

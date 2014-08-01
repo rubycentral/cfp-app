@@ -85,6 +85,20 @@ describe Person do
         expect(user.services).to eq([service])
       end
     end
+
+    context "User doesn't have an email" do
+      let(:email) { '' }
+
+      it "creates a new person" do
+        expect { Person.authenticate(auth_hash) }.to change { Person.count }.by(1)
+      end
+
+      it "sets user's email to nil while still setting name" do
+        service, user = Person.authenticate(auth_hash)
+        expect(user.email).to eq(nil)
+        expect(user.name).to eq(name)
+      end
+    end
   end
 
   describe '#new' do

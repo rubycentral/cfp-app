@@ -9,13 +9,6 @@ describe PersonDecorator do
         eq(h.proposal_path(proposal.event.slug, proposal)))
     end
 
-    it "returns the path for an organizer" do
-      organizer = create(:organizer)
-      proposal = create(:proposal)
-      expect(organizer.decorate.proposal_path(proposal)).to(
-        eq(h.organizer_event_proposal_path(proposal.event, proposal)))
-    end
-
     it "returns the path for a reviewer" do
       reviewer = create(:person, :reviewer)
       proposal = create(:proposal)

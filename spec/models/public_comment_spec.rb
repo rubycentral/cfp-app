@@ -4,21 +4,29 @@ describe PublicComment do
   describe "#create" do
     context "when speaker creates PublicComment" do
       let(:speaker) { proposal.speakers.first.person }
+      subject { proposal.public_comments.create!(attributes_for(:comment, person: speaker)) }
 
       describe "for organizers who have commented" do
         let(:proposal) { create(:proposal, :with_organizer_public_comment, :with_speaker) }
         let(:organizer) { Participant.for_event(proposal.event).organizer.first.person }
+
         it "creates a notification" do
           expect {
-            proposal.public_comments.create(attributes_for(:comment, person: speaker))
+            subject
           }.to change {
             organizer.reload.notifications.count
           }.by(1)
         end
 
         it "does not show the name of the speaker" do
-          proposal.public_comments.create(attributes_for(:comment, person: speaker))
+          subject
           expect(organizer.reload.notifications.last.message).to_not match(speaker.name)
+        end
+
+        it "redirects to the reviewer page to preserve anonymity" do
+          subject
+          expect(organizer.reload.notifications.last.target_path).
+            to eq("/reviewer/events/#{proposal.event.to_param}/proposals/#{proposal.to_param}")
         end
       end
 
@@ -37,6 +45,12 @@ describe PublicComment do
         it "does not show the name of the speaker" do
           proposal.public_comments.create(attributes_for(:comment, person: speaker))
           expect(reviewer.reload.notifications.last.message).to_not match(speaker.name)
+        end
+
+        it "redirects to the reviewer page" do
+          subject
+          expect(reviewer.reload.notifications.last.target_path).
+            to eq("/reviewer/events/#{proposal.event.to_param}/proposals/#{proposal.to_param}")
         end
       end
 

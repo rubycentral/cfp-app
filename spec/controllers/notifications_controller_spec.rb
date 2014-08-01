@@ -6,8 +6,8 @@ describe NotificationsController, type: :controller do
 
   describe "GET 'index'" do
     it "returns http success" do
-      get 'index'
-      response.should be_success
+      get :index
+      expect(response).to be_success
     end
 
     it "redirects an unauthenticated user" do
@@ -18,15 +18,15 @@ describe NotificationsController, type: :controller do
   end
 
   describe "GET 'show'" do
-    it "returns http success" do
-      notification = create(:notification, person: person)
-      get 'show', id: notification
-      response.should be_redirect
+    it "redirects to the notification's target path" do
+      notification = create(:notification, person: person, target_path: "/something/awesome")
+      get :show, id: notification
+      expect(response).to redirect_to "/something/awesome"
     end
 
     it "sets notification as read" do
       notification = create(:notification, read_at: nil, person: person)
-      get 'show', id: notification
+      get :show, id: notification
       expect(notification.reload).to be_read
     end
   end

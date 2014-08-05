@@ -3,7 +3,6 @@
     .col-md-8
       %h1
         = proposal.title
-      = link_to 'Tweet', 'https://twitter.com/share', class: 'twitter-share-button', data: { text: "Check out this #{event} proposal: #{proposal.title}" }
     .col-md-4
       - if proposal.has_speaker?(current_user)
         .toolbox.pull-right

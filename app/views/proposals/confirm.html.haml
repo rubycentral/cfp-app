@@ -4,7 +4,6 @@
       %h1
         Confirm
         = proposal.title
-      = link_to 'Tweet', 'https://twitter.com/share', class: 'twitter-share-button', data: { text: "Check out this #{proposal.event} proposal: #{proposal.title}" }
   .row
     .col-md-8
       %p.help-block Congratulations! Your talk has been #{proposal.state}. Please ensure the information below is correct.

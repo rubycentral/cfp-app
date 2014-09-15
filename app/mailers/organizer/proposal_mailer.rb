@@ -4,7 +4,7 @@ class Organizer::ProposalMailer < ActionMailer::Base
     @proposal = proposal.decorate
     @event = event
 
-    mail_to_speakers(proposal,
+    mail_to_speakers(event, proposal,
         "Your proposal for #{@proposal.event.name} has been accepted")
   end
 
@@ -12,7 +12,7 @@ class Organizer::ProposalMailer < ActionMailer::Base
     @proposal = proposal
     @event = event
 
-    mail_to_speakers(proposal,
+    mail_to_speakers(event, proposal,
        "Your proposal for #{@proposal.event.name} has not been accepted")
   end
 
@@ -20,16 +20,21 @@ class Organizer::ProposalMailer < ActionMailer::Base
     @proposal = proposal.decorate
     @event = event
 
-    mail_to_speakers(proposal,
+    mail_to_speakers(event, proposal,
       "Your proposal for #{proposal.event.name} has been added to the waitlist")
   end
 
   private
 
-  def mail_to_speakers(proposal, subject)
+  def mail_to_speakers(event, proposal, subject)
     bcc = proposal.speakers.map(&:email)
     if bcc.any?
-      mail(bcc: bcc, subject: subject)
+      bcc << event.contact_email
+      mail(
+        from: event.contact_email,
+        bcc: bcc,
+        subject: subject
+      )
     end
   end
 end

@@ -8,11 +8,12 @@ describe Organizer::ProposalMailer do
   describe "accept_email" do
     let(:mail) { Organizer::ProposalMailer.accept_email(event, proposal) }
 
-    it "bccs to all speakers" do
+    it "bccs to all speakers including contact_mail" do
       proposal.speakers = build_list(:speaker, 3)
       proposal.save!
-      expect(mail.bcc.count).to eq(3)
-      expect(mail.bcc).to match_array(proposal.speakers.map(&:email))
+      expect(mail.bcc.count).to eq(4)
+      bcc_emails = proposal.speakers.map(&:email) << event.contact_email
+      expect(mail.bcc).to match_array(bcc_emails)
     end
 
     it "uses event's accept template" do
@@ -29,11 +30,12 @@ describe Organizer::ProposalMailer do
   describe "reject_email" do
     let(:mail) { Organizer::ProposalMailer.reject_email(event, proposal) }
 
-    it "bccs to all speakers" do
+    it "bccs to all speakers including contact_mail" do
       proposal.speakers = build_list(:speaker, 3)
       proposal.save!
-      expect(mail.bcc.count).to eq(3)
-      expect(mail.bcc).to match_array(proposal.speakers.map(&:email))
+      expect(mail.bcc.count).to eq(4)
+      bcc_emails = proposal.speakers.map(&:email) << event.contact_email
+      expect(mail.bcc).to match_array(bcc_emails)
     end
 
     it "uses event's reject template" do
@@ -50,11 +52,12 @@ describe Organizer::ProposalMailer do
   describe "waitlist_email" do
     let(:mail) { Organizer::ProposalMailer.waitlist_email(event, proposal) }
 
-    it "bccs to all speakers" do
+    it "bccs to all speakers including contact_mail" do
       proposal.speakers = build_list(:speaker, 3)
       proposal.save!
-      expect(mail.bcc.count).to eq(3)
-      expect(mail.bcc).to match_array(proposal.speakers.map(&:email))
+      expect(mail.bcc.count).to eq(4)
+      bcc_emails = proposal.speakers.map(&:email) << event.contact_email
+      expect(mail.bcc).to match_array(bcc_emails)
     end
 
     it "uses event's waitlist template" do

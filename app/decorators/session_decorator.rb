@@ -10,6 +10,14 @@ class SessionDecorator < Draper::Decorator
     object.end_time && object.end_time.to_s(:time)
   end
 
+  def proposal_id
+    if proposal
+      "prop_#{proposal.id}"
+    else
+      ""
+    end
+  end
+
   def row_data(buttons: false)
     row = [ object.conference_day, start_time, end_time, linked_title,
       presenter, room_name, track_name ]

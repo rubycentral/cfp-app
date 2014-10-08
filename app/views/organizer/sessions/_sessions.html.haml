@@ -37,6 +37,7 @@
       %th
       %th
       %th
+      %th
     %tr
       %th Conference Day
       %th Start Time
@@ -45,12 +46,14 @@
       %th Presenter
       %th Room
       %th Track
+      %th ID
       %th.actions Actions
   %tbody
     - sessions.each do |session|
       %tr{ id: "session_#{session.id}" }
         - session.row_data.each do |cell|
           %td= cell
+        %td= session.id
         %td.actions
           = session.session_buttons
 #session-edit-dialog.modal.fade

@@ -1,4 +1,4 @@
 class SessionSerializer < ActiveModel::Serializer
-  attributes :conference_day, :start_time, :end_time, :proposal_id, :title, :presenter,
+  attributes :conference_day, :start_time, :end_time, :session_id, :proposal_id, :title, :presenter,
     :room_name, :track_name
 end

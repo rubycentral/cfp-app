@@ -10,6 +10,10 @@ class SessionDecorator < Draper::Decorator
     object.end_time && object.end_time.to_s(:time)
   end
 
+  def session_id
+    object.id
+  end
+
   def proposal_id
     if proposal
       "prop_#{proposal.id}"

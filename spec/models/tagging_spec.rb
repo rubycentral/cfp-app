@@ -3,19 +3,19 @@ require 'rails_helper'
 describe Tagging do
   describe '.tags_string_to_array' do
     it 'splits comma separated string into tags' do
-      Tagging.tags_string_to_array('one,two,three').should == ['one', 'two', 'three']
+      expect(Tagging.tags_string_to_array('one,two,three')).to match_array ['one', 'two', 'three']
     end
     it 'strips leading and trailing whitespace from tags' do
-      Tagging.tags_string_to_array('  one  , two , three   ').should == ['one', 'two', 'three']
+      expect(Tagging.tags_string_to_array('  one  , two , three   ')).to match_array ['one', 'two', 'three']
     end
     it 'allows whitespace inside a tag' do
-      Tagging.tags_string_to_array('one,two,third element').should == ['one', 'two', 'third element']
+      expect(Tagging.tags_string_to_array('one,two,third element')).to match_array ['one', 'two', 'third element']
     end
     it 'removes extra commas' do
-      Tagging.tags_string_to_array(' ,  one,   ,two , ,three,').should == ['one', 'two', 'three']
+      expect(Tagging.tags_string_to_array(' ,  one,   ,two , ,three,')).to match_array ['one', 'two', 'three']
     end
     it 'removes duplicated tags' do
-      Tagging.tags_string_to_array('one,one,two,three').should == ['one', 'two', 'three']
+      expect(Tagging.tags_string_to_array('one,one,two,three')).to match_array ['one', 'two', 'three']
     end
   end
 

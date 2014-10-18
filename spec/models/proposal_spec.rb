@@ -71,8 +71,8 @@ describe Proposal do
     end
 
     it "limits abstracts to 600 characters or less" do
-      build(:proposal, abstract: "S" * 600).should be_valid
-      build(:proposal, abstract: "S" * 601).should_not be_valid
+      expect(build(:proposal, abstract: "S" * 600)).to be_valid
+      expect(build(:proposal, abstract: "S" * 601)).not_to be_valid
     end
   end
 
@@ -272,34 +272,34 @@ describe Proposal do
       proposal.reload
     end
     it 'creates proposal_tags' do
-      proposal.tags.sort.should == ['one', 'two', 'three'].sort
+      expect(proposal.tags).to match_array ['one', 'two', 'three']
     end
     it 'creates review_tags' do
-      proposal.review_tags.sort.should == ['four', 'five', 'six'].sort
+      expect(proposal.review_tags).to match_array ['four', 'five', 'six']
     end
     it "clears proposal_tags if attribute is empty array" do
       proposal.tags = [""] # this is the form param when nothing is checked
       proposal.save
       proposal.reload
-      proposal.tags.should == []
+      expect(proposal.tags).to be_empty
     end
     it "clears review_tags if attribute is empty array" do
       proposal.review_tags = [""] # this is the form param when nothing is checked
       proposal.save
       proposal.reload
-      proposal.review_tags.should == []
+      expect(proposal.review_tags).to be_empty
     end
     it "doesn't reset proposal_tags if attribute not set" do
       proposal.tags = nil # this is the form param if not in form at all
       proposal.save
       proposal.reload
-      proposal.tags.sort.should == ['one', 'two', 'three'].sort
+      expect(proposal.tags).to match_array ['one', 'two', 'three']
     end
     it "doesn't reset review_tags if attribute not set" do
       proposal.review_tags = nil # this is the form param if not in form at all
       proposal.save
       proposal.reload
-      proposal.review_tags.sort.should == ['four', 'five', 'six'].sort
+      expect(proposal.review_tags).to match_array ['four', 'five', 'six']
     end
   end
 
@@ -333,13 +333,13 @@ describe Proposal do
       proposal.ratings.build(score: 4)
       proposal.ratings.build(score: 5)
 
-      proposal.ratings.size.should == 4
-      proposal.average_rating.should == 3.5
+      expect(proposal.ratings.size).to eq(4)
+      expect(proposal.average_rating).to eq(3.5)
     end
 
     it "returns nil if no rating" do
-      proposal.ratings.size.should == 0
-      proposal.average_rating.should be_nil
+      expect(proposal.ratings).to be_empty
+      expect(proposal.average_rating).to be_nil
     end
   end
 

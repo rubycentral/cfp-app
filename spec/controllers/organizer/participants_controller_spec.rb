@@ -13,7 +13,7 @@ describe Organizer::ParticipantsController, type: :controller do
 
 
     context "A valid organizer" do
-      before { controller.stub(:current_user).and_return(organizer_user) }
+      before { allow(controller).to receive(:current_user).and_return(organizer_user) }
 
       it "creates a new participant" do
         post :create, participant: { role: 'reviewer' }, email: 'foo@bar.com', event_id: event.id
@@ -35,7 +35,7 @@ describe Organizer::ParticipantsController, type: :controller do
     end
 
     context "A non-organizer" do
-      before { controller.stub(:current_user).and_return(other_user) }
+      before { allow(controller).to receive(:current_user).and_return(other_user) }
 
       it "returns 404" do
         expect {
@@ -52,7 +52,7 @@ describe Organizer::ParticipantsController, type: :controller do
       before do
         create(:participant, person: sneaky_organizer, event: event2,
                role: 'organizer')
-        controller.stub(:current_user).and_return(sneaky_organizer)
+        allow(controller).to receive(:current_user).and_return(sneaky_organizer)
       end
 
       it "cannot create participants for different events" do

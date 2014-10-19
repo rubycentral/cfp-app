@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 def select_demographics(args)
-  select(args[:gender], from: 'person[gender]')
-  select(args[:ethnicity], from: 'person[ethnicity]')
+  fill_in 'person[gender]',    with: args[:gender]
+  fill_in 'person[ethnicity]', with: args[:ethnicity]
+
   select(args[:country], from: 'person[country]')
 end
 

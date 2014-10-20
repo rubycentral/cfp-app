@@ -47,6 +47,10 @@ group :development do
   gem "spring-commands-rspec", require: false
 end
 
+group :test do
+  gem 'cucumber-rails'
+end
+
 group :development, :test do
   gem 'capybara', '>= 2.2'
   gem 'capybara-webkit'

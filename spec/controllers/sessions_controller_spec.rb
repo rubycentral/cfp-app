@@ -11,7 +11,7 @@ describe SessionsController, type: :controller do
     before :each do
       session[:invitation_slug] = invitation.slug
       request.env['omniauth.auth'] = auth_hash
-      controller.stub(:current_user).and_return(user)
+      allow(controller).to receive(:current_user).and_return(user)
     end
 
     it "adds any pending invitations to the new person record" do

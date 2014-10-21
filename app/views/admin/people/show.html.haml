@@ -7,7 +7,7 @@
       = person.email
     %p
       - if person.demographics
-        - Person::DEMOGRAPHIC_TYPES.each do |type, value|
+        - Person::DEMOGRAPHICS.each do |type|
           %p
             = "#{type}:"
             = person.demographics[type.to_s]

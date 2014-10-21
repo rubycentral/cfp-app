@@ -1,9 +1,8 @@
 require 'digest/md5'
 
 class Person < ActiveRecord::Base
+  DEMOGRAPHICS      = [:gender, :ethnicity, :country]
   DEMOGRAPHIC_TYPES = {
-    gender: ['female', 'male', 'trans*', 'bigender', 'genderqueer', 'not listed here'],
-    ethnicity: ['African American', 'Asian', 'Caucasian', 'Hispanic', 'Native American', 'Pacific Islander', 'other' ],
     country: CountrySelect::countries.select{ |k,v| k != 'us'}.values.sort.unshift("United States of America")
   }
 

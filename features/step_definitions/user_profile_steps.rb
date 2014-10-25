@@ -16,13 +16,11 @@ Given(/^I set up my demographics information$/) do
 end
 
 Given(/^I change my demographics information$/) do
-  fill_in 'person[gender]',    with: 'female'
-  fill_in 'person[ethnicity]', with: 'Asian'
-
-  select('United States of America', from: 'person[country]')
-  click_button 'Save'
-
-  visit(edit_profile_path)
+  user = Person.last
+  user.demographics['genger'] = 'female'
+  user.demographics['ethnicity'] = 'Asian'
+  user.demographics['country'] = 'United States of America'
+  user.save!
 
   fill_in 'person[gender]',    with: 'not listed here'
   fill_in 'person[ethnicity]', with: 'Caucasian'

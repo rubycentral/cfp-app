@@ -4,22 +4,22 @@ Feature: A user can update his/her profile
     Given I am logged on as a user
       And I am on the edit profile page
 
-  Scenario: A user can save demographics info
-    Given I set up my demographics info
+  Scenario Outline: A user can add profile information
+    Given I set up my <subject>
      When I save the profile form
-     Then my demographics info is updated
+     Then my <subject> is updated
 
-  Scenario: A user can change the demographics info
-    Given I change my demographics info
-     When I save the profile form
-     Then my demographics info is changed
+  Examples:
+      | subject           |
+      | demographics info |
+      | bio               |
 
-  Scenario: A user can save the bio
-    Given I set up my bio
+  Scenario Outline: A user can change profile information
+    Given I change my <subject>
      When I save the profile form
-     Then my bio is updated
+     Then my <subject> is changed
 
-  Scenario: A user can change the bio
-    Given I change my bio
-     When I save the profile form
-     Then my bio is changed
+  Examples:
+      | subject           |
+      | demographics info |
+      | bio               |

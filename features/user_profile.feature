@@ -13,3 +13,8 @@ Feature: A user can update his/her profile
     Given I change my demographics information
      When I save the profile form
      Then my demographics data is changed
+
+  Scenario: A user can save the bio
+    Given I set up my bio
+     When I save the profile form
+     Then my bio is updated

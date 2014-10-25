@@ -25,6 +25,10 @@ Given(/^I change my demographics information$/) do
   profile_page.set_up_demographics_info(profile_page.changed_demographics_info)
 end
 
+Given(/^I set up my bio$/) do
+  Pages.make(Profile).set_up_bio
+end
+
 When(/^I save the profile form$/) do
   Pages.make(Profile).submit_form
 end
@@ -41,6 +45,11 @@ Then(/^my demographics data is changed$/) do
   demographics_info = Pages.make(Profile).changed_demographics_info
 
   assert_user_demographics(user, demographics_info)
+end
+
+Then(/^my bio is updated$/) do
+  user = Person.last
+  expect(user.bio).to eq(Pages.make(Profile).default_bio)
 end
 
 def assert_user_demographics(user, demographics_info)

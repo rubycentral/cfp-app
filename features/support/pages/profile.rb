@@ -15,6 +15,10 @@ class Profile < Base
       from: 'person[country]')
   end
 
+  def set_up_bio(bio=default_bio)
+    @page.fill_in('Bio', with: bio)
+  end
+
   def submit_form
     @page.click_button 'Save'
   end
@@ -33,5 +37,9 @@ class Profile < Base
       ethnicity: 'Caucasian',
       country: 'Germany'
     }
+  end
+
+  def default_bio
+    'I am awesome'
   end
 end

@@ -42,4 +42,8 @@ class Profile < Base
   def default_bio
     'I am awesome'
   end
+
+  def changed_bio
+    'I am even more awesome'
+  end
 end

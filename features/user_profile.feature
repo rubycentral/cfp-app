@@ -18,3 +18,8 @@ Feature: A user can update his/her profile
     Given I set up my bio
      When I save the profile form
      Then my bio is updated
+
+  Scenario: A user can change the bio
+    Given I change my bio
+     When I save the profile form
+     Then my bio is changed

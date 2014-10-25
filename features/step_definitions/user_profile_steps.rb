@@ -29,6 +29,15 @@ Given(/^I set up my bio$/) do
   Pages.make(Profile).set_up_bio
 end
 
+Given(/^I change my bio$/) do
+  step "I set up my bio"
+  step "I save the profile form"
+
+  profile_page = Pages.make(Profile)
+  profile_page.visit
+  profile_page.set_up_bio(profile_page.changed_bio)
+end
+
 When(/^I save the profile form$/) do
   Pages.make(Profile).submit_form
 end
@@ -37,14 +46,14 @@ Then(/^my demographics data is updated$/) do
   user = Person.last
   demographics_info = Pages.make(Profile).default_demographics_info
 
-  assert_user_demographics(user, demographics_info)
+  ProfileHelper.assert_user_demographics(user, demographics_info)
 end
 
 Then(/^my demographics data is changed$/) do
   user = Person.last
   demographics_info = Pages.make(Profile).changed_demographics_info
 
-  assert_user_demographics(user, demographics_info)
+  ProfileHelper.assert_user_demographics(user, demographics_info)
 end
 
 Then(/^my bio is updated$/) do
@@ -52,8 +61,16 @@ Then(/^my bio is updated$/) do
   expect(user.bio).to eq(Pages.make(Profile).default_bio)
 end
 
-def assert_user_demographics(user, demographics_info)
-  expect(user.demographics['gender']).to eq(demographics_info.fetch(:gender))
-  expect(user.demographics['ethnicity']).to eq(demographics_info.fetch(:ethnicity))
-  expect(user.demographics['country']).to eq(demographics_info.fetch(:country))
+Then(/^my bio is changed$/) do
+  user = Person.last
+  expect(user.bio).to eq(Pages.make(Profile).changed_bio)
+end
+
+class ProfileHelper
+  extend RSpec::Matchers
+  def self.assert_user_demographics(user, demographics_info)
+    expect(user.demographics['gender']).to eq(demographics_info.fetch(:gender))
+    expect(user.demographics['ethnicity']).to eq(demographics_info.fetch(:ethnicity))
+    expect(user.demographics['country']).to eq(demographics_info.fetch(:country))
+  end
 end

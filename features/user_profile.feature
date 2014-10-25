@@ -5,14 +5,14 @@ Feature: A user can update his/her profile
       And I am on the edit profile page
 
   Scenario: A user can save demographics info
-    Given I set up my demographics information
+    Given I set up my demographics info
      When I save the profile form
-     Then my demographics data is updated
+     Then my demographics info is updated
 
   Scenario: A user can change the demographics info
-    Given I change my demographics information
+    Given I change my demographics info
      When I save the profile form
-     Then my demographics data is changed
+     Then my demographics info is changed
 
   Scenario: A user can save the bio
     Given I set up my bio

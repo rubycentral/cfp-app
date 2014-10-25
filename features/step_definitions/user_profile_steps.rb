@@ -8,11 +8,11 @@ Given(/^I am on the edit profile page$/) do
   Pages.make(Profile).visit
 end
 
-Given(/^I set up my demographics information$/) do
+Given(/^I set up my demographics info$/) do
   Pages.make(Profile).set_up_demographics_info
 end
 
-Given(/^I change my demographics information$/) do
+Given(/^I change my demographics info$/) do
   # Set up the initial demographics info
   user = Person.last
   demographics_info = Pages.make(Profile).default_demographics_info
@@ -42,14 +42,14 @@ When(/^I save the profile form$/) do
   Pages.make(Profile).submit_form
 end
 
-Then(/^my demographics data is updated$/) do
+Then(/^my demographics info is updated$/) do
   user = Person.last
   demographics_info = Pages.make(Profile).default_demographics_info
 
   ProfileHelper.assert_user_demographics(user, demographics_info)
 end
 
-Then(/^my demographics data is changed$/) do
+Then(/^my demographics info is changed$/) do
   user = Person.last
   demographics_info = Pages.make(Profile).changed_demographics_info
 

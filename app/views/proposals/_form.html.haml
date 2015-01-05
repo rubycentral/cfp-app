@@ -1,5 +1,11 @@
 .row
   %fieldset.col-md-6
+    %p
+      Read the #{link_to 'guidelines', event_path(event.slug)} to maximize
+      your chance of approval. Refrain from including any information that
+      would allow a reviewer to identify you. All fields support
+      %a{href: 'https://help.github.com/articles/github-flavored-markdown'}
+        GitHub Flavored Markdown.
     = proposal.title_input(f)
     = proposal.abstract_input(f)
 
@@ -18,13 +24,7 @@
       hint: 'Explain why this talk should be considered and what makes you qualified to speak on the topic.'
 
   %fieldset.col-md-6
-    %p
-      Read the #{link_to 'guidelines', event_path(event.slug)} to maximize
-      your chance of approval. Refrain from including any information that
-      would allow a reviewer to identify you. All fields support
-      %a{href: 'https://help.github.com/articles/github-flavored-markdown'}
-        GitHub Flavored Markdown.
-
+    %h3 Tags
     = f.select :tags,
       options_for_select(event.proposal_tags, proposal.object.tags),
       {}, {class: 'multiselect proposal-tags', multiple: true }

@@ -68,11 +68,11 @@ ActiveRecord::Schema.define(version: 20140429143808) do
 
   create_table "notifications", force: true do |t|
     t.integer  "person_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "message"
     t.datetime "read_at"
     t.string   "target_path"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   add_index "notifications", ["person_id"], name: "index_notifications_on_person_id", using: :btree
@@ -117,11 +117,11 @@ ActiveRecord::Schema.define(version: 20140429143808) do
     t.text     "abstract"
     t.text     "details"
     t.text     "pitch"
-    t.text     "last_change"
-    t.text     "confirmation_notes"
     t.datetime "confirmed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "last_change"
+    t.text     "confirmation_notes"
   end
 
   add_index "proposals", ["event_id"], name: "index_proposals_on_event_id", using: :btree

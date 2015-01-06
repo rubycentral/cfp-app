@@ -56,10 +56,7 @@
         and will be
         %strong hidden
         from the review committee.
-        - Person::DEMOGRAPHIC_TYPES.each do |type, value|
-          .form-group
-            = f.label demographic_label(type)
-            = f.select type, value, { include_blank: true }, { class: 'form-control' }
+        = render :partial => 'shared/demographics', :locals => {:f => f}
 
   .row.col-md-12.form-submit
     %button.pull-right.btn.btn-success{:type => "submit"} Save

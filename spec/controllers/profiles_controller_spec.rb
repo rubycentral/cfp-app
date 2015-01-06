@@ -7,7 +7,7 @@ describe ProfilesController, type: :controller do
       { person: { bio: 'foo', demographics: { gender: 'female' } } }
     }
 
-    before { controller.stub(:current_user).and_return(user) }
+    before { allow(controller).to receive(:current_user).and_return(user) }
 
     it "updates the user record" do
       put :update, params

@@ -35,7 +35,7 @@ describe ProposalsController, type: :controller do
       }
     }
 
-    before { controller.stub(:current_user).and_return(user) }
+    before { allow(controller).to receive(:current_user).and_return(user) }
 
     it "sets the user's bio if not is present" do
       user.bio = nil
@@ -45,7 +45,7 @@ describe ProposalsController, type: :controller do
 
     context "With completed demgraphics" do
       it "redirects to the new proposal" do
-        user.stub(:demographics_complete?).and_return(true)
+        allow(user).to receive(:demographics_complete?).and_return(true)
         post :create, params
         expect(response).to redirect_to(proposal_path(slug: event.slug,
                                                       uuid: assigns(:proposal).uuid)
@@ -55,7 +55,7 @@ describe ProposalsController, type: :controller do
 
     context "With incomplete demographics" do
       it "redirects to the profile page" do
-        user.stub(:demographics_complete?).and_return(false)
+        allow(user).to receive(:demographics_complete?).and_return(false)
         post :create, params
         expect(response).to redirect_to(edit_profile_path)
       end
@@ -67,7 +67,7 @@ describe ProposalsController, type: :controller do
       authorized = create(:speaker)
       unauthorized = create(:speaker)
       proposal = create(:proposal, event: event, speakers: [ authorized ], state: "accepted")
-      ProposalsController.any_instance.stub(current_user: unauthorized.person)
+      allow_any_instance_of(ProposalsController).to receive(:current_user) { unauthorized.person }
       post :confirm, slug: event.slug, uuid: proposal.uuid
       expect(response).to be_success
     end
@@ -76,14 +76,14 @@ describe ProposalsController, type: :controller do
   describe "POST #set_confirmed" do
     it "confirms a proposal" do
       proposal = create(:proposal, confirmed_at: nil)
-      ProposalsController.any_instance.stub(current_user: create(:speaker))
+      allow_any_instance_of(ProposalsController).to receive(:current_user) { create(:speaker) }
       post :set_confirmed, slug: proposal.event.slug, uuid: proposal.uuid
       expect(proposal.reload).to be_confirmed
     end
 
     it "can set confirmation_notes" do
       proposal = create(:proposal, confirmation_notes: nil)
-      ProposalsController.any_instance.stub(current_user: create(:speaker))
+      allow_any_instance_of(ProposalsController).to receive(:current_user) { create(:speaker) }
       post :set_confirmed, slug: proposal.event.slug, uuid: proposal.uuid,
         confirmation_notes: 'notes'
       expect(proposal.reload.confirmation_notes).to eq('notes')
@@ -93,17 +93,17 @@ describe ProposalsController, type: :controller do
   describe 'POST #withdraw' do
     let(:proposal) { create(:proposal, event: event) }
     let(:user) { create(:person) }
-    before { controller.stub(:current_user).and_return(user) }
+    before { allow(controller).to receive(:current_user).and_return(user) }
 
     it "sets the state to withdrawn for unconfirmed proposals" do
       post :withdraw, slug: event.slug, uuid: proposal.uuid
-      proposal.reload.should be_withdrawn
+      expect(proposal.reload).to be_withdrawn
     end
 
     it "leaves state unchanged for confirmed proposals" do
       proposal.update_attribute(:confirmed_at, Time.now)
       post :withdraw, slug: event.slug, uuid: proposal.uuid
-      proposal.reload.should_not be_withdrawn
+      expect(proposal.reload).not_to be_withdrawn
     end
 
     it "sends an in-app notification to reviewers" do

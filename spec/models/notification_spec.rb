@@ -40,7 +40,7 @@ describe Notification do
   describe "#read" do
     it "sets read_at to DateTime.now" do
       now = DateTime.now
-      DateTime.stub(now: now)
+      allow(DateTime).to receive(:now) { now }
       notification = create(:notification)
       notification.read
       expect(notification.reload).to be_read

@@ -13,8 +13,8 @@ describe Rating do
     create :rating, proposal: proposal_in_event2
     create :rating, proposal: proposal_in_event2
 
-    Rating.for_event(event1).count.should eq(1)
-    Rating.for_event(event2).count.should eq(2)
+    expect(Rating.for_event(event1).count).to eq(1)
+    expect(Rating.for_event(event2).count).to eq(2)
   end
 
 end

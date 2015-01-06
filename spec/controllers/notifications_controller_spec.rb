@@ -7,7 +7,7 @@ describe NotificationsController, type: :controller do
   describe "GET 'index'" do
     it "returns http success" do
       get 'index'
-      response.should be_success
+      expect(response).to be_success
     end
 
     it "redirects an unauthenticated user" do
@@ -21,7 +21,7 @@ describe NotificationsController, type: :controller do
     it "returns http success" do
       notification = create(:notification, person: person)
       get 'show', id: notification
-      response.should be_redirect
+      expect(response).to be_redirect
     end
 
     it "sets notification as read" do

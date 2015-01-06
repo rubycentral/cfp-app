@@ -8,7 +8,7 @@ describe CommentsController, type: :controller do
     let(:mailer) { double("ProposalMailer.comment_notification") }
 
     before do
-      Proposal.stub(:find).and_return(proposal)
+      allow(Proposal).to receive(:find).and_return(proposal)
       request.env['HTTP_REFERER'] =  referer_path
     end
 
@@ -20,7 +20,7 @@ describe CommentsController, type: :controller do
       before do
         allow(comment_person).to receive(:reviewer?).and_return(true)
         allow(comment_person).to receive(:reviewer_for_event?).and_return(true)
-        CommentsController.any_instance.stub(current_user: comment_person)
+        allow_any_instance_of(CommentsController).to receive(:current_user) { comment_person }
       end
 
       it "adds a comment to the proposal" do
@@ -42,7 +42,7 @@ describe CommentsController, type: :controller do
       it "sends an email notification to all speakers" do
         speakers = build_list(:speaker, 3)
         proposal = create(:proposal, speakers: speakers)
-        Proposal.stub(:find).and_return(proposal)
+        allow(Proposal).to receive(:find).and_return(proposal)
         expect {
           post :create, params
         }.to change(ActionMailer::Base.deliveries, :count).by(1)

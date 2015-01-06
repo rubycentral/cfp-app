@@ -11,14 +11,11 @@
         = f.email_field :email, class: 'form-control', placeholder: 'Email address'
       %p
         = f.label :bio
-        = f.text_area :bio, class: 'form-control', placeholder: 'Bio', rows: 8        
+        = f.text_area :bio, class: 'form-control', placeholder: 'Bio', rows: 8
+
     %fieldset.col-md-4
       %h2 Demographics
-      %p
-        - Person::DEMOGRAPHIC_TYPES.each do |type, value|
-          .form-group
-            = f.label type
-            = f.select type, value, { include_blank: true }, { class: 'form-control' }
+      %p= render :partial => 'shared/demographics', :locals => {:f => f}
 
   .row.col-md-12.form-submit
     %button.pull-right.btn.btn-success{:type => "submit"} Save

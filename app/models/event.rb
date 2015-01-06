@@ -17,7 +17,7 @@ class Event < ActiveRecord::Base
   serialize :review_tags, Array
 
   scope :recent, -> { order('name ASC') }
-  scope :live, -> { where("state = 'open' and (closes_at is null or closes_at > ?)", Time.now).order('closes_at ASC') }
+  scope :live, -> { where("state = 'open' and (closes_at is null or closes_at > ?)", Time.current).order('closes_at ASC') }
 
   validates :name, :contact_email, presence: true
   validates :slug, presence: true, uniqueness: true
@@ -49,7 +49,7 @@ class Event < ActiveRecord::Base
   end
 
   def open?
-    state == 'open' && (closes_at.nil? || closes_at > Time.now)
+    state == 'open' && (closes_at.nil? || closes_at > Time.current)
   end
 
   def closed?
@@ -57,7 +57,7 @@ class Event < ActiveRecord::Base
   end
 
   def past_open?
-    state == 'open' && closes_at < Time.now
+    state == 'open' && closes_at < Time.current
   end
 
   def unmet_requirements_for_scheduling

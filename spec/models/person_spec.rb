@@ -103,7 +103,7 @@ describe Person do
 
   describe '#new' do
     it 'should default to non-admin' do
-      Person.new.should_not be_admin
+      expect(Person.new).not_to be_admin
     end
   end
 
@@ -151,11 +151,11 @@ describe Person do
     let(:person) { create(:person, :reviewer) }
 
     it 'is true when reviewer for any event' do
-      person.should be_reviewer
+      expect(person).to be_reviewer
     end
     it 'is false when not reviewer of any event' do
       person.participants.map { |p| p.update_attribute(:role, 'not_reviewer') }
-      person.should_not be_reviewer
+      expect(person).not_to be_reviewer
     end
   end
 
@@ -163,11 +163,11 @@ describe Person do
     let(:person) { create(:person, :organizer) }
 
     it 'is true when organizer for any event' do
-      person.should be_organizer
+      expect(person).to be_organizer
     end
     it 'is false when not organizer of any event' do
       person.participants.map { |p| p.update_attribute(:role, 'not_organizer') }
-      person.should_not be_organizer
+      expect(person).not_to be_organizer
     end
   end
 
@@ -183,10 +183,10 @@ describe Person do
       end
 
       it 'is true when reviewer for the event' do
-        person.should be_reviewer_for_event(event1)
+        expect(person).to be_reviewer_for_event(event1)
       end
       it 'is false when not reviewer of the event' do
-        person.should_not be_reviewer_for_event(event2)
+        expect(person).not_to be_reviewer_for_event(event2)
       end
     end
 
@@ -197,10 +197,10 @@ describe Person do
       end
 
       it 'is true when organizer for the event' do
-        person.should be_organizer_for_event(event1)
+        expect(person).to be_organizer_for_event(event1)
       end
       it 'is false when not organizer of the event' do
-        person.should_not be_organizer_for_event(event2)
+        expect(person).not_to be_organizer_for_event(event2)
       end
     end
   end

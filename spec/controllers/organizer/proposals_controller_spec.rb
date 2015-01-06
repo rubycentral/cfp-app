@@ -12,7 +12,7 @@ describe Organizer::ProposalsController, type: :controller do
   let(:proposal) { create(:proposal, event: event) }
 
   before do
-    ApplicationController.any_instance.stub(:current_user).and_return(person)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(person)
   end
 
   describe "POST 'update_state'" do

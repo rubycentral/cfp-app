@@ -18,7 +18,7 @@ gem 'omniauth-twitter'
 
 gem 'chartkick'
 gem 'groupdate'
-gem 'country_select'
+gem 'country_select', '~> 1.3.1'
 gem 'redcarpet', '~> 3.0.0'
 gem 'coderay', '~> 1.0'
 gem 'bootstrap-multiselect-rails', '0.0.4'

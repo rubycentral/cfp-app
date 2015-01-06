@@ -35,7 +35,7 @@ feature "Event Dashboard" do
       fill_in "End date", with: DateTime.now + 15.days
       click_button 'Save'
       admin_user.reload
-      admin_user.organizer_events.last.name.should eql("My Other Event")
+      expect(admin_user.organizer_events.last.name).to eql("My Other Event")
     end
 
     it "can edit an event" do

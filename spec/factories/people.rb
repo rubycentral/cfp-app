@@ -22,7 +22,7 @@ FactoryGirl.define do
     end
 
     factory :organizer, traits: [ :organizer ] do
-      ignore do
+      transient do
         event { build(:event) }
       end
 
@@ -34,7 +34,7 @@ FactoryGirl.define do
     end
 
     factory :reviewer, traits: [ :reviewer ] do
-      ignore do
+      transient do
         event { build(:event) }
       end
 

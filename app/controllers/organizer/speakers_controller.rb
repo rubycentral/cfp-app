@@ -11,6 +11,10 @@ class Organizer::SpeakersController < Organizer::ApplicationController
     @speaker = Speaker.find(params[:id])
   end
 
+  def edit
+
+  end
+
   def emails
     emails = Proposal.where(id: params[:proposal_ids]).emails
     respond_to do |format|

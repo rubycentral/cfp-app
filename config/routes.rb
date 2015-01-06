@@ -73,7 +73,7 @@ CFPApp::Application.routes.draw do
       controller :speakers do
         get :speaker_emails, action: :emails
       end
-      resources :speakers, only: [:index, :show, :edit]
+      resources :speakers, only: [:index, :show, :edit, :update]
     end
   end
 

@@ -1,4 +1,5 @@
-= form_for participant, url: organizer_event_speaker, html: {role: 'form'} do |f|
+
+= form_for @speaker, url: [ :organizer, event, @speaker ], html: {role: 'form'} do |f|
   .row
     %fieldset.col-md-4
       .form-group
@@ -8,3 +9,6 @@
         = f.label :bio
         = f.text_area :bio, class: 'form-control', placeholder: 'Enter your bio', rows: 7, maxlength: 500
         %p.help-block Bio is limited to 500 characters.
+
+  .row.col-md-12.form-submit
+    %button.pull-right.btn.btn-success{:type => "submit"} Save

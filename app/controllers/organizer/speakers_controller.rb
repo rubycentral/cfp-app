@@ -12,7 +12,13 @@ class Organizer::SpeakersController < Organizer::ApplicationController
   end
 
   def edit
+    @speaker = Speaker.find(params[:id])
+  end
 
+  def update
+    @speaker = Speaker.find(params[:id])
+    @speaker.update(speaker_params)
+    redirect_to organizer_event_speaker_path(@event, @speaker)
   end
 
   def emails
@@ -20,5 +26,11 @@ class Organizer::SpeakersController < Organizer::ApplicationController
     respond_to do |format|
       format.json { render json: { emails: emails } }
     end
+  end
+
+  private
+
+  def speaker_params
+    params.require(:speaker).permit(:bio)
   end
 end

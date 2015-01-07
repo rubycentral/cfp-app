@@ -23,7 +23,7 @@
           - proposals.each do |proposal|
             - proposal.speakers.each do |speaker|
               %tr
-                %td= speaker.name
+                %td=link_to speaker.name, organizer_event_participant_path(event, speaker.id)
                 %td= speaker.email
-                %td= link_to proposal.title, reviewer_event_proposal_path(event, proposal)
+                %td= link_to proposal.title, organizer_event_proposal_path(event, proposal)
                 %td= proposal.state_label(small: true)

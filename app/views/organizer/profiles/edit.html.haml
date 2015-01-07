@@ -22,32 +22,26 @@
         = f.email_field :email, class: 'form-control', placeholder: 'Your email address'
       - if Rails.env.development?
         .service
-          - if current_user.connected?('developer')
-            %button.btn.btn-success
-              %i.glyphicon.glyphicon-user
-              | Connected via Developer
+          - if @person.connected?('developer')
+            %i.glyphicon.glyphicon-user
+            | Connected via Developer
           - else
-            = link_to '/auth/developer', class: 'btn btn-default' do
-              %i.glyphicon.glyphicon-user
-              | Connect via Developer
+            %i.glyphicon.glyphicon-user
+            | Not Connected via Developer
       .service
-        - if current_user.connected?('github')
-          %button.btn.btn-success
-            %i.icon-github
-            | Connected via GitHub
+        - if @person.connected?('github')
+          %i.icon-github
+          | Connected via GitHub
         - else
-          = link_to '/auth/github', class: 'btn btn-default' do
-            %i.icon-github
-            | Connect to GitHub
+          %i.icon-github
+          | Not Connected to GitHub
       .service
-        - if current_user.connected?('twitter')
-          %button.btn.btn-success
-            %i.icon-twitter
-            | Connected via Twitter
+        - if @person.connected?('twitter')
+          %i.icon-twitter
+          | Connected via Twitter
         - else
-          = link_to '/auth/twitter', class: 'btn btn-default' do
-            %i.icon-twitter
-            | Connect to Twitter
+          %i.icon-twitter
+          | Not Connected to Twitter
     %fieldset.col-md-3
       %h2 Demographics
       %p

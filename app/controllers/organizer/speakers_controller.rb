@@ -20,7 +20,7 @@ class Organizer::SpeakersController < Organizer::ApplicationController
     if @speaker.update(speaker_params)
       redirect_to organizer_event_speaker_path(@event, @speaker)
     else
-      redirect_to :back
+      render :edit
     end
   end
 

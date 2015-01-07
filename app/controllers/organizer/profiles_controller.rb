@@ -9,7 +9,8 @@ class Organizer::ProfilesController < Organizer::ApplicationController
     if @person.update(person_params)
       redirect_to organizer_event_speakers_path(event)
     else
-      redirect_to edit_profile_organizer_event_speaker_path(event, speaker), danger: "Update failed; please try again later."
+      flash[:danger] = "Unable to save profile."
+      render :edit
     end
   end
 

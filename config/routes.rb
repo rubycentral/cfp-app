@@ -73,8 +73,14 @@ CFPApp::Application.routes.draw do
       controller :speakers do
         get :speaker_emails, action: :emails
       end
-      resources :speakers, only: [:index, :show, :edit, :update]
+      resources :speakers, only: [:index, :show, :edit, :update] do
+        member do
+          get :profile, to: "profiles#edit", as: :edit_profile
+          patch :profile, to: "profiles#update", as: :update_profile
+        end
+      end
     end
+
   end
 
   namespace 'reviewer' do

@@ -2,9 +2,8 @@
 = form_for @speaker, url: [ :organizer, event, @speaker ], html: {role: 'form'} do |f|
   .row
     %fieldset.col-md-4
-      .form-group
-        = f.label :name
-        = f.text_field :name, class: 'form-control', placeholder: 'Your name'
+      %b Name:
+      = @speaker.name
       %p
         = f.label :bio
         = f.text_area :bio, class: 'form-control', placeholder: 'Enter your bio', rows: 7, maxlength: 500

@@ -17,14 +17,17 @@ class Organizer::SpeakersController < Organizer::ApplicationController
 
   def update
     @speaker = Speaker.find(params[:id])
-    @speaker.update(speaker_params)
-    redirect_to organizer_event_speaker_path(@event, @speaker)
+    if @speaker.update(speaker_params)
+      redirect_to organizer_event_speaker_path(@event, @speaker)
+    else
+      redirect_to :back
+    end
   end
 
   def emails
     emails = Proposal.where(id: params[:proposal_ids]).emails
     respond_to do |format|
-      format.json { render json: { emails: emails } }
+      format.json { render json: {emails: emails} }
     end
   end
 

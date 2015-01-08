@@ -25,6 +25,7 @@ class Person < ActiveRecord::Base
 
   validates :email, uniqueness: { case_insensitive: true }, allow_nil: true
   validates :bio, length: { maximum: 500 }
+  validates :name, :presence => true
 
   def self.authenticate(auth, current_user = nil)
     provider = auth['provider']

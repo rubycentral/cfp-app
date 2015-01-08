@@ -12,7 +12,8 @@ class ProfilesController < ApplicationController
       current_user.assign_open_invitations if session[:need_to_complete]
       redirect_to (session.delete(:target) || root_path), info: "We've updated your profile. Thanks!"
     else
-      redirect_to edit_profile_path, danger: "We could not update your information at this time; please try again later."
+      flash.now[:danger] = "Unable to save profile. Please correct the highlighted fields."
+      render :edit
     end
   end
 

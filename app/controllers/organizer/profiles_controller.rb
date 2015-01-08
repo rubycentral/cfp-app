@@ -9,7 +9,7 @@ class Organizer::ProfilesController < Organizer::ApplicationController
     if @person.update(person_params)
       redirect_to organizer_event_speakers_path(event)
     else
-      flash[:danger] = "Unable to save profile."
+      flash.now[:danger] = "Unable to save profile. Please correct the highlighted fields."
       render :edit
     end
   end

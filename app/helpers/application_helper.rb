@@ -48,7 +48,6 @@ module ApplicationHelper
   end
 
   def show_flash
-    logger.info "flash is #{flash.inspect}"
     flash.map do |key, value|
       content_tag(:div, class: "container alert alert-dismissable alert-#{key}") do
         content_tag(:button, content_tag(:span, '', class: 'glyphicon glyphicon-remove'),

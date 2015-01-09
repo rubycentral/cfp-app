@@ -9,7 +9,11 @@ class Organizer::ProfilesController < Organizer::ApplicationController
     if @person.update(person_params)
       redirect_to organizer_event_speakers_path(event)
     else
-      flash.now[:danger] = "Unable to save profile. Please correct the highlighted fields."
+      if @person.email == ""
+        @person.errors[:email].clear
+        @person.errors[:email] = " can't be blank"
+      end
+      flash.now[:danger] = "Unable to save profile. Please correct the following: #{@person.errors.full_messages.join(', ')}."
       render :edit
     end
   end

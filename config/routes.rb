@@ -1,6 +1,8 @@
 CFPApp::Application.routes.draw do
 
-  resources :notifications, only: [ :index, :show ]
+  resources :notifications, only: [ :index, :show ] do
+    post :mark_all_as_read, on: :collection
+  end
 
   root 'home#show'
 

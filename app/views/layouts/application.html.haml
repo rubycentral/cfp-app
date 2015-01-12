@@ -73,7 +73,7 @@
                   - current_user.notifications.recent.each do |notification|
                     %li= link_to notification.message, notification_path(notification)
                     %li.divider
-                  %li.text-right Mark all as read
+                  %li.text-right= link_to 'Mark all as read', mark_all_as_read_notifications_path, method: :post
                   %li.text-right= link_to 'View all notifications', notifications_path
 
               %li.dropdown

@@ -5,7 +5,7 @@
     - f.object.speaker_notification_emails.each do |type, text|
       .form-group
         = f.label type
-        = f.text_area type, class: 'form-control', placeholder: "Please enter some text", value: text
+        = f.text_area type, class: 'form-control', rows: 20, placeholder: "Please enter some text", value: text
   %fieldset.col-md-6
     .panel.panel-default
       .panel-heading

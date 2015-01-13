@@ -36,7 +36,9 @@
       = f.object.end_date.strftime('%B %-d, %Y at %I:%M %z') unless f.object.end_date.blank?
       = f.text_field :end_date, value: (f.object.end_date.blank? ? "" : f.object.end_date.strftime('%Y-%m-%d %I:%M %z') )
       -#%p.help-block Open proposal end date is optional. If you do not provide one the CFP will defer to its state.
-
+    .form-group
+      = f.label :state
+      = f.select :state, ['open', 'closed'], class: 'form-control'
 
 .row.col-md-12.form-submit
   - if event && event.persisted? && current_user.admin?

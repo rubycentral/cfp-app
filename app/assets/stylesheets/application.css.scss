@@ -1,9 +1,11 @@
+// vendor styles
 @import "bootstrap";
 @import "jquery-ui";
 @import "jquery-ui-1.10.3.custom.min";
 @import "dataTables/jquery.dataTables.bootstrap3";
 @import "bootstrap-multiselect";
 
+// application styles
 @import "base";
 @import "coderay";
 @import "comments";
@@ -15,7 +17,4 @@
 @import "session";
 @import "social-buttons";
 @import "speaker";
-
-.badge.badge-important {
-  background-color: red;
-}
+@import "badge";

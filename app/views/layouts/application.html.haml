@@ -96,10 +96,13 @@
             %ul.nav.navbar-nav.navbar-right
               %li= link_to 'Log in', new_session_path
 
-  #flash= show_flash
+  - if on_organizer_page?
+    .alert-viewer-mode
+      .container
+        Viewing as: 
+        %strong Organizer
 
-  -if on_organizer_page?
-    You're in organizer mode!
+  #flash= show_flash
 
   .container
     =yield

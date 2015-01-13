@@ -21,7 +21,11 @@
         %dt Email:
         %dd #{event.contact_email}
         %dt Guidelines:
-        %dd= link_to "Guidelines", event_path(slug: event.slug)
+        %dd
+          -if event.guidelines.present?
+            = event.guidelines.truncate(150, separator: /\s/)
+          = link_to "Public guidelines", event_path(slug: event.slug)
+          %p= link_to "Edit Guidelines", edit_organizer_event_path, class: "btn btn-primary"
       %dl.dl-horizontal
         %dt CFP Opens:
         %dd #{event.opens_at}
@@ -59,6 +63,14 @@
         .subset
           %dt Confirmed:
           %dd #{event.proposals.waitlisted.confirmed.count} (#{event.waitlisted_percent})
+      %h4 Proposal Tags
+      %dd=event.valid_proposal_tags
+      %dl.dl-horizontal
+
+      %h4 Review Tags
+      %dd=event.valid_review_tags
+      %dl.dl-horizontal
+
     .col-sm-4
       %h4 Tracks
       -if event.track_count.present?
@@ -71,6 +83,16 @@
                   = count
       -else
         %p No Tracks
+
+      %h4 Speaker Notifcations
+      = link_to 'Edit Speaker Notifications', edit_organizer_event_path(:form => "speaker_notifications_form"), class: "btn btn-primary"
+      %dt Accept:
+      %dd=event.speaker_notification_emails['accept'].truncate(75, separator: /\s/)
+      %dt Reject:
+      %dd=event.speaker_notification_emails['reject'].truncate(75, separator: /\s/)
+      %dt Waitlist:
+      %dd=event.speaker_notification_emails['waitlist'].truncate(75, separator: /\s/)
+
 
   = render partial: 'participants',
     locals: { event: event, participants: participants,

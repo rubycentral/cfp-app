@@ -18,23 +18,23 @@
     %h3 CFP Dates
     .form-group
       = f.label :opens_at
-      = f.object.opens_at.strftime('%B %-d, %Y at %I:%M %z') unless f.object.opens_at.blank?
-      = f.text_field :opens_at, value: (f.object.opens_at.blank? ? "" : f.object.opens_at.strftime('%Y-%m-%d %I:%M %z') )
+      = f.object.opens_at.to_s(:long_with_zone) unless f.object.opens_at.blank?
+      = f.text_field :opens_at, value: (f.object.opens_at.blank? ? "" : f.object.opens_at.to_s(:long_with_zone) )
       -#%p.help-block Open proposal end date is optional. If you do not provide one the CFP will defer to its state.
     .form-group
       = f.label :closes_at
-      = f.object.closes_at.strftime('%B %-d, %Y at %I:%M %z') unless f.object.closes_at.blank?
-      = f.text_field :closes_at, value: (f.object.closes_at.blank? ? "" : f.object.closes_at.strftime('%Y-%m-%d %I:%M %z') )
+      = f.object.closes_at.to_s(:long_with_zone) #unless f.object.closes_at.blank?
+      = f.text_field :closes_at, value: (f.object.closes_at.blank? ? "" : f.object.closes_at.to_s(:long_with_zone) )
       -#%p.help-block Open proposal end date is optional. If you do not provide one the CFP will defer to its state.
     %h3 Event Dates
     .form-group
       = f.label :start_date
-      = f.object.start_date.strftime('%B %-d, %Y at %I:%M %z') unless f.object.start_date.blank?
-      = f.text_field :start_date, value: (f.object.start_date.blank? ? "" : f.object.start_date.strftime('%Y-%m-%d %I:%M %z') )
+      = f.object.start_date.to_s(:month_day_year) unless f.object.start_date.blank?
+      = f.text_field :start_date, value: (f.object.start_date.blank? ? "" : f.object.start_date.to_s(:month_day_year) )
     .form-group
       = f.label :end_date
-      = f.object.end_date.strftime('%B %-d, %Y at %I:%M %z') unless f.object.end_date.blank?
-      = f.text_field :end_date, value: (f.object.end_date.blank? ? "" : f.object.end_date.strftime('%Y-%m-%d %I:%M %z') )
+      = f.object.end_date.to_s(:month_day_year) unless f.object.end_date.blank?
+      = f.text_field :end_date, value: (f.object.end_date.blank? ? "" : f.object.end_date.to_s(:month_day_year) )
       -#%p.help-block Open proposal end date is optional. If you do not provide one the CFP will defer to its state.
     .form-group
       = f.label :state

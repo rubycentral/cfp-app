@@ -8,7 +8,7 @@
     - if comment.person.present?
       .meta
         %small{ title: comment.created_at.to_s }
-          #{proposal.has_speaker?(comment.person) ? 'speaker' : comment.person.name} - #{comment.created_at.strftime('%-d %b @ %H:%M')}
+          #{proposal.has_speaker?(comment.person) ? 'speaker' : comment.person.name} - #{comment.created_at.to_s(:day_at_time)}
 
 = form_for comments.new do |f|
   = f.hidden_field :proposal_id

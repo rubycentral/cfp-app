@@ -21,6 +21,10 @@ FactoryGirl.define do
       end
     end
 
+    factory :admin do
+      admin true
+    end
+
     factory :organizer, traits: [ :organizer ] do
       transient do
         event { build(:event) }

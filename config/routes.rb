@@ -48,7 +48,11 @@ CFPApp::Application.routes.draw do
 	end
 
   namespace 'admin' do
-    resources :events, except: [:show, :index, :edit, :update]
+    resources :events, except: [:show, :edit, :update] do
+      post :archive
+      post :unarchive
+    end
+
     resources :people
   end
 

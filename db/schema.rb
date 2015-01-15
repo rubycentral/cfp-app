@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140429143808) do
+ActiveRecord::Schema.define(version: 20150115205108) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 20140429143808) do
     t.hstore   "speaker_notification_emails", default: {"accept"=>"", "reject"=>"", "waitlist"=>""}
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "archived",                    default: false
   end
 
   add_index "events", ["slug"], name: "index_events_on_slug", using: :btree

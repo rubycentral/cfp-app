@@ -1,4 +1,5 @@
 class Organizer::EventsController < Organizer::ApplicationController
+
   def edit
     @partial = 'admin/events/form'
     if params[:form]
@@ -26,4 +27,5 @@ class Organizer::EventsController < Organizer::ApplicationController
       render :edit
     end
   end
+
 end

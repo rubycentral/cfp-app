@@ -195,3 +195,9 @@ h3.tags {
     padding-bottom: 3px;
   }
 }
+
+
+//datepicker
+.ui-datepicker {
+  z-index: 10000 !important;
+}

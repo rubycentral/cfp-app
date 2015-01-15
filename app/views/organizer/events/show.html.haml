@@ -28,20 +28,20 @@
           %p= link_to "Edit Guidelines", edit_organizer_event_path(:form => "guidelines_form"), class: "btn btn-primary"
       %dl.dl-horizontal
         %dt CFP Opens:
-        %dd #{event.opens_at.to_s(:long_with_zone)}
+        %dd #{event.opens_at.to_s(:long_with_zone) unless event.opens_at.blank?}
 
         %dt CFP Closes:
-        %dd #{event.closes_at.to_s(:long_with_zone)}
+        %dd #{event.closes_at.to_s(:long_with_zone) unless event.closes_at.blank?}
 
         .subset
           %dt Days Remaining:
           %dd #{event.cfp_days_remaining}
 
         %dt Event Start:
-        %dd #{event.start_date.to_s(:month_day_year)}
+        %dd #{event.start_date.to_s(:month_day_year) unless event.start_date.blank?}
 
         %dt Event End:
-        %dd #{event.end_date.to_s(:month_day_year)}
+        %dd #{event.end_date.to_s(:month_day_year) unless event.end_date.blank?}
     .col-sm-4
       %h4 Proposal Stats
       %dl.dl-horizontal

@@ -23,7 +23,7 @@
       -#%p.help-block Open proposal end date is optional. If you do not provide one the CFP will defer to its state.
     .form-group
       = f.label :closes_at
-      = f.object.closes_at.to_s(:long_with_zone) #unless f.object.closes_at.blank?
+      = f.object.closes_at.to_s(:long_with_zone) unless f.object.closes_at.blank?
       = f.text_field :closes_at, value: (f.object.closes_at.blank? ? "" : f.object.closes_at.to_s(:long_with_zone) )
       -#%p.help-block Open proposal end date is optional. If you do not provide one the CFP will defer to its state.
     %h3 Event Dates

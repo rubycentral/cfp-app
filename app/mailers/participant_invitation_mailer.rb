@@ -4,6 +4,7 @@ class ParticipantInvitationMailer < ActionMailer::Base
     @event = participant_invitation.event
 
     mail to: participant_invitation.email,
+         from: @event.contact_email,
       subject: "You've been invited to participate in a CFP"
   end
 end

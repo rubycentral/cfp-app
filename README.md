@@ -12,28 +12,43 @@ The app was written with a Heroku deployment stack in mind.  The only two add-on
 
 Make sure you have Ruby 2.1 and Postgres installed in your environment.  This is a Rails 4.1 app and uses bundler to install all required gems.  We are also making the assumption that you're familiar with how Rails apps and setup and deployed.  If this is not the case then you'll want to refer to documentation that will bridge any gaps in the instructions below.
 
-* Install gem requirements
+1. Install gem requirements
 
+    ```bash
     bundle install
+    ```
 
-* Duplicate and edit environment variables
+1. Duplicate and edit environment variables
 
+    ```bash
     cp env-sample .env
-  
-[Omniauth](http://intridea.github.io/omniauth/) is set up to use Twitter and Github for logins in production.  You'll want to put your own key and secret in for both.  Other environment variables will include your postgres user and Rails' secret_token.
+    ```
 
-* Duplicate and edit database.yml
+    [Omniauth](http://intridea.github.io/omniauth/) is set up to use Twitter and Github for logins in production.  You'll want to put your own key and secret in for both.  Other environment variables will include your postgres user and Rails' secret_token.
 
+1. Duplicate and edit database.yml
+
+    ```bash
     cp config/database_example.yml config/database.yml
-        
+    ```
 
-* Build dev database
+1. Build dev database
 
+    ```bash
     bundle exec rake db:create db:migrate db:seed
-    
-NOTE: Seed will make an admin user with an email of an@admin.com to get started.  There is a special, development only login method in Omniauth that you can use to test it out.
+    ```
+
+    NOTE: Seed will make an admin user with an email of an@admin.com to get started.  There is a special, development only login method in Omniauth that you can use to test it out.
+
+1. Start the server
+
+    ```bash
+    bundle exec rails server
+    ```
+
 
 ### Environment variables
+
     POSTGRES_USER (dev/test only)
     MAIL_HOST (production only)
     SECRET_TOKEN (production only)
@@ -48,7 +63,7 @@ View our CONTRIBUTING.md file to see guidelines on how to make CFP App better.
 
 ## Contributors
 
-The CFP App was initially authored by Ben Scofield.  Marty Haught took over the project and lead development for the CFP for RailsConf 2014.  Below are the others that participating on the project while it was a private project.  
+The CFP App was initially authored by Ben Scofield.  Marty Haught took over the project and lead development for the CFP for RailsConf 2014.  Below are the others that participating on the project while it was a private project.
 
 * Matt Garriott
 * Andy Kappen
@@ -58,5 +73,3 @@ The CFP App was initially authored by Ben Scofield.  Marty Haught took over the 
 * Sarah Mei
 
 It was open sourced in May 2014 and moved to its new home.  Please view the contributor graph for those that have contributed since it was open sourced.
-
-

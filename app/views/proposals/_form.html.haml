@@ -25,9 +25,10 @@
       %a{href: 'https://help.github.com/articles/github-flavored-markdown'}
         GitHub Flavored Markdown.
 
-    = f.select :tags,
-      options_for_select(event.proposal_tags, proposal.object.tags),
-      {}, {class: 'multiselect proposal-tags', multiple: true }
+    - if event.proposal_tags.any?
+      = f.select :tags,
+        options_for_select(event.proposal_tags, proposal.object.tags),
+        {}, {class: 'multiselect proposal-tags', multiple: true }
 
     = render partial: 'speakers/fields', locals: { f: f }
 

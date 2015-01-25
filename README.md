@@ -16,21 +16,24 @@ Make sure you have Ruby 2.1 and Postgres installed in your environment.  This is
 
     bundle install
 
+    NOTE: You may need to install Qt/`qmake` to get Capybara to work; with
+    Homebrew you can run `brew install qt`.
+
 * Duplicate and edit environment variables
 
     cp env-sample .env
-  
+
 [Omniauth](http://intridea.github.io/omniauth/) is set up to use Twitter and Github for logins in production.  You'll want to put your own key and secret in for both.  Other environment variables will include your postgres user and Rails' secret_token.
 
 * Duplicate and edit database.yml
 
     cp config/database_example.yml config/database.yml
-        
+
 
 * Build dev database
 
     bundle exec rake db:create db:migrate db:seed
-    
+
 NOTE: Seed will make an admin user with an email of an@admin.com to get started.  There is a special, development only login method in Omniauth that you can use to test it out.
 
 ### Environment variables
@@ -48,7 +51,7 @@ View our CONTRIBUTING.md file to see guidelines on how to make CFP App better.
 
 ## Contributors
 
-The CFP App was initially authored by Ben Scofield.  Marty Haught took over the project and lead development for the CFP for RailsConf 2014.  Below are the others that participating on the project while it was a private project.  
+The CFP App was initially authored by Ben Scofield.  Marty Haught took over the project and lead development for the CFP for RailsConf 2014.  Below are the others that participating on the project while it was a private project.
 
 * Matt Garriott
 * Andy Kappen
@@ -58,5 +61,3 @@ The CFP App was initially authored by Ben Scofield.  Marty Haught took over the 
 * Sarah Mei
 
 It was open sourced in May 2014 and moved to its new home.  Please view the contributor graph for those that have contributed since it was open sourced.
-
-

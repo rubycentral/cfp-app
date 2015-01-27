@@ -30,7 +30,7 @@ class Organizer::ParticipantInvitationsController < Organizer::ApplicationContro
     @participant_invitation.destroy
 
     redirect_to organizer_event_participant_invitations_path(@event),
-      flash: { danger: 'Participant invitation was successfully removed.' }
+      flash: { info: 'Participant invitation was successfully removed.' }
   end
 
   private

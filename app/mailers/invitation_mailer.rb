@@ -5,6 +5,6 @@ class InvitationMailer < ActionMailer::Base
     @proposal   = invitation.proposal
     @speaker    = speaker
 
-    mail(to: @invitation.email, subject: "You've been invited to join the \"#{@proposal.title}\" proposal for #{@proposal.event}")
+    mail(to: @invitation.email, from: @proposal.event.contact_email, subject: "You've been invited to join the \"#{@proposal.title}\" proposal for #{@proposal.event}")
   end
 end

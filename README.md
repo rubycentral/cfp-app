@@ -35,7 +35,8 @@ NOTE: Seed will make an admin user with an email of an@admin.com to get started.
 
 ### Environment variables
     POSTGRES_USER (dev/test only)
-    MAIL_HOST (production only)
+    MAIL_HOST (production only - from host)
+    MAIL_FROM (production only - from address)
     SECRET_TOKEN (production only)
     GITHUB_KEY
     GITHUB_SECRET

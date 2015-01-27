@@ -63,4 +63,8 @@ module ApplicationHelper
       class: "btn btn-primary",
       id: 'copy-filtered-speaker-emails'
   end
+
+  def on_organizer_page?
+    /\/organizer\// =~ request.path
+  end
 end

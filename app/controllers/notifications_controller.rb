@@ -12,4 +12,9 @@ class NotificationsController < ApplicationController
 
     redirect_to notification.target_path
   end
+
+  def mark_all_as_read
+    current_user.notifications.where(read_at: nil).update_all(read_at: DateTime.now)
+    redirect_to :back
+  end
 end

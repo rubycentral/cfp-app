@@ -15,7 +15,7 @@ describe Event do
       event3 = create(:event, closes_at: 3.weeks.from_now, state: 'open')
       event2 = create(:event, closes_at: 2.weeks.from_now, state: 'open')
 
-      expect(Event.live).to eq([ event1, event2, event3 ])
+      expect(Event.live).to eq([event1, event2, event3])
     end
   end
 
@@ -58,7 +58,7 @@ describe Event do
 
   it 'sets its slug on saving' do
     event = build :event, name: 'RubyConf 2013', slug: "", url: 'http://rubyconf.com'
-    expect{event.save}.to change{event.slug}.from("").to('rubyconf-2013')
+    expect { event.save }.to change { event.slug }.from("").to('rubyconf-2013')
   end
 
   it 'requires unique slug' do
@@ -105,6 +105,30 @@ describe Event do
       ]
 
       expect(missing).to match_array(expected_missing)
+    end
+  end
+
+  describe "#archived?" do
+    let(:event) { build :event }
+    it "returns false if event is not archived" do
+      expect(event.archived?).to eq(false)
+    end
+
+    it "returns true if event is archived" do
+      event.archive
+      expect(event.archived?).to eq(true)
+    end
+  end
+
+  describe "#current?" do
+    let(:event) { build :event, archived: true }
+    it "returns false if event is archived" do
+      expect(event.current?).to eq(false)
+    end
+
+    it "returns false if event is archived" do
+      event.unarchive
+      expect(event.current?).to eq(true)
     end
   end
 end

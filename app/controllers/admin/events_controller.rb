@@ -23,4 +23,30 @@ class Admin::EventsController < Admin::ApplicationController
     redirect_to events_path
   end
 
+  def archive
+    @event = Event.find_by_id(params[:event_id])
+    if @event
+      @event.archive
+      flash[:warning] = "#{@event.name} is now archived."
+    else
+      flash[:danger] = "Event not found. Unable to archive."
+    end
+    redirect_to admin_events_path
+  end
+
+  def unarchive
+    @event = Event.find_by_id(params[:event_id])
+    if @event
+      @event.unarchive
+      flash[:warning] = "#{@event.name} is now current."
+    else
+      flash[:danger] = "Event not found. Unable to unarchive."
+    end
+    redirect_to admin_events_path
+  end
+
+  def index
+    @events = Event.order("archived").all
+  end
+
 end

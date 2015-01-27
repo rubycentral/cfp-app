@@ -9,6 +9,7 @@ class ProposalMailer < ActionMailer::Base
 
     if bcc.any?
       mail(bcc: bcc,
+           from: @proposal.event.contact_email,
           subject: "You've received a comment on your proposal '#{@proposal.title}'")
     end
   end

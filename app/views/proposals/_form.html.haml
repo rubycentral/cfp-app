@@ -1,5 +1,11 @@
 .row
   %fieldset.col-md-6
+    %p
+      Read the #{link_to 'guidelines', event_path(event.slug)} to maximize
+      your chance of approval. Refrain from including any information that
+      would allow a reviewer to identify you. All fields support
+      %a{href: 'https://help.github.com/articles/github-flavored-markdown'}
+        GitHub Flavored Markdown.
     = proposal.title_input(f)
     = proposal.abstract_input(f)
 
@@ -10,7 +16,7 @@
       be visible to the review committee.
 
     = f.input :details, input_html: { class: 'watched', rows: 10 },
-      placeholder: 'Explain the theme and flow of your talk. What are the intended audience takeways?',
+      placeholder: 'Explain the theme and flow of your talk. What are the intended audience takeaways?',
       hint: 'Include any pertinent details such as outlines, outcomes or intended audience.'
 
     = f.input :pitch, input_html: { class: 'watched', rows: 5 },
@@ -18,14 +24,8 @@
       hint: 'Explain why this talk should be considered and what makes you qualified to speak on the topic.'
 
   %fieldset.col-md-6
-    %p
-      Read the #{link_to 'guidelines', event_path(event.slug)} to maximize
-      your chance of approval. Refrain from including any information that
-      would allow a reviewer to identify you. All fields support
-      %a{href: 'https://help.github.com/articles/github-flavored-markdown'}
-        GitHub Flavored Markdown.
-
     - if event.proposal_tags.any?
+      %h3 Tags
       = f.select :tags,
         options_for_select(event.proposal_tags, proposal.object.tags),
         {}, {class: 'multiselect proposal-tags', multiple: true }

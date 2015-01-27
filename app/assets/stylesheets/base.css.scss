@@ -1,8 +1,19 @@
 body {
-  padding-top: 70px;
+  padding-top: 60px;
 }
+.navbar {
+  height: 60px;
+}
+
 .alert {
   margin-top: 20px;
+}
+
+.alert-viewer-mode {
+  padding: 10px 0;
+  margin-bottom: 20px;
+  background-color: lighten(#E69400, 25%);
+  text-align: center;
 }
 
 .form-submit {
@@ -183,4 +194,10 @@ h3.tags {
     &:first-child { padding-left: 5px; }
     padding-bottom: 3px;
   }
+}
+
+
+//datepicker
+.ui-datepicker {
+  z-index: 10000 !important;
 }

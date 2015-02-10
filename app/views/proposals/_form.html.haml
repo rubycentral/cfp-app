@@ -24,10 +24,11 @@
       hint: 'Explain why this talk should be considered and what makes you qualified to speak on the topic.'
 
   %fieldset.col-md-6
-    %h3 Tags
-    = f.select :tags,
-      options_for_select(event.proposal_tags, proposal.object.tags),
-      {}, {class: 'multiselect proposal-tags', multiple: true }
+    - if event.proposal_tags.any?
+      %h3 Tags
+      = f.select :tags,
+        options_for_select(event.proposal_tags, proposal.object.tags),
+        {}, {class: 'multiselect proposal-tags', multiple: true }
 
     = render partial: 'speakers/fields', locals: { f: f }
 

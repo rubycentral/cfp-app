@@ -1,7 +1,11 @@
 module ApplicationHelper
 
   def title
-    @title
+    if @title.blank?
+      "CFPApp"
+    else
+      @title
+    end
   end
 
   def demographic_label(demographic)

@@ -49,6 +49,7 @@ Make sure you have Ruby 2.1 and Postgres installed in your environment.  This is
 
 ### Environment variables
 
+    TIMEZONE (defaults to Pacific if not set)
     POSTGRES_USER (dev/test only)
     MAIL_HOST (production only - from host)
     MAIL_FROM (production only - from address)

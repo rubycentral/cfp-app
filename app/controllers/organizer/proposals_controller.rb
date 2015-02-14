@@ -33,6 +33,7 @@ class Organizer::ProposalsController < Organizer::ApplicationController
   end
 
   def show
+    set_title(@proposal.title)
     other_proposals = []
     @proposal.speakers.each do |speaker|
       speaker.proposals.each do |p|

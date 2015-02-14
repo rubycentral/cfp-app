@@ -55,4 +55,8 @@ class ApplicationController < ActionController::Base
   def render_json(object)
     send_data(render_to_string(json: object))
   end
+
+  def set_title(title)
+    @title = title[0..25] if title
+  end
 end

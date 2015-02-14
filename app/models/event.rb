@@ -88,6 +88,14 @@ class Event < ActiveRecord::Base
   def current?
     ! archived?
   end
+
+  def cfp_opens
+    opens_at && opens_at.to_s(:long_with_zone)
+  end
+
+  def cfp_closes
+    closes_at && closes_at.to_s(:long_with_zone)
+  end
 end
 
 # == Schema Information

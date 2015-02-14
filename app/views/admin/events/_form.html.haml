@@ -18,12 +18,12 @@
     %h3 CFP Dates
     .form-group
       = f.label :opens_at
-      = f.object.opens_at.to_s(:long_with_zone) unless f.object.opens_at.blank?
+      = f.object.cfp_opens
       = f.text_field :opens_at, value: (f.object.opens_at.blank? ? "" : f.object.opens_at.to_s(:long_with_zone) )
       -#%p.help-block Open proposal end date is optional. If you do not provide one the CFP will defer to its state.
     .form-group
       = f.label :closes_at
-      = f.object.closes_at.to_s(:long_with_zone) unless f.object.closes_at.blank?
+      = f.object.cfp_closes
       = f.text_field :closes_at, value: (f.object.closes_at.blank? ? "" : f.object.closes_at.to_s(:long_with_zone) )
       -#%p.help-block Open proposal end date is optional. If you do not provide one the CFP will defer to its state.
     %h3 Event Dates

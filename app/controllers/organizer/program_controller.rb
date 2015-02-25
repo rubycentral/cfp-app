@@ -19,7 +19,7 @@ class Organizer::ProgramController < Organizer::ApplicationController
         }
       end
 
-      format.json { render_json(accepted_proposals) }
+      format.json { render_json(accepted_proposals.confirmed) }
     end
   end
 end

@@ -13,6 +13,10 @@ addons.
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
+Upon deploying to Heroku you will probably want to log in using Twitter or
+GitHub and then run `heroku run console` to update the first Person object to
+be an admin.
+
 ## Setup
 * Required Items
 

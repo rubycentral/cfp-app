@@ -14,6 +14,14 @@
     "postdeploy": "bundle exec rake db:migrate"
   },
   "env": {
+    "MAIL_HOST": {
+      "description": "The hostname from which emails will originate.",
+      "value": "example.com"
+    },
+    "MAIL_FROM": {
+      "description": "The email address from which emails will originate.",
+      "value": "person@example.com"
+    },
     "SECRET_TOKEN": {
       "description": "The secret token for the application",
       "generator": "secret"

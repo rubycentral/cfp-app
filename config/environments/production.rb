@@ -78,18 +78,20 @@ CFPApp::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  config.action_mailer.default_url_options = { host: ENV['MAIL_HOST'] }
-  config.action_mailer.default_options = {from: ENV['MAIL_FROM']}
-
-  config.action_mailer.smtp_settings = {
-    :address        => 'smtp.sendgrid.net',
-    :port           => '587',
-    :authentication => :plain,
-    :user_name      => ENV['SENDGRID_USERNAME'],
-    :password       => ENV['SENDGRID_PASSWORD'],
-    :domain         => 'heroku.com',
-    :enable_starttls_auto => true
-  }
+  # Set up these config settings in case you are not using Heroku with the
+  # default SendGrid Starter addon to send mail.
+  #
+  # config.action_mailer.default_url_options = { host: ENV['MAIL_HOST'] }
+  # config.action_mailer.default_options = {from: ENV['MAIL_FROM']}
+  # config.action_mailer.smtp_settings = {
+  #   :address        => 'smtp.sendgrid.net',
+  #   :port           => '587',
+  #   :authentication => :plain,
+  #   :user_name      => ENV['SENDGRID_USERNAME'],
+  #   :password       => ENV['SENDGRID_PASSWORD'],
+  #   :domain         => 'heroku.com',
+  #   :enable_starttls_auto => true
+  # }
 
   config.exceptions_app = self.routes
 end

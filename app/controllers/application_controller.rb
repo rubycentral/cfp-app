@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+  rescue_from ActiveRecord::RecordNotFound, :with => :rescue_not_found
 
   helper_method :current_user
   helper_method :user_signed_in?
@@ -58,5 +59,10 @@ class ApplicationController < ActionController::Base
 
   def set_title(title)
     @title = title[0..25] if title
+  end
+
+  protected
+  def rescue_not_found
+    render :template => 'errors/incorrect_token', :status => :not_found
   end
 end

@@ -2,6 +2,7 @@ class InvitationsController < ApplicationController
   before_filter :require_user, except: :show
   before_filter :require_invitation, except: :create
   before_filter :require_proposal, only: :create
+  rescue_from ActiveRecord::RecordNotFound, :with => :rescue_not_found
 
   def create
     @invitation = @proposal.invitations.find_or_initialize_by(email: params[:email])
@@ -61,4 +62,8 @@ class InvitationsController < ApplicationController
     @invitation = Invitation.find_by!(slug: params[:invitation_slug] || session[:invitation_slug])
   end
 
+  protected
+  def rescue_not_found
+    render :template => 'errors/incorrect_token', :status => :not_found
+  end
 end

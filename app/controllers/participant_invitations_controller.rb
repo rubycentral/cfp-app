@@ -2,6 +2,7 @@ class ParticipantInvitationsController < ApplicationController
   before_action :set_participant_invitation
   before_action :require_pending
   before_action :require_user, only: :accept
+  rescue_from ActiveRecord::RecordNotFound, :with => :rescue_not_found
 
   decorates_assigned :participant_invitation
 
@@ -28,5 +29,10 @@ class ParticipantInvitationsController < ApplicationController
 
   def require_pending
     redirect_to root_url unless @participant_invitation.pending?
+  end
+
+  protected
+  def rescue_not_found
+    render :template => 'errors/incorrect_token', :status => :not_found
   end
 end

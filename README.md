@@ -15,8 +15,16 @@ addons.
 
 Upon deploying to Heroku you will probably want to log in using Twitter or
 GitHub and then run `heroku run console` to update the first Person object to
-be an admin.
+be an admin like this:
 
+
+    ```bash
+    p = Person.first
+    p.admin = true
+    p.save
+    ```
+
+Do make sure that the Person record you pull back is indeed your newly created user and the one that should get admin permissions!
 
 ## Setup
 * Required Items

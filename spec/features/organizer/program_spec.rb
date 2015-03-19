@@ -23,4 +23,11 @@ feature "Organizers can manage the program" do
       expect(back[:href]).to eq(organizer_event_program_path(proposal.event))
     end
   end
+
+  context "Organizers can see confirmation feedback clearly" do
+    it "shows speakers confirmation feedback" do
+      visit organizer_event_program_path(proposal.event)
+      expect(page).to have_text("Confirmation Notes")
+    end
+  end
 end

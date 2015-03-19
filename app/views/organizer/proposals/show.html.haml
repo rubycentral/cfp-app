@@ -26,14 +26,13 @@
       %h3 Other Proposals
       = render partial: 'other_proposals', locals: { event: event, other_proposals: other_proposals }
       %h3 Speakers
-      %section
-        = render partial: 'organizer/proposals/speakers', locals: { speakers: proposal.speakers }
+      = render partial: 'organizer/proposals/speakers', locals: { speakers: proposal.speakers }
+    - if proposal.state == 'accepted'
+      %h3 Confirmation Notes
+      = render partial: 'proposals/confirmation_notes', locals: {proposal: proposal, notes: proposal.confirmation_notes}
+    .col-md-4
       %h3 Public Comments
       = render partial: 'proposals/comments', locals: { proposal: proposal, comments: proposal.public_comments }
-    .col-md-4 
-      %h3 Confirmation Notes
-    = render partial: 'proposals/confirmation_notes', locals: {proposal: proposal, notes: proposal.confirmation_notes}
-    .col-md-4
       %h3 Tags
       = render partial: 'shared/proposals/tags_form', locals: { event: event, proposal: proposal }
       %h3 Review

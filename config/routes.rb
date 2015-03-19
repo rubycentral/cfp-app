@@ -1,6 +1,8 @@
 CFPApp::Application.routes.draw do
 
-  resources :notifications, only: [ :index, :show ]
+  resources :notifications, only: [ :index, :show ] do
+    post :mark_all_as_read, on: :collection
+  end
 
   root 'home#show'
 
@@ -46,7 +48,11 @@ CFPApp::Application.routes.draw do
 	end
 
   namespace 'admin' do
-    resources :events, except: [:show, :index, :edit, :update]
+    resources :events, except: [:show, :edit, :update] do
+      post :archive
+      post :unarchive
+    end
+
     resources :people
   end
 
@@ -73,8 +79,14 @@ CFPApp::Application.routes.draw do
       controller :speakers do
         get :speaker_emails, action: :emails
       end
-      resources :speakers, only: [:index, :show]
+      resources :speakers, only: [:index, :show, :edit, :update] do
+        member do
+          get :profile, to: "profiles#edit", as: :edit_profile
+          patch :profile, to: "profiles#update", as: :update_profile
+        end
+      end
     end
+
   end
 
   namespace 'reviewer' do

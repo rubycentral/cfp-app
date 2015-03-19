@@ -5,10 +5,10 @@
         %h2= event
       .col-sm-5.col-sm-offset-4
         #event-actions-top.pull-right
-          = link_to 'Proposals', organizer_event_proposals_path(event), class: "btn btn-default"
-          = link_to 'Program', organizer_event_program_path(event), class: "btn btn-default"
+          = link_to "Proposals", organizer_event_proposals_path(event), class: "btn btn-default"
+          = link_to "Program", organizer_event_program_path(event), class: "btn btn-default"
           = link_to "Schedule", organizer_event_sessions_path(event), class: "btn btn-default"
-          = link_to 'Edit Event', edit_organizer_event_path(event), class: 'btn btn-primary'
+          = link_to "Edit Event", edit_organizer_event_path(event), class: "btn btn-primary"
   .row
     .col-sm-4
       %h4 Event Details
@@ -21,23 +21,27 @@
         %dt Email:
         %dd #{event.contact_email}
         %dt Guidelines:
-        %dd= link_to "Guidelines", event_path(slug: event.slug)
+        %dd
+          -if event.guidelines.present?
+            = event.guidelines.truncate(150, separator: /\s/)
+          = link_to "Public guidelines", event_path(slug: event.slug)
+          %p= link_to "Edit Guidelines", edit_organizer_event_path(:form => "guidelines_form"), class: "btn btn-primary"
       %dl.dl-horizontal
         %dt CFP Opens:
-        %dd #{event.opens_at}
+        %dd= event.cfp_opens
 
         %dt CFP Closes:
-        %dd #{event.closes_at}
+        %dd= event.cfp_closes
 
         .subset
           %dt Days Remaining:
           %dd #{event.cfp_days_remaining}
 
         %dt Event Start:
-        %dd #{event.start_date}
+        %dd #{event.start_date.to_s(:month_day_year) unless event.start_date.blank?}
 
         %dt Event End:
-        %dd #{event.end_date}
+        %dd #{event.end_date.to_s(:month_day_year) unless event.end_date.blank?}
     .col-sm-4
       %h4 Proposal Stats
       %dl.dl-horizontal
@@ -59,6 +63,16 @@
         .subset
           %dt Confirmed:
           %dd #{event.proposals.waitlisted.confirmed.count} (#{event.waitlisted_percent})
+      %h4 Proposal Tags
+      %dd=event.valid_proposal_tags
+      %dl.dl-horizontal
+
+      %h4 Review Tags
+      %dd=event.valid_review_tags
+      %dl.dl-horizontal
+      %p= link_to "Edit Tags", edit_organizer_event_path(:form => "tags_form"), class: "btn btn-primary"
+
+
     .col-sm-4
       %h4 Tracks
       -if event.track_count.present?
@@ -71,6 +85,16 @@
                   = count
       -else
         %p No Tracks
+
+      %h4 Speaker Notifcations
+      = link_to 'Edit Speaker Notifications', edit_organizer_event_path(:form => "speaker_notifications_form"), class: "btn btn-primary"
+      %dt Accept:
+      %dd=event.speaker_notification_emails['accept'].truncate(75, separator: /\s/)
+      %dt Reject:
+      %dd=event.speaker_notification_emails['reject'].truncate(75, separator: /\s/)
+      %dt Waitlist:
+      %dd=event.speaker_notification_emails['waitlist'].truncate(75, separator: /\s/)
+
 
   = render partial: 'participants',
     locals: { event: event, participants: participants,

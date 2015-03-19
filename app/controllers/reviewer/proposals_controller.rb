@@ -19,6 +19,7 @@ class Reviewer::ProposalsController < Reviewer::ApplicationController
   end
 
   def show
+    set_title(@proposal.title)
     rating = current_user.rating_for(@proposal)
 
     render locals: {

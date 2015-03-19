@@ -1,6 +1,7 @@
 .row
   .col-md-6
     %h2 Notifications
+    =link_to "Mark all as read", mark_all_as_read_notifications_path, method: :post
 .row
   .col-md-12
     %table#notifications.table

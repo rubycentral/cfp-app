@@ -31,4 +31,6 @@ CFPApp::Application.configure do
   config.action_mailer.default_options = {from: 'cfp@example.org'}
 
   I18n.enforce_available_locales = false
+
+  config.time_zone = ENV['TIMEZONE'] || "Pacific Time (US & Canada)"
 end

@@ -30,6 +30,9 @@
         = render partial: 'organizer/proposals/speakers', locals: { speakers: proposal.speakers }
       %h3 Public Comments
       = render partial: 'proposals/comments', locals: { proposal: proposal, comments: proposal.public_comments }
+    - if proposal.state == 'accepted'
+      %h3 Confirmation Notes
+      = render partial: 'proposals/confirmation_notes', locals: {proposal: proposal, notes: proposal.confirmation_notes}
     .col-md-4
       %h3 Tags
       = render partial: 'shared/proposals/tags_form', locals: { event: event, proposal: proposal }
@@ -44,3 +47,6 @@
   .row
     .col-md-12
       .toolbox.pull-right
+
+
+

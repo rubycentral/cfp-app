@@ -56,4 +56,11 @@ feature 'User Profile' do
 
     expect(user.bio).to eq('I am even more awesome')
   end
+
+  scenario "A user attempts to save their bio without email" do
+    visit (edit_profile_path)
+    fill_in('Email', with: '')
+    click_button 'Save'
+    expect(page).to have_content("Unable to save profile. Please correct the following: Email can't be blank")
+  end
 end

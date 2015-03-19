@@ -2,7 +2,7 @@ class Track < ActiveRecord::Base
   belongs_to :event
   has_many :session
 
-  validates :name, uniqueness: true, presence: true
+  validates :name, uniqueness: {scope: :event}, presence: true
 
   def self.count_by_track(event)
     event.tracks.joins(:session).group(:name).count

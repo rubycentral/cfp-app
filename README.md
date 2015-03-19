@@ -4,41 +4,75 @@ This is a Ruby on Rails application that you can deploy to manage your conferenc
 
 The CFP app is not the conference website but just to place for potential speakers to submit talks for your CFP.  You'll end up pointing those interested in submitting a talk to your deployed version of this application.  From there speakers can submit their talk, track their talk's progress and update their profile and talk details as need be.  As an organizer you can have a group of reviewers that blindly look over proposals, give feedback, tag and rate them.  You can have a different group of organizers that then sift through talks, curate your program, send out acceptance emails and manage the program.  We'll get into the details of the specifics of all of these things below.
 
-The app was written with a Heroku deployment stack in mind.  The only two add-ons you'll need is a database and an email sending service.  We used SendGrid but it shouldn't matter.  You can deploy it wherever you'd like assuming it can run Ruby 2.1.2 and Rails 4.1.2 with a postgres database and an SMTP listener.
+## Heroku
 
+The app was written with a Heroku deployment stack in mind. You can easily deploy the application using the button below, or you can deploy it anywhere assuming you can run Ruby 2.1.2 and Rails 4.1.2 with a postgres database and an SMTP listener.
+
+The Heroku stack will use the free SendGrid Starter and Heroku postgreSQL
+addons.
+
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
+Upon deploying to Heroku you will probably want to log in using Twitter or
+GitHub and then run `heroku run console` to update the first Person object to
+be an admin like this:
+
+
+    ```bash
+    p = Person.first
+    p.admin = true
+    p.save
+    ```
+
+Do make sure that the Person record you pull back is indeed your newly created user and the one that should get admin permissions!
 
 ## Setup
 * Required Items
 
 Make sure you have Ruby 2.1 and Postgres installed in your environment.  This is a Rails 4.1 app and uses bundler to install all required gems.  We are also making the assumption that you're familiar with how Rails apps and setup and deployed.  If this is not the case then you'll want to refer to documentation that will bridge any gaps in the instructions below.
 
-* Install gem requirements
+1. Install gem requirements
 
+    ```bash
     bundle install
-
+    ```
     NOTE: You may need to install Qt/`qmake` to get Capybara to work; with
     Homebrew you can run `brew install qt`.
 
-* Duplicate and edit environment variables
+1. Duplicate and edit environment variables
 
+    ```bash
     cp env-sample .env
+    ```
 
-[Omniauth](http://intridea.github.io/omniauth/) is set up to use Twitter and Github for logins in production.  You'll want to put your own key and secret in for both.  Other environment variables will include your postgres user and Rails' secret_token.
+    [Omniauth](http://intridea.github.io/omniauth/) is set up to use Twitter and Github for logins in production.  You'll want to put your own key and secret in for both.  Other environment variables will include your postgres user and Rails' secret_token.
 
-* Duplicate and edit database.yml
+1. Duplicate and edit database.yml
 
+    ```bash
     cp config/database_example.yml config/database.yml
+    ```
 
+1. Build dev database
 
-* Build dev database
-
+    ```bash
     bundle exec rake db:create db:migrate db:seed
+    ```
 
-NOTE: Seed will make an admin user with an email of an@admin.com to get started.  There is a special, development only login method in Omniauth that you can use to test it out.
+    NOTE: Seed will make an admin user with an email of an@admin.com to get started.  There is a special, development only login method in Omniauth that you can use to test it out.
+
+1. Start the server
+
+    ```bash
+    bundle exec rails server
+    ```
 
 ### Environment variables
+
+    TIMEZONE (defaults to Pacific if not set)
     POSTGRES_USER (dev/test only)
-    MAIL_HOST (production only)
+    MAIL_HOST (production only - from host)
+    MAIL_FROM (production only - from address)
     SECRET_TOKEN (production only)
     GITHUB_KEY
     GITHUB_SECRET

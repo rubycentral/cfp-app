@@ -24,7 +24,7 @@ class SessionDecorator < Draper::Decorator
 
   def row_data(buttons: false)
     row = [ object.conference_day, start_time, end_time, linked_title,
-      presenter, room_name, track_name ]
+      presenter, room_name, track_name, session_id ]
 
     row << session_buttons if buttons
     row

@@ -1,0 +1,45 @@
+{
+  "name": "CFP-App",
+  "description": "Conference call for proposal management application by Ruby Central",
+  "keywords": [
+    "cfp",
+    "proposals",
+    "conference"
+  ],
+  "addons": [
+    "sendgrid:starter",
+    "heroku-postgresql"
+  ],
+  "scripts": {
+    "postdeploy": "bundle exec rake db:migrate"
+  },
+  "env": {
+    "TIMEZONE": {
+      "description": "Timezone for the Rails app"
+    },
+    "MAIL_HOST": {
+      "description": "The hostname from which emails will originate.",
+      "value": "example.com"
+    },
+    "MAIL_FROM": {
+      "description": "The email address from which emails will originate.",
+      "value": "person@example.com"
+    },
+    "SECRET_TOKEN": {
+      "description": "The secret token for the application",
+      "generator": "secret"
+    },
+    "GITHUB_KEY": {
+      "description": "GitHub application key"
+    },
+    "GITHUB_SECRET": {
+      "description": "GitHub application secret"
+    },
+    "TWITTER_KEY": {
+      "description": "Twitter application key"
+    },
+    "TWITTER_SECRET": {
+      "description": "Twitter application secret"
+    }
+  }
+}

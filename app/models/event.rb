@@ -72,6 +72,30 @@ class Event < ActiveRecord::Base
 
     missing_prereqs
   end
+
+  def archive
+    if current?
+      update_attribute(:archived, true)
+    end
+  end
+
+  def unarchive
+    if archived?
+      update_attribute(:archived, false)
+    end
+  end
+
+  def current?
+    ! archived?
+  end
+
+  def cfp_opens
+    opens_at && opens_at.to_s(:long_with_zone)
+  end
+
+  def cfp_closes
+    closes_at && closes_at.to_s(:long_with_zone)
+  end
 end
 
 # == Schema Information
@@ -95,6 +119,7 @@ end
 #  speaker_notification_emails :hstore           default({"accept"=>"", "reject"=>"", "waitlist"=>""})
 #  created_at                  :datetime
 #  updated_at                  :datetime
+#  archived                    :boolean          default(FALSE)
 #
 # Indexes
 #

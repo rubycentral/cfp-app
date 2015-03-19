@@ -17,7 +17,8 @@
 //= require dataTables/jquery.dataTables
 //= require dataTables/jquery.dataTables.bootstrap3
 //= require jquery.dataTables.columnFilter
-//= require timepicker
+//= require jquery-ui-sliderAccess
+//= require jquery-ui-timepicker-addon
 //= require bootstrap-multiselect
 //= require zeroclipboard
 //= require_tree .

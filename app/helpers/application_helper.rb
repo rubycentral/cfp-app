@@ -1,7 +1,11 @@
 module ApplicationHelper
 
   def title
-    @title
+    if @title.blank?
+      "CFPApp"
+    else
+      @title
+    end
   end
 
   def demographic_label(demographic)
@@ -62,5 +66,9 @@ module ApplicationHelper
       data: { url: organizer_event_speaker_emails_path(@event) },
       class: "btn btn-primary",
       id: 'copy-filtered-speaker-emails'
+  end
+
+  def on_organizer_page?
+    /\/organizer\// =~ request.path
   end
 end

@@ -1,0 +1,11 @@
+%h2 Tags
+.form-group
+  = f.label :valid_proposal_tags
+  = f.text_field :valid_proposal_tags, class: 'form-control', placeholder: 'Separate multiple tags with commas'
+  %p.help-block This is a comma separated list of tags allowed for use on proposals. These limits apply to publicly displayed tags and not to tags used internally by reviewers.
+
+.form-group
+  = f.label :valid_review_tags
+  = f.text_field :valid_review_tags, class: 'form-control', placeholder: 'Separate multiple tags with commas'
+  %p.help-block This is a comma separated list of tags allowed for use during proposal reviews. These limits apply to tags used internally by reviewers and not to publicly displayed tags.
+  %button.pull-right.btn.btn-success{:type => "submit"} Save

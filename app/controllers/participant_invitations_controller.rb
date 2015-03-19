@@ -2,7 +2,7 @@ class ParticipantInvitationsController < ApplicationController
   before_action :set_participant_invitation
   before_action :require_pending
   before_action :require_user, only: :accept
-  rescue_from ActiveRecord::RecordNotFound, :with => :rescue_not_found
+  rescue_from ActiveRecord::RecordNotFound, :with => :incorrect_token
 
   decorates_assigned :participant_invitation
 
@@ -32,7 +32,7 @@ class ParticipantInvitationsController < ApplicationController
   end
 
   protected
-  def rescue_not_found
+  def incorrect_token
     render :template => 'errors/incorrect_token', :status => :not_found
   end
 end

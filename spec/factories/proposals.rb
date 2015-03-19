@@ -6,6 +6,7 @@ FactoryGirl.define do
     details "Various other things"
     pitch "Baseball."
 
+
     trait :with_reviewer_public_comment do
       after(:create) do |proposal|
         reviewer = FactoryGirl.create(:person, :reviewer)

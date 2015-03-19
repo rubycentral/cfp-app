@@ -25,6 +25,11 @@ describe Organizer::ProposalMailer do
       event.update_attribute(:accept, "")
       expect(mail.body.to_s).to match("<p>\nCongratulations! We'd love to include your talk")
     end
+
+    it "gives the speaker the ability to submit feedback and ask any questions they may have" do
+      proposal.update_attribute(:confirmation_notes, "I love cats")
+      expect(proposal.confirmation_notes).to eq("I love cats")
+    end
   end
 
   describe "reject_email" do

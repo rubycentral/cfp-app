@@ -13,7 +13,7 @@ feature "Organizers can manage participants" do
       create(:person, email: 'viktorkrum@durmstrang.edu')
       visit organizer_event_path(event)
 
-      click_link 'Add New Participant'
+      click_link 'Add/Invite New Participant'
       fill_in 'email', with: 'h'
 
       expect(page).to have_text('harrypotter@hogwarts.edu')

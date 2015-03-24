@@ -75,7 +75,7 @@ feature "Event Dashboard" do
     it "can promote a person" do
       person = create(:person)
       visit organizer_event_path(event)
-      click_link 'Add New Participant'
+      click_link 'Add/Invite New Participant'
 
       form = find('#new_participant')
       form.fill_in :email, with: person.email

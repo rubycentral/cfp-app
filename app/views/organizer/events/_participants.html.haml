@@ -4,8 +4,7 @@
       %h3 Participants
       = link_to 'view speakers', organizer_event_speakers_path(event)
     .col-sm-1.col-sm-offset-6
-      = link_to 'Add New Participant', '#', class: 'btn btn-primary', data: { toggle: 'modal', target: "#new-participant-event-#{event.id}" }
-      = new_participant_invitation_button
+      = link_to 'Add/Invite New Participant', '#', class: 'btn btn-primary', data: { toggle: 'modal', target: "#new-participant-event-#{event.id}" }
       = link_to 'Manage Participant Invitations',
         organizer_event_participant_invitations_path(event), class: 'btn btn-primary'
 .row
@@ -33,7 +32,7 @@
     .modal-content
       = form_for event.participants.build, url: organizer_event_participants_path(event), html: {role: 'form'} do |f|
         .modal-header
-          %h3 Add a participant to #{event.name}
+          %h3 Add/Invite a participant to #{event.name}
         .modal-body
           .form-group
             = label_tag :email
@@ -48,4 +47,3 @@
           %button.btn.btn-default{'data-dismiss' => "modal"} Cancel
           %button.pull-right.btn.btn-success{:type => "submit"} Save
 
-= render partial: 'organizer/participant_invitations/new_dialog', locals: { event: event }

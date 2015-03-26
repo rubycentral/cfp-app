@@ -13,6 +13,7 @@ class Organizer::ParticipantsController < Organizer::ApplicationController
       else
         flash[:danger] = 'There was a problem creating your invitation.'
       end
+      redirect_to organizer_event_participant_invitations_path(@event)
     else
       participant = @event.participants.build(participant_params.merge(person: person))
 
@@ -21,8 +22,8 @@ class Organizer::ParticipantsController < Organizer::ApplicationController
       else
         flash[:danger] = "There was a problem saving your participant. Please try again"
       end
+      redirect_to organizer_event_path(@event)
     end
-    redirect_to organizer_event_path(@event)
   end
 
   def update

@@ -1,5 +1,5 @@
 %header
-  %h2 Participant invitations
+  %h2 Pending & Refused Participant Invitations
   .pull-right= new_participant_invitation_button
 
 .row
@@ -10,9 +10,9 @@
       %th Slug
       %th Role
       %th
-
     - participant_invitations.each do |participant_invitation|
       %tr
+      - unless participant_invitation.state == 'accepted'
         %td= participant_invitation.email
         %td= participant_invitation.state
         %td= participant_invitation.slug

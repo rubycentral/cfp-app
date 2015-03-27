@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
       else
         session[:target] = request.path
       end
-      flash[:danger] = "You must be signed in to access this page."
+      flash[:danger] = "You must be signed in to access this page. If you haven't created an account, please create one."
       redirect_to new_session_path
     end
   end

@@ -23,6 +23,8 @@ class Person < ActiveRecord::Base
   has_many :notifications, dependent: :destroy
   has_many :proposals, through: :speakers, source: :proposal
 
+  # named_scope :want_email_notifications, :conditions => ['opt_out = ?', false]
+
   validates :email, uniqueness: { case_insensitive: true }, allow_nil: true
   validates :bio, length: { maximum: 500 }
   validates :name, :presence => true, allow_nil: true

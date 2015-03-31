@@ -48,6 +48,8 @@
           = link_to '/auth/twitter', class: 'btn btn-default' do
             %i.icon-twitter
             | Connect to Twitter
+        %h2 Notifications
+        = check_box_tag 'receive_email', 'yes', true
     %fieldset.col-md-3
       %h2 Demographics
       %p

@@ -48,8 +48,10 @@
           = link_to '/auth/twitter', class: 'btn btn-default' do
             %i.icon-twitter
             | Connect to Twitter
+      - if current_user.role_names == 'reviewer' || 'organizer'
         %h2 Notifications
-        = check_box_tag 'receive_email', 'yes', true
+        = f.fields_for :participants do |ff|
+          = ff.check_box :notifications 
     %fieldset.col-md-3
       %h2 Demographics
       %p

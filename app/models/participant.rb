@@ -9,6 +9,15 @@ class Participant < ActiveRecord::Base
   scope :reviewer, -> { where(role: ['reviewer', 'organizer'])}
 
   validates :person, :event, :role, presence: true
+
+
+  def comment_notifications
+    if self.notifications == true
+      "\u2713"
+    else
+      "X"
+    end
+  end
 end
 
 # == Schema Information
@@ -21,7 +30,7 @@ end
 #  role          :string(255)
 #  created_at    :datetime
 #  updated_at    :datetime
-#  notifications :boolean          default(FALSE)
+#  notifications :boolean          default(TRUE)
 #
 # Indexes
 #

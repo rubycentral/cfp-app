@@ -113,6 +113,10 @@ class ProposalDecorator < ApplicationDecorator
     form.input :title, placeholder: 'Title of the talk'
   end
 
+  def speaker_input(form)
+    form.input :speaker, placeholder: 'Speaker Name'
+  end
+
   def abstract_input(form)
     form.input :abstract, placeholder: 'What is your talk about?',
       maxlength: :lookup, input_html: { class: 'watched', rows: 5 },

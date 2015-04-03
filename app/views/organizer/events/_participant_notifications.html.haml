@@ -1,0 +1,14 @@
+= link_to 'Change', '#', class: 'btn btn-primary btn-xs', data: { toggle: 'modal', target: "#participant-change-role-#{participant.id}" }
+%div{ id: "participant-change-role-#{participant.id}", class: 'modal fade' }
+  .modal-dialog
+    .modal-content
+      = form_for participant, url: organizer_event_participant_path(participant.event, participant), html: { role: 'form' } do |f|
+        .modal-header
+          %h3 Change participant role
+        .modal-body
+          = f.label :notifications
+          = f.check_box :notifications, input_html: {checked: true}, class: "checkbox"
+          = f.label "Check to Receive Comment Notification Emails"
+        -#.modal-footer
+        -#  %button.btn.btn-default{'data-dismiss' => "modal"} Cancel
+        -#  %button.pull-right.btn.btn-primary{:type => "submit"} Save

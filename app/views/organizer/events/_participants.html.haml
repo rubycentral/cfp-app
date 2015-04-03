@@ -16,7 +16,7 @@
           %th Email
           %th Rated Proposals
           %th Role
-          %th Notifications
+          %th.notifications Comment Notifications
           %th.actions Actions
       %tbody
         - participants.each do |participant|
@@ -25,7 +25,10 @@
             %td= participant.person.email
             %td= rating_counts[participant.person.id] || 0
             %td= participant.role
-            %td= participant.notifications
+            %td.notifications
+              = participant.comment_notifications
+              - if participant.person == current_user
+                = render partial: 'organizer/events/participant_notifications', locals: {participant: participant}
             %td.actions
               - unless participant.person == current_user
                 = render partial: 'organizer/events/participant_controls', locals: { participant: participant }

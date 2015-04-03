@@ -30,7 +30,7 @@ class Organizer::ParticipantsController < Organizer::ApplicationController
     participant = Participant.find(params[:id])
     participant.update(participant_params)
 
-    flash[:info] = "You have successfully changed the role for your participant."
+    flash[:info] = "You have successfully changed your participant."
     redirect_to organizer_event_path(@event)
   end
 
@@ -50,6 +50,6 @@ class Organizer::ParticipantsController < Organizer::ApplicationController
   private
 
   def participant_params
-    params.require(:participant).permit(:role)
+    params.require(:participant).permit(:role, :notifications)
   end
 end

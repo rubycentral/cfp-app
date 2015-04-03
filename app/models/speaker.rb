@@ -2,11 +2,14 @@ class Speaker < ActiveRecord::Base
   belongs_to :proposal
   belongs_to :person
 
+
   has_many :proposals, through: :person
 
   delegate :name, :email, :gravatar_hash, to: :person
 
   validates :bio, length: { maximum: 500 }
+
+  accepts_nested_attributes_for :person
 end
 
 # == Schema Information

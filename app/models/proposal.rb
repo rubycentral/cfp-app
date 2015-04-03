@@ -26,6 +26,7 @@ class Proposal < ActiveRecord::Base
   accepts_nested_attributes_for :public_comments, reject_if: Proc.new { |comment_attributes| comment_attributes[:body].blank? }
   accepts_nested_attributes_for :speakers
 
+
   before_create :set_uuid
   before_update :save_attr_history
   after_save :save_tags, :save_review_tags

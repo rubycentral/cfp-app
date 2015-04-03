@@ -71,6 +71,8 @@ class Organizer::ProposalsController < Organizer::ApplicationController
 
   def new
     @proposal = @event.proposals.new
+    @speaker = @proposal.speakers.build
+    @person = @speaker.build_person
   end
 
   def create
@@ -80,6 +82,7 @@ class Organizer::ProposalsController < Organizer::ApplicationController
       flash[:success] = 'Proposal Added'
       redirect_to organizer_event_program_path(@event)
     else
+      puts @proposal.errors.inspect
       flash.now[:danger] = 'There was a problem saving your proposal; please review the form for issues and try again.'
       render :new
     end
@@ -91,12 +94,12 @@ class Organizer::ProposalsController < Organizer::ApplicationController
     # add updating_person to params so Proposal does not update last_change attribute when updating_person is organizer_for_event?
     params.require(:proposal).permit(:title, {review_tags: []}, :abstract, :details, :pitch,
                                      comments_attributes: [:body, :proposal_id, :person_id],
-                                     speakers_attributes: [:bio, :person_id, :id]).merge(updating_person: current_user)
+                                     speakers_attributes: [:bio, :person_id, :id, person_attributes:[:id, :name, :email]])
   end
 
   def send_state_mail(state)
     case state
-    when Proposal::State::ACCEPTED
+      when Proposal::State::ACCEPTED
       Organizer::ProposalMailer.accept_email(@event, @proposal).deliver
     when Proposal::State::REJECTED
       Organizer::ProposalMailer.reject_email(@event, @proposal).deliver

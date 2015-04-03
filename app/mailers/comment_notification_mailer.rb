@@ -4,7 +4,7 @@ class CommentNotificationMailer < ActionMailer::Base
 
 
     bcc = @comment.proposal.event.participants.map do |participant|
-      if participant.notifications
+      if participant.notifications && participant.role == 'reviewer' || 'organizer'
       end
     end
 

@@ -13,7 +13,13 @@
 
           = link_to(edit_organizer_event_speaker_path,
             class: "btn btn-primary") do
-            Manage Speakers
+            Edit Speaker
+        - if current_user.organizer_for_event?(event)
+          = link_to(new_organizer_event_speaker_path(event),
+            class: "btn btn-primary") do
+            Add Speakers
+
+
   .row
     .col-md-12
       %p

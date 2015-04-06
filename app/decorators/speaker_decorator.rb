@@ -18,7 +18,7 @@ class SpeakerDecorator < ApplicationDecorator
   end
 
   def delete_button
-    h.button_to h.organizer_event_speaker_path,
+    h.button_to h.speaker_path,
                 method: :delete,
                 data: {
                   confirm:

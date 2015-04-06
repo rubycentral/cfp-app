@@ -3,12 +3,24 @@ class Organizer::SpeakersController < Organizer::ApplicationController
 
   def index
     render locals: {
-      proposals: @event.proposals.includes(speakers: :person).decorate
-    }
+             proposals: @event.proposals.includes(speakers: :person).decorate
+           }
   end
 
   def new
     @speaker = Speaker.new
+  end
+
+  def create
+    altered_params = proposal_params.merge!("state" => "accepted", "confirmed_at" => DateTime.now)
+    @proposal = @event.proposals.new(altered_params)
+    if @proposal.save
+      flash[:success] = 'Proposal Added'
+      redirect_to organizer_event_program_path(@event)
+    else
+      flash.now[:danger] = 'There was a problem saving your speaker; please review the form for issues and try again.'
+      render :new
+    end
   end
 
   def show
@@ -26,6 +38,16 @@ class Organizer::SpeakersController < Organizer::ApplicationController
     else
       render :edit
     end
+  end
+
+  def destroy
+    @speaker = Speaker.find_by!(id: params[:id])
+
+    @proposal = speaker.proposal
+    speaker.destroy
+
+    flash[:info] = "You've deleted the speaker for this proposal"
+    redirect_to organizer_event_speaker_path(@event, @speaker)
   end
 
   def emails

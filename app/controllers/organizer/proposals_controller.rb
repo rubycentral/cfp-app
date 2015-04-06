@@ -82,7 +82,6 @@ class Organizer::ProposalsController < Organizer::ApplicationController
       flash[:success] = 'Proposal Added'
       redirect_to organizer_event_program_path(@event)
     else
-      puts @proposal.errors.inspect
       flash.now[:danger] = 'There was a problem saving your proposal; please review the form for issues and try again.'
       render :new
     end

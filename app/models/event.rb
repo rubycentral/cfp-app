@@ -24,6 +24,7 @@ class Event < ActiveRecord::Base
 
   before_validation :generate_slug
 
+
   def valid_proposal_tags
     proposal_tags.join(', ')
   end

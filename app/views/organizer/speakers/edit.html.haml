@@ -1,9 +1,11 @@
 
+
+
 = form_for @speaker, url: [ :organizer, event, @speaker ], html: {role: 'form'} do |f|
   .row
     %fieldset.col-md-4
-      %b Name:
-      = @speaker.name
+      = f.label :name
+      = f.text_area :name
       %p
         = f.label :bio
         = f.text_area :bio, class: 'form-control', value: speaker.bio,

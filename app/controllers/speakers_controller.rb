@@ -1,6 +1,7 @@
 class SpeakersController < ApplicationController
   before_filter :require_user
 
+
   def destroy
     speaker = Speaker.find_by!(id: params[:id])
 

@@ -7,6 +7,10 @@ class Organizer::SpeakersController < Organizer::ApplicationController
     }
   end
 
+  def new
+    @speaker = Speaker.new
+  end
+
   def show
     @speaker = Speaker.find(params[:id])
   end
@@ -34,6 +38,6 @@ class Organizer::SpeakersController < Organizer::ApplicationController
   private
 
   def speaker_params
-    params.require(:speaker).permit(:bio)
+    params.require(:speaker).permit(:bio, :name)
   end
 end

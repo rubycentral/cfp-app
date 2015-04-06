@@ -16,4 +16,18 @@ class SpeakerDecorator < ApplicationDecorator
   def bio
     speaker.bio.present? ? speaker.bio : speaker.person.bio
   end
+
+  def delete_button
+    h.button_to h.organizer_event_speaker_path,
+                method: :delete,
+                data: {
+                  confirm:
+                    'This will delete this speaker. Are you sure you want to do this? ' +
+                      'It can not be undone.'
+                },
+                class: 'btn btn-danger navbar-btn',
+                id: 'delete' do
+      bang('Delete Speaker')
+    end
+  end
 end

@@ -4,3 +4,7 @@
       organizer_event_speaker_path(speaker.proposal.event, speaker))
   %p
     = speaker.bio
+    -#- if current_user.organizer_for_event?(event)
+    -#  = link_to(edit_organizer_event_speaker_path,
+    -#        class: "btn btn-primary") do
+    -#    Manage Speakers

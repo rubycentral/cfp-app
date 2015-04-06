@@ -75,6 +75,7 @@ class Proposal < ActiveRecord::Base
     self.update(state: state_string)
   end
 
+
   def finalize
     update_state(SOFT_TO_FINAL[state]) if SOFT_TO_FINAL.has_key?(state)
   end

@@ -4,7 +4,8 @@
       organizer_event_speaker_path(speaker.proposal.event, speaker))
   %p
     = speaker.bio
-    - if current_user.organizer_for_event?(event)
-      = link_to(organizer_event_speaker_path(speaker.proposal.event, speaker),
-            class: "btn btn-primary") do
-        Manage Speakers
+
+- if current_user.organizer_for_event?(event)
+  = link_to(new_organizer_event_proposal_speaker_path(event, @proposal),
+    class: "btn btn-primary") do
+    Add Speakers

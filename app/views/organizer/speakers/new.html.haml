@@ -1,14 +1,21 @@
-= form_for @speaker do |f|
-  .row
-    %p
-    = f.label :bio
-    = f.text_area :bio, class: 'form-control', value: speaker.bio,
-      placeholder: 'Bio for the event program.', rows: 7, maxlength: 500
-    %p.help-block Bio is limited to 500 characters.
+=  link_to("« Return to Proposal", organizer_event_proposal_path(uuid: @proposal.uuid), class: "btn btn-primary", id: "back")
 
-  = f.fields_for :person, @person do |ff|
-    = ff.text_field :name
-    = ff.text_field :email
+%h3 New Speaker
+
+= form_for @speaker, url: [ :organizer, event, @proposal, @speaker ], html: {role: 'form'} do  |f|
+  .row
+    %fieldset.col-md-6
+      = f.label :bio
+      = f.text_area :bio, class: 'form-control', value: speaker.bio,
+      placeholder: 'Bio for the event program.', rows: 7, maxlength: 500
+      %p.help-block Bio is limited to 500 characters.
+
+      = f.fields_for :person, @person do |ff|
+        = ff.text_field :name
+        = ff.label "Name"
+        = ff.text_field :email
+        = ff.label "Email"
+
 
   .row.col-md-12.form-submit
     %button.pull-right.btn.btn-success{:type => "submit"} Save

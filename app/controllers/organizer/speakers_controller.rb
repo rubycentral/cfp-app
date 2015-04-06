@@ -1,5 +1,6 @@
 class Organizer::SpeakersController < Organizer::ApplicationController
   decorates_assigned :speaker
+  before_filter :set_proposal, only: [:new, :create, :destroy]
 
   def index
     render locals: {
@@ -9,16 +10,18 @@ class Organizer::SpeakersController < Organizer::ApplicationController
 
   def new
     @speaker = Speaker.new
+    @person = @speaker.build_person
+    @proposal = Proposal.find_by(uuid: params[:proposal_uuid])
   end
 
   def create
-    altered_params = proposal_params.merge!("state" => "accepted", "confirmed_at" => DateTime.now)
-    @proposal = @event.proposals.new(altered_params)
-    if @proposal.save
-      flash[:success] = 'Proposal Added'
-      redirect_to organizer_event_program_path(@event)
+    @speaker = Speaker.new(speaker_params.merge(proposal: @proposal))
+    if @speaker.save
+      flash[:success] = "Speaker was added to this proposal"
+      redirect_to organizer_event_proposal_path(event, @proposal)
     else
-      flash.now[:danger] = 'There was a problem saving your speaker; please review the form for issues and try again.'
+      flash[:danger] = "There was a problem saving this speaker"
+      @person = @speaker.person
       render :new
     end
   end
@@ -42,12 +45,11 @@ class Organizer::SpeakersController < Organizer::ApplicationController
 
   def destroy
     @speaker = Speaker.find_by!(id: params[:id])
-
-    @proposal = speaker.proposal
-    speaker.destroy
+    proposal = speaker.proposal
+    @speaker.destroy
 
     flash[:info] = "You've deleted the speaker for this proposal"
-    redirect_to organizer_event_speaker_path(@event, @speaker)
+    redirect_to organizer_event_proposal_path(uuid: proposal)
   end
 
   def emails
@@ -60,6 +62,11 @@ class Organizer::SpeakersController < Organizer::ApplicationController
   private
 
   def speaker_params
-    params.require(:speaker).permit(:bio, :name)
+    params.require(:speaker).permit(:bio,
+                  person_attributes: [:name, :email])
+  end
+
+  def set_proposal
+    @proposal = Proposal.find_by(uuid: params[:proposal_uuid])
   end
 end

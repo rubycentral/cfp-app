@@ -72,6 +72,7 @@ CFPApp::Application.routes.draw do
       resources :tracks, only: [:create, :destroy]
       resources :sessions, except: :show
       resources :proposals, param: :uuid do
+        resources :speakers, only: [:new, :create]
         post :finalize
         post :update_state
       end
@@ -79,7 +80,7 @@ CFPApp::Application.routes.draw do
       controller :speakers do
         get :speaker_emails, action: :emails
       end
-      resources :speakers, only: [:index, :show, :edit, :update, :new] do
+      resources :speakers, only: [:index, :show, :edit, :update, :destroy] do
         member do
           get :profile, to: "profiles#edit", as: :edit_profile
           patch :profile, to: "profiles#update", as: :update_profile

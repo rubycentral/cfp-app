@@ -1,8 +1,8 @@
 class CommentsController < ApplicationController
   def create
-    proposal = Proposal.find(comment_params[:proposal_id])
+    @proposal = Proposal.find(comment_params[:proposal_id])
 
-    @comment = comment_class.create(comment_params.merge(proposal: proposal,
+    @comment = comment_class.create(comment_params.merge(proposal: @proposal,
                                                          person: current_user))
 
     # this action is used by the proposal show page for both speaker

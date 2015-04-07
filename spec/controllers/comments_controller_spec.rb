@@ -24,8 +24,10 @@ describe CommentsController, type: :controller do
       end
 
       it "adds a comment to the proposal" do
-        expect(PublicComment).to receive(:create).and_return(comment)
-        post :create, params
+        # expect(PublicComment).to receive(:create).and_return(comment)
+        expect {
+          post :create, params
+        }.to change {PublicComment.count}.by(1)
       end
 
       it "returns to the referer" do
@@ -55,10 +57,17 @@ describe CommentsController, type: :controller do
     context "Internal comments" do
       let(:comment) { build_stubbed(:comment, type: "InternalComment") }
       let(:params) { { internal_comment: { body: 'foo', proposal_id: proposal.id }, type: "InternalComment" } }
+      let(:reviewer) { build_stubbed(:reviewer)}
+
+      before do
+        allow_any_instance_of(CommentsController).to receive(:current_user) { reviewer }
+      end
 
       it "adds the comment to the proposal" do
-        expect(InternalComment).to receive(:create).and_return(comment)
-        post :create, params
+        # expect(InternalComment).to receive(:create).and_return(comment)
+        expect {
+          post :create, params
+        }.to change {InternalComment.count}.by(1)
       end
 
       it "returns to the referer" do

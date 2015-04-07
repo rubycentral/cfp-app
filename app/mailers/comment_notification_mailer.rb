@@ -5,12 +5,13 @@ class CommentNotificationMailer < ActionMailer::Base
 
     bcc = @comment.proposal.event.participants.map do |participant|
       if participant.notifications && participant.role == 'reviewer' || participant.role == 'organizer'
+        participant.person.email
       end
-    end
+    end.compact
 
     if bcc.any?
       mail(bcc: bcc,
-           from: @proposal.event.contact_email,
+           from: @comment.proposal.event.contact_email,
            subject: "A comment has been posted")
     end
   end

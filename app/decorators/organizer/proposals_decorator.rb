@@ -11,6 +11,10 @@ class Organizer::ProposalsDecorator < Draper::CollectionDecorator
     end
   end
 
+  def updated_in_words
+    "updated #{h.time_ago_in_words(object.updated_by_speaker_at)} ago"
+  end
+
   # Override the default decorator class
   def decorator_class
     Organizer::ProposalDecorator

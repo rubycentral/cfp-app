@@ -16,7 +16,7 @@
 
   .row
     #updated_parent.col-md-12
-      %date#updated_subheader= "updated #{time_ago_in_words(proposal.updated_at)} ago"
+      %date#updated_subheader= "updated #{time_ago_in_words(proposal.updated_by_speaker_at)} ago"
       .tags= proposal.review_tags
   .row
     .col-md-4

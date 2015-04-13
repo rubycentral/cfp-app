@@ -102,7 +102,7 @@ class ProposalDecorator < ApplicationDecorator
   end
 
   def updated_in_words
-    "updated #{h.time_ago_in_words(object.updated_at)} ago"
+    "updated #{h.time_ago_in_words(object.updated_by_speaker_at)} ago"
   end
 
   def created_in_words

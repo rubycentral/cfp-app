@@ -29,7 +29,7 @@ class Reviewer::ProposalsController < Reviewer::ApplicationController
   end
 
   def update
-    unless @proposal.update_attributes(proposal_params)
+    unless @proposal.update_without_touching_updated_by_speaker_at(proposal_params)
       flash[:danger] = 'There was a problem saving the proposal.'
     end
     redirect_to :back

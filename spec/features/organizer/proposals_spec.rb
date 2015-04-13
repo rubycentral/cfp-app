@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature "Organizers can manage proposals" do
 
-  let(:event) { create(:event, review_tags: [ 'intro', 'advanced' ]) }
+  let(:event) { create(:event, review_tags: ['intro', 'advanced']) }
   let(:proposal) { create(:proposal, event: event) }
 
   let(:organizer_person) { create(:person) }
@@ -170,7 +170,16 @@ feature "Organizers can manage proposals" do
         expect(ActionMailer::Base.deliveries).to be_empty
       end
     end
-
   end
 
+  context "update_without_touching_updated_by_speaker_at" do
+    it "doesn't update the update_by_speaker_at column" do
+      tag = create(:tagging)
+      updated_at = 1.day.ago
+      proposal.update_column(:updated_by_speaker_at, updated_at)
+      proposal.update_without_touching_updated_by_speaker_at(review_tags: [tag.tag])
+      proposal.reload
+      expect(proposal.updated_by_speaker_at.to_s).to eq(updated_at.to_s)
+    end
+  end
 end

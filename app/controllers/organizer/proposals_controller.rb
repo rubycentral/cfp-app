@@ -54,7 +54,7 @@ class Organizer::ProposalsController < Organizer::ApplicationController
   end
 
   def update
-    if @proposal.update_attributes(proposal_params)
+    if @proposal.update_without_touching_updated_by_speaker_at(proposal_params)
       flash[:info] = 'Proposal Updated'
       redirect_to organizer_event_proposals_path(slug: @event.slug)
     else

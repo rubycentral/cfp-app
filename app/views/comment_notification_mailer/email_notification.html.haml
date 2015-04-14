@@ -4,4 +4,4 @@ Hello!
 %blockquote
   = simple_format(@comment.body)
 
-%p= link_to 'View the proposal', '#'
+%p= link_to 'View the proposal', proposal_url(slug: @comment.proposal.event.slug, uuid: @comment.proposal)

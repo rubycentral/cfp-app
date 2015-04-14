@@ -1,4 +1,4 @@
-
+=  link_to("« Return to Proposal", organizer_event_proposal_path(uuid: @proposal.uuid), class: "btn btn-primary", id: "back")
 
 
 = form_for @speaker, url: [ :organizer, event, @speaker ], html: {role: 'form'} do |f|

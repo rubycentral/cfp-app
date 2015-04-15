@@ -1,4 +1,4 @@
-class ProposalMailer < ActionMailer::Base
+class ProposalMailer < ApplicationMailer
   def comment_notification(proposal, comment)
     @proposal = proposal
     @comment = comment
@@ -8,7 +8,7 @@ class ProposalMailer < ActionMailer::Base
     end
 
     if bcc.any?
-      mail(bcc: bcc,
+      mail_markdown(bcc: bcc,
            from: @proposal.event.contact_email,
           subject: "You've received a comment on your proposal '#{@proposal.title}'")
     end

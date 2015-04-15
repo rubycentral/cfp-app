@@ -1,4 +1,4 @@
-class CommentNotificationMailer < ActionMailer::Base
+class CommentNotificationMailer < ApplicationMailer
   def email_notification(comment)
     @comment = comment
 
@@ -10,7 +10,7 @@ class CommentNotificationMailer < ActionMailer::Base
     end.compact
 
     if bcc.any?
-      mail(bcc: bcc,
+      mail_markdown(bcc: bcc,
            from: @comment.proposal.event.contact_email,
            subject: "A comment has been posted")
     end

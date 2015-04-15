@@ -1,8 +1,0 @@
-%p #{@comment.person.name} has left a comment on your proposal '#{@proposal.title}' for #{@proposal.event.name}:
-
-%blockquote
-  = simple_format(@comment.body)
-
-%p= link_to 'View your proposal', proposal_url(slug: @proposal.event.slug, uuid: @proposal)
-
-

@@ -1,0 +1,6 @@
+Hello!
+<%= @comment.person.name %> has left a comment on the proposal '<%= @comment.proposal.title %>' for <%= @comment.proposal.event.name %>:
+
+> <%= simple_format(@comment.body) %>
+
+<%= md_link_to 'View the proposal', proposal_url(slug: @comment.proposal.event.slug, uuid: @comment.proposal) %>

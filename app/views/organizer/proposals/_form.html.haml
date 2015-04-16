@@ -12,13 +12,12 @@
     %fieldset
       %h4 Speaker
       = f.simple_fields_for :speakers do |speaker_fields|
-        = speaker_fields.input :bio, maxlength: :lookup,
-          placeholder: 'Bio for speaker for the event program.'
-
         = speaker_fields.simple_fields_for :person, @person do |person_fields|
           = person_fields.input :name
           = person_fields.input :email
+        = speaker_fields.input :bio, maxlength: :lookup,
+          placeholder: 'Bio for speaker for the event program.'
 
-      .form-submit.clearfix
+
         %button.pull-right.btn.btn-primary.btn-lg{:type => "submit"} Save
 

@@ -1,4 +1,7 @@
-= speaker.delete_button
+= link_to(organizer_event_proposal_path(speaker.proposal.event, speaker.proposal),
+              class: "btn btn-primary", id: "back") do
+
+  &laquo; Return to Proposal
 
 #speaker
   .row
@@ -6,10 +9,7 @@
       %h1 Speaker Profile
       .toolbox.pull-right
         .clearfix
-          = link_to(organizer_event_proposal_path(speaker.proposal.event, speaker.proposal),
-              class: "btn btn-primary", id: "back") do
-
-            &laquo; Return to Proposal
+          = speaker.delete_button
 
           = link_to(edit_organizer_event_speaker_path,
             class: "btn btn-primary") do

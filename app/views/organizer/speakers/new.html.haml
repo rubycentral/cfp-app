@@ -4,17 +4,18 @@
 
 = form_for @speaker, url: [ :organizer, event, @proposal, @speaker ], html: {role: 'form'} do  |f|
   .row
-    %fieldset.col-md-6
-      = f.label :bio
-      = f.text_area :bio, class: 'form-control', value: speaker.bio,
-      placeholder: 'Bio for the event program.', rows: 7, maxlength: 500
-      %p.help-block Bio is limited to 500 characters.
+    %fieldset.col-md-4
 
       = f.fields_for :person, @person do |ff|
         = ff.text_field :name
         = ff.label "Name"
+        %p
         = ff.text_field :email
         = ff.label "Email"
+      = f.text_area :bio, class: 'form-control', value: speaker.bio,
+      placeholder: 'Bio for the event program.', rows: 7, maxlength: 500
+      = f.label :bio
+      %p.help-block Bio is limited to 500 characters.
 
 
   .row.col-md-12.form-submit

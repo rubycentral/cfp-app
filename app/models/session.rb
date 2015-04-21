@@ -3,6 +3,14 @@ class Session < ActiveRecord::Base
   belongs_to :room
   belongs_to :track
   belongs_to :event
+
+  def desc
+    if proposal
+      proposal.abstract
+    else
+      description
+    end
+  end
 end
 
 # == Schema Information

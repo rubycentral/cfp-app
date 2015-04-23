@@ -1,4 +1,4 @@
-class Organizer::ProposalMailer < ActionMailer::Base
+class Organizer::ProposalMailer < ApplicationMailer
 
   def accept_email(event, proposal)
     @proposal = proposal.decorate
@@ -30,7 +30,7 @@ class Organizer::ProposalMailer < ActionMailer::Base
     bcc = proposal.speakers.map(&:email)
     if bcc.any?
       bcc << event.contact_email
-      mail(
+      mail_markdown(
         from: event.contact_email,
         bcc: bcc,
         subject: subject

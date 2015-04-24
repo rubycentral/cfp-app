@@ -63,6 +63,10 @@ class Organizer::ProposalDecorator < ProposalDecorator
     end
   end
 
+  def organizer_confirm
+      object.state == "accepted"
+  end
+
   private
 
   def state_button(text, path, opts = {})

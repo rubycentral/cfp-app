@@ -6,7 +6,10 @@
         = proposal.title
   .row
     .col-md-8
-      %p.help-block Congratulations! Your talk has been #{proposal.state}. Please ensure the information below is correct.
+      - if @proposal.speakers == current_user
+        %p.help-block Congratulations! Your talk has been #{proposal.state}. Please ensure the information below is correct.
+      - else
+        %p.help-block Please ensure the information below is correct.
 
       %h3 Abstract
       = proposal.abstract
@@ -26,7 +29,11 @@
               = text_area_tag :confirmation_notes, nil, class: 'form-control', rows: 5,
                 placeholder: 'Please note any scheduling conflicts, or any additional information an organizer may need to schedule your talk.'
             .form-submit.clearfix
+            - if @proposal.speakers == current_user
               = submit_tag 'Confirm my participation', class: 'btn btn-success'
+              = proposal.withdraw_button
+            - else
+              = submit_tag 'Confirm', class: 'btn btn-success'
               = proposal.withdraw_button
 
         - if proposal.event.url

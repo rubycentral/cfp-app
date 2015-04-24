@@ -94,7 +94,7 @@ feature "Proposals" do
 
       before do
         visit confirm_proposal_path(slug: proposal.event.slug, uuid: proposal)
-        click_button "Confirm my participation"
+          click_button "Confirm"
       end
 
       it "marks the proposal as confirmed" do

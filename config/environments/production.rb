@@ -91,6 +91,12 @@ CFPApp::Application.configure do
     :enable_starttls_auto => true
   }
 
+  ENV['GITHUB_KEY'] = "e5662bfcd64133b4d7d2";
+  ENV['GITHUB_SECRET'] = "f48593fce92c10867cc8aaae0acb700eb7351ee7";
+
+  ENV['TWITTER_KEY'] = "A993PtIUR5Eyi16QS4hZevkQf";
+  ENV['TWITTER_SECRET'] = "Y7C4OfweE7PO9Lgz3Iq5lN3hNv0vrJZh8tx2QBm1ClIOOkv67U";
+
   config.exceptions_app = self.routes
 
   config.time_zone = ENV['TIMEZONE'] || "Pacific Time (US & Canada)"

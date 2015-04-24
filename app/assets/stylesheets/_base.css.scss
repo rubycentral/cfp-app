@@ -102,6 +102,16 @@ h3.tags {
   color: Orange;
 }
 
+.navbar .navbar-collapse, .navbar-form .navbar-fixed-top {
+  border-color: #f8f8f8;
+  background-color: #f8f8f8;
+}
+
+.navbar-inverse {
+  border-color: #f8f8f8;
+  background-color: #f8f8f8;
+}
+
 .user-dropdown-gravatar {
   width: 25px;
 }

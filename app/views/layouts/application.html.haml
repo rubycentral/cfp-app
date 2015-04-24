@@ -13,6 +13,8 @@
 
     = csrf_meta_tags
 
+    %link{href:"http://fonts.googleapis.com/css?family=Raleway", rel: :stylesheet, type: "text/css"}
+
     // html5 shim and respond.js ie8 support of html5 elements and media queries
     /[if lt ie 9]
       = javascript_include_tag "/js/html5shiv.js"
@@ -21,6 +23,7 @@
     .navbar.navbar-inverse.navbar-fixed-top
       .container
         .navbar-header
+          = image_tag 'railslogo.png'
           %button.navbar-toggle{ type: "button", data: { toggle: "collapse", target: ".navbar-collapse" } }
             %span.icon-bar
             %span.icon-bar

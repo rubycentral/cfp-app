@@ -16,6 +16,7 @@ class Reviewer::ProposalsController < Reviewer::ApplicationController
     render locals: {
       proposals: proposals
     }
+
   end
 
   def show

@@ -13,6 +13,8 @@
             .clearfix
             #state_buttons
               = proposal.state_buttons
+              - if proposal.state = "accepted"
+                = link_to "Confirm for Speaker", "#", class: "btn btn-primary", data: { toggle: 'modal', target: "#new-participant-event-#{event.id}" }
 
   .row
     #updated_parent.col-md-12
@@ -48,5 +50,17 @@
     .col-md-12
       .toolbox.pull-right
 
-
+%div{ id: "new-participant-event-#{event.id}", class: 'modal fade' }
+  .modal-dialog
+    .modal-content
+      = form_for proposal, html: {role: 'form'} do |f|
+        .modal-header
+          %h3 Confirm Proposal for Speaker
+        .modal-body
+          .form-group
+            = f.label :Confirm
+            = f.check_box :confirmed
+        .modal-footer
+          %button.btn.btn-default{'data-dismiss' => "modal"} Cancel
+          %button.pull-right.btn.btn-success{:type => "submit"} Save
 

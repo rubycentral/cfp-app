@@ -31,6 +31,7 @@ end
 #  created_at    :datetime
 #  updated_at    :datetime
 #  notifications :boolean          default(TRUE)
+#  preferences   :json
 #
 # Indexes
 #

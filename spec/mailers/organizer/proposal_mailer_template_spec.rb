@@ -9,21 +9,21 @@ describe Organizer::ProposalMailerTemplate do
       template = "Line one.\n\nLine two.\nMore line two.\n\nLine three."
 
       rendered = Organizer::ProposalMailerTemplate.new(template, event, proposal).render
-      expect(rendered).to match(%r{^<p>Line one.</p>\n<p>.*?</p>\n<p>Line three.</p>$}m) # multiline match
+      expect(rendered).to match(%r{^Line one.\n.*?\nLine three.$}m) # multiline match
     end
 
     it "converts double carriage returns/linefeeds to paragraphs" do
       template = "Line one.\r\n\r\nLine two.\r\nMore line two.\r\n\r\nLine three."
 
       rendered = Organizer::ProposalMailerTemplate.new(template, event, proposal).render
-      expect(rendered).to match(%r{^<p>Line one.</p>\n<p>.*?</p>\n<p>Line three.</p>$}m) # multiline match
+      expect(rendered).to match(%r{^Line one.\n.*?\nLine three.$}m) # multiline match
     end
 
     it "passes unknown tags as themselves" do
       template = "::no_tag:: and ::fake_tag::.\n\n::tag_alone::"
       rendered = Organizer::ProposalMailerTemplate.new(template, event, proposal).render
       expect(rendered).to match(%r{no_tag and fake_tag})
-      expect(rendered).to match(%r{<p>tag_alone</p>})
+      expect(rendered).to match(%r{tag_alone})
     end
 
     it "substitutes proposal title" do

@@ -2,7 +2,7 @@
   <%= Organizer::ProposalMailerTemplate.new(@event.waitlist, @event, @proposal).render %>
 <% else %>
 
-    We have good news and bad news.  We'll start with the bad news.  We weren't able to fit your talk, <%= @proposal.title %>, into the program for #{@event.name}.  The good news is we have you on our waitlist.  We keep a waitlist of talks that are ready to step in if any of the accepted talks back out or get sick.
+    We have good news and bad news.  We'll start with the bad news.  We weren't able to fit your talk, <%= @proposal.title %>, into the program for <%= @event.name %>.  The good news is we have you on our waitlist.  We keep a waitlist of talks that are ready to step in if any of the accepted talks back out or get sick.
 
     If you are willing to be a waitlisted speaker then you need to CONFIRM by visiting the <%= @proposal.confirm_link %>.
 

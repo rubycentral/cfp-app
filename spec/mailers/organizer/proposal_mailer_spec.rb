@@ -18,12 +18,14 @@ describe Organizer::ProposalMailer do
 
     it "uses event's accept template" do
       event.update_attribute(:accept, "Body stored in database.")
-      expect(mail.body.to_s).to eq("<p>Body stored in database.</p>\n")
+      mail.deliver
+      expect(mail.html_part.body.to_s).to eq("<p>Body stored in database.</p>\n")
     end
 
     it "uses the default template if event's accept is blank" do
       event.update_attribute(:accept, "")
-      expect(mail.body.to_s).to match("<p>\nCongratulations! We'd love to include your talk")
+      mail.deliver
+      expect(mail.html_part.body.to_s).to match("<p>\nCongratulations! We'd love to include your talk")
     end
 
     it "gives the speaker the ability to submit feedback and ask any questions they may have" do
@@ -45,12 +47,14 @@ describe Organizer::ProposalMailer do
 
     it "uses event's reject template" do
       event.update_attribute(:reject, "Body stored in database.")
-      expect(mail.body.to_s).to eq("<p>Body stored in database.</p>\n")
+      mail.deliver
+      expect(mail.html_part.body.to_s).to eq("<p>Body stored in database.</p>\n")
     end
 
     it "uses the default template if event's reject is blank" do
       event.update_attribute(:reject, "")
-      expect(mail.body.to_s).to match("<p>\nThank you for your proposal to")
+      mail.deliver
+      expect(mail.html_part.body.to_s).to match("<p>\nThank you for your proposal to")
     end
   end
 
@@ -67,13 +71,14 @@ describe Organizer::ProposalMailer do
 
     it "uses event's waitlist template" do
       event.update_attribute(:waitlist, "Body stored in database.")
-      expect(mail.body.to_s).to eq("<p>Body stored in database.</p>\n")
+      mail.deliver
+      expect(mail.html_part.body.to_s).to eq("<p>Body stored in database.</p>\n")
     end
 
     it "uses the default template if event's waitlist is blank" do
       event.update_attribute(:waitlist, "")
-      expect(mail.body.to_s).to match("<p>\nWe have good news and bad news.")
+      mail.deliver
+      expect(mail.html_part.body.to_s).to match("<p>\nWe have good news and bad news.")
     end
   end
-
 end

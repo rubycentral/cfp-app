@@ -236,6 +236,7 @@ end
 #  last_change           :text
 #  confirmation_notes    :text
 #  updated_by_speaker_at :datetime
+#  proposal_data         :text
 #
 # Indexes
 #

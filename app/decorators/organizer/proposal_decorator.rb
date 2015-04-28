@@ -64,7 +64,7 @@ class Organizer::ProposalDecorator < ProposalDecorator
   end
 
   def organizer_confirm
-      object.state == "accepted"
+      object.state == "accepted" && object.confirmed_at == nil
   end
 
   private

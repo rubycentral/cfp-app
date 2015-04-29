@@ -10,6 +10,8 @@
             =link_to(edit_organizer_event_proposal_path(proposal.event_id, proposal.uuid), class: "btn btn-primary", id: 'edit') do
               %span.glyphicon.glyphicon-edit
               Edit Proposal
+          %p
+            =link_to "Next Proposal", '#', class: "btn btn-primary"
             .clearfix
             #state_buttons
               = proposal.state_buttons
@@ -45,6 +47,7 @@
       #rating-form
         = render partial: 'rating_form', locals: { event: event, proposal: proposal, rating: rating }
     .col-md-3
+    - if proposal.proposal_data?
       %h3 Video URL
       = proposal.proposal_data[:video_url]
       %p

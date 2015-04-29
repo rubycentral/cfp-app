@@ -91,7 +91,7 @@ class Organizer::ProposalsController < Organizer::ApplicationController
 
   def proposal_params
     # add updating_person to params so Proposal does not update last_change attribute when updating_person is organizer_for_event?
-    params.require(:proposal).permit(:title, {review_tags: []}, :abstract, :details, :pitch,
+    params.require(:proposal).permit(:title, {review_tags: []}, :abstract, :details, :pitch, :slides_url, :video_url,
                                      comments_attributes: [:body, :proposal_id, :person_id],
                                      speakers_attributes: [:bio, :person_id, :id, person_attributes:[:id, :name, :email]])
   end

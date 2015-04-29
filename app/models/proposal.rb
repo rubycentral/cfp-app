@@ -20,8 +20,10 @@ class Proposal < ActiveRecord::Base
   validates :abstract, length: {maximum: 600}
 
   serialize :last_change
+  serialize :proposal_data, Hash
 
   attr_accessor :tags, :review_tags, :updating_person
+  attr_accessor :video_url, :slide_url
 
   accepts_nested_attributes_for :public_comments, reject_if: Proc.new { |comment_attributes| comment_attributes[:body].blank? }
   accepts_nested_attributes_for :speakers
@@ -67,6 +69,22 @@ class Proposal < ActiveRecord::Base
                  'LEFT OUTER JOIN comments AS c ON c.person_id = people.id')
       .where("participants.event_id = ? AND participants.role IN (?) AND (r.proposal_id = ? or (c.proposal_id = ? AND c.type = 'PublicComment'))",
              event.id, ['organizer', 'reviewer'], id, id).uniq
+  end
+
+  def video_url
+    proposal_data[:video_url]
+  end
+
+  def slides_url
+    proposal_data[:slides_url]
+  end
+
+  def video_url=(video_url)
+    proposal_data[:video_url] = video_url
+  end
+
+  def slides_url=(slides_url)
+    proposal_data[:slides_url] = slides_url
   end
 
   def update_state(new_state)

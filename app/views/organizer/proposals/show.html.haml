@@ -47,7 +47,14 @@
       .internal-comments
         %h3 Internal Comments
         = render partial: 'proposals/comments', locals: { proposal: proposal, comments: proposal.internal_comments }
-
+    .col-md-3
+      %h3 Add Video and Slides
+      = simple_form_for proposal, url: [ :organizer, event, proposal ] do |f|
+        = f.label :video_url
+        = f.text_field :video_url
+        = f.label :slides_url
+        = f.text_field :slides_url
+        = f.submit "Save", class: "btn btn-primary"
   .row
     .col-md-12
       .toolbox.pull-right

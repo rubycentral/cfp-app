@@ -4,11 +4,16 @@
       %h4 Proposal
       = proposal.title_input(f)
       = proposal.abstract_input(f)
-
+      = f.label :video_url
+      = f.text_field :video_url
+      = f.label :slides_url
+      = f.text_field :slides_url
 
       = f.select :review_tags,
         options_for_select(event.review_tags, proposal.object.review_tags),
         {}, {class: 'multiselect review-tags', multiple: true}
+
+
     %fieldset
       %h4 Speaker
       = f.simple_fields_for :speakers do |speaker_fields|

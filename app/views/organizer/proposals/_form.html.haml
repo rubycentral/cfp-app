@@ -8,11 +8,10 @@
       = f.text_field :video_url
       = f.label :slides_url
       = f.text_field :slides_url
-
+      %p
       = f.select :review_tags,
         options_for_select(event.review_tags, proposal.object.review_tags),
         {}, {class: 'multiselect review-tags', multiple: true}
-
 
     %fieldset
       %h4 Speaker
@@ -23,6 +22,6 @@
         = speaker_fields.input :bio, maxlength: :lookup,
           placeholder: 'Bio for speaker for the event program.'
 
-
         %button.pull-right.btn.btn-primary.btn-lg{:type => "submit"} Save
-
+        %br
+        %br

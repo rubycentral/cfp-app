@@ -46,13 +46,12 @@
       #current_state= proposal.state_label
       #rating-form
         = render partial: 'rating_form', locals: { event: event, proposal: proposal, rating: rating }
-    .col-md-3
-    - if proposal.proposal_data?
-      %h3 Video URL
-      = proposal.proposal_data[:video_url]
-      %p
-      %h3 Slides URL
-      = proposal.proposal_data[:slides_url]
+      - if proposal.proposal_data?
+        %h3 Video URL
+        = proposal.proposal_data[:video_url]
+        %p
+        %h3 Slides URL
+        = proposal.proposal_data[:slides_url]
       .internal-comments
         %h3 Internal Comments
         = render partial: 'proposals/comments', locals: { proposal: proposal, comments: proposal.internal_comments }

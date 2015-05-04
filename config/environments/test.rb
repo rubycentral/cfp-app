@@ -39,11 +39,5 @@ CFPApp::Application.configure do
 
   I18n.enforce_available_locales = false
 
-  ENV['GITHUB_KEY'] = "e5662bfcd64133b4d7d2";
-  ENV['GITHUB_SECRET'] = "f48593fce92c10867cc8aaae0acb700eb7351ee7";
-
-  ENV['TWITTER_KEY'] = "A993PtIUR5Eyi16QS4hZevkQf";
-  ENV['TWITTER_SECRET'] = "Y7C4OfweE7PO9Lgz3Iq5lN3hNv0vrJZh8tx2QBm1ClIOOkv67U";
-
   config.assets.debug = true
 end

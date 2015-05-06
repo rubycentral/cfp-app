@@ -185,14 +185,6 @@ class Proposal < ActiveRecord::Base
     success
   end
 
-  def next(query)
-    unless query.nil?
-      index = query.find_index(self.id)
-      next_id = query[index+1] unless index == query.size
-      self.class.find_by_id(next_id)
-    end
-  end
-
   private
 
   def save_tags

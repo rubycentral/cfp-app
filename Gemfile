@@ -7,7 +7,7 @@ gem 'pg'
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'jquery-datatables-rails', '~> 1.12.2'
+gem 'jquery-datatables-rails'
 gem 'uglifier', '>= 1.3.0'
 gem 'sass-rails', '~> 4.0.1'
 gem 'haml', '~> 4.0.4'

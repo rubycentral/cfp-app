@@ -11,7 +11,7 @@
               %span.glyphicon.glyphicon-edit
               Edit Proposal
           %p
-            =link_to "Next Proposal", '#', class: "btn btn-primary"
+            =link_to "Next Proposal", organizer_event_proposal_path(uuid: "PLACEHOLDER"), class: "next-proposal btn btn-primary", data: {"proposal-uuid" => proposal.uuid }
             .clearfix
             #state_buttons
               = proposal.state_buttons

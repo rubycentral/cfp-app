@@ -33,9 +33,6 @@ class Organizer::ProposalsController < Organizer::ApplicationController
   end
 
   def show
-    if session[:query]
-      @next_proposal = @proposal.next(session[:query])
-    end
     set_title(@proposal.title)
     other_proposals = []
     @proposal.speakers.each do |speaker|

@@ -28,8 +28,8 @@ logger.info "Signing in user #{user.inspect}"
         redirect_to (session.delete(:target) || root_path)
       else
         session[:need_to_complete] = true
-        # redirect_to edit_profile_path
-        render 'profiles/edit'
+        redirect_to edit_profile_path
+        # render 'profiles/edit'
       end
     else
       redirect_to new_session_path, danger: "There was an error authenticating via #{params[:provider].capitalize}."

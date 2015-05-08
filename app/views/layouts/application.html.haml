@@ -13,6 +13,8 @@
 
     = csrf_meta_tags
 
+    %link{href:"http://fonts.googleapis.com/css?family=Raleway", rel: :stylesheet, type: "text/css"}
+
     // html5 shim and respond.js ie8 support of html5 elements and media queries
     /[if lt ie 9]
       = javascript_include_tag "/js/html5shiv.js"
@@ -25,10 +27,8 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          - if event && event.slug
-            = link_to event.name, event_path(slug: event.slug), class: 'navbar-brand'
-          - else
-            = link_to "#{Rails.application.class.parent_name}", events_path, class: 'navbar-brand'
+          %a.navbar-brand{href: root_path}
+            = image_tag 'railslogo.png', alt: 'Rails Conf logo', style: "height: 40px;"
 
         .collapse.navbar-collapse
           %ul.nav.navbar-nav
@@ -102,7 +102,7 @@
   - if on_organizer_page?
     .alert-viewer-mode
       .container
-        Viewing as: 
+        Viewing as:
         %strong Organizer
 
   #flash= show_flash

@@ -40,4 +40,6 @@ CFPApp::Application.configure do
   I18n.enforce_available_locales = false
 
   config.assets.debug = true
+
+  config.time_zone = ENV['AEST'] || "Pacific Time (US & Canada)"
 end

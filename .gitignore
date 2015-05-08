@@ -6,4 +6,5 @@
 
 config/database.yml
 .env
+.ruby-gemset
 .idea/

@@ -112,12 +112,26 @@ h3.tags {
   background-color: #f8f8f8;
 }
 
+.nav.navbar-nav.navbar-right li a {
+  color: #339999;
+  font-weight: bold;
+}
+
 .container {
   width: 100%;
 }
 
 .user-dropdown-gravatar {
   width: 25px;
+}
+
+.btn {
+  background-color: #339999;
+  border-color: #339999;
+}
+
+.speaker.clearfix a h4 {
+  color: #339999;
 }
 
 // demographic notification

@@ -33,3 +33,12 @@
 #download-json {
   margin-top: 5px;
 }
+
+#schedule {
+  table.schedule {
+    border-collapse: separate;
+    td {
+      border: 1px solid black;
+    }
+  }
+}

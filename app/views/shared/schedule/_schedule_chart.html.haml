@@ -1,0 +1,34 @@
+-#%table.schedule
+-#  %thead
+-#    %tr
+-#      %th (Time Slots)
+-#      -#- schedule_room_names.each do |room_name|
+-#      -#  %th
+-#      -#    = room_name
+-#
+-#  %tbody
+-#    / - Session.time_slots(1).each do |time_slot|
+-#    - schedule_day.each do |day|
+-#      - Session.time_slots(day).each do |time_slot|
+-#        %tr
+-#          %td.schedule-time-slot
+-#            %p
+-#              = row_time(time_slot)
+-#
+-#          - if time_slot.conference_wide?
+-#            %td.schedule-full-width-row.light-gray-bg{ colspan: 6}
+-#              %p= time_slot.sessions.first.title
+-#
+-#          - else
+-#            - time_slot.sessions.order_by_room_name(schedule_room_names).each do |session|
+-#              - unless session.nil?
+-#                - takes_two = session.takes_two_time_slots?
+-#                %td{class: ("schedule-two-row-block" if takes_two), rowspan: (2 if takes_two)}
+-#                  -if session.track_name.present?
+-#                    %p.track_name_base{class: ("#{session.track_name}-track")}
+-#                      = session.track_name
+-#                  .session-content
+-#                    %p.session-title
+-#                      = session.title
+-#                    %p.speaker-name
+-#                      = session.presenter

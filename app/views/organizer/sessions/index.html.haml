@@ -8,6 +8,8 @@
         %a{"data-toggle" => "tab", href: "#session", id: 'sessions-tab'} Sessions
       %li
         %a{"data-toggle" => "tab", href: "#adddetails"} Rooms and Tracks
+      %li
+        %a{"data-toggle" => "tab", href: "#addschedule"} Schedule
     .tab-content
       #session.tab-pane.active
         .row
@@ -19,3 +21,7 @@
             = render partial: 'rooms'
           .col-md-2
             = render partial: 'tracks'
+      #addschedule.tab-pane
+        .row
+          .col-md-12
+            #schedule= render partial: 'schedule'

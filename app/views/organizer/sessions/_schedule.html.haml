@@ -1,0 +1,30 @@
+.mod-heading#program-bg
+
+.schedule-wrap
+
+  %section.schedule-details-wrap
+    #schedule
+      .full
+        %section
+          %article
+            #schedule_page
+              = render "shared/schedule/day_one"
+              -#%nav#schedule_nav
+              -#  %ul#tabs
+              -#    %li.schedule-tab#schedule-top
+              -#      %h1 SCHEDULE
+              -#    %li.schedule-tab.active
+              -#      %a{href: "#day-1"} Tuesday, April 21
+              -#    %li.schedule-tab
+              -#      %a{href: "#day-2"} Wednesday, April 22
+              -#    %li.schedule-tab
+              -#      %a{href: "#day-3"} Thursday, April 23
+              -#
+              -##tabs_container.schedule-body
+              -#  #day-1
+              -#    = render "shared/schedule/day_one"
+              -#  #day-2.hidden
+              -#    = render "shared/schedule/day_two"
+              -#  #day-3.hidden
+              -#    = render "shared/schedule/day_three"
+

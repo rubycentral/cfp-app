@@ -61,7 +61,6 @@ feature "Organizers can manage proposals" do
     before do
       proposal.last_change = ['abstract']
       proposal.save!
-
       visit edit_organizer_event_proposal_path(event, proposal)
       fill_in "Title", with: "A New Title"
       click_button 'Save'
@@ -73,6 +72,7 @@ feature "Organizers can manage proposals" do
     end
 
     it "clears out the last_change array" do
+
       expect(proposal.last_change).to be_nil
     end
   end

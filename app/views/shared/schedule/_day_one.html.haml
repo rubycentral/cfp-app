@@ -1,5 +1,5 @@
 
-%h1 Tuesday, April 21 - Day 1
+%h1= event.conference_day_in_words(1)
 %table.schedule
   %thead
     %tr
@@ -9,7 +9,7 @@
           = room.name
 
   %tbody
-    - Session.time_slots(1).each do |time_slot|
+    - Session.time_slots(1, @event).each do |time_slot|
       %tr
         %td.schedule-time-slot
           %p
@@ -18,14 +18,15 @@
         - if time_slot.conference_wide?
           %td{ colspan: @rooms.count}
             %p
-              = time_slot.sessions.first.title + ":"
-              = time_slot.sessions.first.room.try(:name)
+              - session = time_slot.conference_wide_session.decorate
+              = session.conference_wide_title
 
         - else
-          - time_slot.sessions.each do |session|
+          - time_slot.sessions.by_room.each do |session|
+            - session = session.decorate
             - unless session.nil?
               - takes_two = session.takes_two_time_slots?
-              %td{class: ("schedule-two-row-block" if takes_two), rowspan: (2 if takes_two)}
+              %td{rowspan: (2 if takes_two)}
                 .session-content
                   %p.session-title
                     = session.title

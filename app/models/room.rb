@@ -3,6 +3,7 @@ class Room < ActiveRecord::Base
   has_many :session
 
   validates :name, uniqueness: true
+  scope :by_grid_position, -> {where.not(grid_position: nil).order(:grid_position)}
 end
 
 # == Schema Information
@@ -18,7 +19,7 @@ end
 #  event_id      :integer
 #  created_at    :datetime
 #  updated_at    :datetime
-#  grid_position :string(255)
+#  grid_position :integer
 #
 # Indexes
 #

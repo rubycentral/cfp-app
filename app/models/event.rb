@@ -97,6 +97,10 @@ class Event < ActiveRecord::Base
   def cfp_closes
     closes_at && closes_at.to_s(:long_with_zone)
   end
+
+  def conference_date(conference_day)
+    start_date + (conference_day - 1).days
+  end
 end
 
 # == Schema Information

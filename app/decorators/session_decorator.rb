@@ -100,4 +100,7 @@ class SessionDecorator < Draper::Decorator
     object.track && object.track.name
   end
 
+  def conference_wide_title
+    title + ": " + room_name
+  end
 end

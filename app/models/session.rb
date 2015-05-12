@@ -8,6 +8,9 @@ class Session < ActiveRecord::Base
 
   scope :day, -> (num) { where(conference_day: num).order(:start_time).order(room_name: :asc) }
   scope :start_times_by_day, -> (num) { day(num+1).pluck(:start_time).uniq }
+  scope :by_room, -> do
+    joins(:room).where.not(rooms: {grid_position: nil}).sort_by { |session| session.room.grid_position }
+  end
 
   def self.import(file)
     raw_json = file.read # maybe open as well
@@ -19,16 +22,12 @@ class Session < ActiveRecord::Base
     end
   end
 
-  # def self.order_by_room_name(room_names)
-  #   sessions = all.to_a
-  #   room_names.map do |room_name|
-  #     sessions.find { |s| s.room_name == room_name }
-  #   end
-  # end
-
-  def self.time_slots(conference_day)
-    where(conference_day: conference_day).order(:start_time).pluck(:start_time).uniq.map do |start_time|
-      TimeSlot.new(conference_day, start_time)
+  def self.time_slots(conference_day, event)
+    start_times = where(conference_day: conference_day, event_id: event.id).pluck(:start_time).uniq.map do |start_time|
+      [TimeHelpers.with_correct_time_zone(start_time), start_time]
+    end.sort_by { |start_time| start_time.first }
+    start_times.map do |_, start_time|
+      TimeSlot.new(conference_day, start_time, event)
     end
   end
 
@@ -47,6 +46,14 @@ class Session < ActiveRecord::Base
       description
     end
   end
+
+  def start_time
+    TimeHelpers.with_correct_time_zone(read_attribute(:start_time))
+  end
+
+  def end_time
+    TimeHelpers.with_correct_time_zone(read_attribute(:end_time))
+  end
 end
 
 # == Schema Information
@@ -55,8 +62,8 @@ end
 #
 #  id             :integer          not null, primary key
 #  conference_day :integer
-#  start_time     :datetime
-#  end_time       :datetime
+#  start_time     :time
+#  end_time       :time
 #  title          :text
 #  description    :text
 #  presenter      :text

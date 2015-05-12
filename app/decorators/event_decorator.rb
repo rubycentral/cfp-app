@@ -90,6 +90,10 @@ class EventDecorator < ApplicationDecorator
       library: {pointSize: 0, lineWidth: 2, series: [{color: '#9ACFEA'}]}
   end
 
+  def conference_day_in_words(day)
+    object.conference_date(day).strftime("%A, %B %d - Day #{day}")
+  end
+
   private
 
   def proposal_date_range

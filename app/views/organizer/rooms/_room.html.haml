@@ -4,6 +4,7 @@
   %td= room.address
   %td= room.level
   %td= room.capacity
+  %td= room.grid_position
   %td.actions
     = link_to 'Edit', '#', class: 'btn btn-primary btn-xs',
       data: { toggle: 'modal', target: "#room-edit-#{room.id}" }

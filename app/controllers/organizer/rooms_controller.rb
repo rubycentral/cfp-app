@@ -40,7 +40,7 @@ class Organizer::RoomsController < Organizer::SchedulesController
   private
 
   def room_params
-    params.require(:room).permit(:name, :room_number, :level, :address, :capacity)
+    params.require(:room).permit(:name, :room_number, :level, :address, :capacity, :grid_position)
   end
 
 end

@@ -10,9 +10,10 @@ module ApplicationHelper
 
   def demographic_label(demographic)
     case demographic
-    when :gender then "Gender Identity"
-    else
-      demographic.to_s.titleize
+      when :gender then
+        "Gender Identity"
+      else
+        demographic.to_s.titleize
     end
   end
 
@@ -55,20 +56,25 @@ module ApplicationHelper
     flash.map do |key, value|
       content_tag(:div, class: "container alert alert-dismissable alert-#{key}") do
         content_tag(:button, content_tag(:span, '', class: 'glyphicon glyphicon-remove'),
-                    class: 'close', data: { dismiss: 'alert' } ) +
-        simple_format(value)
+                    class: 'close', data: {dismiss: 'alert'}) +
+          simple_format(value)
       end
     end.join.html_safe
   end
 
   def copy_email_btn
     link_to 'Copy Speaker Email Addresses To Clipboard', '#',
-      data: { url: organizer_event_speaker_emails_path(@event) },
-      class: "btn btn-primary",
-      id: 'copy-filtered-speaker-emails'
+            data: {url: organizer_event_speaker_emails_path(@event)},
+            class: "btn btn-primary",
+            id: 'copy-filtered-speaker-emails'
   end
 
   def on_organizer_page?
     /\/organizer\// =~ request.path
+  end
+
+  def modal(identifier, title = '')
+    body = capture { yield }
+    render 'shared/modal', identifier: identifier, body: body, title: title
   end
 end

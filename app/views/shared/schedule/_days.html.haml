@@ -1,3 +1,6 @@
+-#= modal('add session', 'SESSION') do
+-#  = render 'organizer/sessions/new_dialog', session: Session.new
+
 
 %h1= event.conference_day_in_words(1)
 %table.schedule
@@ -16,7 +19,7 @@
             = row_time(time_slot)
 
         - if time_slot.conference_wide?
-          %td{ colspan: @rooms.count}
+          %td.proposal-slot{ colspan: @rooms.count}
             %p
               - session = time_slot.conference_wide_session.decorate
               = session.conference_wide_title

@@ -18,11 +18,11 @@ GitHub and then run `heroku run console` to update the first Person object to
 be an admin like this:
 
 
-    ```bash
-    p = Person.first
-    p.admin = true
-    p.save
-    ```
+```bash
+p = Person.first
+p.admin = true
+p.save
+```
 
 Do make sure that the Person record you pull back is indeed your newly created user and the one that should get admin permissions!
 
@@ -33,39 +33,40 @@ Make sure you have Ruby 2.1 and Postgres installed in your environment.  This is
 
 1. Install gem requirements
 
-    ```bash
-    bundle install
-    ```
+```bash
+bundle install
+```
+
     NOTE: You may need to install Qt/`qmake` to get Capybara to work; with
     Homebrew you can run `brew install qt`.
 
 1. Duplicate and edit environment variables
 
-    ```bash
-    cp env-sample .env
-    ```
+```bash
+cp env-sample .env
+```
 
     [Omniauth](http://intridea.github.io/omniauth/) is set up to use Twitter and Github for logins in production.  You'll want to put your own key and secret in for both.  Other environment variables will include your postgres user and Rails' secret_token.
 
 1. Duplicate and edit database.yml
 
-    ```bash
-    cp config/database_example.yml config/database.yml
-    ```
+```bash
+cp config/database_example.yml config/database.yml
+```
 
 1. Build dev database
 
-    ```bash
-    bundle exec rake db:create db:migrate db:seed
-    ```
+```bash
+bundle exec rake db:create db:migrate db:seed
+```
 
     NOTE: Seed will make an admin user with an email of an@admin.com to get started.  There is a special, development only login method in Omniauth that you can use to test it out.
 
 1. Start the server
 
-    ```bash
-    bundle exec rails server
-    ```
+```bash
+bundle exec rails server
+```
 
 ### Environment variables
 

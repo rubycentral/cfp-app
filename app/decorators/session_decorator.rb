@@ -39,7 +39,7 @@ class SessionDecorator < Draper::Decorator
       h.link_to('Edit',
               h.edit_organizer_event_session_path(object.event, object),
               class: 'btn btn-primary btn-xs',
-              remote: :true,
+              remote: true,
               data: { toggle: 'modal', target: "#session-edit-dialog" }),
 
       h.link_to('Remove',
@@ -102,5 +102,9 @@ class SessionDecorator < Draper::Decorator
 
   def conference_wide_title
     title + ": " + room_name
+  end
+
+  def cell_data_attr
+    {"session-edit-path" => h.edit_organizer_event_session_path(object.event, object), toggle: 'modal', target: "#session-edit-dialog"}
   end
 end

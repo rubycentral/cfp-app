@@ -19,9 +19,9 @@
             = row_time(time_slot)
 
         - if time_slot.conference_wide?
-          %td.proposal-slot{ colspan: @rooms.count}
+          - session = time_slot.conference_wide_session.decorate
+          %td.proposal-slot.session-slot{ colspan: @rooms.count, data: session.cell_data_attr}
             %p
-              - session = time_slot.conference_wide_session.decorate
               = session.conference_wide_title
 
         - else
@@ -29,7 +29,7 @@
             - session = session.decorate
             - unless session.nil?
               - takes_two = session.takes_two_time_slots?
-              %td{rowspan: (2 if takes_two)}
+              %td.session-slot{rowspan: (2 if takes_two), data: session.cell_data_attr}
                 .session-content
                   %p.session-title
                     = session.title

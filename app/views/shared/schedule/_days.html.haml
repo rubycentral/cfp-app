@@ -1,5 +1,4 @@
--#= modal('add session', 'SESSION') do
--#  = render 'organizer/sessions/new_dialog', session: Session.new
+
 
 
 %h1= event.conference_day_in_words(1)
@@ -12,28 +11,32 @@
           = room.name
 
   %tbody
-    - Session.time_slots(1, @event).each do |time_slot|
+    - conference_day = ConferenceDay.new(1, @event)
+    - conference_day.time_slots.each do |time_slot|
       %tr
-        %td.schedule-time-slot
+        %td
           %p
             = row_time(time_slot)
-
         - if time_slot.conference_wide?
           - session = time_slot.conference_wide_session.decorate
           %td.proposal-slot.session-slot{ colspan: @rooms.count, data: session.cell_data_attr}
             %p
               = session.conference_wide_title
-
         - else
-          - time_slot.sessions.by_room.each do |session|
-            - session = session.decorate
-            - unless session.nil?
+          - time_slot.sessions.each_with_index do |session, i|
+            - if conference_day.session_empty?(session, i, time_slot)
+              %td
+            - elsif session.present?
+              - session = session.decorate
               - takes_two = session.takes_two_time_slots?
+              -#%td.session-slot{ data: session.cell_data_attr}
               %td.session-slot{rowspan: (2 if takes_two), data: session.cell_data_attr}
                 .session-content
                   %p.session-title
                     = session.title
                   %p.speaker-name
                     = session.presenter
--#= render "shared/schedule/schedule_chart"
+
+
+
 

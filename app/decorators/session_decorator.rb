@@ -23,31 +23,31 @@ class SessionDecorator < Draper::Decorator
   end
 
   def row_data(buttons: false)
-    row = [ object.conference_day, start_time, end_time, linked_title,
-      presenter, room_name, track_name, session_id ]
+    row = [object.conference_day, start_time, end_time, linked_title,
+           presenter, room_name, track_name, session_id]
 
     row << session_buttons if buttons
     row
   end
 
   def row
-    { id: object.id, values: row_data(buttons: true) }
+    {id: object.id, values: row_data(buttons: true)}
   end
 
   def session_buttons
     [
       h.link_to('Edit',
-              h.edit_organizer_event_session_path(object.event, object),
-              class: 'btn btn-primary btn-xs',
-              remote: true,
-              data: { toggle: 'modal', target: "#session-edit-dialog" }),
+                h.edit_organizer_event_session_path(object.event, object),
+                class: 'btn btn-primary btn-xs',
+                remote: true,
+                data: {toggle: 'modal', target: "#session-edit-dialog"}),
 
       h.link_to('Remove',
-              h.organizer_event_session_path(object.event, object),
-              method: :delete,
-              data: { confirm: "Are you sure you want to remove this session?" },
-              remote: true,
-              class: 'btn btn-danger btn-xs')
+                h.organizer_event_session_path(object.event, object),
+                method: :delete,
+                data: {confirm: "Are you sure you want to remove this session?"},
+                remote: true,
+                class: 'btn btn-danger btn-xs')
     ].join("\n").html_safe
   end
 
@@ -63,7 +63,7 @@ class SessionDecorator < Draper::Decorator
       notes = p.confirmation_notes || ''
 
       h.content_tag :option, p.title, value: p.id,
-        data: { 'confirmation-notes' => notes }, selected: p == object.proposal
+                    data: {'confirmation-notes' => notes}, selected: p == object.proposal
     end.join.html_safe
   end
 
@@ -106,5 +106,6 @@ class SessionDecorator < Draper::Decorator
 
   def cell_data_attr
     {"session-edit-path" => h.edit_organizer_event_session_path(object.event, object), toggle: 'modal', target: "#session-edit-dialog"}
+      # {"session-new-path" => h.edit_organizer_event_session_path(object.event, object), toggle: 'modal', target: "#session-new-dialog"}
   end
 end

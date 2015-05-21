@@ -94,6 +94,12 @@ class EventDecorator < ApplicationDecorator
     object.conference_date(day).strftime("%A, %B %d - Day #{day}")
   end
 
+  def day
+    1
+    2
+    3
+  end
+
   private
 
   def proposal_date_range

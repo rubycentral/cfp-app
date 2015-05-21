@@ -22,23 +22,6 @@ class Session < ActiveRecord::Base
     end
   end
 
-  # def self.time_slots(conference_day, event)
-  #   start_times = where(conference_day: conference_day, event_id: event.id).pluck(:start_time).uniq.map do |start_time|
-  #     [TimeHelpers.with_correct_time_zone(start_time), start_time]
-  #   end.sort_by { |start_time| start_time.first }
-  #   start_times.map do |_, start_time|
-  #     TimeSlot.new(conference_day, start_time, event)
-  #   end
-  # end
-  # def self.conference_day(day, event)
-  #   start_times = where(conference_day: day, event_id: event.id).pluck(:start_time).uniq.map do |start_time|
-  #     [TimeHelpers.with_correct_time_zone(start_time), start_time]
-  #   end.sort_by { |start_time| start_time.first }
-  #   start_times.map do |_, start_time|
-  #     TimeSlot.new(day, start_time, event)
-  #   end
-  # end
-
   def self.track_names
     pluck(:track_name).uniq
   end

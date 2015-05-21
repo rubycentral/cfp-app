@@ -106,6 +106,5 @@ class SessionDecorator < Draper::Decorator
 
   def cell_data_attr
     {"session-edit-path" => h.edit_organizer_event_session_path(object.event, object), toggle: 'modal', target: "#session-edit-dialog"}
-      # {"session-new-path" => h.edit_organizer_event_session_path(object.event, object), toggle: 'modal', target: "#session-new-dialog"}
   end
 end

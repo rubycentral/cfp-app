@@ -8,23 +8,22 @@
         %section
           %article
             #schedule_page
-              = render "shared/schedule/days"
-              -#%nav#schedule_nav
-              -#  %ul#tabs
-              -#    %li.schedule-tab#schedule-top
-              -#      %h1 SCHEDULE
-              -#    %li.schedule-tab.active
-              -#      %a{href: "#day-1"} Tuesday, April 21
-              -#    %li.schedule-tab
-              -#      %a{href: "#day-2"} Wednesday, April 22
-              -#    %li.schedule-tab
-              -#      %a{href: "#day-3"} Thursday, April 23
-              -#
-              -##tabs_container.schedule-body
-              -#  #day-1
-              -#    = render "shared/schedule/day_one"
-              -#  #day-2.hidden
-              -#    = render "shared/schedule/day_two"
-              -#  #day-3.hidden
-              -#    = render "shared/schedule/day_three"
+              %nav#schedule_nav
+                %ul#tabs
+                  %li.schedule-tab#schedule-top
+                    %h1 SCHEDULE
+                  %li.schedule-tab.active
+                    %a{href: "#day-1"}  #{event.conference_day_in_words(1)}
+                  %li.schedule-tab
+                    %a{href: "#day-2"}  #{event.conference_day_in_words(2)}
+                  %li.schedule-tab
+                    %a{href: "#day-3"}  #{event.conference_day_in_words(3)}
+
+                #day-1
+                  = render "shared/schedule/days", day: 1
+                #day-2
+                  = render "shared/schedule/days", day: 2
+                #day-3
+                  = render "shared/schedule/days", day: 3
+
 

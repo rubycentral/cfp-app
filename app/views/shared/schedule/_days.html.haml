@@ -1,7 +1,4 @@
-
-
-
-%h1= event.conference_day_in_words(1)
+%h1= event.conference_day_in_words(day)
 %table.schedule
   %thead
     %tr
@@ -11,7 +8,7 @@
           = room.name
 
   %tbody
-    - conference_day = ConferenceDay.new(1, @event)
+    - conference_day = ConferenceDay.new(day, @event)
     - conference_day.time_slots.each do |time_slot|
       %tr
         %td
@@ -29,7 +26,6 @@
             - elsif session.present?
               - session = session.decorate
               - takes_two = session.takes_two_time_slots?
-              -#%td.session-slot{ data: session.cell_data_attr}
               %td.session-slot{rowspan: (2 if takes_two), data: session.cell_data_attr}
                 .session-content
                   %p.session-title

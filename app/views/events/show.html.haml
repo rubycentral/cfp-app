@@ -12,6 +12,21 @@
       %p
         Closed at
         %strong= event.closes_at(:long_with_zone)
+    The biggest Rails event of the year, Rails Conf, is coming to Australia for the first time.
+    This September in Sydney, hundreds of the best will meet to talk, learn and share knowledge about Rails in the real world.
+    %p
+    Call for proposals for talks focused on the practical, operations and business aspects of Rails can be submitted here by clicking on the green "Submit a proposal" button.
+    %p
+    Topics we are looking for include:
+    %ul
+      %li New technology with Rails
+      %li Latest Rails features
+      %li Practical testing and specifications
+      %li Scaling Rails and challenges solved
+      %li Scalable coding practices
+      %li Development methodologies
+      %li Operations
+      %li DevOps
   .col-md-4
     - if event.open?
       %p= link_to 'Submit a proposal', new_proposal_path(slug: event.slug), class: 'btn btn-primary'

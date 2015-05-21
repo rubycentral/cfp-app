@@ -10,7 +10,7 @@
         %small= event.state
         - if event.open?
           = link_to 'Submit a proposal', new_proposal_path(slug: event.slug), class: 'btn btn-primary pull-right'
-      %ul
+      %ul.list-unstyled
         - talks.each do |proposal|
           %li.proposal
             = proposal.public_state(small: true)

@@ -9,20 +9,27 @@
           .clearfix
           - unless proposal.withdrawn? || proposal.accepted? || proposal.confirmed?
             = link_to edit_proposal_path(slug: event.slug, uuid: proposal), class: 'btn btn-primary' do
-              %span.glyphicon.glyphicon-edit
               Edit
             -if proposal.has_reviewer_activity?
               = proposal.withdraw_button
             -else
               = link_to proposal_path, method: :delete, data: {confirm: 'This will delete your talk. Are you sure you want to do this? It can not be undone.'}, class: 'btn btn-warning', id: 'delete' do
-                %span.glyphicon.glyphicon-exclamation-sign
                 Delete Proposal
   .row
     .col-md-12.tags= proposal.tags
 
   .row
-    .col-md-4
+    .col-md-8
       = render partial: 'proposals/contents', locals: { proposal: proposal }
+
+      %h3 Reviewer Activity
+      %p
+        = pluralize(proposal.ratings.count, 'review')
+        = proposal.public_state
+
+      %h3 Comments
+      = render partial: 'proposals/comments',
+        locals: { proposal: proposal, comments: proposal.public_comments }
 
     .col-md-4
       %h3 Speakers
@@ -32,7 +39,7 @@
         %h3 Invited Speakers
         - invitations.each do |invitation|
           .clearfix
-            %ul.invitation
+            %ul.list-unstyled.invitation
               %li
                 = invitation.state_label
                 = invitation.email
@@ -53,14 +60,4 @@
           %h3 Invite a Speaker
           = email_field_tag :email, '', placeholder: "Enter an email address.", class: 'form-control'
           %button.btn.btn-success(type="submit")
-            %span.glyphicon.glyphicon-envelope
             Invite
-    .col-md-4
-      %h3 Reviewer Activity
-      %p
-        = pluralize(proposal.ratings.count, 'review')
-        = proposal.public_state
-
-      %h3 Comments
-      = render partial: 'proposals/comments',
-        locals: { proposal: proposal, comments: proposal.public_comments }

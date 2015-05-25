@@ -13,6 +13,8 @@
 
     = csrf_meta_tags
 
+    %link{href:"http://fonts.googleapis.com/css?family=Raleway", rel: :stylesheet, type: "text/css"}
+
     // html5 shim and respond.js ie8 support of html5 elements and media queries
     /[if lt ie 9]
       = javascript_include_tag "/js/html5shiv.js"
@@ -25,10 +27,8 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          - if event && event.slug
-            = link_to event.name, event_path(slug: event.slug), class: 'navbar-brand'
-          - else
-            = link_to "#{Rails.application.class.parent_name}", events_path, class: 'navbar-brand'
+          %a.navbar-brand{href: root_path}
+            = image_tag 'railslogo.png', alt: 'Rails Conf logo', style: "height: 40px;"
 
         .collapse.navbar-collapse
           %ul.nav.navbar-nav
@@ -75,8 +75,8 @@
                   - current_user.notifications.recent.each do |notification|
                     %li= link_to notification.message, notification_path(notification)
                     %li.divider
-                  %li.text-right= link_to 'Mark all as read', mark_all_as_read_notifications_path, method: :post
-                  %li.text-right= link_to 'View all notifications', notifications_path
+                  %li= link_to 'Mark all as read', mark_all_as_read_notifications_path, method: :post
+                  %li= link_to 'View all notifications', notifications_path
 
               %li.dropdown
                 - unless current_user.demographics_complete?
@@ -102,7 +102,7 @@
   - if on_organizer_page?
     .alert-viewer-mode
       .container
-        Viewing as: 
+        Viewing as:
         %strong Organizer
 
   #flash= show_flash

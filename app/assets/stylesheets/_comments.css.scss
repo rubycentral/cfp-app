@@ -1,8 +1,12 @@
 .comment {
+  background-color: #f8f8f8;
   border: 0 solid #ddd;
   border-left-width: 5px;
-  padding-left: 0.5em;
   margin-bottom: 0.5em;
+  padding: 7px;
+  p {
+    margin-bottom: 5px;
+  }
 }
 
 .speaker-comment {

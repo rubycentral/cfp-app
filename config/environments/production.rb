@@ -93,5 +93,5 @@ CFPApp::Application.configure do
 
   config.exceptions_app = self.routes
 
-  config.time_zone = ENV['TIMEZONE'] || "Pacific Time (US & Canada)"
+  config.time_zone = ENV['AEST'] || "Pacific Time (US & Canada)"
 end

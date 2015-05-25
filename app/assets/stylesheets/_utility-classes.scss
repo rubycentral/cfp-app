@@ -1,0 +1,23 @@
+$spacing: 12px;
+$spacing-lrg: $spacing * 2;
+$spacing-xlrg: $spacing * 3;
+
+.u-text-align-center { text-align: center; }
+
+.u-font-bold { font-weight: bold;}
+.u-font-small { font-size: .9em; }
+
+.u-margin-none { margin: 0; }
+
+.u-margin-med-top { margin-top: $spacing; }
+.u-margin-med-btm { margin-bottom: $spacing; }
+.u-margin-med-ends { margin-top: $spacing; margin-bottom: $spacing; }
+
+.u-margin-lrg-ends { margin-top: $spacing-xlrg; margin-bottom: $spacing-xlrg; }
+.u-margin-lrg-btm { margin-bottom: $spacing-xlrg; }
+.u-margin-lrg-top { margin-top: $spacing-xlrg; }
+
+.u-inline-block { display: inline-block; }
+.u-block { display: block; }
+
+.u-full-width { width: 100%; }

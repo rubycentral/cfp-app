@@ -7,7 +7,9 @@
 @import "jquery-ui-timepicker-addon";
 
 // application styles
+@import "settings";
 @import "base";
+@import "utility-classes";
 @import "coderay";
 @import "comments";
 @import "dashboard";

@@ -1,16 +1,18 @@
 body {
-  padding-top: 60px;
-  * {
+  padding: 60px 0;
+  *:not(.glyphicon) {
     font-family: Raleway, helvetica, sans-serif !important;
   }
 }
 p {
-  text-align: left-justify;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .navbar {
   height: 60px;
+  .dropdown-menu {
+    min-width: 100%;
+  }
 }
 
 .alert {
@@ -25,8 +27,6 @@ p {
 }
 
 .form-submit {
-  border-top: 1px solid #ccc;
-  margin: 1em 0 5em;
   padding-top: 1em;
 }
 .help-block {
@@ -35,8 +35,14 @@ p {
 .share {
   font-size: 12px;
 }
+.proposals-header {
+  padding-bottom: 12px;
+  border-bottom: 1px solid #ccc;
+}
 .proposal {
-  margin-bottom: 1em;
+  padding-left: 1em;
+  border-left: 3px solid #ccc;
+  margin: 1em 0;
 }
 .speaker {
   margin-top: 2em;
@@ -62,6 +68,16 @@ h4 {
 }
 .service {
   margin-bottom: 1em;
+  .glyphicon-ok {
+    width: 25px;
+    color: white;
+    padding: 5px;
+    background-color: green;
+    border-radius: 50%;
+    position: relative;
+    top: 4px;
+    left: 5px;
+  }
 }
 
 .remove-speaker {
@@ -110,6 +126,22 @@ h3.tags {
   color: Orange;
 }
 
+.navbar-inverse .navbar-nav > .open > a,
+.navbar-inverse .navbar-nav > .open > a:hover,
+.navbar-inverse .navbar-nav > .open > a:focus {
+  background-color: $green-base;
+  color: white;
+  .caret {
+    border-bottom-color: white !important;
+    border-top-color: white !important;
+  }
+}
+
+.navbar-inverse .navbar-nav > .dropdown > a:hover .caret {
+  border-bottom-color: $green-base;
+  border-top-color: $green-base;
+}
+
 .navbar .navbar-collapse, .navbar-form .navbar-fixed-top {
   border-color: #f8f8f8;
   background-color: #f8f8f8;
@@ -118,14 +150,22 @@ h3.tags {
 .navbar-inverse {
   border-color: #f8f8f8;
   background-color: #f8f8f8;
+  .navbar-toggle {
+    background-color: $green-base;
+    border: none;
+    &:hover {
+      background-color: darken($green-base,10%);
+    }
+  }
 }
 
 .nav.navbar-nav.navbar-right li a {
-  color: #339999;
+  color: $green-base;
   font-weight: bold;
 }
 
 .container {
+  max-width: 1200px;
   width: 100%;
 }
 
@@ -134,12 +174,12 @@ h3.tags {
 }
 
 .btn {
-  background-color: #339999;
-  border-color: #339999;
+  background-color: $green-base;
+  border-color: $green-base;
 }
 
 .speaker.clearfix a h4 {
-  color: #339999;
+  color: $green-base;
 }
 
 // demographic notification

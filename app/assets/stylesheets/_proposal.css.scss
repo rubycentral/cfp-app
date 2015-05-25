@@ -8,8 +8,6 @@
   span {
     &.status {
       float: right;
-      display: block;
-      margin: .3em 6.5em .4em 0;
     }
     &.small-status {
       float: right;
@@ -44,14 +42,8 @@
   .date_range_filter, .text_filter { width: 100px !important; }
 }
 
-ul {
-  li.proposal .label {
-    margin-right: 1em;
-  }
-}
-
 .status.label {
-  font-size: 1.3em;
+  font-size: 1em;
 }
 
 .twitter-share-button {
@@ -71,10 +63,6 @@ input#email {
   width: 275px !important;
 }
 
-.btn.save-comment {
-  width: 105px;
-  float: right;
-}
 .btn#back, .btn#edit {
   margin-bottom: 5px;
 }

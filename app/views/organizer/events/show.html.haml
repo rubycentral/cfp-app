@@ -74,6 +74,9 @@
       %dl.dl-horizontal
       %p= link_to "Edit Tags", edit_organizer_event_path(:form => "tags_form"), class: "btn btn-primary"
 
+      %h4 Fields
+      %p= link_to "Add Custom Field", "#", class: "btn btn-primary"
+
 
     .col-sm-4
       %h4 Tracks
@@ -88,6 +91,7 @@
       -else
         %p No Tracks
 
+    .col-sm-4
       %h4 Speaker Notifcations
       = link_to 'Edit Speaker Notifications', edit_organizer_event_path(:form => "speaker_notifications_form"), class: "btn btn-primary"
       %dt Accept:

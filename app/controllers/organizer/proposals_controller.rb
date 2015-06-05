@@ -1,5 +1,5 @@
 class Organizer::ProposalsController < Organizer::ApplicationController
-  before_filter :require_proposal, except: [ :index, :new, :create ]
+  before_filter :require_proposal, except: [:index, :new, :create, :edit_all]
 
   decorates_assigned :proposal, with: Organizer::ProposalDecorator
 
@@ -21,13 +21,13 @@ class Organizer::ProposalsController < Organizer::ApplicationController
   def index
     proposals = @event.proposals.includes(:review_taggings, :proposal_taggings, :ratings, {speakers: :person}).load
 
-    session[:prev_page] = { name: 'Proposals', path: organizer_event_proposals_path }
+    session[:prev_page] = {name: 'Proposals', path: organizer_event_proposals_path}
 
     taggings_count = Tagging.count_by_tag(@event)
 
     proposals = Organizer::ProposalsDecorator.decorate(proposals)
     respond_to do |format|
-      format.html { render locals: { event: @event, proposals: proposals, taggings_count: taggings_count} }
+      format.html { render locals: {event: @event, proposals: proposals, taggings_count: taggings_count} }
       format.csv { render text: proposals.to_csv }
     end
   end
@@ -44,14 +44,15 @@ class Organizer::ProposalsController < Organizer::ApplicationController
     end
 
     render locals: {
-      speakers: @proposal.speakers.decorate,
-      other_proposals: Organizer::ProposalsDecorator.decorate(other_proposals),
-      rating: current_user.rating_for(@proposal)
-    }
+             speakers: @proposal.speakers.decorate,
+             other_proposals: Organizer::ProposalsDecorator.decorate(other_proposals),
+             rating: current_user.rating_for(@proposal)
+           }
   end
 
   def edit
   end
+
 
   def update
     if @proposal.update_without_touching_updated_by_speaker_at(proposal_params)
@@ -91,19 +92,19 @@ class Organizer::ProposalsController < Organizer::ApplicationController
 
   def proposal_params
     # add updating_person to params so Proposal does not update last_change attribute when updating_person is organizer_for_event?
-    params.require(:proposal).permit(:title, {review_tags: []}, :abstract, :details, :pitch, :slides_url, :video_url,
+    params.require(:proposal).permit(:title, {review_tags: []}, :abstract, :details, :pitch, :slides_url, :video_url, :custom_fields,
                                      comments_attributes: [:body, :proposal_id, :person_id],
-                                     speakers_attributes: [:bio, :person_id, :id, person_attributes:[:id, :name, :email]])
+                                     speakers_attributes: [:bio, :person_id, :id, person_attributes: [:id, :name, :email]])
   end
 
   def send_state_mail(state)
     case state
       when Proposal::State::ACCEPTED
-      Organizer::ProposalMailer.accept_email(@event, @proposal).deliver
-    when Proposal::State::REJECTED
-      Organizer::ProposalMailer.reject_email(@event, @proposal).deliver
-    when Proposal::State::WAITLISTED
-      Organizer::ProposalMailer.waitlist_email(@event, @proposal).deliver
+        Organizer::ProposalMailer.accept_email(@event, @proposal).deliver
+      when Proposal::State::REJECTED
+        Organizer::ProposalMailer.reject_email(@event, @proposal).deliver
+      when Proposal::State::WAITLISTED
+        Organizer::ProposalMailer.waitlist_email(@event, @proposal).deliver
     end
   end
 end

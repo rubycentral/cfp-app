@@ -75,7 +75,8 @@
       %p= link_to "Edit Tags", edit_organizer_event_path(:form => "tags_form"), class: "btn btn-primary"
 
       %h4 Fields
-      %p= link_to "Add Custom Field", "#", class: "btn btn-primary"
+      %dd=event.fields
+      %p= link_to "Add Custom Field", edit_custom_fields_organizer_event_path(event), class: "btn btn-primary"
 
 
     .col-sm-4

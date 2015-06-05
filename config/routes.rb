@@ -58,7 +58,12 @@ CFPApp::Application.routes.draw do
 
   namespace 'organizer' do
     resources :events, only: [:edit, :show, :update] do
+      member do
+        get :edit_custom_fields
+        put :update_custom_fields
+      end
       resources :participant_invitations, except: [ :new, :edit, :update, :show ]
+
 
       controller :program do
         get 'program' => 'program#show'
@@ -76,6 +81,7 @@ CFPApp::Application.routes.draw do
         post :finalize
         post :update_state
       end
+
 
       controller :speakers do
         get :speaker_emails, action: :emails

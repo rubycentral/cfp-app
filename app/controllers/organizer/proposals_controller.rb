@@ -19,7 +19,7 @@ class Organizer::ProposalsController < Organizer::ApplicationController
   end
 
   def index
-    proposals = @event.proposals.includes(:review_taggings, :proposal_taggings, :ratings, {speakers: :person}).load
+    proposals = @event.proposals.includes(:event, :review_taggings, :proposal_taggings, :ratings, {speakers: :person}).load
 
     session[:prev_page] = {name: 'Proposals', path: organizer_event_proposals_path}
 
@@ -92,7 +92,7 @@ class Organizer::ProposalsController < Organizer::ApplicationController
 
   def proposal_params
     # add updating_person to params so Proposal does not update last_change attribute when updating_person is organizer_for_event?
-    params.require(:proposal).permit(:title, {review_tags: []}, :abstract, :details, :pitch, :slides_url, :video_url, :custom_fields,
+    params.require(:proposal).permit(:title, {review_tags: []}, :abstract, :details, :pitch, :slides_url, :video_url, custom_fields: @event.custom_fields,
                                      comments_attributes: [:body, :proposal_id, :person_id],
                                      speakers_attributes: [:bio, :person_id, :id, person_attributes: [:id, :name, :email]])
   end

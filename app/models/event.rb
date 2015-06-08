@@ -13,6 +13,8 @@ class Event < ActiveRecord::Base
   has_many :ratings, through: :proposals
   has_many :participant_invitations
 
+  accepts_nested_attributes_for :proposals
+
 
   serialize :proposal_tags, Array
   serialize :review_tags, Array

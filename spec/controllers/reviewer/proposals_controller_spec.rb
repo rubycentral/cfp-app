@@ -6,7 +6,7 @@ describe Reviewer::ProposalsController, type: :controller do
   let(:event) { proposal.event }
   let(:reviewer) { create(:person, :reviewer) }
   let(:speaker) { create(:speaker, proposal: proposal) }
-  
+
 
   before { login reviewer }
 

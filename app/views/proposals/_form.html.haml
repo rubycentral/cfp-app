@@ -23,12 +23,21 @@
       placeholder: 'Why is this talk pertinent? What is your involvement in the topic?',
       hint: 'Explain why this talk should be considered and what makes you qualified to speak on the topic.'
 
+
   %fieldset.col-md-6
     - if event.proposal_tags.any?
       %h3 Tags
       = f.select :tags,
         options_for_select(event.proposal_tags, proposal.object.tags),
         {}, {class: 'multiselect proposal-tags', multiple: true }
+
+    - if event.custom_fields.any?
+      %h3 Custom Fields 
+    - event.custom_fields.each do |custom_field|
+      .form-group
+      = f.label custom_field
+      = text_field_tag "proposal[custom_fields][#{custom_field}]", proposal.custom_fields[custom_field], class: "form-control"
+
 
     = render partial: 'speakers/fields', locals: { f: f }
 

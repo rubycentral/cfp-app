@@ -12,6 +12,10 @@ class Notification < ActiveRecord::Base
     end
   end
 
+  def self.mark_as_read_for_proposal(proposal_path)
+    all.unread.where(target_path: proposal_path).update_all(read_at: DateTime.now)
+  end
+
   def read
     update(read_at: DateTime.now)
   end

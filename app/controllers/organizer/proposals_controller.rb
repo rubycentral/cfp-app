@@ -42,7 +42,7 @@ class Organizer::ProposalsController < Organizer::ApplicationController
         end
       end
     end
-
+    current_user.notifications.mark_as_read_for_proposal(request.path)
     render locals: {
              speakers: @proposal.speakers.decorate,
              other_proposals: Organizer::ProposalsDecorator.decorate(other_proposals),

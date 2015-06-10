@@ -10,8 +10,8 @@
 %div{ data: { 'field-id' => 'proposal_pitch' } }
   =proposal.pitch
 
-  - if @proposal.custom_fields.any?
-    - @proposal.proposal_data[:custom_fields].select do |key,value|
+  - if proposal.custom_fields.any?
+    - proposal.proposal_data[:custom_fields].select do |key,value|
       %h3= key.capitalize
       %div
       = value.capitalize

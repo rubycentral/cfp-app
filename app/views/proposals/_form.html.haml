@@ -32,7 +32,7 @@
         {}, {class: 'multiselect proposal-tags', multiple: true }
 
     - if event.custom_fields.any?
-      %h3 Custom Fields 
+      %h3 Custom Fields
     - event.custom_fields.each do |custom_field|
       .form-group
       = f.label custom_field

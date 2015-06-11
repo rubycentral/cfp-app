@@ -15,16 +15,21 @@ class Organizer::SpeakersController < Organizer::ApplicationController
   end
 
   def create
-      @speaker = Speaker.new(speaker_params.merge(proposal: @proposal))
-    if @speaker.save
-      flash[:success] = "Speaker was added to this proposal"
-      redirect_to organizer_event_proposal_path(event, @proposal)
+    s_params = speaker_params
+    person = Person.find_by(email: s_params.delete(:email))
+    if person
+      if person.speakers.create(s_params.merge(proposal: @proposal))
+        flash[:success] = "Speaker was added to this proposal"
+      else
+        flash[:danger] = "There was a problem saving this speaker"
+      end
     else
-      flash[:danger] = "There was a problem saving this speaker"
-      # @person = @speaker.person
-      render :new
+      flash[:danger] = "Could not find a person with this email address"
     end
+    redirect_to organizer_event_proposal_path(event, @proposal)
   end
+
+  #if user input (params), exist
 
   def show
     @speaker = Speaker.find(params[:id])
@@ -62,8 +67,7 @@ class Organizer::SpeakersController < Organizer::ApplicationController
   private
 
   def speaker_params
-    params.require(:speaker).permit(:bio,
-                                    person_attributes: [:name, :email])
+    params.require(:speaker).permit(:bio, :email)
   end
 
   def set_proposal

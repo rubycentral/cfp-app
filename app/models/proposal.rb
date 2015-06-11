@@ -225,7 +225,7 @@ class Proposal < ActiveRecord::Base
   end
 
   def save_attr_history
-    if updating_person && updating_person.organizer_for_event?(event)
+    if updating_person && updating_person.organizer_for_event?(event) || @dont_touch_updated_by_speaker_at
       # Erase the record of last change if the proposal is updated by an
       # organizer
       self.last_change = nil

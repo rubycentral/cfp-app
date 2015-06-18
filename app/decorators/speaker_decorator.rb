@@ -13,6 +13,22 @@ class SpeakerDecorator < ApplicationDecorator
     "#{object.name} (#{object.email})"
   end
 
+  def link_to_github
+    if (github = person.services.find_by(provider: 'github'))
+      h.link_to "@#{github.uname}", "https://github.com/#{github.uname}"
+    else
+      'none'
+    end
+  end
+
+  def link_to_twitter
+    if (twitter = person.services.find_by(provider: 'twitter'))
+      h.link_to "@#{twitter.uname}", "https://twitter.com/#{twitter.uname}"
+    else
+      'none'
+    end
+  end
+
   def bio
     speaker.bio.present? ? speaker.bio : speaker.person.bio
   end

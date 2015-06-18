@@ -31,10 +31,12 @@
             %th
             %th
             %th
+            %th
           %tr
             %th Score
             %th Your<br/>Score
             %th Ratings
+            %th Speaker(s)
             %th Title
             %th Proposal<br/>Tags
             %th Reviewer<br/>Tags
@@ -51,6 +53,8 @@
                 = proposal.score_for(current_user)
               %td.ratings-count
                 = proposal.ratings.size
+              %td.spearkers
+                = proposal.speaker_names
               %td.title
                 = proposal.title_link
               %td.tags

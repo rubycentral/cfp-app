@@ -1,7 +1,12 @@
 %h3= proposal.speakers.one? ? 'Speaker' : 'Speakers'
 - proposal.speakers.each do |speaker|
   .markdown{ data: { 'field-id' => 'proposal_speaker_name' } }
-    = link_to speaker.name, [:organizer, @event, speaker]
+    %strong= link_to speaker.name, [:organizer, @event, speaker]
+  GitHub:&nbsp;
+  = speaker.link_to_github
+  \&nbsp;/&nbsp;
+  Twitter:&nbsp;
+  = speaker.link_to_twitter
   %p= speaker.bio
 
 %h3 Title

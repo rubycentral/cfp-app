@@ -4,7 +4,7 @@ class PersonDecorator < ApplicationDecorator
   def proposal_path(proposal)
     event = proposal.event
     if object.organizer_for_event?(event)
-      h.organizer_event_proposal_path(event, proposal)
+      h.reviewer_event_proposal_path(event, proposal)
     elsif object.reviewer_for_event?(event)
       h.reviewer_event_proposal_path(event, proposal)
     else

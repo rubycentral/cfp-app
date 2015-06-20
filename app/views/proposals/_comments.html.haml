@@ -2,7 +2,7 @@
   None
 
 - comments.order(:created_at).each do |comment|
-  .comment{ class: choose_class_for(comment) }
+  .comment.markdown{ class: choose_class_for(comment) }
     =markdown(comment.body)
 
     - if comment.person.present?

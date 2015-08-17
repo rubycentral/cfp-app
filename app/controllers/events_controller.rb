@@ -8,5 +8,6 @@ class EventsController < ApplicationController
   end
 
   def show
+    @title = "#{@event.name} CFP"
   end
 end

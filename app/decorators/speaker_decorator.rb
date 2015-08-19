@@ -26,7 +26,10 @@ class SpeakerDecorator < ApplicationDecorator
 
   def link_to_twitter
     if (twitter = person.services.find_by(provider: 'twitter'))
-      h.link_to "@#{twitter.uname}", "https://twitter.com/#{twitter.uname}"
+      tw_screen_name = Rails.cache.fetch "tw_#{twitter.uid}" do
+        Twitter::REST::Client.new(consumer_key: ENV['TWITTER_KEY'], consumer_secret: ENV['TWITTER_SECRET']).user(twitter.uid.to_i).screen_name
+      end
+      h.link_to "@#{tw_screen_name}", "https://twitter.com/#{tw_screen_name}"
     else
       'none'
     end

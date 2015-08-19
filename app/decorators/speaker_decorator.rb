@@ -15,7 +15,10 @@ class SpeakerDecorator < ApplicationDecorator
 
   def link_to_github
     if (github = person.services.find_by(provider: 'github'))
-      h.link_to "@#{github.uname}", "https://github.com/#{github.uname}"
+      gh_login = Rails.cache.fetch "gh_#{github.uid}" do
+        JSON.parse(Net::HTTP.get(URI("https://api.github.com/user/#{github.uid}")))['login']
+      end
+      h.link_to "@#{gh_login}", "https://github.com/#{gh_login}"
     else
       'none'
     end

@@ -53,7 +53,7 @@ class ProposalsController < ApplicationController
 
       # notifying to our chat
       if (idobata_url = ENV['IDOBATA_WEBHOOK_URL'])
-        Net::HTTP.post_form URI(idobata_url), format: 'html', source: %(#{current_user.name} submitted <a href="#{reviewer_event_proposal_url @event, @proposal}">a new proposal</a>!)
+        Net::HTTP.post_form URI(idobata_url), format: 'html', source: %(#{current_user.name} submitted <a href="#{reviewer_event_proposal_url @event, @proposal}">a new proposal</a>!) rescue nil
       end
 
       if current_user.demographics_complete?

@@ -51,6 +51,11 @@ class ProposalsController < ApplicationController
       current_user.update_bio
       flash[:info] = setup_flash_message
 
+      # notifying to our chat
+      if (idobata_url = ENV['IDOBATA_WEBHOOK_URL'])
+        Net::HTTP.post_form URI(idobata_url), format: 'html', source: %(#{current_user.name} submitted <a href="#{reviewer_event_proposal_url @event, @proposal}">a new proposal</a>!)
+      end
+
       if current_user.demographics_complete?
         redirect_to proposal_url(slug: @event.slug, uuid: @proposal)
       else

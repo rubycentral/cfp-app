@@ -67,3 +67,5 @@ group :development, :test do
   gem 'timecop'
   gem 'spring'
 end
+
+gem 'twitter'

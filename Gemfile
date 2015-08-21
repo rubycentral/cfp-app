@@ -1,7 +1,9 @@
 source 'https://rubygems.org'
-ruby '2.1.2'
+ruby '2.2.3'
 
 gem 'rails', '4.1.2'
+gem 'puma', '~> 2.13.4'
+gem 'rack-timeout', '~> 0.2.4'
 
 gem 'pg'
 
@@ -30,7 +32,6 @@ gem 'zeroclipboard-rails'
 
 group :production do
   gem 'rails_12factor'
-  gem 'unicorn'
 end
 
 group :development do
@@ -42,7 +43,6 @@ group :development do
   gem 'pry'
   gem 'pry-rails'
   gem 'quiet_assets'
-  gem 'thin'
   gem 'rack-mini-profiler'
   gem 'haml-rails'
   gem "spring-commands-rspec", require: false
@@ -50,7 +50,7 @@ end
 
 group :development, :test do
   gem 'capybara', '>= 2.2'
-  gem 'capybara-webkit'
+  gem 'capybara-webkit', '~> 1.6.0' # Requires local installation of QT (`brew install qt`)
   gem 'database_cleaner'
   gem 'dotenv-rails'
   gem 'factory_girl_rails'
@@ -61,4 +61,5 @@ group :development, :test do
   gem 'rspec'
   gem 'rspec-rails'
   gem 'timecop'
+  gem 'spring'
 end

@@ -1,6 +1,6 @@
 - speakers.each do |speaker|
   %b
-    = link_to(speaker.name,
+    = link_to((speaker.person && speaker.name) || 'somebody',
       organizer_event_speaker_path(speaker.proposal.event, speaker))
   %p
     = speaker.bio

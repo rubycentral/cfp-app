@@ -15,7 +15,7 @@
             .clearfix
             #state_buttons
               = proposal.state_buttons
-              = if proposal.organizer_confirm
+              - if proposal.organizer_confirm
                 = link_to "Confirm for Speaker", confirm_proposal_path(slug: proposal.event.slug, uuid: proposal), class: "btn btn-primary"
 
 

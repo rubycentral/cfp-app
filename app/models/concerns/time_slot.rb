@@ -36,10 +36,6 @@ class TimeSlot
     raw_sessions.first
   end
 
-  def corrected_start_time
-    TimeHelpers.with_correct_time_zone(start_time)
-  end
-
 
   private
   def rooms

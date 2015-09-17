@@ -38,13 +38,6 @@ class Session < ActiveRecord::Base
     end
   end
 
-  def start_time
-    TimeHelpers.with_correct_time_zone(read_attribute(:start_time))
-  end
-
-  def end_time
-    TimeHelpers.with_correct_time_zone(read_attribute(:end_time))
-  end
 end
 
 # == Schema Information

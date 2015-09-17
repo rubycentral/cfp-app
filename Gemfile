@@ -3,7 +3,6 @@ ruby '2.2.3'
 
 gem 'rails', '4.1.2'
 gem 'puma', '~> 2.13'
-gem 'rack-timeout', '~> 0.2.4'
 
 gem 'pg'
 
@@ -32,6 +31,7 @@ gem 'zeroclipboard-rails'
 
 group :production do
   gem 'rails_12factor'
+  gem 'rack-timeout', '~> 0.2.4'
 end
 
 group :development do

@@ -1,7 +1,7 @@
 class Organizer::ProgramController < Organizer::ApplicationController
   def show
     accepted_proposals =
-      @event.proposals.includes(:session).for_state(Proposal::State::ACCEPTED)
+      @event.proposals.includes(:session).for_state([Proposal::State::ACCEPTED, Proposal::State::SOFT_ACCEPTED])
 
     waitlisted_proposals = @event.proposals.for_state(Proposal::State::WAITLISTED)
 

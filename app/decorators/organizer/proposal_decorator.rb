@@ -49,8 +49,7 @@ class Organizer::ProposalDecorator < ProposalDecorator
   end
 
   def confirm_link
-    h.link_to 'confirmation page',
-              h.confirm_proposal_url(slug: object.event.slug, uuid: object)
+    h.confirm_proposal_url(slug: object.event.slug, uuid: object)
   end
 
   def small_state_buttons

@@ -21,7 +21,7 @@ class Admin::PeopleController < Admin::ApplicationController
     if @person.update(person_params)
       redirect_to admin_people_path, flash: { info: "#{@person.name} was successfully updated." }
     else
-      render :edit, locals: { person: person }
+      render :edit, locals: { person: @person }
     end
   end
 

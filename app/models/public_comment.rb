@@ -11,7 +11,7 @@ class PublicComment < Comment
     end
   end
 
-  # Generate notifications and email for Comment
+  # Generate notifications for Comment
   # 1. If a speaker is leaving a comment,
   #    all reviewers/organizers get an in app notification
   #      if they have reviewed or commented on the proposal.

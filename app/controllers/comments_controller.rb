@@ -2,8 +2,17 @@ class CommentsController < ApplicationController
   def create
     @proposal = Proposal.find(comment_params[:proposal_id])
 
-    @comment = comment_class.create(comment_params.merge(proposal: @proposal,
-                                                         person: current_user))
+    comment_attributes = comment_params.merge(proposal: @proposal,
+                                              person: current_user)
+
+    case comment_type
+    when 'PublicComment'
+      @comment = @proposal.public_comments.create!(comment_attributes)
+    when 'InternalComment'
+      @comment = @proposal.internal_comments.create!(comment_attributes)
+    else
+      raise "Unknown comment type: #{comment_type}"
+    end
 
     # email all reviers and organizers about the comment
     CommentNotificationMailer.email_notification(@comment).deliver
@@ -16,10 +25,6 @@ class CommentsController < ApplicationController
   private
   def comment_type
     params[:type] || 'PublicComment'
-  end
-
-  def comment_class
-    comment_type.constantize
   end
 
   def comment_params

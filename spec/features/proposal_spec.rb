@@ -32,7 +32,7 @@ feature "Proposals" do
         create_proposal
       end
 
-      it "submits succesfully" do
+      it "submits successfully" do
         expect(page).to have_text("Thank you for submitting")
       end
 

@@ -10,7 +10,7 @@
           %dt Proposals Rated:
           %dd= event.proposals_rated_message
           %dt Unrated Proposals:
-          %dd= event.proposals.unrated.count
+          %dd= event.proposals.unrated.not_withdrawn.count
   .row
     .col-md-10
       %small <em>Hint:</em> Hold <kbd>shift</kbd> and click sorting arrows to sort by multiple columns

@@ -7,7 +7,7 @@ class Reviewer::ProposalsController < Reviewer::ApplicationController
   def index
     proposal_ids = current_user.proposals.pluck(:id)
 
-    proposals = @event.proposals.includes(:proposal_taggings, :review_taggings,
+    proposals = @event.proposals.not_withdrawn.includes(:proposal_taggings, :review_taggings,
       :ratings, :internal_comments, :public_comments).where.not(id: proposal_ids)
 
     proposals.to_a.sort_by! { |p| [ p.ratings.present? ? 1 : 0, p.created_at ] }

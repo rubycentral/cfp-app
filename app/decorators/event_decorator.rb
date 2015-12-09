@@ -3,7 +3,7 @@ class EventDecorator < ApplicationDecorator
 
   def proposals_rated_message
     rated_count = h.current_user.ratings.for_event(object).size
-    proposals_count = object.proposals.size
+    proposals_count = object.proposals.not_withdrawn.size
 
     message = "#{rated_count}/#{proposals_count}"
 

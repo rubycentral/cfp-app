@@ -23,6 +23,7 @@ class Event < ActiveRecord::Base
 
   scope :recent, -> { order('name ASC') }
   scope :live, -> { where("state = 'open' and (closes_at is null or closes_at > ?)", Time.current).order('closes_at ASC') }
+  scope :not_withdrawn, -> {where.not(event.proposal(state: WITHDRAWN))}
 
   validates :name, :contact_email, presence: true
   validates :slug, presence: true, uniqueness: true

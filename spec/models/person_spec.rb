@@ -7,19 +7,21 @@ describe Person do
     let(:provider) { 'developer' }
     let(:name) { 'Name' }
     let(:email) { 'name@example.com' }
+    let(:account_name) { 'testuser' }
     let(:auth_hash) do
       {
         'provider' => provider,
         'uid' => uid,
         'info' => {
           'name' => name,
-          'email' => email
+          'email' => email,
+          'nickname' => account_name
         }
       }
     end
 
     context "User already exists" do
-      let!(:user) { create(:person) }
+      let!(:user) { create(:person, email: email, name: name) }
 
       it "doesn't create a new person" do
         expect {
@@ -51,7 +53,7 @@ describe Person do
 
       context "Using an existing service" do
         let!(:service) {
-          create(:service, provider: provider, uid: uid, person: user) }
+          create(:service, provider: provider, uid: uid, account_name: account_name, person: user) }
 
         it "doesn't create a new service" do
           expect {
@@ -62,6 +64,20 @@ describe Person do
         it "doesn't add new services to the user" do
           service, user = Person.authenticate(auth_hash, user)
           expect(user.services).to match_array([service])
+        end
+
+        # Some users have had issues with oauth returning a different ID when they are signing in
+        context "with a new oauth ID" do
+          it "finds the correct person" do
+            service, user = nil, nil
+            expect {
+              service, user = Person.authenticate(auth_hash.merge('uid' => 'different'), user)
+            }.to_not change { Person.count }
+
+            expect(user.email).to eq(email)
+            expect(service.account_name).to eq(account_name)
+            expect(user.name).to eq(name)
+          end
         end
       end
     end
@@ -233,7 +249,7 @@ describe Person do
     end
 
     it "returns multiple roles" do
-      create(:participant, role: 'organizer', event: event, person: person)
+      create(:participant, role: 'organizer', event: create(:event), person: person)
       role_names = person.role_names
       expect(role_names).to include('reviewer')
       expect(role_names).to include('organizer')

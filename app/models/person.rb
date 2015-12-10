@@ -31,8 +31,34 @@ class Person < ActiveRecord::Base
   def self.authenticate(auth, current_user = nil)
     provider = auth['provider']
     uid      = auth['uid'].to_s
-    service  = Service.where(provider: provider, uid: uid).first ||
-    Service.create(provider: provider, uid: uid, uname: auth['info']['name'], uemail: auth['info']['email'])
+    account_name = auth['info']['nickname']
+    service = Service.where(provider: provider, uid: uid).first
+
+    if service.nil?
+      # Some users have had issues with oauth returning a different ID when they
+      # attempt to sign in. So, in the event that we can't find a service with
+      # the returned uid, we'll try to match on the returned account name.
+      service = Service.where(provider: provider, account_name: account_name).first
+
+      if service
+        logger.info {
+          "Service match on UID: #{uid} failed, but succeeded on account_name: #{account_name}" }
+      end
+    end
+
+    service_attributes = {
+      provider: provider,
+      uid: uid,
+      account_name: account_name,
+      uname: auth['info']['name'],
+      uemail: auth['info']['email']
+    }
+
+    if service
+      service.update(service_attributes)
+    else
+      service = Service.create(service_attributes)
+    end
 
     user = if current_user
       current_user.services << service
@@ -47,6 +73,7 @@ class Person < ActiveRecord::Base
 
   def self.create_for_service(service, auth)
     email = auth['info']['email'].blank? ? nil : auth['info']['email']
+
     person = create({
       name:  auth['info']['name'],
       email: email

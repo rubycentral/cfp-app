@@ -28,6 +28,7 @@ class Event < ActiveRecord::Base
   validates :slug, presence: true, uniqueness: true
 
   before_validation :generate_slug
+  before_save :update_closes_at_if_manually_closed
 
 
   def valid_proposal_tags
@@ -121,6 +122,13 @@ class Event < ActiveRecord::Base
 
   def conference_date(conference_day)
     start_date + (conference_day - 1).days
+  end
+
+  private
+  def update_closes_at_if_manually_closed
+    if changes.key?(:state) && changes[:state] == ['open', 'closed']
+      self.closes_at = DateTime.now
+    end
   end
 end
 

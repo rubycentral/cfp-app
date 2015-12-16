@@ -9,6 +9,7 @@ class Participant < ActiveRecord::Base
   scope :reviewer, -> { where(role: ['reviewer', 'organizer'])}
 
   validates :person, :event, :role, presence: true
+  validates :person_id, uniqueness: { scope: :event_id }
 
 
   def comment_notifications

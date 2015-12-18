@@ -18,6 +18,7 @@ class Proposal < ActiveRecord::Base
 
   validates :title, :abstract, presence: true
   validates :abstract, length: {maximum: 600}
+  validates :title, length: {maximum: 60}
 
   serialize :last_change
   serialize :proposal_data, Hash

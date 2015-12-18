@@ -2,7 +2,7 @@ $(function() {
   var preview = $('#proposal-preview');
   if (preview.length > 0) {
     var url = preview.data('remote-url');
-    $('textarea.watched').blur(function() {
+    $('.watched').blur(function() {
       $.ajax({
         data: {
           id: this.id,
@@ -12,4 +12,11 @@ $(function() {
       });
     });
   }
+  $('.js-maxlength-alert').keyup(function() {
+    var maxlength = $(this).attr('maxlength');
+    var current_length = $(this).val().length;
+    if (maxlength <= current_length) {
+      alert("Character limit of " + maxlength + " has been exceeded");
+    }
+  });
 });

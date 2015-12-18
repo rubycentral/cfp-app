@@ -110,7 +110,9 @@ class ProposalDecorator < ApplicationDecorator
   end
 
   def title_input(form)
-    form.input :title, placeholder: 'Title of the talk'
+    form.input :title, placeholder: 'Title of the talk',
+    maxlength: :lookup, input_html: { class: 'watched js-maxlength-alert' },
+    hint: "Please limit your title to 60 characters or less."
   end
 
   def speaker_input(form)
@@ -119,7 +121,7 @@ class ProposalDecorator < ApplicationDecorator
 
   def abstract_input(form)
     form.input :abstract, placeholder: 'What is your talk about?',
-      maxlength: :lookup, input_html: { class: 'watched', rows: 5 },
+      maxlength: :lookup, input_html: { class: 'watched js-maxlength-alert', rows: 5 },
       hint: 'Provide a concise description for the program limited to 600 characters or less.'
   end
 

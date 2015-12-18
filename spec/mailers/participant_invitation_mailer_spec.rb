@@ -10,6 +10,7 @@ describe ParticipantInvitationMailer, type: :mailer do
       expect(mail.to).to eq([invitation.email])
     end
 
+
     it "renders the body" do
       expect(mail.body.encoded).to(
         match(accept_participant_invitation_url(invitation.slug,

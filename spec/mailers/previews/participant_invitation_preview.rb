@@ -1,4 +1,4 @@
-class InvitationPreview < ActionMailer::Preview
+class ParticipantInvitationPreview < ActionMailer::Preview
   def create
     ParticipantInvitationMailer.create(ParticipantInvitation.first)
   end

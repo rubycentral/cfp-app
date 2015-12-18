@@ -21,7 +21,6 @@ describe ParticipantInvitationMailer, type: :mailer do
           invitation.token)))
 
       expect(mail.body.encoded).to match(event_url(invitation.event.slug))
-      assert_equal read_fixture(ParticipantInvitationMailer)
     end
   end
 

@@ -6,14 +6,15 @@ end
 #
 # Table name: services
 #
-#  id         :integer          not null, primary key
-#  provider   :string(255)
-#  uid        :string(255)
-#  person_id  :integer
-#  uname      :string(255)
-#  uemail     :string(255)
-#  created_at :datetime
-#  updated_at :datetime
+#  id           :integer          not null, primary key
+#  provider     :string(255)
+#  uid          :string(255)
+#  person_id    :integer
+#  uname        :string(255)
+#  uemail       :string(255)
+#  created_at   :datetime
+#  updated_at   :datetime
+#  account_name :string(255)
 #
 # Indexes
 #

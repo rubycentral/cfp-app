@@ -8,7 +8,7 @@ At a high level the CFP App allows speakers to submit and manage their proposals
 
 ## Getting Started
 
-Make sure you have Ruby 2.1 and Postgres installed in your environment.  This is a Rails 4.1 app and uses bundler to install all required gems.  We are also making the assumption that you're familiar with how Rails apps and setup and deployed.  If this is not the case then you'll want to refer to documentation that will bridge any gaps in the instructions below.
+Make sure you have Ruby 2.3 and Postgres installed in your environment.  This is a Rails 4.1 app and uses bundler to install all required gems.  We are also making the assumption that you're familiar with how Rails apps and setup and deployed.  If this is not the case then you'll want to refer to documentation that will bridge any gaps in the instructions below.
 
 1. Install gem requirements
 
@@ -60,7 +60,7 @@ bundle exec rails server
 
 ## Deployment on Heroku
 
-The app was written with a Heroku deployment stack in mind. You can easily deploy the application using the button below, or you can deploy it anywhere assuming you can run Ruby 2.1.2 and Rails 4.1.2 with a postgres database and an SMTP listener.
+The app was written with a Heroku deployment stack in mind. You can easily deploy the application using the button below, or you can deploy it anywhere assuming you can run Ruby 2.3.0 and Rails 4.1.2 with a postgres database and an SMTP listener.
 
 The Heroku stack will use the free SendGrid Starter and Heroku postgreSQL
 addons.
@@ -100,7 +100,7 @@ One logged in you should see your user's name with a dropdown arrow in the top r
 
 Once done you should land on your event's organizers page.  This is the hub of managing your event.  I will briefly touch on the things you can do here.
 
-1. You will likely want to add other organizers and reviewers to the event.  This is at the bottom of the page in a section called 'Participants'.  Click 'Add/Invite New Participant' to add them.  You will use their email address to get them added.  The system will add any existing users if their email address matches the invite.  You can fully manage who has access to your event in that section.  
+1. You will likely want to add other organizers and reviewers to the event.  This is at the bottom of the page in a section called 'Participants'.  Click 'Add/Invite New Participant' to add them.  You will use their email address to get them added.  The system will add any existing users if their email address matches the invite.  You can fully manage who has access to your event in that section.
 
 2. The next order of business will be to draft up your conference guidelines via the 'Edit Guidelines' button.  Guidelines are the instructions speakers see before submitting a proposal.  This is where you give them any information and instructions before they submit a talk. You can preview the guidelines with a link to the public guidelines page after they've been set.
 
@@ -110,9 +110,9 @@ Once done you should land on your event's organizers page.  This is the hub of m
 
 5. 'Edit Speaker Notifications' allows you to craft the email content that goes out to speakers when their talks are accepted, waitlisted or rejected. The app does have defaults but we recommend you draft your own email bodies.  On the right side there is a markup legend with some custom tags for making the emails dynamic such as including proposal title and confirmation link.
 
-### Navigation 
+### Navigation
 
-The nav bar has several parts to it.  On the far left we have the 'CFPApp' link which takes you to a public-facing events page.  There you would see all events active on the site.  
+The nav bar has several parts to it.  On the far left we have the 'CFPApp' link which takes you to a public-facing events page.  There you would see all events active on the site.
 
 Next to the right is the 'Speaking' dropdown. All users get this and from there you can navigate to your proposals.  That page has links to each proposal you have submitted to all events as well as any speaker invitations you may have received.  We'll touch on speaker invitations under 'Submitting a Proposal'.
 
@@ -140,14 +140,14 @@ Returning to your proposal page, you will see both an 'Edit' and either 'Delete 
 
 Another feature on the proposal page is the ability to invite additional speakers.  If your talk has more than one speaker, you would now invite them via their email to your talk.  They will get an email with instructions on how to accept your invitation. This is important so that their information will be associated with the talk.
 
-Additionally, you can make comments to the reviewers on your talk.  You will remain anonymous, identified only as 'speaker', though any replies from the reviewers will indicate which reviewer made the comment.  
+Additionally, you can make comments to the reviewers on your talk.  You will remain anonymous, identified only as 'speaker', though any replies from the reviewers will indicate which reviewer made the comment.
 
 You can see how many reviews your talk has received but not details on what sort of rating it received.  Finally, you can see if your talk status has changed from 'submitted'.
 
 
 ### Reviewing Proposals
 
-As a reviewer or organizer, you will use the 'Review' dropdown to get to the proposals page for your event. It is the hub for going through and rating all the proposals submitted.  It has a Statistics section up top where it will show you how many proposals you have rated versus how many have been submitted.  Below that is a count of how many unrated proposals are left.  
+As a reviewer or organizer, you will use the 'Review' dropdown to get to the proposals page for your event. It is the hub for going through and rating all the proposals submitted.  It has a Statistics section up top where it will show you how many proposals you have rated versus how many have been submitted.  Below that is a count of how many unrated proposals are left.
 
 The list of proposals can be filtered and sorted as you see fit.  This is very important so that you can either focus on a certain tag or look at the oldest proposals that you have not rated.  The list shows the following fields:
 
@@ -165,7 +165,7 @@ The sort order is sticky and you can use the shift key to sort by more than one 
 
 By clicking the proposal title you can view the proposal details page.  Here you can see the title, abstract, details and pitch fields for the talk. If any comments have been made, you can view those as well as make a comment yourself.  The Review column on the far right is only visible to other reviewers and organizers.  You will not be able to see any other ratings or internal comments until you have rated the talk.  This is to keep the reviewer from being biased by what others have said on their reviews.  You can set or modify review tags at any point and this again is visible only to other reviewers.
 
-The rating scale is 1 through 5.  At RubyCentral we consider a 1 as a strong no, 2 is a likely not, 3 is a good talk and certainly in the running, 4 is a great talk and a fit for the event and 5 as a top notch and ideal talk for the event.  We also like to get at least three ratings for each talk, preferrably more.  Once you have rated the talk you will see an average rating along with the other ratings the proposal received.  
+The rating scale is 1 through 5.  At RubyCentral we consider a 1 as a strong no, 2 is a likely not, 3 is a good talk and certainly in the running, 4 is a great talk and a fit for the event and 5 as a top notch and ideal talk for the event.  We also like to get at least three ratings for each talk, preferrably more.  Once you have rated the talk you will see an average rating along with the other ratings the proposal received.
 
 Finally internal comments can be viewed below, once you have rated the talk.  These comments will only be visible to fellow reviewers and is a place for any commentary that can help determine how suitable the talk is for your event without the speaker seeing the discussion.
 
@@ -181,7 +181,7 @@ One thing that will happen is you will get notifications showing you what talks 
 
 ## Customizing and Contributing
 
-It is likely you may want to customize or change how the CFP App works.  Feel free to fork and modify as you see it, as long as you respect the MIT license.  If you feel any of your customizations are appropriate to contribute back to the project, please review our CONTRIBUTING.md file to see the guidelines on how to work with us to make the CFP App better.   
+It is likely you may want to customize or change how the CFP App works.  Feel free to fork and modify as you see it, as long as you respect the MIT license.  If you feel any of your customizations are appropriate to contribute back to the project, please review our CONTRIBUTING.md file to see the guidelines on how to work with us to make the CFP App better.
 
 
 ## Contributors

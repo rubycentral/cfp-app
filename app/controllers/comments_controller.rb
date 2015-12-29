@@ -14,8 +14,9 @@ class CommentsController < ApplicationController
       raise "Unknown comment type: #{comment_type}"
     end
 
-    # email all reviers and organizers about the comment
+    # email all reviewers and organizers about the comment
     CommentNotificationMailer.email_notification(@comment).deliver
+    OrganizerCommentNotificationMailer.organizer_email_notification(@comment).deliver
 
     # this action is used by the proposal show page for both speaker
     # and reviewer, so we reload the page they commented from

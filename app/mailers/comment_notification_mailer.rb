@@ -4,7 +4,7 @@ class CommentNotificationMailer < ApplicationMailer
 
 
     bcc = @comment.proposal.event.participants.map do |participant|
-      if participant.notifications && (participant.role == 'reviewer' || participant.role == 'organizer')
+      if participant.notifications && (participant.role == 'reviewer')
         participant.person.email
       end
     end.compact

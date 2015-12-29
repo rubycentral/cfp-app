@@ -23,6 +23,6 @@ class Reviewer::ProposalDecorator < ProposalDecorator
   end
 
   def internal_comments_style
-    object.was_rated_by_person?(h.current_user) ? nil : "display: none;"
+    # object.was_rated_by_person?(h.current_user) ? nil : "display: none;"
   end
 end

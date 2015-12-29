@@ -1,6 +1,0 @@
-Hello!
-A comment has been left on the proposal '<%= @comment.proposal.title %>' for <%= @comment.proposal.event.name %>:
-
-> <%= simple_format(@comment.body) %>
-
-<%= md_link_to 'View the proposal', organizer_event_proposal_url(@comment.proposal.event, @comment.proposal) %>

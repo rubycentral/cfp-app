@@ -8,26 +8,28 @@ class Participant < ActiveRecord::Base
   scope :organizer, -> { where(role: 'organizer') }
   scope :reviewer, -> { where(role: ['reviewer', 'organizer']) }
 
+
   validates :person, :event, :role, presence: true
   validates :person_id, uniqueness: {scope: :event_id}
 
 
   def comment_notifications
-    if should_notify
+    if notifications
       "\u2713"
     else
       "X"
     end
   end
 
-  def should_notify
-    self.notifications
+  def should_be_notified?
+    notifications
   end
 
-  def reviewer?
-    self.role == ('organizer' || 'reviewer')
+  def did_not_make_comment?(comment)
+    comment.person_id != person_id
   end
 end
+
 
 # == Schema Information
 #

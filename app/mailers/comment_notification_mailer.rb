@@ -4,7 +4,7 @@ class CommentNotificationMailer < ApplicationMailer
 
 
     bcc = @comment.proposal.event.participants.map do |participant|
-      if participant.should_notify && (participant.reviewer? && participant_did_not_make_comment)
+      if participant.should_be_notified? && participant.did_not_make_comment?(@comment)
         participant.person.email
       end
     end.compact
@@ -15,11 +15,5 @@ class CommentNotificationMailer < ApplicationMailer
                     subject: "A comment has been posted")
     end
   end
-
-  def participant_did_not_make_comment
-    @comment.proposal.speakers.include?(@comment.person)
-  end
 end
-
-
 

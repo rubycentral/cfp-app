@@ -20,14 +20,6 @@ class Participant < ActiveRecord::Base
       "X"
     end
   end
-
-  def should_be_notified?
-    notifications
-  end
-
-  def did_not_make_comment?(comment)
-    comment.person_id != person_id
-  end
 end
 
 

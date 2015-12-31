@@ -19,6 +19,3 @@ class CommentNotificationMailer < ApplicationMailer
   end
 end
 
-# 3 reviewers, reviewer who is making the comment & has already rated, someone who has rated but didn't make comment (both have notifications turned on), has notifications turned off
-# Speaker notifications as well
-# Make sure logic still works 

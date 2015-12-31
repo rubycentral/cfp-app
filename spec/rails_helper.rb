@@ -21,7 +21,6 @@ RSpec.configure do |config|
   Capybara.javascript_driver = :webkit
 
   Capybara::Webkit.configure do |config|
-    config.debug = true
     config.block_unknown_urls
     config.allow_url("127.0.0.1")
     config.allow_url("localhost")

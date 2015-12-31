@@ -11,6 +11,7 @@ class Comment < ActiveRecord::Base
   end
 end
 
+
 # == Schema Information
 #
 # Table name: comments

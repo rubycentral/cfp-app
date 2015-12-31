@@ -124,6 +124,7 @@ class Event < ActiveRecord::Base
     start_date + (conference_day - 1).days
   end
 
+
   private
   def update_closes_at_if_manually_closed
     if changes.key?(:state) && changes[:state] == ['open', 'closed']

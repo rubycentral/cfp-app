@@ -9,6 +9,17 @@
     = proposal.title_input(f)
     = proposal.abstract_input(f)
 
+    - if event.proposal_tags.any?
+      %h3 Proposal Type
+      %p.help-block
+        The type of talk proposals
+        Plenary (30 minutes)
+        Tutorial (50 minutes)
+
+      = f.select :tags,
+        options_for_select(event.proposal_tags, proposal.object.tags),
+        {}, {class: 'multiselect proposal-tags', multiple: false }
+
     %h3 For Review Committee
     %p.help-block
       This content will
@@ -25,12 +36,6 @@
 
 
   %fieldset.col-md-6
-    - if event.proposal_tags.any?
-      %h3 Tags
-      = f.select :tags,
-        options_for_select(event.proposal_tags, proposal.object.tags),
-        {}, {class: 'multiselect proposal-tags', multiple: true }
-
     - if event.custom_fields.any?
       %h3 Custom Fields
     - event.custom_fields.each do |custom_field|

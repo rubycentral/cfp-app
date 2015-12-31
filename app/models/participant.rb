@@ -5,19 +5,27 @@ class Participant < ActiveRecord::Base
   scope :for_event, -> (event) { where(event: event) }
   scope :recent, -> { order('created_at DESC') }
 
-  scope :organizer, -> { where(role: 'organizer')}
-  scope :reviewer, -> { where(role: ['reviewer', 'organizer'])}
+  scope :organizer, -> { where(role: 'organizer') }
+  scope :reviewer, -> { where(role: ['reviewer', 'organizer']) }
 
   validates :person, :event, :role, presence: true
-  validates :person_id, uniqueness: { scope: :event_id }
+  validates :person_id, uniqueness: {scope: :event_id}
 
 
   def comment_notifications
-    if self.notifications == true
+    if should_notify
       "\u2713"
     else
       "X"
     end
+  end
+
+  def should_notify
+    self.notifications
+  end
+
+  def reviewer?
+    self.role == ('organizer' || 'reviewer')
   end
 end
 

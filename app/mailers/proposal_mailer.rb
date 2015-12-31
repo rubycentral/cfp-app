@@ -10,7 +10,7 @@ class ProposalMailer < ApplicationMailer
     if bcc.any?
       mail_markdown(bcc: bcc,
            from: @proposal.event.contact_email,
-          subject: "You've received a comment on your proposal '#{@proposal.title}'")
+          subject: "CFP #{@proposal.event.name}: You've received a comment on your proposal '#{@proposal.title}'")
     end
   end
 end

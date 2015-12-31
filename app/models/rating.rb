@@ -5,7 +5,7 @@ class Rating < ActiveRecord::Base
   scope :for_event, -> (event) { joins(:proposal).where("proposals.event_id = ?", event.id) }
 
   def participant
-    @participant ||= person.participants.where(event: proposal.event).first
+    person.participants.where(event: proposal.event).first
   end
 end
 

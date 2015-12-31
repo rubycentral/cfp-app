@@ -13,6 +13,10 @@ class Participant < ActiveRecord::Base
   validates :person_id, uniqueness: {scope: :event_id}
 
 
+  def should_be_notified?
+    notifications
+  end
+
   def comment_notifications
     if notifications
       "\u2713"

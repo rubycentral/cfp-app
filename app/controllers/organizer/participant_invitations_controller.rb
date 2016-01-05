@@ -17,7 +17,7 @@ class Organizer::ParticipantInvitationsController < Organizer::ApplicationContro
 
     if @participant_invitation.save
       ParticipantInvitationMailer.create(@participant_invitation).deliver_now
-      redirect_to organizer_event_participant_invitations_path(@event),
+      redirect_to organizer_event_participant_invitations_url(@event),
         flash: { info: 'Participant invitation successfully sent.' }
     else
       redirect_to organizer_event_participant_invitations_path(@event),
@@ -29,7 +29,7 @@ class Organizer::ParticipantInvitationsController < Organizer::ApplicationContro
   def destroy
     @participant_invitation.destroy
 
-    redirect_to organizer_event_participant_invitations_path(@event),
+    redirect_to organizer_event_participant_invitations_url(@event),
       flash: { info: 'Participant invitation was successfully removed.' }
   end
 

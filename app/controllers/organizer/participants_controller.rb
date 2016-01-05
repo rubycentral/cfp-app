@@ -13,7 +13,7 @@ class Organizer::ParticipantsController < Organizer::ApplicationController
       else
         flash[:danger] = 'There was a problem creating your invitation.'
       end
-      redirect_to organizer_event_participant_invitations_path(@event)
+      redirect_to organizer_event_participant_invitations_url(@event)
     else
       participant = @event.participants.build(participant_params.merge(person: person))
 
@@ -22,7 +22,7 @@ class Organizer::ParticipantsController < Organizer::ApplicationController
       else
         flash[:danger] = "There was a problem saving your participant. Please try again"
       end
-      redirect_to organizer_event_path(@event)
+      redirect_to organizer_event_url(@event)
     end
   end
 
@@ -31,14 +31,14 @@ class Organizer::ParticipantsController < Organizer::ApplicationController
     participant.update(participant_params)
 
     flash[:info] = "You have successfully changed your participant."
-    redirect_to organizer_event_path(@event)
+    redirect_to organizer_event_url(@event)
   end
 
   def destroy
     @event.participants.find(params[:id]).destroy
 
     flash[:info] = "Your participant has been deleted."
-    redirect_to organizer_event_path(@event)
+    redirect_to organizer_event_url(@event)
   end
 
   def emails

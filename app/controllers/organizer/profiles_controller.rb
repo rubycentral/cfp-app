@@ -7,7 +7,7 @@ class Organizer::ProfilesController < Organizer::ApplicationController
   def update
     @person = Speaker.find(params[:id]).person
     if @person.update(person_params)
-      redirect_to organizer_event_speakers_path(event)
+      redirect_to organizer_event_speakers_url(event)
     else
       if @person.email == ""
         @person.errors[:email].clear

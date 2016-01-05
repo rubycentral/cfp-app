@@ -14,7 +14,7 @@ class Organizer::ApplicationController < ApplicationController
     unless @event
       session[:target] = request.path
       flash[:danger] = "You must be signed in as an organizer to access this page."
-      redirect_to new_session_path
+      redirect_to new_session_url
     end
   end
 

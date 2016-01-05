@@ -31,8 +31,8 @@ describe Notification do
       proposal = create(:proposal)
       Notification.create_for(people, proposal: proposal)
       people.each do |p|
-        expect(p.notifications.first.target_path).to(
-          eq(p.decorate.proposal_path(proposal)))
+        expect(p.decorate.proposal_path(proposal)).to(
+          eq(p.notifications.first.target_path))
       end
     end
   end

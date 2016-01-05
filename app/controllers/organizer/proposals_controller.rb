@@ -6,7 +6,7 @@ class Organizer::ProposalsController < Organizer::ApplicationController
   def finalize
     @proposal.finalize
     send_state_mail(@proposal.state)
-    redirect_to organizer_event_proposal_path(@proposal.event, @proposal)
+    redirect_to organizer_event_proposal_url(@proposal.event, @proposal)
   end
 
   def update_state
@@ -58,7 +58,7 @@ class Organizer::ProposalsController < Organizer::ApplicationController
   def update
     if @proposal.update_without_touching_updated_by_speaker_at(proposal_params)
       flash[:info] = 'Proposal Updated'
-      redirect_to organizer_event_proposals_path(slug: @event.slug)
+      redirect_to organizer_event_proposals_url(slug: @event.slug)
     else
       flash[:danger] = 'There was a problem saving your proposal; please review the form for issues and try again.'
       render :edit
@@ -68,7 +68,7 @@ class Organizer::ProposalsController < Organizer::ApplicationController
   def destroy
     @proposal.destroy
     flash[:info] = "Your proposal has been deleted."
-    redirect_to organizer_event_proposals_path(@event)
+    redirect_to organizer_event_proposals_url(@event)
   end
 
   def new
@@ -82,7 +82,7 @@ class Organizer::ProposalsController < Organizer::ApplicationController
     @proposal = @event.proposals.new(altered_params)
     if @proposal.save
       flash[:success] = 'Proposal Added'
-      redirect_to organizer_event_program_path(@event)
+      redirect_to organizer_event_program_url(@event)
     else
       flash.now[:danger] = 'There was a problem saving your proposal; please review the form for issues and try again.'
       render :new

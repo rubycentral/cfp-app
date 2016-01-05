@@ -25,7 +25,7 @@ gem 'coderay', '~> 1.0'
 gem 'bootstrap-multiselect-rails', '0.0.4'
 gem 'active_model_serializers', '~> 0.8.1'
 gem 'draper'
-gem 'simple_form', '3.1.0.rc1'
+gem 'simple_form', '3.1.0'
 
 gem 'zeroclipboard-rails'
 

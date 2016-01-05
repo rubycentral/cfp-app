@@ -5,7 +5,7 @@ class Organizer::ProgramController < Organizer::ApplicationController
 
     waitlisted_proposals = @event.proposals.for_state(Proposal::State::WAITLISTED)
 
-    session[:prev_page] = { name: 'Program', path: organizer_event_program_path }
+    session[:prev_page] = { name: 'Program', path: organizer_event_program_path(@event) }
 
     respond_to do |format|
       format.html do

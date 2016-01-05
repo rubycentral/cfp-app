@@ -42,8 +42,8 @@ module ApplicationHelper
 
   def smart_return_button
     if session.has_key?(:prev_page)
-      name = session[:prev_page][:name]
-      path = session[:prev_page][:path]
+      name = session[:prev_page]["name"]
+      path = session[:prev_page]["path"]
     else
       name = 'Proposals'
       path = organizer_event_proposals_path

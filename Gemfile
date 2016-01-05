@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.3.0'
 
-gem 'rails', '4.1.2'
+gem 'rails', '4.2.5'
 gem 'puma', '~> 2.13'
 
 gem 'pg'
@@ -29,6 +29,8 @@ gem 'simple_form', '3.1.0.rc1'
 
 gem 'zeroclipboard-rails'
 
+gem 'responders', '~> 2.0'
+
 group :production do
   gem 'rails_12factor'
   gem 'rack-timeout', '~> 0.2.4'
@@ -46,6 +48,8 @@ group :development do
   gem 'rack-mini-profiler'
   gem 'haml-rails'
   gem "spring-commands-rspec", require: false
+
+  gem 'web-console', '~> 2.0'
 end
 
 group :development, :test do

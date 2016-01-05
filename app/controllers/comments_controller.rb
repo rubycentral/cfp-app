@@ -15,7 +15,7 @@ class CommentsController < ApplicationController
     end
 
     # email all reviers and organizers about the comment
-    CommentNotificationMailer.email_notification(@comment).deliver
+    CommentNotificationMailer.email_notification(@comment).deliver_now
 
     # this action is used by the proposal show page for both speaker
     # and reviewer, so we reload the page they commented from

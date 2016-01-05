@@ -101,11 +101,11 @@ class Organizer::ProposalsController < Organizer::ApplicationController
   def send_state_mail(state)
     case state
       when Proposal::State::ACCEPTED
-        Organizer::ProposalMailer.accept_email(@event, @proposal).deliver
+        Organizer::ProposalMailer.accept_email(@event, @proposal).deliver_now
       when Proposal::State::REJECTED
-        Organizer::ProposalMailer.reject_email(@event, @proposal).deliver
+        Organizer::ProposalMailer.reject_email(@event, @proposal).deliver_now
       when Proposal::State::WAITLISTED
-        Organizer::ProposalMailer.waitlist_email(@event, @proposal).deliver
+        Organizer::ProposalMailer.waitlist_email(@event, @proposal).deliver_now
     end
   end
 end

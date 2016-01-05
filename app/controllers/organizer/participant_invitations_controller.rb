@@ -16,7 +16,7 @@ class Organizer::ParticipantInvitationsController < Organizer::ApplicationContro
       @event.participant_invitations.build(participant_invitation_params)
 
     if @participant_invitation.save
-      ParticipantInvitationMailer.create(@participant_invitation).deliver
+      ParticipantInvitationMailer.create(@participant_invitation).deliver_now
       redirect_to organizer_event_participant_invitations_path(@event),
         flash: { info: 'Participant invitation successfully sent.' }
     else

@@ -8,7 +8,7 @@ class InvitationsController < ApplicationController
     @invitation = @proposal.invitations.find_or_initialize_by(email: params[:email])
 
     if @invitation.save
-      InvitationMailer.speaker(@invitation, current_user).deliver
+      InvitationMailer.speaker(@invitation, current_user).deliver_now
       flash[:info] = "An invitation has been sent to #{params[:email]}."
     elsif !@invitation.valid?
       flash[:danger] = "Please enter a valid email and try again."
@@ -33,7 +33,7 @@ class InvitationsController < ApplicationController
   end
 
   def resend
-    InvitationMailer.speaker(@invitation, current_user).deliver
+    InvitationMailer.speaker(@invitation, current_user).deliver_now
     flash[:info] = "You have resent an invitation to #{@invitation.email}."
     redirect_to :back
   end

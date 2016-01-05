@@ -52,7 +52,7 @@ describe Organizer::ProposalsController, type: :controller do
 
       state_to_email.each do |state, mail_action|
         proposal = create(:proposal, state: state)
-        mail = double(:mail, deliver: nil)
+        mail = double(:mail, deliver_now: nil)
         expect(Organizer::ProposalMailer).to receive(mail_action).and_return(mail)
         post :finalize, event_id: event.id, proposal_uuid: proposal.uuid
       end

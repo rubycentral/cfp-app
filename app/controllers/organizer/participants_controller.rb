@@ -8,7 +8,7 @@ class Organizer::ParticipantsController < Organizer::ApplicationController
         @event.participant_invitations.build(participant_params.merge(email: params[:email]))
 
       if participant_invitation.save
-        ParticipantInvitationMailer.create(participant_invitation).deliver
+        ParticipantInvitationMailer.create(participant_invitation).deliver_now
         flash[:info] = 'Participant invitation successfully sent.'
       else
         flash[:danger] = 'There was a problem creating your invitation.'

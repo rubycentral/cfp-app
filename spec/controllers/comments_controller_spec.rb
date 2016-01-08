@@ -37,7 +37,7 @@ describe CommentsController, type: :controller do
 
       it "sends an email notification to the speaker" do
         allow(ProposalMailer).to receive(:comment_notification).and_return(mailer)
-        expect(mailer).to receive(:deliver)
+        expect(mailer).to receive(:deliver_now)
         post :create, params
       end
 

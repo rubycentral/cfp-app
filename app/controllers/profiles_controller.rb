@@ -10,7 +10,7 @@ class ProfilesController < ApplicationController
   def update
     if current_user.update_attributes(person_params) && current_user.complete?
       current_user.assign_open_invitations if session[:need_to_complete]
-      redirect_to (session.delete(:target) || root_path), info: "We've updated your profile. Thanks!"
+      redirect_to (session.delete(:target) || root_url), info: "We've updated your profile. Thanks!"
     else
       if current_user.email == ""
         current_user.errors[:email].clear

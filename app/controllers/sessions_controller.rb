@@ -25,14 +25,14 @@ logger.info "Signing in user #{user.inspect}"
       assign_open_invitations if session[:invitation_slug].present?
 
       if user.complete?
-        redirect_to (session.delete(:target) || root_path)
+        redirect_to (session.delete(:target) || root_url)
       else
         session[:need_to_complete] = true
-        # redirect_to edit_profile_path
+        # redirect_to edit_profile_url
         render 'profiles/edit'
       end
     else
-      redirect_to new_session_path, danger: "There was an error authenticating via #{params[:provider].capitalize}."
+      redirect_to new_session_url, danger: "There was an error authenticating via #{params[:provider].capitalize}."
     end
   end
 

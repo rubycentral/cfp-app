@@ -26,7 +26,7 @@ class Organizer::SpeakersController < Organizer::ApplicationController
     else
       flash[:danger] = "Could not find a person with this email address"
     end
-    redirect_to organizer_event_proposal_path(event, @proposal)
+    redirect_to organizer_event_proposal_url(event, @proposal)
   end
 
   #if user input (params), exist
@@ -42,7 +42,7 @@ class Organizer::SpeakersController < Organizer::ApplicationController
   def update
     @speaker = Speaker.find(params[:id])
     if @speaker.update(speaker_params)
-      redirect_to organizer_event_speaker_path(@event, @speaker)
+      redirect_to organizer_event_speaker_url(@event, @speaker)
     else
       render :edit
     end
@@ -54,7 +54,7 @@ class Organizer::SpeakersController < Organizer::ApplicationController
     @speaker.destroy
 
     flash[:info] = "You've deleted the speaker for this proposal"
-    redirect_to organizer_event_proposal_path(uuid: proposal)
+    redirect_to organizer_event_proposal_url(uuid: proposal)
   end
 
   def emails

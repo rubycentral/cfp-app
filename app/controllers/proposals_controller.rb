@@ -28,20 +28,20 @@ class ProposalsController < ApplicationController
   def set_confirmed
     @proposal.update(confirmed_at: DateTime.now,
                      confirmation_notes: params[:confirmation_notes])
-    redirect_to proposal_path(slug: @event.slug, uuid: @proposal),
+    redirect_to proposal_url(slug: @event.slug, uuid: @proposal),
       flash: { success: 'Thank you for confirming your participation' }
   end
 
   def withdraw
     @proposal.withdraw unless @proposal.confirmed?
     flash[:info] = "Your withdrawal request has been submitted."
-    redirect_to proposal_path(slug: @proposal.event.slug, uuid: @proposal)
+    redirect_to proposal_url(slug: @proposal.event.slug, uuid: @proposal)
   end
 
   def destroy
     @proposal.destroy
     flash[:info] = "Your proposal has been deleted."
-    redirect_to proposals_path
+    redirect_to proposals_url
   end
 
   def create
@@ -52,10 +52,10 @@ class ProposalsController < ApplicationController
       flash[:info] = setup_flash_message
 
       if current_user.demographics_complete?
-        redirect_to proposal_path(slug: @event.slug, uuid: @proposal)
+        redirect_to proposal_url(slug: @event.slug, uuid: @proposal)
       else
         flash[:warning] = "Please consider filling out the demographic data in your profile."
-        redirect_to edit_profile_path
+        redirect_to edit_profile_url
       end
     else
       flash[:danger] = 'There was a problem saving your proposal; please review the form for issues and try again.'
@@ -75,10 +75,10 @@ class ProposalsController < ApplicationController
   def update
     if params[:confirm]
       @proposal.update(confirmed_at: DateTime.now)
-      redirect_to proposal_path(slug: @event.slug, uuid: @proposal), flash: { success: 'Thank you for confirming your participation' }
+      redirect_to proposal_url(slug: @event.slug, uuid: @proposal), flash: { success: 'Thank you for confirming your participation' }
     elsif @proposal.update_and_send_notifications(proposal_params)
       flash[:info] = 'Please consider filling out the demographic data in your profile.' unless current_user.demographics_complete?
-      redirect_to proposal_path(slug: @event.slug, uuid: @proposal)
+      redirect_to proposal_url(slug: @event.slug, uuid: @proposal)
     else
       flash[:danger] = 'There was a problem saving your proposal; please review the form for issues and try again.'
       render :edit
@@ -120,7 +120,7 @@ class ProposalsController < ApplicationController
 
   def require_waitlisted_or_accepted_state
     unless @proposal.waitlisted? || @proposal.accepted?
-      redirect_to event_path(@event.slug)
+      redirect_to event_url(@event.slug)
     end
   end
 end

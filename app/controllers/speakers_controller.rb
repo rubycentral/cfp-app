@@ -10,6 +10,6 @@ class SpeakersController < ApplicationController
     speaker.destroy
 
     flash[:info] = "You've withdrawn from this proposal."
-    redirect_to proposal_path(slug: proposal.event.slug, uuid: proposal)
+    redirect_to proposal_url(slug: proposal.event.slug, uuid: proposal)
   end
 end

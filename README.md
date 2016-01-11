@@ -10,43 +10,25 @@ At a high level the CFP App allows speakers to submit and manage their proposals
 
 Make sure you have Ruby 2.3 and Postgres installed in your environment.  This is a Rails 4.1 app and uses bundler to install all required gems.  We are also making the assumption that you're familiar with how Rails apps and setup and deployed.  If this is not the case then you'll want to refer to documentation that will bridge any gaps in the instructions below.
 
-1. Install gem requirements
+Run [bin/setup](bin/setup) script to install gem dependencies and setup database for development.
 
 ```bash
-bundle install
+bin/setup
 ```
+
+This will create `.env`, a development database with seed data. Seed will make an admin user with an email of `an@admin.com` to get started. There is a special, development only login method in Omniauth that you can use to test it out.
 
 NOTE: You may need to install Qt/`qmake` to get Capybara to work; with Homebrew you can run `brew install qt`.
 
-1. Duplicate and edit environment variables
+Start the server:
 
 ```bash
-cp env-sample .env
-```
-
-[Omniauth](http://intridea.github.io/omniauth/) is set up to use Twitter and Github for logins in production.  You'll want to put your own key and secret in for both.  Other environment variables will include your postgres user and Rails' secret_token.
-
-1. Duplicate and edit database.yml
-
-```bash
-cp config/database_example.yml config/database.yml
-```
-
-1. Build dev database
-
-```bash
-bundle exec rake db:create db:migrate db:seed
-```
-
-NOTE: Seed will make an admin user with an email of an@admin.com to get started.  There is a special, development only login method in Omniauth that you can use to test it out.
-
-1. Start the server
-
-```bash
-bundle exec rails server
+bin/rails server
 ```
 
 ### Environment variables
+
+[Omniauth](http://intridea.github.io/omniauth/) is set up to use Twitter and Github for logins in production. You'll want to put your own key and secret in for both. Other environment variables will include your postgres user and Rails' secret_token.
 
     TIMEZONE (defaults to Pacific if not set)
     POSTGRES_USER (dev/test only)

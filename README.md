@@ -8,7 +8,7 @@ At a high level the CFP App allows speakers to submit and manage their proposals
 
 ## Getting Started
 
-Make sure you have Ruby 2.3 and Postgres installed in your environment.  This is a Rails 4.1 app and uses bundler to install all required gems.  We are also making the assumption that you're familiar with how Rails apps and setup and deployed.  If this is not the case then you'll want to refer to documentation that will bridge any gaps in the instructions below.
+Make sure you have Ruby 2.3 and Postgres installed in your environment.  This is a Rails 4.2 app and uses bundler to install all required gems.  We are also making the assumption that you're familiar with how Rails apps and setup and deployed.  If this is not the case then you'll want to refer to documentation that will bridge any gaps in the instructions below.
 
 1. Install gem requirements
 
@@ -60,7 +60,7 @@ bundle exec rails server
 
 ## Deployment on Heroku
 
-The app was written with a Heroku deployment stack in mind. You can easily deploy the application using the button below, or you can deploy it anywhere assuming you can run Ruby 2.3.0 and Rails 4.1.2 with a postgres database and an SMTP listener.
+The app was written with a Heroku deployment stack in mind. You can easily deploy the application using the button below, or you can deploy it anywhere assuming you can run Ruby 2.3.0 and Rails 4.2.5 with a postgres database and an SMTP listener.
 
 The Heroku stack will use the free SendGrid Starter and Heroku postgreSQL
 addons.

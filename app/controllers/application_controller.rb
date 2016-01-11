@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
 
   private
   def current_user
-    @current_user ||= Person.find_by_id(session[:uid])
+    @current_user ||= Person.find_by(id: session[:uid])
   end
 
   def reviewer?

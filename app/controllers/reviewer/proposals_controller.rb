@@ -22,7 +22,7 @@ class Reviewer::ProposalsController < Reviewer::ApplicationController
   def show
     set_title(@proposal.title)
     rating = current_user.rating_for(@proposal)
-    current_user.notifications.mark_as_read_for_proposal(request.path)
+    current_user.notifications.mark_as_read_for_proposal(request.url)
     render locals: {
       rating: rating
     }

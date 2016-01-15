@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :notifications, only: [ :index, :show ] do
+  resources :notifications, only: [:index, :show] do
     post :mark_all_as_read, on: :collection
   end
 
@@ -22,13 +22,13 @@ Rails.application.routes.draw do
 
     post '/proposals' => 'proposals#create', as: :event_proposals
     get 'parse_edit_field' => 'proposals#parse_edit_field',
-      as: :parse_edit_field_proposal
+        as: :parse_edit_field_proposal
 
     resources :proposals, param: :uuid do
       member { get :confirm }
       member { post :set_confirmed }
       member { post :withdraw }
-      member { delete :destroy}
+      member { delete :destroy }
     end
   end
 
@@ -39,13 +39,13 @@ Rails.application.routes.draw do
     end
   end
 
-	resources :invitations, only: [:show, :create, :destroy], param: :invitation_slug do
-		member do
-			post :accept, action: :update
-			post :refuse, action: :update, refuse: true
-			post :resend, action: :resend
-		end
-	end
+  resources :invitations, only: [:show, :create, :destroy], param: :invitation_slug do
+    member do
+      post :accept, action: :update
+      post :refuse, action: :update, refuse: true
+      post :resend, action: :resend
+    end
+  end
 
   namespace 'admin' do
     resources :events, except: [:show, :edit, :update] do
@@ -53,7 +53,9 @@ Rails.application.routes.draw do
       post :unarchive
     end
 
-    resources :people
+    resources :people do
+      resources :services
+    end
   end
 
   namespace 'organizer' do
@@ -62,7 +64,8 @@ Rails.application.routes.draw do
         get :edit_custom_fields
         put :update_custom_fields
       end
-      resources :participant_invitations, except: [ :new, :edit, :update, :show ]
+      resources :participant_invitations, except: [:new, :edit, :update, :show]
+
 
 
       controller :program do
@@ -70,7 +73,7 @@ Rails.application.routes.draw do
       end
 
       resources :participants, only: [:create, :destroy, :update] do
-        collection { get :emails, defaults: { format: :json } }
+        collection { get :emails, defaults: {format: :json} }
       end
 
       resources :rooms, only: [:create, :update, :destroy]
@@ -99,7 +102,7 @@ Rails.application.routes.draw do
   namespace 'reviewer' do
     resources :events, only: [] do
       resources :proposals, only: [:index, :show, :update], param: :uuid do
-        resources :ratings, only: [:create, :update], defaults: { format: :js }
+        resources :ratings, only: [:create, :update], defaults: {format: :js}
       end
     end
   end

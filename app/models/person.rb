@@ -144,6 +144,9 @@ class Person < ActiveRecord::Base
     self.participants.collect {|p| p.role}.uniq.join(", ")
   end
 
+  def services_for_person
+    self.services.map {|service| service.provider}
+  end
 end
 
 # == Schema Information

@@ -1,19 +1,5 @@
 class Service < ActiveRecord::Base
   belongs_to :person
-
-  # def delete_button
-  #   h.button_to h.admin_person_services_path,
-  #               method: :delete,
-  #               data: {
-  #                 confirm:
-  #                   'This will delete this service. Are you sure you want to do this? ' +
-  #                     'It can not be undone.'
-  #               },
-  #               class: 'btn btn-danger navbar-btn',
-  #               id: 'delete' do
-  #     bang('Delete Service')
-  #   end
-  # end
 end
 
 # == Schema Information

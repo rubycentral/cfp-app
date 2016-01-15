@@ -4,10 +4,12 @@
       %h4 Proposal
       = proposal.title_input(f)
       = proposal.abstract_input(f)
-      = f.label :video_url
-      = f.text_field :video_url
-      = f.label :slides_url
-      = f.text_field :slides_url
+      %section.inline-block
+        = f.label :video_url
+        = f.text_field :video_url
+      %section.inline-block
+        = f.label :slides_url
+        = f.text_field :slides_url
       %p
       = f.select :review_tags,
         options_for_select(event.review_tags, proposal.object.review_tags),

@@ -9,7 +9,7 @@ class Speaker < ActiveRecord::Base
 
   validates :bio, length: {maximum: 500}
 
-  # accepts_nested_attributes_for :person
+  accepts_nested_attributes_for :person
 
 end
 

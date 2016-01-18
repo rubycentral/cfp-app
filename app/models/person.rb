@@ -143,7 +143,6 @@ class Person < ActiveRecord::Base
   def role_names
     self.participants.collect {|p| p.role}.uniq.join(", ")
   end
-
 end
 
 # == Schema Information

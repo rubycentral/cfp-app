@@ -36,7 +36,7 @@
       %h3 Tags
       = render partial: 'shared/proposals/tags_form',
         locals: { event: event, proposal: proposal }
-      =link_to('#', class: "btn btn-primary") do
+      =link_to reviewer_event_proposal_path(uuid: "PLACEHOLDER"), class: "next-proposal btn btn-primary" do
         Next Proposal &raquo;
 
       .internal-comments{ style: proposal.internal_comments_style }

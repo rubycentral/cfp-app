@@ -19,7 +19,7 @@ logger.info "Authenticating user credentials: #{auth_hash.inspect}"
       session[:sid] = service.id
 logger.info "Session set to uid:#{session[:uid]}, sid:#{session[:sid]}"
 
-      flash[:info] = "You have signed in with #{params[:provider].capitalize}."
+      flash.now[:info] = "You have signed in with #{params[:provider].capitalize}."
 logger.info "Signing in user #{user.inspect}"
 
       assign_open_invitations if session[:invitation_slug].present?
@@ -39,7 +39,7 @@ logger.info "Signing in user #{user.inspect}"
   def destroy
     session[:uid] = nil
     session[:sid] = nil
-    redirect_to :back, info: "You have signed out."
+    redirect_to root_path, info: "You have signed out."
   end
 
   private

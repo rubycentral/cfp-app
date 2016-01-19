@@ -3,7 +3,7 @@
     .col-md-12
       %p
       - if @proposal.speakers != current_user
-        = link_to "Back to Proposal", organizer_event_proposal_path(@proposal.event_id, @proposal.uuid), class: "btn btn-primary"
+        = link_to "Back to Proposal", proposal_path(slug: proposal.event.slug, uuid: proposal), class: "btn btn-primary"
       %h1
         Confirm
         = proposal.title

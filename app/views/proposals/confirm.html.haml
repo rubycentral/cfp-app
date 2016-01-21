@@ -3,8 +3,10 @@
     .col-md-12
       %p
       - if current_user.organizer?
-        = link_to link_to "Back to Proposal", organizer_event_proposal_path(@proposal.event_id, @proposal.uuid), class: "btn btn-primary"
-      - else 
+        = link_to "Back to Proposal", organizer_event_proposal_path(@proposal.event_id, @proposal.uuid), class: "btn btn-primary"
+      - elsif current_user.reviewer?
+        = link_to "Back to Proposal", reviewer_event_proposal_path(@proposal.event_id, @proposal.uuid), class: "btn btn-primary"
+      - else
         = link_to "Back to Proposal", proposal_path(slug: proposal.event.slug, uuid: proposal), class: "btn btn-primary"
       %h1
         Confirm

@@ -150,8 +150,8 @@ end
 # Table name: people
 #
 #  id           :integer          not null, primary key
-#  name         :string(255)
-#  email        :string(255)
+#  name         :string
+#  email        :string
 #  bio          :text
 #  demographics :hstore
 #  admin        :boolean          default(FALSE)

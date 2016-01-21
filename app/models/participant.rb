@@ -34,7 +34,7 @@ end
 #  id            :integer          not null, primary key
 #  event_id      :integer
 #  person_id     :integer
-#  role          :string(255)
+#  role          :string
 #  created_at    :datetime
 #  updated_at    :datetime
 #  notifications :boolean          default(TRUE)

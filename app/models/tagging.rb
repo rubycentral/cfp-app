@@ -21,7 +21,7 @@ end
 #
 #  id          :integer          not null, primary key
 #  proposal_id :integer
-#  tag         :string(255)
+#  tag         :string
 #  internal    :boolean          default(FALSE)
 #  created_at  :datetime
 #  updated_at  :datetime

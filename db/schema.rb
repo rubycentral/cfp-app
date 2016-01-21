@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20151217214608) do
     t.integer  "person_id"
     t.integer  "parent_id"
     t.text     "body"
-    t.string   "type",        limit: 255
+    t.string   "type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -31,11 +31,11 @@ ActiveRecord::Schema.define(version: 20151217214608) do
   add_index "comments", ["proposal_id"], name: "index_comments_on_proposal_id", using: :btree
 
   create_table "events", force: :cascade do |t|
-    t.string   "name",                        limit: 255
-    t.string   "slug",                        limit: 255
-    t.string   "url",                         limit: 255
-    t.string   "contact_email",               limit: 255
-    t.string   "state",                       limit: 255, default: "closed"
+    t.string   "name"
+    t.string   "slug"
+    t.string   "url"
+    t.string   "contact_email"
+    t.string   "state",                       default: "closed"
     t.datetime "opens_at"
     t.datetime "closes_at"
     t.datetime "start_date"
@@ -44,10 +44,10 @@ ActiveRecord::Schema.define(version: 20151217214608) do
     t.text     "review_tags"
     t.text     "guidelines"
     t.text     "policies"
-    t.hstore   "speaker_notification_emails",             default: {"accept"=>"", "reject"=>"", "waitlist"=>""}
+    t.hstore   "speaker_notification_emails", default: {"accept"=>"", "reject"=>"", "waitlist"=>""}
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "archived",                                default: false
+    t.boolean  "archived",                    default: false
     t.text     "custom_fields"
   end
 
@@ -56,9 +56,9 @@ ActiveRecord::Schema.define(version: 20151217214608) do
   create_table "invitations", force: :cascade do |t|
     t.integer  "proposal_id"
     t.integer  "person_id"
-    t.string   "email",       limit: 255
-    t.string   "state",       limit: 255, default: "pending"
-    t.string   "slug",        limit: 255
+    t.string   "email"
+    t.string   "state",       default: "pending"
+    t.string   "slug"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -70,21 +70,21 @@ ActiveRecord::Schema.define(version: 20151217214608) do
 
   create_table "notifications", force: :cascade do |t|
     t.integer  "person_id"
+    t.string   "message"
+    t.datetime "read_at"
+    t.string   "target_path"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "message",     limit: 255
-    t.datetime "read_at"
-    t.string   "target_path", limit: 255
   end
 
   add_index "notifications", ["person_id"], name: "index_notifications_on_person_id", using: :btree
 
   create_table "participant_invitations", force: :cascade do |t|
-    t.string   "email",      limit: 255
-    t.string   "state",      limit: 255
-    t.string   "slug",       limit: 255
-    t.string   "role",       limit: 255
-    t.string   "token",      limit: 255
+    t.string   "email"
+    t.string   "state"
+    t.string   "slug"
+    t.string   "role"
+    t.string   "token"
     t.integer  "event_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -93,38 +93,38 @@ ActiveRecord::Schema.define(version: 20151217214608) do
   create_table "participants", force: :cascade do |t|
     t.integer  "event_id"
     t.integer  "person_id"
-    t.string   "role",          limit: 255
+    t.string   "role"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "notifications",             default: true
+    t.boolean  "notifications", default: true
   end
 
   add_index "participants", ["event_id"], name: "index_participants_on_event_id", using: :btree
   add_index "participants", ["person_id"], name: "index_participants_on_person_id", using: :btree
 
   create_table "people", force: :cascade do |t|
-    t.string   "name",         limit: 255
-    t.string   "email",        limit: 255
+    t.string   "name"
+    t.string   "email"
     t.text     "bio"
     t.hstore   "demographics"
-    t.boolean  "admin",                    default: false
+    t.boolean  "admin",        default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "proposals", force: :cascade do |t|
     t.integer  "event_id"
-    t.string   "state",                 limit: 255, default: "submitted"
-    t.string   "uuid",                  limit: 255
-    t.string   "title",                 limit: 255
+    t.string   "state",                 default: "submitted"
+    t.string   "uuid"
+    t.string   "title"
     t.text     "abstract"
     t.text     "details"
     t.text     "pitch"
+    t.text     "last_change"
+    t.text     "confirmation_notes"
     t.datetime "confirmed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "last_change"
-    t.text     "confirmation_notes"
     t.datetime "updated_by_speaker_at"
     t.text     "proposal_data"
   end
@@ -144,10 +144,10 @@ ActiveRecord::Schema.define(version: 20151217214608) do
   add_index "ratings", ["proposal_id"], name: "index_ratings_on_proposal_id", using: :btree
 
   create_table "rooms", force: :cascade do |t|
-    t.string   "name",          limit: 255
-    t.string   "room_number",   limit: 255
-    t.string   "level",         limit: 255
-    t.string   "address",       limit: 255
+    t.string   "name"
+    t.string   "room_number"
+    t.string   "level"
+    t.string   "address"
     t.integer  "capacity"
     t.integer  "event_id"
     t.datetime "created_at"
@@ -158,14 +158,14 @@ ActiveRecord::Schema.define(version: 20151217214608) do
   add_index "rooms", ["event_id"], name: "index_rooms_on_event_id", using: :btree
 
   create_table "services", force: :cascade do |t|
-    t.string   "provider",     limit: 255
-    t.string   "uid",          limit: 255
+    t.string   "provider"
+    t.string   "uid"
     t.integer  "person_id"
-    t.string   "uname",        limit: 255
-    t.string   "uemail",       limit: 255
+    t.string   "uname"
+    t.string   "uemail"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "account_name", limit: 255
+    t.string   "account_name"
   end
 
   add_index "services", ["person_id"], name: "index_services_on_person_id", using: :btree
@@ -200,8 +200,8 @@ ActiveRecord::Schema.define(version: 20151217214608) do
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "proposal_id"
-    t.string   "tag",         limit: 255
-    t.boolean  "internal",                default: false
+    t.string   "tag"
+    t.boolean  "internal",    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

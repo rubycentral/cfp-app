@@ -31,11 +31,11 @@ end
 #
 #  id          :integer          not null, primary key
 #  person_id   :integer
+#  message     :string
+#  read_at     :datetime
+#  target_path :string
 #  created_at  :datetime
 #  updated_at  :datetime
-#  message     :string(255)
-#  read_at     :datetime
-#  target_path :string(255)
 #
 # Indexes
 #

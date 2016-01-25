@@ -252,17 +252,17 @@ end
 #
 #  id                    :integer          not null, primary key
 #  event_id              :integer
-#  state                 :string(255)      default("submitted")
-#  uuid                  :string(255)
-#  title                 :string(255)
+#  state                 :string           default("submitted")
+#  uuid                  :string
+#  title                 :string
 #  abstract              :text
 #  details               :text
 #  pitch                 :text
+#  last_change           :text
+#  confirmation_notes    :text
 #  confirmed_at          :datetime
 #  created_at            :datetime
 #  updated_at            :datetime
-#  last_change           :text
-#  confirmation_notes    :text
 #  updated_by_speaker_at :datetime
 #  proposal_data         :text
 #

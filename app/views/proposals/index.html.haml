@@ -5,16 +5,16 @@
     - if proposals.empty?
       %h3 You don't have any proposals.
     - proposals.each do |event, talks|
-      %h3
-        = link_to event.name, event_path(event.slug)
+      %h3.margin-bottom
+        = link_to event.name, event_path(event.slug), class: 'event-title'
         %small= event.state
         - if event.open?
-          = link_to 'Submit a proposal', new_proposal_path(slug: event.slug), class: 'btn btn-primary pull-right'
+          = link_to 'Submit a proposal', new_proposal_path(slug: event.slug), class: 'btn btn-primary'
       %ul
         - talks.each do |proposal|
           %li.proposal
+            %h4= link_to proposal.title, proposal_path(slug: proposal.event.slug, uuid: proposal)
             = proposal.public_state(small: true)
-            = link_to proposal.title, proposal_path(slug: proposal.event.slug, uuid: proposal)
             %p= truncate(proposal.abstract, length: 80)
   .col-md-4.invitations
     %h2 Invitations

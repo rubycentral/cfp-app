@@ -2,17 +2,19 @@
   .row
     .col-md-12
       %p
-      - if @proposal.speakers != current_user
+      - if current_user.organizer_for_event?(@event)
         = link_to "Back to Proposal", organizer_event_proposal_path(@proposal.event_id, @proposal.uuid), class: "btn btn-primary"
+      - else
+        = link_to "Back to Proposal", proposal_path(slug: proposal.event.slug, uuid: proposal), class: "btn btn-primary"
       %h1
         Confirm
         = proposal.title
   .row
     .col-md-8
-      - if @proposal.speakers == current_user
-        %p.help-block Congratulations! Your talk has been #{proposal.state}. Please ensure the information below is correct.
-      - else
+      - if current_user.organizer_for_event?(@event)
         %p.help-block Please ensure the information below is correct.
+      - else
+        %p.help-block Congratulations! Your talk has been #{proposal.state}. Please ensure the information below is correct.
 
       %h3 Abstract
       = proposal.abstract

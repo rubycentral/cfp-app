@@ -27,6 +27,8 @@
         locals: { proposal: proposal, comments: proposal.public_comments }
     .col-md-4
       %h3 Review
+      = link_to "#", {id: "rating-tooltip", data: {toggle: "tooltip"}, title: proposal.rating_tooltip } do
+        %span.glyphicon.glyphicon-question-sign
       - unless proposal.draft?
         = proposal.state_label
       #rating-form

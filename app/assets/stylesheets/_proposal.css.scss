@@ -162,4 +162,11 @@ span.disabled-state {
 
 span.glyphicon-question-sign {
   font-size: 1.3em;
+  display: inline-block;
+}
+
+div.col-md-4 {
+    h3 {
+      display: inline-block;
+    }
 }

@@ -2,8 +2,6 @@
   = form_for [:reviewer, event, proposal, rating], remote: true do |f|
     .form-group
       = f.label :score, "Rating"
-      = link_to "#", {id: "rating-tooltip", data: {toggle: "tooltip"}, title: proposal.rating_tooltip } do
-        %span.glyphicon.glyphicon-question-sign
       = f.select :score, (1..5).to_a, {include_blank: rating.new_record?}, {class: 'form-control', onchange: '$(this).trigger("submit.rails");', disabled: proposal.withdrawn?}
 %dl.dl-horizontal.ratings_list
   %dt.text-success Average rating:

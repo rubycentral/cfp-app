@@ -43,7 +43,7 @@
       %h3 Tags
       = render partial: 'shared/proposals/tags_form', locals: { event: event, proposal: proposal }
       %h3 Review
-      = link_to "#", {id: "rating-tooltip", data: {toggle: "tooltip"}, title: proposal.rating_tooltip } do
+      = link_to "#", {id: "rating-tooltip", data: {toggle: "tooltip", placement: "bottom"}, title: proposal.rating_tooltip } do
         %span.glyphicon.glyphicon-question-sign
       #current_state= proposal.state_label
       #rating-form

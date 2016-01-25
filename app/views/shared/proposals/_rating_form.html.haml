@@ -1,7 +1,9 @@
 - unless proposal.has_speaker?(current_user)
   = form_for [:reviewer, event, proposal, rating], remote: true do |f|
     .form-group
-      = f.label :score, "Rating"
+      = f.label :score, "Ratings"
+      = link_to "#", {id: "Tooltip", data: {toggle: "tooltip"}, title: proposal.rating_tooltip } do
+        %span.glyphicon.glyphicon-question-sign
       = f.select :score, (1..5).to_a, {include_blank: true}, {class: 'form-control', onchange: '$(this).trigger("submit.rails");', disabled: proposal.withdrawn?}
 - unless rating.new_record?
   %dl.dl-horizontal.ratings_list
@@ -10,3 +12,5 @@
     - proposal.ratings.each do |rating|
       %dt= "#{rating.person.name}:"
       %dd= rating.score
+
+

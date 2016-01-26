@@ -29,9 +29,9 @@
       - if @event.custom_fields?
         %h4 Custom Fields
         - @event.custom_fields.each do |custom_field|
+          .form-group
           = f.label custom_field
-          = text_field_tag "proposal[custom_fields][#{custom_field}]", proposal.custom_fields[custom_field]
+          = text_field_tag "proposal[custom_fields][#{custom_field}]", proposal.custom_fields[custom_field], class: "form-control"
+          %p 
 
   %button.pull-right.btn.btn-primary.btn-lg{:type => "submit"} Save
-  %br
-  %br

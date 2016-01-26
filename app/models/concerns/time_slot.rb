@@ -24,7 +24,7 @@ class TimeSlot
     if conference_wide?
       conference_wide_session.end_time
     else
-      corrected_start_time + Session::STANDARD_LENGTH
+      start_time + Session::STANDARD_LENGTH
     end
   end
 

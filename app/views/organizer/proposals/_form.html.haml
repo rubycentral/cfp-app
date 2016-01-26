@@ -15,6 +15,8 @@
         options_for_select(event.review_tags, proposal.object.review_tags),
         {}, {class: 'multiselect review-tags', multiple: true}
 
+
+
     %fieldset
       %h4 Speaker
       = f.simple_fields_for :speakers do |speaker_fields|
@@ -24,13 +26,11 @@
         = speaker_fields.input :bio, maxlength: :lookup,
           placeholder: 'Bio for speaker for the event program.'
 
-    %fieldset
-      %h4 Custom Fields
-      - @event.custom_fields.each do |custom_field|
-        .form-group
+      - if @event.custom_fields?
+        %h4 Custom Fields
+        - @event.custom_fields.each do |custom_field|
           = f.label custom_field
-          = text_field_tag "proposal[custom_fields][#{custom_field}]", proposal.custom_fields[custom_field], class: "form-control"
-
+          = text_field_tag "proposal[custom_fields][#{custom_field}]", proposal.custom_fields[custom_field]
 
   %button.pull-right.btn.btn-primary.btn-lg{:type => "submit"} Save
   %br

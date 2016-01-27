@@ -202,7 +202,6 @@ class Proposal < ActiveRecord::Base
       update_tags(proposal_taggings, @tags, false)
     end
   end
-  @dont_touch_updated_by_speaker_at
 
   def save_review_tags
     if @review_tags

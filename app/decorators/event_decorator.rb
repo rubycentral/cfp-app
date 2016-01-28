@@ -24,10 +24,6 @@ class EventDecorator < ApplicationDecorator
     h.link_to h.pluralize(object.proposals.count, 'proposal'), path
   end
 
-  def status
-    object.open? ? 'open' : 'closed'
-  end
-
   def cfp_days_remaining
     ((object.closes_at - DateTime.now).to_i / 1.day) if object.closes_at && (object.closes_at - DateTime.now).to_i / 1.day > 1
   end

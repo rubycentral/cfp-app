@@ -49,7 +49,7 @@
                   %ul.dropdown-menu
                     - current_user.reviewer_events.each do |event|
                       -unless event.archived?
-                        %li= link_to event, reviewer_event_proposals_path(event)
+                        %li= link_to event, reviewer_event_path(event)
               - if current_user.organizer?
                 %li.dropdown
                   %a.organize_nav.dropdown-toggle{ href: "#", data: {toggle: "dropdown"} }

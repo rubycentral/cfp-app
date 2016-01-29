@@ -100,7 +100,8 @@ Rails.application.routes.draw do
   end
 
   namespace 'reviewer' do
-    resources :events, only: [] do
+    resources :events, only: [:show] do
+      resources :participants, only: [:update]
       resources :proposals, only: [:index, :show, :update], param: :uuid do
         resources :ratings, only: [:create, :update], defaults: {format: :js}
       end

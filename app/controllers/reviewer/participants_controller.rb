@@ -6,8 +6,8 @@ class Reviewer::ParticipantsController < Reviewer::ApplicationController
     participant = Participant.find(params[:id])
     participant.update(participant_params)
 
-    flash[:info] = "You have successfully changed your notifications."
-    redirect_to reviewer_event_url(@event)
+    flash[:info] = "You have successfully changed your participant."
+    redirect_to :back
   end
 
   private

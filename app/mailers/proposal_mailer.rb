@@ -8,7 +8,7 @@ class ProposalMailer < ApplicationMailer
     end
 
     if to.any?
-      mail_markdown(to: @proposal.speakers.map(&:email),
+      mail_markdown(to: to,
                     from: @proposal.event.contact_email,
                     subject: "CFP #{@proposal.event.name}: You've received a comment on your proposal '#{@proposal.title}'")
     end

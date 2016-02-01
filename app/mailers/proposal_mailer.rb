@@ -3,13 +3,12 @@ class ProposalMailer < ApplicationMailer
     @proposal = proposal
     @comment = comment
 
-    bcc = @proposal.speakers.map do |speaker|
+    to = @proposal.speakers.map do |speaker|
       speaker.email if speaker.person != @comment.person
     end
 
-    if bcc.any?
+    if to.any?
       mail_markdown(to: @proposal.speakers.map(&:email),
-                    bcc: bcc,
                     from: @proposal.event.contact_email,
                     subject: "CFP #{@proposal.event.name}: You've received a comment on your proposal '#{@proposal.title}'")
     end

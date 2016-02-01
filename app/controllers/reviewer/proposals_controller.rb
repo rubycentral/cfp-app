@@ -33,7 +33,6 @@ class Reviewer::ProposalsController < Reviewer::ApplicationController
     unless @proposal.update_without_touching_updated_by_speaker_at(proposal_params)
       flash[:danger] = 'There was a problem saving the proposal.'
     end
-    redirect_to :back
   end
 
   private

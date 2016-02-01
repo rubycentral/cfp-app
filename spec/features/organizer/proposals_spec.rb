@@ -101,7 +101,7 @@ feature "Organizers can manage proposals" do
       end
 
       it "sends an email notification to the speaker" do
-        expect(ActionMailer::Base.deliveries.last.bcc).to include(speaker_person.email)
+        expect(ActionMailer::Base.deliveries.last.to).to include(speaker_person.email)
       end
     end
 
@@ -117,7 +117,7 @@ feature "Organizers can manage proposals" do
       end
 
       it "sends an email notification to the speaker" do
-        expect(ActionMailer::Base.deliveries.last.bcc).to include(speaker_person.email)
+        expect(ActionMailer::Base.deliveries.last.to).to include(speaker_person.email)
       end
     end
 
@@ -133,7 +133,7 @@ feature "Organizers can manage proposals" do
       end
 
       it "sends an email notification to the speaker" do
-        expect(ActionMailer::Base.deliveries.last.bcc).to include(speaker_person.email)
+        expect(ActionMailer::Base.deliveries.last.to).to include(speaker_person.email)
       end
     end
 

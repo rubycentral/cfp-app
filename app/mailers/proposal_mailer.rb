@@ -8,9 +8,10 @@ class ProposalMailer < ApplicationMailer
     end
 
     if bcc.any?
-      mail_markdown(bcc: bcc,
-           from: @proposal.event.contact_email,
-          subject: "CFP #{@proposal.event.name}: You've received a comment on your proposal '#{@proposal.title}'")
+      mail_markdown(to: @proposal.speakers.map(&:email),
+                    bcc: bcc,
+                    from: @proposal.event.contact_email,
+                    subject: "CFP #{@proposal.event.name}: You've received a comment on your proposal '#{@proposal.title}'")
     end
   end
 end

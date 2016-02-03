@@ -33,6 +33,7 @@ feature "Event Dashboard" do
       fill_in "Contact email", with: "me@example.com"
       fill_in "Start date", with: DateTime.now + 10.days
       fill_in "End date", with: DateTime.now + 15.days
+      fill_in "Closes at", with: DateTime.now + 15.days
       click_button 'Save'
       admin_user.reload
       expect(admin_user.organizer_events.last.name).to eql("My Other Event")

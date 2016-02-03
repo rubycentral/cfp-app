@@ -2,7 +2,7 @@
 %div{ id: "participant-change-role-#{participant.id}", class: 'modal fade' }
   .modal-dialog
     .modal-content
-      = form_for participant, url: organizer_event_participant_path(participant.event, participant), html: { role: 'form' } do |f|
+      = form_for participant, url: reviewer_event_participant_path(participant.event, participant), html: { role: 'form' } do |f|
         .modal-header
           %h3 Change participant role
         .modal-body

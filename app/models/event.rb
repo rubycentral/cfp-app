@@ -83,6 +83,10 @@ class Event < ActiveRecord::Base
     state == 'open' && closes_at < Time.current
   end
 
+  def status
+    open? ? 'open' : 'closed'
+  end
+
   def unmet_requirements_for_scheduling
     missing_prereqs = []
 

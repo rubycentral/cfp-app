@@ -12,7 +12,8 @@ class CommentNotificationMailer < ApplicationMailer
     end.compact
 
     if bcc.any?
-      mail_markdown(bcc: bcc,
+      mail_markdown(
+                    bcc: bcc,
                     from: @proposal.event.contact_email,
                     subject: "CFP #{@proposal.event.name}: A comment has been posted on '#{@proposal.title}'")
     end

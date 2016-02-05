@@ -12,11 +12,11 @@ describe Organizer::ProposalMailer do
   describe "accept_email" do
     let(:mail) { Organizer::ProposalMailer.accept_email(event, proposal) }
 
-    it "bccs to all speakers including contact_mail" do
+    it "emails to all speakers including contact_mail" do
       proposal.speakers = build_list(:speaker, 3)
       proposal.save!
-      expect(mail.bcc.count).to eq(4)
-      bcc_emails = proposal.speakers.map(&:email) << event.contact_email
+      expect(mail.to.count).to eq(3)
+      bcc_emails = event.contact_email
       expect(mail.bcc).to match_array(bcc_emails)
     end
 
@@ -44,8 +44,8 @@ describe Organizer::ProposalMailer do
     it "bccs to all speakers including contact_mail" do
       proposal.speakers = build_list(:speaker, 3)
       proposal.save!
-      expect(mail.bcc.count).to eq(4)
-      bcc_emails = proposal.speakers.map(&:email) << event.contact_email
+      expect(mail.to.count).to eq(3)
+      bcc_emails = event.contact_email
       expect(mail.bcc).to match_array(bcc_emails)
     end
 
@@ -68,8 +68,8 @@ describe Organizer::ProposalMailer do
     it "bccs to all speakers including contact_mail" do
       proposal.speakers = build_list(:speaker, 3)
       proposal.save!
-      expect(mail.bcc.count).to eq(4)
-      bcc_emails = proposal.speakers.map(&:email) << event.contact_email
+      expect(mail.to.count).to eq(3)
+      bcc_emails = event.contact_email
       expect(mail.bcc).to match_array(bcc_emails)
     end
 

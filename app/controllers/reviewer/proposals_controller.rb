@@ -4,6 +4,7 @@ class Reviewer::ProposalsController < Reviewer::ApplicationController
 
   decorates_assigned :proposal, with: Reviewer::ProposalDecorator
 
+
   def index
     proposal_ids = current_user.proposals.pluck(:id)
 

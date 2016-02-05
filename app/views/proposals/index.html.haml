@@ -7,7 +7,7 @@
     - proposals.each do |event, talks|
       %h3.margin-bottom
         = link_to event.name, event_path(event.slug), class: 'event-title'
-        %small= event.state
+        %small= event.status
         - if event.open?
           = link_to 'Submit a proposal', new_proposal_path(slug: event.slug), class: 'btn btn-primary'
       %ul

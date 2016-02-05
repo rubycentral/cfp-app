@@ -24,10 +24,6 @@ class EventDecorator < ApplicationDecorator
     h.link_to h.pluralize(object.proposals.count, 'proposal'), path
   end
 
-  def status
-    object.open? ? 'open' : 'closed'
-  end
-
   def cfp_days_remaining
     ((object.closes_at - DateTime.now).to_i / 1.day) if object.closes_at && (object.closes_at - DateTime.now).to_i / 1.day > 1
   end
@@ -62,7 +58,7 @@ class EventDecorator < ApplicationDecorator
   end
 
   def confirmed_percent
-    if proposals.count > 1
+    if proposals.accepted.confirmed.count > 0
       "#{((object.proposals.accepted.confirmed.count.to_f/object.proposals.accepted.count.to_f)*100).round(1)}%"
     else
       "0%"
@@ -70,7 +66,7 @@ class EventDecorator < ApplicationDecorator
   end
 
   def scheduled_percent
-    if proposals.count > 1
+    if proposals.scheduled.count > 0
       "#{((object.proposals.scheduled.count.to_f/object.proposals.accepted.count.to_f)*100).round(1)}%"
     else
       "0%"
@@ -78,7 +74,7 @@ class EventDecorator < ApplicationDecorator
   end
 
   def waitlisted_percent
-    if proposals.count > 1
+    if proposals.waitlisted.confirmed.count > 0
       "#{((object.proposals.waitlisted.confirmed.count.to_f/object.proposals.waitlisted.count.to_f)*100).round(1)}%"
     else
       "0%"

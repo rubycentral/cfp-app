@@ -26,6 +26,7 @@ class Event < ActiveRecord::Base
 
   validates :name, :contact_email, presence: true
   validates :slug, presence: true, uniqueness: true
+  validates :closes_at, presence: true
 
   before_validation :generate_slug
   before_save :update_closes_at_if_manually_closed

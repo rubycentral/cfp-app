@@ -27,12 +27,12 @@ class Organizer::ProposalMailer < ApplicationMailer
   private
 
   def mail_to_speakers(event, proposal, subject)
-    bcc = proposal.speakers.map(&:email)
-    if bcc.any?
-      bcc << event.contact_email
+    to = proposal.speakers.map(&:email)
+    if to.any?
       mail_markdown(
         from: event.contact_email,
-        bcc: bcc,
+        to: to,
+        bcc: event.contact_email,
         subject: subject
       )
     end

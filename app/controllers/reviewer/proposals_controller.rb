@@ -35,7 +35,7 @@ class Reviewer::ProposalsController < Reviewer::ApplicationController
       unless @proposal.update_without_touching_updated_by_speaker_at(proposal_params)
         flash[:danger] = 'There was a problem saving the proposal.'
       else
-        flash[:notice] = 'Review Tags were saved for this proposal'
+        flash[:info] = 'Review Tags were saved for this proposal'
       end
     end
 

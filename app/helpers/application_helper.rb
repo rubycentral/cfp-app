@@ -77,4 +77,12 @@ module ApplicationHelper
     body = capture { yield }
     render 'shared/modal', identifier: identifier, body: body, title: title
   end
+
+  def review_tags_url
+    if current_user.organizer_for_event?(event)
+      url = organizer_event_proposal_path(event, proposal)
+    else
+      url = reviewer_event_proposal_path(event, proposal)
+    end
+  end
 end

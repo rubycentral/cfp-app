@@ -15,7 +15,7 @@ $(function() {
   $('.js-maxlength-alert').keyup(function() {
     var maxlength = $(this).attr('maxlength');
     var current_length = $(this).val().length;
-    if (maxlength <= current_length) {
+    if (current_length > maxlength) {
       alert("Character limit of " + maxlength + " has been exceeded");
     }
   });

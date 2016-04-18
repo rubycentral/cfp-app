@@ -28,7 +28,7 @@ bin/rails server
 
 ### Environment variables
 
-[Omniauth](http://intridea.github.io/omniauth/) is set up to use Twitter and Github for logins in production. You'll want to put your own key and secret in for both. Other environment variables will include your postgres user and Rails' secret_token.
+[Omniauth](http://intridea.github.io/omniauth/) is set up to use Twitter and Github for logins in production. You'll want to put your own key and secret in for both. Other environment variables will include your postgres user and Rails' secret\_token.
 
     TIMEZONE (defaults to Pacific if not set)
     POSTGRES_USER (dev/test only)

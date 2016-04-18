@@ -28,7 +28,7 @@
           - if event && event.slug
             = link_to event.name, event_path(slug: event.slug), class: 'navbar-brand'
           - else
-            = link_to "#{Rails.application.class.parent_name}", events_path, class: 'navbar-brand'
+            = link_to image_tag('rubykaigi2016_logo.png', class: 'logo-rubykaigi2016'), events_path, class: 'navbar-brand'
 
         .collapse.navbar-collapse
           %ul.nav.navbar-nav

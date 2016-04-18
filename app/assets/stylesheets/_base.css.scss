@@ -18,7 +18,7 @@ body {
 
 .form-submit {
   border-top: 1px solid #ccc;
-  margin: 1em 0 5em;
+  margin: 64px 0 5em;
   padding-top: 1em;
 }
 .help-block {
@@ -43,6 +43,9 @@ body {
   margin-bottom:1em;
 }
 
+h1, h2, h3 {
+	margin-top: 40px;
+}
 h4 {
   margin-top: 0;
 }
@@ -112,12 +115,13 @@ h3.tags {
   display: block;
 }
 
+// color:#d9534f → color: #ffff1a, 2016.04.18
 #gravatar-alert {
   position: absolute;
   z-index: 1;
   top: 31px;
   left: 31px;
-  color: #d9534f;
+  color: #ffff1a;
 }
 
 .tooltip-inner {
@@ -223,4 +227,16 @@ h3.tags {
 
 .inline-block {
   display: inline-block;
+}
+
+// 2016.04.18
+.btn-success {
+  color: white;
+  background-color: #c22700;
+  border-color: #c22700;
+}
+.btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active {
+  color: white;
+  background-color: #af2300;
+  border-color: #af2300;
 }

@@ -121,7 +121,7 @@ class ProposalDecorator < ApplicationDecorator
 
   def abstract_input(form)
     form.input :abstract, placeholder: 'What is your talk about?',
-      maxlength: 605, input_html: { class: 'watched js-maxlength-alert', rows: 5 },
+      maxlength: 1000, input_html: { class: 'watched js-maxlength-alert', rows: 5 },
       hint: 'Provide a concise description for the program limited to 600 characters or less.'
   end
 

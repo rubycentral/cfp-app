@@ -21,7 +21,7 @@ class Proposal < ActiveRecord::Base
   # This used to be 600, but it's so confusing for users that the browser
   # uses \r\n for newlines and they're over the 600 limit because of 
   # bytes they can't see. So we give them a bit of tolerance.
-  validates :abstract, length: {maximum: 625}
+  validates :abstract, length: {maximum: 1000}
   validates :title, length: {maximum: 60}
 
   serialize :last_change

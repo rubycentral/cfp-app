@@ -1,4 +1,12 @@
-# CFP-App
+# CFP-App 2.0
+
+## WARNING
+
+This is a major upgrade from the original CFP App that is not backwards compatible.  We are in the process of rewriting many of the core data models and changing how the app works.
+
+Do not switch to this fork until further notice. We are not providing a migration path for your existing data at this time. Once this fork becomes stable we'll explore if migrating legacy cfp app databases to the new version makes sense.  Please reach out to Marty Haught if you have any questions.
+
+## Overview
 
 This is a Ruby on Rails application that lets you manage your conference's call for proposal (CFP), program and schedule.  It was written by Ruby Central to run the CFPs for RailsConf and RubyConf.
 

@@ -1,5 +1,5 @@
 class Service < ActiveRecord::Base
-  belongs_to :person
+  belongs_to :user
 end
 
 # == Schema Information
@@ -9,14 +9,14 @@ end
 #  id           :integer          not null, primary key
 #  provider     :string
 #  uid          :string
-#  person_id    :integer
+#  user_id      :integer
 #  uname        :string
+#  account_name :string
 #  uemail       :string
 #  created_at   :datetime
 #  updated_at   :datetime
-#  account_name :string
 #
 # Indexes
 #
-#  index_services_on_person_id  (person_id)
+#  index_services_on_user_id  (user_id)
 #

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'Speaker Invitations' do
   let(:second_speaker_email) { 'second_speaker@example.com' }
-  let(:user) { create(:person) }
+  let(:user) { create(:user) }
   let(:event) { create(:event, state: 'open') }
   let(:proposal) { create(:proposal,
                           title: 'Hello there',
@@ -10,7 +10,7 @@ feature 'Speaker Invitations' do
                           event: event)
   }
   let!(:speaker) { create(:speaker,
-                         person: user,
+                         user: user,
                          proposal: proposal)
   }
 
@@ -68,11 +68,11 @@ feature 'Speaker Invitations' do
   end
 
   context "Responding to an invitaiton" do
-    let(:second_speaker) { create(:person, email: second_speaker_email) }
+    let(:second_speaker) { create(:user, email: second_speaker_email) }
     let!(:invitation) { create(:invitation,
                                proposal: proposal,
                                email: second_speaker_email,
-                               person: second_speaker)
+                               user: second_speaker)
     }
     let(:other_proposal) { create(:proposal, event: event) }
     let!(:other_invitation) { create(:invitation,

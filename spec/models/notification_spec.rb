@@ -2,35 +2,35 @@ require 'rails_helper'
 
 describe Notification do
   describe ".create_for" do
-    let(:people) { create_list(:person, 3) }
+    let(:users) { create_list(:user, 3) }
 
-    it "creates notifications for a list of people" do
+    it "creates notifications for a list of users" do
       expect {
-        Notification.create_for(people)
-      }.to change { Notification.count }.by(people.count)
-      people.each { |p| expect(p.notifications.size).to eq(1) }
+        Notification.create_for(users)
+      }.to change { Notification.count }.by(users.count)
+      users.each { |p| expect(p.notifications.size).to eq(1) }
     end
 
     it "sets the notification's message" do
       message = 'test message'
-      Notification.create_for(people, message: message)
-      people.each do |p|
+      Notification.create_for(users, message: message)
+      users.each do |p|
         expect(p.notifications.first.message).to eq(message)
       end
     end
 
     it "sets the target path" do
       target_path = '/test_path'
-      Notification.create_for(people, target_path: target_path)
-      people.each do |p|
+      Notification.create_for(users, target_path: target_path)
+      users.each do |p|
         expect(p.notifications.first.target_path).to eq(target_path)
       end
     end
 
     it "uses proposal's path if proposal is present" do
       proposal = create(:proposal)
-      Notification.create_for(people, proposal: proposal)
-      people.each do |p|
+      Notification.create_for(users, proposal: proposal)
+      users.each do |p|
         expect(p.decorate.proposal_path(proposal)).to(
           eq(p.notifications.first.target_path))
       end

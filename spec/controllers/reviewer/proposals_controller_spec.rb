@@ -4,7 +4,7 @@ describe Reviewer::ProposalsController, type: :controller do
 
   let(:proposal) { create(:proposal) }
   let(:event) { proposal.event }
-  let(:reviewer) { create(:person, :reviewer) }
+  let(:reviewer) { create(:user, :reviewer) }
   let(:speaker) { create(:speaker, proposal: proposal) }
 
 
@@ -27,7 +27,7 @@ describe Reviewer::ProposalsController, type: :controller do
   end
 
   context "reviewer has a submitted proposal" do
-    let!(:speaker) { create(:speaker, person: reviewer) }
+    let!(:speaker) { create(:speaker, user: reviewer) }
     let!(:proposal) { create(:proposal, speakers: [ speaker ]) }
 
     it "prevents reviewers from viewing their own proposals" do

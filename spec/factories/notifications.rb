@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :notification do
-    person nil
+    user nil
     message "MyString"
     read_at DateTime.now
     target_path 'MyString'

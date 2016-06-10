@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 feature "User's can interact with notifications" do
-  let!(:person) { create(:person) }
+  let!(:user) { create(:user) }
   let!(:notification) {
-    create(:notification, message: 'a new message', person: person) }
+    create(:notification, message: 'a new message', user: user) }
 
   context "an authenticated user" do
-    before { login_user(person) }
+    before { login_user(user) }
 
     it "can view their notifications" do
       visit notifications_path

@@ -3,8 +3,8 @@ require 'rails_helper'
 describe Organizer::ProposalsController, type: :controller do
 
   let(:event) { create(:event) }
-  let(:person) do
-    create(:person,
+  let(:user) do
+    create(:user,
            organizer_participants:
              [ build(:participant, role: 'organizer', event: event) ],
           )
@@ -12,15 +12,15 @@ describe Organizer::ProposalsController, type: :controller do
   let(:proposal) { create(:proposal, event: event) }
 
   before do
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(person)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
   end
 
   describe "GET 'show'" do
     it "marks all notifications for this proposal as read" do
-      Notification.create_for([person], proposal: proposal, message: "A fancy notification")
+      Notification.create_for([user], proposal: proposal, message: "A fancy notification")
       expect{
         get :show, {event_id: event.id, uuid: proposal.uuid}
-      }.to change {person.notifications.unread.count}.by(-1)
+      }.to change {user.notifications.unread.count}.by(-1)
     end
   end
 

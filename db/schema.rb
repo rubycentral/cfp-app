@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151217214608) do
+ActiveRecord::Schema.define(version: 20140429143808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,11 +44,11 @@ ActiveRecord::Schema.define(version: 20151217214608) do
     t.text     "review_tags"
     t.text     "guidelines"
     t.text     "policies"
+    t.boolean  "archived",                    default: false
+    t.text     "custom_fields"
     t.hstore   "speaker_notification_emails", default: {"accept"=>"", "reject"=>"", "waitlist"=>""}
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "archived",                    default: false
-    t.text     "custom_fields"
   end
 
   add_index "events", ["slug"], name: "index_events_on_slug", using: :btree
@@ -94,9 +94,9 @@ ActiveRecord::Schema.define(version: 20151217214608) do
     t.integer  "event_id"
     t.integer  "person_id"
     t.string   "role"
+    t.boolean  "notifications", default: true
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "notifications", default: true
   end
 
   add_index "participants", ["event_id"], name: "index_participants_on_event_id", using: :btree
@@ -122,11 +122,11 @@ ActiveRecord::Schema.define(version: 20151217214608) do
     t.text     "pitch"
     t.text     "last_change"
     t.text     "confirmation_notes"
+    t.text     "proposal_data"
+    t.datetime "updated_by_speaker_at"
     t.datetime "confirmed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "updated_by_speaker_at"
-    t.text     "proposal_data"
   end
 
   add_index "proposals", ["event_id"], name: "index_proposals_on_event_id", using: :btree
@@ -149,10 +149,10 @@ ActiveRecord::Schema.define(version: 20151217214608) do
     t.string   "level"
     t.string   "address"
     t.integer  "capacity"
+    t.integer  "grid_position"
     t.integer  "event_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "grid_position"
   end
 
   add_index "rooms", ["event_id"], name: "index_rooms_on_event_id", using: :btree
@@ -162,10 +162,10 @@ ActiveRecord::Schema.define(version: 20151217214608) do
     t.string   "uid"
     t.integer  "person_id"
     t.string   "uname"
+    t.string   "account_name"
     t.string   "uemail"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "account_name"
   end
 
   add_index "services", ["person_id"], name: "index_services_on_person_id", using: :btree

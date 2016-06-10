@@ -5,6 +5,7 @@ class CreateServices < ActiveRecord::Migration
       t.string :uid
       t.references :person, index: true
       t.string :uname
+      t.string :account_name
       t.string :uemail
 
       t.timestamps

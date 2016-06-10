@@ -4,7 +4,7 @@ class CreateParticipants < ActiveRecord::Migration
       t.references :event, index: true
       t.references :person, index: true
       t.string :role
-
+      t.boolean :notifications, default: true
       t.timestamps
     end
   end

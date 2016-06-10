@@ -66,30 +66,30 @@ addons.
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
 Upon deploying to Heroku you will probably want to log in using Twitter or
-GitHub and then run `heroku run console` to update the first Person object to
+GitHub and then run `heroku run console` to update the first User object to
 be an admin like this:
 
 ```bash
-p = Person.first
-p.admin = true
-p.save
+user = User.first
+user.admin = true
+user.save
 ```
 
-Do make sure that the Person record you pull back is indeed your newly created user and the one that should get admin permissions!
+Do make sure that the User record you pull back is indeed your newly created user and the one that should get admin permissions!
 
 ## How to use the CFP App
 
 ### Creating your event
 
-You must login as an admin to create an event.  As touched on above in the deploy section you will want to either login to the app or work directly in the console.  Find your Person record or create a new one.  I do recommend you create the admin via login and then find the record via console since the Person record uses Services for authentication.  Once you find your record assign true to the admin attribute such as this:
+You must login as an admin to create an event.  As touched on above in the deploy section you will want to either login to the app or work directly in the console.  Find your User record or create a new one.  I do recommend you create the admin via login and then find the record via console since the User record uses Services for authentication.  Once you find your record assign true to the admin attribute such as this:
 
 ```bash
-p = Person.first
+p = User.first
 p.admin = true
 p.save
 ```
 
-One note, in development mode you have a special testing login called 'developer'.  With this you can login and seed a new Person record by entering name and email. Very handy for testing things locally.
+One note, in development mode you have a special testing login called 'developer'.  With this you can login and seed a new User record by entering name and email. Very handy for testing things locally.
 
 One logged in you should see your user's name with a dropdown arrow in the top right of the nav bar.  In that dropdown click on the 'Manage Events' link.  The Events page will show you all events on the system, which should be blank initially.  Click 'Add Event' to create your event.  Ideally you can fill out all this information though only name and contact email are required.
 
@@ -119,7 +119,7 @@ If you have Organizer access you will see an 'Organize' dropdown will give you t
 
 The 'Notifications' dropdown will display a count of any in app notifications you haven't read.  Clicking the dropdown will show you a list of these notifications such as 'Marty Haught has commented on <talk title>'.  You have a 'Mark all as read' and 'View all notifications' options as well.
 
-We briefly touched on the user dropdown on the far right. This is visible to all users.  From there they can sign out or visit their profile.  Their profile is how they edit their name, email or bio, allow them to connect to various services such as Github or Twitter.  If you are an admin, you will also have a People link.  This is where you manage all Person records.
+We briefly touched on the user dropdown on the far right. This is visible to all users.  From there they can sign out or visit their profile.  Their profile is how they edit their name, email or bio, allow them to connect to various services such as Github or Twitter.  If you are an admin, you will also have a Users link.  This is where you manage all User records.
 
 ### Submitting a Proposal
 

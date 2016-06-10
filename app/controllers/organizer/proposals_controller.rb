@@ -19,7 +19,7 @@ class Organizer::ProposalsController < Organizer::ApplicationController
   end
 
   def index
-    proposals = @event.proposals.includes(:event, :review_taggings, :proposal_taggings, :ratings, {speakers: :person}).load
+    proposals = @event.proposals.includes(:event, :review_taggings, :proposal_taggings, :ratings, {speakers: :user}).load
 
     session[:prev_page] = {name: 'Proposals', path: organizer_event_proposals_path}
 
@@ -74,7 +74,7 @@ class Organizer::ProposalsController < Organizer::ApplicationController
   def new
     @proposal = @event.proposals.new
     @speaker = @proposal.speakers.build
-    @person = @speaker.build_person
+    @user = @speaker.build_user
   end
 
   def create
@@ -92,11 +92,11 @@ class Organizer::ProposalsController < Organizer::ApplicationController
   private
 
   def proposal_params
-    # add updating_person to params so Proposal does not update last_change attribute when updating_person is organizer_for_event?
+    # add updating_user to params so Proposal does not update last_change attribute when updating_user is organizer_for_event?
     params.require(:proposal).permit(:title, {review_tags: []}, :abstract, :details, :pitch, :slides_url, :video_url, custom_fields: @event.custom_fields,
-                                     comments_attributes: [:body, :proposal_id, :person_id],
-                                     speakers_attributes: [:bio, :person_id, :id,
-                                                           person_attributes: [:id, :name, :email, :bio]])
+                                     comments_attributes: [:body, :proposal_id, :user_id],
+                                     speakers_attributes: [:bio, :user_id, :id,
+                                                           user_attributes: [:id, :name, :email, :bio]])
   end
 
   def send_state_mail(state)

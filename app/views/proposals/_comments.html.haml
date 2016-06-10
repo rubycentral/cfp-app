@@ -5,10 +5,10 @@
   .comment.markdown{ class: choose_class_for(comment) }
     =markdown(comment.body)
 
-    - if comment.person.present?
+    - if comment.user.present?
       .meta
         %small{ title: comment.created_at.to_s }
-          #{proposal.has_speaker?(comment.person) ? 'speaker' : comment.person.name} - #{comment.created_at.to_s(:day_at_time)}
+          #{proposal.has_speaker?(comment.user) ? 'speaker' : comment.user.name} - #{comment.created_at.to_s(:day_at_time)}
 
 = form_for comments.new do |f|
   = f.hidden_field :proposal_id

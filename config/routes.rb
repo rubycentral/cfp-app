@@ -53,7 +53,7 @@ Rails.application.routes.draw do
       post :unarchive
     end
 
-    resources :people do
+    resources :users do
       resources :services
     end
   end

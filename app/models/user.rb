@@ -1,6 +1,6 @@
 require 'digest/md5'
 
-class Person < ActiveRecord::Base
+class User < ActiveRecord::Base
   DEMOGRAPHICS      = [:gender, :ethnicity, :country]
   DEMOGRAPHIC_TYPES = {
     country: CountrySelect::countries.select{ |k,v| k != 'us'}.values.sort.unshift("United States of America")
@@ -22,7 +22,6 @@ class Person < ActiveRecord::Base
   has_many :comments,     dependent: :destroy
   has_many :notifications, dependent: :destroy
   has_many :proposals, through: :speakers, source: :proposal
-
 
   validates :email, uniqueness: { case_insensitive: true }, allow_nil: true
   validates :bio, length: { maximum: 500 }
@@ -64,8 +63,8 @@ class Person < ActiveRecord::Base
       current_user.services << service
       current_user
     else
-      logger.info "No existing person making new"
-      service.person.present? ? service.person : create_for_service(service, auth)
+      logger.info "No existing user making new"
+      service.user.present? ? service.user : create_for_service(service, auth)
     end
 
     return service, user
@@ -74,23 +73,23 @@ class Person < ActiveRecord::Base
   def self.create_for_service(service, auth)
     email = auth['info']['email'].blank? ? nil : auth['info']['email']
 
-    person = create({
+    user = create({
       name:  auth['info']['name'],
       email: email
     })
-    unless person.valid?
-      Rails.logger.warn "UNEXPECTED! Person is not valid - Errors: #{person.errors.messages}"
+    unless user.valid?
+      Rails.logger.warn "UNEXPECTED! User is not valid - Errors: #{user.errors.messages}"
     end
-    person.services << service
-    person
+    user.services << service
+    user
   end
   private_class_method :create_for_service
 
   def assign_open_invitations
     if email
-      Invitation.where("LOWER(email) = ? AND state = ? AND person_id IS NULL",
+      Invitation.where("LOWER(email) = ? AND state = ? AND user_id IS NULL",
         email.downcase, Invitation::State::PENDING).each do |invitation|
-        invitation.update_column(:person_id, id)
+        invitation.update_column(:user_id, id)
       end
     end
   end
@@ -147,7 +146,7 @@ end
 
 # == Schema Information
 #
-# Table name: people
+# Table name: users
 #
 #  id           :integer          not null, primary key
 #  name         :string

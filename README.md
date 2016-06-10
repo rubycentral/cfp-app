@@ -34,6 +34,14 @@ Start the server:
 bin/rails server
 ```
 
+If you have the heroku toolbelt installed you can also use:
+
+```bash
+heroku local
+```
+
+This will boot up using Foreman and allow the .env file to be read / set for use locally. Runs on port 5000.
+
 ### Environment variables
 
 [Omniauth](http://intridea.github.io/omniauth/) is set up to use Twitter and Github for logins in production. You'll want to put your own key and secret in for both. Other environment variables will include your postgres user and Rails' secret\_token.
@@ -60,7 +68,6 @@ addons.
 Upon deploying to Heroku you will probably want to log in using Twitter or
 GitHub and then run `heroku run console` to update the first Person object to
 be an admin like this:
-
 
 ```bash
 p = Person.first

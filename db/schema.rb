@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20140429143808) do
 
   create_table "comments", force: :cascade do |t|
     t.integer  "proposal_id"
-    t.integer  "person_id"
+    t.integer  "user_id"
     t.integer  "parent_id"
     t.text     "body"
     t.string   "type"
@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(version: 20140429143808) do
     t.datetime "updated_at"
   end
 
-  add_index "comments", ["person_id"], name: "index_comments_on_person_id", using: :btree
   add_index "comments", ["proposal_id"], name: "index_comments_on_proposal_id", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "events", force: :cascade do |t|
     t.string   "name"
@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(version: 20140429143808) do
 
   create_table "invitations", force: :cascade do |t|
     t.integer  "proposal_id"
-    t.integer  "person_id"
+    t.integer  "user_id"
     t.string   "email"
     t.string   "state",       default: "pending"
     t.string   "slug"
@@ -63,13 +63,13 @@ ActiveRecord::Schema.define(version: 20140429143808) do
     t.datetime "updated_at"
   end
 
-  add_index "invitations", ["person_id"], name: "index_invitations_on_person_id", using: :btree
   add_index "invitations", ["proposal_id", "email"], name: "index_invitations_on_proposal_id_and_email", unique: true, using: :btree
   add_index "invitations", ["proposal_id"], name: "index_invitations_on_proposal_id", using: :btree
   add_index "invitations", ["slug"], name: "index_invitations_on_slug", unique: true, using: :btree
+  add_index "invitations", ["user_id"], name: "index_invitations_on_user_id", using: :btree
 
   create_table "notifications", force: :cascade do |t|
-    t.integer  "person_id"
+    t.integer  "user_id"
     t.string   "message"
     t.datetime "read_at"
     t.string   "target_path"
@@ -77,7 +77,7 @@ ActiveRecord::Schema.define(version: 20140429143808) do
     t.datetime "updated_at"
   end
 
-  add_index "notifications", ["person_id"], name: "index_notifications_on_person_id", using: :btree
+  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
   create_table "participant_invitations", force: :cascade do |t|
     t.string   "email"
@@ -92,7 +92,7 @@ ActiveRecord::Schema.define(version: 20140429143808) do
 
   create_table "participants", force: :cascade do |t|
     t.integer  "event_id"
-    t.integer  "person_id"
+    t.integer  "user_id"
     t.string   "role"
     t.boolean  "notifications", default: true
     t.datetime "created_at"
@@ -100,17 +100,7 @@ ActiveRecord::Schema.define(version: 20140429143808) do
   end
 
   add_index "participants", ["event_id"], name: "index_participants_on_event_id", using: :btree
-  add_index "participants", ["person_id"], name: "index_participants_on_person_id", using: :btree
-
-  create_table "people", force: :cascade do |t|
-    t.string   "name"
-    t.string   "email"
-    t.text     "bio"
-    t.hstore   "demographics"
-    t.boolean  "admin",        default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+  add_index "participants", ["user_id"], name: "index_participants_on_user_id", using: :btree
 
   create_table "proposals", force: :cascade do |t|
     t.integer  "event_id"
@@ -134,14 +124,14 @@ ActiveRecord::Schema.define(version: 20140429143808) do
 
   create_table "ratings", force: :cascade do |t|
     t.integer  "proposal_id"
-    t.integer  "person_id"
+    t.integer  "user_id"
     t.integer  "score"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "ratings", ["person_id"], name: "index_ratings_on_person_id", using: :btree
   add_index "ratings", ["proposal_id"], name: "index_ratings_on_proposal_id", using: :btree
+  add_index "ratings", ["user_id"], name: "index_ratings_on_user_id", using: :btree
 
   create_table "rooms", force: :cascade do |t|
     t.string   "name"
@@ -160,7 +150,7 @@ ActiveRecord::Schema.define(version: 20140429143808) do
   create_table "services", force: :cascade do |t|
     t.string   "provider"
     t.string   "uid"
-    t.integer  "person_id"
+    t.integer  "user_id"
     t.string   "uname"
     t.string   "account_name"
     t.string   "uemail"
@@ -168,7 +158,7 @@ ActiveRecord::Schema.define(version: 20140429143808) do
     t.datetime "updated_at"
   end
 
-  add_index "services", ["person_id"], name: "index_services_on_person_id", using: :btree
+  add_index "services", ["user_id"], name: "index_services_on_user_id", using: :btree
 
   create_table "sessions", force: :cascade do |t|
     t.integer  "conference_day"
@@ -189,14 +179,14 @@ ActiveRecord::Schema.define(version: 20140429143808) do
 
   create_table "speakers", force: :cascade do |t|
     t.integer  "proposal_id"
-    t.integer  "person_id"
+    t.integer  "user_id"
     t.text     "bio"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "speakers", ["person_id"], name: "index_speakers_on_person_id", using: :btree
   add_index "speakers", ["proposal_id"], name: "index_speakers_on_proposal_id", using: :btree
+  add_index "speakers", ["user_id"], name: "index_speakers_on_user_id", using: :btree
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "proposal_id"
@@ -216,5 +206,15 @@ ActiveRecord::Schema.define(version: 20140429143808) do
   end
 
   add_index "tracks", ["event_id"], name: "index_tracks_on_event_id", using: :btree
+
+  create_table "users", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.text     "bio"
+    t.hstore   "demographics"
+    t.boolean  "admin",        default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

@@ -51,14 +51,14 @@ describe Proposal do
 
   describe "scope :emails" do
     it "returns all attached email addresses" do
-      person1 = create(:person, email: 'person1@test.com')
-      person2 = create(:person, email: 'person2@test.com')
+      user1 = create(:user, email: 'user1@test.com')
+      user2 = create(:user, email: 'user2@test.com')
 
-      create(:proposal, speakers: [ create(:speaker, person: person1) ])
-      create(:proposal, speakers: [ create(:speaker, person: person2) ])
+      create(:proposal, speakers: [ create(:speaker, user: user1) ])
+      create(:proposal, speakers: [ create(:speaker, user: user2) ])
 
       emails = Proposal.all.emails
-      expect(emails).to match_array([ person1.email, person2.email ])
+      expect(emails).to match_array([ user1.email, user2.email ])
     end
   end
 
@@ -305,12 +305,12 @@ describe Proposal do
 
   describe "#update" do
     let(:proposal) { create(:proposal, title: 't') }
-    let(:organizer) { create(:person, :organizer) }
+    let(:organizer) { create(:user, :organizer) }
 
     describe ".last_change" do
       describe "when role organizer" do
         it "is cleared" do
-          proposal.update_attributes(title: 'Organizer Edited Title', updating_person: organizer)
+          proposal.update_attributes(title: 'Organizer Edited Title', updating_user: organizer)
           expect(proposal.last_change).to be_nil
         end
       end
@@ -371,12 +371,12 @@ describe Proposal do
 
   describe "#reviewers" do
     let!(:proposal) { create(:proposal) }
-    let!(:reviewer) { create(:person, :reviewer) }
+    let!(:reviewer) { create(:user, :reviewer) }
     let!(:organizer) { create(:organizer, event: proposal.event) }
 
     it "can return the list of reviewers" do
-      create(:rating, person: reviewer, proposal: proposal)
-      proposal.public_comments.create(attributes_for(:comment, person: organizer))
+      create(:rating, user: reviewer, proposal: proposal)
+      proposal.public_comments.create(attributes_for(:comment, user: organizer))
 
       expect(proposal.reviewers).to match_array([ reviewer, organizer ])
     end
@@ -386,8 +386,8 @@ describe Proposal do
     end
 
     it "does not list a reviewer more than once" do
-      create(:rating, person: reviewer, proposal: proposal)
-      proposal.public_comments.create(attributes_for(:comment, person: reviewer))
+      create(:rating, user: reviewer, proposal: proposal)
+      proposal.public_comments.create(attributes_for(:comment, user: reviewer))
 
       expect(proposal.reviewers).to match_array([ reviewer ])
     end
@@ -396,11 +396,11 @@ describe Proposal do
   describe "#update_and_send_notifications" do
     it "sends notification to all reviewers" do
       proposal = create(:proposal, title: 'orig_title', pitch: 'orig_pitch')
-      reviewer = create(:person, :reviewer)
+      reviewer = create(:user, :reviewer)
       organizer = create(:organizer, event: proposal.event)
 
-      create(:rating, person: reviewer, proposal: proposal)
-      proposal.public_comments.create(attributes_for(:comment, person: organizer))
+      create(:rating, user: reviewer, proposal: proposal)
+      proposal.public_comments.create(attributes_for(:comment, user: organizer))
 
       expect {
         proposal.update_and_send_notifications(title: 'new_title', pitch: 'new_pitch')
@@ -414,8 +414,8 @@ describe Proposal do
 
     it "uses the old title in the notification message" do
       proposal = create(:proposal, title: 'orig_title')
-      reviewer = create(:person, :reviewer)
-      create(:rating, person: reviewer, proposal: proposal)
+      reviewer = create(:user, :reviewer)
+      create(:rating, user: reviewer, proposal: proposal)
 
       proposal.update_and_send_notifications(title: 'new_title')
       expect(Notification.last.message).to include('orig_title')
@@ -466,38 +466,38 @@ describe Proposal do
 
   describe "#has_speaker?" do
     let(:proposal) { create(:proposal) }
-    let(:person) { create(:person) }
+    let(:user) { create(:user) }
 
-    it "returns true if person is a speaker on the proposal" do
-      create(:speaker, person: person, proposal: proposal)
-      expect(proposal).to have_speaker(person)
+    it "returns true if user is a speaker on the proposal" do
+      create(:speaker, user: user, proposal: proposal)
+      expect(proposal).to have_speaker(user)
     end
 
-    it "returns false if person is not a speaker on the proposal" do
-      expect(proposal).to_not have_speaker(person)
+    it "returns false if user is not a speaker on the proposal" do
+      expect(proposal).to_not have_speaker(user)
     end
   end
 
-  describe "#was_rated_by_person?" do
+  describe "#was_rated_by_user?" do
     let(:proposal) { create(:proposal) }
-    let(:reviewer) { create(:person, :reviewer) }
+    let(:reviewer) { create(:user, :reviewer) }
 
-    it "returns true if person has rated the proposal" do
-      create(:rating, person: reviewer, proposal: proposal)
-      expect(proposal.was_rated_by_person?(reviewer)).to be_truthy
+    it "returns true if user has rated the proposal" do
+      create(:rating, user: reviewer, proposal: proposal)
+      expect(proposal.was_rated_by_user?(reviewer)).to be_truthy
     end
 
-    it "returns false if person has not rated the proposal" do
-      expect(proposal.was_rated_by_person?(reviewer)).to be_falsey
+    it "returns false if user has not rated the proposal" do
+      expect(proposal.was_rated_by_user?(reviewer)).to be_falsey
     end
   end
 
   describe "#has_reviewer_comments?" do
     let(:proposal) { create(:proposal) }
-    let(:reviewer) { create(:person, :reviewer) }
+    let(:reviewer) { create(:user, :reviewer) }
 
     it "returns true if proposal has reviewer comments" do
-      create(:internal_comment, person: reviewer, proposal: proposal)
+      create(:internal_comment, user: reviewer, proposal: proposal)
       expect(proposal).to have_reviewer_comments
     end
 

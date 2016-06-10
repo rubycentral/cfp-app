@@ -3,13 +3,13 @@ require 'rails_helper'
 describe Organizer::ParticipantsController, type: :controller do
   describe 'POST #create' do
     let(:event) { create(:event) }
-    let(:organizer_user) { create(:person) }
+    let(:organizer_user) { create(:user) }
     let!(:organizer_participant) { create(:participant,
                                          event: event,
-                                         person: organizer_user,
+                                         user: organizer_user,
                                          role: 'organizer')
     }
-    let!(:other_user) { create(:person, email: 'foo@bar.com') }
+    let!(:other_user) { create(:user, email: 'foo@bar.com') }
 
 
     context "A valid organizer" do
@@ -22,7 +22,7 @@ describe Organizer::ParticipantsController, type: :controller do
 
       it "can retrieve autocompleted emails" do
         email = 'name@example.com'
-        create(:person, email: email)
+        create(:user, email: email)
         get :emails, event_id: event, term: 'n', format: :json
         expect(response.body).to include(email)
       end
@@ -47,10 +47,10 @@ describe Organizer::ParticipantsController, type: :controller do
 
     context "An unauthorized organizer" do
       let(:event2) { create(:event) }
-      let(:sneaky_organizer) { create(:person) }
+      let(:sneaky_organizer) { create(:user) }
 
       before do
-        create(:participant, person: sneaky_organizer, event: event2,
+        create(:participant, user: sneaky_organizer, event: event2,
                role: 'organizer')
         allow(controller).to receive(:current_user).and_return(sneaky_organizer)
       end

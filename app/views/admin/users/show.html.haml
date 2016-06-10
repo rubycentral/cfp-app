@@ -1,19 +1,19 @@
 .row
   %fieldset.col-md-12
     %h1
-      = person.name
-      = link_to 'Edit', edit_admin_person_path(person), class: 'btn btn-primary btn-xs'
+      = user.name
+      = link_to 'Edit', edit_admin_user_path(user), class: 'btn btn-primary btn-xs'
     %h5
-      = person.email
+      = user.email
     %p
-      - if person.demographics
-        - Person::DEMOGRAPHICS.each do |type|
+      - if user.demographics
+        - User::DEMOGRAPHICS.each do |type|
           %p
             = "#{type}:"
-            = person.demographics[type.to_s]
+            = user.demographics[type.to_s]
     %h5 Bio
     %p
-      = person.bio
+      = user.bio
 
 .row
   .col-md-12
@@ -26,7 +26,7 @@
           %th Status
           %th Abstract
       %tbody
-        - person.proposals.to_a.group_by(&:event).each do |event, talks|
+        - user.proposals.to_a.group_by(&:event).each do |event, talks|
           - talks.each do |proposal|
             %tr
               %td= link_to event.name, event_path(event.slug)
@@ -45,7 +45,7 @@
           %th Created At
           %th.actions Actions
       %tbody
-        - person.participants.each do |participant|
+        - user.participants.each do |participant|
           %tr
             %td= link_to participant.event.name, event_path(participant.event.slug)
             %td= participant.role

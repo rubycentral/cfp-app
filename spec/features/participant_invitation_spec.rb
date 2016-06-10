@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Participant Invitations' do
-  let(:user) { create(:person) }
+  let(:user) { create(:user) }
   let(:invitation) { create(:participant_invitation, role: 'organizer') }
   let(:event) { create(:event) }
 

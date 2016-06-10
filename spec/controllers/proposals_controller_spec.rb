@@ -16,7 +16,7 @@ describe ProposalsController, type: :controller do
 
   describe 'POST #create' do
     let(:proposal) { build_stubbed(:proposal, uuid: 'abc123') }
-    let(:user) { create(:person) }
+    let(:user) { create(:user) }
     let(:params) {
       {
         slug: event.slug,
@@ -28,7 +28,7 @@ describe ProposalsController, type: :controller do
           speakers_attributes: {
             '0' => {
               bio: 'my bio',
-              person_id: user.id
+              user_id: user.id
             }
           }
         }
@@ -67,7 +67,7 @@ describe ProposalsController, type: :controller do
       authorized = create(:speaker)
       unauthorized = create(:speaker)
       proposal = create(:proposal, event: event, speakers: [ authorized ], state: "accepted")
-      allow_any_instance_of(ProposalsController).to receive(:current_user) { unauthorized.person }
+      allow_any_instance_of(ProposalsController).to receive(:current_user) { unauthorized.user }
       post :confirm, slug: event.slug, uuid: proposal.uuid
       expect(response).to be_success
     end
@@ -92,7 +92,7 @@ describe ProposalsController, type: :controller do
 
   describe 'POST #withdraw' do
     let(:proposal) { create(:proposal, event: event) }
-    let(:user) { create(:person) }
+    let(:user) { create(:user) }
     before { allow(controller).to receive(:current_user).and_return(user) }
 
     it "sets the state to withdrawn for unconfirmed proposals" do
@@ -107,7 +107,7 @@ describe ProposalsController, type: :controller do
     end
 
     it "sends an in-app notification to reviewers" do
-      create(:rating, proposal: proposal, person: create(:organizer))
+      create(:rating, proposal: proposal, user: create(:organizer))
       expect {
         post :withdraw, slug: event.slug, uuid: proposal.uuid
       }.to change { Notification.count }.by(1)
@@ -118,7 +118,7 @@ describe ProposalsController, type: :controller do
     let(:speaker) { create(:speaker) }
     let(:proposal) { create(:proposal, speakers: [ speaker ] ) }
 
-    before { login(speaker.person) }
+    before { login(speaker.user) }
 
     it "updates a proposals attributes" do
       proposal.update(title: 'orig_title', pitch: 'orig_pitch')
@@ -133,7 +133,7 @@ describe ProposalsController, type: :controller do
     it "sends a notifications to an organizer" do
       proposal.update(title: 'orig_title', pitch: 'orig_pitch')
       organizer = create(:organizer, event: proposal.event)
-      create(:rating, proposal: proposal, person: organizer)
+      create(:rating, proposal: proposal, user: organizer)
 
       expect {
         put :update, slug: proposal.event.slug, uuid: proposal,

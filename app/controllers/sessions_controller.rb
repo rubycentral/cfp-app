@@ -12,15 +12,15 @@ class SessionsController < ApplicationController
   end
 
   def create
-logger.info "Authenticating user credentials: #{auth_hash.inspect}"
-    service, user = Person.authenticate(auth_hash, current_user)
+    logger.info "Authenticating user credentials: #{auth_hash.inspect}"
+    service, user = User.authenticate(auth_hash, current_user)
     if user
       session[:uid] = user.id
       session[:sid] = service.id
-logger.info "Session set to uid:#{session[:uid]}, sid:#{session[:sid]}"
+      logger.info "Session set to uid:#{session[:uid]}, sid:#{session[:sid]}"
 
       flash.now[:info] = "You have signed in with #{params[:provider].capitalize}."
-logger.info "Signing in user #{user.inspect}"
+      logger.info "Signing in user #{user.inspect}"
 
       assign_open_invitations if session[:invitation_slug].present?
 
@@ -51,10 +51,10 @@ logger.info "Signing in user #{user.inspect}"
     invitation = Invitation.find_by(slug: session[:invitation_slug])
 
     if invitation
-      Invitation.where("LOWER(email) = ? AND state = ? AND person_id IS NULL",
+      Invitation.where("LOWER(email) = ? AND state = ? AND user_id IS NULL",
                        invitation.email.downcase,
                        Invitation::State::PENDING).each do |invitation|
-        invitation.update_column(:person_id, current_user)
+        invitation.update_column(:user_id, current_user)
       end
     end
   end

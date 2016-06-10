@@ -3,21 +3,21 @@ FactoryGirl.define do
     "email#{n}@factory.com"
   end
 
-  factory :person do
+  factory :user do
     name "John Doe"
     email
     demographics { { gender: "female" } }
     bio "A great Bio"
 
     trait :reviewer do
-      after(:create) do |person|
-        FactoryGirl.create(:participant, :reviewer, person: person)
+      after(:create) do |user|
+        FactoryGirl.create(:participant, :reviewer, user: user)
       end
     end
 
     trait :organizer do
-      after(:create) do |person|
-        FactoryGirl.create(:participant, :organizer, person: person)
+      after(:create) do |user|
+        FactoryGirl.create(:participant, :organizer, user: user)
       end
     end
 
@@ -30,8 +30,8 @@ FactoryGirl.define do
         event { build(:event) }
       end
 
-      after(:create) do |person, evaluator|
-        participant = person.organizer_participants.first
+      after(:create) do |user, evaluator|
+        participant = user.organizer_participants.first
         participant.event = evaluator.event
         participant.event.save
       end
@@ -42,8 +42,8 @@ FactoryGirl.define do
         event { build(:event) }
       end
 
-      after(:create) do |person, evaluator|
-        participant = person.reviewer_participants.first
+      after(:create) do |user, evaluator|
+        participant = user.reviewer_participants.first
         participant.event = evaluator.event
         participant.save
       end

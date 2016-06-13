@@ -1,5 +1,5 @@
-def login(person)
-  session[:uid] = person.id
+def login(user)
+  session[:uid] = user.id
 end
 
 def logout

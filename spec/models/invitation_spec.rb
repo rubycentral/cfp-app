@@ -2,19 +2,19 @@ require 'rails_helper'
 
 describe Invitation do
   describe "#create" do
-    let!(:person) { create(:person, email: 'foo@example.com') }
+    let!(:user) { create(:user, email: 'foo@example.com') }
     let(:proposal) { create(:proposal) }
     let(:invitation) { create(:invitation, email: 'foo@example.com', slug: 'foo', proposal: proposal) }
 
-    context "When a person record matches by email" do
-      it "locates the person record" do
-        expect(Person).to receive(:where).and_return([person])
+    context "When a user record matches by email" do
+      it "locates the user record" do
+        expect(User).to receive(:where).and_return([user])
         create(:invitation, email: 'foo@example.com', slug: 'foo', proposal: proposal)
       end
 
-      it "assigns the person record to the invitation" do
+      it "assigns the user record to the invitation" do
         invitation.reload
-        expect(invitation.person).to eq(person)
+        expect(invitation.user).to eq(user)
       end
     end
 

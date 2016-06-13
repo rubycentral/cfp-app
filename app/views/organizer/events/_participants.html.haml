@@ -21,16 +21,16 @@
       %tbody
         - participants.each do |participant|
           %tr
-            %td= participant.person.name
-            %td= participant.person.email
-            %td= rating_counts[participant.person.id] || 0
+            %td= participant.user.name
+            %td= participant.user.email
+            %td= rating_counts[participant.user.id] || 0
             %td= participant.role
             %td.notifications
               = participant.comment_notifications
-              - if participant.person == current_user
+              - if participant.user == current_user
                 = render partial: 'organizer/events/participant_notifications', locals: {participant: participant}
             %td.actions
-              - unless participant.person == current_user
+              - unless participant.user == current_user
                 = render partial: 'organizer/events/participant_controls', locals: { participant: participant }
 %div{ id: "new-participant-event-#{event.id}", class: 'modal fade' }
   .modal-dialog

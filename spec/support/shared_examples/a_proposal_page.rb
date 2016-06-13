@@ -9,7 +9,7 @@ shared_examples "a proposal page" do |path_method|
     context "commenting" do
 
       before do
-        create(:rating, proposal: proposal, person: reviewer)
+        create(:rating, proposal: proposal, user: reviewer)
         visit send(path_method, event, proposal)
       end
 

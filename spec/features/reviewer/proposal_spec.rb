@@ -2,36 +2,36 @@ require 'rails_helper'
 
 feature "Review Proposals" do
   let(:event) { create(:event, state: 'open') }
-  let(:reviewer_person) {create(:person) }
+  let(:reviewer_user) {create(:user) }
 
   # First proposal
-  let(:user) { create(:person) }
+  let(:user) { create(:user) }
   let(:proposal) { create(:proposal,
                           title: 'First Proposal',
                           abstract: 'Well then.',
                           event: event)
   }
   let!(:speaker) { create(:speaker,
-                         person: user,
+                         user: user,
                          proposal: proposal)
   }
 
   # Another proposal
-  let(:user2) { create(:person) }
+  let(:user2) { create(:user) }
   let(:proposal2) { create(:proposal,
                           title: 'Second Proposal',
                           abstract: 'This is second.',
                           event: event)
   }
   let!(:speaker2) { create(:speaker,
-                         person: user2,
+                         user: user2,
                          proposal: proposal2)
   }
 
   # Reviewer
-  let!(:reviewer_participant) { create(:participant, :reviewer, person: reviewer_person, event: event) }
+  let!(:reviewer_participant) { create(:participant, :reviewer, user: reviewer_user, event: event) }
 
-  before { login_user(reviewer_person) }
+  before { login_user(reviewer_user) }
 
   context "When viewing proposal list" do
     it "shows the proposal list" do
@@ -42,10 +42,10 @@ feature "Review Proposals" do
 
     it "only shows the average rating if you've rated it" do
       # logged-in user rates `proposal` as a 4
-      reviewer_person.ratings.create(proposal: proposal, score: 4)
+      reviewer_user.ratings.create(proposal: proposal, score: 4)
 
       # someone else has rated `proposal2` as a 4
-      other_reviewer = create(:participant, :reviewer, event: event).person
+      other_reviewer = create(:participant, :reviewer, event: event).user
       other_reviewer.ratings.create(proposal: proposal2, score: 4)
 
       visit reviewer_event_proposals_path(event)
@@ -67,7 +67,7 @@ feature "Review Proposals" do
                                       event: event)
     }
     let!(:reviewer_speaker) { create(:speaker,
-                                     person: reviewer_person,
+                                     user: reviewer_user,
                                      proposal: reviewer_proposal)
     }
 

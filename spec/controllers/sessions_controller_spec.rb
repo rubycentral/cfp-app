@@ -3,8 +3,8 @@ require 'rails_helper'
 describe SessionsController, type: :controller do
   describe '#create' do
     let(:auth_hash) { double("OmniAuth::AuthHash") }
-    let(:user) { build_stubbed(:person) }
-    let(:service) { build_stubbed(:service, person: user) }
+    let(:user) { build_stubbed(:user) }
+    let(:service) { build_stubbed(:service, user: user) }
     let(:invitation) { build_stubbed(:invitation, slug: "abc123", email: 'foo@example.com') }
     let(:other_invitation) { build_stubbed(:invitation, slug: "def456", email: 'foo@example.com') }
 
@@ -14,8 +14,8 @@ describe SessionsController, type: :controller do
       allow(controller).to receive(:current_user).and_return(user)
     end
 
-    it "adds any pending invitations to the new person record" do
-      allow(Person).to receive(:authenticate).with(auth_hash, user).and_return([service, user])
+    it "adds any pending invitations to the new user record" do
+      allow(User).to receive(:authenticate).with(auth_hash, user).and_return([service, user])
       allow(Invitation).to receive(:find_by).and_return(invitation)
       allow(Invitation).to receive(:where).and_return([other_invitation])
 

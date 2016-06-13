@@ -97,7 +97,7 @@
                   %li= link_to 'Sign Out', signout_path
                   - if current_user && current_user.admin?
                     %li.divider
-                    %li= link_to 'People', admin_people_path
+                    %li= link_to 'Users', admin_users_path
                     %li= link_to 'Manage Events', admin_events_path
 
           - else
@@ -107,7 +107,7 @@
   - if on_organizer_page?
     .alert-viewer-mode
       .container
-        Viewing as: 
+        Viewing as:
         %strong Organizer
 
   #flash= show_flash

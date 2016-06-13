@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :participant do
     event { Event.first || FactoryGirl.create(:event) }
-    person { Person.first || FactoryGirl.create(:person) }
+    user { User.first || FactoryGirl.create(:user) }
 
     trait :reviewer do
       role 'reviewer'

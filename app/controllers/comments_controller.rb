@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
     @proposal = Proposal.find(comment_params[:proposal_id])
 
     comment_attributes = comment_params.merge(proposal: @proposal,
-                                              person: current_user)
+                                              user: current_user)
 
     case comment_type
     when 'PublicComment'

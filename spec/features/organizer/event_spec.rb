@@ -2,25 +2,25 @@ require 'rails_helper'
 
 feature "Event Dashboard" do
   let(:event) { create(:event, name: "My Event") }
-  let(:admin_user) { create(:person, admin: true) }
+  let(:admin_user) { create(:user, admin: true) }
   let!(:admin_participant) { create(:participant,
                                    event: event,
-                                   person: admin_user,
+                                   user: admin_user,
                                    role: 'organizer'
                                   )
   }
 
-  let(:organizer_user) { create(:person) }
+  let(:organizer_user) { create(:user) }
   let!(:organizer_participant) { create(:participant,
                                        event: event,
-                                       person: organizer_user,
+                                       user: organizer_user,
                                        role: 'organizer')
   }
 
-  let(:reviewer_user) { create(:person) }
+  let(:reviewer_user) { create(:user) }
   let!(:reviewer_participant) { create(:participant,
                                       event: event,
-                                      person: reviewer_user,
+                                      user: reviewer_user,
                                       role: 'reviewer')
   }
 
@@ -73,17 +73,17 @@ feature "Event Dashboard" do
       expect(page).not_to have_link('Delete Event')
     end
 
-    it "can promote a person" do
-      person = create(:person)
+    it "can promote a user" do
+      user = create(:user)
       visit organizer_event_path(event)
       click_link 'Add/Invite New Participant'
 
       form = find('#new_participant')
-      form.fill_in :email, with: person.email
+      form.fill_in :email, with: user.email
       form.select 'organizer', from: 'Role'
       form.click_button('Save')
 
-      expect(person).to be_organizer_for_event(event)
+      expect(user).to be_organizer_for_event(event)
     end
 
     it "can promote a participant" do

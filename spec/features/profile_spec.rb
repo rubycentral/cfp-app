@@ -12,7 +12,6 @@ feature 'User Profile' do
 
   before { login_as(user) }
 
-
   scenario "A user can save demographics info" do
     visit(edit_profile_path)
     select_demographics(gender: 'female', ethnicity: 'Asian', country: 'Albania')

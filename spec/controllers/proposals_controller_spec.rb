@@ -118,7 +118,7 @@ describe ProposalsController, type: :controller do
     let(:speaker) { create(:speaker) }
     let(:proposal) { create(:proposal, speakers: [ speaker ] ) }
 
-    before { login(speaker.user) }
+    before { sign_in(speaker.user) }
 
     it "updates a proposals attributes" do
       proposal.update(title: 'orig_title', pitch: 'orig_pitch')

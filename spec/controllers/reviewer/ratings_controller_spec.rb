@@ -6,7 +6,7 @@ describe Reviewer::RatingsController, type: :controller do
   let(:reviewer) { create(:user, :reviewer) }
   let!(:speaker) { create(:speaker, proposal: proposal) }
 
-  before { login reviewer }
+  before { sign_in(reviewer) }
 
   context "reviewer has a submitted proposal" do
     let!(:speaker) { create(:speaker, user: reviewer) }

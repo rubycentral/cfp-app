@@ -5,7 +5,7 @@ feature "Organizers can manage the program" do
   let(:proposal) { create(:proposal, state: Proposal::State::ACCEPTED) }
   let(:organizer) { create(:organizer, event: proposal.event) }
 
-  before { login_user(organizer) }
+  before { login_as(organizer) }
 
   context "Viewing the program" do
     it "can view the program" do

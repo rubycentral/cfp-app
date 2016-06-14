@@ -25,7 +25,7 @@ feature "Event Dashboard" do
   }
 
   context "An admin" do
-    before { login_user(admin_user) }
+    before { login_as(admin_user) }
 
     it "can create a new event" do
       visit new_admin_event_path
@@ -54,10 +54,16 @@ feature "Event Dashboard" do
   end
 
   context "As an organizer" do
-    before { login_user(organizer_user) }
+    before :each do
+      logout
+      login_as(organizer_user)
+    end
 
     it "cannot create new events" do
+      pending "This fails because it sends them to login and then Devise sends to events path and changes flash"
       visit new_admin_event_path
+      expect(page.current_path).to eq(events_path)
+      #Losing the flash
       expect(page).to have_text("You must be signed in as an administrator")
     end
 

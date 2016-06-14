@@ -15,7 +15,7 @@ feature 'Speaker Invitations' do
   }
 
   let(:go_to_proposal) {
-    login_user(user)
+    login_as(user)
     visit(proposal_path(slug: proposal.event.slug, uuid: proposal))
   }
 
@@ -67,7 +67,7 @@ feature 'Speaker Invitations' do
     end
   end
 
-  context "Responding to an invitaiton" do
+  context "Responding to an invitation" do
     let(:second_speaker) { create(:user, email: second_speaker_email) }
     let!(:invitation) { create(:invitation,
                                proposal: proposal,
@@ -81,7 +81,7 @@ feature 'Speaker Invitations' do
     }
 
     before :each do
-      login_user(second_speaker)
+      login_as(second_speaker)
       visit invitation_url(invitation, invitation_slug: invitation.slug)
     end
 

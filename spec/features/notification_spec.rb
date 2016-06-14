@@ -6,7 +6,7 @@ feature "User's can interact with notifications" do
     create(:notification, message: 'a new message', user: user) }
 
   context "an authenticated user" do
-    before { login_user(user) }
+    before { login_as(user) }
 
     it "can view their notifications" do
       visit notifications_path

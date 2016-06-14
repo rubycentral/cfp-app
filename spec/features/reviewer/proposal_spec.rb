@@ -31,7 +31,7 @@ feature "Review Proposals" do
   # Reviewer
   let!(:reviewer_participant) { create(:participant, :reviewer, user: reviewer_user, event: event) }
 
-  before { login_user(reviewer_user) }
+  before { login_as(reviewer_user) }
 
   context "When viewing proposal list" do
     it "shows the proposal list" do

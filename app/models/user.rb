@@ -1,6 +1,12 @@
 require 'digest/md5'
 
 class User < ActiveRecord::Base
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, #:validatable,
+         :omniauthable, omniauth_providers: [:twitter, :github]
+
   DEMOGRAPHICS      = [:gender, :ethnicity, :country]
   DEMOGRAPHIC_TYPES = {
     country: CountrySelect::countries.select{ |k,v| k != 'us'}.values.sort.unshift("United States of America")
@@ -11,7 +17,6 @@ class User < ActiveRecord::Base
   store_accessor :demographics, :country
 
   has_many :invitations,  dependent: :destroy
-  has_many :services,     dependent: :destroy
   has_many :participants, dependent: :destroy
   has_many :reviewer_participants, -> { where(role: ['reviewer', 'organizer']) }, class_name: 'Participant'
   has_many :reviewer_events, through: :reviewer_participants, source: :event
@@ -23,67 +28,23 @@ class User < ActiveRecord::Base
   has_many :notifications, dependent: :destroy
   has_many :proposals, through: :speakers, source: :proposal
 
-  validates :email, uniqueness: { case_insensitive: true }, allow_nil: true
   validates :bio, length: { maximum: 500 }
-  validates :name, :presence => true, allow_nil: true
+  validates :name, presence: true, allow_nil: true
+  validates_uniqueness_of :email, allow_blank: true
+  validates_format_of :email, with: Devise.email_regexp, allow_blank: true, if: :email_changed?
+  validates_presence_of :password, on: :create
+  validates_confirmation_of :password, on: :create
+  validates_length_of :password, within: Devise.password_length, allow_blank: true
 
-  def self.authenticate(auth, current_user = nil)
-    provider = auth['provider']
-    uid      = auth['uid'].to_s
-    account_name = auth['info']['nickname']
-    service = Service.where(provider: provider, uid: uid).first
-
-    if service.nil?
-      # Some users have had issues with oauth returning a different ID when they
-      # attempt to sign in. So, in the event that we can't find a service with
-      # the returned uid, we'll try to match on the returned account name.
-      service = Service.where(provider: provider, account_name: account_name).first
-
-      if service
-        logger.info {
-          "Service match on UID: #{uid} failed, but succeeded on account_name: #{account_name}" }
-      end
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      password = Devise.friendly_token[0,20]
+      user.name = auth['info']['name']   # assuming the user model has a name
+      user.email = auth['info']['email'] || ''
+      user.password = password
+      user.password_confirmation = password
     end
-
-    service_attributes = {
-      provider: provider,
-      uid: uid,
-      account_name: account_name,
-      uname: auth['info']['name'],
-      uemail: auth['info']['email']
-    }
-
-    if service
-      service.update(service_attributes)
-    else
-      service = Service.create(service_attributes)
-    end
-
-    user = if current_user
-      current_user.services << service
-      current_user
-    else
-      logger.info "No existing user making new"
-      service.user.present? ? service.user : create_for_service(service, auth)
-    end
-
-    return service, user
   end
-
-  def self.create_for_service(service, auth)
-    email = auth['info']['email'].blank? ? nil : auth['info']['email']
-
-    user = create({
-      name:  auth['info']['name'],
-      email: email
-    })
-    unless user.valid?
-      Rails.logger.warn "UNEXPECTED! User is not valid - Errors: #{user.errors.messages}"
-    end
-    user.services << service
-    user
-  end
-  private_class_method :create_for_service
 
   def assign_open_invitations
     if email
@@ -103,7 +64,7 @@ class User < ActiveRecord::Base
   end
 
   def connected?(provider)
-    self.services.detect {|s| s.provider == provider}
+    self.provider == provider
   end
 
   def complete?
@@ -148,12 +109,27 @@ end
 #
 # Table name: users
 #
-#  id           :integer          not null, primary key
-#  name         :string
-#  email        :string
-#  bio          :text
-#  demographics :hstore
-#  admin        :boolean          default(FALSE)
-#  created_at   :datetime
-#  updated_at   :datetime
+#  id                     :integer          not null, primary key
+#  name                   :string
+#  email                  :string           default(""), not null
+#  bio                    :text
+#  demographics           :hstore
+#  admin                  :boolean          default(FALSE)
+#  created_at             :datetime
+#  updated_at             :datetime
+#  encrypted_password     :string           default(""), not null
+#  reset_password_token   :string
+#  reset_password_sent_at :datetime
+#  remember_created_at    :datetime
+#  sign_in_count          :integer          default(0), not null
+#  current_sign_in_at     :datetime
+#  last_sign_in_at        :datetime
+#  current_sign_in_ip     :inet
+#  last_sign_in_ip        :inet
+#  provider               :string
+#  uid                    :string
+#
+# Indexes
+#
+#  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #

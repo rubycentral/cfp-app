@@ -4,7 +4,7 @@ feature "Organizers can manage participants" do
   let(:event) { create(:event) }
   let(:organizer) { create(:organizer, event: event) }
 
-  before { login_user(organizer) }
+  before { login_as(organizer) }
 
   context "adding a new participant" do
     it "autocompletes email addresses", js: true do

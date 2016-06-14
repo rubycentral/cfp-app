@@ -8,7 +8,7 @@ describe Reviewer::ProposalsController, type: :controller do
   let(:speaker) { create(:speaker, proposal: proposal) }
 
 
-  before { login reviewer }
+  before { sign_in(reviewer) }
 
   describe "GET 'show'" do
     it "marks all notifications for this proposal as read" do

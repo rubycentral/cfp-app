@@ -12,7 +12,7 @@ feature "Organizers can manage proposals" do
   let!(:speaker) { create(:speaker, proposal: proposal, user: speaker_user) }
 
   before :each do
-    login_user(organizer_user)
+    login_as(organizer_user)
   end
 
   after { ActionMailer::Base.deliveries.clear }

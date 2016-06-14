@@ -10,7 +10,7 @@ end
 feature 'User Profile' do
   let(:user) { create(:user) }
 
-  before { login_user(user) }
+  before { login_as(user) }
 
 
   scenario "A user can save demographics info" do
@@ -18,6 +18,7 @@ feature 'User Profile' do
     select_demographics(gender: 'female', ethnicity: 'Asian', country: 'Albania')
     click_button 'Save'
 
+    user.reload
     expect(user.demographics['gender']).to eq("female")
     expect(user.demographics['ethnicity']).to eq("Asian")
     expect(user.demographics['country']).to eq("Albania")
@@ -32,6 +33,7 @@ feature 'User Profile' do
     select_demographics(gender: 'not listed here', ethnicity: 'Caucasian', country: 'Algeria')
     click_button 'Save'
 
+    user.reload
     expect(user.demographics['gender']).to eq('not listed here')
     expect(user.demographics['ethnicity']).to eq('Caucasian')
     expect(user.demographics['country']).to eq('Algeria')
@@ -42,6 +44,7 @@ feature 'User Profile' do
     fill_in('Bio', with: 'I am awesome')
     click_button 'Save'
 
+    user.reload
     expect(user.bio).to eq('I am awesome')
   end
 
@@ -54,6 +57,7 @@ feature 'User Profile' do
     fill_in('Bio', with: 'I am even more awesome')
     click_button 'Save'
 
+    user.reload
     expect(user.bio).to eq('I am even more awesome')
   end
 

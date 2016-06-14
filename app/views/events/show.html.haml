@@ -1,7 +1,7 @@
 .row
   .col-md-11
     %h1
-      = event
+      = link_to(event, organizer_event_url(event))
       %small= event.status
   .col-md-1
     .share.pull-right= event.tweet_button

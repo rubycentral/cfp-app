@@ -21,7 +21,7 @@ class Organizer::SessionTypesController < Organizer::ApplicationController
       redirect_to organizer_event_session_types_path(@event)
     else
       flash[:danger] = 'Unable to create session type.'
-      render :edit
+      render :new
     end
   end
 

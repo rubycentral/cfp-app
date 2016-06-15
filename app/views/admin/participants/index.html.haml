@@ -7,8 +7,8 @@
       %h2= role.capitalize.pluralize
       - role_participants.each do |participant|
         .participant
-          = participant.person.name 
-          (#{participant.person.email})
+          = participant.user.name
+          (#{participant.user.email})
           = form_tag admin_event_participant_path(event, participant), method: :delete, data: {confirm: 'Are you sure?'}, style: 'display: inline' do
             %button.btn.btn-danger.btn-xs{:type => "submit"}
               %span.glyphicon.glyphicon-trash

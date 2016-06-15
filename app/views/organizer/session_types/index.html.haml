@@ -1,0 +1,25 @@
+.row
+  %h1 Event Session Types
+  - if @session_types.any?
+    %table.table.table-striped
+      %thead
+        %tr
+          %th Name
+          %th Description
+          %th Duration
+          %th Public
+          %th{colspan: '2'}
+      %tbody
+        - @session_types.each do |st|
+          %tr
+            %td= st.name
+            %td= truncate(st.description, length: 80)
+            %td= st.duration
+            %td= 'X' if st.public?
+            %td.action-edit= link_to 'Edit', edit_organizer_event_session_type_path(@event, st)
+            %td.action-destroy= link_to 'Destroy', organizer_event_session_type_path(@event, st), method: :delete, data: { confirm: 'Are you sure?' }
+  -else
+    %p No session types defined for this event.
+
+  %br
+  %span.action-new= link_to 'New', new_organizer_event_session_type_path(@event)

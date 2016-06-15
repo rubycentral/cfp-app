@@ -7,8 +7,8 @@ class ParticipantInvitation < ActiveRecord::Base
 
   validates_uniqueness_of :email, scope: :event
 
-  def create_participant(person)
-    event.participants.create(person: person, role: role)
+  def create_participant(user)
+    event.participants.create(user: user, role: role)
   end
 
   private

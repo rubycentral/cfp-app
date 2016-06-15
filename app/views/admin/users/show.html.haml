@@ -1,0 +1,55 @@
+.row
+  %fieldset.col-md-12
+    %h1
+      = user.name
+      = link_to 'Edit', edit_admin_user_path(user), class: 'btn btn-primary btn-xs'
+    %h5
+      = user.email
+    %p
+      - if user.demographics
+        - User::DEMOGRAPHICS.each do |type|
+          %p
+            = "#{type}:"
+            = user.demographics[type.to_s]
+    %h5 Bio
+    %p
+      = user.bio
+
+.row
+  .col-md-12
+    %h3 Proposals
+    %table.datatable.table.table-striped
+      %thead
+        %tr
+          %th Event
+          %th Title
+          %th Status
+          %th Abstract
+      %tbody
+        - user.proposals.to_a.group_by(&:event).each do |event, talks|
+          - talks.each do |proposal|
+            %tr
+              %td= link_to event.name, event_path(event.slug)
+              %td= link_to proposal.title, proposal_path(slug: proposal.event.slug, uuid: proposal)
+              %td= proposal.state
+              %td= truncate(proposal.abstract, length: 80)
+
+.row
+  .col-md-12
+    %h3 Participation
+    %table.datatable.table.table-striped
+      %thead
+        %tr
+          %th Event
+          %th Role
+          %th Created At
+          %th.actions Actions
+      %tbody
+        - user.participants.each do |participant|
+          %tr
+            %td= link_to participant.event.name, event_path(participant.event.slug)
+            %td= participant.role
+            %td= participant.created_at
+            %td.actions
+              - if current_user.organizer_events.include?(participant.event)
+                = render partial: 'organizer/events/participant_controls', locals: { participant: participant }

@@ -8,7 +8,7 @@ class ProfilesController < ApplicationController
   end
 
   def update
-    if current_user.update_attributes(person_params) && current_user.complete?
+    if current_user.update_attributes(user_params) && current_user.complete?
       current_user.assign_open_invitations if session[:need_to_complete]
       redirect_to (session.delete(:target) || root_url), info: "We've updated your profile. Thanks!"
     else
@@ -23,7 +23,7 @@ class ProfilesController < ApplicationController
 
   private
 
-  def person_params
-    params.require(:person).permit(:bio, :gender, :ethnicity, :country, :name, :email)
+  def user_params
+    params.require(:user).permit(:bio, :gender, :ethnicity, :country, :name, :email, :password, :password_confirmation)
   end
 end

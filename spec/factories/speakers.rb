@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :speaker do
-    person
+    user
     bio 'Factory bio'
   end
 end

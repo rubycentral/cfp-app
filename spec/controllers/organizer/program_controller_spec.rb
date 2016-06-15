@@ -5,7 +5,7 @@ describe Organizer::ProgramController, type: :controller do
 
   describe "GET #show" do
     it "returns http success" do
-      login(create(:organizer, event: event))
+      sign_in(create(:organizer, event: event))
       get :show, event_id: event
       expect(response).to be_success
     end

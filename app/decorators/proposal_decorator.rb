@@ -27,8 +27,8 @@ class ProposalDecorator < ApplicationDecorator
     h.number_with_precision(object.average_rating, precision: 1) || ''
   end
 
-  def score_for(person)
-    person.rating_for(object).score
+  def score_for(user)
+    user.rating_for(object).score
   end
 
   def review_tags

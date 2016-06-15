@@ -9,6 +9,7 @@ class Event < ActiveRecord::Base
   has_many :rooms, dependent: :destroy
   has_many :tracks, dependent: :destroy
   has_many :sessions, dependent: :destroy
+  has_many :session_types, dependent: :destroy
   has_many :taggings, through: :proposals
   has_many :ratings, through: :proposals
   has_many :participant_invitations

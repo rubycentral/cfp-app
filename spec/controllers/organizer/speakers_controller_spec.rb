@@ -9,7 +9,7 @@ describe Organizer::SpeakersController, type: :controller do
     it "returns a list of speaker emails" do
       proposal = create(:proposal, event: event)
       speakers = create_list(:speaker, 5, proposal: proposal)
-      login(create(:organizer, event: event))
+      sign_in(create(:organizer, event: event))
       xhr :get, :emails, event_id: event, proposal_ids: [ proposal.id ]
       speakers.each do |speaker|
         expect(response.body).to match(speaker.email)

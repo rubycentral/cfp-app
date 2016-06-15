@@ -81,6 +81,7 @@ Rails.application.routes.draw do
       resources :rooms, only: [:create, :update, :destroy]
       resources :tracks, only: [:create, :destroy]
       resources :sessions, except: :show
+      resources :session_types, except: :show
       resources :proposals, param: :uuid do
         resources :speakers, only: [:new, :create]
         post :finalize

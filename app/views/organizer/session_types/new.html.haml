@@ -1,0 +1,6 @@
+.row
+  %fieldset.col-md-6
+    %h2 New Session Type
+    = form_for @session_type, url: organizer_event_session_types_path(@event), html: {method: 'post', role: 'form'} do |f|
+      = render partial: 'form', locals: {f: f}
+      %button.btn.btn-success{type: 'submit'} Save

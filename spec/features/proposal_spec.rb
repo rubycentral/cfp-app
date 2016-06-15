@@ -2,6 +2,7 @@ require 'rails_helper'
 
 feature "Proposals" do
   let(:user) { create(:user) }
+
   let(:event) { create(:event, state: 'open') }
   let(:go_to_new_proposal) { visit new_proposal_path(slug: event.slug) }
   let(:create_proposal) do
@@ -13,7 +14,7 @@ feature "Proposals" do
     click_button 'Submit Proposal'
   end
 
-  before { login_user(user) }
+  before { login_as(user) }
   after { ActionMailer::Base.deliveries.clear }
 
   context "when submitting" do

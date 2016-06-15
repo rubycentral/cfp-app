@@ -1,2 +1,1 @@
-admin = User.create(name: "Admin", email: "an@admin.com", admin: true,)
-admin.services.create(provider: "developer", uid: admin.email, uname: admin.name, uemail: admin.email)
+admin = User.create(name: "Admin", email: "an@admin.com", admin: true, password: "12345678", password_confirmation: "12345678")

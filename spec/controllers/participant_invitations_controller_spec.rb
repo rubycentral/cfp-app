@@ -6,7 +6,7 @@ describe ParticipantInvitationsController, type: :controller do
   describe "GET 'accept'" do
     let(:user) { create(:user) }
 
-    before { login(user) }
+    before { sign_in(user) }
 
     it "creates a new participant for current user" do
       expect {

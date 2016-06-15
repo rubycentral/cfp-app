@@ -8,7 +8,7 @@ feature "Listing events for different roles" do
 
   context "As a regular user" do
     scenario "the user should see a link to to the proposals for an event" do
-      login_user(normal_user)
+      login_as(normal_user)
       visit events_path
       expect(page).to have_link('1 proposal', href: event_path(event.slug))
     end
@@ -17,7 +17,7 @@ feature "Listing events for different roles" do
   context "As an organizer" do
     scenario "the organizer should see a link to the index for managing proposals" do
       create(:participant, role: 'organizer', user: organizer)
-      login_user(organizer)
+      login_as(organizer)
       visit events_path
       expect(page).to have_link('1 proposal', href: organizer_event_proposals_path(event))
     end

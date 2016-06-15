@@ -94,7 +94,7 @@
                   %b.caret
                 %ul.dropdown-menu
                   %li= link_to 'My Profile', edit_profile_path
-                  %li= link_to 'Sign Out', signout_path
+                  %li= link_to 'Sign Out', destroy_user_session_path, method: :delete
                   - if current_user && current_user.admin?
                     %li.divider
                     %li= link_to 'Users', admin_users_path
@@ -102,7 +102,7 @@
 
           - else
             %ul.nav.navbar-nav.navbar-right
-              %li= link_to 'Log in', new_session_path
+              %li= link_to 'Log in', new_user_session_path
 
   - if on_organizer_page?
     .alert-viewer-mode

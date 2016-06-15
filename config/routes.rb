@@ -1,15 +1,17 @@
 Rails.application.routes.draw do
 
+  root 'home#show'
+
   resources :notifications, only: [:index, :show] do
     post :mark_all_as_read, on: :collection
   end
 
-  root 'home#show'
+  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
 
-  match '/auth/:provider/callback' => 'sessions#create', via: [:get, :post]
-  get '/auth/failure' => 'sessions#new', error: true
-  get '/signout' => 'sessions#destroy', as: :signout
-  resource :session, only: [:new, :create, :destroy]
+  #match '/auth/:provider/callback' => 'sessions#create', via: [:get, :post]
+  #get '/auth/failure' => 'sessions#new', error: true
+  #get '/signout' => 'sessions#destroy', as: :signout
+  #resource :session, only: [:new, :create, :destroy]
 
   resource :profile, only: [:edit, :update]
   resource :public_comments, only: [:create], controller: :comments, type: 'PublicComment'

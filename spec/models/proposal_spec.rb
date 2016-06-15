@@ -71,8 +71,8 @@ describe Proposal do
     end
 
     it "limits abstracts to 600 characters or less" do
-      expect(build(:proposal, abstract: "S" * 600)).to be_valid
-      expect(build(:proposal, abstract: "S" * 601)).not_to be_valid
+      expect(build(:proposal, abstract: "S" * 625)).to be_valid
+      expect(build(:proposal, abstract: "S" * 626)).not_to be_valid
     end
   end
 

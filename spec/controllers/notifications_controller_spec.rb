@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe NotificationsController, type: :controller do
   let(:user) { create(:user) }
-  before { login(user) }
+  before { sign_in(user) }
 
   describe "GET 'index'" do
     it "returns http success" do
@@ -11,9 +11,9 @@ describe NotificationsController, type: :controller do
     end
 
     it "redirects an unauthenticated user" do
-      logout
+      sign_out(user)
       get :index
-      expect(response).to redirect_to(new_session_url)
+      expect(response).to redirect_to(new_user_session_url)
     end
   end
 

@@ -2,80 +2,65 @@ require 'rails_helper'
 
 describe User do
 
-  describe ".authenticate" do
-    let(:uid) { '123' }
-    let(:provider) { 'developer' }
-    let(:name) { 'Name' }
-    let(:email) { 'name@example.com' }
+  describe ".from_omniauth" do
+    let(:uid) { '123456' }
+    let(:provider) { 'twitter' }
+    let(:twitter_auth_hash) { OmniAuth.config.mock_auth[:twitter] }
+    let(:github_auth_hash) { OmniAuth.config.mock_auth[:github] }
+    let(:name) { OmniAuth.config.mock_auth[:twitter].info.name }
+    let(:email) { 'test@omniuser.com' }
     let(:account_name) { 'testuser' }
-    let(:auth_hash) do
-      {
-        'provider' => provider,
-        'uid' => uid,
-        'info' => {
-          'name' => name,
-          'email' => email,
-          'nickname' => account_name
-        }
-      }
-    end
 
     context "User already exists" do
-      let!(:user) { create(:user, email: email, name: name) }
+      let!(:user) { create(:user, email: email, name: OmniAuth.config.mock_auth[:github].info.name, uid: OmniAuth.config.mock_auth[:github].uid, provider: "github") }
 
-      it "doesn't create a new user" do
+      it "doesn't create a new user from github auth hash when user exists with email" do
         expect {
-          User.authenticate(auth_hash, user)
+          User.from_omniauth(github_auth_hash)
         }.to_not change { User.count }
       end
 
       context "Using a new service" do
-        it "creates a new service" do
-          service, user = nil, nil
+        it "logs in with Twitter" do
+          user = nil
           expect {
-            service, user = User.authenticate(auth_hash, user)
-          }.to change { Service.count }.by(1)
+            user = User.from_omniauth(twitter_auth_hash)
+          }.to change { User.count }.by(1)
 
-          expect(service.uemail).to eq(email)
-          expect(service.uname).to eq(name)
+          expect(user.email).to eq("")
+          expect(user.name).to eq(name)
         end
 
-        it "adds the new service to the user" do
-          service, returned_user = User.authenticate(auth_hash, user)
-          expect(user.services).to match_array([service])
+        it "adds the new provider to the user" do
+          returned_user = User.from_omniauth(twitter_auth_hash)
+          expect(returned_user.provider).to eq("twitter")
         end
 
-        it "returns the provided user" do
-          service, returned_user = User.authenticate(auth_hash, user)
+        it "returns the provided user via Github" do
+          returned_user = User.from_omniauth(github_auth_hash)
           expect(returned_user).to eq(user)
         end
       end
 
       context "Using an existing service" do
-        let!(:service) {
-          create(:service, provider: provider, uid: uid, account_name: account_name, user: user) }
+        let!(:user) { create(:user, email: email, name: OmniAuth.config.mock_auth[:github].info.name, uid: OmniAuth.config.mock_auth[:github].uid, provider: "github") }
 
-        it "doesn't create a new service" do
+        it "doesn't create a new provider" do
           expect {
-            User.authenticate(auth_hash, user)
-          }.to_not change { Service.count }
-        end
-
-        it "doesn't add new services to the user" do
-          service, user = User.authenticate(auth_hash, user)
-          expect(user.services).to match_array([service])
+            User.from_omniauth(twitter_auth_hash)
+          }.to_not change { user.provider }
         end
 
         # Some users have had issues with oauth returning a different ID when they are signing in
         context "with a new oauth ID" do
           it "finds the correct user" do
-            service, user = nil, nil
+            user = nil
             expect {
-              service, user = User.authenticate(auth_hash.merge('uid' => 'different'), user)
+              user = User.from_omniauth(twitter_auth_hash.merge('uid' => 'different'))
             }.to_not change { User.count }
 
             expect(user.email).to eq(email)
-            expect(service.account_name).to eq(account_name)
+            expect(user.provider).to eq("twitter")
             expect(user.name).to eq(name)
           end
         end
@@ -84,34 +69,35 @@ describe User do
 
     context "User doesn't yet exist" do
       it "creates a new user" do
-        expect { User.authenticate(auth_hash) }.to change { User.count }.by(1)
+        expect { User.from_omniauth(twitter_auth_hash) }.to change { User.count }.by(1)
       end
 
       it "sets user's email and name" do
-        service, user = User.authenticate(auth_hash)
+        #No email returned by twitter so use github
+        user = User.from_omniauth(github_auth_hash)
         expect(user.email).to eq(email)
         expect(user.name).to eq(name)
       end
 
-      it "creates a new service for user" do
-        service, user = nil, nil
+      it "creates a new provider for user" do
+        user = nil
         expect {
-          service, user = User.authenticate(auth_hash)
-        }.to change { Service.count }.by(1)
-        expect(user.services).to eq([service])
+          user = User.from_omniauth(twitter_auth_hash)
+        }.to change { User.count }.by(1)
+        expect(user.provider).to eq("twitter")
       end
     end
 
     context "User doesn't have an email" do
-      let(:email) { '' }
+      let(:email) { "" }
 
       it "creates a new user" do
-        expect { User.authenticate(auth_hash) }.to change { User.count }.by(1)
+        expect { User.from_omniauth(twitter_auth_hash) }.to change { User.count }.by(1)
       end
 
-      it "sets user's email to nil while still setting name" do
-        service, user = User.authenticate(auth_hash)
-        expect(user.email).to eq(nil)
+      it "sets user's email to '' while still setting name for Twitter" do
+        user = User.from_omniauth(twitter_auth_hash)
+        expect(user.email).to eq("")
         expect(user.name).to eq(name)
       end
     end
@@ -132,11 +118,9 @@ describe User do
   end
 
   describe "#connected?" do
-    it "returns true for a connected service provider" do
+    it "returns true for a connected provider" do
       provider = 'github'
-      user = create(:user)
-      create(:service, provider: provider, user: user)
-
+      user = create(:user, provider: provider)
       expect(user).to be_connected(provider)
     end
 
@@ -148,17 +132,17 @@ describe User do
 
   describe "#complete?" do
     it "returns true if name and email are present" do
-      user = create(:user, name: 'Harry', email: 'harry@hogwarts.edu')
+      user = build(:user, name: 'Harry', email: 'harry@hogwarts.edu')
       expect(user).to be_complete
     end
 
     it "returns false if name is missing" do
-      user = create(:user, name: nil, email: 'harry@hogwarts.edu')
+      user = build(:user, name: nil, email: 'harry@hogwarts.edu')
       expect(user).to_not be_complete
     end
 
     it "returns false if email is missing" do
-      user = create(:user, name: 'Harry', email: nil)
+      user = build(:user, name: 'Harry', email: nil)
       expect(user).to_not be_complete
     end
   end

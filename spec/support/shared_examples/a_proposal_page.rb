@@ -3,7 +3,7 @@ shared_examples "a proposal page" do |path_method|
   let!(:proposal) { create(:proposal, event: event) }
   let!(:reviewer) { create(:organizer, event: event) }
 
-  before { login_user(reviewer) }
+  before { login_as(reviewer) }
 
   context "a reviewer" do
     context "commenting" do

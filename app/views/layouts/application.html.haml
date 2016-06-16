@@ -26,7 +26,6 @@
             %span.icon-bar
             %span.icon-bar
           - if event && event.slug
-            -# - is_single_event = true
             = link_to event.name, event_path(slug: event.slug), class: 'navbar-brand'
           - else
             = link_to "#{Rails.application.class.parent_name}", events_path, class: 'navbar-brand'
@@ -38,15 +37,17 @@
               - if current_user.proposals.any?
                 %li= link_to "My Proposals", proposals_path
 
-              - if current_user.reviewer? && event && event.proposals.any?
-                - unless event.archived?
-                  %li= link_to "Review Proposals", reviewer_event_proposals_path(event.id)
+              - if current_user.reviewer? && event
+                - if event.id != nil
+                  - unless event.archived?
+                    %li= link_to "Review Proposals", reviewer_event_proposals_path(event.id)
 
               - if current_user.organizer? && event
-                - unless event.archived?
-                  %li= link_to "Organize Proposals", organizer_event_proposals_path(event)
-                  %li= link_to "Program", organizer_event_program_path(event)
-                  %li= link_to "Schedule", organizer_event_sessions_path(event)
+                - if event.id != nil
+                  - unless event.archived?
+                    %li= link_to "Organize Proposals", organizer_event_proposals_path(event)
+                    %li= link_to "Program", organizer_event_program_path(event)
+                    %li= link_to "Schedule", organizer_event_sessions_path(event)
 
               %li= link_to "Notifications", notifications_path
 

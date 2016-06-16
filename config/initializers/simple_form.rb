@@ -52,7 +52,7 @@ SimpleForm.setup do |config|
   end
 
   #Checkbox wrappers
-  config.wrappers :inline_checkbox, tag: 'div', class: 'control-group', error_class: 'error' do | b |
+  config.wrappers :inline_checkbox, tag: 'div', class: 'form-group col-sm-12', error_class: 'error' do | b |
     b.use :html5
     b.wrapper tag: 'div', class: 'checkbox' do | ba |
       ba.use :label_input

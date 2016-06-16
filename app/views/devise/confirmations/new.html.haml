@@ -4,12 +4,12 @@
 
 .row
   = simple_form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f|
-    = f.error_notification
-    = f.full_error :confirmation_token
 
     .form-inputs
       .col-sm-5
         .well.clearfix
+          = f.error_notification
+          = f.full_error :confirmation_token
           = f.input :email, required: true, autofocus: true, wrapper_html: {class: "col-sm-12"}
 
           .form-actions.form-group.col-sm-12

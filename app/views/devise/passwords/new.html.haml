@@ -4,11 +4,11 @@
 
 .row
   = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
-    = f.error_notification
 
     .form-inputs
       .col-sm-5
         .well.clearfix
+          = f.error_notification
           = f.input :email, required: true, autofocus: true, wrapper_html: {class: "col-sm-12"}
 
           .form-actions.form-group.col-sm-12

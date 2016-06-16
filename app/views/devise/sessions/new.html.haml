@@ -4,11 +4,11 @@
 
 .row
   = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-    = f.error_notification
 
     .form-inputs
       .col-sm-5
         .well.clearfix
+          = f.error_notification
           = f.input :email, required: false, autofocus: true, wrapper_html: {class: "col-sm-12"}
           = f.input :password, required: false, wrapper_html: {class: "col-sm-12"}
           = f.input :remember_me, as: :boolean, wrapper: :inline_checkbox if devise_mapping.rememberable?

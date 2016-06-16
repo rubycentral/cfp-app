@@ -32,6 +32,7 @@ class User < ActiveRecord::Base
   validates :name, presence: true, allow_nil: true
   validates_uniqueness_of :email, allow_blank: true
   validates_format_of :email, with: Devise.email_regexp, allow_blank: true, if: :email_changed?
+  validates_presence_of :email, on: :create, if: -> { provider.nil? }
   validates_presence_of :password, on: :create
   validates_confirmation_of :password, on: :create
   validates_length_of :password, within: Devise.password_length, allow_blank: true

@@ -19,7 +19,7 @@ class ProfilesController < ApplicationController
 
       redirect_to (session.delete(:target) || root_url)
     else
-      if current_user.email == "" && current_user.unconfirmed_email.empty?
+      if current_user.email == "" && current_user.unconfirmed_email.nil?
         current_user.errors[:email].clear
         current_user.errors[:email] = " can't be blank"
         flash.now[:danger] = "Unable to save profile. Please correct the following: #{current_user.errors.full_messages.join(', ')}."

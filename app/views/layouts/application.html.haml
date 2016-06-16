@@ -34,7 +34,7 @@
           %ul.nav.navbar-nav
           - if user_signed_in?
             %ul.nav.navbar-nav.navbar-right
-              - if current_user.proposals
+              - if current_user.proposals.any?
                 %li.dropdown
                   %a.dropdown-toggle{ href: "#", data: {toggle: "dropdown"} }
                     Speaking

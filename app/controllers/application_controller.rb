@@ -6,8 +6,10 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user
   helper_method :current_event
+  helper_method :set_current_event
   helper_method :user_signed_in?
   helper_method :reviewer?
+  helper_method :organizer?
 
   layout 'application'
   decorates_assigned :event
@@ -15,11 +17,21 @@ class ApplicationController < ActionController::Base
   private
 
   def current_event
+    @current_event ||= Event.find_by(id: session[:current_event_id])
+  end
 
+  def set_current_event
+    if user_signed_in?
+      session[:current_event_id] = event.id
+    end
   end
 
   def reviewer?
     @is_reviewer ||= current_user.reviewer?
+  end
+
+  def organizer?
+    @is_organizer ||= current_user.organizer?
   end
 
   def user_signed_in?

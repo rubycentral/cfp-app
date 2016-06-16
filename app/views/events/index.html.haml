@@ -1,6 +1,12 @@
 - events.each do |event|
   .event
-    %h1
-      = link_to(event, organizer_event_url(event))
+    - if current_user && current_user.organizer?
+      %h1= link_to(event, organizer_event_path(event))
+      %small= event.status
+    - elsif current_user && current_user.reviewer?
+      %h1= link_to(event, reviewer_event_path(event))
+      %small= event.status
+    - elsif current_user
+      %h1= link_to(event, event_path(event.slug))
       %small= event.status
     = event.path_for(current_user)

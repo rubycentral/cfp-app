@@ -17,7 +17,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def check_current_user
     if current_user.present?
-      flash[:alert] = I18n.t("devise.failure.already_authenticated")
+      flash[:info] = I18n.t("devise.failure.already_authenticated")
       redirect_to(events_url)
     end
   end
@@ -31,6 +31,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       assign_open_invitations if session[:invitation_slug].present?
       logger.info "Signing in user #{@user.inspect}"
 
+      @user.skip_confirmation!
       sign_in @user
 
       if @user.complete?

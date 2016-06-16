@@ -54,6 +54,7 @@ module ApplicationHelper
 
   def show_flash
     flash.map do |key, value|
+      key += " alert-info" if key == "notice"
       content_tag(:div, class: "container alert alert-dismissable alert-#{key}") do
         content_tag(:button, content_tag(:span, '', class: 'glyphicon glyphicon-remove'),
                     class: 'close', data: {dismiss: 'alert'}) +

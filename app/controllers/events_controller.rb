@@ -8,6 +8,5 @@ class EventsController < ApplicationController
   end
 
   def show
-    set_current_event
   end
 end

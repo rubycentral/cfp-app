@@ -25,6 +25,8 @@ feature "A user only sees information for the current event" do
     within ".navbar" do
       expect(page).to have_content(event_1.name)
     end
+
+    expect(current_event.id).to eq(1)
   end
 
   scenario "User flow for a speaker when there is no live event" do

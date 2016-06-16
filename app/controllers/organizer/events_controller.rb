@@ -8,8 +8,6 @@ class Organizer::EventsController < Organizer::ApplicationController
   end
 
   def show
-    set_current_event
-
     participants = @event.participants.includes(:user).recent
     rating_counts = @event.ratings.group(:user_id).count
 

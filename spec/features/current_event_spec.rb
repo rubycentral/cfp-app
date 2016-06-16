@@ -3,7 +3,7 @@ require 'rails_helper'
 feature "A user only sees information for the current event" do
   let!(:normal_user) { create(:user) }
 
-  scenario "User flow when there is a live event" do
+  scenario "User flow for a speaker when there is a live event" do
     event_1 = create(:event, state: "open")
     event_2 = create(:event, state: "closed")
 
@@ -19,9 +19,15 @@ feature "A user only sees information for the current event" do
 
     expect(page).to have_link(event_1.name)
     expect(page).to_not have_link(event_2.name)
+
+    find("h1").click
+    expect(current_path).to eq(event_path(event_1.slug))
+    within ".navbar" do
+      expect(page).to have_content(event_1.name)
+    end
   end
 
-  scenario "User flow when there is no live event" do
+  scenario "User flow for a speaker when there is no live event" do
     event_1 = create(:event, state: "closed")
     event_2 = create(:event, state: "closed")
 
@@ -39,6 +45,33 @@ feature "A user only sees information for the current event" do
     expect(page).to have_link(event_2.name)
 
     click_on event_2.name
-    # expect(current_path).to eq()
+    expect(current_path).to eq(event_path(event_2.slug))
+    within ".navbar" do
+      expect(page).to have_content(event_2.name)
+    end
+  end
+
+  scenario "User flow for a reviewer when there is a live event" do
+
+  end
+
+  scenario "User flow for a reviewer when there is a no live event" do
+
+  end
+
+  scenario "User flow for a organizer when there is a live event" do
+
+  end
+
+  scenario "User flow for a organizer when there is a no live event" do
+
+  end
+
+  scenario "User flow for a admin when there is a live event" do
+
+  end
+
+  scenario "User flow for a admin when there is a no live event" do
+
   end
 end

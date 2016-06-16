@@ -28,17 +28,6 @@
         = f.label :password_confirmation
         = f.password_field :password_confirmation, class: 'form-control', placeholder: 'Confirm password'
 
-      - if Rails.env.development?
-        .service
-          - if current_user.connected?('developer')
-            %button.btn.btn-success
-              %i.glyphicon.glyphicon-user
-              | Connected via Developer
-          - else
-            = link_to '/auth/developer', class: 'btn btn-default' do
-              %i.glyphicon.glyphicon-user
-              | Connect via Developer
-
       .service
         - if current_user.provider.present?
           %button.btn.btn-success.disabled

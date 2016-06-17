@@ -7,15 +7,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, #:validatable,
          :omniauthable, omniauth_providers: [:twitter, :github]
 
-  DEMOGRAPHICS      = [:gender, :ethnicity, :country]
-  DEMOGRAPHIC_TYPES = {
-    country: CountrySelect::countries.select{ |k,v| k != 'us'}.values.sort.unshift("United States of America")
-  }
-
-  store_accessor :demographics, :gender
-  store_accessor :demographics, :ethnicity
-  store_accessor :demographics, :country
-
   has_many :invitations,  dependent: :destroy
   has_many :participants, dependent: :destroy
   has_many :reviewer_participants, -> { where(role: ['reviewer', 'organizer']) }, class_name: 'Participant'
@@ -71,10 +62,6 @@ class User < ActiveRecord::Base
     self.name.present? && self.email.present?
   end
 
-  def demographics_complete?
-    gender.present? && ethnicity.present? && country.present?
-  end
-
   def organizer?
     organizer_events.count > 0
   end
@@ -113,7 +100,6 @@ end
 #  name                   :string
 #  email                  :string           default(""), not null
 #  bio                    :text
-#  demographics           :hstore
 #  admin                  :boolean          default(FALSE)
 #  created_at             :datetime
 #  updated_at             :datetime

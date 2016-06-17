@@ -14,9 +14,6 @@
         = f.text_area :bio, class: 'form-control', placeholder: 'Bio', rows: 8
 
     %fieldset.col-md-4
-      %h2 Demographics
-      %p= render :partial => 'shared/demographics', :locals => {:f => f}
-
       %h2 Services
       - user.services.each do |service|
         %p

@@ -84,10 +84,6 @@
                   %li.text-right= link_to 'View all notifications', notifications_path
 
               %li.dropdown
-                - unless current_user.demographics_complete?
-                  #gravatar-alert-container
-                    = link_to edit_profile_path, {id: "gravatar-alert", data: {toggle: "tooltip", placement: "bottom"}, title: "Click here to finish filling out your demographics information" } do
-                      %span.glyphicon.glyphicon-exclamation-sign
                 %a.dropdown-toggle.gravatar-container{ href: "#", data: { toggle: "dropdown" } }
                   = image_tag("https://www.gravatar.com/avatar/#{current_user.gravatar_hash}?s=25", class: 'user-dropdown-gravatar')
                   &nbsp; #{current_user.name}

@@ -8,7 +8,6 @@ FactoryGirl.define do
     email
     password "12345678"
     password_confirmation "12345678"
-    demographics { { gender: "female" } }
     bio "A great Bio"
 
     trait :reviewer do

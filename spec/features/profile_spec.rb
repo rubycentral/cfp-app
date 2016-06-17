@@ -1,43 +1,9 @@
 require 'rails_helper'
 
-def select_demographics(args)
-  fill_in 'user[gender]',    with: args[:gender]
-  fill_in 'user[ethnicity]', with: args[:ethnicity]
-
-  select(args[:country], from: 'user[country]')
-end
-
 feature 'User Profile' do
   let(:user) { create(:user) }
 
   before { login_as(user) }
-
-
-  scenario "A user can save demographics info" do
-    visit(edit_profile_path)
-    select_demographics(gender: 'female', ethnicity: 'Asian', country: 'Albania')
-    click_button 'Save'
-
-    user.reload
-    expect(user.demographics['gender']).to eq("female")
-    expect(user.demographics['ethnicity']).to eq("Asian")
-    expect(user.demographics['country']).to eq("Albania")
-  end
-
-  scenario "A user can change their demographic info" do
-    visit(edit_profile_path)
-    select_demographics(gender: 'female', ethnicity: 'Asian', country: 'Albania')
-    click_button 'Save'
-
-    visit(edit_profile_path)
-    select_demographics(gender: 'not listed here', ethnicity: 'Caucasian', country: 'Algeria')
-    click_button 'Save'
-
-    user.reload
-    expect(user.demographics['gender']).to eq('not listed here')
-    expect(user.demographics['ethnicity']).to eq('Caucasian')
-    expect(user.demographics['country']).to eq('Algeria')
-  end
 
   scenario "A user can save their bio" do
     visit(edit_profile_path)

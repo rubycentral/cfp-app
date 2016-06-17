@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 feature "Proposals" do
-  let(:user) { create(:person) }
+  let(:user) { create(:user) }
+
   let(:event) { create(:event, state: 'open') }
   let(:go_to_new_proposal) { visit new_proposal_path(slug: event.slug) }
   let(:create_proposal) do
@@ -13,7 +14,7 @@ feature "Proposals" do
     click_button 'Submit Proposal'
   end
 
-  before { login_user(user) }
+  before { login_as(user) }
   after { ActionMailer::Base.deliveries.clear }
 
   context "when submitting" do
@@ -90,7 +91,7 @@ feature "Proposals" do
     before { proposal.update(state: Proposal::State::ACCEPTED) }
 
     context "when the proposal has not yet been confirmed" do
-      let!(:speaker) { create(:speaker, proposal: proposal, person: user) }
+      let!(:speaker) { create(:speaker, proposal: proposal, user: user) }
 
       before do
         visit confirm_proposal_path(slug: proposal.event.slug, uuid: proposal)
@@ -107,7 +108,7 @@ feature "Proposals" do
     end
 
     context "when the proposal has already been confirmed" do
-      let!(:speaker) { create(:speaker, proposal: proposal, person: user) }
+      let!(:speaker) { create(:speaker, proposal: proposal, user: user) }
 
       before do
         proposal.update(confirmed_at: DateTime.now)
@@ -134,7 +135,7 @@ feature "Proposals" do
 
   context "when deleted" do
     let(:proposal) { create(:proposal, event: event, state: Proposal::State::SUBMITTED) }
-    let!(:speaker) { create(:speaker, proposal: proposal, person: user) }
+    let!(:speaker) { create(:speaker, proposal: proposal, user: user) }
 
     before do
       visit proposal_path(slug: event.slug, uuid: proposal)
@@ -148,7 +149,7 @@ feature "Proposals" do
 
   context "when withdrawn" do
     let(:proposal) { create(:proposal, :with_reviewer_public_comment, event: event, state: Proposal::State::SUBMITTED) }
-    let!(:speaker) { create(:speaker, proposal: proposal, person: user) }
+    let!(:speaker) { create(:speaker, proposal: proposal, user: user) }
 
     before do
       visit proposal_path(slug: event.slug, uuid: proposal)

@@ -6,7 +6,7 @@ class PublicComment < Comment
 
   # Send emails to speakers when reviewer creates a comment
   def send_emails
-    if person.reviewer_for_event?(proposal.event)
+    if user.reviewer_for_event?(proposal.event)
       ProposalMailer.comment_notification(proposal, self).deliver_now
     end
   end
@@ -19,15 +19,15 @@ class PublicComment < Comment
   #      only the speakers get an in app and email notification.
   def create_notifications
 
-    if person.reviewer_for_event?(proposal.event)
-      people = proposal.speakers.map(&:person)
-      message = "#{person.name} has commented on #{proposal.title}"
+    if user.reviewer_for_event?(proposal.event)
+      users = proposal.speakers.map(&:user)
+      message = "#{user.name} has commented on #{proposal.title}"
     else
-      people = proposal.reviewers
+      users = proposal.reviewers
       message = "The author has commented on #{proposal.title}"
     end
 
-    Notification.create_for(people, proposal: proposal, message: message)
+    Notification.create_for(users, proposal: proposal, message: message)
   end
 end
 
@@ -37,7 +37,7 @@ end
 #
 #  id          :integer          not null, primary key
 #  proposal_id :integer
-#  person_id   :integer
+#  user_id     :integer
 #  parent_id   :integer
 #  body        :text
 #  type        :string
@@ -46,6 +46,6 @@ end
 #
 # Indexes
 #
-#  index_comments_on_person_id    (person_id)
 #  index_comments_on_proposal_id  (proposal_id)
+#  index_comments_on_user_id      (user_id)
 #

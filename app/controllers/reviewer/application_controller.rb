@@ -10,7 +10,7 @@ class Reviewer::ApplicationController < ApplicationController
     unless reviewer_signed_in?
       session[:target] = request.path
       flash[:danger] = "You must be signed in as an reviewer to access this page."
-      redirect_to new_session_url
+      redirect_to new_user_session_url
     end
   end
 

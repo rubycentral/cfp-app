@@ -4,12 +4,12 @@ class Reviewer::RatingsController < Reviewer::ApplicationController
   decorates_assigned :proposal
 
   def create
-    @rating = Rating.find_or_create_by(proposal: @proposal, person: current_user)
+    @rating = Rating.find_or_create_by(proposal: @proposal, user: current_user)
     @rating.update_attributes(rating_params)
     if @rating.save
       respond_with @rating, locals: {rating: @rating}
     else
-      logger.warn("Error creating rating for proposal [#{@proposal.id}] for person [#{current_user.id}]: #{@rating.errors.full_messages}")
+      logger.warn("Error creating rating for proposal [#{@proposal.id}] for user [#{current_user.id}]: #{@rating.errors.full_messages}")
       render json: @rating.to_json, status: :bad_request
     end
   end
@@ -25,7 +25,7 @@ class Reviewer::RatingsController < Reviewer::ApplicationController
     if @rating.update_attributes(rating_params)
       respond_with :reviewer, locals: {rating: @rating}
     else
-      logger.warn("Error updating rating for proposal [#{@proposal.id}] for person [#{current_user.id}]: #{@rating.errors.full_messages}")
+      logger.warn("Error updating rating for proposal [#{@proposal.id}] for user [#{current_user.id}]: #{@rating.errors.full_messages}")
       render json: @rating.to_json, status: :bad_request
     end
   end
@@ -33,6 +33,6 @@ class Reviewer::RatingsController < Reviewer::ApplicationController
   private
 
   def rating_params
-    params.require(:rating).permit(:score).merge(proposal: @proposal, person: current_user)
+    params.require(:rating).permit(:score).merge(proposal: @proposal, user: current_user)
   end
 end

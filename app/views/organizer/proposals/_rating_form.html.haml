@@ -7,5 +7,5 @@
   %dt.text-success Average rating:
   %dd.text-success= number_with_precision(proposal.average_rating, precision: 1)
   - proposal.ratings.each do |rating|
-    %dt= "#{rating.person.name}:"
+    %dt= "#{rating.user.name}:"
     %dd= rating.score

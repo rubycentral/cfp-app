@@ -40,8 +40,6 @@
 }
 
 .btn-github {
-  color: #000000;
-  text-shadow: 0 0.7px 0 rgba(0, 0, 0, 0.1);
   background-color: #f2f2f2;
   *background-color: #e6e6e6;
   background-image: -moz-linear-gradient(top, #fafafa, #e6e6e6);
@@ -52,6 +50,9 @@
   background-repeat: repeat-x;
   border-color: #e6e6e6 #e6e6e6 #c0c0c0;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  color: #000000;
+  margin-left: 10px;
+  text-shadow: 0 0.7px 0 rgba(0, 0, 0, 0.1);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffafafa', endColorstr='#ffe6e6e6', GradientType=0);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
 }

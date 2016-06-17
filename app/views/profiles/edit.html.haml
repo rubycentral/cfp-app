@@ -1,6 +1,6 @@
 = form_for current_user, url: profile_path, html: {role: 'form'} do |f|
   .row
-    %fieldset.col-md-4
+    %fieldset.col-md-6
       %h2 Your Profile
       %p
         This information will be
@@ -14,7 +14,7 @@
         = f.text_area :bio, class: 'form-control', placeholder: 'Enter your bio', rows: 7, maxlength: 500
         %p.help-block Bio is limited to 500 characters.
 
-    %fieldset.col-md-4
+    %fieldset.col-md-6
       %h2 Identity Services
       %p
         Email is only used for notifications on proposal feedback and acceptance into the program.
@@ -34,16 +34,6 @@
             %i{class: "icon-#{current_user.provider.downcase}"}
             | Connected via
             = current_user.provider
-
-    %fieldset.col-md-3
-      %h2 Demographics
-      %p
-        This information is entirely
-        %strong optional
-        and will be
-        %strong hidden
-        from the review committee.
-        = render partial: 'shared/demographics', locals: {f: f}
 
   .row.col-md-12.form-submit
     %button.pull-right.btn.btn-success{type: "submit"} Save

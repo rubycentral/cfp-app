@@ -5,12 +5,6 @@
       = link_to 'Edit', edit_admin_user_path(user), class: 'btn btn-primary btn-xs'
     %h5
       = user.email
-    %p
-      - if user.demographics
-        - User::DEMOGRAPHICS.each do |type|
-          %p
-            = "#{type}:"
-            = user.demographics[type.to_s]
     %h5 Bio
     %p
       = user.bio

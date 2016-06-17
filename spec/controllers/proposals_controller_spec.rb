@@ -42,24 +42,6 @@ describe ProposalsController, type: :controller do
       post :create, params
       expect(user.bio).to eq('my bio')
     end
-
-    context "With completed demgraphics" do
-      it "redirects to the new proposal" do
-        allow(user).to receive(:demographics_complete?).and_return(true)
-        post :create, params
-        expect(response).to redirect_to(proposal_path(slug: event.slug,
-                                                      uuid: assigns(:proposal).uuid)
-                                       )
-      end
-    end
-
-    context "With incomplete demographics" do
-      it "redirects to the profile page" do
-        allow(user).to receive(:demographics_complete?).and_return(false)
-        post :create, params
-        expect(response).to redirect_to(edit_profile_path)
-      end
-    end
   end
 
   describe "GET #confirm" do

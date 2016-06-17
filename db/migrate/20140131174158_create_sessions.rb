@@ -2,8 +2,8 @@ class CreateSessions < ActiveRecord::Migration
   def change
     create_table :sessions do |t|
       t.integer :conference_day
-      t.datetime :start_time
-      t.datetime :end_time
+      t.time :start_time
+      t.time :end_time
       t.text :title
       t.text :description
       t.text :presenter

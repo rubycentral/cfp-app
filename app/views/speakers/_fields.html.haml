@@ -14,7 +14,7 @@
       %strong hidden
       from the review committee.
 
-    = speaker_fields.hidden_field :person_id, value: speaker.person_id
+    = speaker_fields.hidden_field :user_id, value: speaker.user_id
 
     = speaker_fields.input :bio, maxlength: :lookup,
       placeholder: 'Bio for the event program.',

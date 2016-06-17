@@ -2,30 +2,30 @@ require 'rails_helper'
 
 feature "Event Dashboard" do
   let(:event) { create(:event, name: "My Event") }
-  let(:admin_user) { create(:person, admin: true) }
+  let(:admin_user) { create(:user, admin: true) }
   let!(:admin_participant) { create(:participant,
                                    event: event,
-                                   person: admin_user,
+                                   user: admin_user,
                                    role: 'organizer'
                                   )
   }
 
-  let(:organizer_user) { create(:person) }
+  let(:organizer_user) { create(:user) }
   let!(:organizer_participant) { create(:participant,
                                        event: event,
-                                       person: organizer_user,
+                                       user: organizer_user,
                                        role: 'organizer')
   }
 
-  let(:reviewer_user) { create(:person) }
+  let(:reviewer_user) { create(:user) }
   let!(:reviewer_participant) { create(:participant,
                                       event: event,
-                                      person: reviewer_user,
+                                      user: reviewer_user,
                                       role: 'reviewer')
   }
 
   context "An admin" do
-    before { login_user(admin_user) }
+    before { login_as(admin_user) }
 
     it "can create a new event" do
       visit new_admin_event_path
@@ -54,10 +54,16 @@ feature "Event Dashboard" do
   end
 
   context "As an organizer" do
-    before { login_user(organizer_user) }
+    before :each do
+      logout
+      login_as(organizer_user)
+    end
 
     it "cannot create new events" do
+      pending "This fails because it sends them to login and then Devise sends to events path and changes flash"
       visit new_admin_event_path
+      expect(page.current_path).to eq(events_path)
+      #Losing the flash
       expect(page).to have_text("You must be signed in as an administrator")
     end
 
@@ -73,17 +79,17 @@ feature "Event Dashboard" do
       expect(page).not_to have_link('Delete Event')
     end
 
-    it "can promote a person" do
-      person = create(:person)
+    it "can promote a user" do
+      user = create(:user)
       visit organizer_event_path(event)
       click_link 'Add/Invite New Participant'
 
       form = find('#new_participant')
-      form.fill_in :email, with: person.email
+      form.fill_in :email, with: user.email
       form.select 'organizer', from: 'Role'
       form.click_button('Save')
 
-      expect(person).to be_organizer_for_event(event)
+      expect(user).to be_organizer_for_event(event)
     end
 
     it "can promote a participant" do

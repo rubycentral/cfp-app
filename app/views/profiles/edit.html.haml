@@ -1,6 +1,6 @@
 = form_for current_user, url: profile_path, html: {role: 'form'} do |f|
   .row
-    %fieldset.col-md-4
+    %fieldset.col-md-6
       %h2 Your Profile
       %p
         This information will be
@@ -13,13 +13,21 @@
         = f.label :bio
         = f.text_area :bio, class: 'form-control', placeholder: 'Enter your bio', rows: 7, maxlength: 500
         %p.help-block Bio is limited to 500 characters.
-    %fieldset.col-md-4
+
+    %fieldset.col-md-6
       %h2 Identity Services
       %p
         Email is only used for notifications on proposal feedback and acceptance into the program.
       .form-group
         = f.label :email
         = f.email_field :email, class: 'form-control', placeholder: 'Your email address'
+      .form-group
+        = f.label :password
+        = f.password_field :password, class: 'form-control', placeholder: 'Password'
+      .form-group
+        = f.label :password_confirmation
+        = f.password_field :password_confirmation, class: 'form-control', placeholder: 'Confirm password'
+
       - if Rails.env.development?
         .service
           - if current_user.connected?('developer')
@@ -30,33 +38,13 @@
             = link_to '/auth/developer', class: 'btn btn-default' do
               %i.glyphicon.glyphicon-user
               | Connect via Developer
+
       .service
-        - if current_user.connected?('github')
-          %button.btn.btn-success
-            %i.icon-github
-            | Connected via GitHub
-        - else
-          = link_to '/auth/github', class: 'btn btn-default' do
-            %i.icon-github
-            | Connect to GitHub
-      .service
-        - if current_user.connected?('twitter')
-          %button.btn.btn-success
-            %i.icon-twitter
-            | Connected via Twitter
-        - else
-          = link_to '/auth/twitter', class: 'btn btn-default' do
-            %i.icon-twitter
-            | Connect to Twitter
-    %fieldset.col-md-3
-      %h2 Demographics
-      %p
-        This information is entirely
-        %strong optional
-        and will be
-        %strong hidden
-        from the review committee.
-        = render :partial => 'shared/demographics', :locals => {:f => f}
+        - if current_user.provider.present?
+          %button.btn.btn-success.disabled
+            %i{class: "icon-#{current_user.provider.downcase}"}
+            | Connected via
+            = current_user.provider
 
   .row.col-md-12.form-submit
-    %button.pull-right.btn.btn-success{:type => "submit"} Save
+    %button.pull-right.btn.btn-success{type: "submit"} Save

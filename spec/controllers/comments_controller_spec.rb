@@ -3,7 +3,7 @@ require 'rails_helper'
 describe CommentsController, type: :controller do
   describe "POST #create" do
     let(:proposal) { build_stubbed(:proposal, uuid: 'abc123') }
-    let(:person) { build_stubbed(:person) }
+    let(:user) { build_stubbed(:user) }
     let(:referer_path) { proposal_path(slug: proposal.event.slug, uuid: proposal) }
     let(:mailer) { double("ProposalMailer.comment_notification") }
 
@@ -13,14 +13,14 @@ describe CommentsController, type: :controller do
     end
 
     context "Public comments" do
-      let(:comment_person) { build_stubbed(:person) }
-      let(:comment) { build_stubbed(:comment, type: "PublicComment", person: comment_person) }
+      let(:comment_user) { build_stubbed(:user) }
+      let(:comment) { build_stubbed(:comment, type: "PublicComment", user: comment_user) }
       let(:params) { { public_comment: { body: 'foo', proposal_id: proposal.id }, type: "PublicComment" } }
 
       before do
-        allow(comment_person).to receive(:reviewer?).and_return(true)
-        allow(comment_person).to receive(:reviewer_for_event?).and_return(true)
-        allow_any_instance_of(CommentsController).to receive(:current_user) { comment_person }
+        allow(comment_user).to receive(:reviewer?).and_return(true)
+        allow(comment_user).to receive(:reviewer_for_event?).and_return(true)
+        allow_any_instance_of(CommentsController).to receive(:current_user) { comment_user }
       end
 
       it "adds a comment to the proposal" do

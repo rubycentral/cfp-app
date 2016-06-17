@@ -84,30 +84,26 @@
                   %li.text-right= link_to 'View all notifications', notifications_path
 
               %li.dropdown
-                - unless current_user.demographics_complete?
-                  #gravatar-alert-container
-                    = link_to edit_profile_path, {id: "gravatar-alert", data: {toggle: "tooltip", placement: "bottom"}, title: "Click here to finish filling out your demographics information" } do
-                      %span.glyphicon.glyphicon-exclamation-sign
                 %a.dropdown-toggle.gravatar-container{ href: "#", data: { toggle: "dropdown" } }
                   = image_tag("https://www.gravatar.com/avatar/#{current_user.gravatar_hash}?s=25", class: 'user-dropdown-gravatar')
                   &nbsp; #{current_user.name}
                   %b.caret
                 %ul.dropdown-menu
                   %li= link_to 'My Profile', edit_profile_path
-                  %li= link_to 'Sign Out', signout_path
+                  %li= link_to 'Sign Out', destroy_user_session_path, method: :delete
                   - if current_user && current_user.admin?
                     %li.divider
-                    %li= link_to 'People', admin_people_path
+                    %li= link_to 'Users', admin_users_path
                     %li= link_to 'Manage Events', admin_events_path
 
           - else
             %ul.nav.navbar-nav.navbar-right
-              %li= link_to 'Log in', new_session_path
+              %li= link_to 'Log in', new_user_session_path
 
   - if on_organizer_page?
     .alert-viewer-mode
       .container
-        Viewing as: 
+        Viewing as:
         %strong Organizer
 
   #flash= show_flash

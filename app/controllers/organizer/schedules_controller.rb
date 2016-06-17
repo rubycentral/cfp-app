@@ -5,6 +5,6 @@ class Organizer::SchedulesController < Organizer::ApplicationController
 
   def set_sessions
     @sessions =
-      @event.sessions.includes(:track, :room, proposal: { speakers: :person })
+      @event.sessions.includes(:track, :room, proposal: { speakers: :user })
   end
 end

@@ -6,6 +6,7 @@ class CreateRooms < ActiveRecord::Migration
       t.string :level
       t.string :address
       t.integer :capacity
+      t.integer :grid_position
       t.references :event, index: true
 
       t.timestamps

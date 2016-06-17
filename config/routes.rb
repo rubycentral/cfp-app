@@ -8,11 +8,6 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
 
-  #match '/auth/:provider/callback' => 'sessions#create', via: [:get, :post]
-  #get '/auth/failure' => 'sessions#new', error: true
-  #get '/signout' => 'sessions#destroy', as: :signout
-  #resource :session, only: [:new, :create, :destroy]
-
   resource :profile, only: [:edit, :update]
   resource :public_comments, only: [:create], controller: :comments, type: 'PublicComment'
   resource :internal_comments, only: [:create], controller: :comments, type: 'InternalComment'
@@ -55,9 +50,7 @@ Rails.application.routes.draw do
       post :unarchive
     end
 
-    resources :users do
-      resources :services
-    end
+    resources :users
   end
 
   namespace 'organizer' do

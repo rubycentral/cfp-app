@@ -20,28 +20,13 @@
       .form-group
         = f.label :email
         = f.email_field :email, class: 'form-control', placeholder: 'Your email address'
-      - if Rails.env.development?
-        .service
-          - if @user.connected?('developer')
-            %i.glyphicon.glyphicon-user
-            | Connected via Developer
-          - else
-            %i.glyphicon.glyphicon-user
-            | Not Connected via Developer
       .service
-        - if @user.connected?('github')
-          %i.icon-github
-          | Connected via GitHub
-        - else
-          %i.icon-github
-          | Not Connected to GitHub
-      .service
-        - if @user.connected?('twitter')
-          %i.icon-twitter
-          | Connected via Twitter
-        - else
-          %i.icon-twitter
-          | Not Connected to Twitter
+        - if current_user.provider.present?
+          %button.btn.btn-success.disabled
+            %i{class: "icon-#{current_user.provider.downcase}"}
+            | Connected via
+            = current_user.provider
+
     %fieldset.col-md-3
       %h2 Demographics
       %p

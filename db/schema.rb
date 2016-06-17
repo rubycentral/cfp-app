@@ -147,19 +147,6 @@ ActiveRecord::Schema.define(version: 20160614162404) do
 
   add_index "rooms", ["event_id"], name: "index_rooms_on_event_id", using: :btree
 
-  create_table "services", force: :cascade do |t|
-    t.string   "provider"
-    t.string   "uid"
-    t.integer  "user_id"
-    t.string   "uname"
-    t.string   "account_name"
-    t.string   "uemail"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "services", ["user_id"], name: "index_services_on_user_id", using: :btree
-
   create_table "session_types", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
@@ -238,8 +225,13 @@ ActiveRecord::Schema.define(version: 20160614162404) do
     t.inet     "last_sign_in_ip"
     t.string   "provider"
     t.string   "uid"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
   end
 
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "session_types", "events"

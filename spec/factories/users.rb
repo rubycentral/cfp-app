@@ -10,6 +10,7 @@ FactoryGirl.define do
     password_confirmation "12345678"
     demographics { { gender: "female" } }
     bio "A great Bio"
+    after(:create) { |user| user.confirm }
 
     trait :reviewer do
       after(:create) do |user|

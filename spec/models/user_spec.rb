@@ -14,57 +14,12 @@ describe User do
     context "User already exists" do
       let!(:user) { create(:user, email: email, name: OmniAuth.config.mock_auth[:github].info.name, uid: OmniAuth.config.mock_auth[:github].uid, provider: "github") }
 
-      it "doesn't create a new user from github auth hash when user exists with email" do
+      it "doesn't create a new user from github auth hash when user exists" do
         expect {
           User.from_omniauth(github_auth_hash)
         }.to_not change { User.count }
       end
 
-      context "Using a new service" do
-        it "logs in with Twitter" do
-          user = nil
-          expect {
-            user = User.from_omniauth(twitter_auth_hash)
-          }.to change { User.count }.by(1)
-
-          expect(user.email).to eq("")
-          expect(user.name).to eq(name)
-        end
-
-        it "adds the new provider to the user" do
-          returned_user = User.from_omniauth(twitter_auth_hash)
-          expect(returned_user.provider).to eq("twitter")
-        end
-
-        it "returns the provided user via Github" do
-          returned_user = User.from_omniauth(github_auth_hash)
-          expect(returned_user).to eq(user)
-        end
-      end
-
-      context "Using an existing service" do
-        let!(:user) { create(:user, email: email, name: OmniAuth.config.mock_auth[:github].info.name, uid: OmniAuth.config.mock_auth[:github].uid, provider: "github") }
-
-        it "doesn't create a new provider" do
-          expect {
-            User.from_omniauth(twitter_auth_hash)
-          }.to_not change { user.provider }
-        end
-
-        # Some users have had issues with oauth returning a different ID when they are signing in
-        context "with a new oauth ID" do
-          it "finds the correct user" do
-            user = nil
-            expect {
-              user = User.from_omniauth(twitter_auth_hash.merge('uid' => 'different'))
-            }.to_not change { User.count }
-
-            expect(user.email).to eq(email)
-            expect(user.provider).to eq("twitter")
-            expect(user.name).to eq(name)
-          end
-        end
-      end
     end
 
     context "User doesn't yet exist" do
@@ -79,12 +34,27 @@ describe User do
         expect(user.name).to eq(name)
       end
 
-      it "creates a new provider for user" do
+      it "returns error if password but no email" do
+        user = build(:user, email: "")
+        expect {
+          user.save!
+        }.to raise_error
+      end
+
+      it "returns no error if password and provider but no email" do
+        user = build(:user, email: "", provider: "twitter", uid: "12345678")
+        expect {
+          user.save!
+        }.to_not raise_error
+      end
+
+      it "creates a new user and sets provider for user" do
         user = nil
         expect {
           user = User.from_omniauth(twitter_auth_hash)
         }.to change { User.count }.by(1)
         expect(user.provider).to eq("twitter")
+        expect(user.uid).to eq(twitter_auth_hash.uid)
       end
     end
 

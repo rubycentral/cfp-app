@@ -6,72 +6,19 @@
 
     = stylesheet_link_tag 'application', media: 'all'
     = javascript_include_tag 'application'
-
     = javascript_include_tag "//www.google.com/jsapi", "chartkick"
-
     = javascript_tag { yield :custom_js }
-
     = csrf_meta_tags
 
     // html5 shim and respond.js ie8 support of html5 elements and media queries
     /[if lt ie 9]
       = javascript_include_tag "/js/html5shiv.js"
       = javascript_include_tag "/js/respond.min.js"
+
   %body
     .navbar.navbar-inverse.navbar-fixed-top
-      .container
-        .navbar-header
-          %button.navbar-toggle{ type: "button", data: { toggle: "collapse", target: ".navbar-collapse" } }
-            %span.icon-bar
-            %span.icon-bar
-            %span.icon-bar
-          - if event && event.slug
-            = link_to event.name, event_path(slug: event.slug), class: 'navbar-brand'
-          - else
-            = link_to "#{Rails.application.class.parent_name}", events_path, class: 'navbar-brand'
-
-        .collapse.navbar-collapse
-          %ul.nav.navbar-nav
-          - if user_signed_in?
-            %ul.nav.navbar-nav.navbar-right
-              - if current_user.proposals.any?
-                %li= link_to "My Proposals", proposals_path
-
-              - if current_user.reviewer? && event
-                - if event.id != nil
-                  - unless event.archived?
-                    %li= link_to "Review Proposals", reviewer_event_proposals_path(event.id)
-
-              - if current_user.organizer? && event
-                - if event.id != nil
-                  - unless event.archived?
-                    %li= link_to "Organize Proposals", organizer_event_proposals_path(event)
-                    %li= link_to "Program", organizer_event_program_path(event)
-                    %li= link_to "Schedule", organizer_event_sessions_path(event)
-
-              %li= link_to "Notifications", notifications_path
-
-              %li.dropdown
-                - unless current_user.demographics_complete?
-                  #gravatar-alert-container
-                    = link_to edit_profile_path, {id: "gravatar-alert", data: {toggle: "tooltip", placement: "bottom"}, title: "Click here to finish filling out your demographics information" } do
-                      %span.glyphicon.glyphicon-exclamation-sign
-                %a.dropdown-toggle.gravatar-container{ href: "#", data: { toggle: "dropdown" } }
-                  = image_tag("https://www.gravatar.com/avatar/#{current_user.gravatar_hash}?s=25", class: 'user-dropdown-gravatar')
-                  &nbsp; #{current_user.name}
-                  %b.caret
-                %ul.dropdown-menu
-                  %li= link_to "My Profile", edit_profile_path
-                  %li= link_to "Sign Out", destroy_user_session_path, method: :delete
-                  - if current_user && current_user.admin?
-                    %li.divider
-                    %li= link_to "Users", admin_users_path
-                    %li= link_to "Manage Events", admin_events_path
-
-          - else
-            %ul.nav.navbar-nav.navbar-right
-              %li= link_to "Log in", new_user_session_path
-
+      = render :partial => "layouts/navbar"
+    
   - if on_organizer_page?
     .alert-viewer-mode
       .container

@@ -27,6 +27,3 @@
               %td= link_to "Archive", admin_event_archive_path(event), method: :post, class: "btn btn-danger btn-xs", data: {confirm: "This will hide this event from reviewers and organizers. Would you like to continue?" }
             - else
               %td= link_to "Unarchive", admin_event_unarchive_path(event), method: :post, class: "btn btn-success btn-xs"
-
-
-

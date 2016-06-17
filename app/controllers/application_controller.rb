@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :user_signed_in?
   helper_method :reviewer?
+  helper_method :organizer?
 
   layout 'application'
   decorates_assigned :event
@@ -14,6 +15,10 @@ class ApplicationController < ActionController::Base
 
   def reviewer?
     @is_reviewer ||= current_user.reviewer?
+  end
+
+  def organizer?
+    @is_organizer ||= current_user.organizer?
   end
 
   def user_signed_in?

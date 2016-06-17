@@ -6,103 +6,17 @@
 
     = stylesheet_link_tag 'application', media: 'all'
     = javascript_include_tag 'application'
-
     = javascript_include_tag "//www.google.com/jsapi", "chartkick"
-
     = javascript_tag { yield :custom_js }
-
     = csrf_meta_tags
 
     // html5 shim and respond.js ie8 support of html5 elements and media queries
     /[if lt ie 9]
       = javascript_include_tag "/js/html5shiv.js"
       = javascript_include_tag "/js/respond.min.js"
+
   %body
-    .navbar.navbar-inverse.navbar-fixed-top
-      .container
-        .navbar-header
-          %button.navbar-toggle{ type: "button", data: { toggle: "collapse", target: ".navbar-collapse" } }
-            %span.icon-bar
-            %span.icon-bar
-            %span.icon-bar
-          - if event && event.slug
-            = link_to event.name, event_path(slug: event.slug), class: 'navbar-brand'
-          - else
-            = link_to "#{Rails.application.class.parent_name}", events_path, class: 'navbar-brand'
-
-        .collapse.navbar-collapse
-          %ul.nav.navbar-nav
-          - if user_signed_in?
-            %ul.nav.navbar-nav.navbar-right
-              - if current_user.proposals
-                %li.dropdown
-                  %a.dropdown-toggle{ href: "#", data: {toggle: "dropdown"} }
-                    Speaking
-                    %b.caret
-                  %ul.dropdown-menu
-                    %li= link_to "My Proposals", proposals_path
-              - if current_user.reviewer?
-                %li.dropdown
-                  %a.review_nav.dropdown-toggle{ href: "#", data: {toggle: "dropdown"} }
-                    Review
-                    %b.caret
-                  %ul.dropdown-menu
-                    - current_user.reviewer_events.each do |event|
-                      -unless event.archived?
-                        -if current_user.organizer_for_event?(event)
-                          %li= link_to event, reviewer_event_proposals_path(event)
-                        - else
-                          %li= link_to event, reviewer_event_path(event)
-                          %ul
-                            %li= link_to 'Proposals', reviewer_event_proposals_path(event)
-              - if current_user.organizer?
-                %li.dropdown
-                  %a.organize_nav.dropdown-toggle{ href: "#", data: {toggle: "dropdown"} }
-                    Organize
-                    %b.caret
-                  %ul.dropdown-menu
-                    - current_user.organizer_events.each do |event|
-                      %li
-                        -unless event.archived?
-                          = link_to event, organizer_event_path(event)
-                          %ul
-                            %li= link_to 'Proposals', organizer_event_proposals_path(event)
-                            %li= link_to 'Program', organizer_event_program_path(event)
-                            %li= link_to "Schedule", organizer_event_sessions_path(event)
-              %li.dropdown
-                %a.dropdown-toggle{ href: "#", data: { toggle: "dropdown" } }
-                  Notifications
-                  - if current_user.notifications.unread.count > 0
-                    %span.badge.badge-important
-                      #{current_user.notifications.unread.count}
-                  %b.caret
-                %ul.dropdown-menu
-                  - current_user.notifications.recent.each do |notification|
-                    %li= link_to notification.message, notification_path(notification)
-                    %li.divider
-                  %li.text-right= link_to 'Mark all as read', mark_all_as_read_notifications_path, method: :post
-                  %li.text-right= link_to 'View all notifications', notifications_path
-
-              %li.dropdown
-                - unless current_user.demographics_complete?
-                  #gravatar-alert-container
-                    = link_to edit_profile_path, {id: "gravatar-alert", data: {toggle: "tooltip", placement: "bottom"}, title: "Click here to finish filling out your demographics information" } do
-                      %span.glyphicon.glyphicon-exclamation-sign
-                %a.dropdown-toggle.gravatar-container{ href: "#", data: { toggle: "dropdown" } }
-                  = image_tag("https://www.gravatar.com/avatar/#{current_user.gravatar_hash}?s=25", class: 'user-dropdown-gravatar')
-                  &nbsp; #{current_user.name}
-                  %b.caret
-                %ul.dropdown-menu
-                  %li= link_to 'My Profile', edit_profile_path
-                  %li= link_to 'Sign Out', destroy_user_session_path, method: :delete
-                  - if current_user && current_user.admin?
-                    %li.divider
-                    %li= link_to 'Users', admin_users_path
-                    %li= link_to 'Manage Events', admin_events_path
-
-          - else
-            %ul.nav.navbar-nav.navbar-right
-              %li= link_to 'Log in', new_user_session_path
+    = render partial: "layouts/navbar"
 
   - if on_organizer_page?
     .alert-viewer-mode

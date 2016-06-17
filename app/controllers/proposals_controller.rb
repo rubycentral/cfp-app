@@ -50,13 +50,7 @@ class ProposalsController < ApplicationController
     if @proposal.save
       current_user.update_bio
       flash[:info] = setup_flash_message
-
-      if current_user.demographics_complete?
-        redirect_to proposal_url(slug: @event.slug, uuid: @proposal)
-      else
-        flash[:warning] = "Please consider filling out the demographic data in your profile."
-        redirect_to edit_profile_url
-      end
+      redirect_to proposal_url(slug: @event.slug, uuid: @proposal)
     else
       flash[:danger] = 'There was a problem saving your proposal; please review the form for issues and try again.'
       render :new
@@ -77,7 +71,6 @@ class ProposalsController < ApplicationController
       @proposal.update(confirmed_at: DateTime.now)
       redirect_to proposal_url(slug: @event.slug, uuid: @proposal), flash: { success: 'Thank you for confirming your participation' }
     elsif @proposal.update_and_send_notifications(proposal_params)
-      flash[:info] = 'Please consider filling out the demographic data in your profile.' unless current_user.demographics_complete?
       redirect_to proposal_url(slug: @event.slug, uuid: @proposal)
     else
       flash[:danger] = 'There was a problem saving your proposal; please review the form for issues and try again.'

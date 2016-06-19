@@ -1,28 +1,35 @@
 .row
-  .col-md-11
-    %h1
-      = link_to(event, event_path(event.slug))
-      %small= event.status
-  .col-md-1
-    .share.pull-right= event.tweet_button
+  .col-md-12
+    .page-header
+      .share.pull-right= event.tweet_button
+      %h1
+        = link_to(event, event_path(event.slug))
+        %span.label.label-primary= event.status
+
+.row.margin-top
   .col-md-8
     .markdown
       - if event.closed?
         Closed on
         %strong= event.closes_at(:long_with_zone)
       = markdown(event.guidelines)
+
   .col-md-4
     - if event.open?
-      %p= link_to 'Submit a proposal', new_proposal_path(slug: event.slug), class: 'btn btn-primary'
+
+      %p= link_to 'Submit a proposal', new_proposal_path(slug: event.slug), class: 'btn btn-primary btn-lg'
+
       - if event.closes_at?
         %p
           Closes at
           %strong= event.closes_at(:long_with_zone)
         %p
           %strong
-            = time_ago_in_words(event.closes_at)
-            left
-          to submit your proposal!
+            %span.label.label-info
+              = time_ago_in_words(event.closes_at)
+              left
+          &nbsp;to submit your proposal!
+
     - if event.proposals.count > 5
       .stats
         %h2 CFP Stats

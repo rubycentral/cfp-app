@@ -1,4 +1,4 @@
-.navbar.navbar-inverse.navbar-fixed-top
+.navbar.navbar-default.navbar-fixed-top
   .container
     .navbar-header
       %button.navbar-toggle{ type: "button", data: { toggle: "collapse", target: ".navbar-collapse" } }
@@ -11,39 +11,73 @@
         = link_to "#{Rails.application.class.parent_name}", events_path, class: 'navbar-brand'
 
     .collapse.navbar-collapse
-      %ul.nav.navbar-nav
       - if user_signed_in?
         %ul.nav.navbar-nav.navbar-right
-          - if current_user.proposals.any?
-            %li= link_to "My Proposals", proposals_path
-
-          - if current_user.reviewer? && event
-            - if event.id != nil
-              - unless event.archived?
-                %li= link_to "Review Proposals", reviewer_event_proposals_path(event.id)
-
-          - if current_user.organizer? && event
-            - if event.id != nil
-              - unless event.archived?
-                %li= link_to "Organize Proposals", organizer_event_proposals_path(event)
-                %li= link_to "Program", organizer_event_program_path(event)
-                %li= link_to "Schedule", organizer_event_sessions_path(event)
-
-          %li= link_to "Notifications", notifications_path
-
+          %li{class: "#{request.path == notifications_path ? 'active' : ''}"}
+            = link_to notifications_path do
+              %i.fa.fa-exclamation
+              %span Notifications
           %li.dropdown
             %a.dropdown-toggle.gravatar-container{ href: "#", data: { toggle: "dropdown" } }
               = image_tag("https://www.gravatar.com/avatar/#{current_user.gravatar_hash}?s=25", class: 'user-dropdown-gravatar')
               &nbsp; #{current_user.name}
               %b.caret
             %ul.dropdown-menu
-              %li= link_to "My Profile", edit_profile_path
-              %li= link_to "Sign Out", destroy_user_session_path, method: :delete
-              - if current_user && current_user.admin?
-                %li.divider
-                %li= link_to "Users", admin_users_path
-                %li= link_to "Manage Events", admin_events_path
-
+              %li
+                = link_to edit_profile_path do
+                  %i.fa.fa-user
+                  %span My Profile
+              %li
+                = link_to destroy_user_session_path, method: :delete do
+                  %i.fa.fa-sign-out
+                  %span Sign Out
       - else
         %ul.nav.navbar-nav.navbar-right
           %li= link_to "Log in", new_user_session_path
+
+- if user_signed_in?
+  .subnavbar
+    .subnavbar-inner
+      .container
+        %ul.mainnav
+          %li{class: "#{request.path == events_path ? 'active' : ''}"}
+            =link_to events_path do
+              %i.fa.fa-dashboard
+              %span Dashboard
+          - if current_user && current_user.admin?
+            %li{class: "#{request.path == admin_users_path ? 'active' : ''}"}
+              = link_to admin_users_path do
+                %i.fa.fa-users
+                %span Users
+              %li{class: "#{request.path == admin_events_path ? 'active' : ''}"}
+                =link_to admin_events_path do
+                  %i.fa.fa-calendar
+                  %span Manage Events
+
+          - if current_user.proposals.any?
+            %li{class: "#{request.path == proposals_path ? 'active' : ''}"}
+              = link_to proposals_path do
+                %i.fa.fa-file-text
+                %span My Proposals
+
+          - if current_user.reviewer? && event
+            - if event.id != nil && !event.archived?
+              %li{class: "#{request.path == reviewer_event_proposals_path(event.id) ? 'active' : ''}"}
+                = link_to reviewer_event_proposals_path(event.id) do
+                  %i.fa.fa-book
+                  %span Review Proposals
+
+          - if current_user.organizer? && event
+            - if event.id != nil && !event.archived?
+              %li{class: "#{request.path == organizer_event_proposals_path(event) ? 'active' : ''}"}
+                = link_to organizer_event_proposals_path(event) do
+                  %i.fa.fa-file-text
+                  %span Organize Proposals
+              %li{class: "#{request.path == organizer_event_program_path(event) ? 'active' : ''}"}
+                = link_to organizer_event_program_path(event) do
+                  %i.fa.fa-list
+                  %span Program
+              %li{class: "#{request.path == organizer_event_sessions_path(event) ? 'active' : ''}"}
+                = link_to organizer_event_sessions_path(event) do
+                  %i.fa.fa-calendar
+                  Schedule

@@ -61,8 +61,6 @@ Rails.application.routes.draw do
       end
       resources :participant_invitations, except: [:new, :edit, :update, :show]
 
-
-
       controller :program do
         get 'program' => 'program#show'
       end
@@ -80,7 +78,6 @@ Rails.application.routes.draw do
         post :finalize
         post :update_state
       end
-
 
       controller :speakers do
         get :speaker_emails, action: :emails
@@ -104,6 +101,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get "/current-styleguide", :to => "pages#current_styleguide"
   get "/404", :to => "errors#not_found"
   get "/422", :to => "errors#unacceptable"
   get "/500", :to => "errors#internal_error"

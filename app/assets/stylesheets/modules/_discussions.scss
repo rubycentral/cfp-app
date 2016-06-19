@@ -1,0 +1,92 @@
+/* Message layout */
+ul.messages_layout {
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+ul.messages_layout li {
+  float: left;
+  list-style: none;
+  position: relative
+}
+ul.messages_layout li.left {
+  padding-left: 75px
+}
+ul.messages_layout li.right {
+  padding-right: 75px
+}
+ul.messages_layout li.right .avatar {
+  right: 0;
+  left: auto
+}
+ul.messages_layout li.right .message_wrap .arrow {
+  background-position: 0 -213px;
+  height: 15px;
+  left: auto;
+  right: -12px;
+  width: 12px;
+}
+ul.messages_layout li.by_myself .message_wrap {
+  border: 1px solid $bright-blue;
+}
+ul.messages_layout li.by_myself .message_wrap .info a.name {
+  color: $bright-blue;
+}
+ul.messages_layout li a.avatar {
+  left: 0;
+  position: absolute;
+  top: 0
+}
+ul.messages_layout li a.avatar img {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px
+}
+ul.messages_layout li .message_wrap {
+  background: #fefefe;
+  border: 1px solid $brand-primary;
+  float: left;
+  margin-bottom: 20px;
+  padding: 10px;
+  position: relative;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: rgba(0,0,0,0.1) 0 1px 0px;
+  -moz-box-shadow: rgba(0,0,0,0.1) 0 1px 0px;
+  box-shadow: rgba(0,0,0,0.1) 0 1px 0px
+}
+ul.messages_layout li .message_wrap .arrow {
+  background-position: 0 -228px;
+  height: 15px;
+  width: 12px;
+  height: 15px;
+  width: 12px;
+  position: absolute;
+  left: -12px;
+  top: 13px
+}
+ul.messages_layout li .message_wrap .info {
+  float: left;
+  width: 100%;
+  border-bottom: 1px solid #fff;
+  line-height: 23px
+}
+ul.messages_layout li .message_wrap .info .name {
+  color: $brand-primary;
+  float: left;
+  font-weight: bold;
+}
+ul.messages_layout li .message_wrap .info .time {
+  float: left;
+  font-size: 11px;
+  margin-left: 6px
+}
+ul.messages_layout li .message_wrap .text {
+  float: left;
+  width: 100%;
+  border-top: 1px solid #cfcfcf;
+  padding-top: 5px
+}
+
+ul.messages_layout .dropdown-menu  li{ width:100%; font-size:11px;}

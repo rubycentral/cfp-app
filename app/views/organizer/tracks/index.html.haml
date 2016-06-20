@@ -1,0 +1,23 @@
+.row
+  %h1 Event Tracks
+  - if @tracks.any?
+    %table.table.table-striped
+      %thead
+        %tr
+          %th Name
+          %th Description
+          %th Guidelines
+          %th{colspan: '2'}
+      %tbody
+        - @tracks.each do |t|
+          %tr
+            %td= t.name
+            %td= truncate(t.description, length: 60)
+            %td= truncate(t.guidelines, length: 80)
+            %td.action-edit= link_to 'Edit', edit_organizer_event_track_path(@event, t)
+            %td.action-destroy= link_to 'Destroy', organizer_event_track_path(@event, t), method: :delete, data: { confirm: 'Are you sure?' }
+  -else
+    %p No tracks defined for this event.
+
+  %br
+  %span.action-new= link_to 'New', new_organizer_event_track_path(@event)

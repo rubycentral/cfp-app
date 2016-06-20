@@ -1,0 +1,63 @@
+/*------------------------------------------------------------------
+[3. News Item / .news-items]
+*/
+
+.news-items {
+  margin: 1em 0 0;
+  padding-left: 0;
+  li {
+    border-bottom: 1px dotted #CCC;
+    display: table;
+    margin-bottom: 1em;
+    padding: 0 1em 0 0;
+    &:last-child {
+      border: none;
+      padding-bottom: 0;
+    }
+    .news-item-date {
+      display: table-cell;
+    }
+
+    .news-item-detail {
+      display: table-cell;
+    }
+
+    .news-item-title {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .news-item-date {
+      width: 75px;
+      vertical-align: middle;
+      text-align: center;
+    }
+
+    .news-item-day {
+      display: block;
+      margin-bottom: .25em;
+
+      font-size: 24px;
+      color: #888;
+    }
+  }
+}
+
+
+.news-item-preview {
+  margin-bottom: 0;
+
+  color: #777;
+}
+
+.news-item-month {
+  display: block;
+  padding-right: 1px;
+
+  font-size: 12px;
+  font-weight: 600;
+  color: #888;
+}
+
+
+

@@ -9,11 +9,20 @@
   }
 }
 
+.proposal {
+  margin-bottom: 1em;
+}
+.speaker {
+  margin-top: 2em;
+}
+.speaker img, .speaker-image {
+  margin: 0 0.5em 0.8em 0;
+}
+
 #proposal {
-  input#email { width: 80%; }
   select#rating_score {
-    width: 4em;
     display: inline;
+    width: 4em;
   }
 
   span {
@@ -83,10 +92,6 @@ ul {
     float: left;
     margin-right: .5em;
   }
-}
-
-input#email {
-  width: 275px !important;
 }
 
 .btn.save-comment {

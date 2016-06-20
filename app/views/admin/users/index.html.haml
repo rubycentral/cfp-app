@@ -1,18 +1,17 @@
-%h1 Users
-
-%table.users.datatable.table.table-striped
-  %thead
-    %tr
-      %th Name
-      %th Email
-      %th Role
-      %th Created At
-      %th
-    %tr
-      %th Name
-      %th Email
-      %th Role
-      %th Created At
-      %th.actions Actions
-  %tbody
-    = render users
+.row
+  .col-sm-12
+    .widget.widget-table
+      .widget-header
+        %i.fa.fa-users
+        %h3 Users
+      .widget-content
+        %table.users.datatable.table.table-striped.table-bordered
+          %thead
+            %tr
+              %th Name
+              %th Email
+              %th Role
+              %th Created At
+              %th.actions Actions
+          %tbody
+            = render users

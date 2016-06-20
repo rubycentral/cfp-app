@@ -1,12 +1,12 @@
 .row
-  .col-sm-12
+  .col-sm-12.text-center
     %h2 Change your password
 
 .row
   = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
 
     .form-inputs
-      .col-sm-5
+      .col-sm-5.col-centered
         .well.clearfix
           = f.error_notification
           = f.input :reset_password_token, as: :hidden
@@ -14,5 +14,5 @@
           = f.input :password, label: "New password", required: true, autofocus: true, wrapper_html: {class: "col-sm-12"}, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length)
           = f.input :password_confirmation, label: "Confirm your new password", required: true, wrapper_html: {class: "col-sm-12"}
 
-          .form-actions.form-group.col-sm-12
+          .form-group.col-sm-12
             = f.button :submit, "Change my password", class: "btn btn-success"

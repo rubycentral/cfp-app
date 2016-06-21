@@ -7,7 +7,12 @@ class SpeakersController < ApplicationController
     proposal = speaker.proposal
     speaker.destroy
 
-    flash[:info] = "You've withdrawn from this proposal."
-    redirect_to proposal_url(slug: proposal.event.slug, uuid: proposal)
+    if current_user.id == speaker.id
+      flash[:info] = "You have withdrawn from #{proposal.title}."
+      redirect_to root_path
+    else
+      flash[:info] = "#{speaker.email} has been withdrawn from #{proposal.title}."
+      redirect_to proposal_url(slug: proposal.event.slug, uuid: proposal)
+    end
   end
 end

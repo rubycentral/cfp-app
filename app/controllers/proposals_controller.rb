@@ -93,7 +93,7 @@ class ProposalsController < ApplicationController
   private
 
   def proposal_params
-    params.require(:proposal).permit(:title, {tags: []}, :abstract, :details, :pitch, custom_fields: @event.custom_fields,
+    params.require(:proposal).permit(:title, {tags: []}, :session_type_id, :track_id, :abstract, :details, :pitch, custom_fields: @event.custom_fields,
                                      comments_attributes: [:body, :proposal_id, :user_id],
                                      speakers_attributes: [:bio, :user_id, :id])
   end

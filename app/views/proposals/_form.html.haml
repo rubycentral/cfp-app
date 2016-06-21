@@ -21,6 +21,14 @@
 
   .col-md-6
     %fieldset
+      - opts_session_types = event.session_types.public_types.map {|st| [st.name, st.id]}
+      = f.association :session_type, collection: opts_session_types, include_blank: 'None selected',
+        required: true, input_html: {class: 'dropdown'}
+
+      - opts_tracks = event.tracks.map {|t| [t.name, t.id]}
+      = f.association :track, collection: opts_tracks, include_blank: 'None selected',
+        input_html: {class: 'dropdown'}
+
       - if event.proposal_tags.any?
         %h3 Tags
         = f.select :tags,

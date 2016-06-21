@@ -7,9 +7,9 @@
 = simple_form_for speaker, url: [ :organizer, event, speaker ] do |f|
   .row
     %fieldset.col-md-4
-      = f.simple_fields_for :person, @person do |person_fields|
-        = person_fields.input :name
-        = person_fields.input :email
+      = f.simple_fields_for :user, @user do |user_fields|
+        = user_fields.input :name
+        = user_fields.input :email
       %p
       = f.input :bio, maxlength: :lookup,
         placeholder: 'Bio for speaker for the event program'

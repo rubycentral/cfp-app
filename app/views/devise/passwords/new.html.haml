@@ -1,0 +1,15 @@
+.row
+  .col-sm-12.text-center
+    %h2 Forgot your password?
+
+.row
+  = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+
+    .form-inputs
+      .col-sm-5.col-centered
+        .well.clearfix
+          = f.error_notification
+          = f.input :email, required: true, autofocus: true, wrapper_html: {class: "col-sm-12"}
+
+          .form-group.col-sm-12
+            = f.button :submit, "Send me reset password instructions", class: "btn btn-success"

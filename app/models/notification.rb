@@ -1,14 +1,14 @@
 class Notification < ActiveRecord::Base
-  belongs_to :person
+  belongs_to :user
 
   scope :recent, -> { unread.order(created_at: :desc).limit(15) }
   scope :unread, -> { where(read_at: nil) }
 
-  def self.create_for(people, args = {})
+  def self.create_for(users, args = {})
     proposal = args.delete(:proposal)
-    people.each do |person|
-      args[:target_path] = person.decorate.proposal_path(proposal) if proposal
-      person.notifications.create(args)
+    users.each do |user|
+      args[:target_path] = user.decorate.proposal_path(proposal) if proposal
+      user.notifications.create(args)
     end
   end
 
@@ -30,7 +30,7 @@ end
 # Table name: notifications
 #
 #  id          :integer          not null, primary key
-#  person_id   :integer
+#  user_id     :integer
 #  message     :string
 #  read_at     :datetime
 #  target_path :string
@@ -39,5 +39,5 @@ end
 #
 # Indexes
 #
-#  index_notifications_on_person_id  (person_id)
+#  index_notifications_on_user_id  (user_id)
 #

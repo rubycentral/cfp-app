@@ -1,10 +1,12 @@
 .event
   .row
     %header
-      .col-sm-3
+      .col-sm-2
         %h2= event
-      .col-sm-5.col-sm-offset-4
+      .col-sm-7.col-sm-offset-3
         #event-actions-top.pull-right
+          = link_to "Session Types", organizer_event_session_types_path(event), class: "btn btn-default"
+          = link_to "Tracks", organizer_event_tracks_path(event), class: "btn btn-default"
           = link_to "Proposals", organizer_event_proposals_path(event), class: "btn btn-default"
           = link_to "Program", organizer_event_program_path(event), class: "btn btn-default"
           = link_to "Schedule", organizer_event_sessions_path(event), class: "btn btn-default"

@@ -1,0 +1,6 @@
+.row
+  %fieldset.col-md-6
+    %h2 Edit Track
+    = form_for @track, url: organizer_event_track_path(@event, @track), html: {method: 'patch', role: 'form'} do |f|
+      = render partial: 'form', locals: {f: f}
+      %button.btn.btn-success{type: 'submit'} Update

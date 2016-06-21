@@ -51,6 +51,16 @@ SimpleForm.setup do |config|
     # b.use :full_error, wrap_with: { tag: :span, class: :error }
   end
 
+  #Checkbox wrappers
+  config.wrappers :inline_checkbox, tag: 'div', class: 'form-group col-sm-12', error_class: 'error' do | b |
+    b.use :html5
+    b.wrapper tag: 'div', class: 'checkbox' do | ba |
+      ba.use :label_input
+      ba.use :error, wrap_with: { tag: 'span', class: 'help-inline' }
+      ba.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
+    end
+  end
+
   # The default wrapper to be used by the FormBuilder.
   config.default_wrapper = :default
 
@@ -104,7 +114,7 @@ SimpleForm.setup do |config|
   # config.label_class = nil
 
   # You can define the class to use on all forms. Default is simple_form.
-  # config.form_class = :simple_form
+  #config.default_form_class = 'form-horizontal'
 
   # You can define which elements should obtain additional classes
   # config.generate_additional_classes_for = [:wrapper, :label, :input]

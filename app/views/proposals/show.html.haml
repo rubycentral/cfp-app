@@ -7,6 +7,11 @@
           %span.label.label-info= proposal.event.start_date.to_s(:month_day_year)
         %h1
           = proposal.title
+          %small
+            = proposal.session_type.try(:name)
+            - if proposal.track
+              \ –
+              = proposal.track.name
 
       .col-md-4
         - if proposal.has_speaker?(current_user)

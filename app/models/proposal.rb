@@ -14,9 +14,11 @@ class Proposal < ActiveRecord::Base
 
   belongs_to :event
   has_one :session
-  has_one :track, through: :session
+  belongs_to :session_type
+  belongs_to :track
 
   validates :title, :abstract, presence: true
+  validates :session_type, presence: true
 
   # This used to be 600, but it's so confusing for users that the browser
   # uses \r\n for newlines and they're over the 600 limit because of
@@ -263,14 +265,18 @@ end
 #  pitch                 :text
 #  last_change           :text
 #  confirmation_notes    :text
+#  proposal_data         :text
+#  updated_by_speaker_at :datetime
 #  confirmed_at          :datetime
 #  created_at            :datetime
 #  updated_at            :datetime
-#  updated_by_speaker_at :datetime
-#  proposal_data         :text
+#  session_type_id       :integer
+#  track_id              :integer
 #
 # Indexes
 #
-#  index_proposals_on_event_id  (event_id)
-#  index_proposals_on_uuid      (uuid) UNIQUE
+#  index_proposals_on_event_id         (event_id)
+#  index_proposals_on_session_type_id  (session_type_id)
+#  index_proposals_on_track_id         (track_id)
+#  index_proposals_on_uuid             (uuid) UNIQUE
 #

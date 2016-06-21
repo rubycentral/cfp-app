@@ -10,7 +10,6 @@ class Organizer::SessionTypesController < Organizer::ApplicationController
   end
 
   def edit
-
   end
 
   def create

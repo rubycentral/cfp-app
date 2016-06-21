@@ -36,14 +36,18 @@
       margin: 5px 5px 0 0;
     }
 
-    [class^="fa-"], [class*=" fa-"],
-    [class^="glyphicon-"], [class*=" glyphicon-"] {
+    > [class^="fa-"], > [class*=" fa-"],
+    > [class^="glyphicon-"], > [class*=" glyphicon-"] {
       color: #555;
       display: inline-block;
       font-size: 16px;
       margin: -8px -2px 0 10px;
       vertical-align: text-top;
     }
+  }
+
+  &.widget-nopad .widget-content {
+    padding: 0;
   }
 
   .widget-content {
@@ -53,6 +57,16 @@
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
+    /* Widget Content Clearfix */
+    &:before,
+    &:after {
+      content:"";
+      display:table;
+    }
+
+    &:after {
+      clear:both;
+    }
   }
 
   .widget-header +.widget-content {
@@ -63,21 +77,6 @@
     -moz-border-radius-topright: 0;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-  }
-
-  .widget-nopad .widget-content {
-    padding: 0;
-  }
-
-  /* Widget Content Clearfix */
-  .widget-content:before,
-  .widget-content:after {
-    content:"";
-    display:table;
-  }
-
-  .widget-content:after {
-    clear:both;
   }
 
   /* Widget Table */

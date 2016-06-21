@@ -1,16 +1,20 @@
 .form-group
   = f.label :name
   = f.text_field :name, class: 'form-control', placeholder: 'Name'
-  .form-group
-    = f.label :description
-    = f.text_area :description, class: 'form-control', placeholder: 'Description', rows: 6
-  .form-group
-    = f.label :duration
-    = f.text_field :duration, type: 'number', class: 'form-control', placeholder: '#'
+
+.form-group
+  = f.label :description
+  = f.text_area :description, class: 'form-control', placeholder: 'Description', rows: 6
+
+.form-group
+  = f.label :duration
+  = f.text_field :duration, type: 'number', class: 'form-control', placeholder: '#'
   %p.help-block How long the session will be (in minutes).
-  .form-group
-    = f.label 'Visibility'
-    %br
-    = f.check_box :public?, class: ''
-    &nbsp; make public
-  %p.help-block If checked, speakers will be able to select this session type when submitting proposals.
+
+.form-group
+  = f.label 'Visibility'
+  %br
+  = f.check_box :public?, class: ''
+  %label{for: "session_type_public"} Make public
+
+%p.help-block If checked, speakers will be able to select this session type when submitting proposals.

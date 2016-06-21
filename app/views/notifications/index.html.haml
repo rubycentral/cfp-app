@@ -1,7 +1,9 @@
 .row
   .col-sm-12
-    %br/
-    =link_to "Mark all as read", mark_all_as_read_notifications_path, method: :post, class: "btn btn-primary pull-right"
+    .page-header.clearfix
+      .btn-nav.pull-right
+        =link_to "Mark all as read", mark_all_as_read_notifications_path, method: :post, class: "btn btn-primary pull-right"
+      %h1 Notifications
 
 .row
   .col-sm-12

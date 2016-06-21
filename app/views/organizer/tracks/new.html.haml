@@ -1,6 +1,11 @@
 .row
-  %fieldset.col-md-6
-    %h2 New Track
-    = form_for @track, url: organizer_event_tracks_path(@event), html: {method: 'post', role: 'form'} do |f|
-      = render partial: 'form', locals: {f: f}
-      %button.btn.btn-success{type: 'submit'} Save
+  .col-sm-12
+    .page-header
+      %h1 New Track
+
+.row
+  .col-md-6
+    %fieldset
+      = form_for @track, url: organizer_event_tracks_path(@event), html: {method: 'post', role: 'form'} do |f|
+        = render partial: 'form', locals: {f: f}
+        %button.btn.btn-success.pull-right{type: 'submit'} Save

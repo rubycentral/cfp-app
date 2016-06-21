@@ -1,14 +1,16 @@
 #proposal
   .row
     .col-md-12
-      %p
-      - if current_user.organizer_for_event?(@event)
-        = link_to "Back to Proposal", organizer_event_proposal_path(@proposal.event_id, @proposal.uuid), class: "btn btn-primary"
-      - else
-        = link_to "Back to Proposal", proposal_path(slug: proposal.event.slug, uuid: proposal), class: "btn btn-primary"
-      %h1
-        Confirm
-        = proposal.title
+      .page-header.clearfix
+        .btn-nav.pull-right
+          - if current_user.organizer_for_event?(@event)
+            = link_to organizer_event_proposal_path(@proposal.event_id, @proposal.uuid), class: "btn btn-primary" do
+              &laquo; Back to Proposal
+          - else
+            = link_to "&laquo; Back to Proposal", proposal_path(slug: proposal.event.slug, uuid: proposal), class: "btn btn-primary"
+        %h1
+          Confirm
+          = proposal.title
   .row
     .col-md-8
       - if current_user.organizer_for_event?(@event)
@@ -18,9 +20,10 @@
 
       %h3 Abstract
       = proposal.abstract
+
       %h3 Speakers
-      = render partial: 'speakers/speaker',
-        collection: proposal.speakers, locals: { withdraw: false }
+      = render partial: 'speakers/speaker', collection: proposal.speakers, locals: { withdraw: false }
+
     .col-md-4
       - if proposal.confirmed?
         %p This proposal was confirmed on #{proposal.confirmed_at}.
@@ -33,7 +36,7 @@
               = label_tag 'Notes'
               = text_area_tag :confirmation_notes, nil, class: 'form-control', rows: 5,
                 placeholder: 'Please note any scheduling conflicts, or any additional information an organizer may need to schedule your talk.'
-            .form-submit.clearfix
+            .form-group.form-submit.clearfix
             - if @proposal.speakers == current_user
               = submit_tag 'Confirm my participation', class: 'btn btn-success'
               = proposal.withdraw_button

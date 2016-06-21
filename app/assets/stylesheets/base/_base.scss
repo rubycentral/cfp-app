@@ -35,40 +35,6 @@ h3.tags {
   margin: 0 0 0.75em 0;
 }
 
-
-// Consider breaking the following into modules
-//datatables
-.datatable {
-  tr.updated td {
-    background-color: lighten(#dff0d8, 5%);
-  }
-  .form-control {
-    padding: 3px;
-    height: inherit;
-  }
-  td, th { text-align: center; }
-}
-
-// Back Button
-#organizer-speakers-index,
-#organizer-proposals-index {
-  h2 {
-    float: left;
-  }
-  #back_link {
-    margin-bottom: 20px;
-  }
-
-  #download_link {
-    margin-top: 5px;
-  }
-}
-
-#back_link {
-  float: right;
-  margin-top: 33px;
-}
-
 #columns {
   float: left;
 

@@ -6,10 +6,9 @@
           %h3 Invite a new participant
         .modal-body
           = f.error_notification
-
-          = f.input :email
-          = f.input :role, as: :select, collection: [ 'reviewer', 'organizer' ]
+          = f.input :email, class: "form-control"
+          = f.input :role, as: :select, collection: [ 'reviewer', 'organizer' ], class: "form-control"
 
         .modal-footer
           %button.btn.btn-default{'data-dismiss' => "modal"} Cancel
-          %button.pull-right.btn.btn-success{:type => "submit"} Invite
+          %button.pull-right.btn.btn-success{type: "submit"} Invite

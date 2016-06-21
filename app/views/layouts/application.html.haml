@@ -19,12 +19,12 @@
       = javascript_include_tag "/js/html5shiv.js"
       = javascript_include_tag "/js/respond.min.js"
 
-  %body
+  %body{id: body_id}
     = render partial: "layouts/navbar"
 
   - if on_organizer_page?
     .alert-viewer-mode
-      .container
+      .container-fluid
         Viewing as:
         %strong Organizer
 
@@ -32,5 +32,5 @@
 
   .main
     .main-inner
-      .container
+      .container-fluid
         =yield

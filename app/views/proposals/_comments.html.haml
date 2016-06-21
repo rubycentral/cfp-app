@@ -13,7 +13,7 @@
 = form_for comments.new do |f|
   = f.hidden_field :proposal_id
   .form-group
-    = f.text_area :body, class: 'form-control', placeholder: 'Add your comment', rows: 10
+    = f.text_area :body, class: 'form-control', placeholder: 'Add your comment', rows: 5
   .form-group
     %button.btn.btn-success.save-comment(type="submit")
       %span.glyphicon.glyphicon-ok

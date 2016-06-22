@@ -39,11 +39,11 @@
           %th Created At
           %th.actions Actions
       %tbody
-        - user.participants.each do |participant|
+        - user.event_teammates.each do |event_teammate|
           %tr
-            %td= link_to participant.event.name, event_path(participant.event.slug)
-            %td= participant.role
-            %td= participant.created_at
+            %td= link_to event_teammate.event.name, event_path(event_teammate.event.slug)
+            %td= event_teammate.role
+            %td= event_teammate.created_at
             %td.actions
-              - if current_user.organizer_events.include?(participant.event)
-                = render partial: 'organizer/events/participant_controls', locals: { participant: participant }
+              - if current_user.organizer_events.include?(event_teammate.event)
+                = render partial: 'organizer/events/event_teammate_controls', locals: { event_teammate: event_teammate }

@@ -6,7 +6,7 @@ class CommentNotificationMailer < ApplicationMailer
     # Email all reviewers of this proposal if notifications is true unless they made the comment
     bcc = @proposal.ratings.map do |rating|
       user = rating.user
-      if rating.participant.try(:should_be_notified?) && @comment.user_id != user.id
+      if rating.event_teammate.try(:should_be_notified?) && @comment.user_id != user.id
         user.email
       end
     end.compact

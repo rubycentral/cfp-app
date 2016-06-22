@@ -16,7 +16,7 @@ feature "Listing events for different roles" do
 
   context "As an organizer" do
     scenario "the organizer should see a link to the index for managing proposals" do
-      create(:participant, role: 'organizer', user: organizer)
+      create(:event_teammate, role: 'organizer', user: organizer)
       login_as(organizer)
       visit events_path
       expect(page).to have_link('1 proposal', href: organizer_event_proposals_path(event))

@@ -8,11 +8,11 @@ class User < ActiveRecord::Base
          :omniauthable, omniauth_providers: [:twitter, :github]
 
   has_many :invitations,  dependent: :destroy
-  has_many :participants, dependent: :destroy
-  has_many :reviewer_participants, -> { where(role: ['reviewer', 'organizer']) }, class_name: 'Participant'
-  has_many :reviewer_events, through: :reviewer_participants, source: :event
-  has_many :organizer_participants, -> { where(role: 'organizer') }, class_name: 'Participant'
-  has_many :organizer_events, through: :organizer_participants, source: :event
+  has_many :event_teammates, dependent: :destroy
+  has_many :reviewer_event_teammates, -> { where(role: ['reviewer', 'organizer']) }, class_name: 'EventTeammate'
+  has_many :reviewer_events, through: :reviewer_event_teammates, source: :event
+  has_many :organizer_event_teammates, -> { where(role: 'organizer') }, class_name: 'EventTeammate'
+  has_many :organizer_events, through: :organizer_event_teammates, source: :event
   has_many :speakers,     dependent: :destroy
   has_many :ratings,      dependent: :destroy
   has_many :comments,     dependent: :destroy
@@ -68,7 +68,7 @@ class User < ActiveRecord::Base
   end
 
   def organizer_for_event?(event)
-    participants.organizer.for_event(event).size > 0
+    event_teammates.organizer.for_event(event).size > 0
   end
 
   def reviewer?
@@ -76,7 +76,7 @@ class User < ActiveRecord::Base
   end
 
   def reviewer_for_event?(event)
-    participants.reviewer.for_event(event).size > 0
+    event_teammates.reviewer.for_event(event).size > 0
   end
 
   def rating_for(proposal, build_new = true)
@@ -89,7 +89,7 @@ class User < ActiveRecord::Base
   end
 
   def role_names
-    self.participants.collect {|p| p.role}.uniq.join(", ")
+    self.event_teammates.collect {|p| p.role}.uniq.join(", ")
   end
 end
 

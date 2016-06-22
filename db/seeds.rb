@@ -32,10 +32,10 @@ seed_event = Event.create(name: "SeedConf", slug: "seedconf", contact_email: "in
 
 
 # Event Team
-seed_event.participants.create(user: organizer, role: "organizer", notifications: false)
-seed_event.participants.create(user: track_director, role: "organizer") # < update to program team
-seed_event.participants.create(user: reviewer, role: "reviewer")
-seed_event.participants.create(user: speaker_reviewer, role: "reviewer")
+seed_event.event_teammates.create(user: organizer, role: "organizer", notifications: false)
+seed_event.event_teammates.create(user: track_director, role: "organizer") # < update to program team
+seed_event.event_teammates.create(user: reviewer, role: "reviewer")
+seed_event.event_teammates.create(user: speaker_reviewer, role: "reviewer")
 
 
 # Proposals

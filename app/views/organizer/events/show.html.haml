@@ -160,6 +160,6 @@
               %p=event.speaker_notification_emails['waitlist'].truncate(75, separator: /\s/)
 
   %hr/
-  = render partial: 'participants',
-    locals: { event: event, participants: participants,
+  = render partial: 'event_teammates',
+    locals: { event: event, event_teammates: event_teammates,
       rating_counts: rating_counts }

@@ -3,7 +3,7 @@ class Admin::UsersController < Admin::ApplicationController
 
   # GET /admin/users
   def index
-    render locals: { users: User.includes(:participants) }
+    render locals: { users: User.includes(:event_teammates) }
   end
 
   # GET /admin/users/1

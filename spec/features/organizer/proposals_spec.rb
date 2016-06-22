@@ -6,7 +6,7 @@ feature "Organizers can manage proposals" do
   let(:proposal) { create(:proposal, event: event) }
 
   let(:organizer_user) { create(:user) }
-  let!(:organizer_participant) { create(:participant, :organizer, user: organizer_user, event: event) }
+  let!(:organizer_event_teammate) { create(:event_teammate, :organizer, user: organizer_user, event: event) }
 
   let(:speaker_user) { create(:user) }
   let!(:speaker) { create(:speaker, proposal: proposal, user: speaker_user) }

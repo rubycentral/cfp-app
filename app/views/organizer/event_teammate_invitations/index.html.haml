@@ -1,0 +1,30 @@
+.row
+  .col-md-12
+    .page-header.clearfix
+      .btn-nav.pull-right
+        = new_event_teammate_invitation_button
+      %h1 Pending &amp; Refused EventTeammate Invitations
+
+.row
+  .col-md-12
+    %table.table.table-striped
+      %tr
+        %th Email
+        %th State
+        %th Slug
+        %th Role
+        %th
+      - event_teammate_invitations.each do |event_teammate_invitation|
+        %tr
+        - unless event_teammate_invitation.state == 'accepted'
+          %td= event_teammate_invitation.email
+          %td= event_teammate_invitation.state
+          %td= event_teammate_invitation.slug
+          %td= event_teammate_invitation.role
+          %td= link_to 'Remove',
+            organizer_event_event_teammate_invitation_path(event, event_teammate_invitation),
+            method: :delete,
+            data: { confirm: 'Are you sure?' },
+            class: 'btn btn-danger btn-xs'
+
+= render partial: 'organizer/event_teammate_invitations/new_dialog', locals: { event: event }

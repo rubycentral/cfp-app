@@ -1,15 +1,12 @@
 Rails.application.routes.draw do
 
+  root 'home#show'
+
   resources :notifications, only: [:index, :show] do
     post :mark_all_as_read, on: :collection
   end
 
-  root 'home#show'
-
-  match '/auth/:provider/callback' => 'sessions#create', via: [:get, :post]
-  get '/auth/failure' => 'sessions#new', error: true
-  get '/signout' => 'sessions#destroy', as: :signout
-  resource :session, only: [:new, :create, :destroy]
+  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
 
   resource :profile, only: [:edit, :update]
   resource :public_comments, only: [:create], controller: :comments, type: 'PublicComment'
@@ -53,9 +50,7 @@ Rails.application.routes.draw do
       post :unarchive
     end
 
-    resources :people do
-      resources :services
-    end
+    resources :users
   end
 
   namespace 'organizer' do
@@ -66,8 +61,6 @@ Rails.application.routes.draw do
       end
       resources :participant_invitations, except: [:new, :edit, :update, :show]
 
-
-
       controller :program do
         get 'program' => 'program#show'
       end
@@ -77,14 +70,14 @@ Rails.application.routes.draw do
       end
 
       resources :rooms, only: [:create, :update, :destroy]
-      resources :tracks, only: [:create, :destroy]
       resources :sessions, except: :show
+      resources :session_types, except: :show
+      resources :tracks, except: [:show]
       resources :proposals, param: :uuid do
         resources :speakers, only: [:new, :create]
         post :finalize
         post :update_state
       end
-
 
       controller :speakers do
         get :speaker_emails, action: :emails
@@ -108,6 +101,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get "/current-styleguide", :to => "pages#current_styleguide"
   get "/404", :to => "errors#not_found"
   get "/422", :to => "errors#unacceptable"
   get "/500", :to => "errors#internal_error"

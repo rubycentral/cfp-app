@@ -6,10 +6,10 @@
       = proposal.abstract_input(f)
       %section.inline-block
         = f.label :video_url
-        = f.text_field :video_url
+        = f.text_field :video_url, class: "form-control"
       %section.inline-block
         = f.label :slides_url
-        = f.text_field :slides_url
+        = f.text_field :slides_url, class: "form-control"
       %p
       = f.select :review_tags,
         options_for_select(event.review_tags, proposal.object.review_tags),
@@ -20,9 +20,9 @@
     %fieldset
       %h4 Speaker
       = f.simple_fields_for :speakers do |speaker_fields|
-        = speaker_fields.simple_fields_for :person, @person do |person_fields|
-          = person_fields.input :name
-          = person_fields.input :email
+        = speaker_fields.simple_fields_for :user, @user do |user_fields|
+          = user_fields.input :name
+          = user_fields.input :email
         = speaker_fields.input :bio, maxlength: :lookup,
           placeholder: 'Bio for speaker for the event program.'
 
@@ -32,6 +32,8 @@
           .form-group
           = f.label custom_field
           = text_field_tag "proposal[custom_fields][#{custom_field}]", proposal.custom_fields[custom_field], class: "form-control"
-          %p 
+          %p
 
-  %button.pull-right.btn.btn-primary.btn-lg{:type => "submit"} Save
+  .row
+    .col-sm-12
+      %button.pull-right.btn.btn-primary.btn-lg{type: "submit"} Save

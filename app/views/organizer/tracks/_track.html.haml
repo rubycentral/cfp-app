@@ -1,6 +1,0 @@
-%dt{ id: "track_#{track.id}" }= track.name
-%dd= link_to 'Remove', organizer_event_track_path(event, track),
-  method: :delete,
-  remote: true,
-  data: { confirm: "Are you sure you want to remove this track?" },
-  class: 'btn btn-danger btn-xs'

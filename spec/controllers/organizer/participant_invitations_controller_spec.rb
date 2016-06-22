@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Organizer::ParticipantInvitationsController, type: :controller do
   let(:event) { create(:event) }
   let(:organizer) { create(:organizer, event: event) }
-  before { login(organizer) }
+  before { sign_in(organizer) }
 
   describe "POST #create" do
     let(:valid_params) do

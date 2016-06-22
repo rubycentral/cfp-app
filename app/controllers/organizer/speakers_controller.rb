@@ -4,27 +4,27 @@ class Organizer::SpeakersController < Organizer::ApplicationController
 
   def index
     render locals: {
-             proposals: @event.proposals.includes(speakers: :person).decorate
+             proposals: @event.proposals.includes(speakers: :user).decorate
            }
   end
 
   def new
     @speaker = Speaker.new
-    @person = @speaker.build_person
+    @user = @speaker.build_user
     @proposal = Proposal.find_by(uuid: params[:proposal_uuid])
   end
 
   def create
     s_params = speaker_params
-    person = Person.find_by(email: s_params.delete(:email))
-    if person
-      if person.speakers.create(s_params.merge(proposal: @proposal))
+    user = User.find_by(email: s_params.delete(:email))
+    if user
+      if user.speakers.create(s_params.merge(proposal: @proposal))
         flash[:success] = "Speaker was added to this proposal"
       else
         flash[:danger] = "There was a problem saving this speaker"
       end
     else
-      flash[:danger] = "Could not find a person with this email address"
+      flash[:danger] = "Could not find a user with this email address"
     end
     redirect_to organizer_event_proposal_url(event, @proposal)
   end
@@ -68,7 +68,7 @@ class Organizer::SpeakersController < Organizer::ApplicationController
 
   def speaker_params
     params.require(:speaker).permit(:bio, :email,
-                              person_attributes: [:id, :name, :email, :bio])
+                              user_attributes: [:id, :name, :email, :bio])
   end
 
   def set_proposal

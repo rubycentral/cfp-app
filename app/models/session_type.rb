@@ -1,11 +1,13 @@
 class SessionType < ActiveRecord::Base
   belongs_to :event
   has_many :sessions
+  has_many :proposals
 
   validates_presence_of :name, :event
   validates_uniqueness_of :name, scope: :event
 
   scope :sort_by_name, ->{ order(:name) }
+  scope :publicly_viewable, ->{ where(public: true)}
 end
 
 # == Schema Information

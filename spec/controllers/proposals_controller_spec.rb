@@ -25,6 +25,7 @@ describe ProposalsController, type: :controller do
           abstract: proposal.abstract,
           details: proposal.details,
           pitch: proposal.pitch,
+          session_type_id: proposal.session_type.id,
           speakers_attributes: {
             '0' => {
               bio: 'my bio',

@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 feature "Proposals" do
-  let(:user) { create(:user) }
+  let!(:user) { create(:user) }
+  let!(:event) { create(:event, state: 'open') }
+  let!(:session_type) { create(:session_type, name: 'Only type')}
 
-  let(:event) { create(:event, state: 'open') }
   let(:go_to_new_proposal) { visit new_proposal_path(slug: event.slug) }
   let(:create_proposal) do
     fill_in 'Title', with: "General Principles Derived by Magic from My Personal Experience"
@@ -11,6 +12,7 @@ feature "Proposals" do
     fill_in 'proposal_speakers_attributes_0_bio', with: "I am awesome."
     fill_in 'Pitch', with: "You live but once; you might as well be amusing. - Coco Chanel"
     fill_in 'Details', with: "Plans are nothing; planning is everything. - Dwight D. Eisenhower"
+    select 'Only type', from: 'Session type'
     click_button 'Submit Proposal'
   end
 

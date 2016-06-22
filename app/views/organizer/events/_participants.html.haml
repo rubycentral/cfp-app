@@ -1,14 +1,14 @@
 .row
   %header
-    .col-md-3
+    .col-md-12
+      .btn-nav.pull-right
+        = link_to 'View speakers', organizer_event_speakers_path(event), class: "btn btn-primary"
+        = link_to 'Add/Invite New Participant', '#', class: 'btn btn-primary', data: { toggle: 'modal', target: "#new-participant-event-#{event.id}" }
+        = link_to 'Manage Participant Invitations',
+          organizer_event_participant_invitations_path(event), class: 'btn btn-primary'
       %h3 Participants
-      = link_to 'view speakers', organizer_event_speakers_path(event)
-    .col-sm-1.col-sm-offset-6
-      = link_to 'Add/Invite New Participant', '#', class: 'btn btn-primary', data: { toggle: 'modal', target: "#new-participant-event-#{event.id}" }
-      = link_to 'Manage Participant Invitations',
-        organizer_event_participant_invitations_path(event), class: 'btn btn-primary'
 .row
-  .col-md-11
+  .col-md-12
     %table.participants.table.table-striped
       %thead
         %tr
@@ -32,6 +32,7 @@
             %td.actions
               - unless participant.user == current_user
                 = render partial: 'organizer/events/participant_controls', locals: { participant: participant }
+
 %div{ id: "new-participant-event-#{event.id}", class: 'modal fade' }
   .modal-dialog
     .modal-content

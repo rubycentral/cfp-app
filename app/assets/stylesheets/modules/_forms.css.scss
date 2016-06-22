@@ -1,15 +1,14 @@
-.error_notification, .help-block {
-  color: darken(#edd1d1, 50%);
-  font-weight: 700;
-}
-
 .error_notification {
   border-bottom: 1px solid darken(#edd1d1, 50%);
+  color: $brand-warning;
+  font-weight: 700;
   margin-bottom: 10px;
   padding-bottom: 5px;
 }
 .help-block {
+  color: darken($brand-success, 5%);
   font-size: 0.9em;
+  font-style: italic;
 }
 
 .field_with_errors {

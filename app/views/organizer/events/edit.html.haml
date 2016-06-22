@@ -1,4 +1,13 @@
-%h1
-  Edit #{event}
-= form_for event, url: organizer_event_path(event), html: {role: 'form'} do |f|
-  = render partial: @partial, locals: {f: f}
+.row
+  .col-md-12
+    .page-header
+      %h1
+        Edit #{event}
+        -if params[:form].present?
+          \-
+          %em=params[:form].humanize.gsub("form", "")
+
+.row
+  .col-md-12
+    = form_for event, url: organizer_event_path(event), html: {role: 'form'} do |f|
+      = render partial: @partial, locals: {f: f}

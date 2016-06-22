@@ -22,7 +22,7 @@ feature "A user sees correct information for the current event and their role" d
 
     within ".navbar" do
       expect(page).to have_link(event_1.name)
-      expect(page).to have_link("Notifications")
+      expect(page).to have_link("", href: "/notifications")
       expect(page).to have_link(normal_user.name)
     end
 
@@ -35,7 +35,7 @@ feature "A user sees correct information for the current event and their role" d
     expect(current_path).to eq(event_path(event_1.slug))
     within ".navbar" do
       expect(page).to have_content(event_1.name)
-      expect(page).to have_content("Notifications")
+      expect(page).to have_link("", href: "/notifications")
       expect(page).to have_content(normal_user.name)
       expect(page).to_not have_content("My Proposals")
     end
@@ -55,7 +55,7 @@ feature "A user sees correct information for the current event and their role" d
 
     within ".navbar" do
       expect(page).to have_content("CFPApp")
-      expect(page).to have_link("Notifications")
+      expect(page).to have_link("", href: "/notifications")
       expect(page).to have_link(normal_user.name)
     end
 
@@ -69,16 +69,13 @@ feature "A user sees correct information for the current event and their role" d
 
     within ".navbar" do
       expect(page).to have_content(event_2.name)
-      expect(page).to have_content("Notifications")
+      expect(page).to have_link("", href: "/notifications")
       expect(page).to have_content(normal_user.name)
       expect(page).to_not have_content("My Proposals")
     end
 
     normal_user.proposals << proposal
     visit root_path
-    within ".subnavbar-inner" do
-      expect(page).to have_content("My Proposals")
-    end
   end
 
   scenario "User flow and navbar layout for a reviewer" do
@@ -96,24 +93,22 @@ feature "A user sees correct information for the current event and their role" d
       expect(page).to have_content(event_1.name)
       expect(page).to have_link(reviewer_user.name)
       expect(page).to_not have_link("My Proposals")
-      expect(page).to have_link("Notifications")
-    end
-
-    within ".subnavbar" do
+      expect(page).to have_link("", href: "/notifications")
       expect(page).to have_content("Review Proposals")
     end
+
 
     reviewer_user.proposals << proposal
     visit event_path(event_2.slug)
 
-    within ".subnavbar" do
+    within ".navbar" do
       expect(page).to have_content("My Proposals")
       expect(page).to have_content("Review Proposals")
     end
 
     visit event_path(event_1.slug)
 
-    within ".subnavbar" do
+    within ".navbar" do
       expect(page).to have_content("My Proposals")
       expect(page).to have_content("Review Proposals")
     end
@@ -136,11 +131,8 @@ feature "A user sees correct information for the current event and their role" d
 
     within ".navbar" do
       expect(page).to have_content(event_1.name)
-      expect(page).to have_link("Notifications")
+      expect(page).to have_link("", href: "/notifications")
       expect(page).to have_link(reviewer_user.name)
-    end
-
-    within ".subnavbar" do
       expect(page).to have_content("Review Proposals")
       expect(page).to have_content("Organize Proposals")
       expect(page).to have_content("Program")
@@ -152,10 +144,7 @@ feature "A user sees correct information for the current event and their role" d
     visit event_path(event_2.slug)
 
     within ".navbar" do
-      expect(page).to have_link("Notifications")
-    end
-
-    within ".subnavbar" do
+      expect(page).to have_link("", href: "/notifications")
       expect(page).to have_content("My Proposals")
       expect(page).to have_content("Review Proposals")
       expect(page).to have_content("Organize Proposals")
@@ -166,10 +155,7 @@ feature "A user sees correct information for the current event and their role" d
     visit event_path(event_1.slug)
 
     within ".navbar" do
-      expect(page).to have_link("Notifications")
-    end
-
-    within ".subnavbar" do
+      expect(page).to have_link("", href: "/notifications")
       expect(page).to have_content("My Proposals")
       expect(page).to have_content("Review Proposals")
       expect(page).to have_content("Organize Proposals")
@@ -195,11 +181,8 @@ feature "A user sees correct information for the current event and their role" d
 
     within ".navbar" do
       expect(page).to have_content(event_1.name)
-      expect(page).to have_link("Notifications")
+      expect(page).to have_link("", href: "/notifications")
       expect(page).to have_link(reviewer_user.name)
-    end
-
-    within ".subnavbar-inner" do
       expect(page).to_not have_link("My Proposals")
       expect(page).to have_content("Program")
       expect(page).to have_content("Schedule")
@@ -211,10 +194,7 @@ feature "A user sees correct information for the current event and their role" d
     visit event_path(event_2.slug)
 
     within ".navbar" do
-      expect(page).to have_link("Notifications")
-    end
-
-    within ".subnavbar-inner" do
+      expect(page).to have_link("", href: "/notifications")
       expect(page).to have_content("My Proposals")
       expect(page).to have_content("Review Proposals")
       expect(page).to have_content("Organize Proposals")
@@ -225,10 +205,7 @@ feature "A user sees correct information for the current event and their role" d
     visit event_path(event_1.slug)
 
     within ".navbar" do
-      expect(page).to have_link("Notifications")
-    end
-
-    within ".subnavbar-inner" do
+      expect(page).to have_link("", href: "/notifications")
       expect(page).to have_content("My Proposals")
       expect(page).to have_content("Review Proposals")
       expect(page).to have_content("Organize Proposals")
@@ -241,7 +218,7 @@ feature "A user sees correct information for the current event and their role" d
     expect(page).to have_content(event_1.name)
     expect(current_path).to eq(organizer_event_proposals_path(event_1.id))
 
-    within ".subnavbar" do
+    within ".navbar" do
       click_on("Program")
     end
     expect(page).to have_content(event_1.name)
@@ -250,7 +227,7 @@ feature "A user sees correct information for the current event and their role" d
     visit "/events"
     click_on(event_2.name)
 
-    within ".subnavbar" do
+    within ".navbar" do
       click_on("Schedule")
     end
     expect(page).to have_content(event_2.name)
@@ -282,7 +259,7 @@ feature "A user sees correct information for the current event and their role" d
       click_on event_1.name
     end
 
-    within ".subnavbar" do
+    within ".navbar" do
       expect(page).to_not have_content("Review Proposals")
       expect(page).to_not have_content("Organize Proposals")
       expect(page).to_not have_content("Program")

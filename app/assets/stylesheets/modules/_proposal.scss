@@ -20,11 +20,6 @@
 }
 
 #proposal {
-  select#rating_score {
-    display: inline;
-    width: 4em;
-  }
-
   span {
     &.status {
       float: right;
@@ -86,20 +81,9 @@ ul {
   margin-top: 2.3em;
 }
 
-.toolbox {
-  margin: 1.5em 0 -.8em;
-  a {
-    float: left;
-    margin-right: .5em;
-  }
-}
-
 .btn.save-comment {
   width: 105px;
   float: right;
-}
-.btn#back, .btn#edit {
-  margin-bottom: 5px;
 }
 
 span.disabled-state {
@@ -107,54 +91,11 @@ span.disabled-state {
   color: grey;
 }
 
-#delete {
-  margin-right: 5px;
-}
-
-.row {
-  #updated_parent {
-    /* Place this row behind the status buttons */
-    z-index: -1;
-  }
-}
-
-#organizer-proposals-index {
-  .dataTables_filter, .filter_date_range {
-    display: none;
-  }
-  .top_row_buttons { margin-bottom: 5px;}
-}
-
-#reviewer-proposals_wrapper {
-  // A hack to hide our rated? boolean column that is being used to initally sort
-  th:last-of-type, td:last-of-type{ display: none }
-}
-
 .callout {
   border-left: solid darken(#dff0d8, 10%) 5px;
   background-color: lighten(#dff0d8, 5%);
   padding-left: 0.5em;
 }
-
-#event_statistics {
-  h3 {
-    margin-bottom: -10px;
-  }
-  dl {
-    margin-left: .5em;
-  }
-  dt {
-    text-align:left;
-    width: 160px;
-  }
-  dd { margin-left: 140px; }
-}
-
-.glyphicon-leaf {
-  color: green;
-  &:hover{cursor: pointer;}
-}
-
 
 .ratings_list {
   .text-success:hover { color: #468847; }

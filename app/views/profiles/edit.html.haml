@@ -1,3 +1,9 @@
+.row
+  .col-md-12
+    .page-header
+      %h1
+        Edit Your Profile
+
 = form_for current_user, url: profile_path, html: {role: 'form'} do |f|
   .row
     %fieldset.col-md-6

@@ -14,10 +14,11 @@
   }
 }
 
-#rooms-partial, #tracks-partial {
+#session, #rooms-partial, #tracks-partial {
   header {
-    h3, .btn { float:left;}
-    .btn {margin: 21px 0 0 15px;}
+    .btn {
+      margin: 21px 0 0 15px;
+    }
   }
   dl {
     dt {
@@ -29,10 +30,6 @@
 }
 
 .tab-content { margin-top: 20px; }
-
-#download-json {
-  margin-top: 5px;
-}
 
 #schedule {
   table.schedule {

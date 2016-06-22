@@ -13,10 +13,10 @@
     border-bottom: 1px solid $gray-light;
     height: 60px;
   }
-  .container {
+  .container-fluid {
     > ul {
       display: inline-block;
-      height: 80px;
+      height: 100%;
       margin: 0;
       padding: 0;
       > li {
@@ -44,20 +44,21 @@
             text-decoration: none;
           }
           > i {
-            display: inline-block;
+            display: block;
             font-size: 20px;
             height: 24px;
-            margin-top: 11px;
-            margin-bottom: -3px;
+            margin: 10px auto 0px;
             width: 24px;
           }
           > span {
             display: block;
           }
         }
-        &.active > a {
-          border-bottom:3px solid $brand-primary;
-          color: $gray-darker;
+        &.active {
+          border-bottom: 3px solid $brand-primary;
+          > a {
+            color: $gray-darker;
+          }
         }
       }
     }

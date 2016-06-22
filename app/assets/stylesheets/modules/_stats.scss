@@ -11,21 +11,20 @@
 }
 
 .stats .stat {
+  color: #999;
   display: table-cell;
-  width: 40%;
-  vertical-align: top;
-
   font-size: 11px;
   font-weight: bold;
-  color: #999;
+  line-height: 1.2;
+  vertical-align: top;
+  width: 40%;
 }
 
 .stat-value {
   display: block;
-  margin-bottom: .55em;
-
   font-size: 30px;
   font-weight: bold;
+  line-height: 1.2;
   letter-spacing: -2px;
   color: #444;
 }

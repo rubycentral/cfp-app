@@ -42,7 +42,7 @@ class InvitationsController < ApplicationController
     if params[:refuse]
       @invitation.refuse
       flash[:info] = "You have refused this invitation."
-      redirect_to :back
+      redirect_to root_url
     else
       @invitation.accept
       flash[:info] = "You have accepted this invitation."

@@ -99,7 +99,10 @@ class ProposalsController < ApplicationController
   end
 
   def require_speaker
-    raise ActiveRecord::RecordNotFound unless current_user.proposal_ids.include?(@proposal.id)
+    unless current_user.proposal_ids.include?(@proposal.id)
+      redirect_to root_path
+      flash[:danger] = 'You are not a listed speaker on the proposal you are trying to access.'
+    end
   end
 
   def setup_flash_message

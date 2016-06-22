@@ -6,6 +6,7 @@ class EventTeammate < ActiveRecord::Base
   scope :recent, -> { order('created_at DESC') }
 
   scope :organizer, -> { where(role: 'organizer') }
+  scope :program_team, -> { where(role: ['program team', 'organizer']) }
   scope :reviewer, -> { where(role: ['reviewer', 'organizer']) }
 
   validates :user, :event, :role, presence: true

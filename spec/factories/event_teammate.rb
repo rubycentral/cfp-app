@@ -7,6 +7,10 @@ FactoryGirl.define do
       role 'reviewer'
     end
 
+    trait :program_team do
+      role 'program team'
+    end
+
     trait :organizer do
       role 'organizer'
     end

@@ -9,7 +9,7 @@ class Organizer::EventTeammatesController < Organizer::ApplicationController
 
       if event_teammate_invitation.save
         EventTeammateInvitationMailer.create(event_teammate_invitation).deliver_now
-        flash[:info] = 'EventTeammate invitation successfully sent.'
+        flash[:info] = 'Event teammate invitation successfully sent.'
       else
         flash[:danger] = 'There was a problem creating your invitation.'
       end
@@ -18,9 +18,9 @@ class Organizer::EventTeammatesController < Organizer::ApplicationController
       event_teammate = @event.event_teammates.build(event_teammate_params.merge(user: user))
 
       if event_teammate.save
-        flash[:info] = 'Your event_teammate was added.'
+        flash[:info] = 'Your event teammate was added.'
       else
-        flash[:danger] = "There was a problem saving your event_teammate. Please try again"
+        flash[:danger] = "There was a problem saving your event teammate. Please try again"
       end
       redirect_to organizer_event_url(@event)
     end
@@ -37,7 +37,7 @@ class Organizer::EventTeammatesController < Organizer::ApplicationController
   def destroy
     @event.event_teammates.find(params[:id]).destroy
 
-    flash[:info] = "Your event_teammate has been deleted."
+    flash[:info] = "Your event teammate has been deleted."
     redirect_to organizer_event_url(@event)
   end
 

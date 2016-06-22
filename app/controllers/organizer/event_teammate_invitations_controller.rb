@@ -18,7 +18,7 @@ class Organizer::EventTeammateInvitationsController < Organizer::ApplicationCont
     if @event_teammate_invitation.save
       EventTeammateInvitationMailer.create(@event_teammate_invitation).deliver_now
       redirect_to organizer_event_event_teammate_invitations_url(@event),
-        flash: { info: 'EventTeammate invitation successfully sent.' }
+        flash: { info: 'Event teammate invitation successfully sent.' }
     else
       redirect_to organizer_event_event_teammate_invitations_path(@event),
         flash: { danger: 'There was a problem creating your invitation.' }
@@ -30,7 +30,7 @@ class Organizer::EventTeammateInvitationsController < Organizer::ApplicationCont
     @event_teammate_invitation.destroy
 
     redirect_to organizer_event_event_teammate_invitations_url(@event),
-      flash: { info: 'EventTeammate invitation was successfully removed.' }
+      flash: { info: 'Event teammate invitation was successfully removed.' }
   end
 
   private

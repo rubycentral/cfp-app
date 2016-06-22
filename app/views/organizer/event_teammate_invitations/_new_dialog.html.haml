@@ -1,13 +1,13 @@
-%div{ id: "new-event_teammate-invitation", class: 'modal fade' }
+%div{ id: "new-event-teammate-invitation", class: 'modal fade' }
   .modal-dialog
     .modal-content
       = simple_form_for(:event_teammate_invitation, url: organizer_event_event_teammate_invitations_path(event)) do |f|
         .modal-header
-          %h3 Invite a new event_teammate
+          %h3 Invite a new event teammate
         .modal-body
           = f.error_notification
           = f.input :email, class: "form-control"
-          = f.input :role, as: :select, collection: [ 'reviewer', 'organizer' ], class: "form-control"
+          = f.input :role, as: :select, collection: [ 'reviewer', 'program team', 'organizer' ], class: "form-control"
 
         .modal-footer
           %button.btn.btn-default{'data-dismiss' => "modal"} Cancel

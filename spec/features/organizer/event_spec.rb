@@ -82,7 +82,7 @@ feature "Event Dashboard" do
     it "can promote a user" do
       user = create(:user)
       visit organizer_event_path(event)
-      click_link 'Add/Invite New EventTeammate'
+      click_link 'Add/Invite New Event Teammate'
 
       form = find('#new_event_teammate')
       form.fill_in :email, with: user.email
@@ -92,7 +92,7 @@ feature "Event Dashboard" do
       expect(user).to be_organizer_for_event(event)
     end
 
-    it "can promote a event_teammate" do
+    it "can promote an event teammate" do
       visit organizer_event_path(event)
 
       form = find('tr', text: reviewer_user.email).find('form')
@@ -102,7 +102,7 @@ feature "Event Dashboard" do
       expect(reviewer_user).to be_organizer_for_event(event)
     end
 
-    it "can remove a event_teammate" do
+    it "can remove a event teammate" do
       visit organizer_event_path(event)
 
       row = find('tr', text: reviewer_user.email)
@@ -111,11 +111,11 @@ feature "Event Dashboard" do
       expect(reviewer_user).to_not be_reviewer_for_event(event)
     end
 
-    it "can invite a new event_teammate" do
+    it "can invite a new event teammate" do
       visit organizer_event_event_teammate_invitations_path(event)
 
       fill_in 'Email', with: 'harrypotter@hogwarts.edu'
-      select 'organizer', from: 'Role'
+      select 'program team', from: 'Role'
       click_button('Invite')
 
       email = ActionMailer::Base.deliveries.last

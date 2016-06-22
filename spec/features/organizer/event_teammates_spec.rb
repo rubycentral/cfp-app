@@ -13,7 +13,7 @@ feature "Organizers can manage event_teammates" do
       create(:user, email: 'viktorkrum@durmstrang.edu')
       visit organizer_event_path(event)
 
-      click_link 'Add/Invite New EventTeammate'
+      click_link 'Add/Invite New Event Teammate'
       fill_in 'email', with: 'h'
 
       expect(page).to have_text('harrypotter@hogwarts.edu')

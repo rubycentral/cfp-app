@@ -15,7 +15,7 @@
   .form-control {
     background-color: #edd1d1;
   }
-  label {
+  label, .help-block {
     color: darken(#edd1d1, 50%);
   }
 }
@@ -24,4 +24,18 @@
   border-top: 1px solid #ccc;
   margin: 1em 0 5em;
   padding-top: 1em;
+}
+
+input.required {
+  border: 1px solid darken(#edd1d1, 50%);
+}
+
+.required_notification {
+  color:darken(#edd1d1, 50%);
+  font-style: italic;
+  float:right;
+}
+
+span[title="required"] {
+  color: darken(#edd1d1, 50%);
 }

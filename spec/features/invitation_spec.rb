@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'Speaker Invitations' do
   let(:second_speaker_email) { 'second_speaker@example.com' }
-  let(:user) { create(:person) }
+  let(:user) { create(:user) }
   let(:event) { create(:event, state: 'open') }
   let(:proposal) { create(:proposal,
                           title: 'Hello there',
@@ -10,12 +10,12 @@ feature 'Speaker Invitations' do
                           event: event)
   }
   let!(:speaker) { create(:speaker,
-                         person: user,
+                         user: user,
                          proposal: proposal)
   }
 
   let(:go_to_proposal) {
-    login_user(user)
+    login_as(user)
     visit(proposal_path(slug: proposal.event.slug, uuid: proposal))
   }
 
@@ -67,12 +67,12 @@ feature 'Speaker Invitations' do
     end
   end
 
-  context "Responding to an invitaiton" do
-    let(:second_speaker) { create(:person, email: second_speaker_email) }
+  context "Responding to an invitation" do
+    let(:second_speaker) { create(:user, email: second_speaker_email) }
     let!(:invitation) { create(:invitation,
                                proposal: proposal,
                                email: second_speaker_email,
-                               person: second_speaker)
+                               user: second_speaker)
     }
     let(:other_proposal) { create(:proposal, event: event) }
     let!(:other_invitation) { create(:invitation,
@@ -81,7 +81,7 @@ feature 'Speaker Invitations' do
     }
 
     before :each do
-      login_user(second_speaker)
+      login_as(second_speaker)
       visit invitation_url(invitation, invitation_slug: invitation.slug)
     end
 

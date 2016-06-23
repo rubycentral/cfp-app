@@ -8,8 +8,8 @@ class Organizer::EventsController < Organizer::ApplicationController
   end
 
   def show
-    participants = @event.participants.includes(:person).recent
-    rating_counts = @event.ratings.group(:person_id).count
+    participants = @event.participants.includes(:user).recent
+    rating_counts = @event.ratings.group(:user_id).count
 
     render locals: {
              event: @event.decorate,

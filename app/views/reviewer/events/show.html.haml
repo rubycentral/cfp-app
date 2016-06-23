@@ -1,82 +1,121 @@
 .event
   .row
-    %header
-      .col-sm-3
-        %h2= event
-      .col-sm-5.col-sm-offset-4
-        #event-actions-top.pull-right
-          %p= link_to "Proposals", reviewer_event_proposals_path(event), class: "btn btn-default"
+    .col-md-12
+      .page-header.clearfix
+        .btn-nav.pull-right
+          = link_to "Proposals", reviewer_event_proposals_path(event), class: "btn btn-default"
+        %h1= event
 
   .row
     .col-sm-4
-      %h4 Event Details
-      %dl.dl-horizontal
-        %dt Url:
-        %dd
-          %a{ href: event.url }#{event.url}
-        %dt Slug:
-        %dd #{event.slug}
-        %dt Email:
-        %dd #{event.contact_email}
-        %dt Guidelines:
-        %dd
-          -if event.guidelines.present?
-            = event.guidelines.truncate(150, separator: /\s/)
-          = link_to "Public guidelines", event_path(slug: event.slug)
+      .widget.widget-table
+        .widget-header
+          %i.fa.fa-calendar
+          %h3 Event Details
+        .widget-content
+          %table.table.table-striped.table-bordered
+            %tbody
+              %tr
+                %td.text-primary
+                  %strong Url:
+                %td
+                  %a{ href: event.url }#{event.url}
+              %tr
+                %td.text-primary
+                  %strong Slug:
+                %td #{event.slug}
+              %tr
+                %td.text-primary
+                  %strong Email:
+                %td #{event.contact_email}
+              %tr
+                %td.text-primary
+                  %strong Guidelines:
+                %td
+                  -if event.guidelines.present?
+                    = event.guidelines.truncate(150, separator: /\s/)
+                  = link_to "Public guidelines", event_path(slug: event.slug)
 
-      %dl.dl-horizontal
-        %dt CFP Opens:
-        %dd= event.cfp_opens
+      .widget.widget-table
+        .widget-header
+          %i.fa.fa-calendar
+          %h3 CFP Details
+        .widget-content
+          %table.table.table-striped.table-bordered
+            %tbody
+              %tr
+                %td.text-primary
+                  %strong CFP Opens:
+                %td= event.cfp_opens
+              %tr
+                %td.text-primary
+                  %strong CFP Closes:
+                %td= event.cfp_closes
 
-        %dt CFP Closes:
-        %dd= event.cfp_closes
+              %tr
+                %td.text-primary
+                  %strong Days Remaining:
+                %td #{event.cfp_days_remaining}
 
-        .subset
-          %dt Days Remaining:
-          %dd #{event.cfp_days_remaining}
+              %tr
+                %td.text-primary
+                  %strong Event Start:
+                %td #{event.start_date.to_s(:month_day_year) unless event.start_date.blank?}
 
-        %dt Event Start:
-        %dd #{event.start_date.to_s(:month_day_year) unless event.start_date.blank?}
+              %tr
+                %td.text-primary
+                  %strong Event End:
+                %td #{event.end_date.to_s(:month_day_year) unless event.end_date.blank?}
 
-        %dt Event End:
-        %dd #{event.end_date.to_s(:month_day_year) unless event.end_date.blank?}
-
-
-    .col-sm-4
-      %h4 Proposal Stats
-      %dl.dl-horizontal
-        %dt Total:
-        %dd #{event.proposals.count}
-        .subset
-          %dt Reviewed:
-          %dd #{event.proposals.rated.count} (#{event.reviewed_percent})
-      %h4 Proposal Tags
-      %dd=event.valid_proposal_tags
-      %dl.dl-horizontal
-
-      %h4 Review Tags
-      %dd=event.valid_review_tags
-      %dl.dl-horizontal
-
-
-    .col-sm-4
-      %h4 Tracks
-      -if event.track_count.present?
-        - event.track_count.sort_by{|k,v| v}.reverse.each_slice(8).to_a.each do |row|
-          %ul#columns.list-inline
-            -row.each do |name, count|
-              %li
-                .label.label-success
-                  = name
-                  = count
-      -else
-        %p No Tracks
 
     .col-sm-4
+      .widget.widget-nopad
+        .widget-header
+          %i.fa.fa-list-alt
+          %h3 Proposal Stats
+        .widget-content
+          .stats.clearfix
+            .stat
+              %h3 Total:
+              %span.stat-value #{event.proposals.count}
+            .stat
+              %h3 Reviewed:
+              %span.stat-value #{event.proposals.rated.count} (#{event.reviewed_percent})
+
+      .widget
+        .widget-header
+          %i.fa.fa-tags
+          %h3 Proposal Tags
+        .widget-content
+          =event.valid_proposal_tags
+
+      .widget
+        .widget-header
+          %i.fa.fa-tags
+          %h3 Review Tags
+        .widget-content
+          =event.valid_review_tags
+
+    .col-sm-4
+      .widget
+        .widget-header
+          %i.fa.fa-thumb-tack
+          %h3 Tracks
+        .widget-content
+          -if event.track_count.present?
+            - event.track_count.sort_by{|k,v| v}.reverse.each_slice(8).to_a.each do |row|
+              %ul#columns.list-inline
+                -row.each do |name, count|
+                  %li
+                    .label.label-success
+                      = name
+                      = count
+          -else
+            %p No Tracks
 
 
 .row
-  .col-md-11
+  .col-md-12
     %h3 Reviewer Information
     %table.participants.table.table-striped
       %thead

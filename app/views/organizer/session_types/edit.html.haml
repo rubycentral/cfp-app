@@ -1,0 +1,10 @@
+.row
+  .col-sm-12
+    .page-header
+      %h1 Edit Session Type
+
+.row
+  %fieldset.col-md-6
+    = form_for @session_type, url: organizer_event_session_type_path(@event, @session_type), html: {method: 'patch', role: 'form'} do |f|
+      = render partial: 'form', locals: {f: f}
+      %button.btn.btn-success.pull-right{type: 'submit'} Update

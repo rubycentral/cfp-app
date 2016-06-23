@@ -2,9 +2,9 @@ require 'rails_helper'
 
 describe ProfilesController, type: :controller do
   describe 'PUT #update' do
-    let(:user) { create(:person) }
+    let(:user) { create(:user) }
     let(:params) {
-      { person: { bio: 'foo', demographics: { gender: 'female' } } }
+      { user: { bio: 'foo' } }
     }
 
     before { allow(controller).to receive(:current_user).and_return(user) }

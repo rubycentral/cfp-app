@@ -9,6 +9,7 @@ class Event < ActiveRecord::Base
   has_many :rooms, dependent: :destroy
   has_many :tracks, dependent: :destroy
   has_many :sessions, dependent: :destroy
+  has_many :session_types, dependent: :destroy
   has_many :taggings, through: :proposals
   has_many :ratings, through: :proposals
   has_many :participant_invitations
@@ -24,9 +25,8 @@ class Event < ActiveRecord::Base
   scope :recent, -> { order('name ASC') }
   scope :live, -> { where("state = 'open' and (closes_at is null or closes_at > ?)", Time.current).order('closes_at ASC') }
 
-  validates :name, :contact_email, presence: true
+  validates :name, presence: true
   validates :slug, presence: true, uniqueness: true
-  validates :closes_at, presence: true
 
   before_validation :generate_slug
   before_save :update_closes_at_if_manually_closed
@@ -72,12 +72,16 @@ class Event < ActiveRecord::Base
     name
   end
 
+  def draft?
+    state == 'draft'
+  end
+
   def open?
     state == 'open' && (closes_at.nil? || closes_at > Time.current)
   end
 
   def closed?
-    !open?
+    !open? && !draft?
   end
 
   def past_open?
@@ -85,7 +89,13 @@ class Event < ActiveRecord::Base
   end
 
   def status
-    open? ? 'open' : 'closed'
+    if open?
+      'open'
+    elsif draft?
+      'draft'
+    else
+    'closed'
+    end
   end
 
   def unmet_requirements_for_scheduling
@@ -147,7 +157,7 @@ end
 #  slug                        :string
 #  url                         :string
 #  contact_email               :string
-#  state                       :string           default("closed")
+#  state                       :string           default("draft")
 #  opens_at                    :datetime
 #  closes_at                   :datetime
 #  start_date                  :datetime
@@ -156,11 +166,11 @@ end
 #  review_tags                 :text
 #  guidelines                  :text
 #  policies                    :text
+#  archived                    :boolean          default(FALSE)
+#  custom_fields               :text
 #  speaker_notification_emails :hstore           default({"accept"=>"", "reject"=>"", "waitlist"=>""})
 #  created_at                  :datetime
 #  updated_at                  :datetime
-#  archived                    :boolean          default(FALSE)
-#  custom_fields               :text
 #
 # Indexes
 #

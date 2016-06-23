@@ -2,8 +2,8 @@ class Organizer::ParticipantsController < Organizer::ApplicationController
   respond_to :html, :json
 
   def create
-    person = Person.where(email: params[:email]).first
-    if person.nil?
+    user = User.where(email: params[:email]).first
+    if user.nil?
       participant_invitation =
         @event.participant_invitations.build(participant_params.merge(email: params[:email]))
 
@@ -15,7 +15,7 @@ class Organizer::ParticipantsController < Organizer::ApplicationController
       end
       redirect_to organizer_event_participant_invitations_url(@event)
     else
-      participant = @event.participants.build(participant_params.merge(person: person))
+      participant = @event.participants.build(participant_params.merge(user: user))
 
       if participant.save
         flash[:info] = 'Your participant was added.'
@@ -42,7 +42,7 @@ class Organizer::ParticipantsController < Organizer::ApplicationController
   end
 
   def emails
-    emails = Person.where("email like ?",
+    emails = User.where("email like ?",
                           "%#{params[:term]}%").order(:email).pluck(:email)
     respond_with emails.to_json, format: :json
   end

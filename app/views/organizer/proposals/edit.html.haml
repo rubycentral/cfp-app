@@ -1,6 +1,10 @@
-= link_to(organizer_event_proposal_path(proposal.event_id, proposal.uuid),
-          class: "btn btn-primary", id: "back") do
-  &laquo; Return to Proposal
+.row
+  .col-md-12
+    .page-header.clearfix
+      .btn-navbar.pull-right
+        = link_to(organizer_event_proposal_path(proposal.event_id, proposal.uuid), class: "btn btn-primary") do
+          &laquo; Return to Proposal
+      %h1 Edit #{proposal.title}
 
 .navbar.navbar-default
   .container-fluid
@@ -17,7 +21,13 @@
             = proposal.update_state_link(Proposal::State::WITHDRAWN)
             = proposal.update_state_link(Proposal::State::SUBMITTED)
       %li= proposal.delete_button
-%h3 #{event}
-%h1 #{proposal.title}
+
+.row
+  .col-md-12
+    .page-header
+      %h2
+        %span.label.label-info
+          #{event}
+      %h1 #{proposal.title}
 
 = render partial: 'form', locals: { proposal: proposal }

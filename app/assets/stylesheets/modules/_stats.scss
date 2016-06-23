@@ -1,0 +1,159 @@
+/*------------------------------------------------------------------
+[2. Stats / .stats]
+*/
+
+.stats {
+  width: 100%;
+  display: table;
+  padding: 0 0 0 10px;
+  margin-top: .5em;
+  margin-bottom: 1.9em;
+}
+
+.stats .stat {
+  color: #999;
+  display: table-cell;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1.2;
+  vertical-align: top;
+  width: 40%;
+}
+
+.stat-value {
+  display: block;
+  font-size: 30px;
+  font-weight: bold;
+  line-height: 1.2;
+  letter-spacing: -2px;
+  color: #444;
+}
+
+.stat-time {
+  text-align: center;
+  padding-top: 1.5em;
+}
+
+.stat-time .stat-value {
+  color: #19bc9c;
+  font-size: 40px;
+}
+
+.stats #donut-chart {
+  height: 100px;
+  margin-left: -20px;
+}
+
+#big_stats {
+  width: 100%;
+  display: table;
+  margin-top: 1.5em;
+}
+
+.widget.big-stats-container .widget-content {
+  border: 0;
+}
+
+#big_stats .stat {
+  width: 25%;
+  height: 90px;
+  text-align: center;
+  display: table-cell;
+  padding: 0;
+  position: relative;
+
+  border-right: 1px solid #CCC;
+  border-left: 1px solid #FFF;
+}
+
+#big_stats i {
+  color: #b2afaa;
+  font-size:30px;
+  display:block;
+  line-height: 40px;
+  @include transition(color ease-in-out .15s);
+}
+#big_stats .stat:hover i {color: $brand-primary;}
+
+h6.bigstats{margin: 20px;
+border-bottom: 1px solid #eee;
+padding-bottom: 20px;
+margin-bottom: 26px;}
+
+#big_stats .stat:first-child {
+  border-left: none;
+}
+
+#big_stats .stat:last-child {
+  border-right: none;
+}
+
+#big_stats .stat h4
+{
+  font-size: 11px;
+  font-weight: bold;
+  color: #777;
+  margin-bottom: 1.5em;
+}
+
+#big_stats .stat .value
+{
+  font-size: 45px;
+  font-weight: bold;
+  color: #545454;
+  line-height: 1em;
+}
+
+
+@media all and (max-width: 950px) and (min-width: 1px) {
+
+  #big_stats {
+    display: block;
+    margin-bottom: -40px;
+  }
+
+  #big_stats .stat {
+    width: 49%;
+    display: block;
+    margin-bottom: 3em;
+    float: left;
+  }
+
+  #big_stats .stat:nth-child(2) {
+    border-right: none;
+  }
+
+  #big_stats .stat:nth-child(3) {
+    border-left: none;
+  }
+
+}
+
+@media (max-width: 767px) {
+  #big_stats .stat .value {
+    font-size: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .stats .stat {
+    margin-bottom: 3em;
+  }
+
+  .stats .stat .stat-value {
+    font-size: 20px;
+    margin-bottom: .15em;
+  }
+
+  .stats {
+    display: block;
+    float: left;
+    margin-bottom: 0;
+  }
+
+  #chart-stats {
+    margin: 2em 0 1em;
+  }
+}
+

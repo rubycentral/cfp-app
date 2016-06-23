@@ -14,16 +14,16 @@ class SpeakerDecorator < ApplicationDecorator
   end
 
   def bio
-    speaker.bio.present? ? speaker.bio : speaker.person.bio
+    speaker.bio.present? ? speaker.bio : speaker.user.bio
   end
 
   def delete_button
     h.button_to h.organizer_event_speaker_path,
+                form_class: "inline-block form-inline",
                 method: :delete,
                 data: {
                   confirm:
-                    'This will delete this speaker. Are you sure you want to do this? ' +
-                      'It can not be undone.'
+                    'This will delete this speaker. Are you sure you want to do this? It can not be undone.'
                 },
                 class: 'btn btn-danger navbar-btn',
                 id: 'delete' do

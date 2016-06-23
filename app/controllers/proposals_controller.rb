@@ -18,7 +18,7 @@ class ProposalsController < ApplicationController
 
   def new
     @proposal = Proposal.new(event: @event)
-    @proposal.speakers.build(person: current_user)
+    @proposal.speakers.build(user: current_user)
   end
 
   def confirm
@@ -50,13 +50,7 @@ class ProposalsController < ApplicationController
     if @proposal.save
       current_user.update_bio
       flash[:info] = setup_flash_message
-
-      if current_user.demographics_complete?
-        redirect_to proposal_url(slug: @event.slug, uuid: @proposal)
-      else
-        flash[:warning] = "Please consider filling out the demographic data in your profile."
-        redirect_to edit_profile_url
-      end
+      redirect_to proposal_url(slug: @event.slug, uuid: @proposal)
     else
       flash[:danger] = 'There was a problem saving your proposal; please review the form for issues and try again.'
       render :new
@@ -77,7 +71,6 @@ class ProposalsController < ApplicationController
       @proposal.update(confirmed_at: DateTime.now)
       redirect_to proposal_url(slug: @event.slug, uuid: @proposal), flash: { success: 'Thank you for confirming your participation' }
     elsif @proposal.update_and_send_notifications(proposal_params)
-      flash[:info] = 'Please consider filling out the demographic data in your profile.' unless current_user.demographics_complete?
       redirect_to proposal_url(slug: @event.slug, uuid: @proposal)
     else
       flash[:danger] = 'There was a problem saving your proposal; please review the form for issues and try again.'
@@ -100,13 +93,16 @@ class ProposalsController < ApplicationController
   private
 
   def proposal_params
-    params.require(:proposal).permit(:title, {tags: []}, :abstract, :details, :pitch, custom_fields: @event.custom_fields,
-                                     comments_attributes: [:body, :proposal_id, :person_id],
-                                     speakers_attributes: [:bio, :person_id, :id])
+    params.require(:proposal).permit(:title, {tags: []}, :session_type_id, :track_id, :abstract, :details, :pitch, custom_fields: @event.custom_fields,
+                                     comments_attributes: [:body, :proposal_id, :user_id],
+                                     speakers_attributes: [:bio, :user_id, :id])
   end
 
   def require_speaker
-    raise ActiveRecord::RecordNotFound unless current_user.proposal_ids.include?(@proposal.id)
+    unless current_user.proposal_ids.include?(@proposal.id)
+      redirect_to root_path
+      flash[:danger] = 'You are not a listed speaker on the proposal you are trying to access.'
+    end
   end
 
   def setup_flash_message

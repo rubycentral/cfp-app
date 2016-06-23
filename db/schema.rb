@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160621190447) do
+ActiveRecord::Schema.define(version: 20160623152512) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20160621190447) do
     t.string   "slug"
     t.string   "url"
     t.string   "contact_email"
-    t.string   "state",                       default: "closed"
+    t.string   "state",                       default: "draft"
     t.datetime "opens_at"
     t.datetime "closes_at"
     t.datetime "start_date"
@@ -150,19 +150,6 @@ ActiveRecord::Schema.define(version: 20160621190447) do
   end
 
   add_index "rooms", ["event_id"], name: "index_rooms_on_event_id", using: :btree
-
-  create_table "services", force: :cascade do |t|
-    t.string   "provider"
-    t.string   "uid"
-    t.integer  "user_id"
-    t.string   "uname"
-    t.string   "account_name"
-    t.string   "uemail"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "services", ["user_id"], name: "index_services_on_user_id", using: :btree
 
   create_table "session_types", force: :cascade do |t|
     t.string   "name"

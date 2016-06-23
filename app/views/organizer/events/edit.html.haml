@@ -9,5 +9,6 @@
 
 .row
   .col-md-12
-    = form_for event, url: organizer_event_path(event), html: {role: 'form'} do |f|
+    %span.required_notification * Required
+    = simple_form_for event, url: organizer_event_path(event), html: {role: 'form'} do |f|
       = render partial: @partial, locals: {f: f}

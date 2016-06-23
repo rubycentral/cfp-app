@@ -1,9 +1,10 @@
 .row
   .col-md-12
     .page-header
-      %h1 Create a new event
+      %h1 Create a New Event
 
 .row
   .col-md-12
-    = form_for event, url: admin_events_path, html: {role: 'form'} do |f|
+    %span.required_notification * Required
+    = simple_form_for event, url: admin_events_path, html: {role: 'form'} do |f|
       = render partial: 'form', locals: {f: f}

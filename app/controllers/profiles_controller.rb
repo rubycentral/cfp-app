@@ -8,22 +8,32 @@ class ProfilesController < ApplicationController
   end
 
   def update
-    if current_user.update_attributes(person_params) && current_user.complete?
+    if current_user.update_attributes(user_params) && current_user.complete?
       current_user.assign_open_invitations if session[:need_to_complete]
-      redirect_to (session.delete(:target) || root_url), info: "We've updated your profile. Thanks!"
+
+      if current_user.unconfirmed_email.present?
+        flash[:danger] = I18n.t("devise.registrations.update_needs_confirmation")
+      else
+        flash[:info] = I18n.t("devise.registrations.updated")
+      end
+
+      redirect_to (session.delete(:target) || root_url)
     else
-      if current_user.email == ""
+      if current_user.email == "" && current_user.unconfirmed_email.nil?
         current_user.errors[:email].clear
         current_user.errors[:email] = " can't be blank"
+        flash.now[:danger] = "Unable to save profile. Please correct the following: #{current_user.errors.full_messages.join(', ')}."
+      else
+        current_user.errors[:email].clear
+        flash[:danger] = I18n.t("devise.registrations.update_needs_confirmation")
       end
-      flash.now[:danger] = "Unable to save profile. Please correct the following: #{current_user.errors.full_messages.join(', ')}."
       render :edit
     end
   end
 
   private
 
-  def person_params
-    params.require(:person).permit(:bio, :gender, :ethnicity, :country, :name, :email)
+  def user_params
+    params.require(:user).permit(:bio, :gender, :ethnicity, :country, :name, :email, :password, :password_confirmation)
   end
 end

@@ -1,0 +1,21 @@
+// Consider breaking the following into modules
+//datatables
+table.datatable {
+  thead {
+    > tr {
+      > th {
+        font-size: 12px;
+        line-height: 1.2;
+        vertical-align: top;
+      }
+
+    }
+  }
+  tr.updated td {
+    background-color: lighten(#dff0d8, 5%);
+  }
+  .form-control {
+    width: 100%;
+  }
+  td, th { text-align: center; }
+}

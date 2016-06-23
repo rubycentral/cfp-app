@@ -5,14 +5,14 @@ feature "Organizers can manage proposals" do
   let(:event) { create(:event, review_tags: ['intro', 'advanced']) }
   let(:proposal) { create(:proposal, event: event) }
 
-  let(:organizer_person) { create(:person) }
-  let!(:organizer_participant) { create(:participant, :organizer, person: organizer_person, event: event) }
+  let(:organizer_user) { create(:user) }
+  let!(:organizer_participant) { create(:participant, :organizer, user: organizer_user, event: event) }
 
-  let(:speaker_person) { create(:person) }
-  let!(:speaker) { create(:speaker, proposal: proposal, person: speaker_person) }
+  let(:speaker_user) { create(:user) }
+  let!(:speaker) { create(:speaker, proposal: proposal, user: speaker_user) }
 
   before :each do
-    login_user(organizer_person)
+    login_as(organizer_user)
   end
 
   after { ActionMailer::Base.deliveries.clear }
@@ -101,7 +101,7 @@ feature "Organizers can manage proposals" do
       end
 
       it "sends an email notification to the speaker" do
-        expect(ActionMailer::Base.deliveries.last.to).to include(speaker_person.email)
+        expect(ActionMailer::Base.deliveries.last.to).to include(speaker_user.email)
       end
     end
 
@@ -117,7 +117,7 @@ feature "Organizers can manage proposals" do
       end
 
       it "sends an email notification to the speaker" do
-        expect(ActionMailer::Base.deliveries.last.to).to include(speaker_person.email)
+        expect(ActionMailer::Base.deliveries.last.to).to include(speaker_user.email)
       end
     end
 
@@ -133,7 +133,7 @@ feature "Organizers can manage proposals" do
       end
 
       it "sends an email notification to the speaker" do
-        expect(ActionMailer::Base.deliveries.last.to).to include(speaker_person.email)
+        expect(ActionMailer::Base.deliveries.last.to).to include(speaker_user.email)
       end
     end
 

@@ -4,13 +4,13 @@ feature "Organizers can manage participants" do
   let(:event) { create(:event) }
   let(:organizer) { create(:organizer, event: event) }
 
-  before { login_user(organizer) }
+  before { login_as(organizer) }
 
   context "adding a new participant" do
     it "autocompletes email addresses", js: true do
-      create(:person, email: 'harrypotter@hogwarts.edu')
-      create(:person, email: 'hermionegranger@hogwarts.edu')
-      create(:person, email: 'viktorkrum@durmstrang.edu')
+      create(:user, email: 'harrypotter@hogwarts.edu')
+      create(:user, email: 'hermionegranger@hogwarts.edu')
+      create(:user, email: 'viktorkrum@durmstrang.edu')
       visit organizer_event_path(event)
 
       click_link 'Add/Invite New Participant'

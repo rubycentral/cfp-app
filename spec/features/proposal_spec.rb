@@ -1,8 +1,10 @@
 require 'rails_helper'
 
 feature "Proposals" do
-  let(:user) { create(:person) }
-  let(:event) { create(:event, state: 'open') }
+  let!(:user) { create(:user) }
+  let!(:event) { create(:event, state: 'open') }
+  let!(:session_type) { create(:session_type, name: 'Only type')}
+
   let(:go_to_new_proposal) { visit new_proposal_path(slug: event.slug) }
   let(:create_proposal) do
     fill_in 'Title', with: "General Principles Derived by Magic from My Personal Experience"
@@ -10,10 +12,11 @@ feature "Proposals" do
     fill_in 'proposal_speakers_attributes_0_bio', with: "I am awesome."
     fill_in 'Pitch', with: "You live but once; you might as well be amusing. - Coco Chanel"
     fill_in 'Details', with: "Plans are nothing; planning is everything. - Dwight D. Eisenhower"
+    select 'Only type', from: 'Session type'
     click_button 'Submit Proposal'
   end
 
-  before { login_user(user) }
+  before { login_as(user) }
   after { ActionMailer::Base.deliveries.clear }
 
   context "when submitting" do
@@ -90,7 +93,7 @@ feature "Proposals" do
     before { proposal.update(state: Proposal::State::ACCEPTED) }
 
     context "when the proposal has not yet been confirmed" do
-      let!(:speaker) { create(:speaker, proposal: proposal, person: user) }
+      let!(:speaker) { create(:speaker, proposal: proposal, user: user) }
 
       before do
         visit confirm_proposal_path(slug: proposal.event.slug, uuid: proposal)
@@ -107,7 +110,7 @@ feature "Proposals" do
     end
 
     context "when the proposal has already been confirmed" do
-      let!(:speaker) { create(:speaker, proposal: proposal, person: user) }
+      let!(:speaker) { create(:speaker, proposal: proposal, user: user) }
 
       before do
         proposal.update(confirmed_at: DateTime.now)
@@ -134,7 +137,7 @@ feature "Proposals" do
 
   context "when deleted" do
     let(:proposal) { create(:proposal, event: event, state: Proposal::State::SUBMITTED) }
-    let!(:speaker) { create(:speaker, proposal: proposal, person: user) }
+    let!(:speaker) { create(:speaker, proposal: proposal, user: user) }
 
     before do
       visit proposal_path(slug: event.slug, uuid: proposal)
@@ -148,7 +151,7 @@ feature "Proposals" do
 
   context "when withdrawn" do
     let(:proposal) { create(:proposal, :with_reviewer_public_comment, event: event, state: Proposal::State::SUBMITTED) }
-    let!(:speaker) { create(:speaker, proposal: proposal, person: user) }
+    let!(:speaker) { create(:speaker, proposal: proposal, user: user) }
 
     before do
       visit proposal_path(slug: event.slug, uuid: proposal)

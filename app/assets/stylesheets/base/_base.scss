@@ -1,0 +1,52 @@
+.alert {
+  margin-top: 20px;
+}
+
+.alert-viewer-mode {
+  padding: 10px 0;
+  margin-bottom: 20px;
+  background-color: lighten(#E69400, 25%);
+  text-align: center;
+}
+.share {
+  font-size: 12px;
+}
+
+.tag-list input {
+  vertical-align: top;
+}
+.participant {
+  margin-bottom:1em;
+}
+
+.invitation button {
+  margin-left: 1em;
+}
+.service {
+  margin-bottom: 1em;
+}
+
+.remove-speaker {
+  margin-top: 10px;
+  width: 80px;
+}
+
+h3.tags {
+  margin: 0 0 0.75em 0;
+}
+
+#columns {
+  float: left;
+
+  li {
+    display: block;
+    &:first-child { padding-left: 5px; }
+    padding-bottom: 3px;
+  }
+}
+
+//datepicker
+.ui-datepicker {
+  z-index: 10000 !important;
+}
+

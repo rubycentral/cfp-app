@@ -1,8 +1,0 @@
-$('#track-new-dialog').modal('hide');
-
-<% if track.persisted? %>
-  $('dl#tracks').append('<%=j render track %>');
-  clearFields(['#track_name']);
-<% end %>
-
-document.getElementById('flash').innerHTML = '<%=j show_flash %>';

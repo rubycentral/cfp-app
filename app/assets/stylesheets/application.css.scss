@@ -1,22 +1,45 @@
 // vendor styles
+@import "bootstrap-sprockets";
+@import "base/variables";
 @import "bootstrap";
+
+
 @import "jquery-ui";
-@import "jquery-ui-1.10.3.custom.min";
+@import "vendor/jquery-ui-1.10.3.custom.min";
 @import "dataTables/bootstrap/3/jquery.dataTables.bootstrap";
 @import "bootstrap-multiselect";
 @import "jquery-ui-timepicker-addon";
 
-// application styles
-@import "base";
-@import "coderay";
-@import "comments";
-@import "dashboard";
-@import "events";
-@import "notification";
-@import "participant-invitations";
-@import "proposal";
-@import "session";
-@import "social-buttons";
-@import "speaker";
-@import "badge";
-@import "navbar";
+// base application styles
+@import "base/mixins";
+@import "base/base";
+@import "base/layout";
+@import "base/helper_classes";
+
+// page specific styles
+// @import "pages/*";
+
+// module styles
+@import "modules/badge";
+@import "modules/buttons";
+@import "modules/calendar";
+@import "modules/coderay";
+@import "modules/comments";
+@import "modules/dashboard";
+@import "modules/data_tables";
+@import "modules/discussions";
+@import "modules/events";
+@import "modules/forms";
+@import "modules/icons";
+@import "modules/navbar";
+@import "modules/markdown";
+@import "modules/news";
+@import "modules/notification";
+@import "modules/participant-invitations";
+@import "modules/proposal";
+@import "modules/session";
+@import "modules/social-buttons";
+@import "modules/shortcuts";
+@import "modules/speaker";
+@import "modules/stats";
+@import "modules/widgets";

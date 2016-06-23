@@ -4,21 +4,21 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-
-  helper_method :current_user
   helper_method :user_signed_in?
   helper_method :reviewer?
+  helper_method :organizer?
 
   layout 'application'
   decorates_assigned :event
 
   private
-  def current_user
-    @current_user ||= Person.find_by(id: session[:uid])
-  end
 
   def reviewer?
     @is_reviewer ||= current_user.reviewer?
+  end
+
+  def organizer?
+    @is_organizer ||= current_user.organizer?
   end
 
   def user_signed_in?
@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
         session[:target] = request.path
       end
       flash[:danger] = "You must be signed in to access this page. If you haven't created an account, please create one."
-      redirect_to new_session_url
+      redirect_to new_user_session_url
     end
   end
 

@@ -8,7 +8,7 @@ class Admin::EventsController < Admin::ApplicationController
   def create
     @event = Event.new(event_params)
     if @event.save
-			@event.participants.create(user: current_user, role: 'organizer')
+			@event.event_teammates.create(user: current_user, role: 'organizer')
       flash[:info] = 'Your event was saved.'
       redirect_to organizer_event_url(@event)
     else

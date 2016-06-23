@@ -3,7 +3,7 @@ class Event < ActiveRecord::Base
   store_accessor :speaker_notification_emails, :reject
   store_accessor :speaker_notification_emails, :waitlist
 
-  has_many :participants, dependent: :destroy
+  has_many :event_teammates, dependent: :destroy
   has_many :proposals, dependent: :destroy
   has_many :speakers, through: :proposals
   has_many :rooms, dependent: :destroy
@@ -12,7 +12,7 @@ class Event < ActiveRecord::Base
   has_many :session_types, dependent: :destroy
   has_many :taggings, through: :proposals
   has_many :ratings, through: :proposals
-  has_many :participant_invitations
+  has_many :event_teammate_invitations
 
   accepts_nested_attributes_for :proposals
 

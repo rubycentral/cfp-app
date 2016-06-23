@@ -82,8 +82,8 @@ feature "A user sees correct information for the current event and their role" d
     event_1 = create(:event, state: "open")
     event_2 = create(:event, state: "open")
     proposal = create(:proposal, :with_reviewer_public_comment)
-    create(:participant, :reviewer, user: reviewer_user, event: event_1)
-    create(:participant, :reviewer, user: reviewer_user, event: event_2)
+    create(:event_teammate, :reviewer, user: reviewer_user, event: event_1)
+    create(:event_teammate, :reviewer, user: reviewer_user, event: event_2)
 
     signin(reviewer_user.email, reviewer_user.password)
 
@@ -122,8 +122,8 @@ feature "A user sees correct information for the current event and their role" d
     event_1 = create(:event, state: "open")
     event_2 = create(:event, state: "closed")
     proposal = create(:proposal, :with_organizer_public_comment)
-    create(:participant, :organizer, user: organizer_user, event: event_1)
-    create(:participant, :organizer, user: organizer_user, event: event_2)
+    create(:event_teammate, :organizer, user: organizer_user, event: event_1)
+    create(:event_teammate, :organizer, user: organizer_user, event: event_2)
 
     signin(organizer_user.email, organizer_user.password)
 
@@ -172,8 +172,8 @@ feature "A user sees correct information for the current event and their role" d
     event_1 = create(:event, state: "open")
     event_2 = create(:event, state: "closed")
     proposal = create(:proposal, :with_organizer_public_comment)
-    create(:participant, :organizer, user: admin_user, event: event_1)
-    create(:participant, :organizer, user: admin_user, event: event_2)
+    create(:event_teammate, :organizer, user: admin_user, event: event_1)
+    create(:event_teammate, :organizer, user: admin_user, event: event_2)
 
     signin(admin_user.email, admin_user.password)
 

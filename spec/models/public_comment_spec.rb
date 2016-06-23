@@ -7,7 +7,7 @@ describe PublicComment do
 
       describe "for organizers who have commented" do
         let(:proposal) { create(:proposal, :with_organizer_public_comment, :with_speaker) }
-        let(:organizer) { Participant.for_event(proposal.event).organizer.first.user }
+        let(:organizer) { EventTeammate.for_event(proposal.event).organizer.first.user }
         it "creates a notification" do
           expect {
             proposal.public_comments.create(attributes_for(:comment, user: speaker))
@@ -24,7 +24,7 @@ describe PublicComment do
 
       describe "for reviewers who have commented" do
         let(:proposal) { create(:proposal, :with_reviewer_public_comment, :with_speaker) }
-        let(:reviewer) { Participant.for_event(proposal.event).reviewer.first.user }
+        let(:reviewer) { EventTeammate.for_event(proposal.event).reviewer.first.user }
 
         it "creates a notification" do
           expect {

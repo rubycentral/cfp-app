@@ -1,0 +1,28 @@
+%h1= event
+.row
+  .col-md-6
+    - if event_teammates.empty?
+      %h2 No event_teammates in this event
+    - event_teammates.group_by(&:role).each_pair do |role, role_event_teammates|
+      %h2= role.capitalize.pluralize
+      - role_event_teammates.each do |event_teammate|
+        .event_teammate
+          = event_teammate.user.name
+          (#{event_teammate.user.email})
+          = form_tag admin_event_event_teammate_path(event, event_teammate), method: :delete, data: {confirm: 'Are you sure?'}, style: 'display: inline' do
+            %button.btn.btn-danger.btn-xs{:type => "submit"}
+              %span.glyphicon.glyphicon-trash
+              Delete
+  %fieldset.col-md-6
+    %h2 Add event_teammate
+    = form_for event_teammate, url: admin_event_event_teammates_path, html: {role: 'form'} do |f|
+      .form-group
+        = label_tag :email
+        = text_field_tag :email, '', class: 'form-control', placeholder: "EventTeammate's email"
+      .form-group
+        = f.label :role
+        = f.select :role, ['reviewer', 'organizer'], class: 'form-control'
+      .form-submit
+        %button.pull-right.btn.btn-primary{:type => "submit"} Save
+- content_for :custom_css do
+  = stylesheet_link_tag 'ui_lightness/jquery-ui-1.10.3.custom.min.css', media: 'all'

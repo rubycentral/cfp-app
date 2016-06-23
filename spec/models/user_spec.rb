@@ -124,7 +124,7 @@ describe User do
       expect(user).to be_reviewer
     end
     it 'is false when not reviewer of any event' do
-      user.participants.map { |p| p.update_attribute(:role, 'not_reviewer') }
+      user.event_teammates.map { |p| p.update_attribute(:role, 'not_reviewer') }
       expect(user).not_to be_reviewer
     end
   end
@@ -136,7 +136,7 @@ describe User do
       expect(user).to be_organizer
     end
     it 'is false when not organizer of any event' do
-      user.participants.map { |p| p.update_attribute(:role, 'not_organizer') }
+      user.event_teammates.map { |p| p.update_attribute(:role, 'not_organizer') }
       expect(user).not_to be_organizer
     end
   end
@@ -148,8 +148,8 @@ describe User do
 
     describe '#reviewer_for_event?' do
       before do
-        create(:participant, event: event1, user: user, role: 'reviewer')
-        create(:participant, event: event2, user: user, role: 'not_reviewer')
+        create(:event_teammate, event: event1, user: user, role: 'reviewer')
+        create(:event_teammate, event: event2, user: user, role: 'not_reviewer')
       end
 
       it 'is true when reviewer for the event' do
@@ -162,8 +162,8 @@ describe User do
 
     describe '#organizer_for_event?' do
       before do
-        create(:participant, event: event1, user: user, role: 'organizer')
-        create(:participant, event: event2, user: user, role: 'not_organizer')
+        create(:event_teammate, event: event1, user: user, role: 'organizer')
+        create(:event_teammate, event: event2, user: user, role: 'not_organizer')
       end
 
       it 'is true when organizer for the event' do
@@ -195,15 +195,15 @@ describe User do
   describe "#role_names" do
     let(:event) { create(:event) }
     let(:user) { create(:user) }
-    let!(:participant) {
-      create(:participant, role: 'reviewer', event: event, user: user) }
+    let!(:event_teammate) {
+      create(:event_teammate, role: 'reviewer', event: event, user: user) }
 
     it "returns the role names for a reviewer" do
       expect(user.role_names).to eq('reviewer')
     end
 
     it "returns multiple roles" do
-      create(:participant, role: 'organizer', event: create(:event), user: user)
+      create(:event_teammate, role: 'organizer', event: create(:event), user: user)
       role_names = user.role_names
       expect(role_names).to include('reviewer')
       expect(role_names).to include('organizer')
@@ -211,7 +211,7 @@ describe User do
 
     it "returns unique roles" do
       event2 = create(:event)
-      create(:participant, role: 'reviewer', event: event2, user: user)
+      create(:event_teammate, role: 'reviewer', event: event2, user: user)
 
       expect(user.role_names).to eq('reviewer')
     end

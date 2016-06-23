@@ -13,13 +13,13 @@ FactoryGirl.define do
 
     trait :reviewer do
       after(:create) do |user|
-        FactoryGirl.create(:participant, :reviewer, user: user)
+        FactoryGirl.create(:event_teammate, :reviewer, user: user)
       end
     end
 
     trait :organizer do
       after(:create) do |user|
-        FactoryGirl.create(:participant, :organizer, user: user)
+        FactoryGirl.create(:event_teammate, :organizer, user: user)
       end
     end
 
@@ -33,9 +33,9 @@ FactoryGirl.define do
       end
 
       after(:create) do |user, evaluator|
-        participant = user.organizer_participants.first
-        participant.event = evaluator.event
-        participant.event.save
+        event_teammate = user.organizer_event_teammates.first
+        event_teammate.event = evaluator.event
+        event_teammate.event.save
       end
     end
 
@@ -45,9 +45,9 @@ FactoryGirl.define do
       end
 
       after(:create) do |user, evaluator|
-        participant = user.reviewer_participants.first
-        participant.event = evaluator.event
-        participant.save
+        event_teammate = user.reviewer_event_teammates.first
+        event_teammate.event = evaluator.event
+        event_teammate.save
       end
     end
   end

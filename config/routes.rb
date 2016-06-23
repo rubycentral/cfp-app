@@ -29,7 +29,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :participant_invitations, only: :show, param: :slug do
+  resources :event_teammate_invitations, only: :show, param: :slug do
     member do
       get ":token/accept", action: :accept, as: :accept
       get ":token/refuse", action: :refuse, as: :refuse
@@ -59,13 +59,13 @@ Rails.application.routes.draw do
         get :edit_custom_fields
         put :update_custom_fields
       end
-      resources :participant_invitations, except: [:new, :edit, :update, :show]
+      resources :event_teammate_invitations, except: [:new, :edit, :update, :show]
 
       controller :program do
         get 'program' => 'program#show'
       end
 
-      resources :participants, only: [:create, :destroy, :update] do
+      resources :event_teammates, only: [:create, :destroy, :update] do
         collection { get :emails, defaults: {format: :json} }
       end
 
@@ -94,7 +94,7 @@ Rails.application.routes.draw do
 
   namespace 'reviewer' do
     resources :events, only: [:show] do
-      resources :participants, only: [:update]
+      resources :event_teammates, only: [:update]
       resources :proposals, only: [:index, :show, :update], param: :uuid do
         resources :ratings, only: [:create, :update], defaults: {format: :js}
       end

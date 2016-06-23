@@ -117,7 +117,7 @@
 .row
   .col-md-12
     %h3 Reviewer Information
-    %table.participants.table.table-striped
+    %table.event_teammates.table.table-striped
       %thead
         %tr
           %th Name
@@ -131,8 +131,8 @@
           %td= current_user.name
           %td= current_user.email
           %td= rating_counts[current_user.id] || 0
-          %td= participant.role
+          %td= event_teammate.role
           %td.notifications
-            = participant.comment_notifications
-            = render partial: 'reviewer/events/participant_notifications', locals: {participant: participant}
+            = event_teammate.comment_notifications
+            = render partial: 'reviewer/events/event_teammate_notifications', locals: {event_teammate: event_teammate}
 

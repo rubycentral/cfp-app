@@ -6,3 +6,18 @@
   vertical-align: middle;
   width: 25px;
 }
+
+@mixin label-variant($color) {
+  background-color: transparent;
+  border: 2px $color solid;
+  color: $color;
+  font-style: italic;
+
+  &[href] {
+    &:hover,
+    &:focus {
+      border-color: darken($color, 10%);
+      color: darken($color, 10%);
+    }
+  }
+}

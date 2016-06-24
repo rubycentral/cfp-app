@@ -9,12 +9,15 @@
     - proposals.each do |event, talks|
       - if event.open?
         = link_to 'Submit a proposal', new_proposal_path(slug: event.slug), class: 'btn btn-primary pull-right'
-      %h2
+        %span.label.label-default.pull-right
+          = pluralize(event.proposals.count, 'proposal')
+          submitted
+      %h2.display.inline-block
         - if event.url?
           = link_to event.name, event.url, class: 'event-title'
         - else
           = link_to event.name, event_path(event.slug), class: 'event-title'
-      %span= link_to 'View Guidelines', event_path(event.slug)
+      %span= link_to 'View Guidelines', event_path(event.slug), class: 'guidelines-link'
       %h4.margin-bottom
         = event.start_date.strftime("%a %b %d") + " - " + event.end_date.strftime("%a %b %d")
       .widget

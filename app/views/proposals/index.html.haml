@@ -7,31 +7,47 @@
     - if proposals.empty?
       %h3 You don't have any proposals.
     - proposals.each do |event, talks|
-      - if event.open?
-        = link_to 'Submit a proposal', new_proposal_path(slug: event.slug), class: 'btn btn-primary pull-right'
-        %span.label.label-default.pull-right
-          = pluralize(event.proposals.count, 'proposal')
-          submitted
-      %h2.display.inline-block
-        - if event.url?
-          = link_to event.name, event.url, class: 'event-title'
-        - else
-          = link_to event.name, event_path(event.slug), class: 'event-title'
-      %span= link_to 'View Guidelines', event_path(event.slug), class: 'guidelines-link'
-      %h4.margin-bottom
-        = event.start_date.strftime("%a %b %d") + " - " + event.end_date.strftime("%a %b %d")
-      .widget
-        .widget-header
-          %i.fa.fa-comment
-          %h3 Proposed Talks
-        .widget-content
-          %ul.list-unstyled
-            - talks.each do |proposal|
-              %li.proposal
-                %h4= link_to proposal.title, event_proposal_path(event_slug: proposal.event.slug, uuid: proposal)
-                = proposal.public_state(small: true)
-                %p= truncate(proposal.abstract, length: 80)
-                %hr/
+      - event = event.decorate
+      .row
+        .col-md-7
+          %h2.inline-block
+            - if event.url?
+              = link_to event.name, event.url, class: 'event-title'
+            - else
+              = link_to event.name, event_path(event.slug), class: 'event-title'
+          %span= link_to 'View Guidelines', event_path(event.slug), class: 'guidelines-link'
+          %h4.margin-bottom
+            = event.start_date.strftime("%a %b %d") + " - " + event.end_date.strftime("%a %b %d")
+        .col-md-5
+          - if event.open?
+            = link_to 'Submit a proposal', new_proposal_path(slug: event.slug), class: 'btn btn-primary'
+            %span.label.label-default
+              = pluralize(event.proposals.count, 'proposal')
+              submitted
+            - if event.closes_at?
+              %p
+                Closes at
+                %strong= event.closes_at(:long_with_zone)
+              %p
+                %strong
+                  %span.label.label-info
+                    = time_ago_in_words(event.closes_at)
+                    left
+                &nbsp;to submit your proposal!
+      .row
+        .col-md-12
+          .widget
+            .widget-header
+              %i.fa.fa-comment
+              %h3 Proposed Talks
+            .widget-content
+              %ul.list-unstyled
+                - talks.each do |proposal|
+                  %li.proposal
+                    %h4= link_to proposal.title, proposal_path(slug: proposal.event.slug, uuid: proposal)
+                    = proposal.public_state(small: true)
+                    %p= truncate(proposal.abstract, length: 80)
+                    %hr/
 
   .col-md-4.invitations
     %h2 Invitations

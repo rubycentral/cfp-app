@@ -1,18 +1,22 @@
 .row
   .col-sm-12
     .page-header
-      %h1 Your Dashboard
+      %h1 My Proposals
 .row
   .col-md-8.proposals
-    %h2 Proposals
     - if proposals.empty?
       %h3 You don't have any proposals.
     - proposals.each do |event, talks|
       - if event.open?
-        = link_to 'Submit a proposal', new_event_proposal_path(event_slug: event.slug), class: 'btn btn-primary pull-right'
-      %h3.margin-bottom
-        = link_to event.name, event_path(event.slug), class: 'event-title'
-        %span.label.label-info= event.status
+        = link_to 'Submit a proposal', new_proposal_path(slug: event.slug), class: 'btn btn-primary pull-right'
+      %h2
+        - if event.url?
+          = link_to event.name, event.url, class: 'event-title'
+        - else
+          = link_to event.name, event_path(event.slug), class: 'event-title'
+      %span= link_to 'View Guidelines', event_path(event.slug)
+      %h4.margin-bottom
+        = event.start_date.strftime("%a %b %d") + " - " + event.end_date.strftime("%a %b %d")
       .widget
         .widget-header
           %i.fa.fa-comment

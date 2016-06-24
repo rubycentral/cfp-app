@@ -54,8 +54,8 @@
           %li{class: "#{request.path == notifications_path ? 'active' : ''}"}
             = link_to notifications_path do
               %i.fa.fa-envelope
-              - if current_user.notifications.length > 0
-                %span.badge=current_user.notifications.length
+              - if current_user.notifications.unread.length > 0
+                %span.badge=current_user.notifications.unread.length
 
           %li.dropdown
             %a.dropdown-toggle.gravatar-container{ href: "#", data: { toggle: "dropdown" } }

@@ -14,7 +14,7 @@ describe Reviewer::RatingsController, type: :controller do
 
     it "prevents reviewer from rating their own proposals" do
       expect {
-        xhr :post, :create, event_id: event, proposal_uuid: proposal,
+        xhr :post, :create, event_id: event.id, proposal_uuid: proposal,
           rating: { score: 3 }
       }.to_not change { Rating.count }
     end

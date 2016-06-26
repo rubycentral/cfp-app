@@ -5,7 +5,7 @@ feature "Proposals" do
   let!(:event) { create(:event, state: 'open') }
   let!(:session_type) { create(:session_type, name: 'Only type')}
 
-  let(:go_to_new_proposal) { visit new_proposal_path(slug: event.slug) }
+  let(:go_to_new_proposal) { visit new_event_proposal_path(event_slug: event.slug) }
   let(:create_proposal) do
     fill_in 'Title', with: "General Principles Derived by Magic from My Personal Experience"
     fill_in 'Abstract', with: "Because certain things happened to me, they will happen in just the same manner to everyone."
@@ -59,7 +59,7 @@ feature "Proposals" do
 
       proposal = user.proposals.first
 
-      visit edit_proposal_path(slug: proposal.event.slug, uuid: proposal)
+      visit edit_event_proposal_path(event_slug: proposal.event.slug, uuid: proposal)
       fill_in 'Title', with: "A new title"
       click_button 'Submit Proposal'
       expect(page).to have_text("A new title")
@@ -71,7 +71,7 @@ feature "Proposals" do
       go_to_new_proposal
       create_proposal
       proposal = user.proposals.first
-      visit proposal_path(slug: proposal.event.slug, uuid: proposal)
+      visit event_proposal_path(event_slug: proposal.event.slug, uuid: proposal)
       fill_in 'public_comment_body', with: "Here's a comment for you!"
       click_button 'Comment'
     end
@@ -96,7 +96,7 @@ feature "Proposals" do
       let!(:speaker) { create(:speaker, proposal: proposal, user: user) }
 
       before do
-        visit confirm_proposal_path(slug: proposal.event.slug, uuid: proposal)
+        visit confirm_event_proposal_path(event_slug: proposal.event.slug, uuid: proposal)
           click_button "Confirm"
       end
 
@@ -114,7 +114,7 @@ feature "Proposals" do
 
       before do
         proposal.update(confirmed_at: DateTime.now)
-        visit confirm_proposal_path(slug: proposal.event.slug, uuid: proposal)
+        visit confirm_event_proposal_path(event_slug: proposal.event.slug, uuid: proposal)
       end
 
       it "does not show the confirmation link" do
@@ -128,7 +128,7 @@ feature "Proposals" do
 
     context "with a speaker who isn't on the proposal" do
       it "allows the user to access the confirmation page" do
-        path = confirm_proposal_path(slug: proposal.event.slug, uuid: proposal)
+        path = confirm_event_proposal_path(event_slug: proposal.event.slug, uuid: proposal)
         visit path
         expect(current_path).to eq(path)
       end
@@ -140,7 +140,7 @@ feature "Proposals" do
     let!(:speaker) { create(:speaker, proposal: proposal, user: user) }
 
     before do
-      visit proposal_path(slug: event.slug, uuid: proposal)
+      visit event_proposal_path(event_slug: event.slug, uuid: proposal)
       click_link 'delete'
     end
 
@@ -154,7 +154,7 @@ feature "Proposals" do
     let!(:speaker) { create(:speaker, proposal: proposal, user: user) }
 
     before do
-      visit proposal_path(slug: event.slug, uuid: proposal)
+      visit event_proposal_path(event_slug: event.slug, uuid: proposal)
       click_link 'Withdraw'
       expect(page).to have_content("Your withdrawal request has been submitted.")
     end

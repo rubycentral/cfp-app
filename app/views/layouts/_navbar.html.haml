@@ -29,19 +29,15 @@
                 %i.fa.fa-file-text
                 %span My Proposals
 
-          / - if current_user.reviewer? && event
-          /   - if event.id != nil && !event.archived?
-          /     %li{class: "#{request.path == event_staff_proposals_path(event) ? 'active' : ''}"}
-          /       = link_to event_staff_proposals_path(event) do
-          /         %i.fa.fa-book
-          /         %span Review Proposals
-
-          - if current_user.organizer? && event
+          - if (current_user.reviewer? || current_user.organizer?) && event
             - if event.id != nil && !event.archived?
               %li{class: "#{request.path == event_staff_proposals_path(event) ? 'active' : ''}"}
                 = link_to event_staff_proposals_path(event) do
-                  %i.fa.fa-file-text
+                  %i.fa.fa-text
                   %span Event Proposals
+
+          - if current_user.organizer? && event
+            - if event.id != nil && !event.archived?
               %li{class: "#{request.path == event_staff_program_path(event) ? 'active' : ''}"}
                 = link_to event_staff_program_path(event) do
                   %i.fa.fa-list

@@ -24,7 +24,7 @@
                 -if proposal.has_reviewer_activity?
                   = proposal.withdraw_button
                 -else
-                  = link_to proposal_path, method: :delete, data: {confirm: 'This will delete your talk. Are you sure you want to do this? It can not be undone.'}, class: 'btn btn-warning', id: 'delete' do
+                  = link_to event_proposal_path, method: :delete, data: {confirm: 'This will delete your talk. Are you sure you want to do this? It can not be undone.'}, class: 'btn btn-warning', id: 'delete' do
                     %span.glyphicon.glyphicon-exclamation-sign
                     Delete Proposal
             %p.text-info.margin-top

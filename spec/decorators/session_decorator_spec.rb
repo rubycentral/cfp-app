@@ -4,7 +4,7 @@ describe SessionDecorator do
   describe '#row_data' do
     it 'returns a link to the proposal in the title' do
       session = FactoryGirl.create(:session_with_proposal)
-      path = h.organizer_event_proposal_path(session.event, session.proposal)
+      path = h.event_staff_proposal_path(session.event, session.proposal)
       data = session.decorate.row_data
       expect(data[3]).to match(path)
     end

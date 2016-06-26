@@ -46,7 +46,7 @@ class Organizer::ProposalMailerTemplate
   end
 
   def confirmation_link
-    confirm_proposal_url(url_params(slug: @event.slug, uuid: @proposal))
+    confirm_event_proposal_url(url_params(event_slug: @event.slug, uuid: @proposal))
   end
 
   def url_params(hash)

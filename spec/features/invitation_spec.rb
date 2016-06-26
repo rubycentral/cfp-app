@@ -16,7 +16,7 @@ feature 'Speaker Invitations' do
 
   let(:go_to_proposal) {
     login_as(user)
-    visit(proposal_path(slug: proposal.event.slug, uuid: proposal))
+    visit(event_proposal_path(event_slug: proposal.event.slug, uuid: proposal))
   }
 
   context "Creating an invitation" do

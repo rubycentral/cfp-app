@@ -4,10 +4,10 @@
       .page-header.clearfix
         .btn-nav.pull-right
           - if current_user.organizer_for_event?(@event)
-            = link_to organizer_event_proposal_path(@proposal.event_id, @proposal.uuid), class: "btn btn-primary" do
+            = link_to event_staff_proposal_path(@proposal.event, @proposal.uuid), class: "btn btn-primary" do
               &laquo; Back to Proposal
           - else
-            = link_to "&laquo; Back to Proposal", proposal_path(slug: proposal.event.slug, uuid: proposal), class: "btn btn-primary"
+            = link_to "&laquo; Back to Proposal", event_proposal_path(slug: proposal.event.slug, uuid: proposal), class: "btn btn-primary"
         %h1
           Confirm
           = proposal.title
@@ -30,7 +30,7 @@
       - elsif proposal.withdrawn?
         %p This proposal has been withdrawn
       - else
-        = form_tag(set_confirmed_proposal_path(slug: proposal.event.slug, uuid: proposal)) do
+        = form_tag(set_confirmed_event_proposal_path(slug: proposal.event.slug, uuid: proposal)) do
           %fieldset
             .form-group
               = label_tag 'Notes'

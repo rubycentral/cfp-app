@@ -29,11 +29,14 @@ Rails.application.routes.draw do
     namespace 'staff' do
       get '/' => 'events#show'
 
-      get :edit #temporary
+      get :edit
+      get '/speaker-emails' => 'events#speaker_emails', as: :speaker_email_notifications
+      get '/guidelines' => 'events#guidelines', as: :guidelines_notifications
       get :show
       patch :update
-      get :edit_custom_fields
+      get 'custom-fields', as: :custom_fields
       put :update_custom_fields
+
       resources :event_teammate_invitations, except: [:new, :edit, :update, :show]
       resources :event_teammates, only: [:create, :destroy, :update] do
         collection { get :emails, defaults: {format: :json} }
@@ -41,6 +44,7 @@ Rails.application.routes.draw do
 
       controller :program do
         get 'program' => 'program#show'
+        get 'program-selection' => 'program#selection'
       end
 
       resources :rooms, only: [:create, :update, :destroy]
@@ -54,7 +58,7 @@ Rails.application.routes.draw do
       end
 
       controller :speakers do
-        get :speaker_emails, action: :emails
+        get :speaker_emails, action: :emails #returns json of speaker emails
       end
 
       resources :speakers, only: [:index, :show, :edit, :update, :destroy] do
@@ -65,14 +69,6 @@ Rails.application.routes.draw do
       end
     end
   end
-
-  # namespace 'organizer' do
-  #   resources :events, only: [:edit, :show, :update] do
-  #     member do
-  #       get :edit_custom_fields
-  #       put :update_custom_fields
-  #     end
-  # end
 
   #TEMPORARILY ENABLED
   namespace 'reviewer' do

@@ -1,0 +1,46 @@
+.row
+  .col-md-12
+    .page-header
+      %h1
+        Edit  #{@user.name}'s Profile
+
+= form_for @user, url: edit_profile_event_staff_speaker_path, html: {role: 'form'} do |f|
+  .row
+    %fieldset.col-md-6
+      .widget
+        .widget-header
+          %i.fa.fa-user
+          %h3 #{@user.name}'s Profile
+        .widget-content
+          %p
+            This information will be
+            %strong hidden
+            from the review committee, but will be shown on the program if the proposal is accepted.
+          .form-group
+            = f.label :name
+            = f.text_field :name, class: 'form-control', placeholder: 'Your name'
+          %p
+            = f.label :bio
+            = f.text_area :bio, class: 'form-control', placeholder: 'Enter your bio', rows: 7, maxlength: 500
+            %p.help-block Bio is limited to 500 characters.
+
+    %fieldset.col-md-6
+      .widget
+        .widget-header
+          %i.fa.fa-envelope
+          %h3 Identity Services
+        .widget-content
+          %p
+            Email is only used for notifications on proposal feedback and acceptance into the program.
+          .form-group
+            = f.label :email
+            = f.email_field :email, class: 'form-control', placeholder: 'Your email address'
+          .service
+            - if current_user.provider.present?
+              %button.btn.btn-success.disabled
+                %i{class: "icon-#{current_user.provider.downcase}"}
+                | Connected via
+                = current_user.provider
+
+  .row.col-md-12.form-submit
+    %button.pull-right.btn.btn-success{:type => "submit"} Save

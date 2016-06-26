@@ -31,12 +31,12 @@ describe Reviewer::ProposalsController, type: :controller do
     let!(:proposal) { create(:proposal, speakers: [ speaker ]) }
 
     it "prevents reviewers from viewing their own proposals" do
-      get :show, event_id: event, uuid: proposal
+      get :show, event_id: event.id, uuid: proposal
       expect(response).to redirect_to(reviewer_event_proposals_path)
     end
 
     it "prevents reviewers from updating their own proposals" do
-      get :update, event_id: event, uuid: proposal,
+      get :update, event_id: event.id, uuid: proposal,
         proposal: { review_tags: [ 'tag' ] }
       expect(proposal.review_tags).to_not eq([ 'tag' ])
     end

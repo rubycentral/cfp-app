@@ -28,20 +28,20 @@ class ProposalsController < ApplicationController
   def set_confirmed
     @proposal.update(confirmed_at: DateTime.now,
                      confirmation_notes: params[:confirmation_notes])
-    redirect_to confirm_proposal_url(slug: @proposal.event.slug, uuid: @proposal),
+    redirect_to confirm_event_proposal_url(slug: @proposal.event.slug, uuid: @proposal),
       flash: { success: 'Thank you for confirming your participation' }
   end
 
   def withdraw
     @proposal.withdraw unless @proposal.confirmed?
     flash[:info] = "Your withdrawal request has been submitted."
-    redirect_to proposal_url(slug: @proposal.event.slug, uuid: @proposal)
+    redirect_to event_event_proposals_url(slug: @proposal.event.slug, uuid: @proposal)
   end
 
   def destroy
     @proposal.destroy
     flash[:info] = "Your proposal has been deleted."
-    redirect_to proposals_url
+    redirect_to event_proposals_url
   end
 
   def create
@@ -50,7 +50,7 @@ class ProposalsController < ApplicationController
     if @proposal.save
       current_user.update_bio
       flash[:info] = setup_flash_message
-      redirect_to proposal_url(slug: @event.slug, uuid: @proposal)
+      redirect_to event_event_proposals_url(slug: @event.slug, uuid: @proposal)
     else
       flash[:danger] = 'There was a problem saving your proposal; please review the form for issues and try again.'
       render :new
@@ -69,9 +69,9 @@ class ProposalsController < ApplicationController
   def update
     if params[:confirm]
       @proposal.update(confirmed_at: DateTime.now)
-      redirect_to proposal_url(slug: @event.slug, uuid: @proposal), flash: { success: 'Thank you for confirming your participation' }
+      redirect_to event_event_proposals_url(slug: @event.slug, uuid: @proposal), flash: { success: 'Thank you for confirming your participation' }
     elsif @proposal.update_and_send_notifications(proposal_params)
-      redirect_to proposal_url(slug: @event.slug, uuid: @proposal)
+      redirect_to event_proposal_url(event_slug: @event.slug, uuid: @proposal)
     else
       flash[:danger] = 'There was a problem saving your proposal; please review the form for issues and try again.'
       render :edit

@@ -82,7 +82,7 @@ class SessionDecorator < Draper::Decorator
   def linked_title
     if object.proposal.present?
       h.link_to(object.proposal.title,
-                h.organizer_event_proposal_path(object.event, object.proposal))
+                h.event_staff_proposal_path(object.event, object.proposal))
     else
       object.title
     end

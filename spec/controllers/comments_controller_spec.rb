@@ -4,7 +4,7 @@ describe CommentsController, type: :controller do
   describe "POST #create" do
     let(:proposal) { build_stubbed(:proposal, uuid: 'abc123') }
     let(:user) { build_stubbed(:user) }
-    let(:referer_path) { proposal_path(slug: proposal.event.slug, uuid: proposal) }
+    let(:referer_path) { event_proposal_path(event_slug: proposal.event.slug, uuid: proposal) }
     let(:mailer) { double("ProposalMailer.comment_notification") }
 
     before do

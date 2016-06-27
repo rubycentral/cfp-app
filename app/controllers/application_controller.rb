@@ -11,6 +11,10 @@ class ApplicationController < ActionController::Base
   layout 'application'
   decorates_assigned :event
 
+  def after_sign_in_path_for(resource)
+    resource.complete? ? root_path : edit_profile_path
+  end
+
   private
 
   def reviewer?

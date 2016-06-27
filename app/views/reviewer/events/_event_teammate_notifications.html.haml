@@ -4,7 +4,7 @@
     .modal-content
       = form_for event_teammate, url: reviewer_event_event_teammate_path(event_teammate.event, event_teammate), html: { role: 'form' } do |f|
         .modal-header
-          %h3 Change event_teammate role
+          %h3 Change event teammate role
         .modal-body
           = f.label :notifications
           = f.check_box :notifications, class: "checkbox"

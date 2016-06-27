@@ -148,7 +148,7 @@ end
 #  slug                        :string
 #  url                         :string
 #  contact_email               :string
-#  state                       :string           default("closed")
+#  state                       :string           default("draft")
 #  opens_at                    :datetime
 #  closes_at                   :datetime
 #  start_date                  :datetime
@@ -157,11 +157,11 @@ end
 #  review_tags                 :text
 #  guidelines                  :text
 #  policies                    :text
+#  archived                    :boolean          default(FALSE)
+#  custom_fields               :text
 #  speaker_notification_emails :hstore           default({"accept"=>"", "reject"=>"", "waitlist"=>""})
 #  created_at                  :datetime
 #  updated_at                  :datetime
-#  archived                    :boolean          default(FALSE)
-#  custom_fields               :text
 #
 # Indexes
 #

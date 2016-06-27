@@ -6,7 +6,8 @@ class Reviewer::EventTeammatesController < Reviewer::ApplicationController
     event_teammate = EventTeammate.find(params[:id])
     event_teammate.update(event_teammate_params)
 
-    flash[:info] = "You have successfully changed your event_teammate."
+    flash[:info] = "You have successfully changed your event teammate."
+
     redirect_to :back
   end
 

@@ -29,25 +29,25 @@
                 %i.fa.fa-file-text
                 %span My Proposals
 
-          - if current_user.reviewer? && event
-            - if event.id != nil && !event.archived?
-              %li{class: "#{request.path == reviewer_event_proposals_path(event.id) ? 'active' : ''}"}
-                = link_to reviewer_event_proposals_path(event.id) do
-                  %i.fa.fa-book
-                  %span Review Proposals
+          / - if current_user.reviewer? && event
+          /   - if event.id != nil && !event.archived?
+          /     %li{class: "#{request.path == event_staff_proposals_path(event) ? 'active' : ''}"}
+          /       = link_to event_staff_proposals_path(event) do
+          /         %i.fa.fa-book
+          /         %span Review Proposals
 
           - if current_user.organizer? && event
             - if event.id != nil && !event.archived?
-              %li{class: "#{request.path == organizer_event_proposals_path(event) ? 'active' : ''}"}
-                = link_to organizer_event_proposals_path(event) do
+              %li{class: "#{request.path == event_staff_proposals_path(event) ? 'active' : ''}"}
+                = link_to event_staff_proposals_path(event) do
                   %i.fa.fa-file-text
-                  %span Organize Proposals
-              %li{class: "#{request.path == organizer_event_program_path(event) ? 'active' : ''}"}
-                = link_to organizer_event_program_path(event) do
+                  %span Event Proposals
+              %li{class: "#{request.path == event_staff_program_path(event) ? 'active' : ''}"}
+                = link_to event_staff_program_path(event) do
                   %i.fa.fa-list
                   %span Program
-              %li{class: "#{request.path == organizer_event_sessions_path(event) ? 'active' : ''}"}
-                = link_to organizer_event_sessions_path(event) do
+              %li{class: "#{request.path == event_staff_sessions_path(event) ? 'active' : ''}"}
+                = link_to event_staff_sessions_path(event) do
                   %i.fa.fa-calendar
                   Schedule
 

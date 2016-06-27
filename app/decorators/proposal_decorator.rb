@@ -75,7 +75,7 @@ class ProposalDecorator < ApplicationDecorator
 
   def withdraw_button
     h.link_to bang('Withdraw Proposal'),
-      h.withdraw_proposal_path,
+      h.withdraw_event_proposal_path,
       method: :post,
       data: {
         confirm: 'This will remove your talk from consideration and send an ' +

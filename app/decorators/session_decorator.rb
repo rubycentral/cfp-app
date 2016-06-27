@@ -37,13 +37,13 @@ class SessionDecorator < Draper::Decorator
   def session_buttons
     [
       h.link_to('Edit',
-                h.edit_organizer_event_session_path(object.event, object),
+                h.edit_event_staff_session_path(object.event, object),
                 class: 'btn btn-primary btn-xs',
                 remote: true,
                 data: {toggle: 'modal', target: "#session-edit-dialog"}),
 
       h.link_to('Remove',
-                h.organizer_event_session_path(object.event, object),
+                h.event_staff_session_path(object.event, object),
                 method: :delete,
                 data: {confirm: "Are you sure you want to remove this session?"},
                 remote: true,
@@ -105,6 +105,6 @@ class SessionDecorator < Draper::Decorator
   end
 
   def cell_data_attr
-    {"session-edit-path" => h.edit_organizer_event_session_path(object.event, object), toggle: 'modal', target: "#session-edit-dialog"}
+    {"session-edit-path" => h.edit_event_staff_session_path(object.event, object), toggle: 'modal', target: "#session-edit-dialog"}
   end
 end

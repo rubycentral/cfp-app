@@ -17,7 +17,7 @@
   .col-md-4
     - if event.open?
 
-      %p= link_to 'Submit a proposal', new_proposal_path(slug: event.slug), class: 'btn btn-primary btn-lg'
+      %p= link_to 'Submit a proposal', new_event_proposal_path, class: 'btn btn-primary btn-lg'
 
       - if event.closes_at?
         %p

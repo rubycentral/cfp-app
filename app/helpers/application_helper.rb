@@ -46,7 +46,7 @@ module ApplicationHelper
       path = session[:prev_page]["path"]
     else
       name = 'Proposals'
-      path = organizer_event_proposals_path
+      path = event_staff_proposals_path
     end
 
     link_to("« Return to #{name}", path, class: "btn btn-primary", id: "back")
@@ -66,7 +66,7 @@ module ApplicationHelper
 
   def copy_email_btn
     link_to "<i class='fa fa-files-o'></i> Copy Speaker Emails".html_safe, '#',
-            data: {url: organizer_event_speaker_emails_path(@event)},
+            data: {url: event_staff_speaker_emails_path(@event)},
             class: "btn btn-primary",
             id: 'copy-filtered-speaker-emails'
   end

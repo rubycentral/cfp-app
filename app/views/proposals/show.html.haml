@@ -18,7 +18,7 @@
           .toolbox.pull-right
             .clearfix
               - unless proposal.withdrawn? || proposal.accepted? || proposal.confirmed?
-                = link_to edit_proposal_path(slug: event.slug, uuid: proposal), class: 'btn btn-primary' do
+                = link_to edit_event_proposal_path(slug: event.slug, uuid: proposal), class: 'btn btn-primary' do
                   %span.glyphicon.glyphicon-edit
                   Edit
                 -if proposal.has_reviewer_activity?

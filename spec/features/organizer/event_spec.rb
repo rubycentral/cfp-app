@@ -120,7 +120,7 @@ feature "Event Dashboard" do
 
       email = ActionMailer::Base.deliveries.last
       expect(email.to).to eq([ 'harrypotter@hogwarts.edu' ])
-      expect(page).to have_text('EventTeammate invitation successfully sent')
+      expect(page).to have_text('Event teammate invitation successfully sent')
     end
   end
 end

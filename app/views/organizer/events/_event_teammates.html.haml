@@ -3,10 +3,10 @@
     .col-md-12
       .btn-nav.pull-right
         = link_to 'View speakers', organizer_event_speakers_path(event), class: "btn btn-primary"
-        = link_to 'Add/Invite New EventTeammate', '#', class: 'btn btn-primary', data: { toggle: 'modal', target: "#new-event_teammate-event-#{event.id}" }
-        = link_to 'Manage EventTeammate Invitations',
+        = link_to 'Add/Invite New Event Teammate', '#', class: 'btn btn-primary', data: { toggle: 'modal', target: "#new-event_teammate-event-#{event.id}" }
+        = link_to 'Manage Event Teammate Invitations',
           organizer_event_event_teammate_invitations_path(event), class: 'btn btn-primary'
-      %h3 EventTeammates
+      %h3 Event Teammates
 .row
   .col-md-12
     %table.event_teammates.table.table-striped
@@ -38,17 +38,17 @@
     .modal-content
       = form_for event.event_teammates.build, url: organizer_event_event_teammates_path(event), html: {role: 'form'} do |f|
         .modal-header
-          %h3 Add/Invite a event_teammate to #{event.name}
+          %h3 Add/Invite an event teammate to #{event.name}
         .modal-body
           .form-group
             = label_tag :email
             = text_field_tag :email, '', class: 'form-control',
               id: 'autocomplete-email',
-              placeholder: "EventTeammate's email",
+              placeholder: "Event Teammate's email",
               data: { path: emails_organizer_event_event_teammates_path(event) }
           .form-group
             = f.label :role
-            = f.select :role, ['reviewer', 'organizer'], class: 'form-control'
+            = f.select :role, ['reviewer', 'program team', 'organizer'], class: 'form-control'
         .modal-footer
           %button.btn.btn-default{'data-dismiss' => "modal"} Cancel
           %button.pull-right.btn.btn-success{:type => "submit"} Save

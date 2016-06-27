@@ -5,10 +5,10 @@
     .modal-content
       = form_for event_teammate, url: organizer_event_event_teammate_path(event_teammate.event, event_teammate), html: { role: 'form' } do |f|
         .modal-header
-          %h3 Change event_teammate role
+          %h3 Change event teammate role
         .modal-body
           = f.label :role
-          = f.select :role, ['reviewer', 'organizer'], class: 'form-control'
+          = f.select :role, ['reviewer', 'program team', 'organizer'], class: 'form-control'
         .modal-footer
           %button.btn.btn-default{'data-dismiss' => "modal"} Cancel
           %button.pull-right.btn.btn-primary{:type => "submit"} Save

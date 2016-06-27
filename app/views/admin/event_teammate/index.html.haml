@@ -21,7 +21,7 @@
         = text_field_tag :email, '', class: 'form-control', placeholder: "EventTeammate's email"
       .form-group
         = f.label :role
-        = f.select :role, ['reviewer', 'organizer'], class: 'form-control'
+        = f.select :role, ['reviewer', 'program team', 'organizer'], class: 'form-control'
       .form-submit
         %button.pull-right.btn.btn-primary{:type => "submit"} Save
 - content_for :custom_css do

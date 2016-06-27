@@ -1,5 +1,5 @@
 .row
-  .col-sm-12
+  .col-md-12
     .page-header
       %h1 My Proposals
 .row
@@ -8,32 +8,40 @@
       %h3 You don't have any proposals.
     - proposals.each do |event, talks|
       - event = event.decorate
+
       .row
         .col-md-7
-          %h2.inline-block
+          %h1.inline-block
             - if event.url?
               = link_to event.name, event.url, class: 'event-title'
             - else
               = link_to event.name, event_path(event.slug), class: 'event-title'
+
           %span= link_to 'View Guidelines', event_path(event.slug), class: 'guidelines-link'
+
           %h4.margin-bottom
             = event.start_date.strftime("%a %b %d") + " - " + event.end_date.strftime("%a %b %d")
-        .col-md-5
+
+        .col-md-5.margin-top
           - if event.open?
-            = link_to 'Submit a proposal', new_proposal_path(slug: event.slug), class: 'btn btn-primary'
-            %span.label.label-default
-              = pluralize(event.proposals.count, 'proposal')
-              submitted
+
+            %p.pull-right= link_to 'Submit a proposal', new_proposal_path(slug: event.slug), class: 'btn btn-primary btn-md'
+
             - if event.closes_at?
-              %p
+              %p.pull-right
                 Closes at
                 %strong= event.closes_at(:long_with_zone)
-              %p
+              %p.pull-right
                 %strong
                   %span.label.label-info
                     = time_ago_in_words(event.closes_at)
                     left
                 &nbsp;to submit your proposal!
+
+            %span.label.label-default.pull-right
+              = pluralize(event.proposals.count, 'proposal')
+              submitted
+
       .row
         .col-md-12
           .widget
@@ -44,10 +52,32 @@
               %ul.list-unstyled
                 - talks.each do |proposal|
                   %li.proposal
+                    - if proposal.has_speaker?(current_user)
+                      .toolbox.pull-right
+                        .clearfix
+                          - unless proposal.withdrawn? || proposal.accepted? || proposal.confirmed?
+                            = link_to edit_proposal_path(slug: event.slug, uuid: proposal), class: 'btn btn-primary' do
+                              %span.glyphicon.glyphicon-edit
+                              Edit
                     %h4= link_to proposal.title, proposal_path(slug: proposal.event.slug, uuid: proposal)
                     = proposal.public_state(small: true)
-                    %p= truncate(proposal.abstract, length: 80)
-                    %hr/
+                    %p
+                      %i= truncate(proposal.abstract, length: 80, escape: false)
+                    %p
+                      %strong Session:
+                      #{proposal.session_type.name}
+                    %p
+                      %strong Track:
+                      #{proposal.track.name}
+                    %p
+                      %strong #{ 'Speaker'.pluralize(proposal.speakers.count) }:
+                      = proposal.speakers.collect { |speaker| speaker.name }.join(', ')
+                    %p
+                      %strong Comments:
+                      = proposal.public_comments.count
+                    %p
+                      %strong Reviews:
+                      = proposal.ratings.count
 
   .col-md-4.invitations
     %h2 Invitations

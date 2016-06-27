@@ -25,12 +25,15 @@ class Event < ActiveRecord::Base
   scope :recent, -> { order('name ASC') }
   scope :live, -> { where("state = 'open' and (closes_at is null or closes_at > ?)", Time.current).order('closes_at ASC') }
 
-  validates :name, :contact_email, presence: true
+  validates :name, presence: true
   validates :slug, presence: true, uniqueness: true
-  validates :closes_at, presence: true
 
   before_validation :generate_slug
   before_save :update_closes_at_if_manually_closed
+
+  STATUSES = { open: 'open',
+               draft: 'draft',
+               closed: 'closed' }
 
 
   def valid_proposal_tags
@@ -73,20 +76,30 @@ class Event < ActiveRecord::Base
     name
   end
 
+  def draft?
+    state == STATUSES[:draft]
+  end
+
   def open?
-    state == 'open' && (closes_at.nil? || closes_at > Time.current)
+    state == STATUSES[:open] && (closes_at.nil? || closes_at > Time.current)
   end
 
   def closed?
-    !open?
+    !open? && !draft?
   end
 
   def past_open?
-    state == 'open' && closes_at < Time.current
+    state == STATUSES[:open] && closes_at < Time.current
   end
 
   def status
-    open? ? 'open' : 'closed'
+    if open?
+      STATUSES[:open]
+    elsif draft?
+      STATUSES[:draft]
+    else
+    STATUSES[:closed]
+    end
   end
 
   def unmet_requirements_for_scheduling
@@ -133,7 +146,7 @@ class Event < ActiveRecord::Base
 
   private
   def update_closes_at_if_manually_closed
-    if changes.key?(:state) && changes[:state] == ['open', 'closed']
+    if changes.key?(:state) && changes[:state] == [STATUSES[:open], STATUSES[:closed]]
       self.closes_at = DateTime.now
     end
   end

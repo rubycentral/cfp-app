@@ -15,7 +15,7 @@ class InvitationDecorator < ApplicationDecorator
       h.refuse_invitation_path(invitation_slug: object.slug),
       method: :post,
       class: classes,
-      data: { confirm: 'Are you sure you want to refuse this invitation?' }
+      data: { confirm: 'Are you sure you want to decline this invitation?' }
   end
 
   def accept_button(small: false)

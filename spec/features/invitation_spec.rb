@@ -113,7 +113,7 @@ feature 'Speaker Invitations' do
       before { click_link 'Decline' }
 
       it "redirects the user back to the proposal page" do
-        expect(page).to have_text("You have refused this invitation")
+        expect(page).to have_text("You have declined this invitation")
       end
 
       it "marks the invitation as refused" do

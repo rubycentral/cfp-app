@@ -41,7 +41,7 @@ class InvitationsController < ApplicationController
   def update
     if params[:refuse]
       @invitation.refuse
-      flash[:info] = "You have refused this invitation."
+      flash[:info] = "You have declined this invitation."
       redirect_to root_url
     else
       @invitation.accept

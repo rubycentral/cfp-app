@@ -35,47 +35,65 @@
 
   .row
     .col-md-4
-      = render partial: 'proposals/contents', locals: { proposal: proposal }
+      .widget
+        .widget-header
+          %i.fa.fa-list-alt
+          %h3 Proposal Contents
+        .widget-content
+          = render partial: 'proposals/contents', locals: { proposal: proposal }
 
     .col-md-4
-      %h3 Speakers
-      = render proposal.speakers
-
-      - if (proposal.has_speaker?(current_user))
-        %h3 Invited Speakers
-        - invitations.each do |invitation|
-          .clearfix
-            %ul.invitation
-              %li
-                = invitation.state_label
-                = invitation.email
-                .pull-right
-                  = link_to 'Resend',
-                    resend_invitation_path(invitation_slug: invitation.slug),
-                    method: :post,
-                    class: 'btn btn-xs btn-primary',
-                    disabled: !invitation.pending?
-                  = link_to 'Remove',
-                    invitation_path(invitation_slug: invitation.slug),
-                    method: :delete,
-                    class: 'btn btn-xs btn-danger',
-                    disabled: !invitation.pending?,
-                    data: {confirm: 'Are you sure you want to remove this invitation?'}
-
-        = form_tag invitations_path(proposal_uuid: proposal.uuid), class: 'form-horizontal speaker' do
-          %h3 Invite a Speaker
-          .input-group{role: "group", "aria-label" => "Enter an Email to Invite a Speaker"}
-            = email_field_tag :email, '', placeholder: "Enter an email address.", class: 'form-control'
-            %span.input-group-btn
-              %button.btn.btn-success(type="submit")
-                %span.glyphicon.glyphicon-envelope
-                Invite
+      .widget
+        .widget-header
+          %i.fa.fa-comment-o
+          %h3 Speakers
+        .widget-content
+          = render proposal.speakers
+          - if (proposal.has_speaker?(current_user))
+            %h3 Invited Speakers
+            - invitations.each do |invitation|
+              .clearfix
+                %ul.invitation
+                  %li
+                    = invitation.state_label
+                    = invitation.email
+                    .pull-right
+                      = link_to 'Resend',
+                        resend_invitation_path(invitation_slug: invitation.slug),
+                        method: :post,
+                        class: 'btn btn-xs btn-primary',
+                        disabled: !invitation.pending?
+                      = link_to 'Remove',
+                        invitation_path(invitation_slug: invitation.slug),
+                        method: :delete,
+                        class: 'btn btn-xs btn-danger',
+                        disabled: !invitation.pending?,
+                        data: {confirm: 'Are you sure you want to remove this invitation?'}
+            .new-speaker-invite
+              %p You may invite other speakers to your proposal.
+              .button.btn.btn-success.speaker-invite-button Invite a Speaker
+              .speaker-invite-form
+                = form_tag invitations_path(proposal_uuid: proposal.uuid), class: 'form-horizontal speaker' do
+                  %h3 Invite a Speaker
+                  .input-group{role: "group", "aria-label" => "Enter an Email to Invite a Speaker"}
+                    = email_field_tag :email, '', placeholder: "Enter an email address.", class: 'form-control'
+                    %span.input-group-btn
+                      %button.btn.btn-success(type="submit")
+                        %span.glyphicon.glyphicon-envelope
+                        Invite
     .col-md-4
-      %h3 Reviewer Activity
-      %p
-        = pluralize(proposal.ratings.count, 'review')
-        = proposal.public_state
-
-      %h3 Comments
-      = render partial: 'proposals/comments',
-        locals: { proposal: proposal, comments: proposal.public_comments }
+      .widget
+        .widget-header
+          %i.fa.fa-sticky-note-o
+          %h3 Reviewer Activity
+        .widget-content
+          %p.count
+            = pluralize(proposal.ratings.count, 'review')
+            = proposal.public_state
+      .widget
+        .widget-header
+          %i.fa.fa-comments
+          %h3 Comments
+        .widget-content
+          = render partial: 'proposals/comments',
+            locals: { proposal: proposal, comments: proposal.public_comments }

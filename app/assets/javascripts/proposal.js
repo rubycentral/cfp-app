@@ -20,3 +20,9 @@ $(function() {
     }
   });
 });
+
+$(function() {
+  $('.speaker-invite-button').click(function() {
+    $('.speaker-invite-form').toggle();
+  });
+});

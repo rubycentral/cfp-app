@@ -4,7 +4,6 @@
   }
   .btn{
     display: block;
-    width: 150px;
     margin-top: 1em;
   }
 }
@@ -122,6 +121,10 @@ div.col-md-4 {
     h3 {
       display: inline-block;
     }
+}
+
+.invite-btns {
+  margin-top: 10px;
 }
 
 .new-speaker-invite {

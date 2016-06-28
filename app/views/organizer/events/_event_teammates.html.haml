@@ -3,8 +3,8 @@
     .col-md-12
       .btn-nav.pull-right
         = link_to 'View speakers', organizer_event_speakers_path(event), class: "btn btn-primary"
-        = link_to 'Add/Invite New Event Teammate', '#', class: 'btn btn-primary', data: { toggle: 'modal', target: "#new-event_teammate-event-#{event.id}" }
-        = link_to 'Manage Event Teammate Invitations',
+        = link_to 'Add/Invite New Teammate', '#', class: 'btn btn-primary', data: { toggle: 'modal', target: "#new-event_teammate-event-#{event.id}" }
+        = link_to 'Manage Teammate Invitations',
           organizer_event_event_teammate_invitations_path(event), class: 'btn btn-primary'
       %h3 Event Teammates
 .row

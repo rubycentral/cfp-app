@@ -2,7 +2,8 @@ class ProposalsController < ApplicationController
   before_filter :require_event, except: :index
   before_filter :require_user
   before_filter :require_proposal, except: [ :index, :create, :new, :parse_edit_field ]
-  before_filter :require_speaker, only: [:show, :edit, :update]
+  before_filter :require_invite, only: [:show]
+  before_filter :require_speaker, only: [:edit, :update]
   before_filter :require_waitlisted_or_accepted_state, only: [:confirm]
 
   decorates_assigned :proposal
@@ -96,6 +97,13 @@ class ProposalsController < ApplicationController
     params.require(:proposal).permit(:title, {tags: []}, :session_type_id, :track_id, :abstract, :details, :pitch, custom_fields: @event.custom_fields,
                                      comments_attributes: [:body, :proposal_id, :user_id],
                                      speakers_attributes: [:bio, :user_id, :id])
+  end
+
+  def require_invite
+    unless current_user.invitations.where(state: 'pending').includes(proposal_id: @proposal.id)
+      redirect_to root_path
+      flash[:danger] = 'You are not an invited speaker for the proposal you are trying to access.'
+    end
   end
 
   def require_speaker

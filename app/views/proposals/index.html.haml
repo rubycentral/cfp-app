@@ -24,7 +24,6 @@
 
         .col-md-5.margin-top
           - if event.open?
-
             %p.pull-right= link_to 'Submit a proposal', new_proposal_path(slug: event.slug), class: 'btn btn-primary btn-md'
 
             - if event.closes_at?
@@ -67,8 +66,9 @@
                       %strong Session:
                       #{proposal.session_type.name}
                     %p
-                      %strong Track:
-                      #{proposal.track.name}
+                      - if proposal.track
+                        %strong Track:
+                        #{proposal.track.name}
                     %p
                       %strong #{ 'Speaker'.pluralize(proposal.speakers.count) }:
                       = proposal.speakers.collect { |speaker| speaker.name }.join(', ')
@@ -80,15 +80,28 @@
                       = proposal.ratings.count
 
   .col-md-4.invitations
-    %h2 Invitations
-    %ul.list-unstyled
-      - invitations.each do |invitation|
-        %li
-          = invitation.state_label
-          = invitation.proposal.title
-          - if invitation.pending?
-            (
-            = invitation.refuse_button(small: true)
-            |
-            = invitation.accept_button(small: true)
-            )
+    .widget
+      .widget-header
+        %i.fa.fa-envelope-o
+        %h3 Speaker Invitations
+      .widget-content
+        %ul.list-unstyled
+          - if invitations.empty?
+            %h5 You don't have any invitations.
+          - invitations.each do |invitation|
+            %li.invitation
+              %h4.inline-block= link_to invitation.proposal.title, proposal_path(slug: invitation.proposal.event.slug, uuid: invitation.proposal)
+              - if invitation.pending?
+                .pull-right.invite-btns
+                  = invitation.refuse_button(small: true)
+
+                  = invitation.accept_button(small: true)
+              .margin-bottom= invitation.state_label
+              %p
+                - if invitation.proposal.track
+                  %strong Track:
+                  = invitation.proposal.track.name
+              %p
+                %strong #{ 'Speaker'.pluralize(invitation.proposal.speakers.count) }:
+                = invitation.proposal.speakers.collect { |speaker| speaker.name }.join(', ')
+              %hr/

@@ -110,7 +110,7 @@ feature 'Speaker Invitations' do
     end
 
     context "When declining" do
-      before { click_link 'Refuse' }
+      before { click_link 'Decline' }
 
       it "redirects the user back to the proposal page" do
         expect(page).to have_text("You have refused this invitation")
@@ -119,6 +119,20 @@ feature 'Speaker Invitations' do
       it "marks the invitation as refused" do
         expect(invitation.reload.state).to eq(Invitation::State::REFUSED)
       end
+    end
+
+    it "User can view proposal before accepting invite" do
+      visit proposals_path
+
+      within(:css, 'div.invitations') do
+        expect(page).to have_text(other_proposal.title)
+        expect(page).to have_link("Accept")
+        expect(page).to have_link("Decline")
+      end
+
+      click_link(other_proposal.title)
+
+      expect(current_path).to eq(proposal_path(slug: other_proposal.event.slug, uuid: other_proposal))
     end
   end
 end

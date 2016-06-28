@@ -11,7 +11,7 @@ class InvitationDecorator < ApplicationDecorator
     classes = 'btn btn-danger'
     classes += ' btn-xs' if small
 
-    h.link_to 'Refuse',
+    h.link_to 'Decline',
       h.refuse_invitation_path(invitation_slug: object.slug),
       method: :post,
       class: classes,

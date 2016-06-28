@@ -10,7 +10,7 @@ class Admin::EventsController < Admin::ApplicationController
     if @event.save
 			@event.event_teammates.create(user: current_user, role: 'organizer')
       flash[:info] = 'Your event was saved.'
-      redirect_to organizer_event_url(@event)
+      redirect_to event_staff_url(@event)
     else
       flash[:danger] = 'There was a problem saving your event; please review the form for issues and try again.'
       render :new

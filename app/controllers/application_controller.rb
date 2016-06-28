@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_event
-    @event = Event.find_by!(slug: params[:slug])
+    @event = Event.find_by!(slug: params[:event_slug])
   end
 
   def require_proposal

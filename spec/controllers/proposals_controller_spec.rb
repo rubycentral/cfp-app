@@ -9,7 +9,7 @@ describe ProposalsController, type: :controller do
     }
 
     it 'should succeed' do
-      get :new, slug: event.slug
+      get :new, {event_slug: event.slug}
       expect(response.status).to eq(200)
     end
   end
@@ -19,7 +19,7 @@ describe ProposalsController, type: :controller do
     let(:user) { create(:user) }
     let(:params) {
       {
-        slug: event.slug,
+        event_slug: event.slug,
         proposal: {
           title: proposal.title,
           abstract: proposal.abstract,
@@ -51,7 +51,7 @@ describe ProposalsController, type: :controller do
       unauthorized = create(:speaker)
       proposal = create(:proposal, event: event, speakers: [ authorized ], state: "accepted")
       allow_any_instance_of(ProposalsController).to receive(:current_user) { unauthorized.user }
-      post :confirm, slug: event.slug, uuid: proposal.uuid
+      post :confirm, event_slug: event.slug, uuid: proposal.uuid
       expect(response).to be_success
     end
   end
@@ -60,14 +60,14 @@ describe ProposalsController, type: :controller do
     it "confirms a proposal" do
       proposal = create(:proposal, confirmed_at: nil)
       allow_any_instance_of(ProposalsController).to receive(:current_user) { create(:speaker) }
-      post :set_confirmed, slug: proposal.event.slug, uuid: proposal.uuid
+      post :set_confirmed, event_slug: proposal.event.slug, uuid: proposal.uuid
       expect(proposal.reload).to be_confirmed
     end
 
     it "can set confirmation_notes" do
       proposal = create(:proposal, confirmation_notes: nil)
       allow_any_instance_of(ProposalsController).to receive(:current_user) { create(:speaker) }
-      post :set_confirmed, slug: proposal.event.slug, uuid: proposal.uuid,
+      post :set_confirmed, event_slug: proposal.event.slug, uuid: proposal.uuid,
         confirmation_notes: 'notes'
       expect(proposal.reload.confirmation_notes).to eq('notes')
     end
@@ -79,20 +79,20 @@ describe ProposalsController, type: :controller do
     before { allow(controller).to receive(:current_user).and_return(user) }
 
     it "sets the state to withdrawn for unconfirmed proposals" do
-      post :withdraw, slug: event.slug, uuid: proposal.uuid
+      post :withdraw, event_slug: event.slug, uuid: proposal.uuid
       expect(proposal.reload).to be_withdrawn
     end
 
     it "leaves state unchanged for confirmed proposals" do
       proposal.update_attribute(:confirmed_at, Time.now)
-      post :withdraw, slug: event.slug, uuid: proposal.uuid
+      post :withdraw, event_slug: event.slug, uuid: proposal.uuid
       expect(proposal.reload).not_to be_withdrawn
     end
 
     it "sends an in-app notification to reviewers" do
       create(:rating, proposal: proposal, user: create(:organizer))
       expect {
-        post :withdraw, slug: event.slug, uuid: proposal.uuid
+        post :withdraw, event_slug: event.slug, uuid: proposal.uuid
       }.to change { Notification.count }.by(1)
     end
   end
@@ -106,7 +106,7 @@ describe ProposalsController, type: :controller do
     it "updates a proposals attributes" do
       proposal.update(title: 'orig_title', pitch: 'orig_pitch')
 
-      put :update, slug: proposal.event.slug, uuid: proposal,
+      put :update, event_slug: proposal.event.slug, uuid: proposal,
         proposal: { title: 'new_title', pitch: 'new_pitch' }
 
       expect(assigns(:proposal).title).to eq('new_title')
@@ -119,7 +119,7 @@ describe ProposalsController, type: :controller do
       create(:rating, proposal: proposal, user: organizer)
 
       expect {
-        put :update, slug: proposal.event.slug, uuid: proposal,
+        put :update, event_slug: proposal.event.slug, uuid: proposal,
           proposal: { abstract: proposal.abstract, title: 'new_title',
                       pitch: 'new_pitch' }
       }.to change { Notification.count }.by(1)

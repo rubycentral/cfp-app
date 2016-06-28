@@ -34,7 +34,9 @@ class Event < ActiveRecord::Base
   STATUSES = { open: 'open',
                draft: 'draft',
                closed: 'closed' }
-
+  def to_param
+    slug
+  end
 
   def valid_proposal_tags
     proposal_tags.join(', ')

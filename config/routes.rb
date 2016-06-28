@@ -1,25 +1,20 @@
 Rails.application.routes.draw do
 
   root 'home#show'
+  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
+
+  get '/profile' => 'profiles#edit', as: :edit_profile
+  patch '/profile' => 'profiles#update'
+  get '/my-proposals' => 'proposals#index', as: :proposals
 
   resources :notifications, only: [:index, :show] do
     post :mark_all_as_read, on: :collection
   end
 
-  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
-
-  resource :profile, only: [:edit, :update]
-  resource :public_comments, only: [:create], controller: :comments, type: 'PublicComment'
-  resource :internal_comments, only: [:create], controller: :comments, type: 'InternalComment'
-  resources :speakers, only: [:destroy]
-  resources :proposals, only: [:index]
-  resources :events, only: [:index]
-  scope '/events/:slug' do
+  resources :events, param: :slug do
     get '/' => 'events#show', as: :event
 
     post '/proposals' => 'proposals#create', as: :event_proposals
-    get 'parse_edit_field' => 'proposals#parse_edit_field',
-        as: :parse_edit_field_proposal
 
     resources :proposals, param: :uuid do
       member { get :confirm }
@@ -27,7 +22,69 @@ Rails.application.routes.draw do
       member { post :withdraw }
       member { delete :destroy }
     end
+
+    get 'parse_edit_field' => 'proposals#parse_edit_field', as: :parse_edit_field_proposal
+
+    #Staff URLS
+    namespace 'staff' do
+      get '/' => 'events#show'
+
+      get :edit
+      get '/speaker-emails' => 'events#speaker_emails', as: :speaker_email_notifications
+      get '/guidelines' => 'events#guidelines', as: :guidelines_notifications
+      get :show
+      patch :update
+      get 'custom-fields', as: :custom_fields
+      put :update_custom_fields
+
+      resources :event_teammate_invitations, except: [:new, :edit, :update, :show]
+      resources :event_teammates, only: [:create, :destroy, :update] do
+        collection { get :emails, defaults: {format: :json} }
+      end
+
+      controller :program do
+        get 'program' => 'program#show'
+        get 'program-selection' => 'program#selection'
+      end
+
+      resources :rooms, only: [:create, :update, :destroy]
+      resources :sessions, except: :show
+      resources :session_types, except: :show
+      resources :tracks, except: [:show]
+      resources :proposals, param: :uuid do
+        resources :speakers, only: [:new, :create]
+        post :finalize
+        post :update_state
+      end
+
+      controller :speakers do
+        get :speaker_emails, action: :emails #returns json of speaker emails
+      end
+
+      resources :speakers, only: [:index, :show, :edit, :update, :destroy] do
+        member do
+          get :profile, to: "profiles#edit", as: :edit_profile
+          patch :profile, to: "profiles#update", as: :update_profile
+        end
+      end
+    end
   end
+
+  #TEMPORARILY ENABLED
+  namespace 'reviewer' do
+    resources :events, only: [:show] do
+      resources :event_teammates, only: [:update]
+      resources :proposals, only: [:index, :show, :update], param: :uuid do
+        resources :ratings, only: [:create, :update], defaults: {format: :js}
+      end
+    end
+  end
+
+  resource :public_comments, only: [:create], controller: :comments, type: 'PublicComment'
+  resource :internal_comments, only: [:create], controller: :comments, type: 'InternalComment'
+
+  resources :speakers, only: [:destroy]
+  resources :events, only: [:index]
 
   resources :event_teammate_invitations, only: :show, param: :slug do
     member do
@@ -51,54 +108,6 @@ Rails.application.routes.draw do
     end
 
     resources :users
-  end
-
-  namespace 'organizer' do
-    resources :events, only: [:edit, :show, :update] do
-      member do
-        get :edit_custom_fields
-        put :update_custom_fields
-      end
-      resources :event_teammate_invitations, except: [:new, :edit, :update, :show]
-
-      controller :program do
-        get 'program' => 'program#show'
-      end
-
-      resources :event_teammates, only: [:create, :destroy, :update] do
-        collection { get :emails, defaults: {format: :json} }
-      end
-
-      resources :rooms, only: [:create, :update, :destroy]
-      resources :sessions, except: :show
-      resources :session_types, except: :show
-      resources :tracks, except: [:show]
-      resources :proposals, param: :uuid do
-        resources :speakers, only: [:new, :create]
-        post :finalize
-        post :update_state
-      end
-
-      controller :speakers do
-        get :speaker_emails, action: :emails
-      end
-      resources :speakers, only: [:index, :show, :edit, :update, :destroy] do
-        member do
-          get :profile, to: "profiles#edit", as: :edit_profile
-          patch :profile, to: "profiles#update", as: :update_profile
-        end
-      end
-    end
-
-  end
-
-  namespace 'reviewer' do
-    resources :events, only: [:show] do
-      resources :event_teammates, only: [:update]
-      resources :proposals, only: [:index, :show, :update], param: :uuid do
-        resources :ratings, only: [:create, :update], defaults: {format: :js}
-      end
-    end
   end
 
   get "/current-styleguide", :to => "pages#current_styleguide"

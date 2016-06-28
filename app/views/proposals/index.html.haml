@@ -9,7 +9,7 @@
       %h3 You don't have any proposals.
     - proposals.each do |event, talks|
       - if event.open?
-        = link_to 'Submit a proposal', new_proposal_path(slug: event.slug), class: 'btn btn-primary pull-right'
+        = link_to 'Submit a proposal', new_event_proposal_path(event_slug: event.slug), class: 'btn btn-primary pull-right'
       %h3.margin-bottom
         = link_to event.name, event_path(event.slug), class: 'event-title'
         %span.label.label-info= event.status
@@ -21,7 +21,7 @@
           %ul.list-unstyled
             - talks.each do |proposal|
               %li.proposal
-                %h4= link_to proposal.title, proposal_path(slug: proposal.event.slug, uuid: proposal)
+                %h4= link_to proposal.title, event_proposal_path(event_slug: proposal.event.slug, uuid: proposal)
                 = proposal.public_state(small: true)
                 %p= truncate(proposal.abstract, length: 80)
                 %hr/

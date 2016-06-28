@@ -12,7 +12,7 @@ class SpeakersController < ApplicationController
       redirect_to root_path
     else
       flash[:info] = "#{speaker.email} has been withdrawn from #{proposal.title}."
-      redirect_to proposal_url(slug: proposal.event.slug, uuid: proposal)
+      redirect_to event_proposal_url(slug: proposal.event.slug, uuid: proposal)
     end
   end
 end

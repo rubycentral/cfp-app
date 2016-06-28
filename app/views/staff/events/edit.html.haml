@@ -1,0 +1,11 @@
+.row
+  .col-md-12
+    .page-header
+      %h1
+        Edit #{event}
+
+.row
+  .col-md-12
+    = simple_form_for event, url: event_staff_update_path(event), html: {role: 'form'} do |f|
+      = render partial: "admin/events/form", locals: {f: f}
+      = render partial: "admin/events/tags_form", locals: {f: f}

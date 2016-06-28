@@ -1,0 +1,28 @@
+#speaker
+  .row
+    .col-md-12
+      .page-header.clearfix
+        .btn-nav.pull-right
+          = link_to(event_staff_proposal_path(speaker.proposal.event, speaker.proposal), class: "btn btn-primary") do
+            &laquo; Return to Proposal
+          = link_to(edit_event_staff_speaker_path, class: "btn btn-primary") do
+            Edit Speaker
+          = speaker.delete_button
+
+        %h1 Speaker Profile
+
+  .row
+    .col-md-12
+      %p
+        = image_tag("https://www.gravatar.com/avatar/#{speaker.gravatar_hash}?s=150",
+          id: 'speaker_gravatar')
+        %br
+        %b Name:
+        = speaker.name
+      %p
+        %b Email:
+        = mail_to(speaker.email)
+      %p
+        %b Bio:
+        %br
+        = speaker.bio

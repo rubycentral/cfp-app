@@ -15,6 +15,7 @@ class NotificationsController < ApplicationController
 
   def mark_all_as_read
     current_user.notifications.where(read_at: nil).update_all(read_at: DateTime.now)
-    redirect_to :back
+    flash[:notice] = "All notifications marked as read"
+    redirect_to notifications_path
   end
 end

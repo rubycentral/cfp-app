@@ -1,0 +1,5 @@
+%tr
+  %td= speaker.user.name
+  %td= speaker.user.email
+  %td= link_to proposal.title, reviewer_event_proposal_path(proposal.event, proposal)
+  %td= proposal.state_label(small: true)

@@ -19,7 +19,7 @@ feature "Listing events for different roles" do
       create(:event_teammate, role: 'organizer', user: organizer)
       login_as(organizer)
       visit events_path
-      expect(page).to have_link('1 proposal', href: organizer_event_proposals_path(event))
+      expect(page).to have_link('1 proposal', href: event_staff_proposals_path(event))
     end
   end
 end

@@ -1,0 +1,33 @@
+.row
+  .col-md-12
+    .page-header.clearfix
+      .btn-navbar.pull-right
+        = link_to(event_staff_proposal_path(proposal.event_id, proposal.uuid), class: "btn btn-primary") do
+          &laquo; Return to Proposal
+      %h1 Edit #{proposal.title}
+
+.navbar.navbar-default
+  .container-fluid
+    %ul.nav.navbar-nav.navbar-right
+      %li.dropdown
+        %a.dropdown-toggle{ href: "#", data: { toggle: "dropdown" } }
+          Change State
+          %b.caret
+        %ul.dropdown-menu
+          %li
+            = proposal.update_state_link(Proposal::State::ACCEPTED)
+            = proposal.update_state_link(Proposal::State::REJECTED)
+            = proposal.update_state_link(Proposal::State::WAITLISTED)
+            = proposal.update_state_link(Proposal::State::WITHDRAWN)
+            = proposal.update_state_link(Proposal::State::SUBMITTED)
+      %li= proposal.delete_button
+
+.row
+  .col-md-12
+    .page-header
+      %h2
+        %span.label.label-info
+          #{event}
+      %h1 #{proposal.title}
+
+= render partial: 'form', locals: { proposal: proposal }

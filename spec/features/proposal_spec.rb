@@ -13,7 +13,7 @@ feature "Proposals" do
     fill_in 'Pitch', with: "You live but once; you might as well be amusing. - Coco Chanel"
     fill_in 'Details', with: "Plans are nothing; planning is everything. - Dwight D. Eisenhower"
     select 'Only type', from: 'Session type'
-    click_button 'Submit Proposal'
+    click_button 'Save'
   end
 
   before { login_as(user) }
@@ -61,7 +61,7 @@ feature "Proposals" do
 
       visit edit_event_proposal_path(event_slug: proposal.event.slug, uuid: proposal)
       fill_in 'Title', with: "A new title"
-      click_button 'Submit Proposal'
+      click_button 'Save'
       expect(page).to have_text("A new title")
     end
   end

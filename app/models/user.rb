@@ -1,6 +1,7 @@
 require 'digest/md5'
 
 class User < ActiveRecord::Base
+  STAFF_ROLES = ['reviewer', 'program team', 'organizer']
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable
   devise :database_authenticatable, :registerable,
@@ -9,7 +10,7 @@ class User < ActiveRecord::Base
 
   has_many :invitations,  dependent: :destroy
   has_many :event_teammates, dependent: :destroy
-  has_many :reviewer_event_teammates, -> { where(role: ['reviewer', 'organizer']) }, class_name: 'EventTeammate'
+  has_many :reviewer_event_teammates, -> { where(role: ['reviewer', 'program_team', 'organizer']) }, class_name: 'EventTeammate'
   has_many :reviewer_events, through: :reviewer_event_teammates, source: :event
   has_many :organizer_event_teammates, -> { where(role: 'organizer') }, class_name: 'EventTeammate'
   has_many :organizer_events, through: :organizer_event_teammates, source: :event

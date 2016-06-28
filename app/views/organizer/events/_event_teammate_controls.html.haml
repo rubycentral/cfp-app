@@ -8,7 +8,7 @@
           %h3 Change event teammate role
         .modal-body
           = f.label :role
-          = f.select :role, ['reviewer', 'program team', 'organizer'], class: 'form-control'
+          = f.select :role, User::STAFF_ROLES, class: 'form-control'
         .modal-footer
           %button.btn.btn-default{'data-dismiss' => "modal"} Cancel
           %button.pull-right.btn.btn-primary{:type => "submit"} Save

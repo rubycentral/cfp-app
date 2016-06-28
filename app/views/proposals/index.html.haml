@@ -1,41 +1,107 @@
 .row
-  .col-sm-12
+  .col-md-12
     .page-header
-      %h1 Your Dashboard
+      %h1 My Proposals
 .row
   .col-md-8.proposals
-    %h2 Proposals
     - if proposals.empty?
       %h3 You don't have any proposals.
     - proposals.each do |event, talks|
-      - if event.open?
-        = link_to 'Submit a proposal', new_event_proposal_path(event_slug: event.slug), class: 'btn btn-primary pull-right'
-      %h3.margin-bottom
-        = link_to event.name, event_path(event.slug), class: 'event-title'
-        %span.label.label-info= event.status
-      .widget
-        .widget-header
-          %i.fa.fa-comment
-          %h3 Proposed Talks
-        .widget-content
-          %ul.list-unstyled
-            - talks.each do |proposal|
-              %li.proposal
-                %h4= link_to proposal.title, event_proposal_path(event_slug: proposal.event.slug, uuid: proposal)
-                = proposal.public_state(small: true)
-                %p= truncate(proposal.abstract, length: 80)
-                %hr/
+      - event = event.decorate
+
+      .row
+        .col-md-7
+          %h1.inline-block
+            - if event.url?
+              = link_to event.name, event.url, class: 'event-title'
+            - else
+              = link_to event.name, event_path(event.slug), class: 'event-title'
+
+          %span= link_to 'View Guidelines', event_path(event.slug), class: 'guidelines-link'
+
+          %h4.margin-bottom
+            = event.start_date.strftime("%a %b %d") + " - " + event.end_date.strftime("%a %b %d")
+
+        .col-md-5.margin-top
+          - if event.open?
+            %p.pull-right= link_to 'Submit a proposal', new_event_proposal_path(event_slug: event.slug), class: 'btn btn-primary btn-md'
+
+            - if event.closes_at?
+              %p.pull-right
+                Closes at
+                %strong= event.closes_at(:long_with_zone)
+              %p.pull-right
+                %strong
+                  %span.label.label-info
+                    = time_ago_in_words(event.closes_at)
+                    left
+                &nbsp;to submit your proposal!
+
+            %span.label.label-default.pull-right
+              = pluralize(event.proposals.count, 'proposal')
+              submitted
+
+      .row
+        .col-md-12
+          .widget
+            .widget-header
+              %i.fa.fa-comment
+              %h3 Proposed Talks
+            .widget-content
+              %ul.list-unstyled
+                - talks.each do |proposal|
+                  %li.proposal
+                    - if proposal.has_speaker?(current_user)
+                      .toolbox.pull-right
+                        .clearfix
+                          - unless proposal.withdrawn? || proposal.accepted? || proposal.confirmed?
+                            = link_to edit_event_proposal_path(event_slug: event.slug, uuid: proposal), class: 'btn btn-primary' do
+                              %span.glyphicon.glyphicon-edit
+                              Edit
+                    %h4= link_to proposal.title, event_proposal_path(event_slug: proposal.event.slug, uuid: proposal)
+                    = proposal.public_state(small: true)
+                    %p
+                      %i= truncate(proposal.abstract, length: 80, escape: false)
+                    %p
+                      %strong Session:
+                      #{proposal.session_type.name}
+                    %p
+                      - if proposal.track
+                        %strong Track:
+                        #{proposal.track.name}
+                    %p
+                      %strong #{ 'Speaker'.pluralize(proposal.speakers.count) }:
+                      = proposal.speakers.collect { |speaker| speaker.name }.join(', ')
+                    %p
+                      %strong Comments:
+                      = proposal.public_comments.count
+                    %p
+                      %strong Reviews:
+                      = proposal.ratings.count
 
   .col-md-4.invitations
-    %h2 Invitations
-    %ul.list-unstyled
-      - invitations.each do |invitation|
-        %li
-          = invitation.state_label
-          = invitation.proposal.title
-          - if invitation.pending?
-            (
-            = invitation.refuse_button(small: true)
-            |
-            = invitation.accept_button(small: true)
-            )
+    .widget
+      .widget-header
+        %i.fa.fa-envelope-o
+        %h3 Speaker Invitations
+      .widget-content
+        %ul.list-unstyled
+          - if invitations.empty?
+            %h5 You don't have any invitations.
+          - invitations.each do |invitation|
+            %li.invitation
+              %h4.inline-block= link_to invitation.proposal.title, event_proposal_path(event_slug: invitation.proposal.event.slug, uuid: invitation.proposal)
+              - if invitation.pending?
+                .pull-right.invite-btns
+                  = invitation.refuse_button(small: true)
+
+                  = invitation.accept_button(small: true)
+              .margin-bottom= invitation.state_label
+              %p
+                - if invitation.proposal.track
+                  %strong Track:
+                  = invitation.proposal.track.name
+              %p
+                %strong #{ 'Speaker'.pluralize(invitation.proposal.speakers.count) }:
+                = invitation.proposal.speakers.collect { |speaker| speaker.name }.join(', ')
+              %hr/

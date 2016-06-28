@@ -132,7 +132,7 @@ feature 'Speaker Invitations' do
 
       click_link(other_proposal.title)
 
-      expect(current_path).to eq(proposal_path(slug: other_proposal.event.slug, uuid: other_proposal))
+      expect(current_path).to eq(event_proposal_path(event_slug: other_proposal.event.slug, uuid: other_proposal))
     end
   end
 end

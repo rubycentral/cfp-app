@@ -24,7 +24,7 @@
 
         .col-md-5.margin-top
           - if event.open?
-            %p.pull-right= link_to 'Submit a proposal', new_proposal_path(slug: event.slug), class: 'btn btn-primary btn-md'
+            %p.pull-right= link_to 'Submit a proposal', new_event_proposal_path(event_slug: event.slug), class: 'btn btn-primary btn-md'
 
             - if event.closes_at?
               %p.pull-right
@@ -55,10 +55,10 @@
                       .toolbox.pull-right
                         .clearfix
                           - unless proposal.withdrawn? || proposal.accepted? || proposal.confirmed?
-                            = link_to edit_proposal_path(slug: event.slug, uuid: proposal), class: 'btn btn-primary' do
+                            = link_to edit_event_proposal_path(event_slug: event.slug, uuid: proposal), class: 'btn btn-primary' do
                               %span.glyphicon.glyphicon-edit
                               Edit
-                    %h4= link_to proposal.title, proposal_path(slug: proposal.event.slug, uuid: proposal)
+                    %h4= link_to proposal.title, event_proposal_path(event_slug: proposal.event.slug, uuid: proposal)
                     = proposal.public_state(small: true)
                     %p
                       %i= truncate(proposal.abstract, length: 80, escape: false)
@@ -90,7 +90,7 @@
             %h5 You don't have any invitations.
           - invitations.each do |invitation|
             %li.invitation
-              %h4.inline-block= link_to invitation.proposal.title, proposal_path(slug: invitation.proposal.event.slug, uuid: invitation.proposal)
+              %h4.inline-block= link_to invitation.proposal.title, event_proposal_path(event_slug: invitation.proposal.event.slug, uuid: invitation.proposal)
               - if invitation.pending?
                 .pull-right.invite-btns
                   = invitation.refuse_button(small: true)

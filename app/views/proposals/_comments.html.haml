@@ -1,6 +1,5 @@
-- if comments.empty?
-  None
-
+%p.count
+  = pluralize(comments.count, 'comment')
 - comments.order(:created_at).each do |comment|
   .comment.markdown{ class: choose_class_for(comment) }
     =markdown(comment.body)

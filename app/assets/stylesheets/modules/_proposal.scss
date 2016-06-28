@@ -14,6 +14,7 @@
 }
 .speaker {
   margin-top: 2em;
+  border-bottom: 1px solid $gray-lighter;
 }
 .speaker img, .speaker-image {
   margin: 0 0.5em 0.8em 0;
@@ -31,6 +32,12 @@
       font-size: 75%;
       display: block;
     }
+  }
+
+  p.count {
+    font-style: italic;
+    font-weight: bold;
+    margin-bottom: 1.5em;
   }
 
   ul.invitation {
@@ -115,4 +122,15 @@ div.col-md-4 {
     h3 {
       display: inline-block;
     }
+}
+
+.new-speaker-invite {
+  margin-top: 20px;
+}
+
+.speaker-invite-form {
+  display: none;
+  form {
+    margin-top: 0px;
+  }
 }

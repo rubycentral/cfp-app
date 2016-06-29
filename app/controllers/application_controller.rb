@@ -51,7 +51,11 @@ class ApplicationController < ActionController::Base
   end
 
   def event_params
-    params.require(:event).permit(:name, :contact_email, :slug, :url, :valid_proposal_tags, :valid_review_tags, :custom_fields_string, :state, :guidelines, :closes_at, :speaker_notification_emails, :accept, :reject, :waitlist, :opens_at, :start_date, :end_date)
+    params.require(:event).permit(
+        :name, :contact_email, :slug, :url, :valid_proposal_tags,
+        :valid_review_tags, :custom_fields_string, :state, :guidelines,
+        :closes_at, :speaker_notification_emails, :accept, :reject,
+        :waitlist, :opens_at, :start_date, :end_date)
   end
 
   def set_event

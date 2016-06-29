@@ -13,9 +13,9 @@
         .col-md-7
           %h1.inline-block
             - if event.url?
-              = link_to event.name, event.url, class: 'event-title'
+              = link_to event.name, "http://#{event.url}", target: 'blank', class: 'event-title'
             - else
-              = link_to event.name, event_path(event.slug), class: 'event-title'
+              = event.name
 
           %span= link_to 'View Guidelines', event_path(event.slug), class: 'guidelines-link'
 

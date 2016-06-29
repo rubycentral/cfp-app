@@ -71,10 +71,6 @@ module ApplicationHelper
             id: 'copy-filtered-speaker-emails'
   end
 
-  def on_organizer_page?
-    /\/organizer\// =~ request.path
-  end
-
   def modal(identifier, title = '')
     body = capture { yield }
     render 'shared/modal', identifier: identifier, body: body, title: title

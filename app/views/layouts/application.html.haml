@@ -22,12 +22,6 @@
   %body{id: body_id}
     = render partial: "layouts/navbar"
 
-  - if on_organizer_page?
-    .alert-viewer-mode
-      .container-fluid
-        Viewing as:
-        %strong Organizer
-
   #flash= show_flash
 
   .main

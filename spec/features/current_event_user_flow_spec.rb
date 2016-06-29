@@ -19,37 +19,103 @@ feature "A user sees correct information for the current event and their role" d
     event_2 = create(:event, state: "closed")
 
     signin(normal_user.email, normal_user.password)
+    expect(current_path).to eq(event_path(event_1.slug))
 
     within ".navbar" do
       expect(page).to have_link(event_1.name)
+      expect(page).to_not have_link("My Proposals")
       expect(page).to have_link("", href: "/notifications")
       expect(page).to have_link(normal_user.name)
     end
 
-    expect(current_path).to eq(event_path(event_1.slug))
-
-    expect(page).to have_link(event_1.name)
-    expect(page).to_not have_link(event_2.name)
-
-    find("h1").click
-    expect(current_path).to eq(event_path(event_1.slug))
-    within ".navbar" do
-      expect(page).to have_content(event_1.name)
-      expect(page).to have_link("", href: "/notifications")
-      expect(page).to have_content(normal_user.name)
-      expect(page).to_not have_content("My Proposals")
+    within ".page-header" do
+      expect(page).to have_link(event_1.name)
+      expect(page).to_not have_link(event_2.name)
     end
 
     proposal = create(:proposal, :with_speaker)
     normal_user.proposals << proposal
     visit root_path
-    expect(page).to have_content("My Proposals")
+
+    within ".navbar" do
+      expect(page).to have_link("My Proposals")
+    end
+
+    visit proposals_path
+    within ".navbar" do
+      expect(page).to have_link(event_1.name)
+    end
+
+    visit notifications_path
+    within ".navbar" do
+      expect(page).to have_link(event_1.name)
+    end
+
+    visit profile_path
+    within ".navbar" do
+      expect(page).to have_link(event_1.name)
+    end
+  end
+
+  scenario "User flow for a speaker when there are two live events" do
+    event_1 = create(:event, state: "open")
+    event_2 = create(:event, state: "open")
+
+    signin(normal_user.email, normal_user.password)
+    expect(current_path).to eq(events_path)
+
+    within ".navbar" do
+      expect(page).to have_link("CFPApp")
+      expect(page).to_not have_link("My Proposals")
+      expect(page).to have_link("", href: "/notifications")
+      expect(page).to have_link(normal_user.name)
+    end
+
+
+    expect(page).to have_link(event_1.name)
+    expect(page).to have_link(event_2.name)
+
+    click_on(event_1.name)
+
+    within ".navbar" do
+      expect(page).to have_link(event_1.name)
+      expect(page).to_not have_link(event_2.name)
+      expect(page).to_not have_link("CFPApp")
+    end
+
+    visit root_path
+    visit proposals_path
+
+    within ".navbar" do
+      expect(page).to have_link(event_1.name)
+    end
+
+    visit root_path
+    click_on(event_2.name)
+
+    within ".navbar" do
+      expect(page).to have_link(event_2.name)
+    end
+
+    visit notifications_path
+
+    within ".navbar" do
+      expect(page).to have_link(event_2.name)
+    end
+
+    proposal = create(:proposal, :with_speaker)
+    normal_user.proposals << proposal
+
+    visit proposals_path
+
+    within ".navbar" do
+      expect(page).to have_link(event_2.name)
+    end
   end
 
   scenario "User flow for a speaker when there is no live event" do
     event_1 = create(:event, state: "closed")
     event_2 = create(:event, state: "closed")
-    proposal = create(:proposal, :with_speaker)
 
     signin(normal_user.email, normal_user.password)
 
@@ -71,14 +137,22 @@ feature "A user sees correct information for the current event and their role" d
       expect(page).to have_content(event_2.name)
       expect(page).to have_link("", href: "/notifications")
       expect(page).to have_content(normal_user.name)
-      expect(page).to_not have_content("My Proposals")
     end
 
-    normal_user.proposals << proposal
     visit root_path
+    click_on event_1.name
+    expect(current_path).to eq(event_path(event_1.slug))
+
+    within ".navbar" do
+      expect(page).to have_content(event_1.name)
+      expect(page).to have_link("", href: "/notifications")
+      expect(page).to have_content(normal_user.name)
+    end
+
   end
 
   scenario "User flow and navbar layout for a reviewer" do
+    pending
     event_1 = create(:event, state: "open")
     event_2 = create(:event, state: "open")
     proposal = create(:proposal, :with_reviewer_public_comment)
@@ -166,6 +240,7 @@ feature "A user sees correct information for the current event and their role" d
   end
 
   scenario "User flow for an admin" do
+    pending
     event_1 = create(:event, state: "open")
     event_2 = create(:event, state: "closed")
     proposal = create(:proposal, :with_organizer_public_comment)

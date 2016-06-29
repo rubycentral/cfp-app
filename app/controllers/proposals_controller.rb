@@ -59,6 +59,8 @@ class ProposalsController < ApplicationController
   end
 
   def show
+    session[:event_id] = event.id
+
     render locals: {
       invitations: @proposal.invitations.not_accepted.decorate
     }

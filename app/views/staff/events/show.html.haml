@@ -1,14 +1,7 @@
 .event
   .row
     .col-md-12
-      .page-header.clearfix
-        .btn-nav.pull-right
-          = link_to "Session Types", event_staff_session_types_path(event), class: "btn btn-default"
-          = link_to "Tracks", event_staff_tracks_path(event), class: "btn btn-default"
-          = link_to "Proposals", event_staff_proposals_path(event), class: "btn btn-default"
-          = link_to "Program", event_staff_program_path(event), class: "btn btn-default"
-          = link_to "Schedule", event_staff_sessions_path(event), class: "btn btn-default"
-          = link_to "Edit Event", event_staff_edit_path(event), class: "btn btn-primary"
+      .page-header
         %h1= event
   .row
     .col-sm-4

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "Organizers can manage event_teammates" do
+feature "Staff Organizers can manage event_teammates" do
   let(:event) { create(:event) }
   let(:organizer) { create(:organizer, event: event) }
 
@@ -13,7 +13,7 @@ feature "Organizers can manage event_teammates" do
       create(:user, email: 'viktorkrum@durmstrang.edu')
       visit event_staff_path(event)
 
-      click_link 'Add/Invite New Event Teammate'
+      click_link 'Add/Invite Staff'
       fill_in 'email', with: 'h'
 
       expect(page).to have_text('harrypotter@hogwarts.edu')

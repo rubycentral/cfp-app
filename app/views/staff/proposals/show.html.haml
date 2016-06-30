@@ -64,6 +64,7 @@
         %h3 Slides URL
         = proposal.proposal_data[:slides_url]
 
-      .internal-comments
-        %h3 Internal Comments
-        = render partial: 'proposals/comments', locals: { proposal: proposal, comments: proposal.internal_comments }
+      - unless proposal.has_speaker?(current_user)
+        .internal-comments
+          %h3 Internal Comments
+          = render partial: 'proposals/comments', locals: { proposal: proposal, comments: proposal.internal_comments }

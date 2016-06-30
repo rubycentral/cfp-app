@@ -10,4 +10,4 @@
       = f.input :valid_review_tags, placeholder: 'Separate multiple tags with commas'
       //= f.text_field :valid_review_tags, class: 'form-control'
       %p.help-block This is a comma separated list of tags allowed for use during proposal reviews. These limits apply to tags used internally by reviewers and not to publicly displayed tags.
-      %button.pull-right.btn.btn-success{:type => "submit"} Save Tags
+      =submit_tag("Save Tags", class: "pull-right btn btn-success", type: "submit", disabled: !current_user.can_edit?)

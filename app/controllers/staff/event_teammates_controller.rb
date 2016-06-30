@@ -1,4 +1,5 @@
 class Staff::EventTeammatesController < Staff::ApplicationController
+  skip_before_filter :require_proposal, only: [:update], if: proc {|c| current_user && current_user.reviewer? }
   respond_to :html, :json
 
   def create

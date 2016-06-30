@@ -1,5 +1,6 @@
 class Staff::ProposalsController < Staff::ApplicationController
   before_filter :require_proposal, except: [:index, :new, :create, :edit_all]
+  before_filter :prevent_self, only: [:show, :update]
 
   decorates_assigned :proposal, with: Staff::ProposalDecorator
 
@@ -35,6 +36,7 @@ class Staff::ProposalsController < Staff::ApplicationController
   def show
     set_title(@proposal.title)
     other_proposals = []
+
     @proposal.speakers.each do |speaker|
       speaker.proposals.each do |p|
         if p.id != @proposal.id && p.event_id == @event.id
@@ -43,7 +45,7 @@ class Staff::ProposalsController < Staff::ApplicationController
       end
     end
 
-    current_user.notifications.mark_as_read_for_proposal(reviewer_event_proposal_url(@event, @proposal))
+    current_user.notifications.mark_as_read_for_proposal(event_staff_proposal_path(@event, @proposal))
     render locals: {
              speakers: @proposal.speakers.decorate,
              other_proposals: Staff::ProposalsDecorator.decorate(other_proposals),
@@ -53,7 +55,6 @@ class Staff::ProposalsController < Staff::ApplicationController
 
   def edit
   end
-
 
   def update
     if @proposal.update_without_touching_updated_by_speaker_at(proposal_params)
@@ -102,11 +103,11 @@ class Staff::ProposalsController < Staff::ApplicationController
   def send_state_mail(state)
     case state
       when Proposal::State::ACCEPTED
-        Organizer::ProposalMailer.accept_email(@event, @proposal).deliver_now
+        Staff::ProposalMailer.accept_email(@event, @proposal).deliver_now
       when Proposal::State::REJECTED
-        Organizer::ProposalMailer.reject_email(@event, @proposal).deliver_now
+        Staff::ProposalMailer.reject_email(@event, @proposal).deliver_now
       when Proposal::State::WAITLISTED
-        Organizer::ProposalMailer.waitlist_email(@event, @proposal).deliver_now
+        Staff::ProposalMailer.waitlist_email(@event, @proposal).deliver_now
     end
   end
 end

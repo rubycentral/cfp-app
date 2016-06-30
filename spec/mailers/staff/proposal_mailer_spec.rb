@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Organizer::ProposalMailer do
+describe Staff::ProposalMailer do
   let(:event) { create(:event) }
   let(:speaker) { create(:speaker) }
   let(:proposal) { create(:proposal, event: event, speakers: [speaker]) }
@@ -10,7 +10,7 @@ describe Organizer::ProposalMailer do
   end
 
   describe "accept_email" do
-    let(:mail) { Organizer::ProposalMailer.accept_email(event, proposal) }
+    let(:mail) { Staff::ProposalMailer.accept_email(event, proposal) }
 
     it "emails to all speakers including contact_mail" do
       proposal.speakers = build_list(:speaker, 3)
@@ -39,7 +39,7 @@ describe Organizer::ProposalMailer do
   end
 
   describe "reject_email" do
-    let(:mail) { Organizer::ProposalMailer.reject_email(event, proposal) }
+    let(:mail) { Staff::ProposalMailer.reject_email(event, proposal) }
 
     it "bccs to all speakers including contact_mail" do
       proposal.speakers = build_list(:speaker, 3)
@@ -63,7 +63,7 @@ describe Organizer::ProposalMailer do
   end
 
   describe "waitlist_email" do
-    let(:mail) { Organizer::ProposalMailer.waitlist_email(event, proposal) }
+    let(:mail) { Staff::ProposalMailer.waitlist_email(event, proposal) }
 
     it "bccs to all speakers including contact_mail" do
       proposal.speakers = build_list(:speaker, 3)

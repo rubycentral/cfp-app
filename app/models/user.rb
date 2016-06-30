@@ -93,6 +93,11 @@ class User < ActiveRecord::Base
   def role_names
     self.event_teammates.collect {|p| p.role}.uniq.join(", ")
   end
+
+  def can_edit?
+    organizer? || admin?
+  end
+
 end
 
 # == Schema Information

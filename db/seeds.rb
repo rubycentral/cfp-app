@@ -26,7 +26,13 @@ seed_event = Event.create(name: "SeedConf", slug: "seedconf", contact_email: "in
 
 
 # session types
+short_session_type = seed_event.public_session_types.create(name: 'Short Talk', duration: 40, description: 'Kinda short! Talk fast. Talk hard.')
+long_session_type = seed_event.public_session_types.create(name: 'Long Talk', duration: 120, description: 'Longer talk allows a speaker put more space in between words, hand motions.')
+internal_session_type = seed_event.session_types.create(name: 'Beenote', public: false, duration: 180, description: 'Involves live bees.')
+
 # tracks
+best_track = seed_event.tracks.create(name: 'Best Track', description: 'Better than all the other tracks.', guidelines: 'Watch yourself. Watch everybody else. All of us are winners in the best track.')
+
 # rooms
 
 

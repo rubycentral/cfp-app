@@ -14,6 +14,8 @@ class Event < ActiveRecord::Base
   has_many :ratings, through: :proposals
   has_many :event_teammate_invitations
 
+  has_many :public_session_types, ->{ where(public: true) }, class_name: SessionType
+
   accepts_nested_attributes_for :proposals
 
 
@@ -36,6 +38,10 @@ class Event < ActiveRecord::Base
                closed: 'closed' }
   def to_param
     slug
+  end
+  with_options on: :update, if: :open? do
+    validates :public_session_types, presence: { message: 'A least one public session type must be defined before event can be opened.' }
+    validates :guidelines, presence: { message: 'Guidelines must be defined before event can be opened..' }
   end
 
   def valid_proposal_tags
@@ -134,11 +140,11 @@ class Event < ActiveRecord::Base
   end
 
   def cfp_opens
-    opens_at && opens_at.to_s(:long_with_zone)
+    opens_at.try(:to_s, :long_with_zone)
   end
 
   def cfp_closes
-    closes_at && closes_at.to_s(:long_with_zone)
+    closes_at.try(:to_s, :long_with_zone)
   end
 
   def conference_date(conference_day)
@@ -147,6 +153,7 @@ class Event < ActiveRecord::Base
 
 
   private
+
   def update_closes_at_if_manually_closed
     if changes.key?(:state) && changes[:state] == [STATUSES[:open], STATUSES[:closed]]
       self.closes_at = DateTime.now

@@ -1,4 +1,4 @@
-class Organizer::ProposalMailerTemplate
+class Staff::ProposalMailerTemplate
   include Rails.application.routes.url_helpers
 
   def initialize(template, event, proposal, tag_whitelist = [])

@@ -118,51 +118,51 @@
                 %td.text-primary
                   %strong Event Url:
                 - if event.url.present?
-                  %td.set Set
+                  %td.set= link_to "Set", event_staff_edit_path
                 - else
-                  %td.missing Missing
+                  %td.missing= link_to "Missing", event_staff_edit_path
               %tr
                 %td.text-primary
                   %strong Event Dates:
                 - if event.start_date.present? && event.end_date.present?
-                  %td.set Set
+                  %td.set= link_to "Set", event_staff_edit_path
                 - else
-                  %td.missing Missing
+                  %td.missing= link_to "Missing", event_staff_edit_path
               %tr
                 %td.text-primary
                   %strong Contact Email:
                 - if event.contact_email.present?
-                  %td.set Set
+                  %td.set= link_to "Set", event_staff_edit_path
                 - else
-                  %td.missing Missing
+                  %td.missing= link_to "Missing", event_staff_edit_path
               %tr
                 %td.text-primary
                   %strong CFP Closes Date:
                 - if event.closes_at.present?
-                  %td.set Set
+                  %td.set= link_to "Set", event_staff_edit_path
                 - else
-                  %td.missing Missing
+                  %td.missing= link_to "Missing", event_staff_edit_path
               %tr
                 %td.text-primary
                   %strong Session Types:
                 - if event.session_types.present?
-                  %td.set= event.session_types.count
+                  %td.set= link_to event.session_types.count, '#'
                 - else
-                  %td.missing None
+                  %td.missing= link_to "None", '#'
               %tr
                 %td.text-primary
                   %strong Tracks:
                 - if event.tracks.present?
-                  %td.set= event.tracks.count
+                  %td.set= link_to event.tracks.count, '#'
                 - else
-                  %td None (optional)
+                  %td.optional= link_to "None (optional)", '#'
               %tr
                 %td.text-primary
                   %strong Guidelines:
                 - if event.guidelines.present?
-                  %td.set Set
+                  %td.set= link_to "Set", event_staff_guidelines_notifications_path
                 - else
-                  %td.missing Missing
+                  %td.missing= link_to "Missing", event_staff_guidelines_notifications_path
 
     -#
     -#   .widget

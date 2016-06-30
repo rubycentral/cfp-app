@@ -2,7 +2,7 @@
 .row
   .col-md-6
     - if event_teammates.empty?
-      %h2 No event_teammates in this event
+      %h2 No event teammates in this event
     - event_teammates.group_by(&:role).each_pair do |role, role_event_teammates|
       %h2= role.capitalize.pluralize
       - role_event_teammates.each do |event_teammate|
@@ -14,11 +14,11 @@
               %span.glyphicon.glyphicon-trash
               Delete
   %fieldset.col-md-6
-    %h2 Add event_teammate
+    %h2 Add event teammate
     = form_for event_teammate, url: admin_event_event_teammates_path, html: {role: 'form'} do |f|
       .form-group
         = label_tag :email
-        = text_field_tag :email, '', class: 'form-control', placeholder: "EventTeammate's email"
+        = text_field_tag :email, '', class: 'form-control', placeholder: "Event Teammate's email"
       .form-group
         = f.label :role
         = f.select :role, User::STAFF_ROLES, class: 'form-control'

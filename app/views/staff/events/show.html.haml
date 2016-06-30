@@ -1,14 +1,28 @@
 .event
   .row
     .col-md-12
-      .page-header
-        %h1= event
+      .page-header.info-bar
+        %h4.pull-right
+          %strong CFP Status:
+          = event.state
+          %br
+          - if event.closes_at?
+            Closes at
+            %strong= event.closes_at(:long_with_zone)
+        %h1
+          - if event.url?
+            = link_to event.name, "http://#{event.url}", target: 'blank', class: 'event-title'
+          - else
+            = event.name
+        %h4
+          - if event.start_date? && event.end_date?
+            = event.date_range
   .row
     .col-sm-4
       .widget.widget-table
         .widget-header
           %i.fa.fa-calendar
-          %h3 Event Details
+          %h3 Details
         .widget-content
           %table.table.table-striped.table-bordered
             %tbody
@@ -19,30 +33,8 @@
                   %a{ href: event.url }#{event.url}
               %tr
                 %td.text-primary
-                  %strong Slug:
-                %td #{event.slug}
-              %tr
-                %td.text-primary
                   %strong Email:
                 %td #{event.contact_email}
-              %tr
-                %td.text-primary
-                  %strong Guidelines:
-                %td
-                  -if event.guidelines.present?
-                    = event.guidelines.truncate(150, separator: /\s/)
-                  %p= link_to "View Public Guidelines", event_path(slug: event.slug), class: "btn btn-success"
-
-                  - if current_user.can_edit?
-                    %p= link_to "<i class='fa fa-pencil'></i> Edit Guidelines".html_safe, event_staff_guidelines_notifications_path, class: "btn btn-primary"
-
-      .widget.widget-table
-        .widget-header
-          %i.fa.fa-calendar
-          %h3 CFP Details
-        .widget-content
-          %table.table.table-striped.table-bordered
-            %tbody
               %tr
                 %td.text-primary
                   %strong CFP Opens:
@@ -51,137 +43,186 @@
                 %td.text-primary
                   %strong CFP Closes:
                 %td= event.cfp_closes
-
               %tr
                 %td.text-primary
-                  %strong Days Remaining:
-                %td #{event.cfp_days_remaining}
+                  %strong Event Staff:
+                %td= event_teammates.count
+              -# %tr
+                -# %td.text-primary
+                -#   %strong Guidelines:
+                -# %td
+                -#   -if event.guidelines.present?
+                -#     = event.guidelines.truncate(150, separator: /\s/)
+                -#   = link_to "Public guidelines", event_path(slug: event.slug)
+                -#   %p= link_to "<i class='fa fa-pencil'></i> Edit Guidelines".html_safe, event_staff_guidelines_notifications_path, class: "btn btn-primary"
 
-              %tr
-                %td.text-primary
-                  %strong Event Start:
-                %td #{event.start_date.to_s(:month_day_year) unless event.start_date.blank?}
-
-              %tr
-                %td.text-primary
-                  %strong Event End:
-                %td #{event.end_date.to_s(:month_day_year) unless event.end_date.blank?}
+      -# .widget.widget-table
+      -#   .widget-header
+      -#     %i.fa.fa-calendar
+      -#     %h3 CFP Details
+      -#   .widget-content
+      -#     %table.table.table-striped.table-bordered
+      -#       %tbody
+      -#         %tr
+      -#           %td.text-primary
+      -#             %strong Days Remaining:
+      -#           %td #{event.cfp_days_remaining}
+      -#         %tr
+      -#           %td.text-primary
+      -#             %strong Event Start:
+      -#           %td #{event.start_date.to_s(:month_day_year) unless event.start_date.blank?}
+      -#         %tr
+      -#           %td.text-primary
+      -#             %strong Event End:
+      -#           %td #{event.end_date.to_s(:month_day_year) unless event.end_date.blank?}
 
 
     .col-sm-4
       .widget
         .widget-header
           %i.fa.fa-list-alt
-          %h3 Proposal Stats
-        .widget-content
-          .row
-            .col-sm-12
-              %h4
-                %strong.text-primary Total:
-                %span.label.label-info #{event.proposals.count}
-          .row
-            .col-sm-12
-              %h4
-                %strong.text-primary Reviewed:
-                %span.label.label-info #{event.proposals.rated.count} (#{event.reviewed_percent})
-          - if current_user.can_edit?
-            .row
-              .col-sm-12
-                %h4
-                  %strong.text-primary Accepted:
-                  %span.label.label-info #{event.proposals.accepted.count}
-            .row
-              .col-sm-12
-                %h4
-                  %strong.text-primary Confirmed:
-                  %span.label.label-info #{event.proposals.accepted.confirmed.count} (#{event.confirmed_percent})
-            .row
-              .col-sm-12
-                %h4
-                  %strong.text-primary Scheduled:
-                  %span.label.label-info #{event.proposals.scheduled.count} (#{event.scheduled_percent})
-            .row
-              .col-sm-12
-                %h4
-                  %strong.text-primary Waitlisted:
-                  %span.label.label-info #{event.proposals.waitlisted.count}
-            .row
-              .col-sm-12
-                %h4
-                  %strong.text-primary Confirmed:
-                  %span.label.label-info #{event.proposals.waitlisted.confirmed.count} (#{event.waitlisted_percent})
-
-      .widget
-        .widget-header
-          %i.fa.fa-tags
-          %h3 Proposal Tags
-        .widget-content
-          =event.valid_proposal_tags
-
-      .widget
-        .widget-header
-          %i.fa.fa-tags
-          %h3 Review Tags
-          - if current_user.can_edit?
-            = link_to "<i class='fa fa-pencil'></i> Edit".html_safe, event_staff_edit_path, class: "btn btn-sm btn-primary pull-right"
-        .widget-content
-          =event.valid_review_tags
-
-      .widget
-        .widget-header
-          %i.fa.fa-tags
-          %h3 Fields
-          - if current_user.can_edit?
-            = link_to "<i class='fa fa-plus'></i> Add Custom Field".html_safe, event_staff_custom_fields_path(event), class: "btn btn-primary btn-sm pull-right"
-        .widget-content
-          %ul.list-unstyled
-            %li
-              %h5.text-primary
-                %strong Standard
-            %li
-              %p=event.fields
-          %hr/
-          %ul.list-unstyled
-            %li
-              %h5.text-primary
-                %strong Custom Fields
-            %li
-              %p=event.custom_fields.join(", ")
-
-    .col-sm-4
-      .widget
-        .widget-header
-          %i.fa.fa-tags
-          %h3 Tracks
-        .widget-content
-          -if event.track_count.present?
-            - event.track_count.sort_by{|k,v| v}.reverse.each_slice(8).to_a.each do |row|
-              %ul#columns.list-inline
-                -row.each do |name, count|
-                  %li
-                    .label.label-success
-                      = name
-                      = count
-          -else
-            %p No Tracks
-
-      .widget
-        .widget-header
-          %i.fa.fa-tags
-          %h3 Speaker Notifications
-          - if current_user.can_edit?
-            = link_to "<i class='fa fa-pencil'></i> Edit".html_safe, event_staff_speaker_email_notifications_path, class: "btn btn-sm btn-primary pull-right"
+          %h3 CFP Statistics
         .widget-content
           %ul.list-group
             %li.list-group-item
-              %strong.text-primary Accept:
-              %p=event.speaker_notification_emails['accept'].truncate(75, separator: /\s/)
+              %strong.text-primary Total:
+              %span.label.label-info #{event.proposals.count}
             %li.list-group-item
-              %strong.text-primary Reject:
-              %p=event.speaker_notification_emails['reject'].truncate(75, separator: /\s/)
+              %strong.text-primary Total Proposals Reviewed:
+              %span.label.label-info #{event.proposals.rated.count} (#{event.reviewed_percent})
             %li.list-group-item
-              %strong.text-primary Waitlist:
-              %p=event.speaker_notification_emails['waitlist'].truncate(75, separator: /\s/)
+              %strong.text-primary Reviewed Proposals Accepted:
+              %span.label.label-info #{event.proposals.accepted.count}
+            -# %li.list-group-item
+            -#   %strong.text-primary Confirmed:
+            -#   %span.label.label-info #{event.proposals.accepted.confirmed.count} (#{event.confirmed_percent})
+            %li.list-group-item
+              %strong.text-primary Accepted Sessions Scheduled:
+              %span.label.label-info #{event.proposals.scheduled.count} (#{event.scheduled_percent})
+            %li.list-group-item
+              %strong.text-primary Waitlisted Sessions:
+              %span.label.label-info #{event.proposals.waitlisted.count}
+            -# %li.list-group-item
+            -#   %strong.text-primary Confirmed:
+            -#   %span.label.label-info #{event.proposals.waitlisted.confirmed.count} (#{event.waitlisted_percent})
 
-  %hr/
-  = render partial: 'event_teammates', locals: { event: event, event_teammates: event_teammates, rating_counts: rating_counts }
+    .col-sm-4
+      .widget.widget-table.checklist
+        .widget-header
+          %i.fa.fa-check-square-o
+          %h3 Checklist
+        .widget-content
+          %table.table.table-striped.table-bordered
+            %tbody
+              %tr
+                %td.text-primary
+                  %strong Event Url:
+                - if event.url.present?
+                  %td.set Set
+                - else
+                  %td.missing Missing
+              %tr
+                %td.text-primary
+                  %strong Event Dates:
+                - if event.start_date.present? && event.end_date.present?
+                  %td.set Set
+                - else
+                  %td.missing Missing
+              %tr
+                %td.text-primary
+                  %strong Contact Email:
+                - if event.contact_email.present?
+                  %td.set Set
+                - else
+                  %td.missing Missing
+              %tr
+                %td.text-primary
+                  %strong CFP Closes Date:
+                - if event.closes_at.present?
+                  %td.set Set
+                - else
+                  %td.missing Missing
+              %tr
+                %td.text-primary
+                  %strong Session Types:
+                - if event.session_types.present?
+                  %td.set= event.session_types.count
+                - else
+                  %td.missing None
+              %tr
+                %td.text-primary
+                  %strong Tracks:
+                - if event.tracks.present?
+                  %td.set= event.tracks.count
+                - else
+                  %td None (optional)
+              %tr
+                %td.text-primary
+                  %strong Guidelines:
+                - if event.guidelines.present?
+                  %td.set Set
+                - else
+                  %td.missing Missing
+
+    -#
+    -#   .widget
+    -#     .widget-header
+    -#       %i.fa.fa-tags
+    -#       %h3 Proposal Tags
+    -#     .widget-content
+    -#       =event.valid_proposal_tags
+    -#
+    -#   .widget
+    -#     .widget-header
+    -#       %i.fa.fa-tags
+    -#       %h3 Review Tags
+    -#       = link_to "<i class='fa fa-pencil'></i> Edit".html_safe, event_staff_edit_path, class: "btn btn-sm btn-primary pull-right"
+    -#     .widget-content
+    -#       =event.valid_review_tags
+    -#
+    -#   .widget
+    -#     .widget-header
+    -#       %i.fa.fa-tags
+    -#       %h3 Fields
+    -#       = link_to "<i class='fa fa-plus'></i> Add Custom Field".html_safe, event_staff_custom_fields_path(event), class: "btn btn-primary btn-sm pull-right"
+    -#     .widget-content
+    -#       %p=event.fields
+    -#       %h4 Custom Fields
+    -#       %p=event.custom_fields.join(", ")
+    -#
+    -# .col-sm-4
+    -#   .widget
+    -#     .widget-header
+    -#       %i.fa.fa-tags
+    -#       %h3 Tracks
+    -#     .widget-content
+    -#       -if event.track_count.present?
+    -#         - event.track_count.sort_by{|k,v| v}.reverse.each_slice(8).to_a.each do |row|
+    -#           %ul#columns.list-inline
+    -#             -row.each do |name, count|
+    -#               %li
+    -#                 .label.label-success
+    -#                   = name
+    -#                   = count
+    -#       -else
+    -#         %p No Tracks
+    -#
+    -#   .widget
+    -#     .widget-header
+    -#       %i.fa.fa-tags
+    -#       %h3 Speaker Notifications
+    -#       = link_to "<i class='fa fa-pencil'></i> Edit".html_safe, event_staff_speaker_email_notifications_path, class: "btn btn-sm btn-primary pull-right"
+    -#     .widget-content
+    -#       %ul.list-group
+    -#         %li.list-group-item
+    -#           %strong.text-primary Accept:
+    -#           %p=event.speaker_notification_emails['accept'].truncate(75, separator: /\s/)
+    -#         %li.list-group-item
+    -#           %strong.text-primary Reject:
+    -#           %p=event.speaker_notification_emails['reject'].truncate(75, separator: /\s/)
+    -#         %li.list-group-item
+    -#           %strong.text-primary Waitlist:
+    -#           %p=event.speaker_notification_emails['waitlist'].truncate(75, separator: /\s/)
+
+  -# %hr/
+  -# = render partial: 'event_teammates', locals: { event: event, event_teammates: event_teammates, rating_counts: rating_counts }

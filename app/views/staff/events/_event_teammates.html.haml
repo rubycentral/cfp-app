@@ -7,7 +7,7 @@
           = link_to 'Add/Invite Staff', '#', class: 'btn btn-primary', data: { toggle: 'modal', target: "#new-event_teammate-event-#{event.id}" }
           = link_to 'Manage Staff Invites',
             event_staff_event_teammate_invitations_path(event), class: 'btn btn-primary'
-      %h3 EventTeammates
+      %h3 Event Teammates
 .row
   .col-md-12
     %table.event_teammates.table.table-striped
@@ -50,7 +50,7 @@
               data: { path: emails_event_staff_event_teammates_path(event) }
           .form-group
             = f.label :role
-            = f.select :role, ['reviewer', 'organizer'], {}, {class: 'form-control'}
+            = f.select :role, User::STAFF_ROLES, {}, {class: 'form-control'}
         .modal-footer
           %button.btn.btn-default{'data-dismiss' => "modal"} Cancel
           %button.pull-right.btn.btn-success{:type => "submit"} Save

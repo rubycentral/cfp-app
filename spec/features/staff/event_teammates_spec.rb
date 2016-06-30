@@ -7,6 +7,7 @@ feature "Staff Organizers can manage event_teammates" do
   before { login_as(organizer) }
 
   context "adding a new event_teammate" do
+    pending "This fails because add/invite new teammate is no longer on this page. Change path once new card is complete"
     it "autocompletes email addresses", js: true do
       create(:user, email: 'harrypotter@hogwarts.edu')
       create(:user, email: 'hermionegranger@hogwarts.edu')

@@ -57,6 +57,16 @@ class EventDecorator < ApplicationDecorator
     twitter_button("Check out the CFP for #{object}!")
   end
 
+  def date_range
+    if (object.start_date.month == object.end_date.month) && (event.start_date.day != event.end_date.day)
+      object.start_date.strftime("%b %d") + object.end_date.strftime("\-%d, %Y")
+    elsif (object.start_date.month == object.end_date.month) && (event.start_date.day == event.end_date.day)
+      object.start_date.strftime("%b %d, %Y")
+    else
+      object.start_date.strftime("%b %d") + object.end_date.strftime("\-%b %d, %Y")
+    end
+  end
+
   def confirmed_percent
     if proposals.accepted.confirmed.count > 0
       "#{((object.proposals.accepted.confirmed.count.to_f/object.proposals.accepted.count.to_f)*100).round(1)}%"

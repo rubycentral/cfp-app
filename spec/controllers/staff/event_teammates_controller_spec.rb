@@ -16,8 +16,10 @@ describe Staff::EventTeammatesController, type: :controller do
       before { allow(controller).to receive(:current_user).and_return(organizer_user) }
 
       it "creates a new event_teammate" do
-        post :create, event_teammate: { role: 'reviewer' }, email: 'foo@bar.com', event_slug: event.slug
-        expect(event.reload.event_teammates.count).to eql(2)
+        expect {
+          post :create, event_teammate: { role: 'reviewer' },
+            email: 'foo@bar.com', event_slug: event.slug
+        }.to change{EventTeammate.count}.from(1).to(2)
       end
 
       it "can retrieve autocompleted emails" do
@@ -37,11 +39,11 @@ describe Staff::EventTeammatesController, type: :controller do
     context "A non-organizer" do
       before { allow(controller).to receive(:current_user).and_return(other_user) }
 
-      it "returns 404" do
+      it "does not change EventTeammate Count" do
         expect {
           post :create, event_teammate: { role: 'reviewer' },
             email: 'something@else.com', event_slug: event.slug
-        }.to raise_error(ActiveRecord::RecordNotFound)
+        }.to_not change{EventTeammate.count}
       end
     end
 
@@ -59,7 +61,7 @@ describe Staff::EventTeammatesController, type: :controller do
         expect {
           post :create, event_teammate: { role: 'organizer' },
             email: sneaky_organizer.email, event_slug: event.slug
-        }.to raise_error(ActiveRecord::RecordNotFound)
+        }.to_not change{EventTeammate.count}
       end
     end
   end

@@ -10,9 +10,17 @@ describe Staff::ProposalsController, type: :controller do
           )
   end
   let(:proposal) { create(:proposal, event: event) }
+  let(:reviewer) { create(:user, :reviewer) }
 
   before do
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+    sign_in(user)
+  end
+
+  describe '#index' do
+    it "should respond" do
+      get :index, event_slug: proposal.event.slug
+      expect(response.status).to eq(200)
+    end
   end
 
   describe "GET 'show'" do
@@ -53,9 +61,32 @@ describe Staff::ProposalsController, type: :controller do
       state_to_email.each do |state, mail_action|
         proposal = create(:proposal, state: state)
         mail = double(:mail, deliver_now: nil)
-        expect(Organizer::ProposalMailer).to receive(mail_action).and_return(mail)
+        expect(Staff::ProposalMailer).to receive(mail_action).and_return(mail)
         post :finalize, event_slug: event, proposal_uuid: proposal.uuid
       end
     end
   end
+
+  context "reviewer has a submitted proposal" do
+    let!(:speaker) { create(:speaker, user: reviewer) }
+    let!(:speaker_proposal) { create(:proposal, speakers: [ speaker ], event: event) }
+
+    before :each do
+      sign_out(user)
+      sign_in(reviewer)
+    end
+
+
+    it "prevents reviewers from viewing their own proposals" do
+      get :show, event_slug: event.slug, uuid: speaker_proposal
+      expect(response).to redirect_to(event_staff_proposals_path(event_slug: event.slug))
+    end
+
+    it "prevents reviewers from updating their own proposals" do
+      get :update, event_slug: event.slug, uuid: speaker_proposal,
+        proposal: { review_tags: [ 'tag' ] }
+      expect(speaker_proposal.review_tags).to_not eq([ 'tag' ])
+    end
+  end
+
 end

@@ -1,4 +1,4 @@
-class Organizer::ProposalMailer < ApplicationMailer
+class Staff::ProposalMailer < ApplicationMailer
 
   def accept_email(event, proposal)
     @proposal = proposal.decorate

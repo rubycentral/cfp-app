@@ -101,7 +101,7 @@ Rails.application.routes.draw do
   end
 
   namespace 'admin' do
-    resources :events, except: [:show, :edit, :update] do
+    resources :events, except: [:show, :edit, :update], param: :slug do
       post :archive
       post :unarchive
     end

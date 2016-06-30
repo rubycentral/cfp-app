@@ -1,13 +1,16 @@
 class Staff::ApplicationController < ApplicationController
   before_action :require_event
   before_filter :require_staff
-  before_filter :prevent_self
 
   private
 
   def require_event
     if current_user
-      @event = current_user.reviewer_events.where(slug: params[:event_slug]).first
+      if current_user.admin?
+        @event = Event.where(slug: params[:event_slug]).first
+      else
+        @event = current_user.reviewer_events.where(slug: params[:event_slug]).first
+      end
     end
 
   end
@@ -37,12 +40,11 @@ class Staff::ApplicationController < ApplicationController
     user_signed_in? && current_user.reviewer?
   end
 
-
-  # Prevent reviewers from reviewing their own proposals. This may need to be refactored if they can't view their proposal
+  # Prevent reviewers from reviewing their own proposals.
   def prevent_self
     if current_user.proposals.include?(@proposal)
       flash[:notice] = "Can't review your own proposal!"
-      redirect_to staff_event_proposals_url
+      redirect_to event_staff_proposals_url(event_slug: @proposal.event.slug)
     end
   end
 

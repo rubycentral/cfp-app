@@ -82,7 +82,7 @@ feature "Event Dashboard" do
     it "can promote a user" do
       user = create(:user)
       visit event_staff_path(event)
-      click_link 'Add/Invite New Event Teammate'
+      click_link 'Add/Invite Staff'
 
       form = find('#new_event_teammate')
       form.fill_in :email, with: user.email

@@ -1,11 +1,12 @@
 .row
   %header
     .col-md-12
-      .btn-nav.pull-right
-        = link_to 'View speakers', event_staff_speakers_path(event), class: "btn btn-primary"
-        = link_to 'Add/Invite New Event Teammate', '#', class: 'btn btn-primary', data: { toggle: 'modal', target: "#new-event_teammate-event-#{event.id}" }
-        = link_to 'Manage EventTeammate Invitations',
-          event_staff_event_teammate_invitations_path(event), class: 'btn btn-primary'
+      - if current_user.can_edit?
+        .btn-nav.pull-right
+          = link_to 'View Speakers', event_staff_speakers_path(event), class: "btn btn-primary"
+          = link_to 'Add/Invite Staff', '#', class: 'btn btn-primary', data: { toggle: 'modal', target: "#new-event_teammate-event-#{event.id}" }
+          = link_to 'Manage Staff Invites',
+            event_staff_event_teammate_invitations_path(event), class: 'btn btn-primary'
       %h3 EventTeammates
 .row
   .col-md-12
@@ -17,7 +18,8 @@
           %th Rated Proposals
           %th Role
           %th.notifications Comment Notifications
-          %th.actions Actions
+          - if current_user.can_edit?
+            %th.actions Actions
       %tbody
         - event_teammates.each do |event_teammate|
           %tr
@@ -29,8 +31,8 @@
               = event_teammate.comment_notifications
               - if event_teammate.user == current_user
                 = render partial: 'staff/events/event_teammate_notifications', locals: {event_teammate: event_teammate}
-            %td.actions
-              - unless event_teammate.user == current_user
+            - if event_teammate.user != current_user && current_user.can_edit?
+              %td.actions
                 = render partial: 'staff/events/event_teammate_controls', locals: { event_teammate: event_teammate }
 
 %div{ id: "new-event_teammate-event-#{event.id}", class: 'modal fade' }

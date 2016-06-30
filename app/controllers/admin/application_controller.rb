@@ -15,8 +15,4 @@ class Admin::ApplicationController < ApplicationController
     user_signed_in? && current_user.admin?
   end
 
-  def require_event
-    @event = Event.find(params[:event_id] || params[:id])
-  end
-
 end

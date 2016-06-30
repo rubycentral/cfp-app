@@ -15,11 +15,11 @@
 
     %fieldset.col-md-4
       %h2 User Logged In with
-        %p
-          - if user.provider.present?
-            = user.provider.capitalize
-          - else
-            Email
+      %p
+        - if user.provider.present?
+          = user.provider.capitalize
+        - else
+          Email
 
   .row.col-md-12.form-submit
     %button.pull-right.btn.btn-success{:type => "submit"} Save

@@ -73,7 +73,6 @@ Rails.application.routes.draw do
   #TEMPORARILY ENABLED
   namespace 'reviewer' do
     resources :events, only: [:show] do
-      resources :event_teammates, only: [:update]
       resources :proposals, only: [:index, :show, :update], param: :uuid do
         resources :ratings, only: [:create, :update], defaults: {format: :js}
       end
@@ -102,7 +101,7 @@ Rails.application.routes.draw do
   end
 
   namespace 'admin' do
-    resources :events, except: [:show, :edit, :update] do
+    resources :events, except: [:show, :edit, :update], param: :slug do
       post :archive
       post :unarchive
     end

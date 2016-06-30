@@ -1,7 +1,0 @@
-var editDialog = $('#session-edit-dialog');
-
-editDialog[0].innerHTML =
-    '<%=j render partial: 'edit_dialog',
-      locals: { session: session_decorator, event: event } %>';
-
-setUpSessionDialog(editDialog);

@@ -29,13 +29,13 @@ feature "Review Proposals" do
   }
 
   # Reviewer
-  let!(:reviewer_event_teammate) { create(:event_teammate, :reviewer, user: reviewer_user, event: event) }
+  let!(:event_staff_teammate) { create(:event_teammate, :reviewer, user: reviewer_user, event: event) }
 
   before { login_as(reviewer_user) }
 
   context "When viewing proposal list" do
     it "shows the proposal list" do
-      visit reviewer_event_proposals_path(event)
+      visit event_staff_proposals_path(event)
       expect(page).to have_text("First Proposal")
       expect(page).to have_text("Second Proposal")
     end
@@ -48,7 +48,7 @@ feature "Review Proposals" do
       other_reviewer = create(:event_teammate, :reviewer, event: event).user
       other_reviewer.ratings.create(proposal: proposal2, score: 4)
 
-      visit reviewer_event_proposals_path(event)
+      visit event_staff_proposals_path(event)
 
       within(".proposal-#{proposal.id}") do
         expect(page).to have_content("4.0")
@@ -72,21 +72,21 @@ feature "Review Proposals" do
     }
 
     scenario "they can't view their own proposals" do
-      visit reviewer_event_proposals_path(event)
+      visit event_staff_proposals_path(event)
       expect(page).not_to have_text("Reviewer Proposal")
     end
 
     scenario "they can't rate their own proposals" do
-      visit reviewer_event_proposal_path(event, reviewer_proposal)
+      visit event_staff_proposal_path(event, reviewer_proposal)
       expect(page).not_to have_select('rating_score')
     end
   end
 
   context "reviewer is viewing a specific proposal" do
-    it_behaves_like "a proposal page", :reviewer_event_proposal_path
+    it_behaves_like "a proposal page", :event_staff_proposal_path
 
     it "only shows them the internal comments once they've rated it", js: true do
-      visit reviewer_event_proposal_path(event, proposal)
+      visit event_staff_proposal_path(event, proposal)
       expect(page).to_not have_content('Internal Comments')
 
       select('3', from: 'Rating')

@@ -31,8 +31,10 @@
                 %td
                   -if event.guidelines.present?
                     = event.guidelines.truncate(150, separator: /\s/)
-                  = link_to "Public guidelines", event_path(slug: event.slug)
-                  %p= link_to "<i class='fa fa-pencil'></i> Edit Guidelines".html_safe, event_staff_guidelines_notifications_path, class: "btn btn-primary"
+                  %p= link_to "View Public Guidelines", event_path(slug: event.slug), class: "btn btn-success"
+
+                  - if current_user.can_edit?
+                    %p= link_to "<i class='fa fa-pencil'></i> Edit Guidelines".html_safe, event_staff_guidelines_notifications_path, class: "btn btn-primary"
 
       .widget.widget-table
         .widget-header
@@ -72,28 +74,42 @@
           %i.fa.fa-list-alt
           %h3 Proposal Stats
         .widget-content
-          %ul.list-group
-            %li.list-group-item
-              %strong.text-primary Total:
-              %span.label.label-info #{event.proposals.count}
-            %li.list-group-item
-              %strong.text-primary Reviewed:
-              %span.label.label-info #{event.proposals.rated.count} (#{event.reviewed_percent})
-            %li.list-group-item
-              %strong.text-primary Accepted:
-              %span.label.label-info #{event.proposals.accepted.count}
-            %li.list-group-item
-              %strong.text-primary Confirmed:
-              %span.label.label-info #{event.proposals.accepted.confirmed.count} (#{event.confirmed_percent})
-            %li.list-group-item
-              %strong.text-primary Scheduled:
-              %span.label.label-info #{event.proposals.scheduled.count} (#{event.scheduled_percent})
-            %li.list-group-item
-              %strong.text-primary Waitlisted:
-              %span.label.label-info #{event.proposals.waitlisted.count}
-            %li.list-group-item
-              %strong.text-primary Confirmed:
-              %span.label.label-info #{event.proposals.waitlisted.confirmed.count} (#{event.waitlisted_percent})
+          .row
+            .col-sm-12
+              %h4
+                %strong.text-primary Total:
+                %span.label.label-info #{event.proposals.count}
+          .row
+            .col-sm-12
+              %h4
+                %strong.text-primary Reviewed:
+                %span.label.label-info #{event.proposals.rated.count} (#{event.reviewed_percent})
+          - if current_user.can_edit?
+            .row
+              .col-sm-12
+                %h4
+                  %strong.text-primary Accepted:
+                  %span.label.label-info #{event.proposals.accepted.count}
+            .row
+              .col-sm-12
+                %h4
+                  %strong.text-primary Confirmed:
+                  %span.label.label-info #{event.proposals.accepted.confirmed.count} (#{event.confirmed_percent})
+            .row
+              .col-sm-12
+                %h4
+                  %strong.text-primary Scheduled:
+                  %span.label.label-info #{event.proposals.scheduled.count} (#{event.scheduled_percent})
+            .row
+              .col-sm-12
+                %h4
+                  %strong.text-primary Waitlisted:
+                  %span.label.label-info #{event.proposals.waitlisted.count}
+            .row
+              .col-sm-12
+                %h4
+                  %strong.text-primary Confirmed:
+                  %span.label.label-info #{event.proposals.waitlisted.confirmed.count} (#{event.waitlisted_percent})
 
       .widget
         .widget-header
@@ -106,7 +122,8 @@
         .widget-header
           %i.fa.fa-tags
           %h3 Review Tags
-          = link_to "<i class='fa fa-pencil'></i> Edit".html_safe, event_staff_edit_path, class: "btn btn-sm btn-primary pull-right"
+          - if current_user.can_edit?
+            = link_to "<i class='fa fa-pencil'></i> Edit".html_safe, event_staff_edit_path, class: "btn btn-sm btn-primary pull-right"
         .widget-content
           =event.valid_review_tags
 
@@ -114,11 +131,22 @@
         .widget-header
           %i.fa.fa-tags
           %h3 Fields
-          = link_to "<i class='fa fa-plus'></i> Add Custom Field".html_safe, event_staff_custom_fields_path(event), class: "btn btn-primary btn-sm pull-right"
+          - if current_user.can_edit?
+            = link_to "<i class='fa fa-plus'></i> Add Custom Field".html_safe, event_staff_custom_fields_path(event), class: "btn btn-primary btn-sm pull-right"
         .widget-content
-          %p=event.fields
-          %h4 Custom Fields
-          %p=event.custom_fields.join(", ")
+          %ul.list-unstyled
+            %li
+              %h5.text-primary
+                %strong Standard
+            %li
+              %p=event.fields
+          %hr/
+          %ul.list-unstyled
+            %li
+              %h5.text-primary
+                %strong Custom Fields
+            %li
+              %p=event.custom_fields.join(", ")
 
     .col-sm-4
       .widget
@@ -141,7 +169,8 @@
         .widget-header
           %i.fa.fa-tags
           %h3 Speaker Notifications
-          = link_to "<i class='fa fa-pencil'></i> Edit".html_safe, event_staff_speaker_email_notifications_path, class: "btn btn-sm btn-primary pull-right"
+          - if current_user.can_edit?
+            = link_to "<i class='fa fa-pencil'></i> Edit".html_safe, event_staff_speaker_email_notifications_path, class: "btn btn-sm btn-primary pull-right"
         .widget-content
           %ul.list-group
             %li.list-group-item

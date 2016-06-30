@@ -3,15 +3,18 @@ class Event < ActiveRecord::Base
   store_accessor :speaker_notification_emails, :reject
   store_accessor :speaker_notification_emails, :waitlist
 
-  has_many :participants, dependent: :destroy
+  has_many :event_teammates, dependent: :destroy
   has_many :proposals, dependent: :destroy
   has_many :speakers, through: :proposals
   has_many :rooms, dependent: :destroy
   has_many :tracks, dependent: :destroy
   has_many :sessions, dependent: :destroy
+  has_many :session_types, dependent: :destroy
   has_many :taggings, through: :proposals
   has_many :ratings, through: :proposals
-  has_many :participant_invitations
+  has_many :event_teammate_invitations
+
+  has_many :public_session_types, ->{ where(public: true) }, class_name: SessionType
 
   accepts_nested_attributes_for :proposals
 
@@ -24,13 +27,22 @@ class Event < ActiveRecord::Base
   scope :recent, -> { order('name ASC') }
   scope :live, -> { where("state = 'open' and (closes_at is null or closes_at > ?)", Time.current).order('closes_at ASC') }
 
-  validates :name, :contact_email, presence: true
+  validates :name, presence: true
   validates :slug, presence: true, uniqueness: true
-  validates :closes_at, presence: true
 
   before_validation :generate_slug
   before_save :update_closes_at_if_manually_closed
 
+  STATUSES = { open: 'open',
+               draft: 'draft',
+               closed: 'closed' }
+  def to_param
+    slug
+  end
+  with_options on: :update, if: :open? do
+    validates :public_session_types, presence: { message: 'A least one public session type must be defined before event can be opened.' }
+    validates :guidelines, presence: { message: 'Guidelines must be defined before event can be opened..' }
+  end
 
   def valid_proposal_tags
     proposal_tags.join(', ')
@@ -72,20 +84,30 @@ class Event < ActiveRecord::Base
     name
   end
 
+  def draft?
+    state == STATUSES[:draft]
+  end
+
   def open?
-    state == 'open' && (closes_at.nil? || closes_at > Time.current)
+    state == STATUSES[:open] && (closes_at.nil? || closes_at > Time.current)
   end
 
   def closed?
-    !open?
+    !open? && !draft?
   end
 
   def past_open?
-    state == 'open' && closes_at < Time.current
+    state == STATUSES[:open] && closes_at < Time.current
   end
 
   def status
-    open? ? 'open' : 'closed'
+    if open?
+      STATUSES[:open]
+    elsif draft?
+      STATUSES[:draft]
+    else
+    STATUSES[:closed]
+    end
   end
 
   def unmet_requirements_for_scheduling
@@ -118,11 +140,11 @@ class Event < ActiveRecord::Base
   end
 
   def cfp_opens
-    opens_at && opens_at.to_s(:long_with_zone)
+    opens_at.try(:to_s, :long_with_zone)
   end
 
   def cfp_closes
-    closes_at && closes_at.to_s(:long_with_zone)
+    closes_at.try(:to_s, :long_with_zone)
   end
 
   def conference_date(conference_day)
@@ -131,8 +153,9 @@ class Event < ActiveRecord::Base
 
 
   private
+
   def update_closes_at_if_manually_closed
-    if changes.key?(:state) && changes[:state] == ['open', 'closed']
+    if changes.key?(:state) && changes[:state] == [STATUSES[:open], STATUSES[:closed]]
       self.closes_at = DateTime.now
     end
   end
@@ -147,7 +170,7 @@ end
 #  slug                        :string
 #  url                         :string
 #  contact_email               :string
-#  state                       :string           default("closed")
+#  state                       :string           default("draft")
 #  opens_at                    :datetime
 #  closes_at                   :datetime
 #  start_date                  :datetime
@@ -156,11 +179,11 @@ end
 #  review_tags                 :text
 #  guidelines                  :text
 #  policies                    :text
+#  archived                    :boolean          default(FALSE)
+#  custom_fields               :text
 #  speaker_notification_emails :hstore           default({"accept"=>"", "reject"=>"", "waitlist"=>""})
 #  created_at                  :datetime
 #  updated_at                  :datetime
-#  archived                    :boolean          default(FALSE)
-#  custom_fields               :text
 #
 # Indexes
 #

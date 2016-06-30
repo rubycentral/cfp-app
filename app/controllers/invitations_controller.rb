@@ -41,13 +41,13 @@ class InvitationsController < ApplicationController
   def update
     if params[:refuse]
       @invitation.refuse
-      flash[:info] = "You have refused this invitation."
-      redirect_to :back
+      flash[:info] = "You have declined this invitation."
+      redirect_to root_url
     else
       @invitation.accept
       flash[:info] = "You have accepted this invitation."
-      @invitation.proposal.speakers.create(person: current_user)
-      redirect_to edit_proposal_url(slug: @invitation.proposal.event.slug,
+      @invitation.proposal.speakers.create(user: current_user)
+      redirect_to edit_event_proposal_url(event_slug: @invitation.proposal.event.slug,
                                      uuid: @invitation.proposal)
     end
   end

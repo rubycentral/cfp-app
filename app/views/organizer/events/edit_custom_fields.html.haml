@@ -1,6 +1,0 @@
-%h2 Custom Fields
-.form-group
-  = form_for @event, :url => update_custom_fields_organizer_event_path, :method => :put  do |f|
-    = f.text_field :custom_fields_string
-    %p.help-block This is a comma separated list of custom fields allowed for use on proposals.
-    %button.pull-right.btn.btn-success{:type => "submit"} Save

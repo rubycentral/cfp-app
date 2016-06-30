@@ -1,7 +1,9 @@
 - withdraw = true if withdraw.nil?
 
 .speaker.clearfix
-  = speaker.gravatar
+  %strong= speaker.name_and_email
+  = simple_format speaker.bio
+
   - if withdraw && speaker.proposal.speakers.count > 1
     = link_to 'Withdraw',
       speaker_path(speaker.id),
@@ -9,5 +11,3 @@
       class: 'btn btn-danger btn-sm pull-right remove-speaker',
       data: { confirm: 'This will remove the speaker from this proposal. Are you sure you want to do this?' }
 
-  %strong= speaker.name_and_email
-  = simple_format speaker.bio

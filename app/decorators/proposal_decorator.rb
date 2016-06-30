@@ -27,8 +27,8 @@ class ProposalDecorator < ApplicationDecorator
     h.number_with_precision(object.average_rating, precision: 1) || ''
   end
 
-  def score_for(person)
-    person.rating_for(object).score
+  def score_for(user)
+    user.rating_for(object).score
   end
 
   def review_tags
@@ -75,7 +75,7 @@ class ProposalDecorator < ApplicationDecorator
 
   def withdraw_button
     h.link_to bang('Withdraw Proposal'),
-      h.withdraw_proposal_path,
+      h.withdraw_event_proposal_path,
       method: :post,
       data: {
         confirm: 'This will remove your talk from consideration and send an ' +
@@ -87,7 +87,7 @@ class ProposalDecorator < ApplicationDecorator
 
   def confirm_link
     h.link_to 'confirmation page',
-      h.confirm_proposal_url(slug: object.event.slug, uuid: object)
+      h.confirm_event_proposal_url(event_slug: object.event.slug, uuid: object)
   end
 
   def state_label(small: false, state: nil, show_confirmed: false)

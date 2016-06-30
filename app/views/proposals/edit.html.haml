@@ -1,4 +1,10 @@
-%h1 Edit #{proposal.title} for #{event}
+.row
+  .col-md-12
+    .page-header
+      %h1
+        Edit
+        %em #{proposal.title}
+        for #{event}
 
-= simple_form_for proposal, url: proposal_path(event.slug, proposal) do |f|
+= simple_form_for [event, proposal], url: event_proposal_path(event.slug, proposal) do |f|
   = render partial: 'form', locals: {f: f}

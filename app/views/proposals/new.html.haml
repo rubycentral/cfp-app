@@ -1,3 +1,17 @@
-%h1 New Proposal for #{event}
+.page-header
+  .row
+    .col-md-12
+      %h1 New Proposal for #{event}
+  .row
+    .col-md-6
+      %p
+        Read the #{link_to 'guidelines', event_path(event.slug)} to maximize
+        your chance of approval. Refrain from including any information that
+        would allow a reviewer to identify you.
+      %p
+        All fields support
+        %a{href: 'https://help.github.com/articles/github-flavored-markdown'}
+          GitHub Flavored Markdown.
+
 = simple_form_for proposal, url: event_proposals_path(event_id: event) do |f|
   = render partial: 'form', locals: {f: f}

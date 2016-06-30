@@ -10,10 +10,11 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'jquery-datatables-rails', github: "rweng/jquery-datatables-rails"
 gem 'uglifier', '>= 1.3.0'
-gem 'sass-rails', '~> 4.0.1'
+gem 'sass-rails', '~> 5.0.4'
 gem 'haml', '~> 4.0.4'
-gem 'bootstrap-sass', '~> 3.0.2.1'
+gem 'bootstrap-sass', '~> 3.3.6'
 
+gem 'devise', '~> 4.1.1'
 gem 'omniauth-github'
 gem 'omniauth-twitter'
 
@@ -22,13 +23,11 @@ gem 'groupdate'
 gem 'country_select', '~> 1.3.1'
 gem 'redcarpet', '~> 3.0.0'
 gem 'coderay', '~> 1.0'
-gem 'bootstrap-multiselect-rails', '0.0.4'
+gem 'bootstrap-multiselect-rails', '~> 0.9.9'
 gem 'active_model_serializers', '~> 0.8.1'
 gem 'draper'
-gem 'simple_form', '3.1.0'
-
+gem 'simple_form', '3.1.1'
 gem 'zeroclipboard-rails'
-
 gem 'responders', '~> 2.0'
 
 group :production do
@@ -42,19 +41,16 @@ group :development do
   gem 'binding_of_caller'
   gem 'foreman'
   gem 'launchy'
-  gem 'pry'
-  gem 'pry-rails'
   gem 'quiet_assets'
   gem 'rack-mini-profiler'
   gem 'haml-rails'
-  gem "spring-commands-rspec", require: false
-
+  gem 'spring-commands-rspec', require: false
   gem 'web-console', '~> 2.0'
 end
 
 group :development, :test do
   gem 'capybara', '>= 2.2'
-  gem 'capybara-webkit', '~> 1.6.0' # Requires local installation of QT (`brew install qt`)
+  gem 'capybara-webkit', '~> 1.6.0' # Local QT install req'd (`brew install qt`)
   gem 'database_cleaner'
   gem 'dotenv-rails'
   gem 'factory_girl_rails'
@@ -66,4 +62,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'timecop'
   gem 'spring'
+  gem 'pry-rails'
+  gem 'pry-rescue'
+  gem 'pry-remote'
 end

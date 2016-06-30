@@ -46,7 +46,7 @@ module ApplicationHelper
       path = session[:prev_page]["path"]
     else
       name = 'Proposals'
-      path = organizer_event_proposals_path
+      path = event_staff_proposals_path
     end
 
     link_to("« Return to #{name}", path, class: "btn btn-primary", id: "back")
@@ -54,6 +54,8 @@ module ApplicationHelper
 
   def show_flash
     flash.map do |key, value|
+      key += " alert-info" if key == "notice"
+      key = "danger" if key == "alert"
       content_tag(:div, class: "container alert alert-dismissable alert-#{key}") do
         content_tag(:button, content_tag(:span, '', class: 'glyphicon glyphicon-remove'),
                     class: 'close', data: {dismiss: 'alert'}) +
@@ -63,18 +65,18 @@ module ApplicationHelper
   end
 
   def copy_email_btn
-    link_to 'Copy Speaker Email Addresses To Clipboard', '#',
-            data: {url: organizer_event_speaker_emails_path(@event)},
+    link_to "<i class='fa fa-files-o'></i> Copy Speaker Emails".html_safe, '#',
+            data: {url: event_staff_speaker_emails_path(@event)},
             class: "btn btn-primary",
             id: 'copy-filtered-speaker-emails'
-  end
-
-  def on_organizer_page?
-    /\/organizer\// =~ request.path
   end
 
   def modal(identifier, title = '')
     body = capture { yield }
     render 'shared/modal', identifier: identifier, body: body, title: title
+  end
+
+  def body_id
+    "#{controller_path.tr('/','_')}_#{action_name}"
   end
 end

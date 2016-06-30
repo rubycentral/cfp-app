@@ -14,12 +14,14 @@ class Proposal < ActiveRecord::Base
 
   belongs_to :event
   has_one :session
-  has_one :track, through: :session
+  belongs_to :session_type
+  belongs_to :track
 
   validates :title, :abstract, presence: true
+  validates :session_type, presence: true
 
   # This used to be 600, but it's so confusing for users that the browser
-  # uses \r\n for newlines and they're over the 600 limit because of 
+  # uses \r\n for newlines and they're over the 600 limit because of
   # bytes they can't see. So we give them a bit of tolerance.
   validates :abstract, length: {maximum: 1000}
   validates :title, length: {maximum: 60}
@@ -27,7 +29,7 @@ class Proposal < ActiveRecord::Base
   serialize :last_change
   serialize :proposal_data, Hash
 
-  attr_accessor :tags, :review_tags, :updating_person
+  attr_accessor :tags, :review_tags, :updating_user
   attr_accessor :video_url, :slide_url
 
   accepts_nested_attributes_for :public_comments, reject_if: Proc.new { |comment_attributes| comment_attributes[:body].blank? }
@@ -51,10 +53,10 @@ class Proposal < ActiveRecord::Base
     includes(:session).where(sessions: {proposal_id: nil}, state: ACCEPTED).order(:title)
   end
   scope :for_state, ->(state) do
-    where(state: state).order(:title).includes(:event, {speakers: :person}, :review_taggings)
+    where(state: state).order(:title).includes(:event, {speakers: :user}, :review_taggings)
   end
 
-  scope :emails, -> { joins(speakers: :person).pluck(:email).uniq }
+  scope :emails, -> { joins(speakers: :user).pluck(:email).uniq }
 
   # Create all state accessor methods like (accepted?, waitlisted?, etc...)
   Proposal::State.constants.each do |constant|
@@ -65,15 +67,15 @@ class Proposal < ActiveRecord::Base
   end
 
   # Return all reviewers for this proposal.
-  # A person is considered a reviewer if they meet the following criteria
+  # A user is considered a reviewer if they meet the following criteria
   # - They are an organizer or reviewer for this event
   # AND
   # - They have rated or made a public comment on this proposal
   def reviewers
-    Person.joins(:participants,
-                 'LEFT OUTER JOIN ratings AS r ON r.person_id = people.id',
-                 'LEFT OUTER JOIN comments AS c ON c.person_id = people.id')
-      .where("participants.event_id = ? AND participants.role IN (?) AND (r.proposal_id = ? or (c.proposal_id = ? AND c.type = 'PublicComment'))",
+    User.joins(:event_teammates,
+                 'LEFT OUTER JOIN ratings AS r ON r.user_id = users.id',
+                 'LEFT OUTER JOIN comments AS c ON c.user_id = users.id')
+      .where("event_teammates.event_id = ? AND event_teammates.role IN (?) AND (r.proposal_id = ? or (c.proposal_id = ? AND c.type = 'PublicComment'))",
              event.id, ['organizer', 'reviewer'], id, id).uniq
   end
 
@@ -158,12 +160,12 @@ class Proposal < ActiveRecord::Base
     end
   end
 
-  def has_speaker?(person)
-    speakers.where(person_id: person).exists?
+  def has_speaker?(user)
+    speakers.where(user_id: user).exists?
   end
 
-  def was_rated_by_person?(person)
-    ratings.any? { |r| r.person_id == person.id }
+  def was_rated_by_user?(user)
+    ratings.any? { |r| r.user_id == user.id }
   end
 
   def tags
@@ -222,15 +224,15 @@ class Proposal < ActiveRecord::Base
   end
 
   def has_public_reviewer_comments?
-    public_comments.reject { |comment| speakers.include?(comment.person_id) }.any?
+    public_comments.reject { |comment| speakers.include?(comment.user_id) }.any?
   end
 
   def has_internal_reviewer_comments?
-    internal_comments.reject { |comment| speakers.include?(comment.person_id) }.any?
+    internal_comments.reject { |comment| speakers.include?(comment.user_id) }.any?
   end
 
   def save_attr_history
-    if updating_person && updating_person.organizer_for_event?(event) || @dont_touch_updated_by_speaker_at
+    if updating_user && updating_user.organizer_for_event?(event) || @dont_touch_updated_by_speaker_at
       # Erase the record of last change if the proposal is updated by an
       # organizer
       self.last_change = nil
@@ -263,14 +265,18 @@ end
 #  pitch                 :text
 #  last_change           :text
 #  confirmation_notes    :text
+#  proposal_data         :text
+#  updated_by_speaker_at :datetime
 #  confirmed_at          :datetime
 #  created_at            :datetime
 #  updated_at            :datetime
-#  updated_by_speaker_at :datetime
-#  proposal_data         :text
+#  session_type_id       :integer
+#  track_id              :integer
 #
 # Indexes
 #
-#  index_proposals_on_event_id  (event_id)
-#  index_proposals_on_uuid      (uuid) UNIQUE
+#  index_proposals_on_event_id         (event_id)
+#  index_proposals_on_session_type_id  (session_type_id)
+#  index_proposals_on_track_id         (track_id)
+#  index_proposals_on_uuid             (uuid) UNIQUE
 #

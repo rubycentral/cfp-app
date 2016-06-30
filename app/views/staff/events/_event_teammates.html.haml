@@ -1,0 +1,57 @@
+.row
+  %header
+    .col-md-12
+      - if current_user.can_edit?
+        .btn-nav.pull-right
+          = link_to 'View Speakers', event_staff_speakers_path(event), class: "btn btn-primary"
+          = link_to 'Add/Invite Staff', '#', class: 'btn btn-primary', data: { toggle: 'modal', target: "#new-event_teammate-event-#{event.id}" }
+          = link_to 'Manage Staff Invites',
+            event_staff_event_teammate_invitations_path(event), class: 'btn btn-primary'
+      %h3 EventTeammates
+.row
+  .col-md-12
+    %table.event_teammates.table.table-striped
+      %thead
+        %tr
+          %th Name
+          %th Email
+          %th Rated Proposals
+          %th Role
+          %th.notifications Comment Notifications
+          - if current_user.can_edit?
+            %th.actions Actions
+      %tbody
+        - event_teammates.each do |event_teammate|
+          %tr
+            %td= event_teammate.user.name
+            %td= event_teammate.user.email
+            %td= rating_counts[event_teammate.user.id] || 0
+            %td= event_teammate.role
+            %td.notifications
+              = event_teammate.comment_notifications
+              - if event_teammate.user == current_user
+                = render partial: 'staff/events/event_teammate_notifications', locals: {event_teammate: event_teammate}
+            - if event_teammate.user != current_user && current_user.can_edit?
+              %td.actions
+                = render partial: 'staff/events/event_teammate_controls', locals: { event_teammate: event_teammate }
+
+%div{ id: "new-event_teammate-event-#{event.id}", class: 'modal fade' }
+  .modal-dialog
+    .modal-content
+      = form_for event.event_teammates.build, url: event_staff_event_teammates_path(event), html: {role: 'form'} do |f|
+        .modal-header
+          %h3 Add/Invite an Event Teammate to #{event.name}
+        .modal-body
+          .form-group
+            = label_tag :email
+            = text_field_tag :email, '', class: 'form-control',
+              id: 'autocomplete-email',
+              placeholder: "Event Teammate's email",
+              data: { path: emails_event_staff_event_teammates_path(event) }
+          .form-group
+            = f.label :role
+            = f.select :role, ['reviewer', 'organizer'], {}, {class: 'form-control'}
+        .modal-footer
+          %button.btn.btn-default{'data-dismiss' => "modal"} Cancel
+          %button.pull-right.btn.btn-success{:type => "submit"} Save
+

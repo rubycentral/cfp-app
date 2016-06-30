@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'Speaker Invitations' do
   let(:second_speaker_email) { 'second_speaker@example.com' }
-  let(:user) { create(:person) }
+  let(:user) { create(:user) }
   let(:event) { create(:event, state: 'open') }
   let(:proposal) { create(:proposal,
                           title: 'Hello there',
@@ -10,13 +10,13 @@ feature 'Speaker Invitations' do
                           event: event)
   }
   let!(:speaker) { create(:speaker,
-                         person: user,
+                         user: user,
                          proposal: proposal)
   }
 
   let(:go_to_proposal) {
-    login_user(user)
-    visit(proposal_path(slug: proposal.event.slug, uuid: proposal))
+    login_as(user)
+    visit(event_proposal_path(event_slug: proposal.event.slug, uuid: proposal))
   }
 
   context "Creating an invitation" do
@@ -67,12 +67,12 @@ feature 'Speaker Invitations' do
     end
   end
 
-  context "Responding to an invitaiton" do
-    let(:second_speaker) { create(:person, email: second_speaker_email) }
+  context "Responding to an invitation" do
+    let(:second_speaker) { create(:user, email: second_speaker_email) }
     let!(:invitation) { create(:invitation,
                                proposal: proposal,
                                email: second_speaker_email,
-                               person: second_speaker)
+                               user: second_speaker)
     }
     let(:other_proposal) { create(:proposal, event: event) }
     let!(:other_invitation) { create(:invitation,
@@ -81,7 +81,7 @@ feature 'Speaker Invitations' do
     }
 
     before :each do
-      login_user(second_speaker)
+      login_as(second_speaker)
       visit invitation_url(invitation, invitation_slug: invitation.slug)
     end
 
@@ -110,15 +110,29 @@ feature 'Speaker Invitations' do
     end
 
     context "When declining" do
-      before { click_link 'Refuse' }
+      before { click_link 'Decline' }
 
       it "redirects the user back to the proposal page" do
-        expect(page).to have_text("You have refused this invitation")
+        expect(page).to have_text("You have declined this invitation")
       end
 
       it "marks the invitation as refused" do
         expect(invitation.reload.state).to eq(Invitation::State::REFUSED)
       end
+    end
+
+    it "User can view proposal before accepting invite" do
+      visit proposals_path
+
+      within(:css, 'div.invitations') do
+        expect(page).to have_text(other_proposal.title)
+        expect(page).to have_link("Accept")
+        expect(page).to have_link("Decline")
+      end
+
+      click_link(other_proposal.title)
+
+      expect(current_path).to eq(event_proposal_path(event_slug: other_proposal.event.slug, uuid: other_proposal))
     end
   end
 end

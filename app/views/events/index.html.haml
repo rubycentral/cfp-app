@@ -1,6 +1,7 @@
 - events.each do |event|
   .event
     %h1
-      = event
+      -if current_user
+        = link_to(event, event_path(event.slug))
       %small= event.status
     = event.path_for(current_user)

@@ -1,7 +1,7 @@
-<%= @comment.person.name %> has left a comment on your proposal '<%= @proposal.title %>' for <%= @proposal.event.name %>:
+<%= @comment.user.name %> has left a comment on your proposal '<%= @proposal.title %>' for <%= @proposal.event.name %>:
 
 > <%= simple_format(@comment.body) %>
 
-<%= md_link_to 'View your proposal', proposal_url(slug: @proposal.event.slug, uuid: @proposal) %>
+<%= md_link_to 'View your proposal', event_proposal_url(event_slug: @proposal.event.slug, uuid: @proposal) %>
 
 

@@ -1,5 +1,5 @@
 - unless proposal.has_speaker?(current_user)
-  = form_for [:reviewer, event, proposal, rating], remote: true do |f|
+  = form_for [:reviewer, event, proposal, rating], html: {class: "form-inline"}, remote: true do |f|
     .form-group
       = f.label :score, "Rating"
       = f.select :score, (1..5).to_a, {include_blank: true}, {class: 'form-control', onchange: '$(this).trigger("submit.rails");', disabled: proposal.withdrawn?}
@@ -8,7 +8,7 @@
     %dt.text-success Average rating:
     %dd.text-success= number_with_precision(proposal.average_rating, precision: 1)
     - proposal.ratings.each do |rating|
-      %dt= "#{rating.person.name}:"
+      %dt= "#{rating.user.name}:"
       %dd= rating.score
 
 

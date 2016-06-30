@@ -1,5 +1,0 @@
-var track = $('dl#tracks #track_<%= track.id %>');
-track.next().remove();
-track.remove();
-
-reloadSessionsTable(<%=raw sessions.rows.to_json %>);

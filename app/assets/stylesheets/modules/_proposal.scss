@@ -1,0 +1,139 @@
+.proposals {
+  .event-title {
+    font-weight: bolder;
+  }
+  .btn{
+    display: block;
+    margin-top: 1em;
+  }
+}
+
+.proposal {
+  margin-bottom: 1em;
+}
+.speaker {
+  margin-top: 2em;
+  border-bottom: 1px solid $gray-lighter;
+}
+.speaker img, .speaker-image {
+  margin: 0 0.5em 0.8em 0;
+}
+
+#proposal {
+  span {
+    &.status {
+      float: right;
+      display: block;
+      margin: .3em 6.5em .4em 0;
+    }
+    &.small-status {
+      float: right;
+      font-size: 75%;
+      display: block;
+    }
+  }
+
+  p.count {
+    font-style: italic;
+    font-weight: bold;
+    margin-bottom: 1.5em;
+  }
+
+  ul.invitation {
+    padding: 0;
+    .label {
+      margin-right: 10px;
+    }
+  }
+  .other_proposals li{ margin-bottom: 5px;}
+  .other_proposal_tags {
+    padding-left: 10px;
+    margin-bottom: 7px;
+  }
+}
+
+#copy-emails {
+  margin: 10px;
+}
+
+#emails-for-copy {
+  display: none;
+}
+
+.proposal-list {
+  .actions { width: 180px; }
+  .date_range_filter, .text_filter { width: 100px !important; }
+}
+
+ul {
+  list-style-type: none;
+  li.proposal .label {
+    margin-right: 1em;
+  }
+  li.proposal {
+    border-bottom: 1px solid #ddd;
+    &:last-of-type {
+      border-bottom: none;
+    }
+  }
+}
+
+.status.label {
+  font-size: 1.3em;
+}
+
+.twitter-share-button {
+  margin-left: .5em;
+  margin-top: 2.3em;
+}
+
+.btn.save-comment {
+  width: 105px;
+  float: right;
+}
+
+span.disabled-state {
+  padding: 3px 20px;
+  color: grey;
+}
+
+.callout {
+  border-left: solid darken(#dff0d8, 10%) 5px;
+  background-color: lighten(#dff0d8, 5%);
+  padding-left: 0.5em;
+}
+
+.ratings_list {
+  .text-success:hover { color: #468847; }
+  dt {
+    text-align: left;
+    font-weight: normal;
+  }
+  dd { margin-left: 150px; }
+}
+
+span.glyphicon-question-sign {
+  font-size: 1.3em;
+  display: inline-block;
+}
+
+div.col-md-4 {
+    h3 {
+      display: inline-block;
+    }
+}
+
+.invite-btns {
+  margin-top: 10px;
+}
+
+.new-speaker-invite {
+  margin-top: 20px;
+}
+
+.speaker-invite-form {
+  display: none;
+  form {
+    margin-top: 0px;
+  }
+}

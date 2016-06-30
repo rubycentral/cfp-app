@@ -1,0 +1,41 @@
+.error_notification {
+  border-bottom: 1px solid darken(#edd1d1, 50%);
+  color: $brand-warning;
+  font-weight: 700;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+}
+.help-block {
+  color: darken($brand-success, 5%);
+  font-size: 0.9em;
+  font-style: italic;
+}
+
+.field_with_errors {
+  .form-control {
+    background-color: #edd1d1;
+  }
+  label, .help-block {
+    color: darken(#edd1d1, 50%);
+  }
+}
+
+.form-submit {
+  border-top: 1px solid #ccc;
+  margin: 1em 0 5em;
+  padding-top: 1em;
+}
+
+input.required {
+  border: 1px solid darken(#edd1d1, 50%);
+}
+
+.required_notification {
+  color:darken(#edd1d1, 50%);
+  font-style: italic;
+  float:right;
+}
+
+span[title="required"] {
+  color: darken(#edd1d1, 50%);
+}

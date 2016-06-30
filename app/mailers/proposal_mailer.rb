@@ -4,7 +4,7 @@ class ProposalMailer < ApplicationMailer
     @comment = comment
 
     to = @proposal.speakers.map do |speaker|
-      speaker.email if speaker.person != @comment.person
+      speaker.email if speaker.user != @comment.user
     end
 
     if to.any?

@@ -7,16 +7,12 @@ class Admin::ApplicationController < ApplicationController
     unless admin_signed_in?
       session[:target] = request.path
       flash[:danger] = "You must be signed in as an administrator to access this page."
-      redirect_to new_session_url
+      redirect_to new_user_session_url
     end
   end
 
   def admin_signed_in?
     user_signed_in? && current_user.admin?
-  end
-
-  def require_event
-    @event = Event.find(params[:event_id] || params[:id])
   end
 
 end

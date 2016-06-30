@@ -1,0 +1,116 @@
+.navbar.navbar-default.navbar-fixed-top
+  .container-fluid
+    .navbar-header
+      %button.navbar-toggle{ type: "button", data: { toggle: "collapse", target: ".navbar-collapse" } }
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      - if event && event.slug
+        = link_to event.name, event_path(slug: event.slug), class: 'navbar-brand'
+      - else
+        = link_to "#{Rails.application.class.parent_name}", events_path, class: 'navbar-brand'
+
+    .collapse.navbar-collapse
+      - if user_signed_in?
+        %ul.nav.navbar-nav.navbar-right
+          - if current_user && current_user.admin?
+            %li{class: "#{request.path == admin_users_path ? 'active' : ''}"}
+              = link_to admin_users_path do
+                %i.fa.fa-users
+                %span Users
+              %li{class: "#{request.path == admin_events_path ? 'active' : ''}"}
+                =link_to admin_events_path do
+                  %i.fa.fa-calendar
+                  %span Manage Events
+
+          - if current_user.proposals.any?
+            %li{class: "#{request.path == proposals_path ? 'active' : ''}"}
+              = link_to proposals_path do
+                %i.fa.fa-file-text
+                %span My Proposals
+
+          - if (current_user.reviewer? || current_user.organizer?) && event
+            - if event.id != nil && !event.archived?
+              %li{class: "#{request.path == event_staff_proposals_path(event) ? 'active' : ''}"}
+                = link_to event_staff_proposals_path(event) do
+                  %i.fa.fa-text
+                  %span Event Proposals
+
+          - if current_user.organizer? && event
+            - if event.id != nil && !event.archived?
+              %li{class: "#{request.path == event_staff_program_path(event) ? 'active' : ''}"}
+                = link_to event_staff_program_path(event) do
+                  %i.fa.fa-list
+                  %span Program
+              %li{class: "#{request.path == event_staff_sessions_path(event) ? 'active' : ''}"}
+                = link_to event_staff_sessions_path(event) do
+                  %i.fa.fa-calendar
+                  Schedule
+              %li{class: "#{request.path == event_staff_path(event) ? 'active' : ''}"}
+                = link_to event_staff_path(event) do
+                  %i.fa.fa-dashboard
+                  %span Event Dashboard
+
+          %li{class: "#{request.path == notifications_path ? 'active' : ''}"}
+            = link_to notifications_path do
+              %i.fa.fa-envelope
+              - if current_user.notifications.unread.length > 0
+                %span.badge=current_user.notifications.unread.length
+
+          %li.dropdown
+            %a.dropdown-toggle.gravatar-container{ href: "#", data: { toggle: "dropdown" } }
+              = image_tag("https://www.gravatar.com/avatar/#{current_user.gravatar_hash}?s=25", class: 'user-dropdown-gravatar')
+              &nbsp; #{current_user.name}
+              %b.caret
+            %ul.dropdown-menu
+              %li
+                = link_to edit_profile_path do
+                  %i.fa.fa-user
+                  %span My Profile
+              %li
+                = link_to destroy_user_session_path, method: :delete do
+                  %i.fa.fa-sign-out
+                  %span Sign Out
+      - else
+        %ul.nav.navbar-nav.navbar-right
+          %li= link_to "Log in", new_user_session_path
+
+- if action_name == "current_styleguide" && user_signed_in?
+  .subnavbar
+    .subnavbar-inner
+      .container-fluid
+        %ul.mainnav
+          %li{class: "#{request.path == events_path ? 'active' : ''}"}
+            =link_to events_path do
+              %i.fa.fa-dashboard
+              %span Dashboard
+
+- if params[:controller].include?("staff") && user_signed_in?
+  .subnavbar
+    .subnavbar-inner
+      .container-fluid
+        %ul.mainnav
+          %li
+            = link_to event_staff_path do
+              %i.fa.fa-dashboard
+              %span Dashboard
+          %li
+            = link_to event_staff_edit_path do
+              %i.fa.fa-info-circle
+              %span Info
+          %li
+            = link_to event_staff_event_teammate_invitations_path do
+              %i.fa.fa-users
+              %span Team
+          %li
+            = link_to event_staff_edit_path do
+              %i.fa.fa-wrench
+              %span Config
+          %li
+            = link_to event_staff_guidelines_notifications_path do
+              %i.fa.fa-list
+              %span Guidelines
+          %li
+            = link_to event_staff_speaker_email_notifications_path do
+              %i.fa.fa-envelope-o
+              %span Speaker Emails

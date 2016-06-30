@@ -1,0 +1,29 @@
+.row
+  .col-sm-12
+    .page-header.clearfix
+      .btn-nav.pull-right
+        = link_to 'New Event Track', new_event_staff_track_path(@event), class: "btn btn-primary"
+      %h1 Event Tracks
+
+.row
+  .col-sm-12
+    - if @tracks.any?
+      %table.table.table-striped
+        %thead
+          %tr
+            %th Name
+            %th Description
+            %th Guidelines
+            %th{colspan: '2'} Actions
+        %tbody
+          - @tracks.each do |t|
+            %tr
+              %td= t.name
+              %td= truncate(t.description, length: 60)
+              %td= truncate(t.guidelines, length: 80)
+              %td.action-edit
+                = link_to 'Edit', edit_event_staff_track_path(@event, t), class: "btn btn-primary"
+              %td.action-destroy
+                = link_to 'Destroy', event_staff_track_path(@event, t), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"
+    -else
+      %p No tracks defined for this event.

@@ -4,21 +4,25 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-
-  helper_method :current_user
   helper_method :user_signed_in?
   helper_method :reviewer?
+  helper_method :organizer?
 
   layout 'application'
   decorates_assigned :event
 
-  private
-  def current_user
-    @current_user ||= Person.find_by(id: session[:uid])
+  def after_sign_in_path_for(resource)
+    resource.complete? ? root_path : edit_profile_path
   end
+
+  private
 
   def reviewer?
     @is_reviewer ||= current_user.reviewer?
+  end
+
+  def organizer?
+    @is_organizer ||= current_user.organizer?
   end
 
   def user_signed_in?
@@ -34,12 +38,12 @@ class ApplicationController < ActionController::Base
         session[:target] = request.path
       end
       flash[:danger] = "You must be signed in to access this page. If you haven't created an account, please create one."
-      redirect_to new_session_url
+      redirect_to new_user_session_url
     end
   end
 
   def require_event
-    @event = Event.find_by!(slug: params[:slug])
+    @event = Event.find_by!(slug: params[:event_slug] || params[:slug])
   end
 
   def require_proposal
@@ -47,7 +51,11 @@ class ApplicationController < ActionController::Base
   end
 
   def event_params
-    params.require(:event).permit(:name, :contact_email, :slug, :url, :valid_proposal_tags, :valid_review_tags, :custom_fields_string, :state, :guidelines, :closes_at, :speaker_notification_emails, :accept, :reject, :waitlist, :opens_at, :start_date, :end_date)
+    params.require(:event).permit(
+        :name, :contact_email, :slug, :url, :valid_proposal_tags,
+        :valid_review_tags, :custom_fields_string, :state, :guidelines,
+        :closes_at, :speaker_notification_emails, :accept, :reject,
+        :waitlist, :opens_at, :start_date, :end_date)
   end
 
   def set_event

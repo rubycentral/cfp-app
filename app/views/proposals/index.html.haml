@@ -13,7 +13,7 @@
         .col-md-7
           %h1.inline-block
             - if event.url?
-              = link_to event.name, "http://#{event.url}", target: 'blank', class: 'event-title'
+              = link_to event.name, "#{event.url}", target: 'blank', class: 'event-title'
             - else
               = event.name
 

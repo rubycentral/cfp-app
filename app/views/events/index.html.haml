@@ -1,7 +1,10 @@
 - events.each do |event|
   .event
     %h1
-      -if current_user
-        = link_to(event, event_path(event.slug))
+      - if event.url?
+        = link_to event.name, "#{event.url}", target: 'blank', class: 'event-title'
+      - else
+        = event.name
       %small= event.status
-    = event.path_for(current_user)
+
+    %span= link_to 'View Guidelines', event_path(event.slug), class: 'guidelines-link'

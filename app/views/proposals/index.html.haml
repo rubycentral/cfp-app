@@ -20,7 +20,7 @@
           %span= link_to 'View Guidelines', event_path(event.slug), class: 'guidelines-link'
 
           %h4.margin-bottom
-            = event.start_date.strftime("%a %b %d") + " - " + event.end_date.strftime("%a %b %d")
+            = event.date_range
 
         .col-md-5.margin-top
           - if event.open?

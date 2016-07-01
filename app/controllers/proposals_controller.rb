@@ -62,7 +62,8 @@ class ProposalsController < ApplicationController
     session[:event_id] = event.id
 
     render locals: {
-      invitations: @proposal.invitations.not_accepted.decorate
+      invitations: @proposal.invitations.not_accepted.decorate,
+      event: @proposal.event.decorate
     }
   end
 

@@ -1,9 +1,5 @@
 module ApplicationHelper
 
-  def current_event
-    @current_event ||= Event.find_by(id: session[:event_id]) if session[:event_id]
-  end
-
   def title
     if @title.blank?
       "CFPApp"

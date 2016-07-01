@@ -7,19 +7,19 @@ feature "Listing events for different roles" do
   let(:organizer) { create(:user) }
 
   context "As a regular user" do
-    scenario "the user should see a link to to the proposals for an event" do
+    scenario "the user should see a link to the guidelines page for an event" do
       login_as(normal_user)
       visit events_path
-      expect(page).to have_link('1 proposal', href: event_path(event.slug))
+      expect(page).to have_link("View #{event.name}'s Guidelines", href: event_path(event.slug))
     end
   end
 
   context "As an organizer" do
-    scenario "the organizer should see a link to the index for managing proposals" do
+    scenario "the organizer should see a link to the guidelines page for an event" do
       create(:event_teammate, role: 'organizer', user: organizer)
       login_as(organizer)
       visit events_path
-      expect(page).to have_link('1 proposal', href: event_staff_proposals_path(event))
+      expect(page).to have_link("View #{event.name}'s Guidelines", href: event_path(event.slug))
     end
   end
 

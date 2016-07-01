@@ -29,7 +29,7 @@
                 %i.fa.fa-file-text
                 %span My Proposals
 
-          - if (current_user.reviewer? || current_user.organizer?) && event
+          - if event && event_staff?
             - if event.id != nil && !event.archived?
               %li{class: "#{request.path == event_staff_proposals_path(event) ? 'active' : ''}"}
                 = link_to event_staff_proposals_path(event) do

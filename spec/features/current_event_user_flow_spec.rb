@@ -40,20 +40,12 @@ feature "A user sees correct information for the current event and their role" d
     within ".navbar" do
       expect(page).to have_link("My Proposals")
     end
-
-    visit proposals_path
-    within ".navbar" do
-      expect(page).to have_link(event_1.name)
-    end
-
-    visit notifications_path
-    within ".navbar" do
-      expect(page).to have_link(event_1.name)
-    end
-
-    visit profile_path
-    within ".navbar" do
-      expect(page).to have_link(event_1.name)
+    
+    [proposals_path, notifications_path, profile_path].each do |path|
+      visit path
+      within ".navbar" do
+        expect(page).to have_link(event_1.name)
+      end
     end
   end
 
@@ -151,44 +143,49 @@ feature "A user sees correct information for the current event and their role" d
   end
 
   scenario "User flow and navbar layout for a reviewer" do
-    pending
     event_1 = create(:event, state: "open")
     event_2 = create(:event, state: "open")
     proposal = create(:proposal, :with_reviewer_public_comment)
     create(:event_teammate, :reviewer, user: reviewer_user, event: event_1)
-    create(:event_teammate, :reviewer, user: reviewer_user, event: event_2)
 
     signin(reviewer_user.email, reviewer_user.password)
 
-    click_on(event_1.name)
+    click_on "View #{event_1.name}'s Guidelines"
 
     within ".navbar" do
-      expect(page).to have_content(event_1.name)
+      expect(page).to have_link(event_1.name)
       expect(page).to have_link(reviewer_user.name)
       expect(page).to_not have_link("My Proposals")
       expect(page).to have_link("", href: "/notifications")
       expect(page).to have_content("Event Proposals")
     end
 
-
-    reviewer_user.proposals << proposal
-    visit event_staff_path(event_2)
+    click_on "Event Proposals"
 
     within ".navbar" do
-      expect(page).to have_content("My Proposals")
-      expect(page).to have_content("Event Proposals")
+      expect(page).to have_link(event_1.name)
     end
 
-    visit event_staff_path(event_1)
+    within ".subnavbar" do
+      expect(page).to have_content("Dashboard")
+      expect(page).to have_content("Info")
+      expect(page).to have_content("Team")
+      expect(page).to have_content("Config")
+      expect(page).to have_content("Guidelines")
+      expect(page).to have_content("Speaker Emails")
+    end
+
+    visit root_path
+
+    click_on "View #{event_2.name}'s Guidelines"
 
     within ".navbar" do
-      expect(page).to have_content("My Proposals")
-      expect(page).to have_content("Event Proposals")
+      expect(page).to have_link(event_2.name)
+      expect(page).to have_link(reviewer_user.name)
+      expect(page).to_not have_link("My Proposals")
+      expect(page).to have_link("", href: "/notifications")
+      expect(page).to_not have_content("Event Proposals")
     end
-
-    click_on("Event Proposals")
-    expect(page).to have_content(event_1.name)
-    expect(current_path).to eq(event_staff_proposals_path(event_1))
   end
 
   scenario "User flow for an organizer" do

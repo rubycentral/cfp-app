@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   helper_method :user_signed_in?
   helper_method :reviewer?
   helper_method :organizer?
+  helper_method :event_staff?
 
   layout 'application'
   decorates_assigned :event
@@ -24,6 +25,10 @@ class ApplicationController < ActionController::Base
 
   def reviewer?
     @is_reviewer ||= current_user.reviewer?
+  end
+
+  def event_staff?
+    event.event_teammates.where(user_id: current_user.id).length > 0
   end
 
   def organizer?

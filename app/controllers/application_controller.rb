@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  helper_method :current_event
   helper_method :user_signed_in?
   helper_method :reviewer?
   helper_method :organizer?
@@ -16,6 +17,10 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def current_event
+    @current_event ||= Event.find_by(id: session[:event_id]) if session[:event_id]
+  end
 
   def reviewer?
     @is_reviewer ||= current_user.reviewer?

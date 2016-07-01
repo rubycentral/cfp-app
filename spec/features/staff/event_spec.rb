@@ -30,13 +30,24 @@ feature "Event Dashboard" do
     it "can create a new event" do
       visit new_admin_event_path
       fill_in "Name", with: "My Other Event"
+      fill_in "Slug", with: "otherevent"
       fill_in "Contact email", with: "me@example.com"
       fill_in "Start date", with: DateTime.now + 10.days
       fill_in "End date", with: DateTime.now + 15.days
       fill_in "Closes at", with: DateTime.now + 15.days
-      click_button 'Save'
+      click_button "Save"
       admin_user.reload
       expect(admin_user.organizer_events.last.name).to eql("My Other Event")
+    end
+
+    it "must provide correct url syntax if a url is given" do
+      visit new_admin_event_path
+      fill_in "Name", with: "All About Donut Holes"
+      fill_in "Slug", with: "donutholes"
+      fill_in "URL", with: "www.donutholes.com"
+      click_button "Save"
+
+      expect(page).to have_content "must start with http:// or https://"
     end
 
     it "can edit an event" do

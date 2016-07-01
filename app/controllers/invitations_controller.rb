@@ -28,7 +28,8 @@ class InvitationsController < ApplicationController
   def show
     render locals: {
       proposal: @invitation.proposal.decorate,
-      invitation: @invitation.decorate
+      invitation: @invitation.decorate,
+      event: @invitation.proposal.event.decorate
     }
   end
 

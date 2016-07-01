@@ -4,7 +4,7 @@
       .share.pull-right= event.tweet_button
       %h1
         - if event.url?
-          = link_to event.name, "http://#{event.url}", target: 'blank', class: 'event-title'
+          = link_to event.name, "#{event.url}", target: 'blank', class: 'event-title'
         - else
           = event.name
 

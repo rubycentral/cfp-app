@@ -18,17 +18,16 @@ class Event < ActiveRecord::Base
 
   accepts_nested_attributes_for :proposals
 
-
   serialize :proposal_tags, Array
   serialize :review_tags, Array
   serialize :custom_fields, Array
-
 
   scope :recent, -> { order('name ASC') }
   scope :live, -> { where("state = 'open' and (closes_at is null or closes_at > ?)", Time.current).order('closes_at ASC') }
 
   validates :name, presence: true
   validates :slug, presence: true, uniqueness: true
+  validate :url_must_be_valid, if: :url?
 
   before_validation :generate_slug
   before_save :update_closes_at_if_manually_closed
@@ -36,6 +35,7 @@ class Event < ActiveRecord::Base
   STATUSES = { open: 'open',
                draft: 'draft',
                closed: 'closed' }
+
   def to_param
     slug
   end
@@ -151,6 +151,14 @@ class Event < ActiveRecord::Base
     start_date + (conference_day - 1).days
   end
 
+  def url_must_be_valid
+    uri = URI.parse(url)
+    unless uri.kind_of?(URI::HTTP) || uri.kind_of?(URI::HTTPS)
+      errors.add(:url, "must start with http:// or https://")
+    end
+  rescue URI::InvalidURIError
+    errors.add(:url, "must be valid")
+  end
 
   private
 

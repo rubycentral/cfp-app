@@ -11,7 +11,7 @@
             %strong= event.closes_at(:long_with_zone)
         %h1
           - if event.url?
-            = link_to event.name, "http://#{event.url}", target: 'blank', class: 'event-title'
+            = link_to event.name, "#{event.url}", target: 'blank', class: 'event-title'
           - else
             = event.name
         %h4

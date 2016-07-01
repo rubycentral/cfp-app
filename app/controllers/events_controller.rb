@@ -8,5 +8,6 @@ class EventsController < ApplicationController
   end
 
   def show
+    session[:event_id] = event.id
   end
 end

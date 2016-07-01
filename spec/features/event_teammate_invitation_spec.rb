@@ -11,7 +11,6 @@ feature 'EventTeammate Invitations' do
     it "can accept the invitation" do
       visit accept_event_teammate_invitation_path(invitation.slug, invitation.token)
       expect(page).to have_text('You successfully accepted the invitation')
-      expect(page).to have_text('0 proposals')
     end
 
     context "User receives incorrect or missing link in event_teammate invitation email" do

@@ -13,14 +13,14 @@
         .col-md-7
           %h1.inline-block
             - if event.url?
-              = link_to event.name, "http://#{event.url}", target: 'blank', class: 'event-title'
+              = link_to event.name, "#{event.url}", target: 'blank', class: 'event-title'
             - else
               = event.name
 
           %span= link_to 'View Guidelines', event_path(event.slug), class: 'guidelines-link'
 
           %h4.margin-bottom
-            = event.start_date.strftime("%a %b %d") + " - " + event.end_date.strftime("%a %b %d")
+            = event.date_range
 
         .col-md-5.margin-top
           - if event.open?

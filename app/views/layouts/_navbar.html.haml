@@ -5,8 +5,8 @@
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      - if event && event.slug
-        = link_to event.name, event_path(slug: event.slug), class: 'navbar-brand'
+      - if current_event && current_event.slug
+        = link_to current_event.name, event_path(current_event), class: 'navbar-brand'
       - else
         = link_to "#{Rails.application.class.parent_name}", events_path, class: 'navbar-brand'
 

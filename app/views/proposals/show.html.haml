@@ -3,8 +3,9 @@
     .row
       .col-md-8
         %h3
-          = link_to(proposal.event.name, event_path(slug: proposal.event.slug) ) + ","
-          %span.label.label-info= proposal.event.start_date.to_s(:month_day_year)
+          = link_to(event.name, event_path(event))
+        %span.text-info= event.date_range
+
         %h1
           = proposal.title
           %small

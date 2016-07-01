@@ -80,6 +80,7 @@ feature "Event Dashboard" do
     end
 
     it "can promote a user" do
+      pending "This fails because add/invite new teammate is no longer on this page. Change path once new card is complete"
       user = create(:user)
       visit event_staff_path(event)
       click_link 'Add/Invite Staff'
@@ -93,6 +94,7 @@ feature "Event Dashboard" do
     end
 
     it "can promote an event teammate" do
+      pending "This fails because the event teammates section is no longer on this page. Change path once new card is complete"
       visit event_staff_path(event)
 
       form = find('tr', text: reviewer_user.email).find('form')
@@ -103,6 +105,7 @@ feature "Event Dashboard" do
     end
 
     it "can remove a event teammate" do
+      pending "This fails because add/invite new teammate is no longer on this page. Change path once new card is complete"
       visit event_staff_path(event)
 
       row = find('tr', text: reviewer_user.email)

@@ -1,5 +1,23 @@
 .event {
-
+  .info-bar {
+    h4 {
+      line-height: 1.35em;
+    }
+  }
+  .checklist {
+    a {
+      color: $white;
+    }
+    .set {
+      background-color: $brand-success;
+    }
+    .missing {
+      background-color: $brand-danger;
+    }
+    .optional a {
+      color: $black;
+    }
+  }
 }
 
 

@@ -8,6 +8,7 @@ SimpleForm.setup do |config|
 
     b.use :html5
     b.use :placeholder
+    b.optional :tooltip
     b.use :label, class: 'control-label'
     b.optional :maxlength
 
@@ -21,6 +22,7 @@ SimpleForm.setup do |config|
   config.wrappers :vertical_file_input, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
     b.use :html5
     b.use :placeholder
+    b.optional :tooltip
     b.use :label, class: 'control-label'
 
     b.wrapper tag: 'div' do |ba|
@@ -33,6 +35,7 @@ SimpleForm.setup do |config|
   config.wrappers :vertical_boolean, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
     b.use :html5
     b.use :placeholder
+    b.optional :tooltip
 
     b.wrapper tag: 'div', class: 'checkbox' do |ba|
       ba.use :label_input
@@ -45,6 +48,7 @@ SimpleForm.setup do |config|
   config.wrappers :vertical_radio_and_checkboxes, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
     b.use :html5
     b.use :placeholder
+    b.optional :tooltip
     b.use :label_input
     b.use :error, wrap_with: { tag: 'span', class: 'help-block' }
     b.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }

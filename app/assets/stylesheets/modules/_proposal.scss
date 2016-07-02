@@ -12,9 +12,16 @@
   margin-bottom: 1em;
 }
 .speaker {
-  margin-top: 2em;
-  border-bottom: 1px solid $gray-lighter;
+  border-bottom: 1px solid $gray-light;
+  margin-top: 1em;
+  > h1, > h2, > h3, > h4 {
+    margin-top: 0;
+  }
+  + .form-submit {
+    border-top: none;
+  }
 }
+
 .speaker img, .speaker-image {
   margin: 0 0.5em 0.8em 0;
 }

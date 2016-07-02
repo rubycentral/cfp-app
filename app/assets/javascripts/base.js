@@ -1,6 +1,6 @@
 $(document).ready(function() {
   $("#gravatar-alert").tooltip();
-  $("#rating-tooltip").tooltip({html: true});
+  $('body').tooltip({selector: "[data-toggle~='tooltip']", html: true})
 });
 
 // Datatable extension for reseting sort order

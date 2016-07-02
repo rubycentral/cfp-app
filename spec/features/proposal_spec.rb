@@ -4,8 +4,10 @@ feature "Proposals" do
   let!(:user) { create(:user) }
   let!(:event) { create(:event, state: 'open') }
   let!(:session_type) { create(:session_type, name: 'Only type')}
+  let(:session_type2) { create(:session_type, name: '2nd type')}
 
   let(:go_to_new_proposal) { visit new_event_proposal_path(event_slug: event.slug) }
+
   let(:create_proposal) do
     fill_in 'Title', with: "General Principles Derived by Magic from My Personal Experience"
     fill_in 'Abstract', with: "Because certain things happened to me, they will happen in just the same manner to everyone."
@@ -16,16 +18,64 @@ feature "Proposals" do
     click_button 'Save'
   end
 
+  let(:create_invalid_proposal) do
+    fill_in 'proposal_speakers_attributes_0_bio', with: "I am a great speaker!."
+    fill_in 'Pitch', with: "You live but once; you might as well be amusing. - Coco Chanel"
+    fill_in 'Details', with: "Plans are nothing; planning is everything. - Dwight D. Eisenhower"
+    click_button 'Save'
+  end
+
   before { login_as(user) }
   after { ActionMailer::Base.deliveries.clear }
 
   context "when submitting" do
+    context "with invalid proposal" do
+      before :each do
+        go_to_new_proposal
+        create_invalid_proposal
+      end
+
+      it "submits unsuccessfully" do
+        expect(page).to have_text("There was a problem saving your proposal; please review the form for issues and try again.")
+      end
+
+      it "shows Title validation if blank on submit" do
+        expect(page).to have_text("Title *can't be blank")
+      end
+
+      it "shows Abstract validation if blank on submit" do
+        expect(page).to have_text("Abstract *can't be blank")
+      end
+    end
+
+    context "with Session Types" do
+      #Default if one Session Type that it is auto-selected
+      it "doesn't show session type validation if one session type" do
+        go_to_new_proposal
+        create_invalid_proposal
+        expect(page).to_not have_text("Session type *None selected Only type 2nd typecan't be blank")
+      end
+
+      it "shows Session Type validation if two session types" do
+        session_type2.save!
+        go_to_new_proposal
+        create_invalid_proposal
+        expect(page).to have_text("Session type *None selected Only type 2nd typecan't be blank")
+      end
+    end
+
     context "with an existing bio" do
-      before { user.update_attribute(:bio, 'bio') }
+      before { user.update_attribute(:name, 'new speaker') }
+      before { user.update_attribute(:bio, 'new bio') }
 
       it "shows the user's bio in the bio field" do
         go_to_new_proposal
-        expect(page).to have_field('Bio', with: 'bio')
+        expect(page).to have_field('Bio', with: 'new bio')
+      end
+
+      it "shows the user's name in the name field" do
+        go_to_new_proposal
+        expect(page).to have_field('Name', disabled: true, with: 'new speaker')
       end
     end
 
@@ -60,6 +110,7 @@ feature "Proposals" do
       proposal = user.proposals.first
 
       visit edit_event_proposal_path(event_slug: proposal.event.slug, uuid: proposal)
+      expect(page).to_not have_text("A new title")
       fill_in 'Title', with: "A new title"
       click_button 'Save'
       expect(page).to have_text("A new title")

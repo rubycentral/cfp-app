@@ -36,7 +36,6 @@ best_track = seed_event.tracks.create(name: 'Best Track', description: 'Better t
 # rooms
 
 
-
 # Event Team
 seed_event.event_teammates.create(user: organizer, role: "organizer", notifications: false)
 seed_event.event_teammates.create(user: track_director, role: "organizer") # < update to program team

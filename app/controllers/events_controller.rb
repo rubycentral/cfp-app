@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  skip_before_action :current_event, only: [:index]
   before_filter :require_event, only: [:show]
 
   def index
@@ -8,6 +9,5 @@ class EventsController < ApplicationController
   end
 
   def show
-    session[:event_id] = event.id
   end
 end

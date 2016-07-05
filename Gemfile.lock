@@ -402,8 +402,5 @@ DEPENDENCIES
   web-console (~> 2.0)
   zeroclipboard-rails
 
-RUBY VERSION
-   ruby 2.3.0p0
-
 BUNDLED WITH
    1.12.5

@@ -12,14 +12,13 @@ class Staff::ApplicationController < ApplicationController
         @event = current_user.reviewer_events.where(slug: params[:event_slug]).first
       end
     end
-
   end
 
   # Must be an organizer on @event
   def require_staff
     unless @event
       session[:target] = request.path
-      flash[:danger] = "You must be signed in as staff to access this page."
+      flash[:danger] = "You must be signed in as event staff to access this page."
       redirect_to root_path
     end
   end

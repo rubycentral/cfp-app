@@ -1,0 +1,4 @@
+%li{class: "#{request.path == event_staff_proposals_path(current_event) ? 'active' : ''}"}
+  = link_to event_staff_proposals_path(current_event) do
+    %i.fa.fa-file-text
+    %span Event Proposals

@@ -31,7 +31,10 @@ Rails.application.routes.draw do
 
       get :edit
       get '/speaker-emails' => 'events#speaker_emails', as: :speaker_email_notifications
-      get '/guidelines' => 'events#guidelines', as: :guidelines_notifications
+
+      get :guidelines
+      patch :update_guidelines
+
       get :show
       patch :update
       get 'custom-fields', as: :custom_fields

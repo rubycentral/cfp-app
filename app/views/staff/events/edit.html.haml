@@ -8,5 +8,40 @@
   .col-md-12
     %span.required_notification * Required
     = simple_form_for event, url: event_staff_update_path(event), html: {role: 'form'} do |f|
-      = render partial: "admin/events/form", locals: {f: f}
-      = render partial: "admin/events/tags_form", locals: {f: f}
+      .row
+        %fieldset.col-md-6
+          %h2 Event Information
+          = f.input :name, placeholder: 'Name of the event'
+          = f.input :slug, placeholder: 'Slug for the event URL, may be left blank once event name is filled out',
+            hint: "The slug will be used in public facing URLs. If you leave this field blank, a slug will be generated based on the name."
+          = f.input :url, label: "URL", placeholder: 'Event\'s URL'
+          = f.input :contact_email, class: 'form-control', placeholder: 'Event email'
+        %fieldset.col-md-6
+          %h3 CFP Dates
+          .form-group.form-inline
+            = f.label :opens_at
+            = f.object.cfp_opens
+            = f.text_field :opens_at, class: 'form-control', value: (f.object.opens_at.blank? ? "" : f.object.opens_at.to_s(:long_with_zone) )
+            %p.help-block Optional. You can manually open the CFP when ready.
+          .form-group.form-inline
+            = f.label :closes_at
+            -if f.object.cfp_closes.present?
+              %span.label.label-info= f.object.cfp_closes
+              %br/
+            = f.text_field :closes_at, class: 'form-control', value: (f.object.closes_at.blank? ? "" : f.object.closes_at.to_s(:long_with_zone) )
+            %p.help-block When the CFP will stop taking submissions. Must be set before opening the CFP.
+          %h3 Event Dates
+          .form-group.form-inline
+            = f.label :start_date
+            = f.object.start_date.to_s(:month_day_year) unless f.object.start_date.blank?
+            = f.text_field :start_date, class: 'form-control', value: (f.object.start_date.blank? ? "" : f.object.start_date.to_s(:month_day_year) )
+            %p.help-block First day of your event
+          .form-group.form-inline
+            = f.label :end_date
+            = f.object.end_date.to_s(:month_day_year) unless f.object.end_date.blank?
+            = f.text_field :end_date, class: 'form-control', value: (f.object.end_date.blank? ? "" : f.object.end_date.to_s(:month_day_year) )
+            %p.help-block Last day of your event
+
+      .row.col-md-12.form-submit
+        =submit_tag("Save", class: "pull-right btn btn-success", type: "submit")
+        = link_to "Cancel", event_staff_info_path(event), {:class=>"cancel-form pull-right btn btn-danger"}

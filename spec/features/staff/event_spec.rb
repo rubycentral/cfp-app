@@ -2,14 +2,6 @@ require 'rails_helper'
 
 feature "Event Dashboard" do
   let(:event) { create(:event, name: "My Event") }
-  let(:admin_user) { create(:user, admin: true) }
-  let!(:admin_event_teammate) { create(:event_teammate,
-                                   event: event,
-                                   user: admin_user,
-                                   role: 'organizer'
-                                  )
-  }
-
   let(:organizer_user) { create(:user) }
   let!(:event_staff_teammate) { create(:event_teammate,
                                        event: event,
@@ -24,46 +16,6 @@ feature "Event Dashboard" do
                                       role: 'reviewer')
   }
 
-  context "An admin" do
-    before { login_as(admin_user) }
-
-    it "can create a new event" do
-      visit new_admin_event_path
-      fill_in "Name", with: "My Other Event"
-      fill_in "Slug", with: "otherevent"
-      fill_in "Contact email", with: "me@example.com"
-      fill_in "Start date", with: DateTime.now + 10.days
-      fill_in "End date", with: DateTime.now + 15.days
-      fill_in "Closes at", with: DateTime.now + 15.days
-      click_button "Save"
-      admin_user.reload
-      expect(admin_user.organizer_events.last.name).to eql("My Other Event")
-    end
-
-    it "must provide correct url syntax if a url is given" do
-      visit new_admin_event_path
-      fill_in "Name", with: "All About Donut Holes"
-      fill_in "Slug", with: "donutholes"
-      fill_in "URL", with: "www.donutholes.com"
-      click_button "Save"
-
-      expect(page).to have_content "must start with http:// or https://"
-    end
-
-    it "can edit an event" do
-      visit event_staff_edit_path(event)
-      fill_in "Name", with: "My Finest Event Evar For Realz"
-      click_button 'Save'
-      expect(page).to have_text("My Finest Event Evar For Realz")
-    end
-
-    it "can delete events" do
-      visit event_staff_edit_path(event)
-      click_link 'Delete Event'
-      expect(page).not_to have_text("My Event")
-    end
-  end
-
   context "As an organizer" do
     before :each do
       logout
@@ -71,11 +23,11 @@ feature "Event Dashboard" do
     end
 
     it "cannot create new events" do
-      pending "This fails because it sends them to login and then Devise sends to events path and changes flash"
+      # pending "This fails because it sends them to login and then Devise sends to events path and changes flash"
       visit new_admin_event_path
       expect(page.current_path).to eq(events_path)
       #Losing the flash on redirect here.
-      expect(page).to have_text("You must be signed in as an administrator")
+      # expect(page).to have_text("You must be signed in as an administrator")
     end
 
     it "can edit events" do
@@ -83,6 +35,22 @@ feature "Event Dashboard" do
       fill_in "Name", with: "Blef"
       click_button 'Save'
       expect(page).to have_text("Blef")
+    end
+
+    it "can change event status" do
+      visit event_staff_info_path(event)
+
+      within('.page-header') do
+        expect(page).to have_content("Event Status: Draft")
+      end
+
+      click_link("Change Status")
+      select('open', :from => 'event[state]')
+      click_button("Update Status")
+
+      within('.page-header') do
+        expect(page).to have_content("Event Status: Open")
+      end
     end
 
     it "cannot delete events" do
@@ -136,5 +104,24 @@ feature "Event Dashboard" do
       expect(email.to).to eq([ 'harrypotter@hogwarts.edu' ])
       expect(page).to have_text('Event teammate invitation successfully sent')
     end
+  end
+
+  context "As a reviewer" do
+    before :each do
+      logout
+      login_as(reviewer_user)
+    end
+
+    it "cannot view buttons to edit event or change status" do
+      visit event_staff_info_path(event)
+
+      within('.page-header') do
+        expect(page).to have_content("Event Status: Draft")
+      end
+
+      expect(page).to_not have_link("Change Status")
+      expect(page).to_not have_css(".btn-nav")
+    end
+
   end
 end

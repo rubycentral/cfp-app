@@ -1,16 +1,32 @@
-class EventPolicy
-  attr_reader :current_user, :model
+class EventPolicy < ApplicationPolicy
+  # class Scope
+  #   def resolve
+  #     scope
+  #   end
+  # end
 
-  def initialize(current_user, model)
-    @current_user = current_user
+  def initialize(user, model)
+    @current_user = user
     @event = model
   end
 
   def index?
+    @current_user.present? || @current_user.reviewer_events.where(slug: @event.slug).present?
+  end
+
+  def new?
     @current_user.admin? || @current_user.organizer_for_event?(@event)
   end
 
+  def create?
+    @current_user.admin?
+  end
+
   def show?
+    @event.present?
+  end
+
+  def edit?
     @current_user.admin? || @current_user.organizer_for_event?(@event)
   end
 
@@ -26,30 +42,6 @@ end
 
 
   # def index?
-  #   false
-  # end
-
-  # def show?
-  #   scope.where(:id => record.id).exists?
-  # end
-
-  # def create?
-  #   false
-  # end
-
-  # def new?
-  #   create?
-  # end
-
-  # def update?
-  #   false
-  # end
-
-  # def edit?
-  #   update?
-  # end
-
-  # def destroy?
   #   false
   # end
 

@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   include Pundit
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  #after_action :verify_authorized, except: :index
+  #after_action :verify_policy_scoped, only: :index
 
   require "csv"
   # Prevent CSRF attacks by raising an exception.

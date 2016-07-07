@@ -142,7 +142,7 @@ feature "A user sees correct information for the current event and their role" d
 
   end
 
-  scenario "User flow and navbar layout for a reviewer" do
+  scenario "Reviewer flow and navbar layout" do
     event_1 = create(:event, state: "open")
     event_2 = create(:event, state: "open")
     create(:event_teammate, :reviewer, user: reviewer_user, event: event_1)

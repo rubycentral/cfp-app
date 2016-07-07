@@ -48,8 +48,9 @@ Rails.application.routes.draw do
 
       get '/speaker-emails' => 'events#speaker_emails', as: :speaker_email_notifications
 
-      resources :event_teammate_invitations, except: [:new, :edit, :update, :show]
-      resources :event_teammates, only: [:create, :destroy, :update] do
+      resources :team
+
+      resources :team_invitations, except: [:new, :edit, :update, :show, :index] do
         collection { get :emails, defaults: {format: :json} }
       end
 

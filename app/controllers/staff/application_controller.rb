@@ -1,22 +1,12 @@
 class Staff::ApplicationController < ApplicationController
   before_action :require_event
-  before_filter :require_staff
+  before_action :require_staff
 
   private
 
-  def require_event
-    if current_user
-      if current_user.admin?
-        @event = Event.where(slug: params[:event_slug]).first
-      else
-        @event = current_user.reviewer_events.where(slug: params[:event_slug]).first
-      end
-    end
-  end
-
   # Must be an organizer on @event
   def require_staff
-    unless @event
+    unless event_staff?(current_event)
       session[:target] = request.path
       flash[:danger] = "You must be signed in as event staff to access this page."
       redirect_to root_path

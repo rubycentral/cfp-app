@@ -50,4 +50,31 @@
               %span Dashboard
 
 - if params[:controller].include?("staff") && user_signed_in?
-  = render partial: "layouts/nav/staff_subnav"
+  .subnavbar
+    .subnavbar-inner
+      .container-fluid
+        %ul.mainnav
+          %li
+            = link_to event_staff_path do
+              %i.fa.fa-dashboard
+              %span Dashboard
+          %li
+            = link_to event_staff_info_path do
+              %i.fa.fa-info-circle
+              %span Info
+          %li
+            = link_to event_staff_team_index_path do
+              %i.fa.fa-users
+              %span Team
+          %li
+            = link_to event_staff_config_path do
+              %i.fa.fa-wrench
+              %span Config
+          %li
+            = link_to event_staff_guidelines_path do
+              %i.fa.fa-list
+              %span Guidelines
+          %li
+            = link_to event_staff_speaker_email_notifications_path do
+              %i.fa.fa-envelope-o
+              %span Speaker Emails

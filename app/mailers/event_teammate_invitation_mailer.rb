@@ -9,4 +9,3 @@ class EventTeammateInvitationMailer < ApplicationMailer
                   subject: "You've been invited to participate in a CFP"
   end
 end
-

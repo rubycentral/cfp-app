@@ -1,7 +1,7 @@
 %div{ id: "new-event-teammate-invitation", class: 'modal fade' }
   .modal-dialog
     .modal-content
-      = simple_form_for(:event_teammate_invitation, url: event_staff_event_teammate_invitations_path(event)) do |f|
+      = simple_form_for(:team_invitation, url: event_staff_team_invitations_path(event)) do |f|
         .modal-header
           %h3 Invite a new event teammate
         .modal-body

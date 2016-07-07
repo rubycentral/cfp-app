@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::Base
+  include Pundit
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
   require "csv"
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -58,6 +61,11 @@ class ApplicationController < ActionController::Base
 
   def require_proposal
     @proposal = @event.proposals.find_by!(uuid: params[:proposal_uuid] || params[:uuid])
+  end
+
+  def user_not_authorized
+    flash[:alert] = "You are not authorized to perform this action."
+    redirect_to(request.referrer || root_path)
   end
 
   def event_params

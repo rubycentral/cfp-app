@@ -230,6 +230,8 @@ GEM
       interception (>= 0.5)
       pry
     puma (2.15.3)
+    pundit (1.1.0)
+      activesupport (>= 3.0.0)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rack (1.6.4)
@@ -311,7 +313,7 @@ GEM
       actionpack (~> 4.0)
       activemodel (~> 4.0)
     slop (3.6.0)
-    spring (1.6.2)
+    spring (1.7.2)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
     sprockets (3.6.1)
@@ -381,6 +383,7 @@ DEPENDENCIES
   pry-remote
   pry-rescue
   puma (~> 2.13)
+  pundit
   quiet_assets
   rack-mini-profiler
   rack-timeout (~> 0.2.4)
@@ -399,5 +402,8 @@ DEPENDENCIES
   web-console (~> 2.0)
   zeroclipboard-rails
 
+RUBY VERSION
+   ruby 2.3.0p0
+
 BUNDLED WITH
-   1.11.2
+   1.12.5

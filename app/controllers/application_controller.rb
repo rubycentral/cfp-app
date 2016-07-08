@@ -20,8 +20,20 @@ class ApplicationController < ActionController::Base
   layout 'application'
   decorates_assigned :event
 
-  def after_sign_in_path_for(resource)
-    resource.complete? ? root_path : edit_profile_path
+  def after_sign_in_path_for(user)
+
+    if !user.complete?
+      edit_profile_path
+    elsif request.referrer.present? && request.referrer != new_user_session_url
+      request.referrer
+    elsif user.admin?
+      admin_events_path
+    elsif user.proposals.any? #speaker
+      proposals_path
+    else
+      root_path
+    end
+
   end
 
   private
@@ -38,7 +50,7 @@ class ApplicationController < ActionController::Base
   def event_staff?(current_event)
     current_event.event_teammates.where(user_id: current_user.id).length > 0
   end
-  
+
   def reviewer?
     @is_reviewer ||= current_user.reviewer?
   end
@@ -89,10 +101,6 @@ class ApplicationController < ActionController::Base
         :valid_review_tags, :custom_fields_string, :state, :guidelines,
         :closes_at, :speaker_notification_emails, :accept, :reject,
         :waitlist, :opens_at, :start_date, :end_date)
-  end
-
-  def set_event
-    @event = Event.find(params[:event_id])
   end
 
   def render_json(object)

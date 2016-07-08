@@ -75,7 +75,7 @@ Rails.application.routes.draw do
 
   #TEMPORARILY ENABLED
   namespace 'reviewer' do
-    resources :events, only: [:show] do
+    resources :events, only: [:show], param: :slug do
       resources :proposals, only: [:index, :show, :update], param: :uuid do
         resources :ratings, only: [:create, :update], defaults: {format: :js}
       end

@@ -19,7 +19,7 @@ class Reviewer::ApplicationController < ApplicationController
   end
 
   def require_event
-    @event = current_user.reviewer_events.where(slug: params[:event_id] || params[:id]).first
+    @event = current_user.reviewer_events.where(slug: params[:event_slug] || params[:slug]).first
   end
 
   # Prevent reviewers from reviewing their own proposals

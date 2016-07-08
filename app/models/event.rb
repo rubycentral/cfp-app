@@ -39,6 +39,7 @@ class Event < ActiveRecord::Base
   def to_param
     slug
   end
+
   with_options on: :update, if: :open? do
     validates :public_session_types, presence: { message: 'A least one public session type must be defined before event can be opened.' }
     validates :guidelines, presence: { message: 'Guidelines must be defined before event can be opened..' }

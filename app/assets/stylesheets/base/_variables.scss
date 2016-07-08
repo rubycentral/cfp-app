@@ -540,8 +540,8 @@ $tooltip-max-width:           200px !default;
 //** Tooltip text color
 $tooltip-color:               #fff !default;
 //** Tooltip background color
-$tooltip-bg:                  #000 !default;
-$tooltip-opacity:             .9 !default;
+$tooltip-bg:                  $brand-primary !default;
+$tooltip-opacity:             .95 !default;
 
 //** Tooltip arrow width
 $tooltip-arrow-width:         5px !default;

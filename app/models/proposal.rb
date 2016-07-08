@@ -17,8 +17,7 @@ class Proposal < ActiveRecord::Base
   belongs_to :session_type
   belongs_to :track
 
-  validates :title, :abstract, presence: true
-  validates :session_type, presence: true
+  validates :title, :abstract, :session_type, presence: true
 
   # This used to be 600, but it's so confusing for users that the browser
   # uses \r\n for newlines and they're over the 600 limit because of

@@ -5,13 +5,13 @@
   .row
     .col-md-6
       %p
-        Read the #{link_to 'guidelines', event_path(event.slug)} to maximize
+        Read the <strong>#{link_to 'guidelines', event_path(event.slug)}</strong> to maximize
         your chance of approval. Refrain from including any information that
         would allow a reviewer to identify you.
       %p
         All fields support
         %a{href: 'https://help.github.com/articles/github-flavored-markdown'}
-          GitHub Flavored Markdown.
+          %strong GitHub Flavored Markdown.
 
 = simple_form_for proposal, url: event_proposals_path(event_id: event) do |f|
   = render partial: 'form', locals: {f: f}

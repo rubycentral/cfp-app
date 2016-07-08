@@ -56,6 +56,25 @@ This will boot up using Foreman and allow the .env file to be read / set for use
     TWITTER_KEY
     TWITTER_SECRET
 
+### User roles
+
+There are five user roles in CFP App. To log in as a user type in development mode, locate the email for each user in `seeds.rb`. The password is the same for each user, and is assigned to the variable `pwd` in the seed file. 
+
+- **Admin:** 
+  - Edit/delete users
+  - Add/archive events 
+  - Automatically an **Organizer** for created events 
+- **Organizer:** 
+  - Edit/view event pages: event dashboard, program, schedule
+  - View event proposals 
+- **Track Director:**
+  - TBD
+- **Reviewer:** 
+  - View/rate anonymous event proposals for an event
+  - Cannot rate own proposals
+- **Speaker:** 
+  - View/edit/delete own proposals
+
 ## Deployment on Heroku
 
 The app was written with a Heroku deployment stack in mind. You can easily deploy the application using the button below, or you can deploy it anywhere assuming you can run Ruby 2.3.0 and Rails 4.2.5 with a postgres database and an SMTP listener.

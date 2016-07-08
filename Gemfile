@@ -29,6 +29,7 @@ gem 'draper'
 gem 'simple_form', '3.1.1'
 gem 'zeroclipboard-rails'
 gem 'responders', '~> 2.0'
+gem 'pundit'
 
 group :production do
   gem 'rails_12factor'

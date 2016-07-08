@@ -23,6 +23,12 @@ FactoryGirl.define do
       end
     end
 
+    trait :program_team do
+      after(:create) do |user|
+        FactoryGirl.create(:event_teammate, :program_team, user: user)
+      end
+    end
+
     factory :admin do
       admin true
     end
@@ -34,6 +40,18 @@ FactoryGirl.define do
 
       after(:create) do |user, evaluator|
         event_teammate = user.organizer_event_teammates.first
+        event_teammate.event = evaluator.event
+        event_teammate.event.save
+      end
+    end
+
+    factory :program_team, traits: [ :program_team ] do
+      transient do
+        event { build(:event) }
+      end
+
+      after(:create) do |user, evaluator|
+        event_teammate = user.reviewer_event_teammates.first
         event_teammate.event = evaluator.event
         event_teammate.event.save
       end

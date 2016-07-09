@@ -13,35 +13,33 @@ class Staff::SessionFormatsController < Staff::ApplicationController
   end
 
   def create
-    session_formate = @event.session_formates.build(session_formate_params)
-    unless session_formate.save
-      flash.now[:warning] = "There was a problem saving your session formate"
+    session_format = @event.session_formats.build(session_format_params)
+    unless session_format.save
+      flash.now[:warning] = "There was a problem saving your session type"
     end
-
     respond_to do |format|
       format.js do
-        render locals: { session_formate: session_formate }
+        render locals: { session_format: session_format }
       end
     end
   end
 
   def update
-    session_formate = SessionFormat.find(params[:id])
-    session_formate.update_attributes(session_formate_params)
+    session_format = SessionFormat.find(params[:id])
+    session_format.update_attributes(session_format_params)
     respond_to do |format|
       format.js do
-        render locals: { session_formate: session_formate }
+        render locals: { session_format: session_format }
       end
     end
   end
 
   def destroy
-    session_formate = @event.session_formates.find(params[:id]).destroy
-
-    flash.now[:info] = "This session formate has been deleted."
+    session_format = @event.session_formats.find(params[:id]).destroy
+    flash.now[:info] = "This session type has been deleted."
     respond_to do |format|
       format.js do
-        render locals: { session_formate: session_formate }
+        render locals: { session_format: session_format }
       end
     end
   end

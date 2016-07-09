@@ -1,0 +1,8 @@
+%li{class: "#{request.path == admin_users_path ? 'active' : ''}"}
+  = link_to admin_users_path do
+    %i.fa.fa-users
+    %span Users
+  %li{class: "#{request.path == admin_events_path ? 'active' : ''}"}
+    =link_to admin_events_path do
+      %i.fa.fa-calendar
+      %span Manage Events

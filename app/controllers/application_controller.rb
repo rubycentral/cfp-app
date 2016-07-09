@@ -15,6 +15,8 @@ class ApplicationController < ActionController::Base
   helper_method :organizer?
   helper_method :event_staff?
 
+  before_action :current_event
+
   layout 'application'
   decorates_assigned :event
 
@@ -25,15 +27,20 @@ class ApplicationController < ActionController::Base
   private
 
   def current_event
-    @current_event ||= Event.find_by(id: session[:event_id]) if session[:event_id]
+    @current_event ||= Event.find_by(id: session[:current_event_id]) if session[:current_event_id]
   end
 
+  def set_current_event(event)
+    @current_event = event
+    session[:current_event_id] = event.id
+  end
+
+  def event_staff?(current_event)
+    current_event.event_teammates.where(user_id: current_user.id).length > 0
+  end
+  
   def reviewer?
     @is_reviewer ||= current_user.reviewer?
-  end
-
-  def event_staff?
-    event.event_teammates.where(user_id: current_user.id).length > 0
   end
 
   def organizer?
@@ -58,7 +65,13 @@ class ApplicationController < ActionController::Base
   end
 
   def require_event
-    @event = Event.find_by!(slug: params[:event_slug] || params[:slug])
+    @event = Event.find_by(slug: params[:event_slug] || params[:slug])
+    if @event
+      set_current_event(event)
+    else
+      flash[:danger] = "Your event could not be found, please check the url."
+      redirect_to events_path
+    end
   end
 
   def require_proposal

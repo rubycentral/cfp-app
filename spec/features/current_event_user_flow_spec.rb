@@ -40,7 +40,7 @@ feature "A user sees correct information for the current event and their role" d
     within ".navbar" do
       expect(page).to have_link("My Proposals")
     end
-    
+
     [proposals_path, notifications_path, profile_path].each do |path|
       visit path
       within ".navbar" do
@@ -145,7 +145,6 @@ feature "A user sees correct information for the current event and their role" d
   scenario "User flow and navbar layout for a reviewer" do
     event_1 = create(:event, state: "open")
     event_2 = create(:event, state: "open")
-    proposal = create(:proposal, :with_reviewer_public_comment)
     create(:event_teammate, :reviewer, user: reviewer_user, event: event_1)
 
     signin(reviewer_user.email, reviewer_user.password)
@@ -177,7 +176,7 @@ feature "A user sees correct information for the current event and their role" d
 
     visit root_path
 
-    click_on "View #{event_2.name}'s Guidelines"
+    visit event_path(event_2.slug)
 
     within ".navbar" do
       expect(page).to have_link(event_2.name)
@@ -190,145 +189,88 @@ feature "A user sees correct information for the current event and their role" d
 
   scenario "User flow for an organizer" do
     event_1 = create(:event, state: "open")
-    event_2 = create(:event, state: "closed")
+    event_2 = create(:event, state: "open")
     proposal = create(:proposal, :with_organizer_public_comment)
-    create(:event_teammate, :organizer, user: organizer_user, event: event_1)
     create(:event_teammate, :organizer, user: organizer_user, event: event_2)
 
     signin(organizer_user.email, organizer_user.password)
 
-    find("h1").click
-
-    within ".navbar" do
-      expect(page).to have_content(event_1.name)
-      expect(page).to have_link("", href: "/notifications")
-      expect(page).to have_link(reviewer_user.name)
-      expect(page).to have_content("Event Proposals")
-      expect(page).to have_content("Program")
-      expect(page).to have_content("Schedule")
-      expect(page).to_not have_link("My Proposals")
-    end
-
-    organizer_user.proposals << proposal
     visit event_path(event_2.slug)
 
     within ".navbar" do
-      expect(page).to have_link("", href: "/notifications")
-      expect(page).to have_content("My Proposals")
+      expect(page).to have_content(event_2.name)
+      expect(page).to_not have_link("My Proposals")
       expect(page).to have_content("Event Proposals")
       expect(page).to have_content("Program")
       expect(page).to have_content("Schedule")
+      expect(page).to have_content("Event Dashboard")
+      expect(page).to have_link("", href: "/notifications")
+      expect(page).to have_link(organizer_user.name)
     end
+
+    click_on "Event Dashboard"
+
+    within ".navbar" do
+      expect(page).to have_content(event_2.name)
+    end
+
+    within ".subnavbar" do
+      expect(page).to have_content("Dashboard")
+      expect(page).to have_content("Info")
+      expect(page).to have_content("Team")
+      expect(page).to have_content("Config")
+      expect(page).to have_content("Guidelines")
+      expect(page).to have_content("Speaker Emails")
+    end
+
+    click_on "Speaker Emails"
+    expect(page).to have_content "Edit #{event_2.name} Speaker Email Notifications"
+
+    organizer_user.proposals << proposal
+    visit event_path(event_1.slug)
+
+    within ".navbar" do
+      expect(page).to have_content(event_1.name)
+      expect(page).to have_content("My Proposals")
+      expect(page).to have_link("", href: "/notifications")
+      expect(page).to_not have_content("Event Proposals")
+      expect(page).to_not have_content("Program")
+      expect(page).to_not have_content("Schedule")
+      expect(page).to_not have_content("Event Dashboard")
+    end
+  end
+
+  scenario "User flow for an admin" do
+    event_1 = create(:event, state: "open")
+    event_2 = create(:event, state: "closed")
+    create(:event_teammate, :organizer, user: admin_user, event: event_1)
+    create(:event_teammate, :organizer,  event: event_2)
+
+    signin(admin_user.email, admin_user.password)
 
     visit event_path(event_1.slug)
 
     within ".navbar" do
-      expect(page).to have_link("", href: "/notifications")
-      expect(page).to have_content("My Proposals")
-      expect(page).to have_content("Event Proposals")
-      expect(page).to have_content("Program")
-      expect(page).to have_content("Schedule")
-    end
-
-    click_on("Event Proposals")
-    expect(page).to have_content(event_1.name)
-    expect(current_path).to eq(event_staff_proposals_path(event_1.slug))
-  end
-
-  scenario "User flow for an admin" do
-    pending
-    event_1 = create(:event, state: "open")
-    event_2 = create(:event, state: "closed")
-    proposal = create(:proposal, :with_organizer_public_comment)
-    create(:event_teammate, :organizer, user: admin_user, event: event_1)
-    create(:event_teammate, :organizer, user: admin_user, event: event_2)
-
-    signin(admin_user.email, admin_user.password)
-
-    find("h1").click
-
-    within ".navbar" do
       expect(page).to have_content(event_1.name)
+      expect(page).to have_content("Users")
+      expect(page).to have_content("Manage Events")
       expect(page).to have_link("", href: "/notifications")
-      expect(page).to have_link(reviewer_user.name)
+      expect(page).to have_link(admin_user.name)
       expect(page).to_not have_link("My Proposals")
       expect(page).to have_content("Program")
       expect(page).to have_content("Schedule")
       expect(page).to have_content("Event Proposals")
     end
 
-    admin_user.proposals << proposal
-    visit event_staff_path(event_2)
+    click_on "Manage Events"
 
     within ".navbar" do
-      expect(page).to have_link("", href: "/notifications")
-      expect(page).to have_content("My Proposals")
-      expect(page).to have_content("Event Proposals")
-      expect(page).to have_content("Program")
-      expect(page).to have_content("Schedule")
-    end
-
-    visit event_staff_path(event_1)
-
-    within ".navbar" do
-      expect(page).to have_link("", href: "/notifications")
-      expect(page).to have_content("My Proposals")
-      expect(page).to have_content("Event Proposals")
-      expect(page).to have_content("Program")
-      expect(page).to have_content("Schedule")
-    end
-
-
-    click_on("Event Proposals")
-    expect(page).to have_content(event_1.name)
-    expect(current_path).to eq(event_staff_proposals_path(event_1.slug))
-
-    within ".navbar" do
-      click_on("Program")
-    end
-    expect(page).to have_content(event_1.name)
-    expect(current_path).to eq(event_staff_program_path(event_1.slug))
-
-    visit "/events"
-    click_on(event_2.name)
-
-    within ".navbar" do
-      click_on("Schedule")
-    end
-    expect(page).to have_content(event_2.name)
-    expect(current_path).to eq(event_staff_sessions_path(event_2.slug))
-
-    click_link admin_user.name
-    click_link "Users"
-    expect(current_path).to eq(admin_users_path)
-
-    visit root_path
-    click_link admin_user.name
-    click_link "Manage Events"
-    expect(current_path).to eq(admin_events_path)
-
-    within ".table" do
       expect(page).to have_content(event_1.name)
-      expect(page).to have_content("open")
-
-      expect(page).to have_content(event_2.name)
-      expect(page).to have_content("closed")
-
-      first(:link, "Archive").click
     end
 
-    expect(page).to have_content("#{event_1.name} is now archived.")
-    expect(page).to have_link("Unarchive")
-
-    within ".table" do
-      click_on event_1.name
-    end
-
-    within ".navbar" do
-      expect(page).to_not have_content("Review Proposals")
-      expect(page).to_not have_content("Organize Proposals")
-      expect(page).to_not have_content("Program")
-      expect(page).to_not have_content("Schedule")
+    within "table" do
+      expect(page).to have_link(event_1.name)
+      expect(page).to have_link(event_2.name)
     end
   end
 end

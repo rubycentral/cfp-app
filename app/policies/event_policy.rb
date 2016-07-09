@@ -38,6 +38,10 @@ class EventPolicy < ApplicationPolicy
     @current_user.admin? || @current_user.organizer_for_event?(@event)
   end
 
+  def staff?
+    @current_user.reviewer_events.where(slug: @event.slug).present?
+  end
+
 end
 
 

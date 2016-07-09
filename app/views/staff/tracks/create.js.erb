@@ -1,0 +1,12 @@
+$('#track-new-dialog').modal('hide');
+
+<% if track.persisted? %>
+  $('#tracks').append('<%=j render track %>');
+  clearFields([
+    '#track_name',
+    '#track_description',
+    '#track_guidelines'
+  ], '#track-new-dialog');
+<% end %>
+
+document.getElementById('flash').innerHTML = '<%=j show_flash %>';

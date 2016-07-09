@@ -28,19 +28,25 @@ Rails.application.routes.draw do
     #Staff URLS
     namespace 'staff' do
       get '/' => 'events#show'
+      get :show
 
-      get :edit
       get :info
+      get :edit
+      patch :update
       patch 'update-status' => 'events#update_status'
-      get '/speaker-emails' => 'events#speaker_emails', as: :speaker_email_notifications
+
+      get '/config' => 'events#configuration', as: :config
+      get 'custom-fields', as: :custom_fields
+      put :update_custom_fields
+      get 'reviewer-tags', as: :reviewer_tags
+      put :update_reviewer_tags
+      get 'proposal-tags', as: :proposal_tags
+      put :update_proposal_tags
 
       get :guidelines
       patch :update_guidelines
 
-      get :show
-      patch :update
-      get 'custom-fields', as: :custom_fields
-      put :update_custom_fields
+      get '/speaker-emails' => 'events#speaker_emails', as: :speaker_email_notifications
 
       resources :event_teammate_invitations, except: [:new, :edit, :update, :show]
       resources :event_teammates, only: [:create, :destroy, :update] do

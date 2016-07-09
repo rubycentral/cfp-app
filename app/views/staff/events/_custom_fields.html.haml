@@ -1,0 +1,8 @@
+#show-custom-fields
+  - if event.custom_fields_string.empty? && current_user.organizer_for_event?(event)
+    = link_to "Add", event_staff_custom_fields_path(event),
+      remote: true, class: "btn btn-success btn-sm pull-right add-custom-fields"
+  - else
+    %p= event.custom_fields_string
+    = link_to "Edit", event_staff_custom_fields_path(event),
+      remote: true, class: "btn btn-primary btn-sm pull-right edit-custom-fields" unless !current_user.organizer_for_event?(event)

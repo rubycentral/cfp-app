@@ -70,7 +70,7 @@ class Event < ActiveRecord::Base
   end
 
   def custom_fields_string
-    custom_fields.join(',')
+    custom_fields.join(', ')
   end
 
   def fields

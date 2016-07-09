@@ -1,20 +1,11 @@
-.form-group
-  = f.label :name
-  = f.text_field :name, class: 'form-control', placeholder: 'Name'
-
-.form-group
-  = f.label :description
-  = f.text_area :description, class: 'form-control', placeholder: 'Description', rows: 6
-
-.form-group
-  = f.label :duration
-  = f.text_field :duration, type: 'number', class: 'form-control', placeholder: '#'
-  %p.help-block How long the session will be (in minutes).
-
-.form-group
-  = f.label 'Visibility'
-  %br
-  = f.check_box :public?, class: ''
-  %label{for: "session_format_public"} Make public
-
-%p.help-block If checked, speakers will be able to select this session format when submitting proposals.
+= simple_form_for [ event, :staff, session_type ], remote: true do |f|
+  .modal-body
+    = f.input :name, placeholder: 'Name'
+    = f.input :description, as: :text, input_html: {rows: 6}, placeholder: 'Description'
+    = f.input :duration, placeholder: '#',
+      hint: 'How long the session will be (in minutes).'
+    = f.input :public, label: false, inline_label: 'Make Public',
+      hint: 'If checked, speakers will be able to select this session type when submitting proposals.'
+  .modal-footer
+    %button.pull-right.btn.btn-primary{:type => "submit"} Save
+    %button.btn.btn-default{'data-dismiss' => "modal"} Cancel

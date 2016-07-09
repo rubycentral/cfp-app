@@ -1,13 +1,10 @@
-.form-group
-  = f.label :name
-  = f.text_field :name, class: 'form-control', placeholder: 'Name'
-
-.form-group
-  = f.label :description
-  = f.text_area :description, class: 'form-control', placeholder: 'Description', rows: 6
-  %p.help-block Brief description (fewer than 250 characters)
-
-.form-group
-  = f.label :guidelines
-  = f.text_area :guidelines, class: 'form-control', placeholder: 'Guidelines', rows: 12
-  %p.help-block A more detailed description of the track that will appear in the Event Guidelines.
+= simple_form_for [ event, :staff, track ], remote: true do |f|
+  .modal-body
+    = f.input :name, placeholder: 'Name'
+    = f.input :description, as: :text, input_html: {rows: 6}, placeholder: 'Description',
+      hint: 'Brief description (fewer than 250 characters)'
+    = f.input :guidelines, as: :text, input_html: {rows: 12}, placeholder: 'Guidelines',
+      hint: 'A more detailed description of the track that will appear in the Event Guidelines.'
+  .modal-footer
+    %button.pull-right.btn.btn-primary{:type => "submit"} Save
+    %button.btn.btn-default{'data-dismiss' => "modal"} Cancel

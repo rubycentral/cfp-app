@@ -13,35 +13,37 @@ class Staff::TracksController < Staff::SchedulesController
   end
 
   def create
-    @track = @event.tracks.build(track_params)
+    track = @event.tracks.build(track_params)
+    unless track.save
+      flash.now[:warning] = "There was a problem saving your track"
+    end
 
-    if @track.save
-      flash[:info] = 'Track created.'
-      redirect_to event_staff_tracks_path(@event)
-    else
-      flash.now[:danger] = 'Unable to create track.'
-      render :new
+    respond_to do |format|
+      format.js do
+        render locals: { track: track }
+      end
     end
   end
 
   def update
-    if @track.update_attributes(track_params)
-      flash[:info] = 'Track updated.'
-      redirect_to event_staff_tracks_path(@event)
-    else
-      flash[:danger] = 'Unable to update track.'
-      render :edit
+    track = Track.find(params[:id])
+    track.update_attributes(track_params)
+    respond_to do |format|
+      format.js do
+        render locals: { track: track }
+      end
     end
   end
 
   def destroy
-    if @track.destroy
-      flash[:info] = 'Track destroyed.'
-    else
-      flash[:danger] = 'Unable to destroy track.'
-    end
+    track = @event.tracks.find(params[:id]).destroy
 
-    redirect_to event_staff_tracks_path(@event)
+    flash.now[:info] = "This track has been deleted."
+    respond_to do |format|
+      format.js do
+        render locals: { track: track }
+      end
+    end
   end
 
   private

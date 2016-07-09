@@ -1,57 +1,59 @@
 class Staff::SessionFormatsController < Staff::ApplicationController
-  before_action :set_session_format, only: [:edit, :update, :destroy]
+  before_action :set_session_formate, only: [:edit, :update, :destroy]
 
   def index
-    @session_formats = @event.session_formats
+    @session_formates = @event.session_formates
   end
 
   def new
-    @session_format = SessionFormat.new(public: true)
+    @session_formate = SessionFormat.new(public: true)
   end
 
   def edit
   end
 
   def create
-    @session_format = @event.session_formats.build(session_format_params)
+    session_formate = @event.session_formates.build(session_formate_params)
+    unless session_formate.save
+      flash.now[:warning] = "There was a problem saving your session formate"
+    end
 
-    if @session_format.save
-      flash[:info] = 'Session format created.'
-      redirect_to event_staff_session_formats_path(@event)
-    else
-      flash[:danger] = 'Unable to create session format.'
-      render :new
+    respond_to do |format|
+      format.js do
+        render locals: { session_formate: session_formate }
+      end
     end
   end
 
   def update
-    if @session_format.update_attributes(session_format_params)
-      flash[:info] = 'Session format updated.'
-      redirect_to event_staff_session_formats_path(@event)
-    else
-      flash[:danger] = 'Unable to update session format.'
-      render :edit
+    session_formate = SessionFormat.find(params[:id])
+    session_formate.update_attributes(session_formate_params)
+    respond_to do |format|
+      format.js do
+        render locals: { session_formate: session_formate }
+      end
     end
   end
 
   def destroy
-    if @session_format.destroy
-      flash[:info] = 'Session format destroyed.'
-    else
-      flash[:danger] = 'Unable to destroy session format.'
-    end
+    session_formate = @event.session_formates.find(params[:id]).destroy
 
-    redirect_to event_staff_session_formats_path(@event)
+    flash.now[:info] = "This session formate has been deleted."
+    respond_to do |format|
+      format.js do
+        render locals: { session_formate: session_formate }
+      end
+    end
   end
 
   private
 
-  def set_session_format
-    @session_format = @event.session_formats.find(params[:id])
+  def set_session_formate
+    @session_formate = @event.session_formates.find(params[:id])
   end
 
-  def session_format_params
-    params.require(:session_format)
+  def session_formate_params
+    params.require(:session_formate)
         .permit(:id, :name, :description, :event_id, :duration, :public)
   end
 

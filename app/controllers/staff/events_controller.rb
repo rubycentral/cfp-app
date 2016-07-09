@@ -18,8 +18,17 @@ class Staff::EventsController < Staff::ApplicationController
   def speaker_emails
   end
 
-  #Edit Event Guidelines
   def guidelines
+  end
+
+  def update_guidelines
+    if @event.update(params.require(:event).permit(:guidelines))
+      flash[:info] = 'Your guidelines were updated.'
+      redirect_to event_staff_guidelines_path
+    else
+      flash[:danger] = 'There was a problem saving your guidelines; please review the form for issues and try again.'
+      render :edit
+    end
   end
 
   def update_custom_fields
@@ -27,7 +36,7 @@ class Staff::EventsController < Staff::ApplicationController
       flash[:info] = 'Your event custom fields were updated.'
       redirect_to event_staff_url(@event)
     else
-      flash[:danger] = flash[:danger] = 'There was a problem saving your event; please review the form for issues and try again.'
+      flash[:danger] = 'There was a problem saving your event; please review the form for issues and try again.'
       render :edit_custom_fields
     end
   end
@@ -40,5 +49,15 @@ class Staff::EventsController < Staff::ApplicationController
       flash[:danger] = 'There was a problem saving your event; please review the form for issues and try again.'
       render :edit
     end
+  end
+
+  private
+
+  def event_params
+    params.require(:event).permit(
+        :name, :contact_email, :slug, :url, :valid_proposal_tags,
+        :valid_review_tags, :custom_fields_string, :state, :guidelines,
+        :closes_at, :speaker_notification_emails, :accept, :reject,
+        :waitlist, :opens_at, :start_date, :end_date)
   end
 end

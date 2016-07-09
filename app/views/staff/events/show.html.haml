@@ -54,7 +54,7 @@
                 -#   -if event.guidelines.present?
                 -#     = event.guidelines.truncate(150, separator: /\s/)
                 -#   = link_to "Public guidelines", event_path(slug: event.slug)
-                -#   %p= link_to "<i class='fa fa-pencil'></i> Edit Guidelines".html_safe, event_staff_guidelines_notifications_path, class: "btn btn-primary"
+                -#   %p= link_to "<i class='fa fa-pencil'></i> Edit Guidelines".html_safe, event_staff_guidelines_path, class: "btn btn-primary"
 
       -# .widget.widget-table
       -#   .widget-header
@@ -160,9 +160,9 @@
                 %td.text-primary
                   %strong Guidelines:
                 - if event.guidelines.present?
-                  %td.set= link_to "Set", event_staff_guidelines_notifications_path
+                  %td.set= link_to "Set", event_staff_guidelines_path
                 - else
-                  %td.missing= link_to "Missing", event_staff_guidelines_notifications_path
+                  %td.missing= link_to "Missing", event_staff_guidelines_path
 
     -#
     -#   .widget

@@ -18,6 +18,16 @@
       color: $black;
     }
   }
+
+  .status-dropdown {
+    display: none;
+  }
+
+  #event_state {
+    width: 100%;
+    display: block;
+    margin-bottom:.25em;
+  }
 }
 
 

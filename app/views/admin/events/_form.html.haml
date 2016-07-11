@@ -36,4 +36,5 @@
   - if event && event.persisted? && current_user.admin?
     = link_to 'Delete Event', admin_event_path(event), method: :delete, data: { confirm: 'Are you sure you want to delete this event?' }, class: 'btn btn-danger pull-left'
 
-  =submit_tag("Save", class: "pull-right btn btn-success", type: "submit", disabled: !policy(@event).update?)
+  =submit_tag("Save", class: "pull-right btn btn-success", type: "submit")
+  = link_to "Cancel", admin_events_path, {:class=>"cancel-form pull-right btn btn-danger"}

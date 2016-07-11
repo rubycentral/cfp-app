@@ -27,14 +27,26 @@ class Staff::EventsController < Staff::ApplicationController
       redirect_to event_staff_guidelines_path
     else
       flash[:danger] = 'There was a problem saving your guidelines; please review the form for issues and try again.'
-      render :edit
+      render :guidelines
+    end
+  end
+
+  def info
+  end
+
+  def update_status
+    if @event.update_attributes(event_params)
+      redirect_to event_staff_info_path(@event), notice: 'Event status was successfully updated.'
+    else
+      flash[:danger] = 'There was a problem updating the event status. Please try again.'
+      render :info
     end
   end
 
   def update_custom_fields
     if @event.update_attributes(event_params)
       flash[:info] = 'Your event custom fields were updated.'
-      redirect_to event_staff_url(@event)
+      redirect_to event_staff_path(@event)
     else
       flash[:danger] = 'There was a problem saving your event; please review the form for issues and try again.'
       render :edit_custom_fields
@@ -44,7 +56,7 @@ class Staff::EventsController < Staff::ApplicationController
   def update
     if @event.update_attributes(event_params)
       flash[:info] = 'Your event was saved.'
-      redirect_to event_staff_url(@event)
+      redirect_to event_staff_info_path(@event)
     else
       flash[:danger] = 'There was a problem saving your event; please review the form for issues and try again.'
       render :edit

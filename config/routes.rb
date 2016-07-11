@@ -30,6 +30,8 @@ Rails.application.routes.draw do
       get '/' => 'events#show'
 
       get :edit
+      get :info
+      patch 'update-status' => 'events#update_status'
       get '/speaker-emails' => 'events#speaker_emails', as: :speaker_email_notifications
 
       get :guidelines

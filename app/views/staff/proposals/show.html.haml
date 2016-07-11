@@ -5,7 +5,7 @@
         .btn-nav.pull-right
           - if current_user.organizer_for_event?(event)
             = smart_return_button
-            =link_to(edit_event_staff_proposal_path(proposal.event_id, proposal.uuid), class: "btn btn-primary") do
+            =link_to(edit_event_staff_proposal_path(proposal.event, proposal.uuid), class: "btn btn-primary") do
               %span.glyphicon.glyphicon-edit
               Edit Proposal
             =link_to "Next Proposal", event_staff_proposal_path(uuid: "PLACEHOLDER"), class: "next-proposal btn btn-primary", data: {"proposal-uuid" => proposal.uuid }

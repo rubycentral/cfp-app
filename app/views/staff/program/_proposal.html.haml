@@ -1,6 +1,6 @@
 %tr{ data: { 'proposal-id' => proposal.id } }
   %td= link_to(proposal.title,
-      event_staff_proposal_path(event_id: proposal.event_id, uuid: proposal))
+      event_staff_proposal_path(proposal.event, uuid: proposal))
   %td= proposal.speaker_names
   %td= proposal.speaker_emails
   %td= proposal.review_tags

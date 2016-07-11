@@ -100,7 +100,8 @@ feature 'Speaker Invitations' do
       before { click_link 'Accept' }
 
       it "allows the second speaker to edit her bio" do
-        expect(page).to have_text(second_speaker_email)
+        expect(current_path).to eq( edit_event_proposal_path(event_slug: event.slug, uuid: proposal) )
+        expect(page).to have_text("You have accepted this invitation.")
         expect(page).to have_css('textarea#proposal_speakers_attributes_1_bio')
       end
 

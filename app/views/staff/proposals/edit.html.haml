@@ -2,7 +2,7 @@
   .col-md-12
     .page-header.clearfix
       .btn-navbar.pull-right
-        = link_to(event_staff_proposal_path(proposal.event_id, proposal.uuid), class: "btn btn-primary") do
+        = link_to(event_staff_proposal_path(proposal.event, proposal.uuid), class: "btn btn-primary") do
           &laquo; Return to Proposal
       %h1 Edit #{proposal.title}
 

@@ -81,6 +81,15 @@ class Staff::EventsController < Staff::ApplicationController
     end
   end
 
+  def open_cfp
+    if @event.open_cfp
+      flash[:info] = "Your CFP was successfully opened."
+    else
+      flash[:danger] = "There was a problem opening your CFP: #{@event.errors.full_messages.to_sentence}"
+    end
+    redirect_to event_staff_path(@event)
+  end
+
   private
 
   def event_params

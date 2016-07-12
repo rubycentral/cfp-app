@@ -34,6 +34,7 @@ Rails.application.routes.draw do
       get :edit
       patch :update
       patch 'update-status' => 'events#update_status'
+      patch :open_cfp
 
       get '/config' => 'events#configuration', as: :config
       get 'custom-fields', as: :custom_fields

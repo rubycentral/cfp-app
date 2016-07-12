@@ -1,4 +1,4 @@
-class SessionType < ActiveRecord::Base
+class SessionFormat < ActiveRecord::Base
   belongs_to :event
   has_many :sessions
   has_many :proposals
@@ -12,7 +12,7 @@ end
 
 # == Schema Information
 #
-# Table name: session_types
+# Table name: session_formats
 #
 #  id          :integer          not null, primary key
 #  name        :string
@@ -25,7 +25,7 @@ end
 #
 # Indexes
 #
-#  index_session_types_on_event_id  (event_id)
+#  index_session_formats_on_event_id  (event_id)
 #
 # Foreign Keys
 #

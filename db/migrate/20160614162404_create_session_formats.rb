@@ -1,6 +1,6 @@
-class CreateSessionTypes < ActiveRecord::Migration
+class CreateSessionFormat < ActiveRecord::Migration
   def change
-    create_table :session_types do |t|
+    create_table :session_formats do |t|
       t.string :name
       t.string :description
       t.integer :duration
@@ -8,6 +8,6 @@ class CreateSessionTypes < ActiveRecord::Migration
       t.references :event, index: true
       t.timestamps null: false
     end
-    add_foreign_key :session_types, :events
+    add_foreign_key :session_formats, :events
   end
 end

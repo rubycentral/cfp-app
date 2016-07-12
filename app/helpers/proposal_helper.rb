@@ -10,8 +10,8 @@ module ProposalHelper
       HTML
   end
 
-  def session_type_tooltip
-    "Select what type of session this proposed talk will be."
+  def session_format_tooltip
+    "The format your proposal will follow."
   end
 
   def track_tooltip

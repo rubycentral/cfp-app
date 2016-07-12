@@ -117,12 +117,12 @@ ActiveRecord::Schema.define(version: 20160623152512) do
     t.datetime "confirmed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "session_type_id"
+    t.integer  "session_format_id"
     t.integer  "track_id"
   end
 
   add_index "proposals", ["event_id"], name: "index_proposals_on_event_id", using: :btree
-  add_index "proposals", ["session_type_id"], name: "index_proposals_on_session_type_id", using: :btree
+  add_index "proposals", ["session_format_id"], name: "index_proposals_on_session_format_id", using: :btree
   add_index "proposals", ["track_id"], name: "index_proposals_on_track_id", using: :btree
   add_index "proposals", ["uuid"], name: "index_proposals_on_uuid", unique: true, using: :btree
 
@@ -151,7 +151,7 @@ ActiveRecord::Schema.define(version: 20160623152512) do
 
   add_index "rooms", ["event_id"], name: "index_rooms_on_event_id", using: :btree
 
-  create_table "session_types", force: :cascade do |t|
+  create_table "session_formats", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
     t.integer  "duration"
@@ -161,7 +161,7 @@ ActiveRecord::Schema.define(version: 20160623152512) do
     t.datetime "updated_at",                 null: false
   end
 
-  add_index "session_types", ["event_id"], name: "index_session_types_on_event_id", using: :btree
+  add_index "session_formats", ["event_id"], name: "index_session_formats_on_event_id", using: :btree
 
   create_table "sessions", force: :cascade do |t|
     t.integer  "conference_day"
@@ -239,5 +239,5 @@ ActiveRecord::Schema.define(version: 20160623152512) do
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  add_foreign_key "session_types", "events"
+  add_foreign_key "session_formats", "events"
 end

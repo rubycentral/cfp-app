@@ -5,7 +5,7 @@ FactoryGirl.define do
     abstract "This and that"
     details "Various other things"
     pitch "Baseball."
-    session_type { SessionType.first || FactoryGirl.create(:session_type) }
+    session_format { SessionFormat.first || FactoryGirl.create(:session_format) }
 
 
     trait :with_reviewer_public_comment do

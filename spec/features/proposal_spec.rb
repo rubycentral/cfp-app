@@ -3,8 +3,8 @@ require 'rails_helper'
 feature "Proposals" do
   let!(:user) { create(:user) }
   let!(:event) { create(:event, state: 'open') }
-  let!(:session_type) { create(:session_type, name: 'Only type')}
-  let(:session_type2) { create(:session_type, name: '2nd type')}
+  let!(:session_format) { create(:session_format, name: 'Only format')}
+  let(:session_format2) { create(:session_format, name: '2nd format')}
 
   let(:go_to_new_proposal) { visit new_event_proposal_path(event_slug: event.slug) }
 
@@ -14,7 +14,7 @@ feature "Proposals" do
     fill_in 'proposal_speakers_attributes_0_bio', with: "I am awesome."
     fill_in 'Pitch', with: "You live but once; you might as well be amusing. - Coco Chanel"
     fill_in 'Details', with: "Plans are nothing; planning is everything. - Dwight D. Eisenhower"
-    select 'Only type', from: 'Session type'
+    select 'Only format', from: 'Session format'
     click_button 'Save'
   end
 
@@ -48,20 +48,20 @@ feature "Proposals" do
       end
     end
 
-    context "with Session Types" do
-      #Default if one Session Type that it is auto-selected
-      it "doesn't show session type validation if one session type" do
+    context "with Session Formats" do
+      #Default if one Session Format that it is auto-selected
+      it "doesn't show session format validation if one session format" do
         go_to_new_proposal
         create_invalid_proposal
-        expect(page).to_not have_text("Session type *None selected Only type 2nd typecan't be blank")
+        expect(page).to_not have_text("Session format *None selected Only format 2nd formatcan't be blank")
       end
 
-      it "shows Session Type validation if two session types" do
+      it "shows Session Format validation if two session formats" do
         skip "Address after session format change"
-        session_type2.save!
+        session_format2.save!
         go_to_new_proposal
         create_invalid_proposal
-        expect(page).to have_text("Session type *None selected Only type 2nd typecan't be blank")
+        expect(page).to have_text("Session format *None selected Only format 2nd formatcan't be blank")
       end
     end
 

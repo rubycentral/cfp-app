@@ -144,9 +144,9 @@
                   %td.missing= link_to "Missing", event_staff_edit_path
               %tr
                 %td.text-primary
-                  %strong Session Types:
-                - if event.session_types.present?
-                  %td.set= link_to event.session_types.count, '#'
+                  %strong Session Formats:
+                - if event.session_formats.present?
+                  %td.set= link_to event.session_formats.count, '#'
                 - else
                   %td.missing= link_to "None", '#'
               %tr

@@ -63,8 +63,8 @@
                     %p
                       %i= truncate(proposal.abstract, length: 80, escape: false)
                     %p
-                      %strong Session:
-                      #{proposal.session_type.name}
+                      %strong Session Format:
+                      #{proposal.session_format.name}
                     %p
                       - if proposal.track
                         %strong Track:

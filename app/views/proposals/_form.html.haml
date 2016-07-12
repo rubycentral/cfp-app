@@ -3,12 +3,12 @@
     %fieldset
       = proposal.title_input(f)
 
-      - opts_session_types = event.session_types.publicly_viewable.map {|st| [st.name, st.id]}
+      - opts_session_formats = event.session_formats.publicly_viewable.map {|st| [st.name, st.id]}
 
-      - if opts_session_types.length > 1
-        = f.association :session_type, collection: opts_session_types, include_blank: 'None selected', required: true, input_html: {class: 'dropdown'}, hint: "Session Type Hint", tooltip: ["right", session_type_tooltip]
+      - if opts_session_formats.length > 1
+        = f.association :session_format, collection: opts_session_formats, include_blank: 'None selected', required: true, input_html: {class: 'dropdown'}, hint: "Session Format Hint", tooltip: ["right", session_format_tooltip]
       - else
-        = f.association :session_type, collection: opts_session_types, include_blank: false, input_html: {readonly: "readonly"}, hint: "Session Type Hint", tooltip: ["right", "Only One Session Type for #{event.name}"]
+        = f.association :session_format, collection: opts_session_formats, include_blank: false, input_html: {readonly: "readonly"}, hint: "Session Format Hint", tooltip: ["right", "Only One Session Format for #{event.name}"]
 
       - opts_tracks = event.tracks.map {|t| [t.name, t.id]}
       -if opts_tracks.length > 0

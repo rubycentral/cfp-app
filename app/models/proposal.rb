@@ -269,13 +269,13 @@ end
 #  confirmed_at          :datetime
 #  created_at            :datetime
 #  updated_at            :datetime
-#  session_format_id       :integer
+#  session_format_id     :integer
 #  track_id              :integer
 #
 # Indexes
 #
-#  index_proposals_on_event_id         (event_id)
+#  index_proposals_on_event_id           (event_id)
 #  index_proposals_on_session_format_id  (session_format_id)
-#  index_proposals_on_track_id         (track_id)
-#  index_proposals_on_uuid             (uuid) UNIQUE
+#  index_proposals_on_track_id           (track_id)
+#  index_proposals_on_uuid               (uuid) UNIQUE
 #

@@ -1,24 +1,23 @@
 require 'digest/md5'
 
 class User < ActiveRecord::Base
-  STAFF_ROLES = ['reviewer', 'program team', 'organizer']
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :confirmable, #:validatable,
          :omniauthable, omniauth_providers: [:twitter, :github]
 
-  scope :with_notifications, -> { joins(:event_teammates).where(event_teammates: { notifications: true })}
+  scope :with_notifications, -> { joins(:teammates).where(teammates: { notifications: true })}
 
   has_many :invitations,  dependent: :destroy
-  has_many :event_teammates, dependent: :destroy
-  has_many :reviewer_event_teammates, -> { where(role: ['reviewer', 'program team', 'organizer']) }, class_name: 'EventTeammate'
-  has_many :reviewer_events, through: :reviewer_event_teammates, source: :event
-  has_many :organizer_event_teammates, -> { where(role: 'organizer') }, class_name: 'EventTeammate'
-  has_many :organizer_events, through: :organizer_event_teammates, source: :event
-  has_many :speakers,     dependent: :destroy
-  has_many :ratings,      dependent: :destroy
-  has_many :comments,     dependent: :destroy
+  has_many :teammates, dependent: :destroy
+  has_many :reviewer_teammates, -> { where(role: ['reviewer', 'program team', 'organizer']) }, class_name: 'Teammate'
+  has_many :reviewer_events, through: :reviewer_teammates, source: :event
+  has_many :organizer_teammates, -> { where(role: 'organizer') }, class_name: 'Teammate'
+  has_many :organizer_events, through: :organizer_teammates, source: :event
+  has_many :speakers,      dependent: :destroy
+  has_many :ratings,       dependent: :destroy
+  has_many :comments,      dependent: :destroy
   has_many :notifications, dependent: :destroy
   has_many :proposals, through: :speakers, source: :proposal
 
@@ -35,7 +34,7 @@ class User < ActiveRecord::Base
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       password = Devise.friendly_token[0,20]
-      user.name = auth['info']['name']   # assuming the user model has a name
+      user.name = auth['info']['name']
       user.email = auth['info']['email'] || ''
       user.password = password
       user.password_confirmation = password
@@ -72,12 +71,12 @@ class User < ActiveRecord::Base
   end
 
   def organizer_for_event?(event)
-    event_teammates.organizer.for_event(event).size > 0
+    teammates.organizer.for_event(event).size > 0
   end
 
   def staff_for?(event)
     #Checks all roles
-    event_teammates.for_event(event).size > 0
+    teammates.for_event(event).size > 0
   end
 
   def reviewer?
@@ -85,7 +84,7 @@ class User < ActiveRecord::Base
   end
 
   def reviewer_for_event?(event)
-    event_teammates.reviewer.for_event(event).size > 0
+    teammates.reviewer.for_event(event).size > 0
   end
 
   def rating_for(proposal, build_new = true)
@@ -98,7 +97,7 @@ class User < ActiveRecord::Base
   end
 
   def role_names
-    self.event_teammates.collect {|p| p.role}.uniq.join(", ")
+    self.teammates.collect {|p| p.role}.uniq.join(", ")
   end
 
 end

@@ -3,7 +3,7 @@ require 'rails_helper'
 feature "Event Guidelines" do
   let(:event) { create(:event, name: "My Event") }
   let(:admin_user) { create(:user, admin: true) }
-  let!(:admin_event_teammate) { create(:event_teammate,
+  let!(:admin_teammate) { create(:teammate,
                                    event: event,
                                    user: admin_user,
                                    role: 'organizer'
@@ -11,14 +11,14 @@ feature "Event Guidelines" do
   }
 
   let(:organizer_user) { create(:user) }
-  let!(:event_staff_teammate) { create(:event_teammate,
+  let!(:event_staff_teammate) { create(:teammate,
                                        event: event,
                                        user: organizer_user,
                                        role: 'organizer')
   }
 
   let(:reviewer_user) { create(:user) }
-  let!(:reviewer_event_teammate) { create(:event_teammate,
+  let!(:reviewer_teammate) { create(:teammate,
                                       event: event,
                                       user: reviewer_user,
                                       role: 'reviewer')

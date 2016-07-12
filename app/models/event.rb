@@ -3,7 +3,7 @@ class Event < ActiveRecord::Base
   store_accessor :speaker_notification_emails, :reject
   store_accessor :speaker_notification_emails, :waitlist
 
-  has_many :event_teammates, dependent: :destroy
+  has_many :teammates, dependent: :destroy
   has_many :proposals, dependent: :destroy
   has_many :speakers, through: :proposals
   has_many :rooms, dependent: :destroy
@@ -13,7 +13,6 @@ class Event < ActiveRecord::Base
   has_many :session_formats, dependent: :destroy
   has_many :taggings, through: :proposals
   has_many :ratings, through: :proposals
-  has_many :event_teammate_invitations
 
   has_many :public_session_formats, ->{ where(public: true) }, class_name: SessionFormat
 

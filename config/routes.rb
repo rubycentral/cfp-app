@@ -48,11 +48,7 @@ Rails.application.routes.draw do
 
       get '/speaker-emails' => 'events#speaker_emails', as: :speaker_email_notifications
 
-      resources :team
-
-      resources :team_invitations, except: [:new, :edit, :update, :show, :index] do
-        collection { get :emails, defaults: {format: :json} }
-      end
+      resources :teammates, path: "team"
 
       controller :program do
         get 'program' => 'program#show'
@@ -97,12 +93,8 @@ Rails.application.routes.draw do
   resources :speakers, only: [:destroy]
   resources :events, only: [:index]
 
-  resources :event_teammate_invitations, only: :show, param: :slug do
-    member do
-      get ":token/accept", action: :accept, as: :accept
-      get ":token/refuse", action: :refuse, as: :refuse
-    end
-  end
+  get "teammates/:token/accept", :to => "teammates#accept", as: :accept_teammate
+  get "teammates/:token/decline", :to => "teammates#decline", as: :decline_teammate
 
   resources :invitations, only: [:show, :create, :destroy], param: :invitation_slug do
     member do

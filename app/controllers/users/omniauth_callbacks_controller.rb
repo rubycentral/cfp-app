@@ -52,7 +52,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def assign_open_invitations
     invitation = Invitation.find_by(slug: session[:invitation_slug])
 
-    #binding.pry
     if invitation
       invitations = Invitation.where("LOWER(email) = ? AND state = ? AND user_id IS NULL",
                        invitation.email.downcase, Invitation::State::PENDING)

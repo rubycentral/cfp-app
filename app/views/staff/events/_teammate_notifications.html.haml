@@ -2,7 +2,7 @@
 %div{ id: "event-teammate-change-role-#{teammate.id}", class: 'modal fade' }
   .modal-dialog
     .modal-content
-      = form_for teammate, url: event_staff_teammates_path(teammate.event, teammate), remote: true, html: { class: 'form-inline', role: 'form' } do |f|
+      = form_for teammate, url: event_staff_teammate_path(teammate.event, teammate), remote: true, html: { class: 'form-inline', role: 'form' } do |f|
         .modal-header
           %h2 Change Comment Notifications
         .modal-body

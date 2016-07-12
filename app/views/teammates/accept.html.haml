@@ -1,0 +1,8 @@
+.row
+  .col-sm-12.text-center
+    %h2.margin-top= "Thank you for joining the #{@current_event.name} team!"
+    %br
+    %h3
+      %span.label.label-default= link_to "Sign In", new_user_session_path
+      or
+      %span.label.label-default= link_to "Create an Account", new_user_registration_path

@@ -21,10 +21,10 @@
 
 #admin-dashboard {
 
-  .event_teammates { margin-left: 40px; }
+  .teammates { margin-left: 40px; }
 
   .dataTables_filter { display: none; }
 }
 
-// add event_teammate modal needs this for autocomplete on email input
+// add teammate modal needs this for autocomplete on email input
 .ui-front { z-index: 1060 !important; }

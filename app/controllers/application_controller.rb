@@ -21,8 +21,9 @@ class ApplicationController < ActionController::Base
   decorates_assigned :event
 
   def after_sign_in_path_for(user)
-
-    if !user.complete?
+    if session[:pending_invite]
+      session[:pending_invite]
+    elsif !user.complete?
       edit_profile_path
     elsif request.referrer.present? && request.referrer != new_user_session_url
       request.referrer
@@ -33,22 +34,22 @@ class ApplicationController < ActionController::Base
     else
       root_path
     end
-
   end
 
   private
 
   def current_event
-    @current_event ||= Event.find_by(id: session[:current_event_id]) if session[:current_event_id]
+    @current_event ||= set_current_event(session[:current_event_id]) if session[:current_event_id]
   end
 
-  def set_current_event(event)
-    @current_event = event
-    session[:current_event_id] = event.id
+  def set_current_event(event_id)
+    @current_event = Event.find_by(id: event_id)
+    session[:current_event_id] = event_id
+    @current_event
   end
 
   def event_staff?(current_event)
-    current_event.event_teammates.where(user_id: current_user.id).length > 0
+    current_event.teammates.where(user_id: current_user.id).any?
   end
 
   def reviewer?
@@ -79,7 +80,7 @@ class ApplicationController < ActionController::Base
   def require_event
     @event = Event.find_by(slug: params[:event_slug] || params[:slug])
     if @event
-      set_current_event(event)
+      set_current_event(event.id)
     else
       flash[:danger] = "Your event could not be found, please check the url."
       redirect_to events_path

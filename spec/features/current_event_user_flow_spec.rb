@@ -145,7 +145,7 @@ feature "A user sees correct information for the current event and their role" d
   scenario "Reviewer flow and navbar layout" do
     event_1 = create(:event, state: "open")
     event_2 = create(:event, state: "open")
-    create(:event_teammate, :reviewer, user: reviewer_user, event: event_1)
+    create(:teammate, :reviewer, user: reviewer_user, event: event_1)
 
     signin(reviewer_user.email, reviewer_user.password)
 
@@ -191,7 +191,7 @@ feature "A user sees correct information for the current event and their role" d
     event_1 = create(:event, state: "open")
     event_2 = create(:event, state: "open")
     proposal = create(:proposal, :with_organizer_public_comment)
-    create(:event_teammate, :organizer, user: organizer_user, event: event_2)
+    create(:teammate, :organizer, user: organizer_user, event: event_2)
 
     signin(organizer_user.email, organizer_user.password)
 
@@ -243,8 +243,8 @@ feature "A user sees correct information for the current event and their role" d
   scenario "User flow for an admin" do
     event_1 = create(:event, state: "open")
     event_2 = create(:event, state: "closed")
-    create(:event_teammate, :organizer, user: admin_user, event: event_1)
-    create(:event_teammate, :organizer,  event: event_2)
+    create(:teammate, :organizer, user: admin_user, event: event_1)
+    create(:teammate, :organizer,  event: event_2)
 
     signin(admin_user.email, admin_user.password)
 

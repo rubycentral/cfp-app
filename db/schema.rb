@@ -30,29 +30,6 @@ ActiveRecord::Schema.define(version: 20160713174249) do
   add_index "comments", ["proposal_id"], name: "index_comments_on_proposal_id", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
-  create_table "event_teammate_invitations", force: :cascade do |t|
-    t.string   "email"
-    t.string   "state"
-    t.string   "slug"
-    t.string   "role"
-    t.string   "token"
-    t.integer  "event_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "event_teammates", force: :cascade do |t|
-    t.integer  "event_id"
-    t.integer  "user_id"
-    t.string   "role"
-    t.boolean  "notifications", default: true
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "event_teammates", ["event_id"], name: "index_event_teammates_on_event_id", using: :btree
-  add_index "event_teammates", ["user_id"], name: "index_event_teammates_on_user_id", using: :btree
-
   create_table "events", force: :cascade do |t|
     t.string   "name"
     t.string   "slug"
@@ -218,6 +195,24 @@ ActiveRecord::Schema.define(version: 20160713174249) do
   add_index "time_slots", ["event_id"], name: "index_time_slots_on_event_id", using: :btree
   add_index "time_slots", ["program_session_id"], name: "index_time_slots_on_program_session_id", using: :btree
   add_index "time_slots", ["room_id"], name: "index_time_slots_on_room_id", using: :btree
+
+  create_table "teammates", force: :cascade do |t|
+    t.integer  "event_id"
+    t.integer  "user_id"
+    t.boolean  "notifications", default: true
+    t.string   "role"
+    t.string   "email"
+    t.string   "state"
+    t.string   "token"
+    t.datetime "invited_at"
+    t.datetime "accepted_at"
+    t.datetime "declined_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "teammates", ["event_id"], name: "index_teammates_on_event_id", using: :btree
+  add_index "teammates", ["user_id"], name: "index_teammates_on_user_id", using: :btree
 
   create_table "tracks", force: :cascade do |t|
     t.text     "name"

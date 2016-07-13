@@ -1,0 +1,6 @@
+$('#show-custom-fields').replaceWith('<%= j render("custom_fields_form") %>');
+
+$('#cancel-custom-fields').on('click', function(event) {
+  event.preventDefault();
+  $('#edit-custom-fields').replaceWith('<%= j render("custom_fields") %>');
+})

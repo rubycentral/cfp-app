@@ -1,0 +1,95 @@
+.row
+  .col-md-12
+    .page-header.clearfix
+      %h1 Event Staff
+      %hr
+
+      .row
+        .col-md-4
+          .widget
+            .widget-header
+              %i.fa.fa-users
+              %h3 Current Staff
+            .widget-content
+              %h4
+                = pluralize(@staff_count["organizer"], "organizer")
+                %em.pending= "(" + pluralize(@invite_count["organizer"], "pending invitation") + ")"
+                %hr
+                = @staff_count["program team"]
+                program team
+                %em.pending= "(" + pluralize(@invite_count["program team"], "pending invitation") + ")"
+                %hr
+                = pluralize(@staff_count["reviewer"], "reviewer")
+                %em.pending= "(" + pluralize(@invite_count["reviewer"], "pending invitation") + ")"
+
+      .row
+        .col-md-12
+          .widget
+            .widget-header
+              %i.fa.fa-user
+              %h3 Staff Details
+            .widget-content
+              %table.table.table-striped.table-bordered
+                %thead
+                  %tr
+                    %th Name
+                    %th Email
+                    %th Rated Proposals
+                    %th Role
+                    %th Comment Notifications
+                    - if current_user.organizer_for_event?(current_event)
+                      %th Actions
+                %tbody
+                  - current_event.teammates.each do |teammate|
+                    %tr{ id: "teammate-#{teammate.id}" }
+                      %td= teammate.user.name
+                      %td= teammate.user.email
+                      %td= teammate.user.ratings.count
+                      %td= teammate.role
+                      %td.notifications
+                        %span= teammate.comment_notifications
+                        - if teammate.user == current_user
+                          = render partial: "staff/events/teammate_notifications", locals: {teammate: teammate}
+                      - if current_user.organizer_for_event?(current_event)
+                        %td
+                          - unless teammate.user == current_user
+                            = render partial: 'staff/events/teammate_controls', locals: { teammate: teammate }
+
+      .row
+        .col-md-12
+          .widget
+            .widget-header
+              - if current_user.organizer_for_event?(current_event)
+                .pull-right
+                  = new_team_invitation_button
+              %i.fa.fa-envelope-o
+              %h3 Pending &amp; Refused Teammate Invitations
+
+            .widget-content
+              %table.table.table-striped.table-bordered
+                %thead
+                  %tr
+                    %th Email
+                    %th State
+                    %th Slug
+                    %th Role
+                    %th Invited At
+                    - if current_user.organizer_for_event?(current_event)
+                      %th Actions
+                %tbody
+                  - @invitations.each do |invite|
+                    %tr
+                      - unless invite.state == 'accepted'
+                        %td= invite.email
+                        %td= invite.state
+                        %td= invite.slug
+                        %td= invite.role
+                        %td= invite.created_at.to_s(:day_at_time)
+                        - if current_user.organizer_for_event?(current_event)
+                          %td= link_to 'Remove',
+                            event_staff_team_invitation_path(event, invite),
+                            method: :delete,
+                            data: { confirm: "Are you sure you want to remove this invite?" },
+                            class: 'btn btn-danger btn-xs'
+
+= render partial: 'staff/team_invitations/new_dialog', locals: { event: event }

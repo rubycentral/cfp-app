@@ -1,0 +1,57 @@
+.row
+  %header
+    .col-md-12
+      - if current_user.organizer_for_event?(event)
+        .btn-nav.pull-right
+          = link_to 'View Speakers', event_staff_speakers_path(event), class: "btn btn-primary"
+          = link_to 'Add/Invite Staff', '#', class: 'btn btn-primary', data: { toggle: 'modal', target: "#new-teammate-event-#{event.id}" }
+          = link_to 'Manage Staff Invites',
+            event_staff_teammates_path(event), class: 'btn btn-primary'
+      %h3 Teammates
+.row
+  .col-md-12
+    %table.teammates.table.table-striped
+      %thead
+        %tr
+          %th Name
+          %th Email
+          %th Rated Proposals
+          %th Role
+          %th.notifications Comment Notifications
+          - if current_user.organizer_for_event?(event)
+            %th.actions Actions
+      %tbody
+        - teammates.each do |teammate|
+          %tr
+            %td= teammate.user.name
+            %td= teammate.user.email
+            %td= rating_counts[teammate.user.id] || 0
+            %td= teammate.role
+            %td.notifications
+              = teammate.comment_notifications
+              - if teammate.user == current_user
+                = render partial: 'staff/events/teammate_notifications', locals: {teammate: teammate}
+            - if teammate.user != current_user && current_user.organizer_for_event?(event)
+              %td.actions
+                = render partial: 'staff/events/teammate_controls', locals: { teammate: teammate }
+
+%div{ id: "new-teammate-event-#{event.id}", class: 'modal fade' }
+  .modal-dialog
+    .modal-content
+      = form_for event.teammates.build, url: event_staff_teammates_path(event), html: {role: 'form'} do |f|
+        .modal-header
+          %h3 Add/Invite an Teammate to #{event.name}
+        .modal-body
+          .form-group
+            = label_tag :email
+            = text_field_tag :email, '', class: 'form-control',
+              id: 'autocomplete-email',
+              placeholder: "Teammate's email",
+              data: { path: emails_event_staff_teammates_path(event) }
+          .form-group
+            = f.label :role
+            = f.select :role, User::STAFF_ROLES, {}, {class: 'form-control'}
+        .modal-footer
+          %button.btn.btn-default{'data-dismiss' => "modal"} Cancel
+          %button.pull-right.btn.btn-success{:type => "submit"} Save
+

@@ -13,35 +13,35 @@ class Staff::SessionFormatsController < Staff::ApplicationController
   end
 
   def create
-    @session_format = @event.session_formats.build(session_format_params)
-
-    if @session_format.save
-      flash[:info] = 'Session format created.'
-      redirect_to event_staff_session_formats_path(@event)
-    else
-      flash[:danger] = 'Unable to create session format.'
-      render :new
+    session_format = @event.session_formats.build(session_format_params)
+    unless session_format.save
+      flash.now[:warning] = "There was a problem saving your session format"
+    end
+    respond_to do |format|
+      format.js do
+        render locals: { session_format: session_format }
+      end
     end
   end
 
   def update
-    if @session_format.update_attributes(session_format_params)
-      flash[:info] = 'Session format updated.'
-      redirect_to event_staff_session_formats_path(@event)
-    else
-      flash[:danger] = 'Unable to update session format.'
-      render :edit
+    session_format = SessionFormat.find(params[:id])
+    session_format.update_attributes(session_format_params)
+    respond_to do |format|
+      format.js do
+        render locals: { session_format: session_format }
+      end
     end
   end
 
   def destroy
-    if @session_format.destroy
-      flash[:info] = 'Session format destroyed.'
-    else
-      flash[:danger] = 'Unable to destroy session format.'
+    session_format = @event.session_formats.find(params[:id]).destroy
+    flash.now[:info] = "This session format has been deleted."
+    respond_to do |format|
+      format.js do
+        render locals: { session_format: session_format }
+      end
     end
-
-    redirect_to event_staff_session_formats_path(@event)
   end
 
   private

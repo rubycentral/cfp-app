@@ -1,0 +1,3 @@
+$('#event-teammate-change-role-<%= teammate.id %>').modal('hide')
+
+$('tr#teammate-<%= teammate.id %> td.notifications span').replaceWith("<span><%= teammate.comment_notifications %></span>")

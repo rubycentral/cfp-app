@@ -1,0 +1,82 @@
+.event
+  .row
+    .col-md-12
+      .page-header.clearfix
+        %h1 Event Configuration
+  .row
+    .col-md-12
+      .widget.widget-table
+        .widget-header
+          %i.fa.fa-comments-o
+          %h3 Session Formats
+          = link_to "Add Session Format", "#", class: "btn btn-success btn-sm pull-right",
+            data: { toggle: "modal", target: "#session-format-new-dialog" } unless !current_user.organizer_for_event?(event)
+        .widget-content
+          %table.table.table-striped.table-bordered#session-formats
+            %thead
+              %tr
+                %th Name
+                %th Description
+                %th Duration
+                %th Public
+                - unless !current_user.organizer_for_event?(event)
+                  %th= "Actions"
+            %tbody
+              = render event.session_formats
+      #session-format-new-dialog.modal.fade
+        .modal-dialog
+          .modal-content
+            .modal-header
+              %h3 New Session Format
+              = render partial: 'staff/session_formats/form', locals: { session_format: SessionFormat.new }
+
+      .widget.widget-table
+        .widget-header
+          %i.fa.fa-exchange
+          %h3 Tracks
+          = link_to "Add Track", "#", class: "btn btn-success btn-sm pull-right",
+            data: { toggle: "modal", target: "#track-new-dialog" } unless !current_user.organizer_for_event?(event)
+        .widget-content
+          %table.table.table-striped.table-bordered#tracks
+            %thead
+              %tr
+                %th Name
+                %th Description
+                %th Guidelines
+                - unless !current_user.organizer_for_event?(event)
+                  %th Actions
+            %tbody
+              = render event.tracks
+      #track-new-dialog.modal.fade
+        .modal-dialog
+          .modal-content
+            .modal-header
+              %h3 New Track
+              = render partial: 'staff/tracks/form', locals: { track: Track.new }
+  .row
+    .col-md-4
+      .widget
+        .widget-header
+          %i.fa.fa-tags
+          %h3 Proposal Tags
+        .widget-content
+          #proposal-tags
+            = render partial: "staff/events/proposal_tags"
+
+    .col-md-4
+      .widget
+        .widget-header
+          %i.fa.fa-tags
+          %h3 Reviewer Tags
+        .widget-content
+          #reviewer-tags
+            = render partial: "staff/events/reviewer_tags"
+
+    .col-md-4
+      .widget
+        .widget-header
+          %i.fa.fa-list-alt
+          %h3 Custom Fields
+        .widget-content
+          #custom-fields
+            = render partial: "staff/events/custom_fields"

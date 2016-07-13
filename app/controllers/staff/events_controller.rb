@@ -35,7 +35,7 @@ class Staff::EventsController < Staff::ApplicationController
   end
 
   def update_status
-    if @event.update_attributes(event_params)
+    if @event.update(params.require(:event).permit(:state))
       redirect_to event_staff_info_path(@event), notice: 'Event status was successfully updated.'
     else
       flash[:danger] = 'There was a problem updating the event status. Please try again.'
@@ -43,13 +43,33 @@ class Staff::EventsController < Staff::ApplicationController
     end
   end
 
+  def configuration
+  end
+
   def update_custom_fields
-    if @event.update_attributes(event_params)
-      flash[:info] = 'Your event custom fields were updated.'
-      redirect_to event_staff_path(@event)
-    else
-      flash[:danger] = 'There was a problem saving your event; please review the form for issues and try again.'
-      render :edit_custom_fields
+    @event.update_attributes(event_params)
+    respond_to do |format|
+      format.js do
+        render locals: { event: @event }
+      end
+    end
+  end
+
+  def update_reviewer_tags
+    @event.update(params.require(:event).permit(:valid_review_tags))
+    respond_to do |format|
+      format.js do
+        render locals: { event: @event }
+      end
+    end
+  end
+
+  def update_proposal_tags
+    @event.update(params.require(:event).permit(:valid_proposal_tags))
+    respond_to do |format|
+      format.js do
+        render locals: { event: @event }
+      end
     end
   end
 

@@ -30,4 +30,92 @@
   }
 }
 
+$event-meta-padding: 10px;
 
+.event-info {
+  font-size: $font-size-base;
+
+  .event-title,
+  .event-meta {
+    display: inline-block;
+  }
+
+  .event-meta {
+    margin-left: $event-meta-padding;
+    color: $gray;
+  }
+}
+
+.event-info-block {
+  margin-bottom: $event-meta-padding * 2;
+
+  .event-title,
+  .event-meta {
+    display: block;
+  }
+  
+  .event-title {
+    font-size: $font-size-large;
+  }
+
+  .event-meta {
+    margin-top: $event-meta-padding / 2;
+    margin-left: 0;
+  }
+}
+
+// Builds on Bootstrap panels
+.event-info-panel {
+  & > .panel-heading {
+    font-size: $font-size-large;
+    text-transform: uppercase;
+  }
+
+  .event-label {
+    color: $gray;
+    font-weight: normal;
+  }
+
+  .event-callout {
+    font-size: $font-size-large;
+    margin-bottom: $event-meta-padding * 2;
+  }
+}
+
+// Event status badges
+$event-open-bg:       $state-success-bg;
+$event-open-border:   $state-success-border;
+$event-open-text:     $state-success-text;
+$event-closed-bg:     $gray-lighter;
+$event-closed-border: darken($gray-lighter, 7%);
+$event-closed-text:   $gray;
+$event-draft-bg:      $state-info-bg;
+$event-draft-border:  $state-info-border;
+$event-draft-text:    $state-info-text;
+
+.event-status-badge {
+  display: inline-block;
+  padding: $padding-xs-vertical $padding-xs-horizontal;
+  font-size: $font-size-small;
+  font-weight: bold;
+  line-height: 1.5;
+  text-transform: uppercase;
+
+  &.event-status-open {
+    background-color: $event-open-bg;
+    border: 1px solid $event-open-border;
+    color: $event-open-text;  
+  }
+
+  &.event-status-draft {
+    background-color: $event-draft-bg;
+    border: 1px solid $event-draft-border;
+    color: $event-draft-text;  
+  }
+
+  &.event-status-closed {
+    background-color: $event-closed-bg;
+    border: 1px solid $event-closed-border;
+    color: $event-closed-text;  
+  }
+}

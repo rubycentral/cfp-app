@@ -28,6 +28,8 @@
               %a{"data-toggle" => "tab", :href => "#shortcuts-example"} Shortcuts / Stats
             %li
               %a{"data-toggle" => "tab", :href => "#cal-news-example"} Calendar / News
+            %li
+              %a{"data-toggle" => "tab", :href => "#ui-components"} UI Elements
 
 
           .tab-content
@@ -675,6 +677,48 @@
                             %a.name Mark Jobs
                             %span.time 2 Days ago
                           .text That's the ONLY thing about being a slave. Now, now. Perfectly symmetrical violence never solved anything. Uh, is the puppy mechanical in any way? As an interesting side note, as a head without a body, I envy the dead.
+
+            #ui-components.tab-pane
+              %h3 Event Info
+              
+              .row
+                .col-md-4
+                  .event-info.event-info-dense
+                    %strong.event-title SeedConf
+                    %span.event-meta 
+                      %i.fa.fa-fw.fa-calendar
+                      March 13, 2017
+                    %span.event-meta 
+                      %i.fa.fa-fw.fa-map-marker
+                      Phoenix, AZ
+                .col-md-4
+                  .event-info.event-info-block
+                    %strong.event-title SeedConf
+                    %span.event-meta 
+                      %i.fa.fa-fw.fa-calendar
+                      March 13, 2017
+                    %span.event-meta 
+                      %i.fa.fa-fw.fa-map-marker
+                      Phoenix, AZ
+                    %span.event-meta= link_to("http://seedconf.com")
+                    %span.event-meta= mail_to("contact@seed.event")
+                .col-md-4
+                  .panel.panel-success.event-info.event-info-panel
+                    .panel-heading
+                      CFP OPEN
+                    .panel-body
+                      %dl
+                        %dt.event-label CFP closes: 
+                        %dd.event-callout January 7, 2017 at 09:30pm MST
+                        %dd
+                          %strong 6 months left to submit your proposal
+                      %div
+                        = link_to 'Submit a proposal', '#', class: 'btn btn-primary'
+              %h3 Event Status Badges
+              
+              .event-status-badge.event-status-open CFP OPEN
+              .event-status-badge.event-status-closed CFP CLOSED
+              .event-status-badge.event-status-draft CFP DRAFT
 
 :javascript
   $(document).ready(function() {

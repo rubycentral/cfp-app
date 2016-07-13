@@ -10,6 +10,17 @@
 
 .row.margin-top
   .col-md-8
+    .event-info.event-info-block
+      %strong.event-title= event.name  
+      - if event.start_date? && event.end_date?
+        .event-meta
+          %i.fa.fa-fw.fa-calendar
+          = event.date_range
+      - if event.url?
+        %span.event-meta= link_to event.url
+      - if event.contact_email?
+        %span.event-meta= mail_to(event.contact_email)
+
     .markdown
       - if event.closed?
         Closed on
@@ -17,25 +28,36 @@
       = markdown(event.guidelines)
 
   .col-md-4
+
     - if event.open?
+      .panel.panel-success.event-info.event-info-panel
+        .panel-heading
+          CFP
+          = event.status
+        .panel-body
+          - if event.closes_at?
+            %dl
+              %dt.event-label
+                CFP closes: 
+              %dd.event-callout
+                = event.closes_at(:long_with_zone)
+              %dd
+                %strong= time_ago_in_words(event.closes_at)
+                left to submit your proposal
+          %div
+            = link_to 'Submit a proposal', new_event_proposal_path, class: 'btn btn-primary'
+    - else
+      .panel.panel-default
+        .panel-heading
+          CFP
+          = event.status
+        .panel-body
+          %dl.event-cfp-data
+            %dt
+              CFP closed: 
+            %dd
+              = event.closes_at(:long_with_zone)
 
-      .pull-right= link_to 'Submit a proposal', new_event_proposal_path, class: 'btn btn-primary btn-xlarge'
-
-      - if event.closes_at?
-        %h4.pull-right
-          Closes at
-          %strong= event.closes_at(:long_with_zone)
-        %h4.pull-right
-          %strong
-            %span.label.label-info
-              = time_ago_in_words(event.closes_at)
-              left
-          &nbsp;to submit your proposal!
-
-        %h4.pull-right
-          %span.label.label-default
-            = pluralize(event.proposals.count, 'proposal')
-            submitted
 
     - if event.proposals.count > 5
       .stats

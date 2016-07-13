@@ -40,3 +40,10 @@
 .brand-warning { color: $brand-warning; }
 .brand-danger { color: $brand-danger; }
 .brand-accent { color: $brand-accent; }
+
+.text-right-responsive,
+.text-center-responsive {
+  @media (max-width: 767px) {
+    text-align: left;
+  }
+}

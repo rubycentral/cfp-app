@@ -1,33 +1,28 @@
 class PublicComment < Comment
 
-  after_create :create_notifications, :send_emails
+  after_create :notify
 
   private
 
-  # Send emails to speakers when reviewer creates a comment
-  def send_emails
-    if user.reviewer_for_event?(proposal.event)
-      ProposalMailer.comment_notification(proposal, self).deliver_now
-    end
-  end
-
-  # Generate notifications for Comment
+  # Generate notifications for PublicComment
   # 1. If a speaker is leaving a comment,
   #    all reviewers/organizers get an in app notification
-  #      if they have reviewed or commented on the proposal.
+  #      if they have reviewed/rated or commented on the proposal.
   # 2. If a a reviewer/organizer leaves a comment,
-  #      only the speakers get an in app and email notification.
-  def create_notifications
+  #  only the speakers get an in app and email notification.
 
+  def notify
     if user.reviewer_for_event?(proposal.event)
-      users = proposal.speakers.map(&:user)
-      message = "#{user.name} has commented on #{proposal.title}"
+      @users = proposal.speakers.map(&:user)
+      message = "New comment on #{proposal.title}"
+      CommentNotificationMailer.speaker_notification(proposal, self, @users).deliver_now
     else
-      users = proposal.reviewers
-      message = "The author has commented on #{proposal.title}"
+      @users = proposal.reviewers
+      message = "Speaker commented on #{proposal.title}"
+      CommentNotificationMailer.reviewer_notification(proposal, self, @users.with_notifications).deliver_now
     end
 
-    Notification.create_for(users, proposal: proposal, message: message)
+    Notification.create_for(@users, proposal: proposal, message: message)
   end
 end
 

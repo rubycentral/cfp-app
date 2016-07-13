@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :event_teammate do
     event { Event.first || FactoryGirl.create(:event) }
-    user { User.first || FactoryGirl.create(:user) }
+    user { FactoryGirl.create(:user) }
 
     trait :reviewer do
       role 'reviewer'

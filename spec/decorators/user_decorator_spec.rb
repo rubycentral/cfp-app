@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 describe UserDecorator do
+
   describe "#proposal_path" do
+
     it "returns the path for a speaker" do
       speaker = create(:speaker)
       proposal = create(:proposal, speakers: [ speaker ])

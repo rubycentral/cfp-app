@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :confirmable, #:validatable,
          :omniauthable, omniauth_providers: [:twitter, :github]
 
+  scope :with_notifications, -> { joins(:event_teammates).where(event_teammates: { notifications: true })}
+
   has_many :invitations,  dependent: :destroy
   has_many :event_teammates, dependent: :destroy
   has_many :reviewer_event_teammates, -> { where(role: ['reviewer', 'program team', 'organizer']) }, class_name: 'EventTeammate'

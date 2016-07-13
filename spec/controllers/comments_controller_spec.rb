@@ -5,7 +5,7 @@ describe CommentsController, type: :controller do
     let(:proposal) { build_stubbed(:proposal, uuid: 'abc123') }
     let(:user) { build_stubbed(:user) }
     let(:referer_path) { event_proposal_path(event_slug: proposal.event.slug, uuid: proposal) }
-    let(:mailer) { double("ProposalMailer.comment_notification") }
+    let(:mailer) { double("CommentNotificationMailer.speaker_notification") }
 
     before do
       allow(Proposal).to receive(:find).and_return(proposal)
@@ -36,7 +36,7 @@ describe CommentsController, type: :controller do
       end
 
       it "sends an email notification to the speaker" do
-        allow(ProposalMailer).to receive(:comment_notification).and_return(mailer)
+        allow(CommentNotificationMailer).to receive(:speaker_notification).and_return(mailer)
         expect(mailer).to receive(:deliver_now)
         post :create, params
       end

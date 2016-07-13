@@ -37,12 +37,57 @@ describe Notification do
     end
   end
 
-  describe "#read" do
+  describe ".mark_as_read_for_proposal" do
+    let!(:user) { create(:user) }
+    let!(:proposal) { create(:proposal) }
+    let!(:notification) { create(:notification, :unread, user: user, target_path: "/proposal/#{proposal.id}" ) }
+
+    it "marks read for proposal" do
+      expect(notification.read_at).to be_nil
+      Notification.mark_as_read_for_proposal("/proposal/#{proposal.id}")
+      notification.reload
+      expect(notification.read_at).to_not be_nil
+    end
+  end
+
+  describe ".more_unread?" do
+    let(:user) { create(:user) }
+
+    before :each do
+      create_count = Notification::UNREAD_LIMIT + 2
+      create_count.times do |i|
+        create(:notification, read_at: nil, message: "Notification #{i}", user: user)
+      end
+    end
+
+    it "tells you there are more than the Notification::UNREAD_LIMIT of #{Notification::UNREAD_LIMIT} notifications for user" do
+      expect(user.notifications.more_unread?).to eq(true)
+    end
+
+  end
+
+  describe ".more_unread_count" do
+    let(:user) { create(:user) }
+
+    before :each do
+      create_count = Notification::UNREAD_LIMIT + 2
+      create_count.times do |i|
+        create(:notification, read_at: nil, message: "Notification #{i}", user: user)
+      end
+    end
+
+    it "returns count of how many over UNREAD_LIMIT are unread" do
+      expect(user.notifications.more_unread_count).to eq(2)
+    end
+
+  end
+
+  describe "#mark_as_read" do
     it "sets read_at to DateTime.now" do
       now = DateTime.now
       allow(DateTime).to receive(:now) { now }
       notification = create(:notification)
-      notification.read
+      notification.mark_as_read
       expect(notification.reload).to be_read
       expect(notification.read_at.to_time.to_s).to eq(now.to_time.to_s)
     end
@@ -51,7 +96,7 @@ describe Notification do
   describe "#read?" do
     it "returns true for a read notification" do
       notification = create(:notification)
-      notification.read
+      notification.mark_as_read
       expect(notification).to be_read
     end
 
@@ -60,4 +105,15 @@ describe Notification do
       expect(notification).to_not be_read
     end
   end
+
+  describe "#short_message" do
+    before :each do
+      @notification = create(:notification, :with_long_message)
+    end
+
+    it "returns shortened message" do
+      expect(@notification.short_message).to eq(@notification.message.truncate(50, omission: "..."))
+    end
+  end
+
 end

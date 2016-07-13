@@ -2,6 +2,13 @@
   margin-bottom: -5px;
 }
 
+.navbar-nav {
+  li.dropdown > a {
+    padding-bottom:    $navbar-padding-vertical;
+    padding-top:    $navbar-padding-vertical;
+  }
+}
+
 /*------------------------------------------------------------------
 [3. Subnavbar / .subnavbar]
 */
@@ -109,3 +116,57 @@
 }
 
 
+
+//Body ids for setting navbar li > a to active state
+//This replaces checking the path in views
+#notifications_index {
+  .navbar-default {
+    .navbar-nav {
+      li.notifications-link {
+        > a {
+          color: $navbar-default-link-active-color;
+          background-color: $navbar-default-link-active-bg;
+        }
+      }
+    }
+  }
+}
+
+#proposals_index {
+  .navbar-default {
+    .navbar-nav {
+      li.my-proposals-link {
+        > a {
+          color: $navbar-default-link-active-color;
+          background-color: $navbar-default-link-active-bg;
+        }
+      }
+    }
+  }
+}
+
+#staff_proposals_index {
+  .navbar-default {
+    .navbar-nav {
+      li.event-proposals-link {
+        > a {
+          color: $navbar-default-link-active-color;
+          background-color: $navbar-default-link-active-bg;
+        }
+      }
+    }
+  }
+}
+
+#staff_events_show {
+  .navbar-default {
+    .navbar-nav {
+      li.event-dashboard-link {
+        > a {
+          color: $navbar-default-link-active-color;
+          background-color: $navbar-default-link-active-bg;
+        }
+      }
+    }
+  }
+}

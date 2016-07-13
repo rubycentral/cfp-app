@@ -73,6 +73,11 @@ class User < ActiveRecord::Base
     event_teammates.organizer.for_event(event).size > 0
   end
 
+  def staff_for?(event)
+    #Checks all roles
+    event_teammates.for_event(event).size > 0
+  end
+
   def reviewer?
     reviewer_events.count > 0
   end

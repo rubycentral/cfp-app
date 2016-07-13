@@ -1,0 +1,13 @@
+$('#session-format-new-dialog').modal('hide');
+
+<% if session_format.persisted? %>
+  $('#session-formats').append('<%=j render session_format %>');
+  clearFields([
+    '#session_format_name',
+    '#session_format_description',
+    '#session_format_duration',
+    '#session_format_public'
+  ], '#session-format-new-dialog');
+<% end %>
+
+document.getElementById('flash').innerHTML = '<%=j show_flash %>';

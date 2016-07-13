@@ -1,12 +1,12 @@
 class Staff::SessionFormatsController < Staff::ApplicationController
-  before_action :set_session_formate, only: [:edit, :update, :destroy]
+  before_action :set_session_format, only: [:edit, :update, :destroy]
 
   def index
-    @session_formates = @event.session_formates
+    @session_formats = @event.session_formats
   end
 
   def new
-    @session_formate = SessionFormat.new(public: true)
+    @session_format = SessionFormat.new(public: true)
   end
 
   def edit
@@ -15,7 +15,7 @@ class Staff::SessionFormatsController < Staff::ApplicationController
   def create
     session_format = @event.session_formats.build(session_format_params)
     unless session_format.save
-      flash.now[:warning] = "There was a problem saving your session type"
+      flash.now[:warning] = "There was a problem saving your session format"
     end
     respond_to do |format|
       format.js do
@@ -36,7 +36,7 @@ class Staff::SessionFormatsController < Staff::ApplicationController
 
   def destroy
     session_format = @event.session_formats.find(params[:id]).destroy
-    flash.now[:info] = "This session type has been deleted."
+    flash.now[:info] = "This session format has been deleted."
     respond_to do |format|
       format.js do
         render locals: { session_format: session_format }
@@ -46,12 +46,12 @@ class Staff::SessionFormatsController < Staff::ApplicationController
 
   private
 
-  def set_session_formate
-    @session_formate = @event.session_formates.find(params[:id])
+  def set_session_format
+    @session_format = @event.session_formats.find(params[:id])
   end
 
-  def session_formate_params
-    params.require(:session_formate)
+  def session_format_params
+    params.require(:session_format)
         .permit(:id, :name, :description, :event_id, :duration, :public)
   end
 

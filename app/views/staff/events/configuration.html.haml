@@ -8,11 +8,11 @@
       .widget.widget-table
         .widget-header
           %i.fa.fa-comments-o
-          %h3 Session Types
-          = link_to "Add Session Type", "#", class: "btn btn-success btn-sm pull-right",
-            data: { toggle: "modal", target: "#session-type-new-dialog" } unless !current_user.organizer_for_event?(event)
+          %h3 Session Formats
+          = link_to "Add Session Format", "#", class: "btn btn-success btn-sm pull-right",
+            data: { toggle: "modal", target: "#session-format-new-dialog" } unless !current_user.organizer_for_event?(event)
         .widget-content
-          %table.table.table-striped.table-bordered#session-types
+          %table.table.table-striped.table-bordered#session-formats
             %thead
               %tr
                 %th Name
@@ -22,13 +22,13 @@
                 - unless !current_user.organizer_for_event?(event)
                   %th= "Actions"
             %tbody
-              = render event.session_types
-      #session-type-new-dialog.modal.fade
+              = render event.session_formats
+      #session-format-new-dialog.modal.fade
         .modal-dialog
           .modal-content
             .modal-header
-              %h3 New Session Type
-              = render partial: 'staff/session_types/form', locals: { session_type: SessionType.new }
+              %h3 New Session Format
+              = render partial: 'staff/session_formats/form', locals: { session_format: SessionFormat.new }
 
       .widget.widget-table
         .widget-header

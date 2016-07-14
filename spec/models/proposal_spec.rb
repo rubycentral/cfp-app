@@ -24,30 +24,30 @@ describe Proposal do
     end
   end
 
-  describe "scope :available" do
-    it "shows a previously assigned but removed proposal as available" do
-      proposal = create(:proposal, state: ACCEPTED)
-      conf_session = create(:session, proposal: proposal, event: proposal.event)
-
-      expect {
-        conf_session.destroy
-      }.to change{Proposal.available.count}.by(1)
-    end
-
-    it "only shows accepted proposals" do
-      create(:proposal, state: WAITLISTED)
-      proposal = create(:proposal, state: ACCEPTED)
-
-      expect(Proposal.available).to match_array([ proposal ])
-    end
-
-    it "sorts proposals by talk title" do
-      zebra = create(:proposal, title: 'Zebra', state: ACCEPTED)
-      theta = create(:proposal, title: 'Theta', state: ACCEPTED)
-      alpha = create(:proposal, title: 'Alpha', state: ACCEPTED)
-      expect(Proposal.available).to eq([ alpha, theta, zebra ])
-    end
-  end
+  # describe "scope :available" do
+  #   it "shows a previously assigned but removed proposal as available" do
+  #     proposal = create(:proposal, state: ACCEPTED)
+  #     conf_session = create(:time_slot, proposal: proposal, event: proposal.event)
+  #
+  #     expect {
+  #       conf_session.destroy
+  #     }.to change{Proposal.available.count}.by(1)
+  #   end
+  #
+  #   it "only shows accepted proposals" do
+  #     create(:proposal, state: WAITLISTED)
+  #     proposal = create(:proposal, state: ACCEPTED)
+  #
+  #     expect(Proposal.available).to match_array([ proposal ])
+  #   end
+  #
+  #   it "sorts proposals by talk title" do
+  #     zebra = create(:proposal, title: 'Zebra', state: ACCEPTED)
+  #     theta = create(:proposal, title: 'Theta', state: ACCEPTED)
+  #     alpha = create(:proposal, title: 'Alpha', state: ACCEPTED)
+  #     expect(Proposal.available).to eq([ alpha, theta, zebra ])
+  #   end
+  # end
 
   describe "scope :emails" do
     it "returns all attached email addresses" do
@@ -119,18 +119,18 @@ describe Proposal do
     end
   end
 
-  describe "#scheduled?" do
-    let(:proposal) { build_stubbed(:proposal, state: ACCEPTED) }
-
-    it "returns true for scheduled proposals" do
-      create(:session, proposal: proposal)
-      expect(proposal).to be_scheduled
-    end
-
-    it "returns false for proposals that are not yet scheduled." do
-      expect(proposal).to_not be_scheduled
-    end
-  end
+  # describe "#scheduled?" do
+  #   let(:proposal) { build_stubbed(:proposal, state: ACCEPTED) }
+  #
+  #   it "returns true for scheduled proposals" do
+  #     create(:time_slot, proposal: proposal)
+  #     expect(proposal).to be_scheduled
+  #   end
+  #
+  #   it "returns false for proposals that are not yet scheduled." do
+  #     expect(proposal).to_not be_scheduled
+  #   end
+  # end
 
   describe "state changing" do
     describe "#finalized?" do

@@ -1,7 +1,7 @@
 class Staff::ProgramController < Staff::ApplicationController
   def show
     accepted_proposals =
-      @event.proposals.includes(:session).for_state(Proposal::State::ACCEPTED)
+      @event.proposals.for_state(Proposal::State::ACCEPTED)
 
     waitlisted_proposals = @event.proposals.for_state(Proposal::State::WAITLISTED)
 

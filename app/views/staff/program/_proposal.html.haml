@@ -6,5 +6,4 @@
   %td= proposal.review_tags
   %td= proposal.state_label(small: true)
   %td= proposal.confirmed? ? '✓' : ''
-  %td= proposal.scheduled? ? '✓' : ''
   %td= truncate(proposal.confirmation_notes, :length => 100)

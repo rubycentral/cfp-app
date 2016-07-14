@@ -1,12 +1,12 @@
 class Track < ActiveRecord::Base
   belongs_to :event
-  has_many :sessions
+  has_many :program_sessions
   has_many :proposals
 
   validates :name, uniqueness: {scope: :event}, presence: true
 
   def self.count_by_track(event)
-    event.tracks.joins(:sessions).group(:name).count
+    event.tracks.joins(:program_sessions).group(:name).count
   end
 end
 

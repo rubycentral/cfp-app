@@ -1,6 +1,6 @@
 class Staff::RoomsController < Staff::SchedulesController
 
-  before_filter :set_sessions, only: [:update, :destroy]
+  before_filter :set_time_slots, only: [:update, :destroy]
 
   def create
     room = @event.rooms.build(room_params)

@@ -1,28 +1,28 @@
 $(document).ready(function() {
-  initSessionsTable();
-  initSessionTimePickers();
+  initTimeSlotsTable();
+  initTimeSlotTimePickers();
 });
 
-function initSessionsTable() {
-  cfpDataTable('#organizer-sessions.datatable', [ 'number', 'text',
+function initTimeSlotsTable() {
+  cfpDataTable('#organizer-time-slots.datatable', [ 'number', 'text',
     'text', 'text', 'text', 'text', 'text' ],
     { "aaSorting": [ [0,'asc'], [1,'asc'] ] });
 }
 
-function initSessionTimePickers() {
-  $('#session_start_time, #session_end_time').timepicker({
+function initTimeSlotTimePickers() {
+  $('#time-slot-start-time, #time-slot-end-time').timepicker({
       timeFormat: 'HH:mm'
   });
 }
 
-function setUpSessionDialog(dialog) {
+function setUpTimeSlotDialog(dialog) {
   dialog.find('#cancel').click(function(e) {
     dialog.empty();
     dialog.modal('hide');
     return false;
   });
 
-  initSessionTimePickers();
+  initTimeSlotTimePickers();
 
   var proposalSelect = $('#session_proposal_id');
   var fields = $('#session_title, #session_presenter, #session_description');
@@ -59,29 +59,29 @@ function clearFields(fields, opt_parent) {
   }
 }
 
-function renderSessions(html) {
-  $('#sessions').html(html);
-  initSessionsTable();
+function renderTimeSlots(html) {
+  $('#time_slots').html(html);
+  initTimeSlotsTable();
 }
 
-function getSessionsTable() {
-  return $('#organizer-sessions.datatable').dataTable();
+function getTimeSlotsTable() {
+  return $('#organizer-time-slots.datatable').dataTable();
 }
 
-function reloadSessionsTable(rows) {
-  var table = getSessionsTable();
+function reloadTimeSlotsTable(rows) {
+  var table = getTimeSlotsTable();
   table.fnClearTable();
 
   for (var i = 0; i < rows.length; ++i) {
-    addSessionRow(rows[i], table);
+    addTimeSlotRow(rows[i], table);
   }
 }
 
-function addSessionRow(row_obj, opt_table) {
+function addTimeSlotRow(row_obj, opt_table) {
   var table;
 
   if (opt_table === undefined) {
-    table = getSessionsTable();
+    table = getTimeSlotsTable();
   } else {
     table = opt_table;
   }
@@ -89,5 +89,5 @@ function addSessionRow(row_obj, opt_table) {
   var index = table.fnAddData(row_obj.values);
 
   var row = $(table.fnGetNodes(index));
-  row.attr('id', 'session_' + row_obj.id);
+  row.attr('id', 'time_slot_' + row_obj.id);
 }

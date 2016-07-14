@@ -1,4 +1,4 @@
 require 'rails_helper'
 
-describe Session do
+describe TimeSlot do
 end

@@ -83,9 +83,16 @@ class EventDecorator < ApplicationDecorator
     end
   end
 
+  def scheduled_count
+    tot = object.proposals.accepted.count
+    tot - object.program_sessions.unscheduled.count
+  end
+
   def scheduled_percent
-    if proposals.scheduled.count > 0
-      "#{((object.proposals.scheduled.count.to_f/object.proposals.accepted.count.to_f)*100).round(1)}%"
+    if scheduled_count > 0
+      tot = object.proposals.accepted.count.to_f
+      sched = tot - object.program_sessions.unscheduled.count.to_f
+      "#{((sched/tot)*100).round(1)}%"
     else
       "0%"
     end

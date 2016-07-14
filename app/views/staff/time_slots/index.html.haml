@@ -2,32 +2,32 @@
   .row
     .col-md-12
       .page-header.clearfix
-        %h1= "#{event} Sessions"
+        %h1= "#{event} Time Slots"
 
   .row
     .col-md-12
       #content
         %ul#tabs.nav.nav-tabs{"data-tabs" => "tabs"}
           %li.active
-            %a{"data-toggle" => "tab", href: "#session", id: 'sessions-tab'} Sessions
+            %a{"data-toggle" => "tab", href: "#time-slot", id: 'time-slots-tab'} Time Slots
           %li
             %a{"data-toggle" => "tab", href: "#rooms"} Rooms
           %li
-            %a{"data-toggle" => "tab", href: "#addschedule"} Schedule
+            %a{"data-toggle" => "tab", href: "#add-schedule"} Schedule
 
         .tab-content
-          #session.tab-pane.active
+          #time-slot.tab-pane.active
             .row
               .col-md-12
-                = render partial: 'sessions'
+                = render partial: 'time_slots'
           #rooms.tab-pane
             .row
               .col-md-12
                 = render partial: 'rooms'
-          #addschedule.tab-pane
+          #add-schedule.tab-pane
             .row
               .col-md-12
                 = render partial: 'schedule'
-        #session-edit-dialog.modal.fade
+        #time-slot-edit-dialog.modal.fade
 
-        #session-new-dialog.modal.fade
+        #time-slot-new-dialog.modal.fade

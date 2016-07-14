@@ -2,9 +2,9 @@ class ConferenceDay
   attr_reader :time_slots
 
   def initialize(day, event)
-    start_times = Session.where(conference_day: day, event_id: event.id).pluck(:start_time).uniq.sort_by { |start_time| start_time }
+    start_times = TimeSlot.where(conference_day: day, event_id: event.id).pluck(:start_time).uniq.sort_by { |start_time| start_time }
     @time_slots = start_times.map do |start_time|
-      TimeSlot.new(day, start_time, event)
+      ConferenceDaySlot.new(day, start_time, event)
     end
   end
 

@@ -11,35 +11,19 @@
 
       .row
         .col-md-7
-          %h1.inline-block
-            - if event.url?
-              = link_to event.name, "#{event.url}", target: 'blank', class: 'event-title'
-            - else
-              = event.name
-
-          %span= link_to 'View Guidelines', event_path(event.slug), class: 'guidelines-link'
-
-          %h4.margin-bottom
-            = event.date_range
-
-        .col-md-5.margin-top
-          - if event.open?
-            %p.pull-right= link_to 'Submit a proposal', new_event_proposal_path(event_slug: event.slug), class: 'btn btn-primary btn-md'
-
-            - if event.closes_at?
-              %p.pull-right
-                Closes at
-                %strong= event.closes_at(:long_with_zone)
-              %p.pull-right
-                %strong
-                  %span.label.label-info
-                    = time_ago_in_words(event.closes_at)
-                    left
-                &nbsp;to submit your proposal!
-
-            %span.label.label-default.pull-right
-              = pluralize(event.proposals.count, 'proposal')
-              submitted
+          .event-info.event-info-block
+            %strong.event-title= event.name
+            .event-meta
+              - if event.start_date? && event.end_date?
+                %span.event-meta-item 
+                  %i.fa.fa-fw.fa-calendar
+                  = event.date_range
+            .event-meta
+              %span{:class => "event-status-badge event-status-#{event.status}"}
+                CFP 
+                = event.status
+              %span.event-meta
+                = link_to 'View Guidelines', event_path(event.slug)
 
       .row
         .col-md-12

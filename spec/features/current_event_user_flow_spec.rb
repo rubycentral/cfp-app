@@ -29,8 +29,8 @@ feature "A user sees correct information for the current event and their role" d
     end
 
     within ".page-header" do
-      expect(page).to have_link(event_1.name)
-      expect(page).to_not have_link(event_2.name)
+      expect(page).to have_content("#{event_1.name} Call for Proposals")
+      expect(page).to_not have_content("#{event_2.name} Call for Proposals")
     end
 
     proposal = create(:proposal, :with_speaker)

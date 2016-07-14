@@ -2,18 +2,8 @@
   .page-header
     .row
       .col-md-8
-        %h3
-          = link_to(event.name, event_path(event))
-        %span.text-info= event.date_range
-
         %h1
           = proposal.title
-          %small
-            = proposal.session_format.try(:name)
-            - if proposal.track
-              \ –
-              = proposal.track.name
-
       .col-md-4
         - if proposal.has_speaker?(current_user)
           .toolbox.pull-right
@@ -28,11 +18,32 @@
                   = link_to event_proposal_path, method: :delete, data: {confirm: 'This will delete your talk. Are you sure you want to do this? It can not be undone.'}, class: 'btn btn-warning', id: 'delete' do
                     %span.glyphicon.glyphicon-exclamation-sign
                     Delete Proposal
-            %p.text-info.margin-top
-              CFP closes
-              = event.closes_at(:month_day_year)
     .row
-      .col-md-12.tags= proposal.tags
+      .col-md-8
+        .event-info.event-info-dense
+          %strong.event-title= event.name
+          - if event.start_date? && event.end_date?
+            %span.event-meta
+              %i.fa.fa-fw.fa-calendar
+              = event.date_range
+      .col-md-4.text-right.text-right-responsive
+        .event-info.event-info-dense
+          %span{:class => "event-meta event-status-badge event-status-#{event.status}"}
+            CFP 
+            = event.status
+          - if event.open?
+            %span.event-meta
+              CFP closes:
+              %strong= event.closes_at(:month_day_year)
+  .row
+    .col-md-12
+      %small
+        = proposal.session_format.try(:name)
+        - if proposal.track
+          \ –
+          = proposal.track.name
+  .row
+    .col-md-12.tags= proposal.tags
 
   .row
     .col-md-4

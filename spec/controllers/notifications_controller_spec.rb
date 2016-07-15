@@ -31,4 +31,17 @@ describe NotificationsController, type: :controller do
     end
   end
 
+  describe "POST 'mark_all_as_read'" do
+    it "marks all unread notifications as read" do
+      5.times do
+        create(:notification, read_at: nil, user: user)
+      end
+
+      expect {
+        post 'mark_all_as_read'
+      }.to change(user.notifications.unread, :count).from(5).to(0)
+
+    end
+  end
+
 end

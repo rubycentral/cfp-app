@@ -6,7 +6,7 @@ describe UserDecorator do
       speaker = create(:speaker)
       proposal = create(:proposal, speakers: [ speaker ])
       expect(speaker.user.decorate.proposal_path(proposal)).to(
-        eq(h.event_staff_proposal_path(proposal.event.slug, proposal)))
+        eq(h.event_proposal_path(proposal.event.slug, proposal)))
     end
 
     it "returns the path for a reviewer" do

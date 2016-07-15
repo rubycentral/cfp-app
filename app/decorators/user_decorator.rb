@@ -3,6 +3,11 @@ class UserDecorator < ApplicationDecorator
 
   def proposal_path(proposal)
     event = proposal.event
-    h.event_staff_proposal_path(event, proposal)
+    if model.staff_for? event
+      h.event_staff_proposal_path(event, proposal)
+    else
+      h.event_proposal_path(event, proposal)
+    end
+
   end
 end

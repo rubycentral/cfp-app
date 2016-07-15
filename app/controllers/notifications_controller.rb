@@ -8,7 +8,7 @@ class NotificationsController < ApplicationController
 
   def show
     notification = current_user.notifications.find(params[:id])
-    notification.read
+    notification.mark_as_read
 
     redirect_to notification.target_path
   end

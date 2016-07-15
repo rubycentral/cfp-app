@@ -26,13 +26,12 @@
             = render partial: "layouts/nav/organizer_nav"
 
           - if current_event && policy(current_event).staff?
-            %li{class: "#{request.path == event_staff_path(current_event) ? 'active' : ''}"}
+            %li{class: "event-dashboard-link"}
               = link_to event_staff_path(current_event) do
                 %i.fa.fa-dashboard
                 %span Event Dashboard
 
-          %li{class: "#{request.path == notifications_path ? 'active' : ''}"}
-            = render partial: "layouts/nav/notifications_link"
+          = render partial: "layouts/nav/notifications_list"
 
           = render partial: "layouts/nav/user_dropdown"
 

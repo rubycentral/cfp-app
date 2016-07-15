@@ -16,9 +16,11 @@
           %thead
             %tr
               %th Message
+              %th When
               %th.actions Actions
           %tbody
             - notifications.each do |notification|
               %tr{ class: notification.read? ? '' : 'unread' }
                 %td= notification.message
+                %td= notification.created_at.to_s(:short)
                 %td= link_to('Show', notification)

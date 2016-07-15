@@ -11,8 +11,8 @@ $('#room-new-dialog').modal('hide');
   ], '#room-new-dialog');
 
   <% if !has_missing_requirements?(room.event) %>
-    $('#session-prereqs').addClass('hidden')
-    $('#add-session').removeClass('disabled')
+    $('#time-slot-prereqs').addClass('hidden')
+    $('#add-time-slot').removeClass('disabled')
   <% else %>
     document.getElementById('missing-prereq-messages').innerHTML =
       '<%=j unmet_requirements(room.event) %>';

@@ -1,0 +1,7 @@
+<% if save_and_add %>
+  $('#add-time-slot').click();
+<% else %>
+  $('#time-slot-new-dialog').modal('hide');
+<% end %>
+
+addTimeSlotRow(<%=raw time_slot_decorator.row.to_json %>);

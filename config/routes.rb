@@ -59,7 +59,7 @@ Rails.application.routes.draw do
       end
 
       resources :rooms, only: [:create, :update, :destroy]
-      resources :sessions, except: :show
+      resources :time_slots, except: :show
       resources :session_formats, except: :show
       resources :tracks, except: [:show]
       resources :proposals, param: :uuid do

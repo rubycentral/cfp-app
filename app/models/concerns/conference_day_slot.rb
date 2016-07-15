@@ -1,4 +1,4 @@
-class TimeSlot
+class ConferenceDaySlot
 
   attr_reader :conference_day, :start_time, :event
 
@@ -24,7 +24,7 @@ class TimeSlot
     if conference_wide?
       conference_wide_session.end_time
     else
-      start_time + Session::STANDARD_LENGTH
+      start_time + TimeSlot::STANDARD_LENGTH
     end
   end
 
@@ -51,10 +51,10 @@ class TimeSlot
   end
 
   def raw_sessions
-    @raw_sessions ||= Session.where(conference_day: conference_day, start_time: start_time, event_id: event.id)
+    @raw_sessions ||= TimeSlot.where(conference_day: conference_day, start_time: start_time, event_id: event.id)
   end
 
   def sessions_from_previous_time_slot
-    @previous_sessions ||= Session.where(conference_day: conference_day, start_time: start_time - Session::STANDARD_LENGTH, event_id: event.id)
+    @previous_sessions ||= TimeSlot.where(conference_day: conference_day, start_time: start_time - TimeSlot::STANDARD_LENGTH, event_id: event.id)
   end
 end

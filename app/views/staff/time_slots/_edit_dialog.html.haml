@@ -1,0 +1,12 @@
+%div{ id: "time-slot-edit-#{time_slot.id}" }
+  .modal-dialog
+    .modal-content
+      = form_for [event, time_slot], url: event_staff_time_slot_path(time_slot.event, time_slot), remote: true, html: {role: 'form'} do |f|
+        .modal-header
+          %h3 Edit Time Slot
+        .modal-body
+          = render partial: 'staff/time_slots/form',
+              locals: {f: f, time_slot: time_slot }
+        .modal-footer
+          %button.pull-right.btn.btn-primary{:type => "submit"} Save
+          %button#cancel.btn.btn-default{'data-dismiss' => "modal"} Cancel

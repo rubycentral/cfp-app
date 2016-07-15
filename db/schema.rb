@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160623152512) do
+ActiveRecord::Schema.define(version: 20160713174249) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,6 +102,23 @@ ActiveRecord::Schema.define(version: 20160623152512) do
 
   add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
+  create_table "program_sessions", force: :cascade do |t|
+    t.text     "title"
+    t.text     "abstract"
+    t.text     "state",             default: "active"
+    t.integer  "event_id"
+    t.integer  "proposal_id"
+    t.integer  "track_id"
+    t.integer  "session_format_id"
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+  end
+
+  add_index "program_sessions", ["event_id"], name: "index_program_sessions_on_event_id", using: :btree
+  add_index "program_sessions", ["proposal_id"], name: "index_program_sessions_on_proposal_id", using: :btree
+  add_index "program_sessions", ["session_format_id"], name: "index_program_sessions_on_session_format_id", using: :btree
+  add_index "program_sessions", ["track_id"], name: "index_program_sessions_on_track_id", using: :btree
+
   create_table "proposals", force: :cascade do |t|
     t.integer  "event_id"
     t.string   "state",                 default: "submitted"
@@ -163,23 +180,6 @@ ActiveRecord::Schema.define(version: 20160623152512) do
 
   add_index "session_formats", ["event_id"], name: "index_session_formats_on_event_id", using: :btree
 
-  create_table "sessions", force: :cascade do |t|
-    t.integer  "conference_day"
-    t.time     "start_time"
-    t.time     "end_time"
-    t.text     "title"
-    t.text     "description"
-    t.text     "presenter"
-    t.integer  "room_id"
-    t.integer  "track_id"
-    t.integer  "proposal_id"
-    t.integer  "event_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "sessions", ["event_id"], name: "index_sessions_on_event_id", using: :btree
-
   create_table "speakers", force: :cascade do |t|
     t.integer  "proposal_id"
     t.integer  "user_id"
@@ -200,6 +200,24 @@ ActiveRecord::Schema.define(version: 20160623152512) do
   end
 
   add_index "taggings", ["proposal_id"], name: "index_taggings_on_proposal_id", using: :btree
+
+  create_table "time_slots", force: :cascade do |t|
+    t.integer  "conference_day"
+    t.time     "start_time"
+    t.time     "end_time"
+    t.text     "title"
+    t.text     "description"
+    t.text     "presenter"
+    t.integer  "program_session_id"
+    t.integer  "room_id"
+    t.integer  "event_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "time_slots", ["event_id"], name: "index_time_slots_on_event_id", using: :btree
+  add_index "time_slots", ["program_session_id"], name: "index_time_slots_on_program_session_id", using: :btree
+  add_index "time_slots", ["room_id"], name: "index_time_slots_on_room_id", using: :btree
 
   create_table "tracks", force: :cascade do |t|
     t.text     "name"

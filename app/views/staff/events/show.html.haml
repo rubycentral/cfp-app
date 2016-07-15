@@ -97,11 +97,11 @@
             -#   %strong.text-primary Confirmed:
             -#   %span.label.label-info #{event.proposals.accepted.confirmed.count} (#{event.confirmed_percent})
             %li.list-group-item
-              %strong.text-primary Accepted Sessions Scheduled:
-              %span.label.label-info #{event.proposals.scheduled.count} (#{event.scheduled_percent})
-            %li.list-group-item
-              %strong.text-primary Waitlisted Sessions:
+              %strong.text-primary Waitlisted Proposals:
               %span.label.label-info #{event.proposals.waitlisted.count}
+            %li.list-group-item
+              %strong.text-primary Program Sessions Scheduled:
+              %span.label.label-info #{event.scheduled_count} (#{event.scheduled_percent})
             -# %li.list-group-item
             -#   %strong.text-primary Confirmed:
             -#   %span.label.label-info #{event.proposals.waitlisted.confirmed.count} (#{event.waitlisted_percent})

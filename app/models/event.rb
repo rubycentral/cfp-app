@@ -8,7 +8,8 @@ class Event < ActiveRecord::Base
   has_many :speakers, through: :proposals
   has_many :rooms, dependent: :destroy
   has_many :tracks, dependent: :destroy
-  has_many :sessions, dependent: :destroy
+  has_many :time_slots, dependent: :destroy
+  has_many :program_sessions, dependent: :destroy
   has_many :session_formats, dependent: :destroy
   has_many :taggings, through: :proposals
   has_many :ratings, through: :proposals
@@ -42,7 +43,7 @@ class Event < ActiveRecord::Base
 
   with_options on: :update, if: :open? do
     validates :public_session_formats, presence: { message: 'A least one public session format must be defined before event can be opened.' }
-    validates :guidelines, presence: { message: 'Guidelines must be defined before event can be opened..' }
+    validates :guidelines, presence: { message: 'Guidelines must be defined before event can be opened.' }
   end
 
   def valid_proposal_tags

@@ -1,12 +1,12 @@
-module SessionHelper
-  def track_options(session)
-    selected = session.track.id if session.track
+module TimeSlotHelper
+  def track_options(time_slot)
+    selected = time_slot.track_id
 
     options_from_collection_for_select(@event.tracks.all, :id, :name, selected)
   end
 
-  def room_options(session)
-    selected = session.room.id if session.room
+  def room_options(time_slot)
+    selected = time_slot.try(:room).try(:id)
 
     options_from_collection_for_select(@event.rooms.all, :id, :name, selected)
   end

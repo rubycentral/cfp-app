@@ -1,10 +1,10 @@
 class Staff::SchedulesController < Staff::ApplicationController
-  decorates_assigned :sessions
+  decorates_assigned :time_slots
 
   protected
 
-  def set_sessions
-    @sessions =
-      @event.sessions.includes(:track, :room, proposal: { speakers: :user })
+  def set_time_slots
+    @time_slots =
+      @event.time_slots.includes(:room, program_session: { proposal: {speakers: :user }})
   end
 end

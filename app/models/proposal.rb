@@ -13,7 +13,8 @@ class Proposal < ActiveRecord::Base
   has_many :invitations, dependent: :destroy
 
   belongs_to :event
-  has_one :session
+  has_one :time_slot
+  has_one :program_session
   belongs_to :session_format
   belongs_to :track
 
@@ -45,12 +46,8 @@ class Proposal < ActiveRecord::Base
   scope :soft_rejected, -> { where(state: SOFT_REJECTED) }
   scope :unrated, -> { where('id NOT IN ( SELECT proposal_id FROM ratings )') }
   scope :rated, -> { where('id IN ( SELECT proposal_id FROM ratings )') }
-  scope :scheduled, -> { joins(:session) }
   scope :not_withdrawn, -> {where.not(state: WITHDRAWN)}
   scope :waitlisted, -> { where(state: WAITLISTED) }
-  scope :available, -> do
-    includes(:session).where(sessions: {proposal_id: nil}, state: ACCEPTED).order(:title)
-  end
   scope :for_state, ->(state) do
     where(state: state).order(:title).includes(:event, {speakers: :user}, :review_taggings)
   end
@@ -130,10 +127,6 @@ class Proposal < ActiveRecord::Base
 
   def confirmed?
     self.confirmed_at.present?
-  end
-
-  def scheduled?
-    accepted? && session
   end
 
   def to_param

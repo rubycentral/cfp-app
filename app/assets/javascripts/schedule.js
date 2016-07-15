@@ -1,8 +1,7 @@
 $(function() {
-  $(".session-slot").click(function () {
-    console.log("session clicked");
+  $(".time-slot").click(function () {
     $.ajax({
-      url: $(this).data("session-edit-path")
+      url: $(this).data("time-slot-edit-path")
     });
   });
 });

@@ -1,4 +1,4 @@
-class SessionsDecorator < Draper::CollectionDecorator
+class TimeSlotsDecorator < Draper::CollectionDecorator
   def to_csv
     CSV.generate do |csv|
       columns = [ :conference_day, :start_time, :end_time, :title,

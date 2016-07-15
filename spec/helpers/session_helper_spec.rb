@@ -1,4 +1,4 @@
 require 'rails_helper'
 
-describe SessionHelper do
+describe TimeSlotHelper do
 end

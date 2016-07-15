@@ -1,13 +1,13 @@
 .modal-dialog
   .modal-content
-    = form_for [event, session], remote: true,
-        url: event_staff_sessions_path(event),
+    = form_for [event, time_slot], remote: true,
+        url: event_staff_time_slots_path(event),
         html: {role: 'form'} do |f|
       .modal-header
-        %h3 New session
+        %h3 New Time Slot
       .modal-body
-        = render partial: 'staff/sessions/form',
-            locals: {f: f, session: session}
+        = render partial: 'staff/time_slots/form',
+            locals: {f: f, time_slot: time_slot}
       .modal-footer
         %ul#form-flash.pull-left
           - flash.map do |key, value|

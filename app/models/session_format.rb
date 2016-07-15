@@ -1,6 +1,6 @@
 class SessionFormat < ActiveRecord::Base
   belongs_to :event
-  has_many :sessions
+  has_many :time_slots
   has_many :proposals
 
   validates_presence_of :name, :event

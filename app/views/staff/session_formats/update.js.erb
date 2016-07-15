@@ -1,4 +1,4 @@
-$('#session-format-edit-<%= session_format.id %>').modal('hide');
+$('#config-modal').modal('hide');
 
 var cells = $('table#session-formats #session_format_<%= session_format.id %> td');
 var sessionFormatName = '<%= session_format.name %>';
@@ -18,3 +18,7 @@ var length = data.length;
 for (var i = 0; i < length; ++i) {
   cells[i].innerText = data[i];
 }
+
+// var tableRow = $('table#session-formats #session_format_<%= session_format.id %>');
+// tableRow.replaceWith('<%= j render session_format %>');
+// $('.modal-backdrop').hide();

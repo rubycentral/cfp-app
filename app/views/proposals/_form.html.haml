@@ -1,54 +1,50 @@
-.row
-  .col-md-8
-    %fieldset
-      = proposal.title_input(f)
 
-      - opts_session_formats = event.session_formats.publicly_viewable.map {|st| [st.name, st.id]}
+%fieldset
+  %legend Proposal Details
+  = proposal.title_input(f)
 
-      - if opts_session_formats.length > 1
-        = f.association :session_format, collection: opts_session_formats, include_blank: 'None selected', required: true, input_html: {class: 'dropdown'}, hint: "Session Format Hint", tooltip: ["right", session_format_tooltip]
-      - else
-        = f.association :session_format, collection: opts_session_formats, include_blank: false, input_html: {readonly: "readonly"}, hint: "Session Format Hint", tooltip: ["right", "Only One Session Format for #{event.name}"]
+  - opts_session_formats = event.session_formats.publicly_viewable.map {|st| [st.name, st.id]}
 
-      - opts_tracks = event.tracks.map {|t| [t.name, t.id]}
-      -if opts_tracks.length > 0
-        = f.association :track, collection: opts_tracks, include_blank: 'None selected', input_html: {class: 'dropdown'}, hint: "Track Hint", tooltip: ["right", track_tooltip]
+  - if opts_session_formats.length > 1
+    = f.association :session_format, collection: opts_session_formats, include_blank: 'None selected', required: true, input_html: {class: 'dropdown'}, hint: "Session Format Hint", tooltip: ["right", session_format_tooltip]
+  - else
+    = f.association :session_format, collection: opts_session_formats, include_blank: false, input_html: {readonly: "readonly"}, hint: "Session Format Hint", tooltip: ["right", "Only One Session Format for #{event.name}"]
 
-      = proposal.abstract_input(f, abstract_tooltip)
+  - opts_tracks = event.tracks.map {|t| [t.name, t.id]}
+  -if opts_tracks.length > 0
+    = f.association :track, collection: opts_tracks, include_blank: 'None selected', input_html: {class: 'dropdown'}, hint: "Track Hint", tooltip: ["right", track_tooltip]
 
-      %hr/
-      %h3 For Review Committee
-      %p.help-block
-        This content will <strong> only</strong> be visible to the review committee.
+  = proposal.abstract_input(f, abstract_tooltip)
 
-      = f.input :details, input_html: { class: 'watched', rows: 5 },
-        placeholder: 'Explain the theme and flow of your talk. What are the intended audience takeaways?',
-        hint: 'Include any pertinent details such as outlines, outcomes or intended audience.', tooltip: ["right", details_tooltip]
+  - if event.proposal_tags.any?
+    .form-group
+      %h3.control-label Tags
+      = f.select :tags,
+        options_for_select(event.proposal_tags, proposal.object.tags),
+        {}, {class: 'multiselect proposal-tags', multiple: true }
 
-      = f.input :pitch, input_html: { class: 'watched', rows: 5 },
-        placeholder: 'Why is this talk pertinent? What is your involvement in the topic?',
-        hint: 'Explain why this talk should be considered and what makes you qualified to speak on the topic.', tooltip: ["right", pitch_tooltip]
+%fieldset
+  %legend For Review Committee
+  %p
+    This content will <strong> only</strong> be visible to the review committee.
 
-      %hr/
+  = f.input :details, input_html: { class: 'watched', rows: 5 },
+    placeholder: 'Explain the theme and flow of your talk. What are the intended audience takeaways?',
+    hint: 'Include any pertinent details such as outlines, outcomes or intended audience.', tooltip: ["right", details_tooltip]
 
-      - if event.proposal_tags.any?
-        %h3 Tags
-        %p.help-block I think this goes away ?
-        = f.select :tags,
-          options_for_select(event.proposal_tags, proposal.object.tags),
-          {}, {class: 'multiselect proposal-tags', multiple: true }
+  = f.input :pitch, input_html: { class: 'watched', rows: 5 },
+    placeholder: 'Why is this talk pertinent? What is your involvement in the topic?',
+    hint: 'Explain why this talk should be considered and what makes you qualified to speak on the topic.', tooltip: ["right", pitch_tooltip]
 
-      - if event.custom_fields.any?
-        %h3 Custom Fields
-        %p.help-block Custom Fields Helper
-        - event.custom_fields.each do |custom_field|
-          .form-group
-            = f.label custom_field
-            = text_field_tag "proposal[custom_fields][#{custom_field}]", proposal.custom_fields[custom_field], class: "form-control"
+- if event.custom_fields.any?
+  - event.custom_fields.each do |custom_field|
+    .form-group
+      = f.label custom_field
+      = text_field_tag "proposal[custom_fields][#{custom_field}]", proposal.custom_fields[custom_field], class: "form-control"
 
-      = render partial: 'speakers/fields', locals: { f: f }
+= render partial: 'speakers/fields', locals: { f: f }
 
-      .form-submit.clearfix
-        %button.pull-right.btn.btn-primary.btn-lg{type: "submit"} Save
+.form-submit.clearfix
+  %button.pull-right.btn.btn-primary.btn-lg{type: "submit"} Save
 
 

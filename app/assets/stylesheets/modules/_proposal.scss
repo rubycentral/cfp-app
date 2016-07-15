@@ -8,12 +8,12 @@
   }
 }
 
-.proposal {
+.proposal,
+.proposal-section {
   margin-bottom: 1em;
 }
+
 .speaker {
-  border-bottom: 1px solid $gray-light;
-  margin-top: 1em;
   > h1, > h2, > h3, > h4 {
     margin-top: 0;
   }

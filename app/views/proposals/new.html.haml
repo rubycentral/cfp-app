@@ -1,7 +1,4 @@
-.page-header
-  .row
-    .col-md-12
-      %h1 New Proposal for #{event}
+.event-info-bar
   .row
     .col-md-8
       .event-info.event-info-dense
@@ -19,6 +16,12 @@
           %span.event-meta
             CFP closes:
             %strong= event.closes_at(:month_day_year)
+
+.page-header.page-header-slim
+  .row
+    .col-md-12
+      %h1 New Proposal for #{event}
+
 .row
   .col-md-12
     .tabbable

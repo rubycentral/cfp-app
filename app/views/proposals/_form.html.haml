@@ -1,5 +1,5 @@
 .row
-  .col-md-6
+  .col-md-8
     %fieldset
       = proposal.title_input(f)
 
@@ -51,7 +51,4 @@
       .form-submit.clearfix
         %button.pull-right.btn.btn-primary.btn-lg{type: "submit"} Save
 
-  .col-md-6
-    %fieldset
-      = render partial: 'preview', locals: { proposal: proposal }
 

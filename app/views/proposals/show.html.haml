@@ -79,7 +79,7 @@
                       Invite
 
     .col-md-4
-      .widget
+      .widget.widget-card
         .widget-header
           %i.fa.fa-sticky-note-o
           %h3 Reviewer Activity
@@ -90,7 +90,7 @@
       .widget
         .widget-header
           %i.fa.fa-comments
-          %h3 Comments
+          %h3= pluralize(proposal.public_comments.count, 'comment')
         .widget-content
           = render partial: 'proposals/comments',
             locals: { proposal: proposal, comments: proposal.public_comments }

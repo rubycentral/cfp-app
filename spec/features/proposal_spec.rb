@@ -133,7 +133,7 @@ feature "Proposals" do
     end
 
     it "does not show the speaker's name" do
-      within(:css, 'div.speaker-comment') do
+      within(:css, '.speaker-comment') do
         expect(page).not_to have_text(user.name)
       end
     end

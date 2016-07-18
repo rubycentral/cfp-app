@@ -23,6 +23,7 @@
       .col-md-8
         %h1
           = proposal.title
+          = proposal.public_state(small: true)
       .col-md-4
         - if proposal.has_speaker?(current_user)
           .toolbox.pull-right
@@ -80,14 +81,6 @@
 
     .col-md-4
       .widget.widget-card
-        .widget-header
-          %i.fa.fa-sticky-note-o
-          %h3 Reviewer Activity
-        .widget-content
-          %p.count
-            = pluralize(proposal.ratings.count, 'review')
-            = proposal.public_state
-      .widget
         .widget-header
           %i.fa.fa-comments
           %h3= pluralize(proposal.public_comments.count, 'comment')

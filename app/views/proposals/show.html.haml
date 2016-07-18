@@ -67,17 +67,20 @@
                       disabled: !invitation.pending?,
                       data: {confirm: 'Are you sure you want to remove this invitation?'}
           .new-speaker-invite
-            %p You may invite other speakers to your proposal.
-            .button.btn.btn-success.speaker-invite-button Invite a Speaker
+            %p
+              You may invite other speakers to your proposal.
+              %button.button.btn.btn-success.btn-xs.speaker-invite-button 
+                Invite a Speaker
             .speaker-invite-form
-              = form_tag invitations_path(proposal_uuid: proposal.uuid), class: 'form-horizontal speaker' do
-                %h3 Invite a Speaker
-                .input-group{role: "group", "aria-label" => "Enter an Email to Invite a Speaker"}
-                  = email_field_tag :email, '', placeholder: "Enter an email address.", class: 'form-control'
-                  %span.input-group-btn
-                    %button.btn.btn-success(type="submit")
-                      %span.glyphicon.glyphicon-envelope
-                      Invite
+              = form_tag invitations_path(proposal_uuid: proposal.uuid), class: 'speaker' do
+                .widget.widget-card
+                  %h3.control-label Invite a Speaker
+                  .input-group{role: "group", "aria-label" => "Enter an Email to Invite a Speaker"}
+                    = email_field_tag :email, '', placeholder: "Enter an email address.", class: 'form-control'
+                    %span.input-group-btn
+                      %button.btn.btn-success(type="submit")
+                        %span.glyphicon.glyphicon-envelope
+                        Invite
 
     .col-md-4
       .widget.widget-card

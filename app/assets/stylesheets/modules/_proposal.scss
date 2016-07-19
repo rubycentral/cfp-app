@@ -1,13 +1,3 @@
-.proposals {
-  .event-title {
-    font-weight: bolder;
-  }
-  .btn{
-    display: block;
-    margin-top: 1em;
-  }
-}
-
 .proposal,
 .proposal-section {
   margin-bottom: 1em;
@@ -78,7 +68,7 @@ ul {
     margin-right: 1em;
   }
   li.proposal {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid $gray-lighter;
     &:last-of-type {
       border-bottom: none;
     }
@@ -107,7 +97,12 @@ span.disabled-state {
 .callout {
   border-left: solid darken(#dff0d8, 10%) 5px;
   background-color: lighten(#dff0d8, 5%);
-  padding-left: 0.5em;
+  padding: $padding-base-horizontal;
+
+  .callout-title {
+    @extend .control-label;
+    margin-bottom: $padding-large-vertical * 2;
+  }
 }
 
 .ratings_list {
@@ -138,5 +133,44 @@ div.col-md-4 {
   display: none;
   form {
     margin-top: 0px;
+  }
+}
+
+// Refactored proposals list items
+.proposal-info-bar {
+  padding-bottom: $padding-large-vertical;
+
+  i.fa {
+    position:relative;
+    margin-top: -0.1em;
+  }
+  
+  .proposal-title {
+    margin-top: 0;
+    margin-bottom: $padding-base-vertical;
+    font-weight: bold;
+  }
+
+  .proposal-meta {
+    font-size: $font-size-small;
+    color: $gray;
+
+    .proposal-meta-item {
+      display: inline-block;
+      margin-right: $padding-base-horizontal;
+    }
+
+    .proposal-description {
+      line-height: 1;
+      margin-bottom: $padding-base-vertical * 2;
+    }
+  }
+
+  .proposal-status {
+    padding-bottom: $padding-large-vertical;
+
+    .label {
+      margin-right: 0;
+    }
   }
 }

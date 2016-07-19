@@ -36,8 +36,6 @@
   }
 }
 
-$event-meta-padding: 10px;
-
 .event-info-bar {
   margin-top: 20px;
 }
@@ -51,13 +49,14 @@ $event-meta-padding: 10px;
   }
 
   .event-meta {
-    margin-left: $event-meta-padding;
+    margin-left: $padding-base-horizontal;
     color: $gray;
   }
 }
 
 .event-info-block {
-  margin-bottom: $event-meta-padding * 2;
+  margin-bottom: $padding-large-vertical * 2;
+  position: relative;
 
   .event-title,
   .event-meta {
@@ -65,12 +64,19 @@ $event-meta-padding: 10px;
   }
   
   .event-title {
-    font-size: $font-size-large;
+    font-size: $font-size-h3;
+    padding-right: 80px;
   }
 
   .event-meta {
-    margin-top: $event-meta-padding / 2;
+    margin-top: $padding-large-vertical / 2;
     margin-left: 0;
+  }
+
+  .event-status-badge {
+    position: absolute;
+    right: $padding-large-vertical / 2;
+    top: $padding-large-vertical / 2;
   }
 }
 
@@ -88,7 +94,7 @@ $event-meta-padding: 10px;
 
   .event-callout {
     font-size: $font-size-large;
-    margin-bottom: $event-meta-padding * 2;
+    margin-bottom: $padding-large-vertical * 2;
   }
 }
 

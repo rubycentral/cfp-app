@@ -1,22 +1,32 @@
 class CommentNotificationMailer < ApplicationMailer
-  def email_notification(comment)
+
+  def reviewer_notification(proposal, comment, users)
     @comment = comment
-    @proposal = comment.proposal
+    @proposal = proposal
 
     # Email all reviewers of this proposal if notifications is true unless they made the comment
-    bcc = @proposal.ratings.map do |rating|
-      user = rating.user
-      if rating.event_teammate.try(:should_be_notified?) && @comment.user_id != user.id
-        user.email
-      end
-    end.compact
+    to = users.map(&:email)
 
-    if bcc.any?
+    if to.any?
       mail_markdown(
-                    bcc: bcc,
+                    to: to,
                     from: @proposal.event.contact_email,
-                    subject: "CFP #{@proposal.event.name}: A comment has been posted on '#{@proposal.title}'")
+                    subject: "#{@proposal.event.name} CFP: New comment on '#{@proposal.title}'")
     end
   end
+
+  def speaker_notification(proposal, comment, users)
+    @proposal = proposal
+    @comment = comment
+
+    to = users.map(&:email)
+
+    if to.any?
+      mail_markdown(to: to,
+                    from: @proposal.event.contact_email,
+                    subject: "#{@proposal.event.name} CFP: New comment on '#{@proposal.title}'")
+    end
+  end
+
 end
 

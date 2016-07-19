@@ -4,6 +4,7 @@ class EventTeammate < ActiveRecord::Base
 
   scope :for_event, -> (event) { where(event: event) }
   scope :recent, -> { order('created_at DESC') }
+  scope :notify, -> { where(notifications: true) }
 
   scope :organizer, -> { where(role: 'organizer') }
   scope :program_team, -> { where(role: ['program team', 'organizer']) }
@@ -11,10 +12,6 @@ class EventTeammate < ActiveRecord::Base
 
   validates :user, :event, :role, presence: true
   validates :user_id, uniqueness: {scope: :event_id}
-
-  def should_be_notified?
-    notifications
-  end
 
   def comment_notifications
     if notifications

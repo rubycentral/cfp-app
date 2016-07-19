@@ -64,15 +64,15 @@ class Proposal < ActiveRecord::Base
 
   # Return all reviewers for this proposal.
   # A user is considered a reviewer if they meet the following criteria
-  # - They are an organizer or reviewer for this event
+  # - They are an teammate for this event
   # AND
-  # - They have rated or made a public comment on this proposal
+  # - They have rated or made a public comment on this proposal, this means they are a 'reviewer'
   def reviewers
     User.joins(:event_teammates,
                  'LEFT OUTER JOIN ratings AS r ON r.user_id = users.id',
                  'LEFT OUTER JOIN comments AS c ON c.user_id = users.id')
-      .where("event_teammates.event_id = ? AND event_teammates.role IN (?) AND (r.proposal_id = ? or (c.proposal_id = ? AND c.type = 'PublicComment'))",
-             event.id, ['organizer', 'reviewer'], id, id).uniq
+      .where("event_teammates.event_id = ? AND (r.proposal_id = ? or (c.proposal_id = ? AND c.type = 'PublicComment'))",
+             event.id, id, id).uniq
   end
 
   def video_url

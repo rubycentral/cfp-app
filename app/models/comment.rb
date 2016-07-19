@@ -9,6 +9,7 @@ class Comment < ActiveRecord::Base
   def public?
     type == "PublicComment"
   end
+
 end
 
 

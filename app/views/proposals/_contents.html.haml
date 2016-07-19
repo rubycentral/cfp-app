@@ -1,23 +1,40 @@
-%h3 Title
-.markdown{ data: { 'field-id' => 'proposal_title' } }
-  = proposal.title
+.proposal-section
+  %h3 Title
+  .markdown{ data: { 'field-id' => 'proposal_title' } }
+    = proposal.title
 
-%h3 Abstract
-.markdown{ data: { 'field-id' => 'proposal_abstract' } }
-  = proposal.abstract
+.proposal-section
+  %h3 Session Format
+  = proposal.session_format.try(:name)
 
-%h3 Details
-.markdown{ data: { 'field-id' => 'proposal_details' } }
-  = proposal.details
+- if proposal.track
+  .proposal-section
+    %h3 Track
+    = proposal.track.name
 
-%h3 Pitch
-.markdown{ data: { 'field-id' => 'proposal_pitch' } }
-  =proposal.pitch
+.proposal-section
+  %h3 Abstract
+  .markdown{ data: { 'field-id' => 'proposal_abstract' } }
+    = proposal.abstract
 
-  - if proposal.custom_fields.any?
-    - proposal.proposal_data[:custom_fields].select do |key,value|
+.proposal-section
+  %h3 Tags
+  = proposal.tags
+
+.proposal-section
+  %h3 Details
+  .markdown{ data: { 'field-id' => 'proposal_details' } }
+    = proposal.details
+
+.proposal-section
+  %h3 Pitch
+  .markdown{ data: { 'field-id' => 'proposal_pitch' } }
+    =proposal.pitch
+
+- if proposal.custom_fields.any?
+  - proposal.proposal_data[:custom_fields].select do |key,value|
+    .proposal-section
       %h3= key.capitalize
       %div
       = value.capitalize
       %div
-

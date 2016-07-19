@@ -40,6 +40,15 @@ span[title="required"] {
   color: darken(#edd1d1, 50%);
 }
 
+.control-label {
+  display: block;
+  max-width: 100%;
+  margin-bottom: 5px;
+  margin-top: 0;
+  font-size: $font-size-base;
+  font-weight: bold;
+}
+
 .cancel-form {
   margin-right: .5em;
 }

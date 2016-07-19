@@ -1,7 +1,4 @@
-.page-header
-  .row
-    .col-md-12
-      %h1 New Proposal for #{event}
+.event-info-bar
   .row
     .col-md-8
       .event-info.event-info-dense
@@ -19,16 +16,34 @@
           %span.event-meta
             CFP closes:
             %strong= event.closes_at(:month_day_year)
-.row
-  .col-md-6
-    %p
-      Read the <strong>#{link_to 'guidelines', event_path(event.slug)}</strong> to maximize
-      your chance of approval. Refrain from including any information that
-      would allow a reviewer to identify you.
-    %p
-      All fields support
-      %a{href: 'https://help.github.com/articles/github-flavored-markdown'}
-        %strong GitHub Flavored Markdown.
 
-= simple_form_for proposal, url: event_proposals_path(event) do |f|
-  = render partial: 'form', locals: {f: f}
+.page-header.page-header-slim
+  .row
+    .col-md-12
+      %h1 New Proposal for #{event}
+
+.row
+  .col-md-12
+    .tabbable
+      %ul.nav.nav-tabs
+        %li.active
+          %a{"data-toggle" => "tab", :href => "#create-proposal"} Create proposal
+        %li
+          %a{"data-toggle" => "tab", :href => "#preview"} Preview
+      .tab-content
+        #create-proposal.tab-pane.active
+          .row
+            .col-md-8
+              %p
+                Read the <strong>#{link_to 'guidelines', event_path(event.slug)}</strong> to maximize
+                your chance of approval. Refrain from including any information that
+                would allow a reviewer to identify you.
+              %p
+                All fields support
+                %a{href: 'https://help.github.com/articles/github-flavored-markdown'}
+                  %strong GitHub Flavored Markdown.
+
+              = simple_form_for proposal, url: event_proposals_path(event) do |f|
+                = render partial: 'form', locals: {f: f}
+        #preview.tab-pane
+          = render partial: 'preview', locals: { proposal: proposal }

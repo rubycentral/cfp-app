@@ -5,15 +5,24 @@ ul.messages_layout {
   position: relative;
 }
 ul.messages_layout li {
-  float: left;
   list-style: none;
-  position: relative
+  position: relative;
+
+  &:before,
+  &:after {
+    content: "";
+    display: table;
+  }
+
+  &:after {
+    clear: both;
+  }
 }
 ul.messages_layout li.left {
-  padding-left: 75px
+  padding-left: 35px
 }
 ul.messages_layout li.right {
-  padding-right: 75px
+  padding-right: 35px
 }
 ul.messages_layout li.right .avatar {
   right: 0;
@@ -44,8 +53,9 @@ ul.messages_layout li a.avatar img {
 }
 ul.messages_layout li .message_wrap {
   background: #fefefe;
-  border: 1px solid $brand-primary;
+  border: 1px solid $gray-light;
   float: left;
+  width: 100%;
   margin-bottom: 20px;
   padding: 10px;
   position: relative;
@@ -67,10 +77,19 @@ ul.messages_layout li .message_wrap .arrow {
   top: 13px
 }
 ul.messages_layout li .message_wrap .info {
-  float: left;
   width: 100%;
   border-bottom: 1px solid #fff;
-  line-height: 23px
+  line-height: 23px;
+
+  &:before,
+  &:after {
+    content: "";
+    display: table;
+  }
+
+  &:after {
+    clear: both;
+  }
 }
 ul.messages_layout li .message_wrap .info .name {
   color: $brand-primary;
@@ -83,7 +102,6 @@ ul.messages_layout li .message_wrap .info .time {
   margin-left: 6px
 }
 ul.messages_layout li .message_wrap .text {
-  float: left;
   width: 100%;
   border-top: 1px solid #cfcfcf;
   padding-top: 5px

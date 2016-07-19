@@ -1,13 +1,17 @@
-%p.count
-  = pluralize(comments.count, 'comment')
-- comments.order(:created_at).each do |comment|
-  .comment.markdown{ class: choose_class_for(comment) }
-    =markdown(comment.body)
+%ul.messages_layout
+  - comments.order(:created_at).each do |comment|
+    %li.comment.markdown{ class: choose_class_for(comment) }
+      %a.avatar
+        = image_tag("https://www.gravatar.com/avatar/#{comment.user.gravatar_hash}?s=25")
+      .message_wrap
+        - if comment.user.present?
+          .info{ title: comment.created_at.to_s }
+            %a.name #{proposal.has_speaker?(comment.user) ? 'speaker' : comment.user.name}
+            %span.time #{comment.created_at.to_s(:day_at_time)}
+        .text
+          =markdown(comment.body)
 
-    - if comment.user.present?
-      .meta
-        %small{ title: comment.created_at.to_s }
-          #{proposal.has_speaker?(comment.user) ? 'speaker' : comment.user.name} - #{comment.created_at.to_s(:day_at_time)}
+      
 
 = form_for comments.new do |f|
   = f.hidden_field :proposal_id

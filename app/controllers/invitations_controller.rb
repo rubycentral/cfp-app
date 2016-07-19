@@ -47,7 +47,7 @@ class InvitationsController < ApplicationController
     else
       @invitation.accept
       flash[:info] = "You have accepted this invitation."
-      @invitation.proposal.speakers.create(user: current_user)
+      @invitation.proposal.speakers.create(user: current_user, event: @invitation.proposal.event)
       redirect_to edit_event_proposal_url(event_slug: @invitation.proposal.event.slug,
                                      uuid: @invitation.proposal)
     end

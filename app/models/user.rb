@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   has_many :comments,      dependent: :destroy
   has_many :notifications, dependent: :destroy
   has_many :proposals, through: :speakers, source: :proposal
+  has_many :program_sessions, through: :speakers, source: :program_session
 
   validates :bio, length: { maximum: 500 }
   validates :name, presence: true, allow_nil: true
@@ -55,7 +56,7 @@ class User < ActiveRecord::Base
   end
 
   def gravatar_hash
-    Digest::MD5.hexdigest email.to_s.downcase
+    self.class.gravatar_hash(email)
   end
 
   def connected?(provider)
@@ -98,6 +99,10 @@ class User < ActiveRecord::Base
 
   def role_names
     self.teammates.collect {|p| p.role}.uniq.join(", ")
+  end
+
+  def self.gravatar_hash(email)
+    Digest::MD5.hexdigest(email.to_s.downcase)
   end
 
 end

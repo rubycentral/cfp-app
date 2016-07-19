@@ -158,13 +158,20 @@ ActiveRecord::Schema.define(version: 20160713174249) do
   add_index "session_formats", ["event_id"], name: "index_session_formats_on_event_id", using: :btree
 
   create_table "speakers", force: :cascade do |t|
-    t.integer  "proposal_id"
-    t.integer  "user_id"
+    t.string   "speaker_name"
+    t.string   "speaker_email"
     t.text     "bio"
+    t.text     "info"
+    t.integer  "user_id"
+    t.integer  "event_id"
+    t.integer  "proposal_id"
+    t.integer  "program_session_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "speakers", ["event_id"], name: "index_speakers_on_event_id", using: :btree
+  add_index "speakers", ["program_session_id"], name: "index_speakers_on_program_session_id", using: :btree
   add_index "speakers", ["proposal_id"], name: "index_speakers_on_proposal_id", using: :btree
   add_index "speakers", ["user_id"], name: "index_speakers_on_user_id", using: :btree
 

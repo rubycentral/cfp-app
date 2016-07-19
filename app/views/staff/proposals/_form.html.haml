@@ -18,13 +18,13 @@
 
 
     %fieldset
-      %h4 Speaker
-      = f.simple_fields_for :speakers do |speaker_fields|
-        = speaker_fields.simple_fields_for :user, @user do |user_fields|
-          = user_fields.input :name
-          = user_fields.input :email
-        = speaker_fields.input :bio, maxlength: :lookup,
-          placeholder: 'Bio for speaker for the event program.'
+      -#%h4 Speaker
+      -#= f.simple_fields_for :speakers do |speaker_fields|
+      -#  = speaker_fields.simple_fields_for :user, @user do |user_fields|
+      -#    = user_fields.input :name
+      -#    = user_fields.input :email
+      -#  = speaker_fields.input :bio, maxlength: :lookup,
+      -#    placeholder: 'Bio for speaker for the event program.'
 
       - if @event.custom_fields?
         %h4 Custom Fields

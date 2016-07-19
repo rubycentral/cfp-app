@@ -47,6 +47,9 @@ class ProposalsController < ApplicationController
 
   def create
     @proposal = @event.proposals.new(proposal_params)
+    speaker = @proposal.speakers[0]
+    speaker.user_id = current_user.id
+    speaker.event_id = @event.id
 
     if @proposal.save
       current_user.update_bio
@@ -99,7 +102,7 @@ class ProposalsController < ApplicationController
   def proposal_params
     params.require(:proposal).permit(:title, {tags: []}, :session_format_id, :track_id, :abstract, :details, :pitch, custom_fields: @event.custom_fields,
                                      comments_attributes: [:body, :proposal_id, :user_id],
-                                     speakers_attributes: [:bio, :user_id, :id])
+                                     speakers_attributes: [:bio, :id])
   end
 
   def require_invite_or_speaker

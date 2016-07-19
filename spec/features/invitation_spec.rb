@@ -11,6 +11,7 @@ feature 'Speaker Invitations' do
   }
   let!(:speaker) { create(:speaker,
                          user: user,
+                         event: event,
                          proposal: proposal)
   }
 

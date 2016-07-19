@@ -16,7 +16,7 @@ class Staff::SpeakersController < Staff::ApplicationController
 
   def create
     s_params = speaker_params
-    user = User.find_by(email: s_params.delete(:email))
+    user = User.find_by(email: s_params.delete(:speaker_email))
     if user
       if user.speakers.create(s_params.merge(proposal: @proposal))
         flash[:success] = "Speaker was added to this proposal"
@@ -67,8 +67,7 @@ class Staff::SpeakersController < Staff::ApplicationController
   private
 
   def speaker_params
-    params.require(:speaker).permit(:bio, :email,
-                              user_attributes: [:id, :name, :email, :bio])
+    params.require(:speaker).permit(:bio, :email, :user_id, :event_id, :speaker_name, :speaker_email)
   end
 
   def set_proposal

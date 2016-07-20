@@ -5,7 +5,7 @@ describe InternalComment do
     context "when reviewer creates InternalComment" do
       let(:proposal) { create(:proposal, :with_organizer_public_comment, :with_speaker) }
       let(:speaker) { proposal.speakers.first.user }
-      let(:organizer) { EventTeammate.for_event(proposal.event).organizer.first.user }
+      let(:organizer) { Teammate.for_event(proposal.event).organizer.first.user }
       let(:organizer2) { create(:organizer) }
       let(:reviewer) { create(:reviewer, event: proposal.event) }
 

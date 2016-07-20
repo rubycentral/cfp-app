@@ -16,7 +16,7 @@ feature "Listing events for different roles" do
 
   context "As an organizer" do
     scenario "the organizer should see a link to the guidelines page for an event" do
-      create(:event_teammate, role: 'organizer', user: organizer)
+      create(:teammate, role: 'organizer', user: organizer)
       login_as(organizer)
       visit events_path
       expect(page).to have_link("View #{event.name}'s Guidelines", href: event_path(event))

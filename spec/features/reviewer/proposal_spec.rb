@@ -29,7 +29,7 @@ feature "Review Proposals" do
   }
 
   # Reviewer
-  let!(:event_staff_teammate) { create(:event_teammate, :reviewer, user: reviewer_user, event: event) }
+  let!(:event_staff_teammate) { create(:teammate, :reviewer, user: reviewer_user, event: event) }
 
   before { login_as(reviewer_user) }
 
@@ -46,7 +46,7 @@ feature "Review Proposals" do
       reviewer_user.ratings.create(proposal: proposal, score: 4)
 
       # someone else has rated `proposal2` as a 4
-      other_reviewer = create(:event_teammate, :reviewer, event: event).user
+      other_reviewer = create(:teammate, :reviewer, event: event).user
       other_reviewer.ratings.create(proposal: proposal2, score: 4)
 
       visit event_staff_proposals_path(event)

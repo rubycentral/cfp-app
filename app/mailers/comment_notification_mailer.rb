@@ -29,4 +29,3 @@ class CommentNotificationMailer < ApplicationMailer
   end
 
 end
-

@@ -68,10 +68,10 @@ class Proposal < ActiveRecord::Base
   # AND
   # - They have rated or made a public comment on this proposal, this means they are a 'reviewer'
   def reviewers
-    User.joins(:event_teammates,
+    User.joins(:teammates,
                  'LEFT OUTER JOIN ratings AS r ON r.user_id = users.id',
                  'LEFT OUTER JOIN comments AS c ON c.user_id = users.id')
-      .where("event_teammates.event_id = ? AND (r.proposal_id = ? or (c.proposal_id = ? AND c.type = 'PublicComment'))",
+      .where("teammates.event_id = ? AND (r.proposal_id = ? or (c.proposal_id = ? AND c.type = 'PublicComment'))",
              event.id, id, id).uniq
   end
 

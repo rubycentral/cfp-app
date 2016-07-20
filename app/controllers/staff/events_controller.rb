@@ -4,13 +4,11 @@ class Staff::EventsController < Staff::ApplicationController
   end
 
   def show
-    event_teammates = @event.event_teammates.includes(:user).recent
-    rating_counts = @event.ratings.group(:user_id).count
+    teammates = @event.teammates.accepted
 
     render locals: {
              event: @event.decorate,
-             rating_counts: rating_counts,
-             event_teammates: event_teammates
+             teammates: teammates
            }
   end
 

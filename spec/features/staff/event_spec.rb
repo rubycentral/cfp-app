@@ -1,17 +1,14 @@
 require 'rails_helper'
 
 feature "Event Dashboard" do
-  let(:event) { create(:event, name: "My Event") }
   let(:organizer_user) { create(:user) }
-  let!(:event_staff_teammate) { create(:event_teammate,
-                                       event: event,
+  let!(:organizer_teammate) { create(:teammate,
                                        user: organizer_user,
-                                       role: 'organizer')
+                                       role: "organizer")
   }
 
   let(:reviewer_user) { create(:user) }
-  let!(:reviewer_event_teammate) { create(:event_teammate,
-                                      event: event,
+  let!(:reviewer_event_teammate) { create(:teammate,
                                       user: reviewer_user,
                                       role: 'reviewer')
   }
@@ -31,14 +28,14 @@ feature "Event Dashboard" do
     end
 
     it "can edit events" do
-      visit event_staff_edit_path(event)
+      visit event_staff_edit_path(organizer_teammate.event)
       fill_in "Name", with: "Blef"
       click_button 'Save'
       expect(page).to have_text("Blef")
     end
 
     it "can change event status" do
-      visit event_staff_info_path(event)
+      visit event_staff_info_path(organizer_teammate.event)
 
       within('.page-header') do
         expect(page).to have_content("Event Status: Draft")
@@ -54,74 +51,8 @@ feature "Event Dashboard" do
     end
 
     it "cannot delete events" do
-      visit event_staff_url(event)
+      visit event_staff_url(organizer_teammate.event)
       expect(page).not_to have_link('Delete Event')
     end
-
-    it "can promote a user" do
-      pending "This fails because add/invite new teammate is no longer on this page. Change path once new card is complete"
-      user = create(:user)
-      visit event_staff_path(event)
-      click_link 'Add/Invite Staff'
-
-      form = find('#new_event_teammate')
-      form.fill_in :email, with: user.email
-      form.select 'organizer', from: 'Role'
-      form.click_button('Save')
-
-      expect(user).to be_organizer_for_event(event)
-    end
-
-    it "can promote an event teammate" do
-      pending "This fails because the event teammates section is no longer on this page. Change path once new card is complete"
-      visit event_staff_path(event)
-
-      form = find('tr', text: reviewer_user.email).find('form')
-      form.select 'organizer', from: 'Role'
-      form.click_button('Save')
-
-      expect(reviewer_user).to be_organizer_for_event(event)
-    end
-
-    it "can remove a event teammate" do
-      pending "This fails because add/invite new teammate is no longer on this page. Change path once new card is complete"
-      visit event_staff_path(event)
-
-      row = find('tr', text: reviewer_user.email)
-      row.click_link 'Remove'
-
-      expect(reviewer_user).to_not be_reviewer_for_event(event)
-    end
-
-    it "can invite a new event teammate" do
-      visit event_staff_event_teammate_invitations_path(event)
-
-      fill_in 'Email', with: 'harrypotter@hogwarts.edu'
-      select 'program team', from: 'Role'
-      click_button('Invite')
-
-      email = ActionMailer::Base.deliveries.last
-      expect(email.to).to eq([ 'harrypotter@hogwarts.edu' ])
-      expect(page).to have_text('Event teammate invitation successfully sent')
-    end
-  end
-
-  context "As a reviewer" do
-    before :each do
-      logout
-      login_as(reviewer_user)
-    end
-
-    it "cannot view buttons to edit event or change status" do
-      visit event_staff_info_path(event)
-
-      within('.page-header') do
-        expect(page).to have_content("Event Status: Draft")
-      end
-
-      expect(page).to_not have_link("Change Status")
-      expect(page).to_not have_css(".btn-nav")
-    end
-
   end
 end

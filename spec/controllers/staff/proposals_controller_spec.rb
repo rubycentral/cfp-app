@@ -5,8 +5,8 @@ describe Staff::ProposalsController, type: :controller do
   let(:event) { create(:event) }
   let(:user) do
     create(:user,
-           organizer_event_teammates:
-             [ build(:event_teammate, role: 'organizer', event: event) ],
+           organizer_teammates:
+             [ build(:teammate, role: 'organizer', event: event) ],
           )
   end
   let(:proposal) { create(:proposal, event: event) }

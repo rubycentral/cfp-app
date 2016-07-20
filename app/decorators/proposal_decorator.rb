@@ -69,7 +69,7 @@ class ProposalDecorator < ApplicationDecorator
     h.markdown(object.details)
   end
 
-  def abstract
+  def abstract_markdown
     h.markdown(object.abstract)
   end
 
@@ -96,7 +96,7 @@ class ProposalDecorator < ApplicationDecorator
     classes = "label #{state_class(state)}"
     classes += ' status' unless small
     classes += ' label-mini' if small
-    
+
     state += ' & confirmed' if proposal.confirmed? && show_confirmed
 
     h.content_tag :span, state, class: classes

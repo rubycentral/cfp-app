@@ -19,7 +19,7 @@
         %p.help-block Congratulations! Your talk has been #{proposal.state}. Please ensure the information below is correct.
 
       %h3 Abstract
-      = proposal.abstract
+      = proposal.abstract_markdown
 
       %h3 Speakers
       = render partial: 'speakers/speaker', collection: proposal.speakers, locals: { withdraw: false }

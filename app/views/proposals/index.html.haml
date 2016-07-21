@@ -31,33 +31,32 @@
                   = link_to 'View Guidelines', event_path(event.slug)
 
         .col-md-8
-          .proposal-section.invitations.callout
-            %h2.callout-title Speaker Invitations
-            - if invitations.empty?
-              %p You don't have any invitations.
-            %ul.list-unstyled
-              - invitations.each do |invitation|
-                %li.invitation.proposal.proposal-info-bar
-                  .flex-container.flex-container-md
-                    .flex-item.flex-item-padded
-                      %h4.proposal-title= link_to invitation.proposal.title, event_proposal_path(event_slug: invitation.proposal.event.slug, uuid: invitation.proposal)
+          - if invitations.any?
+            .proposal-section.invitations.callout
+              %h2.callout-title Speaker Invitations
+              %ul.list-unstyled
+                - invitations.each do |invitation|
+                  %li.invitation.proposal.proposal-info-bar
+                    .flex-container.flex-container-md
+                      .flex-item.flex-item-padded
+                        %h4.proposal-title= link_to invitation.proposal.title, event_proposal_path(event_slug: invitation.proposal.event.slug, uuid: invitation.proposal)
 
-                      .proposal-meta.proposal-description
-                        - if invitation.proposal.track
-                          .proposal-meta-item
-                            %strong Track:
-                            = invitation.proposal.track.name
-                          .proposal-meta-item
-                            %strong #{ 'Speaker'.pluralize(invitation.proposal.speakers.count) }:
-                            = invitation.proposal.speakers.collect { |speaker| speaker.name }.join(', ')
-                    .flex-item.flex-item-fixed.flex-item-padded.flex-item-right
-                      .proposal-status
-                        = invitation.state_label
-                      - if invitation.pending?
-                        .proposal-meta.invite-btns
-                          = invitation.refuse_button(small: true)
+                        .proposal-meta.proposal-description
+                          - if invitation.proposal.track
+                            .proposal-meta-item
+                              %strong Track:
+                              = invitation.proposal.track.name
+                            .proposal-meta-item
+                              %strong #{ 'Speaker'.pluralize(invitation.proposal.speakers.count) }:
+                              = invitation.proposal.speakers.collect { |speaker| speaker.name }.join(', ')
+                      .flex-item.flex-item-fixed.flex-item-padded.flex-item-right
+                        .proposal-status
+                          = invitation.state_label
+                        - if invitation.pending?
+                          .proposal-meta.invite-btns
+                            = invitation.refuse_button(small: true)
 
-                          = invitation.accept_button(small: true)
+                            = invitation.accept_button(small: true)
 
           .proposal-section
             %ul.list-unstyled

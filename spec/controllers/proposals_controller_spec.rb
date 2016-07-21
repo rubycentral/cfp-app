@@ -112,6 +112,8 @@ describe ProposalsController, type: :controller do
 
       expect(assigns(:proposal).title).to eq('new_title')
       expect(assigns(:proposal).pitch).to eq('new_pitch')
+      expect(assigns(:proposal).abstract).to_not match('<p>')
+      expect(assigns(:proposal).abstract).to_not match('</p>')
     end
 
     it "sends a notifications to an organizer" do

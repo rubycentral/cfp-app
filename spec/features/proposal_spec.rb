@@ -87,6 +87,8 @@ feature "Proposals" do
       end
 
       it "submits successfully" do
+        expect(Proposal.last.abstract).to_not match('<p>')
+        expect(Proposal.last.abstract).to_not match('</p>')
         expect(page).to have_text("Thank you for submitting")
       end
 

@@ -8,7 +8,7 @@
     - if proposals.empty?
       .widget.widget-card.text-center
         %h2.control-label You don't have any proposals.
-        
+
     - proposals.each do |event, talks|
       - event = event.decorate
 
@@ -23,7 +23,7 @@
                 = event.status
               .event-meta
                 - if event.start_date? && event.end_date?
-                  %span.event-meta-item 
+                  %span.event-meta-item
                     %i.fa.fa-fw.fa-calendar
                     = event.date_range
               .event-meta.margin-top
@@ -54,7 +54,7 @@
                           = invitation.state_label
                         - if invitation.pending?
                           .proposal-meta.invite-btns
-                            = invitation.refuse_button(small: true)
+                            = invitation.decline_button(small: true)
 
                             = invitation.accept_button(small: true)
 
@@ -74,7 +74,7 @@
                         .proposal-meta-item
                           %strong Format:
                           %span #{proposal.session_format.name}
-                        
+
                         - if proposal.track
                           .proposal-meta-item
                             %strong Track:
@@ -87,4 +87,3 @@
                       .proposal-meta
                         %i.fa.fa-fw.fa-comments
                         = pluralize(proposal.public_comments.count, 'comment')
-                        

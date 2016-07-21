@@ -23,7 +23,7 @@ describe TeammatesController, type: :controller do
       expect(response).to redirect_to(root_url)
     end
 
-    it "sets invitation state to refused" do
+    it "sets invitation state to declined" do
       get "decline", token: invitation.token
       expect(invitation.reload.state).to eq(Teammate::DECLINED)
     end

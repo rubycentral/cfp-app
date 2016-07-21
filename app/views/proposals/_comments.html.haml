@@ -6,12 +6,11 @@
       .message_wrap
         - if comment.user.present?
           .info{ title: comment.created_at.to_s }
-            %a.name #{proposal.has_speaker?(comment.user) ? 'speaker' : comment.user.name}
+            %p.name
+              = comment.user.name
             %span.time #{comment.created_at.to_s(:day_at_time)}
         .text
           =markdown(comment.body)
-
-      
 
 = form_for comments.new do |f|
   = f.hidden_field :proposal_id

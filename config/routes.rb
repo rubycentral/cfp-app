@@ -96,7 +96,7 @@ Rails.application.routes.draw do
   resources :invitations, only: [:show, :create, :destroy], param: :invitation_slug do
     member do
       post :accept, action: :update
-      post :refuse, action: :update, refuse: true
+      post :decline, action: :update, decline: true
       post :resend, action: :resend
     end
   end

@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
       end
     end
   end
-
+  
   def update_bio
     update(bio: speakers.last.bio) if bio.blank?
   end

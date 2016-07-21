@@ -3,16 +3,16 @@ class InvitationDecorator < ApplicationDecorator
 
   STATE_LABEL_MAP = {
     Invitation::State::PENDING => 'label-default',
-    Invitation::State::REFUSED => 'label-danger',
+    Invitation::State::DECLINED => 'label-danger',
     Invitation::State::ACCEPTED => 'label-success'
   }
 
-  def refuse_button(small: false)
+  def decline_button(small: false)
     classes = 'btn btn-danger'
     classes += ' btn-xs' if small
 
     h.link_to 'Decline',
-      h.refuse_invitation_path(invitation_slug: object.slug),
+      h.decline_invitation_path(invitation_slug: object.slug),
       method: :post,
       class: classes,
       data: { confirm: 'Are you sure you want to decline this invitation?' }

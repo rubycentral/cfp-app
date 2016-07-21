@@ -23,25 +23,26 @@ feature 'Speaker Invitations' do
   context "Creating an invitation" do
     before :each do
       go_to_proposal
-      fill_in 'email', with: second_speaker_email
+      click_on "Invite a Speaker"
+      fill_in "Email", with: second_speaker_email
     end
 
     scenario "A speaker can invite another speaker" do
-      click_button 'Invite'
+      click_button "Invite"
       expect(page).
         to(have_text(second_speaker_email))
     end
 
     it "emails the pending speaker" do
       ActionMailer::Base.deliveries.clear
-      click_button 'Invite'
+      click_button "Invite"
       expect(ActionMailer::Base.deliveries.first.to).to include(second_speaker_email)
     end
 
     scenario "A speaker can re-invite the same speaker" do
-      click_button 'Invite'
-      fill_in 'email', with: second_speaker_email
-      click_button 'Invite'
+      click_button "Invite"
+      fill_in "Email", with: second_speaker_email
+      click_button "Invite"
       expect(page).
         to(have_text(second_speaker_email))
     end
@@ -52,7 +53,7 @@ feature 'Speaker Invitations' do
 
     scenario "A speaker can remove an invitation" do
       go_to_proposal
-      click_link 'Remove'
+      click_link "Remove"
       expect(proposal.reload.invitations).not_to include(invitation)
     end
   end
@@ -63,7 +64,7 @@ feature 'Speaker Invitations' do
 
     scenario "A speaker can resend an invitation" do
       go_to_proposal
-      click_link 'Resend'
+      click_link "Resend"
       expect(ActionMailer::Base.deliveries.last.to).to include(second_speaker_email)
     end
   end
@@ -100,13 +101,7 @@ feature 'Speaker Invitations' do
     end
 
     context "When accepting" do
-      before { click_link 'Accept' }
-
-      it "allows the second speaker to edit her bio" do
-        expect(current_path).to eq( edit_event_proposal_path(event_slug: event.slug, uuid: proposal) )
-        expect(page).to have_text("You have accepted this invitation.")
-        expect(page).to have_css('textarea#proposal_speakers_attributes_1_bio')
-      end
+      before { click_link "Accept" }
 
       it "marks the invitation as accepted" do
         expect(invitation.reload.state).to eq(Invitation::State::ACCEPTED)
@@ -114,14 +109,14 @@ feature 'Speaker Invitations' do
     end
 
     context "When declining" do
-      before { click_link 'Decline' }
+      before { click_link "Decline" }
 
       it "redirects the user back to the proposal page" do
         expect(page).to have_text("You have declined this invitation")
       end
 
-      it "marks the invitation as refused" do
-        expect(invitation.reload.state).to eq(Invitation::State::REFUSED)
+      it "marks the invitation as declined" do
+        expect(invitation.reload.state).to eq(Invitation::State::DECLINED)
       end
     end
 

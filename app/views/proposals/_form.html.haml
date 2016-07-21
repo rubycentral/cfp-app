@@ -42,7 +42,7 @@
       = f.label custom_field
       = text_field_tag "proposal[custom_fields][#{custom_field}]", proposal.custom_fields[custom_field], class: "form-control"
 
-= render partial: 'speakers/fields', locals: { f: f }
+= render partial: 'speakers/fields', locals: { f: f, event: event }
 
 .form-submit.clearfix
   %button.pull-right.btn.btn-primary.btn-lg{type: "submit"} Save

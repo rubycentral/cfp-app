@@ -29,7 +29,8 @@ describe ProposalsController, type: :controller do
           speakers_attributes: {
             '0' => {
               bio: 'my bio',
-              user_id: user.id
+              user_id: user.id,
+              event_id: event.id
             }
           }
         }

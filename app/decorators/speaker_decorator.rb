@@ -18,7 +18,7 @@ class SpeakerDecorator < ApplicationDecorator
   end
 
   def delete_button
-    h.button_to h.organizer_event_speaker_path,
+    h.button_to h.event_staff_speaker_path,
                 form_class: "inline-block form-inline",
                 method: :delete,
                 data: {

@@ -2,7 +2,6 @@
   %legend Your Information
   = f.simple_fields_for :speakers, f.object.speakers do |speaker_fields|
     - speaker = speaker_fields.object.decorate
-    = speaker_fields.hidden_field :user_id, value: speaker.user_id
 
     %p This information is <strong>not visible</strong> during the review process. Name and bio will be used publicly in the program if this proposal is selected.
 

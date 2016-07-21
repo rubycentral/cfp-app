@@ -13,7 +13,7 @@
         .row
           %fieldset.col-md-4
             = f.label "Email"
-            = f.text_field :email, class: "form-control"
+            = f.text_field :speaker_email, class: "form-control", placeholder: @speaker.email
             %br
             = f.label :bio
             = f.text_area :bio, class: 'form-control', value: speaker.bio,

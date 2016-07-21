@@ -96,8 +96,7 @@ class Staff::ProposalsController < Staff::ApplicationController
     # add updating_user to params so Proposal does not update last_change attribute when updating_user is organizer_for_event?
     params.require(:proposal).permit(:title, {review_tags: []}, :abstract, :details, :pitch, :slides_url, :video_url, custom_fields: @event.custom_fields,
                                      comments_attributes: [:body, :proposal_id, :user_id],
-                                     speakers_attributes: [:bio, :user_id, :id,
-                                                           user_attributes: [:id, :name, :email, :bio]])
+                                     speakers_attributes: [:id, :event_id, :user_id, :speaker_name, :speaker_email, :bio])
   end
 
   def send_state_mail(state)

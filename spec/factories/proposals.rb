@@ -24,7 +24,7 @@ FactoryGirl.define do
 
     trait :with_speaker do
       after(:create) do |proposal|
-        proposal.speakers << FactoryGirl.create(:speaker)
+        proposal.speakers << FactoryGirl.create(:speaker, event: proposal.event)
       end
     end
   end

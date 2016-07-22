@@ -30,6 +30,8 @@ feature "Review Proposals" do
 
   # Reviewer
   let!(:event_staff_teammate) { create(:teammate, :reviewer, user: reviewer_user, event: event) }
+  let!(:tagging) { create(:tagging, proposal: proposal) }
+  let!(:review_tagging) { create(:tagging, :review_tagging, proposal: proposal) }
 
   before { login_as(reviewer_user) }
 
@@ -41,22 +43,22 @@ feature "Review Proposals" do
     end
 
     it "only shows the average rating if you've rated it" do
-      skip "PLEASE FIX ME!"
       # logged-in user rates `proposal` as a 4
       reviewer_user.ratings.create(proposal: proposal, score: 4)
 
       # someone else has rated `proposal2` as a 4
-      other_reviewer = create(:teammate, :reviewer, event: event).user
-      other_reviewer.ratings.create(proposal: proposal2, score: 4)
+      user = create(:user, :reviewer)
+      other_reviewer = create(:teammate, :reviewer, event: event, user: user)
+      other_reviewer.user.ratings.create(proposal: proposal2, score: 4)
 
       visit event_staff_proposals_path(event)
 
-      within(".proposal-#{proposal.id}") do
-        expect(page).to have_content("4.0")
+      within("table .proposal-#{proposal.id}") do
+        expect(page).to have_content("4.0 4")
       end
 
-      within(".proposal-#{proposal2.id}") do
-        expect(page).to_not have_content("4.0")
+      within("table .proposal-#{proposal2.id}") do
+        expect(page).to_not have_content("4.0 4")
       end
     end
   end

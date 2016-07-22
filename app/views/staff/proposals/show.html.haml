@@ -32,18 +32,18 @@
       = render partial: 'other_proposals', locals: { event: event, other_proposals: other_proposals }
 
       %h3 Speakers
-      %section
-        = render partial: 'staff/proposals/speakers', locals: { speakers: proposal.speakers }
+      = render partial: 'staff/proposals/speakers', locals: { speakers: proposal.speakers }
 
       %h3 Public Comments
       = render partial: 'proposals/comments', locals: { proposal: proposal, comments: proposal.public_comments }
 
-    - if proposal.state == 'accepted'
-      %h3 Confirmation Notes
-      = render partial: 'proposals/confirmation_notes', locals: {proposal: proposal, notes: proposal.confirmation_notes}
+      - if proposal.state == 'accepted'
+        %h3 Confirmation Notes
+        = render partial: 'proposals/confirmation_notes', locals: {proposal: proposal, notes: proposal.confirmation_notes}
 
     .col-md-4
-      = render partial: 'shared/proposals/tags_form', locals: { event: event, proposal: proposal }
+      - if event.public_tags?
+        = render partial: 'shared/proposals/tags_form', locals: { event: event, proposal: proposal }
 
       %h3 Review
       - unless proposal.has_speaker?(current_user)
@@ -52,8 +52,7 @@
 
       #current_state= proposal.state_label
 
-      #rating-form
-        = render partial: 'rating_form', locals: { event: event, proposal: proposal, rating: rating }
+      = render partial: 'rating_form', locals: { event: event, proposal: proposal, rating: rating }
 
       - if proposal.proposal_data?
         %h3 Video URL

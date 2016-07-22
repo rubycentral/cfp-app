@@ -1,12 +1,9 @@
 %h3 Review Tags
 %fieldset
-  - if event.public_tags?
-    = form_for proposal, url: reviewer_event_proposal_path(event, proposal), html: {role: 'form', remote: true} do |f|
-      .form-group
-        .tag-list
-          = f.select :review_tags,
-            options_for_select(event.review_tags, proposal.object.review_tags),
-            {}, { class: 'multiselect review-tags', multiple: true }
-          %button.pull-right.btn.btn-success{:type => "submit"} Update
-  - else
-    None
+  = form_for proposal, url: reviewer_event_proposal_path(event, proposal), html: {role: 'form', remote: true} do |f|
+    .form-group
+      .tag-list
+        = f.select :review_tags,
+          options_for_select(event.review_tags, proposal.object.review_tags),
+          {}, { class: 'multiselect review-tags', multiple: true }
+        %button.pull-right.btn.btn-success{:type => "submit"} Update

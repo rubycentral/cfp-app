@@ -12,8 +12,8 @@
         = f.text_field :slides_url, class: "form-control"
   .row
     %fieldset.col-md-6
-      - if event.public_tags?
-        %section
+      %section
+        - if event.public_tags?
           = f.label :review_tags, label: "Review Tags (#{event.review_tags.length})"
           = f.select :review_tags, options_for_select(event.review_tags, proposal.object.review_tags), {}, {class: 'multiselect review-tags form-control', multiple: true}
 

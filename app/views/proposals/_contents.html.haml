@@ -17,7 +17,7 @@
   .markdown{ data: { 'field-id' => 'proposal_abstract' } }
     = proposal.abstract_markdown
 
--if proposal.tags.present?
+-if proposal.event.public_tags?
   .proposal-section
     %h3 Tags
     %p= proposal.tags

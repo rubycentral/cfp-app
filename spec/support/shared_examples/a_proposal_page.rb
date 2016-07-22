@@ -1,5 +1,5 @@
 shared_examples "a proposal page" do |path_method|
-  let!(:event) { create(:event, review_tags: [ 'intro', 'advanced' ]) }
+  let!(:event) { create(:event, review_tags: [ 'intro', 'advanced' ], valid_proposal_tags: 'intro, advanced') }
   let!(:proposal) { create(:proposal, event: event) }
   let!(:reviewer) { create(:organizer, event: event) }
 
@@ -42,6 +42,7 @@ shared_examples "a proposal page" do |path_method|
       end
 
       it "can tag a proposal", js: true do
+
         button_selector = 'button.multiselect'
         button = find(button_selector)
         button.click

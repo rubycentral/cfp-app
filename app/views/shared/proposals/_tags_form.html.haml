@@ -1,5 +1,6 @@
+%h3 Review Tags
 %fieldset
-  - if event.review_tags.any?
+  - if event.public_tags?
     = form_for proposal, url: reviewer_event_proposal_path(event, proposal), html: {role: 'form', remote: true} do |f|
       .form-group
         .tag-list

@@ -38,9 +38,8 @@
           %th
           %th
           %th
-          - if event.valid_proposal_tags.present?
+          - if event.public_tags?
             %th
-          - if event.valid_review_tags.present?
             %th
           %th.actions
         %tr
@@ -50,9 +49,8 @@
           %th Standard Deviation
           %th Speakers
           %th Talk Title
-          - if event.valid_proposal_tags.present?
+          - if event.public_tags?
             %th Proposal Tags
-          - if event.valid_review_tags.present?
             %th Reviewer Tags
           %th Status
           %th.actions Soft Actions (Internal)

@@ -78,6 +78,18 @@ describe Event do
     expect(second_event.errors[:slug].size).to eq(1)
   end
 
+  describe '#public_tags?' do
+    let(:event) { build :event }
+    it 'returns true if proposal_tags exist' do
+      event.valid_proposal_tags = 'one,two,three'
+      expect(event.public_tags?).to eq(true)
+    end
+
+    it 'returns false if proposal_tags do not exist' do
+      expect(event.public_tags?).to eq(false)
+    end
+  end
+
   describe '#valid_proposal_tags=' do
     let(:event) { build :event }
     it 'splits comma separated string into tags' do

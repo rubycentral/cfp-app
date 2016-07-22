@@ -45,6 +45,10 @@ class Event < ActiveRecord::Base
     validates :guidelines, presence: { message: 'Guidelines must be defined before event can be opened.' }
   end
 
+  def public_tags?
+    proposal_tags.any?
+  end
+
   def valid_proposal_tags
     proposal_tags.join(', ')
   end

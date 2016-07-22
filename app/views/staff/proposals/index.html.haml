@@ -12,7 +12,7 @@
         = event
         Proposals
 
--#.row
+-#.row Seems this can be deleted?
   .col-sm-7
     -if taggings_count.present?
       - taggings_count.sort_by{|k,v| v}.reverse.each_slice(6).to_a.each do |row|
@@ -38,8 +38,10 @@
           %th
           %th
           %th
-          %th
-          %th
+          - if event.valid_proposal_tags.present?
+            %th
+          - if event.valid_review_tags.present?
+            %th
           %th.actions
         %tr
           %th Score
@@ -48,8 +50,10 @@
           %th Standard Deviation
           %th Speakers
           %th Talk Title
-          %th Proposal Tags
-          %th Reviewer Tags
+          - if event.valid_proposal_tags.present?
+            %th Proposal Tags
+          - if event.valid_review_tags.present?
+            %th Reviewer Tags
           %th Status
           %th.actions Soft Actions (Internal)
       %tbody

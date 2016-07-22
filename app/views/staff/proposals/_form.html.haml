@@ -10,11 +10,20 @@
       %section.inline-block
         = f.label :slides_url
         = f.text_field :slides_url, class: "form-control"
-      %p
-      = f.select :review_tags,
-        options_for_select(event.review_tags, proposal.object.review_tags),
-        {}, {class: 'multiselect review-tags', multiple: true}
-
+  .row
+    %fieldset.col-md-6
+      %section
+        %p &nbsp;
+        = f.label :review_tags, label: "Review Tags (#{event.review_tags.length})"
+        - if event.review_tags.any?
+          = f.select :review_tags, options_for_select(event.review_tags, proposal.object.review_tags), {}, {class: 'multiselect review-tags form-control', multiple: true}
+        - else
+          &nbsp;&nbsp;
+          = link_to event_staff_config_path, class: "btn btn-primary" do
+            %span
+              Add Review Tags for
+              = event.name
+            %i.fa.fa-wrench
 
 
     %fieldset

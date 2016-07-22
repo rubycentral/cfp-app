@@ -16,7 +16,7 @@
 
   = proposal.abstract_input(f, abstract_tooltip)
 
-  - if event.proposal_tags.any?
+  - if event.valid_proposal_tags.present?
     .form-group
       %h3.control-label Tags
       = f.select :tags,

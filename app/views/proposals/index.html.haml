@@ -2,90 +2,89 @@
   .col-md-12
     .page-header
       %h1 My Proposals
+
 .row
-  .col-md-8.proposals
+  .col-md-12.proposals
     - if proposals.empty?
-      %h3 You don't have any proposals.
+      .widget.widget-card.text-center
+        %h2.control-label You don't have any proposals.
+        
     - proposals.each do |event, talks|
       - event = event.decorate
 
       .row
-        .col-md-7
-          .event-info.event-info-block
-            %strong.event-title= event.name
-            .event-meta
-              - if event.start_date? && event.end_date?
-                %span.event-meta-item 
-                  %i.fa.fa-fw.fa-calendar
-                  = event.date_range
-            .event-meta
+        .col-md-4
+          .widget.widget-card.flush-top
+            .event-info.event-info-block
+              %strong.event-title
+                = event.name
               %span{:class => "event-status-badge event-status-#{event.status}"}
                 CFP 
                 = event.status
-              %span.event-meta
-                = link_to 'View Guidelines', event_path(event.slug)
+              .event-meta
+                - if event.start_date? && event.end_date?
+                  %span.event-meta-item 
+                    %i.fa.fa-fw.fa-calendar
+                    = event.date_range
+              .event-meta.margin-top
+                %span.event-meta
+                  = link_to 'View Guidelines', event_path(event.slug)
 
-      .row
-        .col-md-12
-          .widget
-            .widget-header
-              %i.fa.fa-comment
-              %h3 Proposed Talks
-            .widget-content
+        .col-md-8
+          - if invitations.any?
+            .proposal-section.invitations.callout
+              %h2.callout-title Speaker Invitations
               %ul.list-unstyled
-                - talks.each do |proposal|
-                  %li.proposal
-                    - if proposal.has_speaker?(current_user)
-                      .toolbox.pull-right
-                        .clearfix
-                          - unless proposal.withdrawn? || proposal.accepted? || proposal.confirmed?
-                            = link_to edit_event_proposal_path(event_slug: event.slug, uuid: proposal), class: 'btn btn-primary' do
-                              %span.glyphicon.glyphicon-edit
-                              Edit
-                    %h4= link_to proposal.title, event_proposal_path(event_slug: proposal.event.slug, uuid: proposal)
-                    = proposal.public_state(small: true)
-                    %p
-                      %i= truncate(proposal.abstract, length: 80, escape: false)
-                    %p
-                      %strong Session Format:
-                      #{proposal.session_format.name}
-                    %p
-                      - if proposal.track
-                        %strong Track:
-                        #{proposal.track.name}
-                    %p
-                      %strong #{ 'Speaker'.pluralize(proposal.speakers.count) }:
-                      = proposal.speakers.collect { |speaker| speaker.name }.join(', ')
-                    %p
-                      %strong Comments:
-                      = proposal.public_comments.count
-                    %p
-                      %strong Reviews:
-                      = proposal.ratings.count
+                - invitations.each do |invitation|
+                  %li.invitation.proposal.proposal-info-bar
+                    .flex-container.flex-container-md
+                      .flex-item.flex-item-padded
+                        %h4.proposal-title= link_to invitation.proposal.title, event_proposal_path(event_slug: invitation.proposal.event.slug, uuid: invitation.proposal)
 
-  .col-md-4.invitations
-    .widget
-      .widget-header
-        %i.fa.fa-envelope-o
-        %h3 Speaker Invitations
-      .widget-content
-        %ul.list-unstyled
-          - if invitations.empty?
-            %h5 You don't have any invitations.
-          - invitations.each do |invitation|
-            %li.invitation
-              %h4.inline-block= link_to invitation.proposal.title, event_proposal_path(event_slug: invitation.proposal.event.slug, uuid: invitation.proposal)
-              - if invitation.pending?
-                .pull-right.invite-btns
-                  = invitation.refuse_button(small: true)
+                        .proposal-meta.proposal-description
+                          - if invitation.proposal.track
+                            .proposal-meta-item
+                              %strong Track:
+                              = invitation.proposal.track.name
+                            .proposal-meta-item
+                              %strong #{ 'Speaker'.pluralize(invitation.proposal.speakers.count) }:
+                              = invitation.proposal.speakers.collect { |speaker| speaker.name }.join(', ')
+                      .flex-item.flex-item-fixed.flex-item-padded.flex-item-right
+                        .proposal-status
+                          = invitation.state_label
+                        - if invitation.pending?
+                          .proposal-meta.invite-btns
+                            = invitation.refuse_button(small: true)
 
-                  = invitation.accept_button(small: true)
-              .margin-bottom= invitation.state_label
-              %p
-                - if invitation.proposal.track
-                  %strong Track:
-                  = invitation.proposal.track.name
-              %p
-                %strong #{ 'Speaker'.pluralize(invitation.proposal.speakers.count) }:
-                = invitation.proposal.speakers.collect { |speaker| speaker.name }.join(', ')
-              %hr/
+                            = invitation.accept_button(small: true)
+
+          .proposal-section
+            %ul.list-unstyled
+              - talks.each do |proposal|
+                %li.proposal.proposal-info-bar
+                  .flex-container.flex-container-md
+                    .flex-item.flex-item-fixed.flex-item-padded
+                      %i.fa.fa-fw.fa-file-text
+                    .flex-item.flex-item-padded
+                      %h4.proposal-title= link_to proposal.title, event_proposal_path(event_slug: proposal.event.slug, uuid: proposal)
+                      .proposal-meta.proposal-description
+                        .proposal-meta-item
+                          %strong #{ 'Speaker'.pluralize(proposal.speakers.count) }:
+                          %span= proposal.speakers.collect { |speaker| speaker.name }.join(', ')
+                        .proposal-meta-item
+                          %strong Format:
+                          %span #{proposal.session_format.name}
+                        
+                        - if proposal.track
+                          .proposal-meta-item
+                            %strong Track:
+                            %span #{proposal.track.name}
+                      .proposal-meta.margin-top
+                        = proposal.updated_in_words
+                    .flex-item.flex-item-fixed.flex-item-padded
+                      .proposal-status
+                        = proposal.public_state(small: true)
+                      .proposal-meta
+                        %i.fa.fa-fw.fa-comments
+                        = pluralize(proposal.public_comments.count, 'comment')
+                        

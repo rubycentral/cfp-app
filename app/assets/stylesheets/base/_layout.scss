@@ -27,3 +27,47 @@ body {
     vertical-align: middle;
   }
 }
+
+// Flexbox module
+.flex-container {
+  display: flex;
+}
+
+.flex-column  { 
+  flex-direction: column 
+}
+
+.flex-wrap { 
+  flex-wrap: wrap 
+}
+
+.flex-item {
+  flex: 1 1 auto;
+
+  &.flex-item-padded {
+    padding-left: $padding-base-horizontal / 2;
+    padding-right: $padding-base-horizontal / 2;
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+
+  &.flex-item-fixed {
+    flex: none;
+  }
+
+  &.flex-item-right {
+    text-align: right;
+  }
+}
+
+@media screen and (max-width: $screen-xs-max) {
+  .flex-container-md {
+    flex-direction: column;
+  }
+}

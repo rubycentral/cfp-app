@@ -58,8 +58,8 @@ shared_examples "a proposal page" do |path_method|
 
         click_button 'Update'
 
-        expect(page).to have_css('span.label-success', text: 'intro')
-        expect(page).to have_css('span.label-success', text: 'advanced')
+        expect(page).to have_css('span.label-success', text: 'INTRO')
+        expect(page).to have_css('span.label-success', text: 'ADVANCED')
       end
     end
   end

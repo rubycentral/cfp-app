@@ -583,17 +583,23 @@ $popover-arrow-outer-fallback-color:  darken($popover-fallback-border-color, 20%
 //##
 
 //** Default label background color
-$label-default-bg:            $gray-light !default;
+$label-default-bg:            $gray-lighter !default;
+$label-default-text:          $gray !default;
 //** Primary label background color
-$label-primary-bg:            $brand-primary !default;
+$label-primary-bg:            $bright-blue !default;
+$label-primary-text:          #fff !default;
 //** Success label background color
-$label-success-bg:            $brand-success !default;
+$label-success-bg:            $state-success-bg !default;
+$label-success-text:          $state-success-text !default;
 //** Info label background color
-$label-info-bg:               $brand-info !default;
+$label-info-bg:               $state-info-bg !default;
+$label-info-text:          $state-info-text !default;
 //** Warning label background color
-$label-warning-bg:            $brand-warning !default;
+$label-warning-bg:            $state-warning-bg !default;
+$label-warning-text:          $state-warning-text !default;
 //** Danger label background color
-$label-danger-bg:             $brand-danger !default;
+$label-danger-bg:             $state-danger-bg !default;
+$label-danger-text:          $state-danger-text !default;
 
 //** Default label text color
 $label-color:                 #fff !default;

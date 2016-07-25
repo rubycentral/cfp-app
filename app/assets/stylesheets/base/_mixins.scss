@@ -7,17 +7,18 @@
   width: 25px;
 }
 
-@mixin label-variant($color) {
-  background-color: transparent;
-  border: 2px $color solid;
-  color: $color;
-  font-style: italic;
+@mixin label-variant($color, $text-color) {
+  background-color: $color;
+  border: 1px solid darken($color, 5%);
+  border-radius: 0;
+  color: $text-color;
+  text-transform: uppercase;
 
   &[href] {
     &:hover,
     &:focus {
       border-color: darken($color, 10%);
-      color: darken($color, 10%);
+      color: darken($text-color, 10%);
     }
   }
 }

@@ -51,6 +51,12 @@
   .event-meta {
     margin-left: $padding-base-horizontal;
     color: $gray;
+
+    // display meta info on separate lines for xs screens
+    @media (max-width: $screen-xs-max) {
+      margin-left: 0;
+      display: block;
+    } 
   }
 }
 
@@ -68,6 +74,11 @@
     padding-right: 80px;
   }
 
+  .event-callout {
+    font-size: $font-size-large;
+    font-weight: bold;
+  }
+
   .event-meta {
     margin-top: $padding-large-vertical / 2;
     margin-left: 0;
@@ -77,24 +88,6 @@
     position: absolute;
     right: $padding-large-vertical / 2;
     top: $padding-large-vertical / 2;
-  }
-}
-
-// Builds on Bootstrap panels
-.event-info-panel {
-  & > .panel-heading {
-    font-size: $font-size-large;
-    text-transform: uppercase;
-  }
-
-  .event-label {
-    color: $gray;
-    font-weight: normal;
-  }
-
-  .event-callout {
-    font-size: $font-size-large;
-    margin-bottom: $padding-large-vertical * 2;
   }
 }
 

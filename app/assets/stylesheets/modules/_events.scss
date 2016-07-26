@@ -51,6 +51,12 @@
   .event-meta {
     margin-left: $padding-base-horizontal;
     color: $gray;
+
+    // display meta info on separate lines for xs screens
+    @media (max-width: $screen-xs-max) {
+      margin-left: 0;
+      display: block;
+    } 
   }
 }
 

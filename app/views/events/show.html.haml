@@ -24,14 +24,7 @@
         Call for Proposals
 
 .row.margin-top
-  .col-md-8
-    .markdown
-      - if event.closed?
-        Closed on
-        %strong= event.closes_at(:long_with_zone)
-      = markdown(event.guidelines)
-
-  .col-md-4
+  .col-md-4.col-md-push-8
 
     - if event.open?
       .panel.panel-success.event-info.event-info-panel
@@ -68,3 +61,10 @@
         %h2 CFP Stats
         = pluralize(event.proposals.count, 'proposal')
         = event.line_chart
+
+  .col-md-8.col-md-pull-4
+    .markdown
+      - if event.closed?
+        Closed on
+        %strong= event.closes_at(:long_with_zone)
+      = markdown(event.guidelines)

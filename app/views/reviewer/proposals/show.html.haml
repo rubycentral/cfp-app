@@ -34,12 +34,10 @@
       - unless proposal.draft?
         = proposal.state_label
 
-      #rating-form
-        = render partial: 'shared/proposals/rating_form', locals: { event: event, proposal: proposal, rating: rating }
+      = render partial: 'shared/proposals/rating_form', locals: { event: event, proposal: proposal, rating: rating }
 
-      %h3 Tags
-      = render partial: 'shared/proposals/tags_form',
-        locals: { event: event, proposal: proposal }
+      - if event.public_tags?
+        = render partial: 'shared/proposals/tags_form', locals: { event: event, proposal: proposal }
 
       .internal-comments{ style: proposal.internal_comments_style }
         %h3 Internal Comments

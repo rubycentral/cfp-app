@@ -12,18 +12,17 @@
         = event
         Proposals
 
--#.row
-  .col-sm-7
-    -if taggings_count.present?
-      - taggings_count.sort_by{|k,v| v}.reverse.each_slice(6).to_a.each do |row|
-        %ul#columns.list-inline
-          -row.each do |name, count|
-            %li
-              .label.label-success
-                = name
-                = count
-    -else
-      %p No Tags
+- if event.public_tags?
+  .row
+    .col-sm-7
+      -if taggings_count.present?
+        - taggings_count.sort_by{|k,v| v}.reverse.each_slice(6).to_a.each do |row|
+          %ul#columns.list-inline
+            -row.each do |name, count|
+              %li
+                .label.label-success
+                  = name
+                  = count
 
 .row
   .col-md-12
@@ -38,8 +37,9 @@
           %th
           %th
           %th
-          %th
-          %th
+          - if event.public_tags?
+            %th
+            %th
           %th.actions
         %tr
           %th Score
@@ -48,8 +48,9 @@
           %th Standard Deviation
           %th Speakers
           %th Talk Title
-          %th Proposal Tags
-          %th Reviewer Tags
+          - if event.public_tags?
+            %th Proposal Tags
+            %th Reviewer Tags
           %th Status
           %th.actions Soft Actions (Internal)
       %tbody

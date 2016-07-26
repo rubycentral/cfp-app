@@ -17,9 +17,10 @@
   .markdown{ data: { 'field-id' => 'proposal_abstract' } }
     = proposal.abstract_markdown
 
-.proposal-section
-  %h3 Tags
-  = proposal.tags
+-if proposal.event.public_tags?
+  .proposal-section
+    %h3 Tags
+    %p= proposal.tags
 
 .proposal-section
   %h3 Details

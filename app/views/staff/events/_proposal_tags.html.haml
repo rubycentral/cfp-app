@@ -1,5 +1,5 @@
 #show-proposal-tags
-  - if event.valid_proposal_tags.empty? && current_user.organizer_for_event?(event)
+  - if !event.public_tags? && current_user.organizer_for_event?(event)
     = link_to "Add", event_staff_proposal_tags_path(event),
       remote: true, class: "btn btn-success btn-sm pull-right add-proposal-tags"
   - else

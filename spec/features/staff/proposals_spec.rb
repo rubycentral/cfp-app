@@ -11,6 +11,9 @@ feature "Organizers can manage proposals" do
   let(:speaker_user) { create(:user) }
   let!(:speaker) { create(:speaker, proposal: proposal, user: speaker_user) }
 
+  let!(:tagging) { create(:tagging, proposal: proposal) }
+  let!(:review_tagging) { create(:tagging, :review_tagging, proposal: proposal) }
+
   before :each do
     login_as(organizer_user)
   end

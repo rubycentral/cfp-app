@@ -1,9 +1,14 @@
-class Reviewer::RatingsController < Reviewer::ApplicationController
+class Staff::RatingsController < Staff::ApplicationController
+  before_filter :require_proposal
+  before_filter :prevent_self
+
   respond_to :js
 
   decorates_assigned :proposal
 
   def create
+    authorize @proposal, :reviewer_update?
+
     @rating = Rating.find_or_create_by(proposal: @proposal, user: current_user)
     @rating.update_attributes(rating_params)
     if @rating.save
@@ -15,6 +20,8 @@ class Reviewer::RatingsController < Reviewer::ApplicationController
   end
 
   def update
+    authorize @proposal, :reviewer_update?
+
     @rating = current_user.rating_for(@proposal)
     if rating_params[:score].blank?
       @rating.destroy

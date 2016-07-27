@@ -60,6 +60,11 @@ Rails.application.routes.draw do
       resources :time_slots, except: :show
       resources :session_formats, except: :show
       resources :tracks, except: [:show]
+      # Reviewer flow for proposals
+      resources :proposals, controller: 'proposal_reviews', only: [:index, :show, :update], param: :uuid do
+        resources :ratings, only: [:create, :update], defaults: {format: :js}
+      end
+      # Organizer flow for proposals (temporary. will probably get refactored)
       resources :proposals, param: :uuid do
         resources :speakers, only: [:new, :create]
         post :finalize
@@ -75,15 +80,6 @@ Rails.application.routes.draw do
           get :profile, to: "profiles#edit", as: :edit_profile
           patch :profile, to: "profiles#update", as: :update_profile
         end
-      end
-    end
-  end
-
-  #TEMPORARILY ENABLED
-  namespace 'reviewer' do
-    resources :events, only: [:show], param: :slug do
-      resources :proposals, only: [:index, :show, :update], param: :uuid do
-        resources :ratings, only: [:create, :update], defaults: {format: :js}
       end
     end
   end

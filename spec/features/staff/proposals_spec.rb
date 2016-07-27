@@ -20,7 +20,7 @@ feature "Organizers can manage proposals" do
 
   after { ActionMailer::Base.deliveries.clear }
 
-  context "Proposals Page" do
+  xcontext "Proposals Page" do
     before { visit event_staff_proposals_path(event) }
 
     context "Soft accepting a proposal" do
@@ -60,7 +60,7 @@ feature "Organizers can manage proposals" do
     end
   end
 
-  context "Edit a proposal" do
+  xcontext "Edit a proposal" do
     before do
       proposal.last_change = ['abstract']
       proposal.save!
@@ -80,7 +80,7 @@ feature "Organizers can manage proposals" do
     end
   end
 
-  context "Viewing a proposal" do
+  xcontext "Viewing a proposal" do
     it_behaves_like "a proposal page", :event_staff_proposal_path
 
     before do
@@ -175,7 +175,7 @@ feature "Organizers can manage proposals" do
     end
   end
 
-  context "update_without_touching_updated_by_speaker_at" do
+  xcontext "update_without_touching_updated_by_speaker_at" do
     it "doesn't update the update_by_speaker_at column" do
       tag = create(:tagging)
       updated_at = 1.day.ago

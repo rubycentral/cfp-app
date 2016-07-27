@@ -45,7 +45,7 @@ class Staff::ProposalsController < Staff::ApplicationController
       end
     end
 
-    current_user.notifications.mark_as_read_for_proposal(event_staff_proposal_path(@event, @proposal))
+    current_user.notifications.mark_as_read_for_proposal(event_staff_proposal_url(@event, @proposal))
     render locals: {
              speakers: @proposal.speakers.decorate,
              other_proposals: Staff::ProposalsDecorator.decorate(other_proposals),

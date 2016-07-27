@@ -6,18 +6,20 @@ $(document).ready(function () {
   //var oTable = cfpDataTable('#reviewer-proposals.datatable', [ 'number', null,
   //  'number', 'text', 'text', 'text', 'number', 'text', 'text', null ]);
 
-  cfpDataTable('#reviewer-proposals.datatable', ['number', null,
+  var oTable = cfpDataTable('#reviewer-proposals.datatable', ['number', null,
       'number', 'text', 'text', 'text', 'number', 'text', 'text', null],
-    {
-      stateSaveParams: function () {
-        var rows = $('[data-proposal-id]');
-        var uuids = [];
-        rows.each(function (i, row) {
-          uuids.push($(row).data('proposal-uuid'));
-        });
-        localStorage.proposal_uuid_table_order = JSON.stringify(uuids);
-      }
+      {
+        stateSaveParams: function () {
+          var rows = $('[data-proposal-id]');
+          var uuids = [];
+          rows.each(function (i, row) {
+            uuids.push($(row).data('proposal-uuid'));
+          });
+          localStorage.proposal_uuid_table_order = JSON.stringify(uuids);
+        },
+        'sDom': '<"top"i>Crt<"bottom"lp><"clear">'
     });
+  oTable.DataTable().column('rated:name').visible(false);
 
   // Replace next proposal link with valid proposal path
   var next_link = $(".next-proposal");

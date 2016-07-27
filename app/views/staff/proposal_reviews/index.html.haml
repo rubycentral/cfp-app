@@ -1,25 +1,36 @@
-%header.row
-  .col-md-12
-    .page-header.clearfix
-      .row
-        .col-md-9
-          %h1= event
-        .col-md-3
-          %aside#event_statistics
-            %h3 Statistics
-            %ul.list-group
-              %li.list-group-item
-                %span.badge.badge-info=event.proposals_rated_message
-                Proposals Rated:&nbsp;
-              %li.list-group-item
-                %span.badge.badge-info=event.proposals.unrated.not_withdrawn.count
-                Unrated Proposals:&nbsp;
-
-
+.event-info-bar
+  .row
+    .col-md-8
+      .event-info.event-info-dense
+        %strong.event-title= event.name
+        - if event.start_date? && event.end_date?
+          %span.event-meta
+            %i.fa.fa-fw.fa-calendar
+            = event.date_range
+    .col-md-4.text-right.text-right-responsive
+      .event-info.event-info-dense
+        %span{:class => "event-meta event-status-badge event-status-#{event.status}"}
+          CFP
+          = event.status
+        - if event.open?
+          %span.event-meta
+            CFP closes:
+            %strong= event.closes_at(:month_day_year)
 .row
-  .col-md-10
-    %small <em>Hint:</em> Hold <kbd>shift</kbd> and click sorting arrows to sort by multiple columns
-  .col-md-2
+  &nbsp;
+.row
+  .col-sm-6.text-left
+    .event-info.event-info-dense
+      %span
+        Total Rated:
+        %span.badge.badge-info=event.proposals_rated_overall_message
+      %span
+        You've rated:
+        %span.badge.badge-info=event.proposals_you_rated_message
+  .col-sm-6.text-right
+    %small.text-right <em>Hint:</em> Hold <kbd>shift</kbd> to sort by multiple columns
+.row
+  .col-md-offset-8.col-md-4
     %button.btn.btn-primary.btn-sm.pull-right#sort_reset Reset Sort Order
 
 .row
@@ -47,7 +58,7 @@
           %th Comments
           %th Submitted On
           %th Updated At
-          %th Rated?
+          %th Rated
       %tbody
         - proposals.each do |proposal|
           %tr{ class: "proposal-#{proposal.id}", data: { 'proposal-id' => proposal.id, 'proposal-uuid' => proposal.uuid } }

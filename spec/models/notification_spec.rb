@@ -27,11 +27,11 @@ describe Notification do
       end
     end
 
-    it "uses proposal's path if proposal is present" do
+    it "uses proposal's url if proposal is present" do
       proposal = create(:proposal)
       Notification.create_for(users, proposal: proposal)
       users.each do |p|
-        expect(p.decorate.proposal_path(proposal)).to(
+        expect(p.decorate.proposal_url(proposal)).to(
           eq(p.notifications.first.target_path))
       end
     end

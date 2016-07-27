@@ -88,6 +88,14 @@ class User < ActiveRecord::Base
     teammates.reviewer.for_event(event).size > 0
   end
 
+  def program_team?
+    teammates.program_team.size > 0
+  end
+
+  def program_team_for_event?(event)
+    teammates.program_team.for_event(event).size > 0
+  end
+
   def rating_for(proposal, build_new = true)
     rating = ratings.detect { |r| r.proposal_id == proposal.id }
     if rating

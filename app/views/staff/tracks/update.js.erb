@@ -1,15 +1,4 @@
-$('#track-edit-<%= track.id %>').modal('hide');
+$('#config-modal').modal('hide');
 
-var cells = $('table#tracks #track_<%= track.id %> td');
-var trackName = '<%= track.name %>';
-
-var data = [
-  trackName,
-  '<%=j truncate(track.description, length: 60) %>',
-  '<%=j truncate(track.guidelines, length: 80) %>'
-];
-
-var length = data.length;
-for (var i = 0; i < length; ++i) {
-  cells[i].innerText = data[i];
-}
+var tableRow = $('table#tracks #track_<%= track.id %>');
+tableRow.replaceWith('<%= j render track %>');

@@ -1,0 +1,7 @@
+.modal-content
+  .modal-header
+    %h3 New Session Format
+    .errors
+  = simple_form_for [ event, :staff, @session_format ], remote: true do |f|
+    .modal-body
+      = render partial: 'form', locals: {f: f}

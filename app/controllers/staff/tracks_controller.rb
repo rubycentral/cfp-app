@@ -19,9 +19,9 @@ class Staff::TracksController < Staff::SchedulesController
 
   def create
     track = @event.tracks.build(track_params)
-    # unless track.save
-    #   flash.now[:warning] = "There was a problem saving your track"
-    # end
+    unless track.save
+      flash.now[:warning] = "There was a problem saving your track"
+    end
     respond_to do |format|
       format.js do
         render locals: { track: track }
@@ -39,12 +39,12 @@ class Staff::TracksController < Staff::SchedulesController
   end
 
   def destroy
-    track = @event.tracks.find(params[:id]).destroy
+    @track.destroy
 
     flash.now[:info] = "This track has been deleted."
     respond_to do |format|
       format.js do
-        render locals: { track: track }
+        render locals: { track: @track }
       end
     end
   end
@@ -52,7 +52,6 @@ class Staff::TracksController < Staff::SchedulesController
   private
 
   def set_track
-    binding.pry
     @track = @event.tracks.find(params[:id])
   end
 

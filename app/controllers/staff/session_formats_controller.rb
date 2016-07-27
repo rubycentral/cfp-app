@@ -39,11 +39,11 @@ class Staff::SessionFormatsController < Staff::ApplicationController
   end
 
   def destroy
-    session_format = @event.session_formats.find(params[:id]).destroy
+    @session_format.destroy
     flash.now[:info] = "This session format has been deleted."
     respond_to do |format|
       format.js do
-        render locals: { session_format: session_format }
+        render locals: { session_format: @session_format }
       end
     end
   end

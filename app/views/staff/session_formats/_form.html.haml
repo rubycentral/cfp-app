@@ -1,16 +1,9 @@
-.modal-content
-  .modal-header
-    -binding.pry
-    %h3 New Session Format
-    .errors
-  = simple_form_for [ event, :staff, @session_format ], remote: true do |f|
-    .modal-body
-      = f.input :name, placeholder: 'Name', error: "no name"
-      = f.input :description, as: :text, input_html: {rows: 6}, placeholder: 'Description'
-      = f.input :duration, placeholder: '#',
-        hint: 'How long the session will be (in minutes).'
-      = f.input :public, label: false, inline_label: 'Make Public',
-        hint: 'If checked, speakers will be able to select this session format when submitting proposals.'
-    .modal-footer
-      %button.pull-right.btn.btn-primary{:type => "submit"} Save
-      %button.btn.btn-default{'data-dismiss' => "modal"} Cancel
+= f.input :name, placeholder: 'Name'
+= f.input :description, as: :text, input_html: {rows: 6}, placeholder: 'Description'
+= f.input :duration, placeholder: '#',
+  hint: 'How long the session will be (in minutes).'
+= f.input :public, label: false, inline_label: 'Make Public',
+  hint: 'If checked, speakers will be able to select this session format when submitting proposals.'
+.modal-footer
+%button.pull-right.btn.btn-primary{:type => "submit"} Save
+%button.btn.btn-default{'data-dismiss' => "modal"} Cancel

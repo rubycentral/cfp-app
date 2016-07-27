@@ -1,5 +1,3 @@
-// $('#config-modal').modal('hide');
-
 <% if session_format.persisted? %>
   $('#config-modal').modal('hide');
   $('#session-formats').append('<%=j render session_format %>');

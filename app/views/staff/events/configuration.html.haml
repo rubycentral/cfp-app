@@ -23,12 +23,6 @@
                   %th= "Actions"
             %tbody
               = render event.session_formats
-      -# #session-format-new-dialog.modal.fade
-      -#   .modal-dialog
-      -#     .modal-content
-      -#       .modal-header
-      -#         %h3 New Session Format
-      -#         = render partial: 'staff/session_formats/form', locals: { session_format: SessionFormat.new }
 
       .widget.widget-table
         .widget-header
@@ -47,12 +41,6 @@
                   %th Actions
             %tbody
               = render event.tracks
-      -# #track-new-dialog.modal.fade
-      -#   .modal-dialog
-      -#     .modal-content
-      -#       .modal-header
-      -#         %h3 New Track
-      -#         = render partial: 'staff/tracks/form', locals: { track: Track.new }
 
     #config-modal.modal.fade
       .modal-dialog

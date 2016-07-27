@@ -7,7 +7,7 @@
     '#track_guidelines'
   ], '#track-new-dialog');
 <% else %>
-  $('#config-modal .modal-header').append('<%=  track.errors.full_messages %>');
+  $('#config-modal .errors').append('<%=  track.errors.full_messages.join(", ") %>');
 <% end %>
 
 document.getElementById('flash').innerHTML = '<%=j show_flash %>';

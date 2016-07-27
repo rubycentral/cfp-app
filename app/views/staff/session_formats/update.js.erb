@@ -1,24 +1,4 @@
 $('#config-modal').modal('hide');
 
-var cells = $('table#session-formats #session_format_<%= session_format.id %> td');
-var sessionFormatName = '<%= session_format.name %>';
-
-var data = [
-  sessionFormatName,
-  '<%=j truncate(session_format.description, length: 60) %>',
-  '<%= session_format.duration %>',
-  <% if session_format.public? %>
-    "\u2713"
-  <% else %>
-    ''
-  <% end %>
-];
-
-var length = data.length;
-for (var i = 0; i < length; ++i) {
-  cells[i].innerText = data[i];
-}
-
-// var tableRow = $('table#session-formats #session_format_<%= session_format.id %>');
-// tableRow.replaceWith('<%= j render session_format %>');
-// $('.modal-backdrop').hide();
+var tableRow = $('table#session-formats #session_format_<%= session_format.id %>');
+tableRow.replaceWith('<%= j render session_format %>');

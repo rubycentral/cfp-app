@@ -1,6 +1,4 @@
-
-%fieldset
-  %legend Proposal Details
+%fieldset.margin-top
   = proposal.title_input(f)
 
   - opts_session_formats = event.session_formats.publicly_viewable.map {|st| [st.name, st.id]}

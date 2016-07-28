@@ -44,7 +44,7 @@
       = render partial: 'proposals/contents', locals: { proposal: proposal }
 
       .proposal-section
-        %h3 Speaker Information
+        %h3.fieldset-legend Speaker Information
         = render proposal.speakers
         - if (proposal.has_speaker?(current_user))
           %h4.control-label Invited Speakers

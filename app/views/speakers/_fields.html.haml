@@ -1,5 +1,5 @@
 %fieldset
-  %legend Speaker Information
+  %legend.fieldset-legend Speaker Information
   = f.simple_fields_for :speakers, f.object.speakers do |speaker_fields|
     - speaker = speaker_fields.object.decorate
 

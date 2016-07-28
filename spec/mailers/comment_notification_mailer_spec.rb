@@ -61,7 +61,7 @@ describe CommentNotificationMailer do
         expect(mail.body.encoded).to match(proposal.event.name)
         expect(mail.body.encoded).to match(proposal.title)
         expect(mail.body.encoded).to match("A comment has been left on the proposal '#{proposal.title}' for #{proposal.event.name}:")
-        expect(mail.body.encoded).to match("/events/#{proposal.event.slug}/proposals/#{proposal.uuid}")
+        expect(mail.body.encoded).to match("/events/#{proposal.event.slug}/staff/proposals/#{proposal.uuid}")
         expect(mail.body.encoded).to match(speaker_comment.body)
       end
     end

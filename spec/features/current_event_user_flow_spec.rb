@@ -158,10 +158,10 @@ feature "A user sees correct information for the current event and their role" d
       expect(page).to have_link(reviewer_user.name)
       expect(page).to_not have_link("My Proposals")
       expect(page).to have_link("", href: "/notifications")
-      expect(page).to have_content("Event Proposals")
+      expect(page).to have_content("Review Proposals")
     end
 
-    click_on "Event Proposals"
+    click_on "Review Proposals"
 
     within ".navbar" do
       expect(page).to have_link(event_1.name)
@@ -185,7 +185,7 @@ feature "A user sees correct information for the current event and their role" d
       expect(page).to have_link(reviewer_user.name)
       expect(page).to_not have_link("My Proposals")
       expect(page).to have_link("", href: "/notifications")
-      expect(page).to_not have_content("Event Proposals")
+      expect(page).to_not have_content("Review Proposals")
     end
   end
 
@@ -202,7 +202,7 @@ feature "A user sees correct information for the current event and their role" d
     within ".navbar" do
       expect(page).to have_content(event_2.name)
       expect(page).to_not have_link("My Proposals")
-      expect(page).to have_content("Event Proposals")
+      expect(page).to have_content("Review Proposals")
       expect(page).to have_content("Program")
       expect(page).to have_content("Schedule")
       expect(page).to have_content("Event Dashboard")
@@ -236,7 +236,7 @@ feature "A user sees correct information for the current event and their role" d
       expect(page).to have_content(event_1.name)
       expect(page).to have_content("My Proposals")
       expect(page).to have_link("", href: "/notifications")
-      expect(page).to_not have_content("Event Proposals")
+      expect(page).to_not have_content("Review Proposals")
       expect(page).to_not have_content("Program")
       expect(page).to_not have_content("Schedule")
       expect(page).to_not have_content("Event Dashboard")
@@ -262,7 +262,7 @@ feature "A user sees correct information for the current event and their role" d
       expect(page).to_not have_link("My Proposals")
       expect(page).to have_content("Program")
       expect(page).to have_content("Schedule")
-      expect(page).to have_content("Event Proposals")
+      expect(page).to have_content("Review Proposals")
     end
 
     click_on "Manage Events"

@@ -1,9 +1,11 @@
 #rating-form
   - unless proposal.has_speaker?(current_user)
-    = form_for [:reviewer, event, proposal, rating], html: {class: "form-inline"}, remote: true do |f|
+    = form_for [event, :staff, proposal, rating], html: {class: "form-inline"}, remote: true do |f|
       .form-group
-        = f.label :score, "Rating"
-        = f.select :score, (1..5).to_a, {include_blank: true}, {class: 'form-control', onchange: '$(this).trigger("submit.rails");', disabled: proposal.withdrawn?}
+        = f.label :score, 'Rating'
+        = f.select :score, (1..5).to_a, {include_blank: true},
+          {class: 'form-control', onchange: '$(this).trigger("submit.rails");', disabled: proposal.withdrawn?,
+          data: {toggle: 'tooltip', placement: 'right', trigger: 'hover'}, title: rating_tooltip }
 
   - unless rating.new_record?
     %dl.dl-horizontal.ratings_list
@@ -12,5 +14,3 @@
       - proposal.ratings.each do |rating|
         %dt= "#{rating.user.name}:"
         %dd= rating.score
-
-

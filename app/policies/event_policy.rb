@@ -5,41 +5,36 @@ class EventPolicy < ApplicationPolicy
   #   end
   # end
 
-  def initialize(user, model)
-    @current_user = user
-    @event = model
-  end
-
   def index?
-    @current_user.present? || @current_user.reviewer_events.where(slug: @event.slug).present?
+    @user.present? || @user.reviewer_events.where(slug: @record.slug).present?
   end
 
   def new?
-    @current_user.admin? || @current_user.organizer_for_event?(@event)
+    @user.admin? || @user.organizer_for_event?(@record)
   end
 
   def create?
-    @current_user.admin?
+    @user.admin?
   end
 
   def show?
-    @event.present?
+    @record.present?
   end
 
   def edit?
-    @current_user.admin? || @current_user.organizer_for_event?(@event)
+    @user.admin? || @user.organizer_for_event?(@record)
   end
 
   def update?
-    @current_user.admin? || @current_user.organizer_for_event?(@event)
+    @user.admin? || @user.organizer_for_event?(@record)
   end
 
   def destroy?
-    @current_user.admin? || @current_user.organizer_for_event?(@event)
+    @user.admin? || @user.organizer_for_event?(@record)
   end
 
   def staff?
-    @current_user.reviewer_events.where(slug: @event.slug).present?
+    @user.reviewer_events.where(slug: @record.slug).present?
   end
 
 end

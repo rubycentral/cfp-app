@@ -26,8 +26,11 @@ class Staff::ProposalDecorator < ProposalDecorator
   end
 
   def title_link
-    h.link_to h.truncate(object.title, length: 45),
-      h.event_staff_proposal_path(object.event, object)
+    link = h.link_to h.truncate(object.title, length: 45),
+                     h.event_staff_proposal_path(object.event, object)
+    link += state_label(small: true) if object.withdrawn?
+
+    link
   end
 
   def standard_deviation
@@ -65,6 +68,22 @@ class Staff::ProposalDecorator < ProposalDecorator
 
   def organizer_confirm
       object.state == "accepted" && object.confirmed_at == nil
+  end
+
+  def created_at
+    object.created_at.to_s(:short)
+  end
+
+  def updated_at
+    object.updated_at.to_s(:short)
+  end
+
+  def comment_count
+    proposal.internal_comments.size + proposal.public_comments.size
+  end
+
+  def internal_comments_style
+    object.was_rated_by_user?(h.current_user) ? nil : "display: none;"
   end
 
   private

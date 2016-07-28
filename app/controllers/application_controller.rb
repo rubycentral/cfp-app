@@ -48,8 +48,12 @@ class ApplicationController < ActionController::Base
     @current_event
   end
 
+  def pundit_user
+    @pundit_user ||= CurrentEventContext.new(current_user, current_event)
+  end
+
   def event_staff?(current_event)
-    current_event.teammates.where(user_id: current_user.id).any?
+    current_user && current_event.teammates.where(user_id: current_user.id).any?
   end
 
   def reviewer?

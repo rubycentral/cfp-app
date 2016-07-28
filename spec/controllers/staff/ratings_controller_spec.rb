@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Reviewer::RatingsController, type: :controller do
+describe Staff::RatingsController, type: :controller do
   let(:proposal) { create(:proposal) }
   let(:event) { proposal.event }
   let(:reviewer) { create(:user, :reviewer) }

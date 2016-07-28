@@ -7,4 +7,4 @@
 
     = speaker_fields.input :name, disabled: true, tooltip: ["right", "Edit your profile to update"]
 
-    = speaker_fields.input :bio, maxlength: :lookup, placeholder: 'Bio for the event program.', input_html: { value: speaker.bio, rows: 4 }, hint: 'Your bio should be short, no longer than 500 characters. It\'s related to why you\'re speaking about this topic.', tooltip: bio_tooltip
+    = speaker_fields.input :bio, maxlength: :lookup, input_html: { value: speaker.bio, rows: 4 }, hint: 'Your bio should be short, no longer than 500 characters. It\'s related to why you\'re speaking about this topic.', tooltip: bio_tooltip

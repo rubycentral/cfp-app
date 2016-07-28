@@ -27,11 +27,9 @@
     This content will <strong> only</strong> be visible to the review committee.
 
   = f.input :details, input_html: { class: 'watched', rows: 5 },
-    placeholder: 'Explain the theme and flow of your talk. What are the intended audience takeaways?',
     hint: 'Include any pertinent details such as outlines, outcomes or intended audience.', tooltip: ["right", details_tooltip]
 
-  = f.input :pitch, input_html: { class: 'watched', rows: 5 },
-    placeholder: 'Why is this talk pertinent? What is your involvement in the topic?',
+  = f.input :pitch, input_html: { class: 'watched', rows: 5 }, 
     hint: 'Explain why this talk should be considered and what makes you qualified to speak on the topic.', tooltip: ["right", pitch_tooltip]
 
 - if event.custom_fields.any?

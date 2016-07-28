@@ -111,17 +111,17 @@ class ProposalDecorator < ApplicationDecorator
   end
 
   def title_input(form)
-    form.input :title, placeholder: 'Title of the talk',
+    form.input :title,
     maxlength: :lookup, input_html: { class: 'watched js-maxlength-alert' },
     hint: "Please limit your title to 60 characters or less."
   end
 
   def speaker_input(form)
-    form.input :speaker, placeholder: 'Speaker Name'
+    form.input :speaker
   end
 
   def abstract_input(form, tooltip = "Proposal Abstract")
-    form.input :abstract, placeholder: 'What is your talk about?',
+    form.input :abstract,
       maxlength: 605, input_html: { class: 'watched js-maxlength-alert', rows: 5 },
       hint: 'Provide a concise description for the program limited to 600 characters or less.', tooltip: tooltip
   end

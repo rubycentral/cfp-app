@@ -46,32 +46,36 @@
 
       .proposal-section
         %h3.fieldset-legend Speaker Information
-        = render proposal.speakers
-        - if (proposal.has_speaker?(current_user))
-          %h4.control-label Invited Speakers
-          - invitations.each do |invitation|
-            .clearfix
-              %ul.invitation
-                %li
-                  = invitation.state_label
-                  = invitation.email
-                  .pull-right
-                    = link_to 'Resend',
-                      resend_invitation_path(invitation_slug: invitation.slug),
-                      method: :post,
-                      class: 'btn btn-xs btn-primary',
-                      disabled: !invitation.pending?
-                    = link_to 'Remove',
-                      invitation_path(invitation_slug: invitation.slug),
-                      method: :delete,
-                      class: 'btn btn-xs btn-danger',
-                      disabled: !invitation.pending?,
-                      data: {confirm: 'Are you sure you want to remove this invitation?'}
-          .new-speaker-invite
-            %p
-              You may invite other speakers to your proposal.
+        .row
+          .col-md-8
+            = render proposal.speakers
+          .col-md-4
+            .new-speaker-invite
               %button.button.btn.btn-success.btn-xs.speaker-invite-button 
                 Invite a Speaker
+              %p.help-block You may invite other speakers to your proposal.
+        .row
+          .col-md-12
+            - if (proposal.has_speaker?(current_user) && invitations.any?)
+              %h4.control-label Invited Speakers
+              - invitations.each do |invitation|
+                .clearfix
+                  %ul.invitation
+                    %li
+                      = invitation.state_label
+                      = invitation.email
+                      .pull-right
+                        = link_to 'Resend',
+                          resend_invitation_path(invitation_slug: invitation.slug),
+                          method: :post,
+                          class: 'btn btn-xs btn-primary',
+                          disabled: !invitation.pending?
+                        = link_to 'Remove',
+                          invitation_path(invitation_slug: invitation.slug),
+                          method: :delete,
+                          class: 'btn btn-xs btn-danger',
+                          disabled: !invitation.pending?,
+                          data: {confirm: 'Are you sure you want to remove this invitation?'}
             .speaker-invite-form
               = form_tag invitations_path(proposal_uuid: proposal.uuid), class: 'speaker' do
                 .widget.widget-card

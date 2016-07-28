@@ -17,13 +17,9 @@ body {
     margin-bottom: 0;
   }
 
-  // force page-header actions to sit bottom-flush with h1 for now
-  // until a page-header refactor using flexbox or display: table
-  .toolbox {
-    margin-top: 28px;
-  }
-
   .label {
+    display: inline-block;
+    margin-bottom: $padding-base-vertical;
     vertical-align: middle;
   }
 }

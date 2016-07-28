@@ -1,7 +1,7 @@
 - withdraw = true if withdraw.nil?
 
 .speaker.clearfix
-  %strong= speaker.name_and_email
+  %strong= speaker.name
   = simple_format speaker.bio
 
   - if withdraw && speaker.proposal.speakers.count > 1

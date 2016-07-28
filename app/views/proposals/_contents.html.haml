@@ -1,41 +1,49 @@
 .proposal-section
-  %h3 Title
+  %h3.control-label Title
   .markdown{ data: { 'field-id' => 'proposal_title' } }
     = proposal.title
+  %p.help-block Publicly viewable title. Ideally catchy, interesting, essence of the talk. Limited to 60 characters.
 
 .proposal-section
-  %h3 Session Format
+  %h3.control-label Session Format
   = proposal.session_format.try(:name)
+  %p.help-block The format your proposal will follow.
 
 - if proposal.track
   .proposal-section
-    %h3 Track
+    %h3.control-label Track
     = proposal.track.name
+    %p.help-block Optional: suggest a specific track to be considered for.
 
 .proposal-section
-  %h3 Abstract
+  %h3.control-label Abstract
   .markdown{ data: { 'field-id' => 'proposal_abstract' } }
     = proposal.abstract_markdown
+  %p.help-block A concise, engaging description for the public program. Limited to 600 characters.
 
 -if proposal.event.public_tags?
   .proposal-section
-    %h3 Tags
+    %h3.control-label Tags
     %p= proposal.tags
 
-.proposal-section
-  %h3 Details
+%h2.fieldset-legend For Review Committee
+
+.proposal-section  
+  %h3.control-label Details
   .markdown{ data: { 'field-id' => 'proposal_details' } }
     = proposal.details
+  %p.help-block Include any pertinent details such as outlines, outcomes or intended audience
 
 .proposal-section
-  %h3 Pitch
+  %h3.control-label Pitch
   .markdown{ data: { 'field-id' => 'proposal_pitch' } }
     =proposal.pitch
+  %p.help-block Explain why this talk should be considered and what makes you qualified to speak on the topic.
 
 - if proposal.custom_fields.any?
   - proposal.proposal_data[:custom_fields].select do |key,value|
     .proposal-section
-      %h3= key.capitalize
+      %h3.control-label= key.capitalize
       %div
       = value.capitalize
       %div

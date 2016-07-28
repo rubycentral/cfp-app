@@ -52,3 +52,10 @@ span[title="required"] {
 .cancel-form {
   margin-right: .5em;
 }
+
+// Use a legend as the heading for major sections in a form.
+// Can also use the .fieldset-legend class to form heading styles
+// e.g., the show page for proposal
+.fieldset-legend {
+  @extend legend;
+}

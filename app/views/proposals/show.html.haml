@@ -23,10 +23,11 @@
       .col-md-8
         %h1
           = proposal.title
-          = proposal.public_state(small: true)
       .col-md-4
-        - if proposal.has_speaker?(current_user)
-          .toolbox.pull-right
+        .toolbox.pull-right
+          .clearfix.text-right
+            = proposal.public_state(small: true)
+          - if proposal.has_speaker?(current_user)
             .clearfix
               - unless proposal.withdrawn? || proposal.accepted? || proposal.confirmed?
                 = link_to edit_event_proposal_path(event_slug: event.slug, uuid: proposal), class: 'btn btn-primary' do
@@ -44,33 +45,37 @@
       = render partial: 'proposals/contents', locals: { proposal: proposal }
 
       .proposal-section
-        %h3 Speaker Information
-        = render proposal.speakers
-        - if (proposal.has_speaker?(current_user))
-          %h4.control-label Invited Speakers
-          - invitations.each do |invitation|
-            .clearfix
-              %ul.invitation
-                %li
-                  = invitation.state_label
-                  = invitation.email
-                  .pull-right
-                    = link_to 'Resend',
-                      resend_invitation_path(invitation_slug: invitation.slug),
-                      method: :post,
-                      class: 'btn btn-xs btn-primary',
-                      disabled: !invitation.pending?
-                    = link_to 'Remove',
-                      invitation_path(invitation_slug: invitation.slug),
-                      method: :delete,
-                      class: 'btn btn-xs btn-danger',
-                      disabled: !invitation.pending?,
-                      data: {confirm: 'Are you sure you want to remove this invitation?'}
-          .new-speaker-invite
-            %p
-              You may invite other speakers to your proposal.
+        %h3.fieldset-legend Speaker Information
+        .row
+          .col-md-8
+            = render proposal.speakers
+          .col-md-4
+            .new-speaker-invite
               %button.button.btn.btn-success.btn-xs.speaker-invite-button 
                 Invite a Speaker
+              %p.help-block You may invite other speakers to your proposal.
+        .row
+          .col-md-12
+            - if (proposal.has_speaker?(current_user) && invitations.any?)
+              %h4.control-label Invited Speakers
+              - invitations.each do |invitation|
+                .clearfix
+                  %ul.invitation
+                    %li
+                      = invitation.state_label
+                      = invitation.email
+                      .pull-right
+                        = link_to 'Resend',
+                          resend_invitation_path(invitation_slug: invitation.slug),
+                          method: :post,
+                          class: 'btn btn-xs btn-primary',
+                          disabled: !invitation.pending?
+                        = link_to 'Remove',
+                          invitation_path(invitation_slug: invitation.slug),
+                          method: :delete,
+                          class: 'btn btn-xs btn-danger',
+                          disabled: !invitation.pending?,
+                          data: {confirm: 'Are you sure you want to remove this invitation?'}
             .speaker-invite-form
               = form_tag invitations_path(proposal_uuid: proposal.uuid), class: 'speaker' do
                 .widget.widget-card
@@ -90,3 +95,5 @@
         .widget-content
           = render partial: 'proposals/comments',
             locals: { proposal: proposal, comments: proposal.public_comments }
+      %p.help-block Have questions or feeback on your proposal? The comments allow you to anonymously converse with the review committee.
+

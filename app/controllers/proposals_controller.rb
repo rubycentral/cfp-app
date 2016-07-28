@@ -54,7 +54,7 @@ class ProposalsController < ApplicationController
     if @proposal.save
       current_user.update_bio
       flash[:info] = setup_flash_message
-      redirect_to event_event_proposals_url(slug: @event.slug, uuid: @proposal)
+      redirect_to event_proposal_url(event_slug: @event.slug, uuid: @proposal)
     else
       flash[:danger] = 'There was a problem saving your proposal; please review the form for issues and try again.'
       render :new

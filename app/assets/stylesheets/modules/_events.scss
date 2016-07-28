@@ -34,6 +34,22 @@
     width: 2em;
     display: inline-block;
   }
+
+  .cfp-button {
+    display: block;
+    margin: .5em auto 0;
+    width: 65%;
+  }
+
+  .incomplete-msg {
+    background-color: $state-danger-bg;
+    border-color: $state-danger-border;
+    color: $state-danger-text;
+    padding: .25em;
+    margin: 1em 0;
+    border: 1px solid transparent;
+    border-radius: 4px;
+  }
 }
 
 .event-info-bar {
@@ -56,7 +72,7 @@
     @media (max-width: $screen-xs-max) {
       margin-left: 0;
       display: block;
-    } 
+    }
   }
 }
 
@@ -68,7 +84,7 @@
   .event-meta {
     display: block;
   }
-  
+
   .event-title {
     font-size: $font-size-h3;
     padding-right: 80px;

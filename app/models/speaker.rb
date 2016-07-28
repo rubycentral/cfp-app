@@ -33,11 +33,12 @@ end
 #  id                 :integer          not null, primary key
 #  speaker_name       :string
 #  speaker_email      :string
+#  bio                :text
+#  info               :text
 #  user_id            :integer
 #  event_id           :integer
 #  proposal_id        :integer
 #  program_session_id :integer
-#  bio                :text
 #  created_at         :datetime
 #  updated_at         :datetime
 #

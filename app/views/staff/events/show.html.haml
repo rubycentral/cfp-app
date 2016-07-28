@@ -4,7 +4,7 @@
       .page-header.info-bar
         %h4.pull-right
           %strong CFP Status:
-          = event.state
+          = event.status.capitalize
           %br
           - if event.closes_at?
             Closes at
@@ -54,22 +54,36 @@
           %i.fa.fa-list-alt
           %h3 CFP Statistics
         .widget-content
-          %ul.list-group
-            %li.list-group-item
-              %strong.text-primary Total:
-              %span.label.label-info #{event.proposals.count}
-            %li.list-group-item
-              %strong.text-primary Total Proposals Reviewed:
-              %span.label.label-info #{event.proposals.rated.count} (#{event.reviewed_percent})
-            %li.list-group-item
-              %strong.text-primary Reviewed Proposals Accepted:
-              %span.label.label-info #{event.proposals.accepted.count}
-            %li.list-group-item
-              %strong.text-primary Waitlisted Proposals:
-              %span.label.label-info #{event.proposals.waitlisted.count}
-            %li.list-group-item
-              %strong.text-primary Program Sessions Scheduled:
-              %span.label.label-info #{event.scheduled_count} (#{event.scheduled_percent})
+          - if event.draft?
+            %strong.text-primary No CFP Statistics
+            - if event.incomplete_checklist_items.empty?
+              - if current_user.organizer_for_event?(current_event)
+                = link_to "Open CFP", event_staff_open_cfp_path(current_event), method: :patch,
+                  class: "btn btn-success btn-lg cfp-button",
+                  data: {confirm: "Are you sure you'd like to open the CFP?" }
+              - else
+                %button.btn.btn-lg.cfp-button.disabled Open CFP
+                %p.incomplete-msg You must be an organizer to open CFP
+            - else
+              %button.btn.btn-lg.cfp-button.disabled Open CFP
+              %p.incomplete-msg Complete Checklist Items to Open CFP
+          - else
+            %ul.list-group
+              %li.list-group-item
+                %strong.text-primary Total:
+                %span.label.label-info #{event.proposals.count}
+              %li.list-group-item
+                %strong.text-primary Total Proposals Reviewed:
+                %span.label.label-info #{event.proposals.rated.count} (#{event.reviewed_percent})
+              %li.list-group-item
+                %strong.text-primary Reviewed Proposals Accepted:
+                %span.label.label-info #{event.proposals.accepted.count}
+              %li.list-group-item
+                %strong.text-primary Program Sessions Scheduled:
+                %span.label.label-info #{event.scheduled_count} (#{event.scheduled_percent})
+              %li.list-group-item
+                %strong.text-primary Waitlisted Proposals:
+                %span.label.label-info #{event.proposals.waitlisted.count}
 
     .col-sm-4
       .widget.widget-table.checklist
@@ -103,24 +117,26 @@
               %tr
                 %td.text-primary
                   %strong CFP Closes Date:
-                - if event.closes_at.present?
+                - if event.closes_at && (event.closes_at > Time.current)
                   %td.set= link_to "Set", event_staff_edit_path
+                -elsif event.closes_at && (event.closes_at <= Time.current)
+                  %td.missing= link_to "Date has Passed", event_staff_edit_path
                 - else
                   %td.missing= link_to "Missing", event_staff_edit_path
               %tr
                 %td.text-primary
-                  %strong Session Formats:
-                - if event.session_formats.present?
-                  %td.set= link_to event.session_formats.count, '#'
+                  %strong Public Session Formats:
+                - if event.public_session_formats.present?
+                  %td.set= link_to event.public_session_formats.length, event_staff_config_path
                 - else
-                  %td.missing= link_to "None", '#'
+                  %td.missing= link_to "No Public Session Formats", event_staff_config_path
               %tr
                 %td.text-primary
                   %strong Tracks:
                 - if event.tracks.present?
-                  %td.set= link_to event.tracks.count, '#'
+                  %td.set= link_to event.tracks.count, event_staff_config_path
                 - else
-                  %td.optional= link_to "None (optional)", '#'
+                  %td.optional= link_to "None (optional)", event_staff_config_path
               %tr
                 %td.text-primary
                   %strong Guidelines:

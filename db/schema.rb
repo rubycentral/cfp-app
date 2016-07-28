@@ -185,24 +185,6 @@ ActiveRecord::Schema.define(version: 20160713174249) do
 
   add_index "taggings", ["proposal_id"], name: "index_taggings_on_proposal_id", using: :btree
 
-  create_table "time_slots", force: :cascade do |t|
-    t.integer  "conference_day"
-    t.time     "start_time"
-    t.time     "end_time"
-    t.text     "title"
-    t.text     "description"
-    t.text     "presenter"
-    t.integer  "program_session_id"
-    t.integer  "room_id"
-    t.integer  "event_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "time_slots", ["event_id"], name: "index_time_slots_on_event_id", using: :btree
-  add_index "time_slots", ["program_session_id"], name: "index_time_slots_on_program_session_id", using: :btree
-  add_index "time_slots", ["room_id"], name: "index_time_slots_on_room_id", using: :btree
-
   create_table "teammates", force: :cascade do |t|
     t.integer  "event_id"
     t.integer  "user_id"
@@ -220,6 +202,24 @@ ActiveRecord::Schema.define(version: 20160713174249) do
 
   add_index "teammates", ["event_id"], name: "index_teammates_on_event_id", using: :btree
   add_index "teammates", ["user_id"], name: "index_teammates_on_user_id", using: :btree
+
+  create_table "time_slots", force: :cascade do |t|
+    t.integer  "conference_day"
+    t.time     "start_time"
+    t.time     "end_time"
+    t.text     "title"
+    t.text     "description"
+    t.text     "presenter"
+    t.integer  "program_session_id"
+    t.integer  "room_id"
+    t.integer  "event_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "time_slots", ["event_id"], name: "index_time_slots_on_event_id", using: :btree
+  add_index "time_slots", ["program_session_id"], name: "index_time_slots_on_program_session_id", using: :btree
+  add_index "time_slots", ["room_id"], name: "index_time_slots_on_room_id", using: :btree
 
   create_table "tracks", force: :cascade do |t|
     t.text     "name"

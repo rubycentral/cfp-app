@@ -145,4 +145,10 @@
       line-height: 1;
     }
   }
+
+  &.widget-card-alt,
+  &.widget-card-alt .widget-header,
+  &.widget-card-alt .widget-content {
+    background: lighten($brand-info, 45%);
+  }
 }

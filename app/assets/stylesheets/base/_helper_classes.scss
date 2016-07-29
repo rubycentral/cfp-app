@@ -16,7 +16,7 @@
 .inline-block {
   display: inline-block;
 }
-.white-text { color: $white; }
+
 .bg-gray-base { background-color: $gray-base; }
 .bg-gray-darker { background-color: $gray-darker; }
 .bg-gray-dark { background-color: $gray-dark; }
@@ -30,24 +30,3 @@
 .bg-brand-warning { background-color: $brand-warning; }
 .bg-brand-danger { background-color: $brand-danger; }
 .bg-brand-accent { background-color: $brand-accent; }
-
-.gray-base { color: $gray-base; }
-.gray-darker { color: $gray-darker; }
-.gray-dark { color: $gray-dark; }
-.gray { color: $gray }
-.gray-light { color: $gray-light; }
-.gray-lighter { color: $gray-lighter; }
-.brand-primary { color: $brand-primary; }
-.brand-success { color: $brand-success; }
-.brand-info { color: $brand-info; }
-.brand-info-alt { color: $brand-info-alt; }
-.brand-warning { color: $brand-warning; }
-.brand-danger { color: $brand-danger; }
-.brand-accent { color: $brand-accent; }
-
-.text-right-responsive,
-.text-center-responsive {
-  @media (max-width: 767px) {
-    text-align: left;
-  }
-}

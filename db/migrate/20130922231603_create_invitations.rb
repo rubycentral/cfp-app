@@ -6,7 +6,8 @@ class CreateInvitations < ActiveRecord::Migration
       t.string :email
       t.string :state, default: 'pending'
       t.string :slug
-      t.timestamps
+
+      t.timestamps null: true
     end
 
     add_index :invitations, [:proposal_id, :email], unique: true

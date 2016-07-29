@@ -1,8 +1,4 @@
 class Event < ActiveRecord::Base
-  store_accessor :speaker_notification_emails, :accept
-  store_accessor :speaker_notification_emails, :reject
-  store_accessor :speaker_notification_emails, :waitlist
-
   has_many :teammates, dependent: :destroy
   has_many :proposals, dependent: :destroy
   has_many :speakers, through: :proposals
@@ -21,6 +17,13 @@ class Event < ActiveRecord::Base
   serialize :proposal_tags, Array
   serialize :review_tags, Array
   serialize :custom_fields, Array
+  serialize :settings, Hash
+  serialize :speaker_notification_emails, Hash
+
+  store_accessor :speaker_notification_emails, :accept
+  store_accessor :speaker_notification_emails, :reject
+  store_accessor :speaker_notification_emails, :waitlist
+
 
   scope :recent, -> { order('name ASC') }
   scope :live, -> { where("state = 'open' and (closes_at is null or closes_at > ?)", Time.current).order('closes_at ASC') }
@@ -208,17 +211,18 @@ end
 #  url                         :string
 #  contact_email               :string
 #  state                       :string           default("draft")
+#  archived                    :boolean          default(FALSE)
 #  opens_at                    :datetime
 #  closes_at                   :datetime
 #  start_date                  :datetime
 #  end_date                    :datetime
+#  info                        :text
+#  guidelines                  :text
+#  settings                    :text
 #  proposal_tags               :text
 #  review_tags                 :text
-#  guidelines                  :text
-#  policies                    :text
-#  archived                    :boolean          default(FALSE)
 #  custom_fields               :text
-#  speaker_notification_emails :hstore           default({"accept"=>"", "reject"=>"", "waitlist"=>""})
+#  speaker_notification_emails :text             default({:accept=>"", :reject=>"", :waitlist=>""})
 #  created_at                  :datetime
 #  updated_at                  :datetime
 #

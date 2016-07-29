@@ -46,8 +46,8 @@ end
 #  id          :integer          not null, primary key
 #  user_id     :integer
 #  message     :string
-#  read_at     :datetime
 #  target_path :string
+#  read_at     :datetime
 #  created_at  :datetime
 #  updated_at  :datetime
 #

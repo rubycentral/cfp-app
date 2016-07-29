@@ -7,7 +7,7 @@ class CreateComments < ActiveRecord::Migration
       t.text :body
       t.string :type
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

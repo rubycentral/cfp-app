@@ -15,12 +15,12 @@ end
 # Table name: tracks
 #
 #  id          :integer          not null, primary key
-#  name        :text
 #  event_id    :integer
-#  created_at  :datetime
-#  updated_at  :datetime
+#  name        :string
 #  description :string(250)
 #  guidelines  :text
+#  created_at  :datetime
+#  updated_at  :datetime
 #
 # Indexes
 #

@@ -266,6 +266,8 @@ end
 #  state                 :string           default("submitted")
 #  uuid                  :string
 #  title                 :string
+#  session_format_id     :integer
+#  track_id              :integer
 #  abstract              :text
 #  details               :text
 #  pitch                 :text
@@ -276,8 +278,6 @@ end
 #  confirmed_at          :datetime
 #  created_at            :datetime
 #  updated_at            :datetime
-#  session_format_id     :integer
-#  track_id              :integer
 #
 # Indexes
 #

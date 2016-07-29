@@ -22,13 +22,13 @@ end
 # Table name: program_sessions
 #
 #  id                :integer          not null, primary key
-#  title             :text
-#  abstract          :text
-#  state             :text             default("active")
 #  event_id          :integer
 #  proposal_id       :integer
+#  title             :text
+#  abstract          :text
 #  track_id          :integer
 #  session_format_id :integer
+#  state             :text             default("active")
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #

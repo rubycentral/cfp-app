@@ -5,7 +5,7 @@ class CreateTaggings < ActiveRecord::Migration
       t.string :tag
       t.boolean :internal, default: false
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

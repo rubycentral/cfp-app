@@ -3,6 +3,8 @@ class ProposalsController < ApplicationController
   before_filter :require_user
   before_filter :require_proposal, except: [ :index, :create, :new, :parse_edit_field ]
   before_filter :require_invite_or_speaker, only: [:show]
+  skip_before_action :require_invite_or_speaker, only: [:destroy]
+
   before_filter :require_speaker, only: [:edit, :update]
   before_filter :require_waitlisted_or_accepted_state, only: [:confirm]
 

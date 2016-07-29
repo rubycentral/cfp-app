@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
   helper_method :reviewer?
   helper_method :organizer?
   helper_method :event_staff?
+  helper_method :speaker_for_proposal?
 
   before_action :current_event
 
@@ -54,6 +55,12 @@ class ApplicationController < ActionController::Base
 
   def event_staff?(current_event)
     current_user && current_event.teammates.where(user_id: current_user.id).any?
+  end
+
+  def speaker_for_proposal?(current_user)
+    if current_event
+      current_event.speakers.any? { |s| s.user_id == current_user.id }
+    end
   end
 
   def reviewer?

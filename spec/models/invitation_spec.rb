@@ -27,11 +27,11 @@ describe Invitation do
     end
   end
 
-  describe "#refuse" do
-    it "sets state as refused" do
+  describe "#decline" do
+    it "sets state as declined" do
       invitation = create(:invitation, state: nil)
-      invitation.refuse
-      expect(invitation.state).to eq(Invitation::State::REFUSED)
+      invitation.decline
+      expect(invitation.state).to eq(Invitation::State::DECLINED)
     end
   end
 
@@ -55,15 +55,15 @@ describe Invitation do
     end
   end
 
-  describe "#refused?" do
-    it "returns true if invitation was refused" do
-      invitation = create(:invitation, state: Invitation::State::REFUSED)
-      expect(invitation).to be_refused
+  describe "#declined?" do
+    it "returns true if invitation was declined" do
+      invitation = create(:invitation, state: Invitation::State::DECLINED)
+      expect(invitation).to be_declined
     end
 
-    it "returns false if invitation was not refused" do
+    it "returns false if invitation was not declined" do
       invitation = create(:invitation, state: Invitation::State::ACCEPTED)
-      expect(invitation).to_not be_refused
+      expect(invitation).to_not be_declined
     end
   end
 end

@@ -1,19 +1,19 @@
 class InvitationsController < ApplicationController
-  before_filter :require_user, except: :show
+  before_filter :require_user, except: [:show, :update]
   before_filter :require_invitation, except: :create
   before_filter :require_proposal, only: :create
   rescue_from ActiveRecord::RecordNotFound, :with => :rescue_not_found
 
   def create
-    @invitation = @proposal.invitations.find_or_initialize_by(email: params[:email])
+    @invitation = @proposal.invitations.find_or_initialize_by(email: params[:speaker][:email])
 
     if @invitation.save
-      InvitationMailer.speaker(@invitation, current_user).deliver_now
-      flash[:info] = "An invitation has been sent to #{params[:email]}."
+      SpeakerInvitationMailer.create(@invitation, current_user).deliver_now
+      flash[:info] = "An invitation has been sent to #{params[:speaker][:email]}."
     elsif !@invitation.valid?
       flash[:danger] = "Please enter a valid email and try again."
     else
-      flash[:danger] = "We could not invite #{params[:email]} as a speaker; please try again later."
+      flash[:danger] = "We could not invite #{params[:speaker][:email]} as a speaker; please try again later."
     end
 
     redirect_to :back
@@ -21,35 +21,40 @@ class InvitationsController < ApplicationController
 
   def destroy
     @invitation.destroy
-    flash[:info] = "You have removed that invitation."
+    flash[:info] = "You have removed the invitation for #{@invitation.email}."
     redirect_to :back
   end
 
   def show
-    render locals: {
-      proposal: @invitation.proposal.decorate,
-      invitation: @invitation.decorate,
-      event: @invitation.proposal.event.decorate
-    }
+    @proposal = @invitation.proposal.decorate
+    @invitation = @invitation.decorate
+    @event = @invitation.proposal.event.decorate
+
+    if current_user && session[:pending_invite]
+      accept_invite
+      session.delete :pending_invite
+    end
   end
 
   def resend
-    InvitationMailer.speaker(@invitation, current_user).deliver_now
+    SpeakerInvitationMailer.create(@invitation, current_user).deliver_now
     flash[:info] = "You have resent an invitation to #{@invitation.email}."
     redirect_to :back
   end
 
   def update
-    if params[:refuse]
-      @invitation.refuse
+    if params[:decline]
+      @invitation.decline
       flash[:info] = "You have declined this invitation."
       redirect_to root_url
     else
-      @invitation.accept
-      flash[:info] = "You have accepted this invitation."
-      @invitation.proposal.speakers.create(user: current_user, event: @invitation.proposal.event)
-      redirect_to edit_event_proposal_url(event_slug: @invitation.proposal.event.slug,
-                                     uuid: @invitation.proposal)
+      if current_user
+        accept_invite
+      else
+        session[:pending_invite] = invitation_path(params[:invitation_slug])
+        flash[:info] = "Thanks for joining us! Please sign in or create an account."
+        redirect_to new_user_session_path
+      end
     end
   end
 
@@ -61,6 +66,18 @@ class InvitationsController < ApplicationController
 
   def require_invitation
     @invitation = Invitation.find_by!(slug: params[:invitation_slug] || session[:invitation_slug])
+  end
+
+  def accept_invite
+    @invitation.accept
+    flash[:info] = "You have accepted your invitation!"
+    @invitation.proposal.speakers.create(user: current_user, event: @invitation.proposal.event)
+    if current_user.complete?
+      redirect_to event_proposal_path(event_slug: @invitation.proposal.event.slug,
+                                      uuid: @invitation.proposal)
+    else
+      redirect_to edit_profile_path
+    end
   end
 
   protected

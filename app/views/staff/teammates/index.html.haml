@@ -60,8 +60,8 @@
               - if current_user.organizer_for_event?(current_event)
                 .pull-right
                   = link_to "Invite new teammate", "#", class: "btn btn-primary btn-sm invite-btn",
-                    data: { toggle: "modal", target: "#new-event-teammate-invitation" },
-                    id: "invite-new-event-teammate"
+                    data: { toggle: "modal", target: "#new-teammate-invitation" },
+                    id: "invite-new-teammate"
               %i.fa.fa-envelope-o
               %h3 Team Invitations
 
@@ -89,4 +89,4 @@
                           data: { confirm: "Are you sure you want to remove this invite?" },
                           class: 'btn btn-danger btn-xs'
 
-= render partial: 'staff/team_invitations/new_dialog', locals: { event: event }
+= render partial: 'staff/teammate_invitations/new_dialog', locals: { event: event }

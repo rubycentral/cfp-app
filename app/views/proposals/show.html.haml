@@ -10,13 +10,13 @@
     .col-md-4.text-right.text-right-responsive
       .event-info.event-info-dense
         %span{:class => "event-meta event-status-badge event-status-#{event.status}"}
-          CFP 
+          CFP
           = event.status
         - if event.open?
           %span.event-meta
             CFP closes:
             %strong= event.closes_at(:month_day_year)
-            
+
 #proposal
   .page-header.page-header-slim
     .row
@@ -49,13 +49,9 @@
         .row
           .col-md-8
             = render proposal.speakers
-          .col-md-4
-            .new-speaker-invite
-              %button.button.btn.btn-success.btn-xs.speaker-invite-button 
-                Invite a Speaker
-              %p.help-block You may invite other speakers to your proposal.
+
         .row
-          .col-md-12
+          .col-md-8
             - if (proposal.has_speaker?(current_user) && invitations.any?)
               %h4.control-label Invited Speakers
               - invitations.each do |invitation|
@@ -65,35 +61,34 @@
                       = invitation.state_label
                       = invitation.email
                       .pull-right
-                        = link_to 'Resend',
-                          resend_invitation_path(invitation_slug: invitation.slug),
-                          method: :post,
-                          class: 'btn btn-xs btn-primary',
-                          disabled: !invitation.pending?
+                        - if !invitation.declined?
+                          = link_to 'Resend',
+                            resend_invitation_path(invitation_slug: invitation.slug),
+                            method: :post,
+                            class: 'btn btn-xs btn-primary'
                         = link_to 'Remove',
                           invitation_path(invitation_slug: invitation.slug),
                           method: :delete,
                           class: 'btn btn-xs btn-danger',
-                          disabled: !invitation.pending?,
                           data: {confirm: 'Are you sure you want to remove this invitation?'}
-            .speaker-invite-form
-              = form_tag invitations_path(proposal_uuid: proposal.uuid), class: 'speaker' do
-                .widget.widget-card
-                  %h3.control-label Invite a Speaker
-                  .input-group{role: "group", "aria-label" => "Enter an Email to Invite a Speaker"}
-                    = email_field_tag :email, '', placeholder: "Enter an email address.", class: 'form-control'
-                    %span.input-group-btn
-                      %button.btn.btn-success(type="submit")
-                        %span.glyphicon.glyphicon-envelope
-                        Invite
 
-    .col-md-4
-      .widget.widget-card
-        .widget-header
-          %i.fa.fa-comments
-          %h3= pluralize(proposal.public_comments.count, 'comment')
-        .widget-content
-          = render partial: 'proposals/comments',
-            locals: { proposal: proposal, comments: proposal.public_comments }
-      %p.help-block Have questions or feeback on your proposal? The comments allow you to anonymously converse with the review committee.
+              %hr
+            .new-speaker-invite
+            - if proposal.has_speaker?(current_user)
+              = link_to "Invite a Speaker", "#", class: "btn btn-success btn-xs speaker-invite-btn",
+                data: { toggle: "modal", target: "#new-speaker-invitation" },
+                id: "invite-new-speaker"
+              %p.help-block You may invite other speakers to your proposal.
 
+    - if current_user && speaker_for_proposal?(current_user)
+      .col-md-4
+        .widget.widget-card
+          .widget-header
+            %i.fa.fa-comments
+            %h3= pluralize(proposal.public_comments.count, 'comment')
+          .widget-content
+            = render partial: 'proposals/comments',
+              locals: { proposal: proposal, comments: proposal.public_comments }
+        %p.help-block Have questions or feeback on your proposal? The comments allow you to anonymously converse with the review committee.
+
+= render partial: 'proposals/speaker_invitations/new_dialog', locals: { event: event, proposal: proposal }

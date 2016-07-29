@@ -9,8 +9,8 @@
         .widget-header
           %i.fa.fa-comments-o
           %h3 Session Formats
-          = link_to "Add Session Format", "#", class: "btn btn-success btn-sm pull-right",
-            data: { toggle: "modal", target: "#session-format-new-dialog" } unless !current_user.organizer_for_event?(event)
+          = link_to "Add Session Format", new_event_staff_session_format_path(event), remote: true,
+            class: "btn btn-success btn-sm pull-right" unless !current_user.organizer_for_event?(event)
         .widget-content
           %table.table.table-striped.table-bordered#session-formats
             %thead
@@ -23,19 +23,13 @@
                   %th= "Actions"
             %tbody
               = render event.session_formats
-      #session-format-new-dialog.modal.fade
-        .modal-dialog
-          .modal-content
-            .modal-header
-              %h3 New Session Format
-              = render partial: 'staff/session_formats/form', locals: { session_format: SessionFormat.new }
 
       .widget.widget-table
         .widget-header
           %i.fa.fa-exchange
           %h3 Tracks
-          = link_to "Add Track", "#", class: "btn btn-success btn-sm pull-right",
-            data: { toggle: "modal", target: "#track-new-dialog" } unless !current_user.organizer_for_event?(event)
+          = link_to "Add Track", new_event_staff_track_path(event), remote: true,
+            class: "btn btn-success btn-sm pull-right" unless !current_user.organizer_for_event?(event)
         .widget-content
           %table.table.table-striped.table-bordered#tracks
             %thead
@@ -47,12 +41,10 @@
                   %th Actions
             %tbody
               = render event.tracks
-      #track-new-dialog.modal.fade
-        .modal-dialog
-          .modal-content
-            .modal-header
-              %h3 New Track
-              = render partial: 'staff/tracks/form', locals: { track: Track.new }
+
+    #config-modal.modal.fade
+      .modal-dialog
+        .modal-content
   .row
     .col-md-4
       .widget

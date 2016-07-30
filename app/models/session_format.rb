@@ -15,11 +15,11 @@ end
 # Table name: session_formats
 #
 #  id          :integer          not null, primary key
+#  event_id    :integer
 #  name        :string
 #  description :string
 #  duration    :integer
 #  public      :boolean          default(TRUE)
-#  event_id    :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #

@@ -5,6 +5,8 @@ class CreateProposals < ActiveRecord::Migration
       t.string :state, default: 'submitted'
       t.string :uuid
       t.string :title
+      t.references :session_format, index: true
+      t.references :track, index: true
       t.text :abstract
       t.text :details
       t.text :pitch
@@ -13,9 +15,10 @@ class CreateProposals < ActiveRecord::Migration
       t.text :proposal_data
       t.datetime :updated_by_speaker_at
       t.timestamp :confirmed_at
-      t.timestamps
+      t.timestamps null: true
     end
 
     add_index :proposals, :uuid, unique: true
+    #TODO: indexes on FKs
   end
 end

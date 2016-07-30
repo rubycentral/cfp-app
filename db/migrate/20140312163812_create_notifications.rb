@@ -3,10 +3,10 @@ class CreateNotifications < ActiveRecord::Migration
     create_table :notifications do |t|
       t.references :user, index: true
       t.string :message
-      t.timestamp :read_at
       t.string :target_path
+      t.timestamp :read_at
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

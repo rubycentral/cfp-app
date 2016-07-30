@@ -44,20 +44,21 @@ end
 # Table name: time_slots
 #
 #  id                 :integer          not null, primary key
+#  program_session_id :integer
+#  room_id            :integer
+#  event_id           :integer
 #  conference_day     :integer
 #  start_time         :time
 #  end_time           :time
 #  title              :text
 #  description        :text
 #  presenter          :text
-#  program_session_id :integer
-#  room_id            :integer
-#  event_id           :integer
 #  created_at         :datetime
 #  updated_at         :datetime
 #
 # Indexes
 #
+#  index_time_slots_on_conference_day      (conference_day)
 #  index_time_slots_on_event_id            (event_id)
 #  index_time_slots_on_program_session_id  (program_session_id)
 #  index_time_slots_on_room_id             (room_id)

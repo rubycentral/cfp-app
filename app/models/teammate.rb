@@ -73,11 +73,11 @@ end
 #  id            :integer          not null, primary key
 #  event_id      :integer
 #  user_id       :integer
-#  notifications :boolean          default(TRUE)
 #  role          :string
 #  email         :string
 #  state         :string
 #  token         :string
+#  notifications :boolean          default(TRUE)
 #  invited_at    :datetime
 #  accepted_at   :datetime
 #  declined_at   :datetime

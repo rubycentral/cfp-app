@@ -5,7 +5,7 @@ class CreateRatings < ActiveRecord::Migration
       t.references :user, index: true
       t.integer :score
 
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

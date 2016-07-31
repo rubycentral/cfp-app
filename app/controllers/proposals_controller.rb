@@ -58,7 +58,7 @@ class ProposalsController < ApplicationController
       flash[:info] = setup_flash_message
       redirect_to event_proposal_url(event_slug: @event.slug, uuid: @proposal)
     else
-      flash[:danger] = 'There was a problem saving your proposal; please review the form for issues and try again.'
+      flash[:danger] = 'There was a problem saving your proposal.'
       render :new
     end
   end
@@ -82,7 +82,7 @@ class ProposalsController < ApplicationController
     elsif @proposal.update_and_send_notifications(proposal_params)
       redirect_to event_proposal_url(event_slug: @event.slug, uuid: @proposal)
     else
-      flash[:danger] = 'There was a problem saving your proposal; please review the form for issues and try again.'
+      flash[:danger] = 'There was a problem saving your proposal.'
       render :edit
     end
   end

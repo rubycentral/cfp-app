@@ -8,9 +8,11 @@
           data: {toggle: 'tooltip', placement: 'right', trigger: 'hover'}, title: rating_tooltip }
 
   - unless rating.new_record?
-    %dl.dl-horizontal.ratings_list
-      %dt.text-success Average rating:
-      %dd.text-success= number_with_precision(proposal.average_rating, precision: 1)
+    %dl.dl-horizontal.ratings_list.margin-top
+      %dt.text-success 
+        %strong Average rating:
+      %dd.text-success
+        %strong= number_with_precision(proposal.average_rating, precision: 1)
       - proposal.ratings.each do |rating|
         %dt= "#{rating.user.name}:"
         %dd= rating.score

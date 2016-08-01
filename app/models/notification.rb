@@ -8,7 +8,7 @@ class Notification < ActiveRecord::Base
   def self.create_for(users, args = {})
     proposal = args.delete(:proposal)
     users.each do |user|
-      args[:target_path] = user.decorate.proposal_url(proposal) if proposal
+      args[:target_path] = user.decorate.proposal_notification_path(proposal) if proposal
       user.notifications.create(args)
     end
   end

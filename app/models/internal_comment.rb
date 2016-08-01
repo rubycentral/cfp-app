@@ -5,8 +5,8 @@ class InternalComment < Comment
 
   # Generate notifications for InternalComment
 
-  # 2. If a a reviewer/organizer leaves a comment,
-  #  only the other reviewers of proposal get an in app notification.
+  # If a reviewer/organizer leaves a comment,
+  #  only the other reviewers of proposal get an in-app notification.
   def notify
     reviewers = proposal.reviewers.reject{|r| r.id == user_id }
     Notification.create_for(reviewers, proposal: proposal, message: "Internal comment on #{proposal.title}")

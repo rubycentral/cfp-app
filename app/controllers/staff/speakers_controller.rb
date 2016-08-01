@@ -26,7 +26,7 @@ class Staff::SpeakersController < Staff::ApplicationController
     else
       flash[:danger] = "Could not find a user with this email address"
     end
-    redirect_to event_staff_proposal_url(event, @proposal)
+    redirect_to event_staff_proposal_path(event, @proposal)
   end
 
   #if user input (params), exist
@@ -54,7 +54,7 @@ class Staff::SpeakersController < Staff::ApplicationController
     @speaker.destroy
 
     flash[:info] = "You've deleted the speaker for this proposal"
-    redirect_to event_staff_proposal_url(uuid: proposal)
+    redirect_to event_staff_proposal_path(uuid: proposal)
   end
 
   def emails

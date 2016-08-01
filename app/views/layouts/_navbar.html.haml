@@ -19,7 +19,7 @@
           - if current_user.proposals.any?
             = render partial: "layouts/nav/proposals_link"
 
-          - if current_event && current_user.reviewer_for_event?(current_event)
+          - if current_event && (current_user.reviewer_for_event?(current_event) || current_user.program_team_for_event?(current_event))
             = render partial: "layouts/nav/reviewer_nav"
 
           - if current_event && current_user.organizer_for_event?(current_event)

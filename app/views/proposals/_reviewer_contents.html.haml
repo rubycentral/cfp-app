@@ -1,0 +1,32 @@
+.proposal-section
+  %h3.control-label Abstract
+  .markdown{ data: { 'field-id' => 'proposal_abstract' } }
+    = proposal.abstract_markdown
+  %p.help-block A concise, engaging description for the public program. Limited to 600 characters.
+
+-if proposal.event.public_tags?
+  .proposal-section
+    %h3.control-label Tags
+    %p= proposal.tags
+
+%h2.fieldset-legend For Review Committee
+
+.proposal-section  
+  %h3.control-label Details
+  .markdown{ data: { 'field-id' => 'proposal_details' } }
+    = proposal.details
+  %p.help-block Include any pertinent details such as outlines, outcomes or intended audience
+
+.proposal-section
+  %h3.control-label Pitch
+  .markdown{ data: { 'field-id' => 'proposal_pitch' } }
+    =proposal.pitch
+  %p.help-block Explain why this talk should be considered and what makes you qualified to speak on the topic.
+
+- if proposal.custom_fields.any?
+  - proposal.proposal_data[:custom_fields].select do |key,value|
+    .proposal-section
+      %h3.control-label= key.capitalize
+      %div
+      = value.capitalize
+      %div

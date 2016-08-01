@@ -8,4 +8,5 @@
           = f.select :review_tags,
             options_for_select(event.review_tags, proposal.object.review_tags),
             {}, { class: 'multiselect review-tags', multiple: true }
-          %button.pull-right.btn.btn-success{:type => "submit"} Update
+      .form-group
+        %button.btn.btn-success.pull-right{:type => "submit"} Update

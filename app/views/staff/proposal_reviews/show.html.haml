@@ -21,37 +21,44 @@
   .page-header.page-header-slim
     .row
       .col-md-8
+        .meta-text= proposal.updated_in_words
         %h1
           = proposal.title
-          = proposal.public_state(small: true)
+          
       .col-md-4
-        .btn-nav.pull-right
-          = link_to(event_staff_proposals_path, class: "btn btn-primary") do
-            &laquo; Return to Proposals
-          = link_to "Next Proposal", event_staff_proposal_path(uuid: "PLACEHOLDER"), class: "next-proposal btn btn-primary", data: {"proposal-uuid" => proposal.uuid }
-    .row
-      .col-md-4
-        %span.label.label-info= proposal.created_in_words
-
-        %span.label.label-info= proposal.updated_in_words
-        %br/
-        .tags= proposal.tags
-
+        .text-right
+          %div
+            = proposal.public_state(small: true)
+          %div
+            = link_to(event_staff_proposals_path, class: "btn btn-primary") do
+              &laquo; Return to Proposals
+            = link_to "Next Proposal", event_staff_proposal_path(uuid: "PLACEHOLDER"), class: "next-proposal btn btn-primary", data: {"proposal-uuid" => proposal.uuid }
+    .proposal-info-bar
+      .proposal-meta.proposal-description
+        .proposal-meta-item
+          %strong #{ 'Speaker'.pluralize(proposal.speakers.count) }:
+          %span= proposal.speakers.collect { |speaker| speaker.name }.join(', ')
+        .proposal-meta-item
+          %strong Format:
+          %span #{proposal.session_format.name}
+        
+        - if proposal.track
+          .proposal-meta-item
+            %strong Track:
+            %span #{proposal.track.name}
   .row
     .col-md-4
-      = render partial: 'proposals/contents', locals: { proposal: proposal }
-
+      = render partial: 'proposals/reviewer_contents', locals: { proposal: proposal }
     .col-md-4
-      .widget.widget-card
+      .widget.widget-card.flush-top
         .widget-header
           %i.fa.fa-comments
           %h3= pluralize(proposal.public_comments.count, 'public comment')
         .widget-content
           = render partial: 'proposals/comments',
             locals: { proposal: proposal, comments: proposal.public_comments }
-
     .col-md-4
-      .widget.widget-card
+      .widget.widget-card.widget-card-alt.flush-top
         .widget-header
           %h3 Review
         .widget-content

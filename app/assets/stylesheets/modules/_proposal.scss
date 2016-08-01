@@ -173,4 +173,9 @@ div.col-md-4 {
       margin-right: 0;
     }
   }
+
+  .page-header & {
+    padding-top: $padding-large-vertical;
+    padding-bottom: 0;
+  }
 }

@@ -1,0 +1,37 @@
+// Text modules
+// Include any overrides to Bootstrap typography here
+.meta-text {
+  font-size: $font-size-small;
+  color: $gray;
+}
+
+.help-block {
+  color: darken($brand-success, 5%);
+  font-size: 0.9em;
+  font-style: italic;
+}
+
+// Misc helper classes
+.white-text { color: $white; }
+.gray-base { color: $gray-base; }
+.gray-darker { color: $gray-darker; }
+.gray-dark { color: $gray-dark; }
+.gray { color: $gray }
+.gray-light { color: $gray-light; }
+.gray-lighter { color: $gray-lighter; }
+.brand-primary { color: $brand-primary; }
+.brand-success { color: $brand-success; }
+.brand-info { color: $brand-info; }
+.brand-info-alt { color: $brand-info-alt; }
+.brand-warning { color: $brand-warning; }
+.brand-danger { color: $brand-danger; }
+.brand-accent { color: $brand-accent; }
+
+// Responsive text:
+// Reset to left-align on smaller screens
+.text-right-responsive,
+.text-center-responsive {
+  @media (max-width: 767px) {
+    text-align: left;
+  }
+}

@@ -12,11 +12,11 @@
   }
 
   .widget-header {
-    background: #f9f6f1;
+    background: $beige;
     border: 1px solid #d6d6d6;
     height: 40px;
     line-height: 40px;
-    @include gradient-vertical(#f9f6f1, #f2efea, 0%, 100%);
+    @include gradient-vertical($beige, #f2efea, 0%, 100%);
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
 
@@ -117,12 +117,12 @@
 }
 
 .widget-card {
-  background: #f9f6f1;
+  background: $beige;
   padding: 15px;
 
   .widget-header,
   .widget-content {
-    background: #f9f6f1;
+    background: $beige;
     border: none;
     border-radius: 0;
     padding: 15px 0;

@@ -79,4 +79,5 @@ module ApplicationHelper
   def body_id
     "#{controller_path.tr('/','_')}_#{action_name}"
   end
+
 end

@@ -15,23 +15,23 @@ module ProposalHelper
   end
 
   def track_tooltip
-    "Track Tooltip!"
+    "Optional: suggest a specific track to be considered for."
   end
 
   def abstract_tooltip
-    "Abstract Tooltip!"
+    "A concise, engaging description for the public program. Limited to 600 characters."
   end
 
   def details_tooltip
-    "Details tooltip"
+    "Include any pertinent details such as outlines, outcomes or intended audience."
   end
 
   def pitch_tooltip
-    "Pitch Tooltip"
+    "Explain why this talk should be considered and what makes you qualified to speak on the topic."
   end
 
   def bio_tooltip
-    "Tell us a bit about yourself!"
+    "Your bio should be short, no longer than 500 characters. It's related to why you're speaking about this topic."
   end
 
 end

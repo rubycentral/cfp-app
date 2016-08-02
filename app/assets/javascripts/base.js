@@ -1,6 +1,7 @@
 $(document).ready(function() {
   $("#gravatar-alert").tooltip();
-  $('body').tooltip({selector: "[data-toggle~='tooltip']", html: true})
+  $('body').tooltip({selector: "[data-toggle~='tooltip']", html: true});
+  $('body').popover({selector: "[data-toggle~='popover']", html: true, trigger: 'manual'});
 });
 
 // Datatable extension for reseting sort order

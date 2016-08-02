@@ -1,4 +1,5 @@
 class Staff::EventsController < Staff::ApplicationController
+  before_action :enable_staff_subnav
 
   def edit
   end

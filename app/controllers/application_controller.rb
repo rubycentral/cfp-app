@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
   helper_method :organizer?
   helper_method :event_staff?
   helper_method :speaker_for_proposal?
+  helper_method :display_staff_subnav?
 
   before_action :current_event
 
@@ -121,5 +122,13 @@ class ApplicationController < ActionController::Base
 
   def set_title(title)
     @title = title[0..25] if title
+  end
+
+  def enable_staff_subnav
+    @display_staff_subnav = true
+  end
+
+  def display_staff_subnav?
+    @display_staff_subnav
   end
 end

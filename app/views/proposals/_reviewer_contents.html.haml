@@ -13,12 +13,14 @@
 .proposal-section
   %h3.control-label Details
   .markdown{ data: { 'field-id' => 'proposal_details' } }
-    = proposal.details
+    = markdown(proposal.details)
+  %p.help-block Include any pertinent details such as outlines, outcomes or intended audience
 
 .proposal-section
   %h3.control-label Pitch
   .markdown{ data: { 'field-id' => 'proposal_pitch' } }
-    =proposal.pitch
+    = markdown(proposal.pitch)
+  %p.help-block Explain why this talk should be considered and what makes you qualified to speak on the topic.
 
 - if proposal.custom_fields.any?
   - proposal.proposal_data[:custom_fields].select do |key,value|

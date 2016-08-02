@@ -20,7 +20,7 @@
   .col-md-12
     .page-header
       %h1
-        = event.name 
+        = event.name
         CFP
 
 .row.margin-top
@@ -35,7 +35,7 @@
         - if event.closes_at?
           %dl.margin-top
             %dt.event-label
-              CFP closes: 
+              CFP closes:
             %dd.event-callout
               = event.closes_at(:long_with_zone)
             %dd.margin-top
@@ -51,7 +51,7 @@
         .panel-body
           %dl.event-cfp-data
             %dt
-              CFP closed: 
+              CFP closed:
             %dd
               = event.closes_at(:long_with_zone)
 

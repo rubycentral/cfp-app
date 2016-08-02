@@ -24,7 +24,7 @@
         .meta-text= proposal.updated_in_words
         %h1
           = proposal.title
-          
+
       .col-md-4
         .text-right
           %div
@@ -41,7 +41,7 @@
         .proposal-meta-item
           %strong Format:
           %span #{proposal.session_format.name}
-        
+
         - if proposal.track
           .proposal-meta-item
             %strong Track:
@@ -74,4 +74,3 @@
           .widget-content
             = render partial: 'proposals/comments',
                 locals: { proposal: proposal, comments: proposal.internal_comments }
-

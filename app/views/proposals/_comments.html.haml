@@ -1,13 +1,11 @@
 %ul.messages_layout
   - comments.order(:created_at).each do |comment|
     %li.comment.markdown{ class: choose_class_for(comment) }
-      %a.avatar
-        = image_tag("https://www.gravatar.com/avatar/#{comment.user.gravatar_hash}?s=25")
       .message_wrap
         - if comment.user.present?
           .info{ title: comment.created_at.to_s }
             %p.name
-              = comment.user.name
+              #{proposal.has_speaker?(comment.user) ? 'speaker' : comment.user.name}
             %span.time #{comment.created_at.to_s(:day_at_time)}
         .text
           =markdown(comment.body)

@@ -18,16 +18,7 @@ ul.messages_layout li {
     clear: both;
   }
 }
-ul.messages_layout li.left {
-  padding-left: 35px
-}
-ul.messages_layout li.right {
-  padding-right: 35px
-}
-ul.messages_layout li.right .avatar {
-  right: 0;
-  left: auto
-}
+
 ul.messages_layout li.right .message_wrap .arrow {
   background-position: 0 -213px;
   height: 15px;
@@ -35,22 +26,15 @@ ul.messages_layout li.right .message_wrap .arrow {
   right: -12px;
   width: 12px;
 }
+
 ul.messages_layout li.by_myself .message_wrap {
   border: 1px solid $bright-blue;
 }
+
 ul.messages_layout li.by_myself .message_wrap .info a.name {
   color: $bright-blue;
 }
-ul.messages_layout li a.avatar {
-  left: 0;
-  position: absolute;
-  top: 0
-}
-ul.messages_layout li a.avatar img {
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px
-}
+
 ul.messages_layout li .message_wrap {
   background: #fefefe;
   border: 1px solid $gray-light;

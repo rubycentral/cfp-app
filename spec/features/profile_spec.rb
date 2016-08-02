@@ -27,7 +27,7 @@ feature 'User Profile' do
     expect(user.bio).to eq('I am even more awesome')
   end
 
-  scenario "A user attempts to save their bio without email" do
+  scenario "A user attempts to save their bio without email", js: true do
     visit (edit_profile_path)
     fill_in('Email', with: '')
     click_button 'Save'

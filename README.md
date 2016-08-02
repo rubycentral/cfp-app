@@ -58,21 +58,21 @@ This will boot up using Foreman and allow the .env file to be read / set for use
 
 ### User roles
 
-There are five user roles in CFP App. To log in as a user type in development mode, locate the email for each user in `seeds.rb`. The password is the same for each user, and is assigned to the variable `pwd` in the seed file. 
+There are five user roles in CFP App. To log in as a user type in development mode, locate the email for each user in `seeds.rb`. The password is the same for each user, and is assigned to the variable `pwd` in the seed file.
 
-- **Admin:** 
+- **Admin:**
   - Edit/delete users
-  - Add/archive events 
-  - Automatically an **Organizer** for created events 
-- **Organizer:** 
+  - Add/archive events
+  - Automatically an **Organizer** for created events
+- **Organizer:**
   - Edit/view event pages: event dashboard, program, schedule
-  - View event proposals 
+  - View event proposals
 - **Track Director:**
   - TBD
-- **Reviewer:** 
+- **Reviewer:**
   - View/rate anonymous event proposals for an event
   - Cannot rate own proposals
-- **Speaker:** 
+- **Speaker:**
   - View/edit/delete own proposals
 
 ## Deployment on Heroku
@@ -167,15 +167,15 @@ As a reviewer or organizer, you will use the 'Review' dropdown to get to the pro
 
 The list of proposals can be filtered and sorted as you see fit.  This is very important so that you can either focus on a certain tag or look at the oldest proposals that you have not rated.  The list shows the following fields:
 
-  Score: the average score across all ratings
-  Your Score: how you rated the proposal
-  Ratings: how many ratings total a talk has received
-  Title: which is also the link to view the proposal
-  Proposal Tags: the tags the speaker(s) associated with the proposal
-  Reviewer Tags: the tags the reviewers have added
-  Comments:  a total count of public comments including reviewers and speakers
-  Submitted On: the original submission date and time
-  Updated At: The last time the speaker updated the proposal
+  - Score: the average score across all ratings
+  - Your Score: how you rated the proposal
+  - Ratings: how many ratings total a talk has received
+  - Title: which is also the link to view the proposal
+  - Proposal Tags: the tags the speaker(s) associated with the proposal
+  - Reviewer Tags: the tags the reviewers have added
+  - Comments:  a total count of public comments including reviewers and speakers
+  - Submitted On: the original submission date and time
+  - Updated At: The last time the speaker updated the proposal
 
 The sort order is sticky and you can use the shift key to sort by more than one column.  Use the 'Reset Sort Order' button to clear this out.
 

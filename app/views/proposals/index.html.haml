@@ -66,7 +66,7 @@
               - talks.each do |proposal|
                 %li.proposal.proposal-info-bar
                   .flex-container.flex-container-md
-                    .flex-item.flex-item-fixed.flex-item-padded
+                    .flex-item.flex-item-fixed.flex-item-padded.proposal-icon
                       %i.fa.fa-fw.fa-file-text
                     .flex-item.flex-item-padded
                       %h4.proposal-title= link_to proposal.title, event_proposal_path(event_slug: proposal.event.slug, uuid: proposal)
@@ -89,4 +89,4 @@
                         = proposal.public_state(small: true)
                       .proposal-meta
                         %i.fa.fa-fw.fa-comments
-                        = pluralize(proposal.public_comments.count, 'comment')
+                        = pluralize(proposal.public_comments.count, 'comment')    

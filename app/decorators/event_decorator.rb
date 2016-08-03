@@ -43,7 +43,7 @@ class EventDecorator < ApplicationDecorator
   end
 
   def closes_at(format = nil)
-    if format
+    if format && object.closes_at
       object.closes_at.to_s(format)
     else
       object.closes_at

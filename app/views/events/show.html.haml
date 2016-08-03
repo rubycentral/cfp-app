@@ -44,17 +44,14 @@
         %div
           = link_to 'Submit a proposal', new_event_proposal_path, class: 'btn btn-primary'
     - else
-      .panel.panel-default
-        .panel-heading
-          CFP
-          = event.status
-        .panel-body
-          %dl.event-cfp-data
-            %dt
-              CFP closed:
-            %dd
-              = event.closes_at(:long_with_zone)
-
+      .event-info.event-info-block.callout
+        .call-header
+          .label.label-success.label-large.inline-block
+            CFP
+            = event.status
+          .panel-body
+            %p The CFP has not yet opened.  
+            %p Please check back soon!
 
     - if event.proposals.count > 5
       .stats

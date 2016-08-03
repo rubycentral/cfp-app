@@ -8,7 +8,7 @@ class ProfilesController < ApplicationController
   end
 
   def update
-    if current_user.update_attributes(user_params) && current_user.complete?
+    if current_user.update_attributes(user_params)
       current_user.assign_open_invitations if session[:need_to_complete]
 
       if current_user.unconfirmed_email.present?

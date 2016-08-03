@@ -36,7 +36,7 @@ feature "Proposals" do
       end
 
       it "submits unsuccessfully" do
-        expect(page).to have_text("There was a problem saving your proposal; please review the form for issues and try again.")
+        expect(page).to have_text("There was a problem saving your proposal.")
       end
 
       it "shows Title validation if blank on submit" do

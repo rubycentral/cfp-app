@@ -49,5 +49,4 @@
               %i.fa.fa-dashboard
               %span Dashboard
 
-- if params[:controller].include?("staff") && user_signed_in?
-  = render partial: "layouts/nav/staff_subnav"
+= render partial: "layouts/nav/staff_subnav" if display_staff_subnav?

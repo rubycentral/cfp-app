@@ -1,6 +1,7 @@
 class Staff::TeammatesController < Staff::ApplicationController
   # what is this? review this line - probably junk
   skip_before_filter :require_proposal, only: [:update], if: proc {|c| current_user && current_user.reviewer? }
+  before_action :enable_staff_subnav
   respond_to :html, :json
 
   def index

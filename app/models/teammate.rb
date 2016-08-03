@@ -20,7 +20,7 @@ class Teammate < ActiveRecord::Base
 
   scope :organizer, -> { where(role: "organizer") }
   scope :program_team, -> { where(role: ["program team", "organizer"]) }
-  scope :reviewer, -> { where(role: ["reviewer", "organizer"]) }
+  scope :reviewer, -> { where(role: ["reviewer", "program team", "organizer"]) }
 
   scope :pending, -> { where(state: PENDING) }
   scope :accepted, -> { where(state: ACCEPTED) }

@@ -1,0 +1,16 @@
+.teammate-info-bar {
+
+  margin-top: 15px;
+
+  .teammate-meta {
+    font-size: $font-size-small;
+    color: $gray;
+
+    .teammate-meta-item {
+      display: inline-block;
+      margin-right: $padding-base-horizontal;
+      font-size: $font-size-small;
+      color: $gray;
+    }
+  }
+}

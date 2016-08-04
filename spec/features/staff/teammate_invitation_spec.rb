@@ -14,10 +14,10 @@ feature "Teammate Invitations" do
     it "can accept the invitation" do
       visit accept_teammate_path(invitation.token)
 
-      expect(page).to have_content("Thanks for joining #{invitation.event.name}!")
-      expect(page).to have_content("Thank you for joining the #{invitation.event.name} team!")
-      expect(page).to have_link("Sign In")
-      expect(page).to have_link("Create an Account")
+      expect(page).to have_content("Team invite to #{invitation.event.name} accepted!")
+      expect(page).to have_content("Thanks for joining our team.")
+      expect(page).to have_link("Log in")
+      expect(page).to have_button("Create your Account")
     end
 
     it "a logged in user can accept an invitation" do

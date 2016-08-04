@@ -6,14 +6,14 @@ class TeammatesController < ApplicationController
   def accept
     if !current_user
       session[:pending_invite] = accept_teammate_url(@teammate_invitation.token)
-      flash[:info] = "Thanks for joining #{current_event.name}!"
+      flash[:info] = "Team invite to #{current_event.name} accepted!"
     else
       if already_teammate?
         flash[:danger] = "You are already a teammate for #{current_event.name}"
         redirect_to event_staff_teammates_path(current_event)
       else
         @teammate_invitation.accept(current_user)
-        flash[:info] = "Thanks for joining #{current_event.name}!"
+        flash[:info] = "Team invite to #{current_event.name} accepted!"
         if current_user.complete?
           session.delete :pending_invite
           flash[:info] = "Congrats! You are now an official team member of #{current_event.name}!"

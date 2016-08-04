@@ -38,7 +38,7 @@ best_track = seed_event.tracks.create(name: 'Best Track', description: 'Better t
 
 # Event Team
 seed_event.teammates.create(user: organizer, email: organizer.email, role: "organizer", state: Teammate::ACCEPTED, notifications: false)
-seed_event.teammates.create(user: track_director, email: track_director.email, role: "organizer", state: Teammate::ACCEPTED) # < update to program team
+seed_event.teammates.create(user: track_director, email: track_director.email, role: "program team", state: Teammate::ACCEPTED)
 seed_event.teammates.create(user: reviewer, email: reviewer.email, role: "reviewer", state: Teammate::ACCEPTED)
 seed_event.teammates.create(user: speaker_reviewer, email: speaker_reviewer.email, role: "reviewer", state: Teammate::ACCEPTED)
 

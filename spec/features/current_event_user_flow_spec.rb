@@ -228,7 +228,7 @@ feature "A user sees correct information for the current event and their role" d
     end
 
     click_on "Speaker Emails"
-    expect(page).to have_content "Edit #{event_2.name} Speaker Email Notifications"
+    expect(page).to have_content "#{event_2.name} Speaker Email Notifications"
 
     speaker = create(:speaker, event: event_2, user: organizer_user)
     proposal.speakers << speaker

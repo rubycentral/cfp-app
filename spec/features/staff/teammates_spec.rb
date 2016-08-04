@@ -44,18 +44,17 @@ feature "Staff Organizers can manage teammates" do
     end
 
     it "removes a teammate", js: true do
-      pending "This test fails because the js alert box doesn't pop up in order to finish removing the teammate"
       visit event_staff_teammates_path(invitation.event)
-      row = find("tr#teammate-#{reviewer_teammate.id}")
+      find("tr#teammate-#{reviewer_teammate.id}")
 
       within "#teammate-role-#{reviewer_teammate.id}" do
-        click_link "Remove"
+        page.accept_confirm { click_on "Remove" }
       end
 
-      # page.accept_confirm { click_on "OK" }
-
-      expect(row).to_not have_content(reviewer_teammate.email)
-      expect(row).to_not have_content("reviewer")
+      expect(page).to have_content("#{reviewer_teammate.email} was removed.")
+      page.reset!
+      expect(page).not_to have_content(reviewer_teammate.email)
+      expect(page).not_to have_content("reviewer")
     end
   end
 
@@ -63,6 +62,21 @@ feature "Staff Organizers can manage teammates" do
     before :each do
       logout
       login_as(reviewer_user)
+    end
+
+    it "cannot view buttons to edit event or change status" do
+      visit event_staff_teammates_path(invitation.event)
+
+      expect(page).to_not have_link("Change Role")
+      expect(page).to_not have_link("Remove")
+      expect(page).to_not have_link("Invite new teammate")
+    end
+  end
+
+  context "A program team cannot edit other teammates" do
+    before :each do
+      logout
+      login_as(program_team_user)
     end
 
     it "cannot view buttons to edit event or change status" do

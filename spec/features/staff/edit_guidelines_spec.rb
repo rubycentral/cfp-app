@@ -6,7 +6,7 @@ feature "Event Guidelines" do
   let!(:admin_teammate) { create(:teammate,
                                    event: event,
                                    user: admin_user,
-                                   role: 'organizer'
+                                   role: "organizer"
                                   )
   }
 
@@ -14,21 +14,28 @@ feature "Event Guidelines" do
   let!(:event_staff_teammate) { create(:teammate,
                                        event: event,
                                        user: organizer_user,
-                                       role: 'organizer')
+                                       role: "organizer")
   }
 
   let(:reviewer_user) { create(:user) }
   let!(:reviewer_teammate) { create(:teammate,
                                       event: event,
                                       user: reviewer_user,
-                                      role: 'reviewer')
+                                      role: "reviewer")
   }
 
-  context "An admin" do
+  let(:program_team_user) { create(:user) }
+  let!(:program_team_teammate) { create(:teammate,
+                                      event: event,
+                                      user: program_team_user,
+                                      role: "program team")
+  }
+
+  context "An admin organizer" do
     before { login_as(admin_user) }
 
     it "can edit event guidelines", js: true do
-      visit event_staff_guidelines_path(event.slug)
+      visit event_staff_guidelines_path(event)
 
       expect(page).to have_button "Edit Guidelines"
       expect(page).to have_content "We want all the good talks!"
@@ -54,7 +61,7 @@ feature "Event Guidelines" do
     before { login_as(organizer_user) }
 
     it "can edit event guidelines", js: true do
-      visit event_staff_guidelines_path(event.slug)
+      visit event_staff_guidelines_path(event)
 
       expect(page).to have_button "Edit Guidelines"
       expect(page).to have_content "We want all the good talks!"
@@ -79,8 +86,19 @@ feature "Event Guidelines" do
   context "A reviewer" do
     before { login_as(reviewer_user) }
 
-    it "can NOT edit event guidelines", js: true do
-      visit event_staff_guidelines_path(event.slug)
+    it "cannot edit event guidelines", js: true do
+      visit event_staff_guidelines_path(event)
+
+      expect(page).to_not have_button "Edit Guidelines"
+      expect(page).to have_content "We want all the good talks!"
+    end
+  end
+
+  context "A program team" do
+    before { login_as(program_team_user) }
+
+    it "cannot edit event guidelines", js: true do
+      visit event_staff_guidelines_path(event)
 
       expect(page).to_not have_button "Edit Guidelines"
       expect(page).to have_content "We want all the good talks!"

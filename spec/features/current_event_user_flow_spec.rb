@@ -167,6 +167,8 @@ feature "A user sees correct information for the current event and their role" d
       expect(page).to have_link(event_1.name)
     end
 
+    click_on "Event Dashboard"
+    
     within ".subnavbar" do
       expect(page).to have_content("Dashboard")
       expect(page).to have_content("Info")

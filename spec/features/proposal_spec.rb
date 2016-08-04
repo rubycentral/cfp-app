@@ -134,9 +134,9 @@ feature "Proposals" do
       expect(page).to have_text("Here's a comment for you!")
     end
 
-    it "it shows the speaker's name" do
+    it "it does not show the speaker's name" do
       within(:css, '.speaker-comment') do
-        expect(page).to have_text(user.name)
+        expect(page).to have_text("speaker")
       end
     end
   end

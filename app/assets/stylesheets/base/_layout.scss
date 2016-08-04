@@ -1,5 +1,10 @@
 body {
   padding-top: $navbar-height;
+
+  // flexbox for sticky footer
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .col-centered {
@@ -26,6 +31,21 @@ body {
 
   .meta-text {
     margin-bottom: $padding-base-vertical;
+  }
+}
+
+.main {
+  padding-bottom: $padding-large-vertical;
+  flex: 1;
+}
+
+.page-footer {
+  margin-top: $padding-large-vertical * 2;
+
+  .page-footer-inner {
+    padding-top: $padding-large-vertical * 2;
+    padding-bottom: $padding-large-vertical * 2;
+    border-top: 1px solid $gray-lighter;
   }
 }
 

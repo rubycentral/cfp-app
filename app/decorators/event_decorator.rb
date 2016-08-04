@@ -73,11 +73,11 @@ class EventDecorator < ApplicationDecorator
 
   def date_range
     if (object.start_date.month == object.end_date.month) && (event.start_date.day != event.end_date.day)
-      object.start_date.strftime("%b %d") + object.end_date.strftime("\-%d, %Y")
+      object.start_date.strftime("%b %d") + object.end_date.strftime(" \- %d, %Y")
     elsif (object.start_date.month == object.end_date.month) && (event.start_date.day == event.end_date.day)
       object.start_date.strftime("%b %d, %Y")
     else
-      object.start_date.strftime("%b %d") + object.end_date.strftime("\-%b %d, %Y")
+      object.start_date.strftime("%b %d") + object.end_date.strftime(" \- %b %d, %Y")
     end
   end
 

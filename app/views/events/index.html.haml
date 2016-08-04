@@ -1,7 +1,5 @@
 - events.each do |event|
   .event
     %h1
-      = event.event_path_for
+      = link_to event.name, event_path(event.slug), class: 'event-title'
       %small= event.status
-
-    %span= link_to "View #{event.name}'s Guidelines", event_path(event.slug), class: 'guidelines-link'

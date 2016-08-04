@@ -67,7 +67,7 @@ feature "A user sees correct information for the current event and their role" d
     expect(page).to have_link(event_1.name)
     expect(page).to have_link(event_2.name)
 
-    click_on("View #{event_1.name}'s Guidelines")
+    click_on(event_1.name)
 
     within ".navbar" do
       expect(page).to have_link(event_1.name)
@@ -83,7 +83,7 @@ feature "A user sees correct information for the current event and their role" d
     end
 
     visit root_path
-    click_on("View #{event_2.name}'s Guidelines")
+    click_on(event_2.name)
 
     within ".navbar" do
       expect(page).to have_link(event_2.name)
@@ -123,7 +123,7 @@ feature "A user sees correct information for the current event and their role" d
     expect(page).to have_link(event_1.name)
     expect(page).to have_link(event_2.name)
 
-    click_on "View #{event_2.name}'s Guidelines"
+    click_on event_2.name
     expect(current_path).to eq(event_path(event_2))
 
     within ".navbar" do
@@ -133,7 +133,7 @@ feature "A user sees correct information for the current event and their role" d
     end
 
     visit root_path
-    click_on "View #{event_1.name}'s Guidelines"
+    click_on event_1.name
     expect(current_path).to eq(event_path(event_1.slug))
 
     within ".navbar" do
@@ -151,7 +151,7 @@ feature "A user sees correct information for the current event and their role" d
 
     signin(reviewer_user.email, reviewer_user.password)
 
-    click_on "View #{event_1.name}'s Guidelines"
+    click_on event_1.name
 
     within ".navbar" do
       expect(page).to have_link(event_1.name)

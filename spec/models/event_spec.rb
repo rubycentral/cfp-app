@@ -10,13 +10,15 @@ describe Event do
       create(:event)
       expect(Event.live).to match_array(live_events)
     end
+  end
 
-    it "returns events in ascending cronological order" do
+  describe "closes_up" do
+    it "returns events in ascending cronological order by close date" do
       event1 = create(:event, closes_at: 1.week.from_now, state: 'open')
       event3 = create(:event, closes_at: 3.weeks.from_now, state: 'open')
       event2 = create(:event, closes_at: 2.weeks.from_now, state: 'open')
 
-      expect(Event.live).to eq([event1, event2, event3])
+      expect(Event.closes_up).to eq([event1, event2, event3])
     end
   end
 

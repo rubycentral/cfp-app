@@ -1,16 +1,16 @@
 require 'rails_helper'
 
 feature "Listing events for different roles" do
-  let(:event) { create(:event, state: 'open') }
+  let(:event) { create(:event, name: "Greens Event", state: 'open') }
   let!(:proposal) { create(:proposal, title: "A Proposal", abstract: 'foo', event: event) }
   let(:normal_user) { create(:user) }
   let(:organizer) { create(:user) }
 
   context "As a regular user" do
-    scenario "the user should see a link to the guidelines page for an event" do
+    scenario "the user should see a link to the CFP page for the event" do
       login_as(normal_user)
       visit events_path
-      expect(page).to have_link("View #{event.name}'s Guidelines", href: event_path(event))
+      expect(page).to have_link("Greens Event", href: event_path(event))
     end
   end
 
@@ -19,7 +19,7 @@ feature "Listing events for different roles" do
       create(:teammate, role: 'organizer', user: organizer)
       login_as(organizer)
       visit events_path
-      expect(page).to have_link("View #{event.name}'s Guidelines", href: event_path(event))
+      expect(page).to have_link("Greens Event", href: event_path(event))
     end
   end
 

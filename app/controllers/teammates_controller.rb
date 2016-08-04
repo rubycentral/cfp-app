@@ -45,7 +45,7 @@ class TeammatesController < ApplicationController
 
   def already_teammate?
     if current_event && current_user
-      Teammate.exists?(event_id: current_event.id, id: current_user.id)
+      Teammate.accepted.exists?(event_id: current_event.id, id: current_user.id)
     end
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160713174249) do
+ActiveRecord::Schema.define(version: 20160804194731) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -257,10 +257,10 @@ ActiveRecord::Schema.define(version: 20160713174249) do
     t.datetime "updated_at"
   end
 
-  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-  add_index "users", ["uid"], name: "index_users_on_uid", unique: true, using: :btree
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", using: :btree
+  add_index "users", ["uid"], name: "index_users_on_uid", using: :btree
 
   add_foreign_key "session_formats", "events"
 end

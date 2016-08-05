@@ -36,9 +36,6 @@
     .proposal-info-bar
       .proposal-meta.proposal-description
         .proposal-meta-item
-          %strong #{ 'Speaker'.pluralize(proposal.speakers.count) }:
-          %span= proposal.speakers.collect { |speaker| speaker.name }.join(', ')
-        .proposal-meta-item
           %strong Format:
           %span #{proposal.session_format.name}
 

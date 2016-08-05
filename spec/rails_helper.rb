@@ -53,6 +53,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do |example|
+    init_mock_omniauth
     DatabaseCleaner.strategy= example.metadata[:js] ? :truncation : :transaction
     DatabaseCleaner.start
   end

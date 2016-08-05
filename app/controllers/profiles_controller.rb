@@ -2,14 +2,11 @@ class ProfilesController < ApplicationController
   before_filter :require_user
 
   def edit
-    unless current_user.complete?
-      flash.now[:danger] = "Please make sure your name and email address are present and correct."
-    end
+    current_user.valid?
   end
 
   def update
     if current_user.update_attributes(user_params)
-      current_user.assign_open_invitations if session[:need_to_complete]
 
       if current_user.unconfirmed_email.present?
         flash[:danger] = I18n.t("devise.registrations.update_needs_confirmation")

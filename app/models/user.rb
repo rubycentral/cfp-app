@@ -32,13 +32,20 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password, on: :create
   validates_length_of :password, within: Devise.password_length, allow_blank: true
 
-  def self.from_omniauth(auth)
+  before_create :check_pending_invite_email
+
+  attr_accessor :pending_invite_email
+
+  def self.from_omniauth(auth, invitation_email=nil)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       password = Devise.friendly_token[0,20]
-      user.name = auth['info']['name']
-      user.email = auth['info']['email'] || ''
+      user.name = auth['info']['name'] if user.name.blank?
+      user.email = invitation_email || auth['info']['email'] || '' if user.email.blank?
       user.password = password
       user.password_confirmation = password
+      if !user.confirmed? && invitation_email.present? && user.email == invitation_email
+        user.skip_confirmation!
+      end
     end
   end
 
@@ -48,6 +55,12 @@ class User < ActiveRecord::Base
         email.downcase, Invitation::State::PENDING).each do |invitation|
         invitation.update_column(:user_id, id)
       end
+    end
+  end
+
+  def check_pending_invite_email
+    if pending_invite_email.present? && pending_invite_email == email
+      skip_confirmation!
     end
   end
   

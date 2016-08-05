@@ -12,17 +12,21 @@ class PublicComment < Comment
   #  only the speakers get an in app and email notification.
 
   def notify
-    if user.reviewer_for_event?(proposal.event)
-      @users = proposal.speakers.map(&:user)
-      message = "New comment on #{proposal.title}"
-      CommentNotificationMailer.speaker_notification(proposal, self, @users).deliver_now
-    else
-      @users = proposal.reviewers
-      message = "Speaker commented on #{proposal.title}"
-      CommentNotificationMailer.reviewer_notification(proposal, self, @users.with_notifications).deliver_now
-    end
+    begin
+      if user.reviewer_for_event?(proposal.event)
+        @users = proposal.speakers.map(&:user)
+        message = "New comment on #{proposal.title}"
+        CommentNotificationMailer.speaker_notification(proposal, self, @users).deliver_now
+      else
+        @users = proposal.reviewers
+        message = "Speaker commented on #{proposal.title}"
+        CommentNotificationMailer.reviewer_notification(proposal, self, @users.with_notifications).deliver_now
+      end
 
-    Notification.create_for(@users, proposal: proposal, message: message)
+      Notification.create_for(@users, proposal: proposal, message: message)
+    rescue e
+      logger.error("Comment Notification ran into an error: #{e.message}")
+    end
   end
 end
 

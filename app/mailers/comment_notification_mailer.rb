@@ -5,7 +5,7 @@ class CommentNotificationMailer < ApplicationMailer
     @proposal = proposal
 
     # Email all reviewers of this proposal if notifications is true unless they made the comment
-    to = users.map(&:email)
+    to = users.map(&:email).reject{|e| e.blank? }
 
     if to.any?
       mail_markdown(
@@ -19,7 +19,7 @@ class CommentNotificationMailer < ApplicationMailer
     @proposal = proposal
     @comment = comment
 
-    to = users.map(&:email)
+    to = users.map(&:email).reject{|e| e.blank? }
 
     if to.any?
       mail_markdown(to: to,

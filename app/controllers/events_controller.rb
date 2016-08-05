@@ -4,7 +4,7 @@ class EventsController < ApplicationController
 
   def index
     render locals: {
-      events: Event.recent.decorate
+      events: Event.not_draft.closes_up.decorate
     }
   end
 

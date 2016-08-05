@@ -33,3 +33,18 @@
 .invite-btn {
   margin-bottom: 25px !important;
 }
+
+.btn-icon {
+  padding: 0;
+}
+
+.hint-btn {
+  color: $brand-info;
+  cursor: pointer;
+  font-size: $font-size-large;
+
+  &:active,
+  &:focus {
+    color: $brand-info;
+  }
+}

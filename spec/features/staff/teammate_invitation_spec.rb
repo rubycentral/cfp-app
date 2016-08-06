@@ -17,7 +17,7 @@ feature "Teammate Invitations" do
       expect(page).to have_content("Team invite to #{invitation.event.name} accepted!")
       expect(page).to have_content("Thanks for joining our team.")
       expect(page).to have_link("Log in")
-      expect(page).to have_button("Create your Account")
+      expect(page).to have_link("Create your Account")
     end
 
     it "a logged in user can accept an invitation" do

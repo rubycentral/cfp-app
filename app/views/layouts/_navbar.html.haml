@@ -13,9 +13,6 @@
     .collapse.navbar-collapse
       - if user_signed_in?
         %ul.nav.navbar-nav.navbar-right
-          - if current_user && current_user.admin?
-            = render partial: "layouts/nav/admin_nav"
-
           - if current_user.proposals.any?
             = render partial: "layouts/nav/proposals_link"
 
@@ -30,6 +27,9 @@
               = link_to event_staff_path(current_event) do
                 %i.fa.fa-dashboard
                 %span Event Dashboard
+
+          - if current_user && current_user.admin?
+            = render partial: "layouts/nav/admin_nav"
 
           = render partial: "layouts/nav/notifications_list"
 

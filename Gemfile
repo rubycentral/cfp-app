@@ -31,6 +31,7 @@ gem 'zeroclipboard-rails'
 gem 'responders', '~> 2.0'
 gem 'pundit'
 gem 'faker'
+gem 'actionview-encoded_mail_to'
 
 group :production do
   gem 'rails_12factor'

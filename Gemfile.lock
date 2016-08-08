@@ -30,6 +30,8 @@ GEM
       erubis (~> 2.7.0)
       rails-dom-testing (~> 1.0, >= 1.0.5)
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
+    actionview-encoded_mail_to (1.0.7)
+      rails
     active_model_serializers (0.8.3)
       activemodel (>= 3.0)
     activejob (4.2.5)
@@ -114,7 +116,7 @@ GEM
     factory_girl_rails (4.5.0)
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
-    faker (1.6.1)
+    faker (1.6.6)
       i18n (~> 0.5)
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
@@ -350,6 +352,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  actionview-encoded_mail_to
   active_model_serializers (~> 0.8.1)
   annotate
   better_errors
@@ -404,6 +407,9 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
   zeroclipboard-rails
+
+RUBY VERSION
+   ruby 2.3.0p0
 
 BUNDLED WITH
    1.12.5

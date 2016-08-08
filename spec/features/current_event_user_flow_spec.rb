@@ -168,7 +168,7 @@ feature "A user sees correct information for the current event and their role" d
     end
 
     click_on "Event Dashboard"
-    
+
     within ".subnavbar" do
       expect(page).to have_content("Dashboard")
       expect(page).to have_content("Info")
@@ -258,7 +258,7 @@ feature "A user sees correct information for the current event and their role" d
     within ".navbar" do
       expect(page).to have_content(event_1.name)
       expect(page).to have_content("Users")
-      expect(page).to have_content("Manage Events")
+      expect(page).to have_content("Admin")
       expect(page).to have_link("", href: "/notifications")
       expect(page).to have_link(admin_user.name)
       expect(page).to_not have_link("My Proposals")
@@ -267,7 +267,8 @@ feature "A user sees correct information for the current event and their role" d
       expect(page).to have_content("Review Proposals")
     end
 
-    click_on "Manage Events"
+    click_on "Admin"
+    click_on "Events"
 
     within ".navbar" do
       expect(page).to have_content(event_1.name)

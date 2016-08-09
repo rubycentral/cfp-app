@@ -1,6 +1,7 @@
 class SpeakerDecorator < ApplicationDecorator
   delegate_all
   decorates_association :proposals
+  decorates_association :program_sessions
 
   def gravatar
     image_url =
@@ -14,7 +15,7 @@ class SpeakerDecorator < ApplicationDecorator
   end
 
   def bio
-    speaker.bio.present? ? speaker.bio : speaker.user.bio
+    object.bio.present? ? object.bio : object.user.try(:bio)
   end
 
   def delete_button

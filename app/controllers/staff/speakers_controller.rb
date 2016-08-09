@@ -1,60 +1,58 @@
 class Staff::SpeakersController < Staff::ApplicationController
   decorates_assigned :speaker
-  before_filter :set_proposal, only: [:new, :create, :destroy]
+  before_action :set_program_session, only: [:new, :create]
+  before_action :speaker_count_check, only: [:destroy]
 
   def index
-    render locals: {
-             proposals: @event.proposals.includes(speakers: :user).decorate
-           }
+    @program_speakers = current_event.speakers.in_program
   end
 
   def new
     @speaker = Speaker.new
-    @user = @speaker.build_user
-    @proposal = Proposal.find_by(uuid: params[:proposal_uuid])
   end
 
   def create
     s_params = speaker_params
-    user = User.find_by(email: s_params.delete(:speaker_email))
-    if user
-      if user.speakers.create(s_params.merge(proposal: @proposal))
-        flash[:success] = "Speaker was added to this proposal"
-      else
-        flash[:danger] = "There was a problem saving this speaker"
-      end
+    @speaker = @program_session.speakers.create(s_params.merge(event: current_event))
+    authorize @speaker
+    if @speaker.save
+      flash[:success] = "#{@speaker.name} has been added to #{@program_session.title}"
+      redirect_to event_staff_speakers_path(current_event)
     else
-      flash[:danger] = "Could not find a user with this email address"
+      flash[:danger] = "There was a problem saving this speaker."
+      render :new
     end
-    redirect_to event_staff_proposal_path(event, @proposal)
   end
 
-  #if user input (params), exist
-
   def show
-    @speaker = Speaker.find(params[:id])
+    @speaker = current_event.speakers.find(params[:id])
   end
 
   def edit
-    @speaker = Speaker.find(params[:id])
+    @speaker = current_event.speakers.find(params[:id])
   end
 
   def update
-    @speaker = Speaker.find(params[:id])
+    @speaker = current_event.speakers.find(params[:id])
+    authorize @speaker
     if @speaker.update(speaker_params)
-      redirect_to event_staff_speaker_url(@event, @speaker)
+      flash[:success] = "#{@speaker.name} was successfully updated"
+      redirect_to event_staff_speakers_path(current_event)
     else
+      flash[:danger] = "There was a problem updating this speaker."
       render :edit
     end
   end
 
   def destroy
-    @speaker = Speaker.find_by!(id: params[:id])
-    proposal = speaker.proposal
-    @speaker.destroy
-
-    flash[:info] = "You've deleted the speaker for this proposal"
-    redirect_to event_staff_proposal_path(uuid: proposal)
+    authorize @speaker
+    if @speaker.destroy
+      flash[:info] = "#{speaker.name} has been removed from #{speaker.program_session.title}."
+      redirect_to event_staff_speakers_path(current_event)
+    else
+      flash[:danger] = "There was a problem removing #{speaker.name}."
+      redirect_to event_staff_speakers_path(current_event)
+    end
   end
 
   def emails
@@ -70,7 +68,15 @@ class Staff::SpeakersController < Staff::ApplicationController
     params.require(:speaker).permit(:bio, :email, :user_id, :event_id, :speaker_name, :speaker_email)
   end
 
-  def set_proposal
-    @proposal = Proposal.find_by(uuid: params[:proposal_uuid])
+  def set_program_session
+    @program_session = current_event.program_sessions.find_by(id: params[:program_session_id])
+  end
+
+  def speaker_count_check
+    @speaker = current_event.speakers.find(params[:id])
+    unless @speaker.program_session.multiple_speakers?
+      flash[:danger] = "Sorry, you can't remove the only speaker for a program session."
+      redirect_to event_staff_speakers_path(current_event)
+    end
   end
 end

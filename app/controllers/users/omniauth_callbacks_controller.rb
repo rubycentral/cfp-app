@@ -24,7 +24,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def authenticate_with_hash
     logger.info "Authenticating user credentials: #{auth_hash.inspect}"
-    @user = User.from_omniauth(auth_hash)
+    @user = User.from_omniauth(auth_hash, session[:pending_invite_email])
 
     if @user.persisted?
       flash.now[:info] = "You have signed in with #{auth_hash['provider'].capitalize}."
@@ -34,12 +34,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       @user.skip_confirmation!
       sign_in @user
 
-      if @user.complete?
-        redirect_to (session.delete(:target) || events_url)
-      else
-        session[:need_to_complete] = true
-        redirect_to edit_profile_url
-      end
+      redirect_to after_sign_in_path_for(@user)
+
     else
       redirect_to new_user_session_url, danger: "There was an error authenticating via #{params[:provider].capitalize}."
     end

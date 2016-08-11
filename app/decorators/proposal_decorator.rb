@@ -31,17 +31,25 @@ class ProposalDecorator < ApplicationDecorator
     user.rating_for(object).score
   end
 
-  def review_tags
+  def session_format_name
+    object.session_format.try(:name)
+  end
+
+  def track_name
+    object.track.try(:name) || 'General'
+  end
+
+  def review_tags_labels
     object.review_tags.map { |tag|
-      h.content_tag :span, tag, class: 'label label-success' }.join("\n").html_safe
+      h.content_tag :span, tag, class: 'label label-success label-compact' }.join("\n").html_safe
   end
 
-  def tags
+  def tags_labels
     object.tags.map { |tag|
-      h.content_tag :span, tag, class: 'label label-primary' }.join("\n").html_safe
+      h.content_tag :span, tag, class: 'label label-primary label-compact' }.join("\n").html_safe
   end
 
-  def review_taggings
+  def review_tags_list
     object.review_tags.join(', ')
   end
 
@@ -103,11 +111,11 @@ class ProposalDecorator < ApplicationDecorator
   end
 
   def updated_in_words
-    "updated #{h.time_ago_in_words(object.updated_by_speaker_at)} ago"
+    "#{h.time_ago_in_words(object.updated_by_speaker_at)} ago"
   end
 
   def created_in_words
-    "created #{h.time_ago_in_words(object.created_at)} ago"
+    "#{h.time_ago_in_words(object.created_at)} ago"
   end
 
   def title_input(form)

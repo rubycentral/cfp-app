@@ -48,17 +48,19 @@
           %th
           %th
           %th
+          %th
         %tr
           %th Score
           %th Your<br/>Score
           %th Ratings
           %th Title
+          %th Session Format
+          %th Track
           %th Proposal<br/>Tags
           %th Reviewer<br/>Tags
           %th Comments
           %th Submitted On
           %th Updated At
-          %th Rated
       %tbody
         - proposals.each do |proposal|
           %tr{ class: "proposal-#{proposal.id}", data: { 'proposal-id' => proposal.id, 'proposal-uuid' => proposal.uuid } }
@@ -70,15 +72,17 @@
               = proposal.ratings.size
             %td.title
               = proposal.title_link
+            %td.session-format
+              = proposal.session_format_name
+            %td.track
+              = proposal.track_name
             %td.tags
-              = proposal.tags
+              = proposal.tags_labels
             %td.review-tags
-              = proposal.review_tags
+              = proposal.review_tags_labels
             %td.comment-count
               = proposal.comment_count
             %td.created-at
               = proposal.created_at
             %td.updated-at
               = proposal.updated_at
-            %td.is-rated
-              = proposal.ratings.present?

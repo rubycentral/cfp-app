@@ -1,5 +1,6 @@
 class InvitationDecorator < ApplicationDecorator
   delegate_all
+  decorates_association :proposal
 
   STATE_LABEL_MAP = {
     Invitation::State::PENDING => 'label-default',

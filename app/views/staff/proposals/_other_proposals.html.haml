@@ -6,7 +6,7 @@
     Average Score:
     = proposal.average_rating ? number_with_precision(proposal.average_rating, precision: 1) : "No Rating"
     = proposal.state_label(small: true)
-    .other_proposal_tags= proposal.review_tags
+    .other_proposal_tags= proposal.review_tags_labels
     %hr
   -if other_proposals.empty?
     %li

@@ -7,7 +7,7 @@ $(document).ready(function () {
   //  'number', 'text', 'text', 'text', 'number', 'text', 'text', null ]);
 
   var oTable = cfpDataTable('#reviewer-proposals.datatable', ['number', null,
-      'number', 'text', 'text', 'text', 'number', 'text', 'text', null],
+      'number', 'text', 'text', 'text', 'text', 'text', 'number', 'text', 'text'],
       {
         stateSaveParams: function () {
           var rows = $('[data-proposal-id]');
@@ -19,7 +19,6 @@ $(document).ready(function () {
         },
         'sDom': '<"top"i>Crt<"bottom"lp><"clear">'
     });
-  oTable.DataTable().column('rated:name').visible(false);
 
   // Replace next proposal link with valid proposal path
   var next_link = $(".next-proposal");

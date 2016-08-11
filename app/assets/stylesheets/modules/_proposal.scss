@@ -16,12 +16,14 @@
   margin: 0 0.5em 0.8em 0;
 }
 
+.proposal-actions-bar {
+  padding: 3px 0 3px 0;
+}
+
 #proposal {
   span {
     &.status {
-      float: right;
-      display: block;
-      margin: .3em 6.5em .4em 0;
+      display: inline-block;
     }
     &.small-status {
       float: right;
@@ -106,12 +108,20 @@ span.disabled-state {
 }
 
 .ratings_list {
+  font-size: $font-size-small;
+
   .text-success:hover { color: #468847; }
+
   dt {
     text-align: left;
     font-weight: normal;
   }
   dd { margin-left: 150px; }
+
+  .avg-rating {
+    font-size: $font-size-base;
+    padding-top: 4px;
+  }
 }
 
 span.glyphicon-question-sign {
@@ -152,12 +162,21 @@ div.col-md-4 {
   }
 
   .proposal-meta {
-    font-size: $font-size-small;
-    color: $gray;
+    font-size: $font-size-base;
+    color: $black;
 
     .proposal-meta-item {
       display: inline-block;
       margin-right: $padding-base-horizontal;
+
+      strong {
+        font-size: $font-size-xs;
+        color: $gray;
+      }
+
+      .label {
+        margin-bottom: 0;
+      }
     }
 
     .proposal-description {

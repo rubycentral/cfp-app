@@ -16,36 +16,53 @@
           %span.event-meta
             CFP closes:
             %strong= event.closes_at(:month_day_year)
+.proposal-actions-bar
+  .row
+    .col-md-offset-8.col-md-4.text-right
+      = link_to(event_staff_proposals_path, class: "btn btn-primary btn-sm") do
+        &laquo; Return to Proposals
+      = link_to "Next Proposal", event_staff_proposal_path(uuid: "PLACEHOLDER"), class: "next-proposal btn btn-primary btn-sm", data: {"proposal-uuid" => proposal.uuid }
 
 #proposal
   .page-header.page-header-slim
     .row
       .col-md-8
-        .meta-text= proposal.updated_in_words
         %h1
           = proposal.title
+    .row
+      .col-sm-6
+        .proposal-info-bar
+          .proposal-meta.proposal-description
+            .proposal-meta-item
+              %strong #{ 'Speaker'.pluralize(proposal.speakers.count) }:
+              %span Blind
+            .proposal-meta-item
+              %strong Format:
+              %span #{proposal.session_format_name}
+            .proposal-meta-item
+              %strong Track:
+              %span #{proposal.track_name}
+            -if proposal.tags.present?
+              .proposal-meta-item
+                %strong Tags:
+                %span #{proposal.tags_labels}
+      .col-sm-6.text-right
+        .proposal-info-bar
+          .proposal-meta.proposal-description
+            .proposal-meta-item
+              %strong Status:
+              = proposal.public_state(small: true)
+            .proposal-meta-item
+              %strong Updated:
+              %span #{proposal.updated_in_words}
+            -if proposal.review_tags.present?
+              .proposal-meta-item
+                %strong Reviewer Tags:
+                %span #{proposal.review_tags_labels}
 
-      .col-md-4
-        .text-right
-          %div
-            = proposal.public_state(small: true)
-          %div
-            = link_to(event_staff_proposals_path, class: "btn btn-primary") do
-              &laquo; Return to Proposals
-            = link_to "Next Proposal", event_staff_proposal_path(uuid: "PLACEHOLDER"), class: "next-proposal btn btn-primary", data: {"proposal-uuid" => proposal.uuid }
-    .proposal-info-bar
-      .proposal-meta.proposal-description
-        .proposal-meta-item
-          %strong Format:
-          %span #{proposal.session_format.name}
-
-        - if proposal.track
-          .proposal-meta-item
-            %strong Track:
-            %span #{proposal.track.name}
   .row
     .col-md-4
-      = render partial: 'proposals/reviewer_contents', locals: { proposal: proposal }
+      = render partial: 'reviewer_contents', locals: { proposal: proposal }
     .col-md-4
       .widget.widget-card.flush-top
         .widget-header

@@ -45,13 +45,12 @@
                         %h4.proposal-title= link_to invitation.proposal.title, event_proposal_path(event_slug: invitation.proposal.event.slug, uuid: invitation.proposal)
 
                         .proposal-meta.proposal-description
-                          - if invitation.proposal.track
-                            .proposal-meta-item
-                              %strong Track:
-                              = invitation.proposal.track.name
-                            .proposal-meta-item
-                              %strong #{ 'Speaker'.pluralize(invitation.proposal.speakers.count) }:
-                              = invitation.proposal.speakers.collect { |speaker| speaker.name }.join(', ')
+                          .proposal-meta-item
+                            %strong Track:
+                            = invitation.proposal.track_name
+                          .proposal-meta-item
+                            %strong #{ 'Speaker'.pluralize(invitation.proposal.speakers.count) }:
+                            = invitation.proposal.speakers.collect { |speaker| speaker.name }.join(', ')
                       .flex-item.flex-item-fixed.flex-item-padded.flex-item-right
                         .proposal-status
                           = invitation.state_label
@@ -76,14 +75,14 @@
                           %span= proposal.speakers.collect { |speaker| speaker.name }.join(', ')
                         .proposal-meta-item
                           %strong Format:
-                          %span #{proposal.session_format.name}
+                          %span #{proposal.session_format_name}
 
-                        - if proposal.track
-                          .proposal-meta-item
-                            %strong Track:
-                            %span #{proposal.track.name}
+                        .proposal-meta-item
+                          %strong Track:
+                          %span #{proposal.track_name}
                       .proposal-meta.margin-top
-                        = proposal.updated_in_words
+                        %strong Updated:
+                        %span #{proposal.updated_in_words}
                     .flex-item.flex-item-fixed.flex-item-padded
                       .proposal-status
                         = proposal.public_state(small: true)

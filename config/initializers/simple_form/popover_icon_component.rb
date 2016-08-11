@@ -7,6 +7,7 @@ module SimpleForm
         input_html_options[:rel] ||= 'popover'
         input_html_options[:data] ||= {}
         input_html_options[:data][:toggle] ||= 'popover'
+        input_html_options[:data][:html] ||= true
         input_html_options[:data][:placement] ||= popover_placement if popover_placement
         input_html_options[:data][:trigger] ||= 'manual'
         input_html_options[:data]['original-title'] ||= popover_title if popover_title
@@ -33,7 +34,7 @@ module SimpleForm
       def popover_selector
         selector = "##{@builder.object_name}_#{@attribute_name}"
         selector.gsub!(/([^a-z0-9#]+)/i, '_')
-        selector += "_#{object.id}" if object.try(:id)
+        # selector += "_#{object.id}" if object.try(:id)
         selector
       end
 

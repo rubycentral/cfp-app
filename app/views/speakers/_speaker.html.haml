@@ -1,9 +1,7 @@
-- withdraw = true if withdraw.nil?
-
 .speaker.clearfix
   %strong= speaker.name
 
-  - if  current_user && speaker_for_proposal?(current_user) && withdraw && speaker.proposal.speakers.count > 1
+  - if withdraw && speaker.proposal.speakers.count > 1
     %p= link_to "Withdraw",
         speaker_path(speaker.id),
         method: :delete,

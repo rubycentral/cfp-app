@@ -1,12 +1,12 @@
 .widget-header
-  %h3 Review Tags
+  %h3 Reviewer Tags
 .widget-content
   %fieldset
     = form_for proposal, url: event_staff_proposal_path(event, proposal), html: {role: 'form', remote: true} do |f|
       .form-group
         .tag-list
           = f.select :review_tags,
-            options_for_select(event.review_tags, proposal.object.review_tags),
+            options_for_select(event.review_tags, proposal.review_tags),
             {}, { class: 'multiselect review-tags', multiple: true }
       .form-group
         %button.btn.btn-success.pull-right{:type => "submit"} Update

@@ -1,7 +1,7 @@
 module ProposalHelper
   def rating_tooltip
       <<-HTML
-      <p>Ratings Guide</p>
+      <p><strong>Ratings Guide</strong></p>
      <p> 1 - Poor talk with many issues. Not a fit for the event.</p>
      <p> 2 - Mediocre talk that might fit event if they work on it.</p>
      <p> 3 - Good talk, could use improvement but appropriate for the event.</p>

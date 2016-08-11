@@ -1,21 +1,7 @@
 .proposal-section
-  %h3.control-label Session Format
-  = proposal.session_format.try(:name)
-
-- if proposal.track
-  .proposal-section
-    %h3.control-label Track
-    = proposal.track.name
-
-.proposal-section
   %h3.control-label Abstract
   .markdown{ data: { 'field-id' => 'proposal_abstract' } }
     = proposal.abstract_markdown
-
--if proposal.event.public_tags?
-  .proposal-section
-    %h3.control-label Tags
-    %p= proposal.tags
 
 %h2.fieldset-legend For Review Committee
 

@@ -17,7 +17,7 @@
         %section
           %p
           = f.label :review_tags, label: "Review Tags (#{event.review_tags.length})"
-          = f.select :review_tags, options_for_select(event.review_tags, proposal.object.review_tags), {}, {class: 'multiselect review-tags form-control', multiple: true}
+          = f.select :review_tags, options_for_select(event.review_tags, proposal.review_tags), {}, {class: 'multiselect review-tags form-control', multiple: true}
 
 
   .row

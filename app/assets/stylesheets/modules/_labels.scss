@@ -29,3 +29,8 @@
 .label-large {
   font-size: $font-size-large;
 }
+
+.label-compact {
+  font-size: $font-size-compact;
+  display: inline-block;
+}

@@ -2,7 +2,7 @@
   - unless proposal.has_speaker?(current_user)
     = simple_form_for [event, :staff, proposal, rating], remote: true do |f|
       = f.input :score, label: 'Rating', collection: (1..5), include_blank: true,
-        input_html: { style: 'width: auto', onchange: '$(this).trigger("submit.rails");'},
+        input_html: { style: 'width: 60px', onchange: '$(this).trigger("submit.rails");'},
         disabled: proposal.withdrawn?, popover_icon: { content: rating_tooltip }
 
   - unless rating.new_record?

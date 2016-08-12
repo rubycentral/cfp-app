@@ -2,6 +2,7 @@ class Staff::EventsController < Staff::ApplicationController
   before_action :enable_staff_subnav
 
   def edit
+    authorize @event, :edit?
   end
 
   def show
@@ -21,6 +22,7 @@ class Staff::EventsController < Staff::ApplicationController
   end
 
   def update_guidelines
+    authorize_update
     if @event.update(params.require(:event).permit(:guidelines))
       flash[:info] = 'Your guidelines were updated.'
       redirect_to event_staff_guidelines_path
@@ -34,6 +36,7 @@ class Staff::EventsController < Staff::ApplicationController
   end
 
   def update_status
+    authorize_update
     if @event.update(params.require(:event).permit(:state))
       redirect_to event_staff_info_path(@event), notice: 'Event status was successfully updated.'
     else
@@ -46,6 +49,7 @@ class Staff::EventsController < Staff::ApplicationController
   end
 
   def update_custom_fields
+    authorize_update
     @event.update_attributes(event_params)
     respond_to do |format|
       format.js do
@@ -55,6 +59,7 @@ class Staff::EventsController < Staff::ApplicationController
   end
 
   def update_reviewer_tags
+    authorize_update
     @event.update(params.require(:event).permit(:valid_review_tags))
     respond_to do |format|
       format.js do
@@ -64,6 +69,7 @@ class Staff::EventsController < Staff::ApplicationController
   end
 
   def update_proposal_tags
+    authorize_update
     @event.update(params.require(:event).permit(:valid_proposal_tags))
     respond_to do |format|
       format.js do
@@ -73,6 +79,7 @@ class Staff::EventsController < Staff::ApplicationController
   end
 
   def update
+    authorize_update
     if @event.update_attributes(event_params)
       flash[:info] = 'Your event was saved.'
       redirect_to event_staff_info_path(@event)
@@ -83,6 +90,7 @@ class Staff::EventsController < Staff::ApplicationController
   end
 
   def open_cfp
+    authorize_update
     if @event.open_cfp
       flash[:info] = "Your CFP was successfully opened."
     else
@@ -99,5 +107,9 @@ class Staff::EventsController < Staff::ApplicationController
         :valid_review_tags, :custom_fields_string, :state, :guidelines,
         :closes_at, :speaker_notification_emails, :accept, :reject,
         :waitlist, :opens_at, :start_date, :end_date)
+  end
+
+  def authorize_update
+    authorize @event, :update?
   end
 end

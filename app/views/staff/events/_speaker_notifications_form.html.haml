@@ -27,9 +27,7 @@
           %br
           %code ::This is my link text|confirmation_link::
         %p.help-block * confirmation link is not available in Reject emails
-
-        %button.pull-right.btn.btn-lg.btn-success{type: "submit"} Save
-
-
-
-
+        %br
+        %br
+        - if current_user.organizer_for_event?(event)
+          %button.pull-left.btn.btn-lg.btn-success{type: "submit"} Save

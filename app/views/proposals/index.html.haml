@@ -5,13 +5,14 @@
 
 .row
   .col-md-12.proposals
-    - if proposals.empty?
+    - if proposals.blank? && invitations.blank?
       .widget.widget-card.text-center
         %h2.control-label You don't have any proposals.
 
-    - proposals.each do |event, talks|
+    - events.each do |event|
+      - talks = proposals[event] || []
+      - invites = invitations[event] || []
       - event = event.decorate
-
       .row
         .col-md-4
           .widget.widget-card.flush-top
@@ -34,15 +35,15 @@
                   = link_to 'View Guidelines', event_path(event.slug)
 
         .col-md-8
-          - if invitations.any?
+          - if invites.present?
             .proposal-section.invitations.callout
               %h2.callout-title Speaker Invitations
               %ul.list-unstyled
-                - invitations.each do |invitation|
+                - invites.each do |invitation|
                   %li.invitation.proposal.proposal-info-bar
                     .flex-container.flex-container-md
                       .flex-item.flex-item-padded
-                        %h4.proposal-title= link_to invitation.proposal.title, event_proposal_path(event_slug: invitation.proposal.event.slug, uuid: invitation.proposal)
+                        %h4.proposal-title= link_to invitation.proposal.title, invitation_path(invitation.slug)
 
                         .proposal-meta.proposal-description
                           .proposal-meta-item

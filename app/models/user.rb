@@ -49,19 +49,14 @@ class User < ActiveRecord::Base
     end
   end
 
-  def assign_open_invitations
-    if email
-      Invitation.where("LOWER(email) = ? AND state = ? AND user_id IS NULL",
-        email.downcase, Invitation::State::PENDING).each do |invitation|
-        invitation.update_column(:user_id, id)
-      end
-    end
-  end
-
   def check_pending_invite_email
     if pending_invite_email.present? && pending_invite_email == email
       skip_confirmation!
     end
+  end
+
+  def pending_invitations
+    Invitation.pending.where(email: email)
   end
   
   def update_bio

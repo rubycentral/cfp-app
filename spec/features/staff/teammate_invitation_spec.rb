@@ -8,8 +8,8 @@ feature "Teammate Invitation received" do
 
   let!(:known_user) { create(:user, email: "known@per.son", password: "12345678") }
 
-  describe "User not signed in" do
-    context "accepts invitation" do
+  context "User who is not signed in" do
+    describe "accepts invitation" do
 
       it "is redirected to the login page with a message" do
         visit accept_teammate_path(knownguy_invitation.token)
@@ -138,10 +138,11 @@ feature "Teammate Invitation received" do
       signin("known@per.son", "12345678")
     end
 
-    context "accepts invitation" do
-      it "instantly becomes a teammate and is redirected to the team page" do
+    describe "accepts invitation" do
+      it "instantly becomes a teammate and is redirected to the profile page" do
         visit accept_teammate_path(knownguy_invitation.token)
         expect(page).to have_content("Congrats! You are now an official team member of #{knownguy_invitation.event.name}!")
+        expect(current_path).to eq(edit_profile_path)
       end
     end
 

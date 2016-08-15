@@ -1,7 +1,7 @@
 class TeammatesController < ApplicationController
   before_action :require_pending_invitation, only: [:accept, :decline]
   before_action :set_session_invite, only: [:accept]
-  before_action :require_user_for_invitation, only: [:accept]
+  before_action :require_user_for_accept, only: [:accept]
   before_action :require_non_teammate, only: [:accept]
 
   def accept
@@ -38,11 +38,11 @@ class TeammatesController < ApplicationController
   end
 
   def set_session_invite
-    session[:pending_invite] = accept_teammate_url(@teammate_invitation.token)
+    session[:pending_invite_accept_url] = accept_teammate_url(@teammate_invitation.token)
     session[:pending_invite_email] = @teammate_invitation.email
   end
 
-  def require_user_for_invitation
+  def require_user_for_accept
     unless current_user
       flash[:info] = "To accept your invitation, you must log in or create an account."
       redirect_to new_user_session_url
@@ -57,7 +57,7 @@ class TeammatesController < ApplicationController
   end
 
   def clear_session_invite
-    session.delete :pending_invite
+    session.delete :pending_invite_accept_url
     session.delete :pending_invite_email
   end
 

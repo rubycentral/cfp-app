@@ -6,13 +6,13 @@ class Invitation < ActiveRecord::Base
   belongs_to :proposal
   belongs_to :user
 
-  before_create :maybe_assign_user
-
-  private
-
-  def maybe_assign_user
-    user = User.where("LOWER(email) = ?", self.email.downcase)
-    self.user = user.first if user.any?
+  def accept(user)
+    transaction do
+      self.user = user
+      self.state = State::ACCEPTED
+      proposal.speakers.create(user: user, event: proposal.event)
+      save
+    end
   end
 end
 

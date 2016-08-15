@@ -13,7 +13,7 @@
     .collapse.navbar-collapse
       - if user_signed_in?
         %ul.nav.navbar-nav.navbar-right
-          - if current_user.proposals.any?
+          - if current_user.proposals.present? || current_user.pending_invitations.present?
             = render partial: "layouts/nav/proposals_link"
 
           - if current_event && current_user.reviewer_for_event?(current_event)

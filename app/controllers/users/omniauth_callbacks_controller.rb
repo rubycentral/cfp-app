@@ -28,7 +28,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @user.persisted?
       flash.now[:info] = "You have signed in with #{auth_hash['provider'].capitalize}."
-      assign_open_invitations if session[:invitation_slug].present?
       logger.info "Signing in user #{@user.inspect}"
 
       @user.skip_confirmation!
@@ -43,19 +42,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def auth_hash
     request.env['omniauth.auth']
-  end
-
-  def assign_open_invitations
-    invitation = Invitation.find_by(slug: session[:invitation_slug])
-
-    if invitation
-      invitations = Invitation.where("LOWER(email) = ? AND state = ? AND user_id IS NULL",
-                       invitation.email.downcase, Invitation::State::PENDING)
-      invitations.each do |invitation|
-        invitation.update_column(:user_id, current_user)
-      end
-
-    end
   end
 
 end

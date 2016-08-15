@@ -1,23 +1,11 @@
 require 'rails_helper'
 
 describe Invitation do
+  let!(:user) { create(:user, email: 'foo@example.com') }
+  let(:proposal) { create(:proposal) }
+  let(:invitation) { create(:invitation, email: 'foo@example.com', slug: 'foo', proposal: proposal) }
+
   describe "#create" do
-    let!(:user) { create(:user, email: 'foo@example.com') }
-    let(:proposal) { create(:proposal) }
-    let(:invitation) { create(:invitation, email: 'foo@example.com', slug: 'foo', proposal: proposal) }
-
-    context "When a user record matches by email" do
-      it "locates the user record" do
-        expect(User).to receive(:where).and_return([user])
-        create(:invitation, email: 'foo@example.com', slug: 'foo', proposal: proposal)
-      end
-
-      it "assigns the user record to the invitation" do
-        invitation.reload
-        expect(invitation.user).to eq(user)
-      end
-    end
-
     it "sets the slug" do
       invitation = build(:invitation, slug: nil)
       digest = 'deadbeef2014'
@@ -37,9 +25,18 @@ describe Invitation do
 
   describe "#accept" do
     it "sets state as accepted" do
-      invitation = create(:invitation, state: nil)
-      invitation.accept
+      invitation.accept(user)
       expect(invitation.state).to eq(Invitation::State::ACCEPTED)
+    end
+
+    it "sets the user on the invitation" do
+      invitation.accept(user)
+      expect(invitation.user).to eq(user)
+    end
+
+    it "creates an associated speaker record" do
+      invitation.accept(user)
+      expect(proposal.has_speaker?(user)).to eq(true)
     end
   end
 

@@ -13,8 +13,7 @@ class InvitationDecorator < ApplicationDecorator
     classes += ' btn-xs' if small
 
     h.link_to 'Decline',
-      h.decline_invitation_path(invitation_slug: object.slug),
-      method: :post,
+      h.decline_invitation_path(object.slug),
       class: classes,
       data: { confirm: 'Are you sure you want to decline this invitation?' }
   end
@@ -24,8 +23,7 @@ class InvitationDecorator < ApplicationDecorator
     classes += ' btn-xs' if small
 
     h.link_to 'Accept',
-      h.accept_invitation_path(invitation_slug: object.slug),
-      method: :post,
+      h.accept_invitation_path(object.slug),
       class: classes
   end
 

@@ -23,10 +23,6 @@ module Invitable
     self.update(state: State::DECLINED)
   end
 
-  def accept #this can be extracted to model and take in a user 
-    self.update(state: State::ACCEPTED)
-  end
-
   def pending?
     state == State::PENDING
   end

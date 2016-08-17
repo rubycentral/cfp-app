@@ -45,6 +45,10 @@ class Teammate < ActiveRecord::Base
     user ? user.name : ""
   end
 
+  def ratings_count(current_event)
+    self.user.ratings.not_withdrawn.for_event(current_event).size
+  end
+
   def pending?
     state == PENDING
   end

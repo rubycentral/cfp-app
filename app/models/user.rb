@@ -58,7 +58,7 @@ class User < ActiveRecord::Base
   def pending_invitations
     Invitation.pending.where(email: email)
   end
-  
+
   def update_bio
     update(bio: speakers.last.bio) if bio.blank?
   end

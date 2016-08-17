@@ -4,13 +4,13 @@
       .event-info.event-info-dense
         %strong.event-title= event.name
         - if event.start_date? && event.end_date?
-          %span.event-meta 
+          %span.event-meta
             %i.fa.fa-fw.fa-calendar
             = event.date_range
     .col-md-4.text-right.text-right-responsive
       .event-info.event-info-dense
         %span{:class => "event-meta event-status-badge event-status-#{event.status}"}
-          CFP 
+          CFP
           = event.status
         - if event.open?
           %span.event-meta

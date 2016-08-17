@@ -15,14 +15,14 @@ feature "Proposals" do
     fill_in 'Pitch', with: "You live but once; you might as well be amusing. - Coco Chanel"
     fill_in 'Details', with: "Plans are nothing; planning is everything. - Dwight D. Eisenhower"
     select 'Only format', from: 'Session format'
-    click_button 'Save'
+    click_button 'Submit'
   end
 
   let(:create_invalid_proposal) do
     fill_in 'proposal_speakers_attributes_0_bio', with: "I am a great speaker!."
     fill_in 'Pitch', with: "You live but once; you might as well be amusing. - Coco Chanel"
     fill_in 'Details', with: "Plans are nothing; planning is everything. - Dwight D. Eisenhower"
-    click_button 'Save'
+    click_button 'Submit'
   end
 
   before { login_as(user) }
@@ -89,7 +89,7 @@ feature "Proposals" do
       it "submits successfully" do
         expect(Proposal.last.abstract).to_not match('<p>')
         expect(Proposal.last.abstract).to_not match('</p>')
-        expect(page).to have_text("Thank you for submitting")
+        expect(page).to have_text("Thank you! Your proposal has been submitted and may be reviewed at any time while the CFP is open.")
       end
 
       it "does not create an empty comment" do
@@ -115,7 +115,7 @@ feature "Proposals" do
       visit edit_event_proposal_path(event_slug: proposal.event.slug, uuid: proposal)
       expect(page).to_not have_text("A new title")
       fill_in 'Title', with: "A new title"
-      click_button 'Save'
+      click_button 'Submit'
       expect(page).to have_text("A new title")
     end
   end

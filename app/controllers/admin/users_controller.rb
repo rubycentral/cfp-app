@@ -18,6 +18,7 @@ class Admin::UsersController < Admin::ApplicationController
 
   # PATCH/PUT /admin/users/1
   def update
+    @user.skip_reconfirmation!
     if @user.update(user_params)
       redirect_to admin_users_url, flash: { info: "#{@user.name} was successfully updated." }
     else
@@ -28,7 +29,7 @@ class Admin::UsersController < Admin::ApplicationController
   # DELETE /admin/users/1
   def destroy
     @user.destroy
-    redirect_to admin_users_url, flash: { info: "#{@user.name} was successfully destroyed." }
+    redirect_to admin_users_url, flash: { info: "User account for #{@user.name} was successfully deleted." }
   end
 
   private

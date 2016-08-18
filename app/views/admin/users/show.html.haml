@@ -24,7 +24,7 @@
           - talks.each do |proposal|
             %tr
               %td= link_to event.name, event_path(event.slug)
-              %td= link_to proposal.title, proposal_path(slug: proposal.event.slug, uuid: proposal)
+              %td= link_to proposal.title, proposals_path(slug: proposal.event.slug, uuid: proposal)
               %td= proposal.state
               %td= truncate(proposal.abstract, length: 80)
 

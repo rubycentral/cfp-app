@@ -67,13 +67,14 @@ class Proposal < ActiveRecord::Base
   # A user is considered a reviewer if they meet the following criteria
   # - They are an teammate for this event
   # AND
-  # - They have rated or made a public comment on this proposal, this means they are a 'reviewer'
+  # - They have rated or made a public comment on this proposal, and are not a speaker on this proposal
   def reviewers
     User.joins(:teammates,
                  'LEFT OUTER JOIN ratings AS r ON r.user_id = users.id',
                  'LEFT OUTER JOIN comments AS c ON c.user_id = users.id')
-      .where("teammates.event_id = ? AND (r.proposal_id = ? or (c.proposal_id = ? AND c.type = 'PublicComment'))",
-             event.id, id, id).uniq
+        .where("teammates.event_id = ? AND (r.proposal_id = ? or (c.proposal_id = ? AND c.type = 'PublicComment'))",
+               event.id, id, id)
+        .where.not(id: speakers.map(&:user_id)).uniq
   end
 
   # Return all proposals from speakers of this proposal. Does not include this proposal.

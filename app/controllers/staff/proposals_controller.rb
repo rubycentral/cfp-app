@@ -7,7 +7,7 @@ class Staff::ProposalsController < Staff::ApplicationController
   def finalize
     @proposal.finalize
     send_state_mail(@proposal.state)
-    redirect_to event_staff_proposal_url(@proposal.event, @proposal)
+    redirect_to event_staff_proposal_path(@proposal.event, @proposal)
   end
 
   def update_state
@@ -45,7 +45,7 @@ class Staff::ProposalsController < Staff::ApplicationController
       end
     end
 
-    current_user.notifications.mark_as_read_for_proposal(event_staff_proposal_url(@event, @proposal))
+    current_user.notifications.mark_as_read_for_proposal(event_staff_proposal_path(@event, @proposal))
     render locals: {
              speakers: @proposal.speakers.decorate,
              other_proposals: Staff::ProposalsDecorator.decorate(other_proposals),
@@ -59,7 +59,7 @@ class Staff::ProposalsController < Staff::ApplicationController
   def update
     if @proposal.update_without_touching_updated_by_speaker_at(proposal_params)
       flash[:info] = 'Proposal Updated'
-      redirect_to event_staff_proposal_url(@event, @proposal)
+      redirect_to event_staff_proposal_path(@event, @proposal)
     else
       flash[:danger] = 'There was a problem saving your proposal; please review the form for issues and try again.'
       render :edit

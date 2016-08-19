@@ -1,8 +1,38 @@
 class InvitationsController < ApplicationController
-  before_filter :require_user, except: [:show, :update]
-  before_filter :require_invitation, except: :create
-  before_filter :require_proposal, only: :create
-  rescue_from ActiveRecord::RecordNotFound, :with => :rescue_not_found
+  before_action :require_proposal, only: [:create, :destroy, :resend]
+  before_action :require_speaker, only: [:create, :destroy, :resend]
+  before_action :require_pending_invitation, only: [:show, :accept, :decline, :destroy, :resend]
+  before_action :set_session_invite, only: [:accept]
+  before_action :require_user_for_accept, only: [:accept]
+
+  def show
+    @proposal = @invitation.proposal.decorate
+    @invitation = @invitation.decorate
+    @event = @invitation.proposal.event.decorate
+  end
+
+  def accept
+    if @invitation.accept(current_user)
+      clear_session_invite
+
+      flash[:info] = "You have accepted your invitation! Before continuing, please take a moment to make sure your profile is complete."
+      session[:target] = event_proposal_path(event_slug: @invitation.proposal.event.slug,
+                                            uuid: @invitation.proposal)
+      redirect_to edit_profile_path
+
+    else
+      flash[:danger] = "A problem occurred while accepting your invitation."
+      Rails.logger.error(@invitation.errors.full_messages.join(', '))
+      redirect_to invitation_path(@invitation.slug)
+    end
+  end
+
+  def decline
+    @invitation.decline
+
+    flash[:info] = "You have declined this invitation."
+    redirect_to root_url
+  end
 
   def create
     @invitation = @proposal.invitations.find_or_initialize_by(email: params[:speaker][:email])
@@ -25,63 +55,51 @@ class InvitationsController < ApplicationController
     redirect_to :back
   end
 
-  def show
-    @proposal = @invitation.proposal.decorate
-    @invitation = @invitation.decorate
-    @event = @invitation.proposal.event.decorate
-
-    if current_user && session[:pending_invite]
-      accept_invite
-      session.delete :pending_invite
-    end
-  end
-
   def resend
     SpeakerInvitationMailer.create(@invitation, current_user).deliver_now
     flash[:info] = "You have resent an invitation to #{@invitation.email}."
     redirect_to :back
   end
 
-  def update
-    if params[:decline]
-      @invitation.decline
-      flash[:info] = "You have declined this invitation."
-      redirect_to root_url
-    else
-      if current_user
-        accept_invite
-      else
-        session[:pending_invite] = invitation_path(params[:invitation_slug])
-        flash[:info] = "Thanks for joining us! Please sign in or create an account."
-        redirect_to new_user_session_path
-      end
-    end
-  end
-
   private
 
   def require_proposal
-    @proposal = Proposal.find_by!(uuid: params[:proposal_uuid])
-  end
-
-  def require_invitation
-    @invitation = Invitation.find_by!(slug: params[:invitation_slug] || session[:invitation_slug])
-  end
-
-  def accept_invite
-    @invitation.accept
-    flash[:info] = "You have accepted your invitation!"
-    @invitation.proposal.speakers.create(user: current_user, event: @invitation.proposal.event)
-    if current_user.complete?
-      redirect_to event_proposal_path(event_slug: @invitation.proposal.event.slug,
-                                      uuid: @invitation.proposal)
-    else
-      redirect_to edit_profile_path
+    @proposal = Proposal.find_by(uuid: params[:proposal_uuid])
+    unless @proposal
+      render :template => 'errors/incorrect_token', :status => :not_found
     end
   end
 
-  protected
-  def rescue_not_found
-    render :template => 'errors/incorrect_token', :status => :not_found
+  def require_speaker
+    unless current_user && @proposal.has_speaker?(current_user)
+      flash[:danger] = "You must be a speaker for this proposal in order to invite other speakers."
+      redirect_to new_user_session_url
+    end
+  end
+
+  def require_pending_invitation
+    @invitation = Invitation.pending.find_by(slug: params[:invitation_slug])
+    if @invitation
+      set_current_event(@invitation.proposal.event_id)
+    else
+      render :template => 'errors/incorrect_token', :status => :not_found
+    end
+  end
+
+  def set_session_invite
+    session[:pending_invite_accept_url] = accept_invitation_path(@invitation.slug)
+    session[:pending_invite_email] = @invitation.email
+  end
+
+  def require_user_for_accept
+    unless current_user
+      flash[:info] = "To accept your invitation, you must log in or create an account."
+      redirect_to new_user_session_url
+    end
+  end
+
+  def clear_session_invite
+    session.delete :pending_invite_accept_url
+    session.delete :pending_invite_email
   end
 end

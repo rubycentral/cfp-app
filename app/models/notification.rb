@@ -8,13 +8,13 @@ class Notification < ActiveRecord::Base
   def self.create_for(users, args = {})
     proposal = args.delete(:proposal)
     users.each do |user|
-      args[:target_path] = user.decorate.proposal_notification_path(proposal) if proposal
+      args[:target_path] = user.decorate.proposal_notification_url(proposal) if proposal
       user.notifications.create(args)
     end
   end
 
-  def self.mark_as_read_for_proposal(proposal_path)
-    all.unread.where(target_path: proposal_path).update_all(read_at: DateTime.now)
+  def self.mark_as_read_for_proposal(proposal_url)
+    all.unread.where(target_path: proposal_url).update_all(read_at: DateTime.current)
   end
 
   def self.more_unread?
@@ -26,7 +26,7 @@ class Notification < ActiveRecord::Base
   end
 
   def mark_as_read
-    update(read_at: DateTime.now)
+    update(read_at: DateTime.current)
   end
 
   def read?

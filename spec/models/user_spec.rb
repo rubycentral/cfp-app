@@ -216,16 +216,4 @@ describe User do
       expect(user.role_names).to eq('reviewer')
     end
   end
-
-  describe "#assign_open_invitations" do
-    it "assigns open invitations to the user" do
-      email = "harry.potter@hogwarts.edu"
-      invitation = create(:invitation, email: email,
-                          state: Invitation::State::PENDING)
-      user = create(:user, email: email)
-
-      user.assign_open_invitations
-      expect(invitation.reload.user).to eq(user)
-    end
-  end
 end

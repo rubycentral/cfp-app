@@ -23,8 +23,8 @@ class ApplicationController < ActionController::Base
   decorates_assigned :event
 
   def after_sign_in_path_for(user)
-    if session[:pending_invite]
-      session[:pending_invite]
+    if session[:pending_invite_accept_url]
+      session[:pending_invite_accept_url]
     elsif !user.complete?
       edit_profile_path
     elsif request.referrer.present? && request.referrer != new_user_session_url
@@ -76,12 +76,7 @@ class ApplicationController < ActionController::Base
 
   def require_user
     unless user_signed_in?
-      if params[:invitation_slug].present?
-        session[:invitation_slug] = params[:invitation_slug]
-        session[:target] = invitation_path(invitation_slug: params[:invitation_slug])
-      else
-        session[:target] = request.path
-      end
+      session[:target] = request.path
       flash[:danger] = "You must be signed in to access this page. If you haven't created an account, please create one."
       redirect_to new_user_session_url
     end

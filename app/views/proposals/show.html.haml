@@ -89,11 +89,10 @@
                       .pull-right
                         - if !invitation.declined?
                           = link_to 'Resend',
-                            resend_invitation_path(invitation_slug: invitation.slug),
-                            method: :post,
+                            resend_invitation_path(invitation_slug: invitation.slug, proposal_uuid: proposal.uuid),
                             class: 'btn btn-xs btn-primary'
                         = link_to 'Remove',
-                          invitation_path(invitation_slug: invitation.slug),
+                          invitation_path(invitation_slug: invitation.slug, proposal_uuid: proposal.uuid),
                           method: :delete,
                           class: 'btn btn-xs btn-danger',
                           data: {confirm: 'Are you sure you want to remove this invitation?'}

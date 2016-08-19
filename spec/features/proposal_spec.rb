@@ -109,10 +109,8 @@ feature "Proposals" do
     scenario "User edits their proposal" do
       go_to_new_proposal
       create_proposal
+      click_link 'Edit'
 
-      proposal = user.proposals.first
-
-      visit edit_event_proposal_path(event_slug: proposal.event.slug, uuid: proposal)
       expect(page).to_not have_text("A new title")
       fill_in 'Title', with: "A new title"
       click_button 'Submit'
@@ -124,8 +122,6 @@ feature "Proposals" do
     before :each do
       go_to_new_proposal
       create_proposal
-      proposal = user.proposals.first
-      visit event_proposal_path(event_slug: proposal.event.slug, uuid: proposal)
       fill_in 'public_comment_body', with: "Here's a comment for you!"
       click_button 'Comment'
     end

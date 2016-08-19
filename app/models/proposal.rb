@@ -171,6 +171,10 @@ class Proposal < ActiveRecord::Base
     speakers.where(user_id: user).exists?
   end
 
+  def has_invited?(user)
+    user.pending_invitations.map(&:proposal_id).include?(id)
+  end
+
   def was_rated_by_user?(user)
     ratings.any? { |r| r.user_id == user.id }
   end

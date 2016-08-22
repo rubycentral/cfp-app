@@ -47,20 +47,20 @@ def create_seed_data
 
   # Core Event Info
   seed_guidelines = %Q[
-  # SeedConf wants you!
+# SeedConf wants you!
 
-  The first annual conference about seed data is happening
-  in sunny Phoenix, Arizona on December 1st, 2016!
+The first annual conference about seed data is happening
+in sunny Phoenix, Arizona on December 1st, 2016!
 
-  If your talk is about seed data in Rails apps, we want to hear about it!
+If your talk is about seed data in Rails apps, we want to hear about it!
 
-  ## #{Faker::Hipster.sentence(4)}
-  #{Faker::Hipster.paragraph(8)}
+## #{Faker::Hipster.sentence(4)}
+#{Faker::Hipster.paragraph(8)}
 
-  #{Faker::Hipster.paragraph(13)}
+#{Faker::Hipster.paragraph(13)}
 
-  #{Faker::Hipster.paragraph(6)}
-  ]
+#{Faker::Hipster.paragraph(6)}
+]
 
   seed_event = Event.create(name: "SeedConf",
                             slug: "seedconf",
@@ -228,16 +228,16 @@ def create_seed_data
 
   # Core Event Info
   sapphire_guidelines = %Q[
-  # SapphireConf - The place to be in 2017!
+# SapphireConf - The place to be in 2017!
 
-  The first annual conference about the hot new programming language Sapphire
-  is happening in moody Reykjavík, Iceland on February 1st, 2017!
+The first annual conference about the hot new programming language Sapphire
+is happening in moody Reykjavík, Iceland on February 1st, 2017!
 
-  If you are on the cutting edge with savvy Sapphire skills, we want you!
+If you are on the cutting edge with savvy Sapphire skills, we want you!
 
-  ## #{Faker::Hipster.sentence(4)}
-  #{Faker::Hipster.paragraph(20)}
-  ]
+## #{Faker::Hipster.sentence(4)}
+#{Faker::Hipster.paragraph(20)}
+]
 
   sapphire_event = Event.create(name: "SapphireConf",
                                 slug: "sapphireconf",

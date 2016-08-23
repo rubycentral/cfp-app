@@ -1,6 +1,6 @@
 class Staff::ProposalReviewsController < Staff::ApplicationController
-  before_filter :require_proposal, except: [:index]
-  before_filter :prevent_self, except: [:index]
+  before_action :require_proposal, except: [:index]
+  before_action :prevent_self, except: [:index]
 
   decorates_assigned :proposal, with: Staff::ProposalDecorator
   respond_to :html, :js

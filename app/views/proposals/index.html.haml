@@ -53,7 +53,7 @@
                             %strong #{ 'Speaker'.pluralize(invitation.proposal.speakers.count) }:
                             = invitation.proposal.speakers.collect { |speaker| speaker.name }.join(', ')
                       .flex-item.flex-item-fixed.flex-item-padded.flex-item-right
-                        .proposal-status
+                        .invitation-status
                           = invitation.state_label
                         - if invitation.pending?
                           .proposal-meta.invite-btns

@@ -1,27 +1,64 @@
-#proposal
+.event-info-bar
   .row
-    .col-md-12
-      .page-header.clearfix
-        .btn-nav.pull-right
-          - if current_user.organizer_for_event?(event)
-            = smart_return_button
-            =link_to(edit_event_staff_proposal_path(proposal.event, proposal.uuid), class: "btn btn-primary") do
-              %span.glyphicon.glyphicon-edit
-              Edit Proposal
-            =link_to "Next Proposal", event_staff_proposal_path(uuid: "PLACEHOLDER"), class: "next-proposal btn btn-primary", data: {"proposal-uuid" => proposal.uuid }
+    .col-md-8
+      .event-info.event-info-dense
+        %strong.event-title= event.name
+        - if event.start_date? && event.end_date?
+          %span.event-meta
+            %i.fa.fa-fw.fa-calendar
+            = event.date_range
+    .col-md-4.text-right.text-right-responsive
+      .event-info.event-info-dense
+        %span{:class => "event-meta event-status-badge event-status-#{event.status}"}
+          CFP
+          = event.status
+        - if event.open?
+          %span.event-meta
+            CFP closes:
+            %strong= event.closes_at(:month_day_year)
 
-        %h1
-          = proposal.title
-        #updated_parent
-          %h4
-            %span.label.label-info#updated_subheader= proposal.updated_in_words
-          .tags= proposal.review_tags_labels
-        .row
-          .col-md-12
-            .btn-nav.pull-right
-              = proposal.state_buttons
-              - if proposal.organizer_confirm
-                = link_to "Confirm for Speaker", confirm_event_proposal_path(slug: proposal.event.slug, uuid: proposal), class: "btn btn-primary"
+#proposal
+  .proposal-actions-bar
+    .row
+      .col-md-offset-8.col-md-4.text-right.clearfix
+        .btn-nav.pull-right
+          = smart_return_button
+          =link_to "Next Proposal", event_staff_program_proposal_path(uuid: "PLACEHOLDER"), class: "next-proposal btn btn-primary btn-sm", data: {"proposal-uuid" => proposal.uuid }
+
+  .page-header.page-header-slim
+    .row
+      .col-md-6
+        %h1= proposal.title
+      .col-md-6.text-right
+        - if proposal.organizer_confirm
+          = link_to "Confirm for Speaker", confirm_event_proposal_path(slug: proposal.event.slug, uuid: proposal), class: "btn btn-primary btn-sm"
+        %span.state-buttons #{proposal.state_buttons(show_finalize: false)}
+    .row
+      .col-sm-6
+        .proposal-info-bar
+          .proposal-meta.proposal-description
+            .proposal-meta-item
+              %strong #{ 'Speaker'.pluralize(proposal.speakers.count) }:
+              %span= proposal.speakers.collect { |speaker| speaker.name }.join(', ')
+            .proposal-meta-item
+              %strong Format:
+              %span #{proposal.session_format_name}
+            .proposal-meta-item
+              %strong Track:
+              %span #{proposal.track_name}
+            -if proposal.tags.present?
+              .proposal-meta-item
+                %strong Tags:
+                %span #{proposal.tags_labels}
+      .col-sm-6.text-right
+        .proposal-info-bar
+          .proposal-meta.proposal-description
+            .proposal-meta-item
+              %strong Status:
+              %span.proposal-status #{proposal.state_label(small: true)}
+            .proposal-meta-item
+              %strong Updated:
+              %span #{proposal.updated_in_words}
 
   .row
     .col-md-4
@@ -29,7 +66,7 @@
 
     .col-md-4
       %h3 Other Proposals
-      = render partial: 'other_proposals', locals: { event: event, other_proposals: other_proposals }
+      = render partial: 'other_proposals', locals: { event: event, other_proposals: @other_proposals }
 
       %h3 Speakers
       = render partial: 'staff/proposals/speakers', locals: { speakers: proposal.speakers }
@@ -37,22 +74,12 @@
       %h3 Public Comments
       = render partial: 'proposals/comments', locals: { proposal: proposal, comments: proposal.public_comments }
 
-      - if proposal.state == 'accepted'
+      - if proposal.accepted?
         %h3 Confirmation Notes
         = render partial: 'proposals/confirmation_notes', locals: {proposal: proposal, notes: proposal.confirmation_notes}
 
     .col-md-4
-      - if event.public_tags?
-        = render partial: 'shared/proposals/tags_form', locals: { event: event, proposal: proposal }
-
-      %h3 Review
-      -#- unless proposal.has_speaker?(current_user)
-      -#  = link_to "#", {id: "rating-tooltip", data: {toggle: "tooltip", placement: "bottom"}, title: rating_tooltip } do
-      -#    %span.glyphicon.glyphicon-question-sign
-
-      #current_state= proposal.state_label
-
-      = render partial: 'rating_form', locals: { event: event, proposal: proposal, rating: rating }
+      = render partial: 'shared/proposals/rating_form', locals: { event: event, proposal: proposal, rating: @rating }
 
       - if proposal.proposal_data?
         %h3 Video URL

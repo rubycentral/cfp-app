@@ -1,13 +1,13 @@
 %ul.list-unstyled.other_proposals
-  -other_proposals.each do |proposal|
-    %li
-      =link_to truncate(proposal.title, length: 55), event_staff_proposal_path(event, proposal)
-    %br
-    Average Score:
-    = proposal.average_rating ? number_with_precision(proposal.average_rating, precision: 1) : "No Rating"
-    = proposal.state_label(small: true)
-    .other_proposal_tags= proposal.review_tags_labels
-    %hr
-  -if other_proposals.empty?
+  -if other_proposals.present?
+    -other_proposals.each do |proposal|
+      %li
+        =link_to truncate(proposal.title, length: 55), event_staff_program_proposal_path(event, proposal)
+        &nbsp;
+        %span.other-proposal-status= proposal.state_label(small: true)
+        %span.other-proposal-rating
+          Rating:
+          = proposal.average_rating ? number_with_precision(proposal.average_rating, precision: 1) : "No Rating"
+  -else
     %li
       None

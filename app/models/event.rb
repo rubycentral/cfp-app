@@ -62,6 +62,10 @@ class Event < ActiveRecord::Base
     self.proposal_tags = Tagging.tags_string_to_array(tags_string)
   end
 
+  def reviewer_tags?
+    review_tags.any?
+  end
+
   def valid_review_tags
     review_tags.join(', ')
   end
@@ -84,6 +88,14 @@ class Event < ActiveRecord::Base
 
   def fields
     self.proposals.column_names.join(', ')
+  end
+
+  def multiple_tracks?
+    tracks.any?
+  end
+
+  def multiple_public_session_formats?
+    session_formats.publicly_viewable.count > 1
   end
 
   def generate_slug

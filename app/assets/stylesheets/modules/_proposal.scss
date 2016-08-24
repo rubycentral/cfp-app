@@ -21,17 +21,6 @@
 }
 
 #proposal {
-  span {
-    &.status {
-      display: inline-block;
-    }
-    &.small-status {
-      float: right;
-      font-size: 75%;
-      display: block;
-    }
-  }
-
   p.count {
     font-style: italic;
     font-weight: bold;
@@ -48,6 +37,11 @@
   .other_proposal_tags {
     padding-left: 10px;
     margin-bottom: 7px;
+  }
+
+  .other-proposal-rating {
+    display: inline-block;
+    margin-left: 8px;
   }
 }
 
@@ -186,6 +180,14 @@ div.col-md-4 {
   }
 
   .proposal-status {
+    padding-bottom: $padding-large-vertical;
+
+    .label {
+      margin-right: 0;
+    }
+  }
+
+  .invitation-status {
     padding-bottom: $padding-large-vertical;
 
     .label {

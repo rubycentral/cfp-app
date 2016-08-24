@@ -25,12 +25,24 @@ class Staff::ProposalDecorator < ProposalDecorator
     btns.join("\n").html_safe
   end
 
-  def title_link
-    link = h.link_to h.truncate(object.title, length: 45),
-                     h.event_staff_program_proposal_path(object.event, object)
-    link += state_label(small: true) if object.withdrawn?
+  def small_state_buttons
+    unless proposal.finalized?
+      state_buttons(
+          states: [ SOFT_ACCEPTED, SOFT_WAITLISTED, SOFT_REJECTED, SUBMITTED ],
+          show_finalize: false,
+          small: true
+      )
+    end
+  end
 
-    link
+  def title_link_for_review
+    h.link_to h.truncate(object.title, length: 45),
+              h.event_staff_program_proposal_path(object.event, object)
+  end
+
+  def title_link
+    h.link_to h.truncate(object.title, length: 45),
+              h.event_staff_program_proposal_path(object.event, object)
   end
 
   def standard_deviation
@@ -38,7 +50,7 @@ class Staff::ProposalDecorator < ProposalDecorator
   end
 
   def delete_button
-    h.button_to h.event_staff_proposal_path,
+    h.button_to h.event_staff_program_proposal_path,
       method: :delete,
       data: {
         confirm:
@@ -54,16 +66,6 @@ class Staff::ProposalDecorator < ProposalDecorator
   def confirm_link
     h.link_to 'confirmation page',
               h.confirm_proposal_url(event_slug: object.event.slug, uuid: object)
-  end
-
-  def small_state_buttons
-    unless proposal.finalized?
-      state_buttons(
-        states: [ SOFT_ACCEPTED, SOFT_WAITLISTED, SOFT_REJECTED, SUBMITTED ],
-        show_finalize: false,
-        small: true
-      )
-    end
   end
 
   def organizer_confirm
@@ -92,13 +94,13 @@ class Staff::ProposalDecorator < ProposalDecorator
     opts = { method: :post, remote: :true, type: 'btn-default', hidden: false }.merge(opts)
 
     opts[:class] = "#{opts[:class]} btn #{opts[:type]} " + (opts[:hidden] ? 'hidden' : '')
-    opts[:class] += ' btn-xs' if opts[:small]
+    opts[:class] += opts[:small] ? ' btn-xs' : ' btn-sm'
     h.link_to(text, path, opts)
   end
 
   def finalize_state_button
     state_button('Finalize State',
-                 h.event_staff_proposal_finalize_path(object.event, object),
+                 h.event_staff_program_proposal_finalize_path(object.event, object),
                  data: {
                    confirm:
                      'Finalizing the state will prevent any additional state changes, ' +

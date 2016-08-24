@@ -25,6 +25,7 @@ class Proposal < ActiveRecord::Base
   # bytes they can't see. So we give them a bit of tolerance.
   validates :abstract, length: {maximum: 625}
   validates :title, length: {maximum: 60}
+  validates_inclusion_of :state, in: valid_states, allow_nil: true, message: "'%{value}' not a valid state."
 
   serialize :last_change
   serialize :proposal_data, Hash
@@ -54,14 +55,6 @@ class Proposal < ActiveRecord::Base
   end
 
   scope :emails, -> { joins(speakers: :user).pluck(:email).uniq }
-
-  # Create all state accessor methods like (accepted?, waitlisted?, etc...)
-  Proposal::State.constants.each do |constant|
-    method_name = constant.to_s.downcase + '?'
-    define_method(method_name) do
-      Proposal::State.const_get(constant) == self.state
-    end
-  end
 
   # Return all reviewers for this proposal.
   # A user is considered a reviewer if they meet the following criteria
@@ -115,9 +108,7 @@ class Proposal < ActiveRecord::Base
   end
 
   def update_state(new_state)
-    state_string = new_state.to_s
-    state_string.gsub!("_", " ") if state_string.include?('_')
-    self.update(state: state_string)
+    update(state: new_state)
   end
 
   def finalize

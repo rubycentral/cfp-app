@@ -1,7 +1,7 @@
 class Event < ActiveRecord::Base
   has_many :teammates, dependent: :destroy
   has_many :proposals, dependent: :destroy
-  has_many :speakers, through: :proposals
+  has_many :speakers
   has_many :rooms, dependent: :destroy
   has_many :tracks, dependent: :destroy
   has_many :time_slots, dependent: :destroy

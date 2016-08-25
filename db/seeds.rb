@@ -1,9 +1,4 @@
 def run
-  unless Rails.env == 'development'
-    puts "seeds.rb should only be run in development"
-    return
-  end
-
   perform_deliveries_orig = ActionMailer::Base.perform_deliveries
 
   begin

@@ -3,6 +3,7 @@ class Rating < ActiveRecord::Base
   belongs_to :user
 
   scope :for_event, -> (event) { joins(:proposal).where("proposals.event_id = ?", event.id) }
+  scope :not_withdrawn, -> { joins(:proposal).where("proposals.state != ?", Proposal::State::WITHDRAWN) }
 
   def teammate
     user.teammates.where(event: proposal.event).first

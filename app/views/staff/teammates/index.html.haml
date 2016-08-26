@@ -30,6 +30,7 @@
                   %tr
                     %th Name
                     %th Email
+                    %th Rated Proposals
                     %th Role
                     %th Email Notifications
                     - if current_user.organizer_for_event?(current_event)
@@ -39,6 +40,7 @@
                     %tr{ id: "teammate-#{teammate.id}" }
                       %td= teammate.name
                       %td= teammate.email
+                      %td= teammate.ratings_count(current_event)
                       %td= teammate.role
                       %td.notifications.text-center
                         %span= teammate.comment_notifications

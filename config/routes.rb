@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   root 'home#show'
-  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
   get '/profile' => 'profiles#edit', as: :edit_profile
   patch '/profile' => 'profiles#update'
@@ -49,11 +49,18 @@ Rails.application.routes.draw do
 
       get '/speaker-emails' => 'events#speaker_emails', as: :speaker_email_notifications
 
-      resources :teammates, path: "team"
+      resources :teammates, path: 'team'
 
       controller :program do
         get 'program' => 'program#show'
         get 'program-selection' => 'program#selection'
+      end
+
+      scope path: 'program' do
+        resources :speakers, only: [:index, :show, :edit, :update, :destroy]
+        resources :program_sessions do
+          resources :speakers, only: [:new, :create]
+        end
       end
 
       resources :rooms, only: [:create, :update, :destroy]
@@ -74,13 +81,6 @@ Rails.application.routes.draw do
       controller :speakers do
         get :speaker_emails, action: :emails #returns json of speaker emails
       end
-
-      resources :speakers, only: [:index, :show, :edit, :update, :destroy] do
-        member do
-          get :profile, to: "profiles#edit", as: :edit_profile
-          patch :profile, to: "profiles#update", as: :update_profile
-        end
-      end
     end
   end
 
@@ -90,8 +90,8 @@ Rails.application.routes.draw do
   resources :speakers, only: [:destroy]
   resources :events, only: [:index]
 
-  get "teammates/:token/accept", :to => "teammates#accept", as: :accept_teammate
-  get "teammates/:token/decline", :to => "teammates#decline", as: :decline_teammate
+  get 'teammates/:token/accept', :to => 'teammates#accept', as: :accept_teammate
+  get 'teammates/:token/decline', :to => 'teammates#decline', as: :decline_teammate
 
   resources :invitations, only: [:show, :create, :destroy], param: :invitation_slug do
     member do
@@ -110,9 +110,9 @@ Rails.application.routes.draw do
     resources :users
   end
 
-  get "/current-styleguide", :to => "pages#current_styleguide"
-  get "/404", :to => "errors#not_found"
-  get "/422", :to => "errors#unacceptable"
-  get "/500", :to => "errors#internal_error"
+  get '/current-styleguide', :to => 'pages#current_styleguide'
+  get '/404', :to => 'errors#not_found'
+  get '/422', :to => 'errors#unacceptable'
+  get '/500', :to => 'errors#internal_error'
 
 end

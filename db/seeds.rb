@@ -20,7 +20,6 @@ def run
 
 end
 
-
 def create_seed_data
 
   pwd = "userpass"
@@ -59,7 +58,7 @@ If your talk is about seed data in Rails apps, we want to hear about it!
 
   seed_event = Event.create(name: "SeedConf",
                             slug: "seedconf",
-                            url: "http://nativeseed.info/",
+                            url: Faker::Internet.url,
                             contact_email: "info@seed.event",
                             closes_at: 6.months.from_now,
                             state: "open",
@@ -94,59 +93,59 @@ If your talk is about seed data in Rails apps, we want to hear about it!
   # Proposals - there are no proposals that are either fully "accepted" or offically "not accepted"
   submitted_proposal_1 = seed_event.proposals.create(event: seed_event,
                                                      uuid: "abc123",
-                                                     title: "Honey Bees",
-                                                     abstract: "We will discuss the vital importance of pollinators and how we can help them thrive.",
-                                                     details: "Why we need pollinators, what plants they love most, basics of how to start your own hive.",
-                                                     pitch: "Learning to be stewards for our insect friends is essential to keeping some of our favorite foods around!",
+                                                     title: Faker::Superhero.name,
+                                                     abstract: Faker::Hipster.sentence,
+                                                     details: Faker::Hacker.say_something_smart,
+                                                     pitch: Faker::Superhero.power,
                                                      session_format: long_session,
                                                      track: track_1)
 
   submitted_proposal_2 = seed_event.proposals.create(event: seed_event,
                                                      uuid: "def456",
-                                                     title: "Coffee Talk",
-                                                     abstract: "We go over what makes a great cup of coffee as well as different methods of preparation.",
-                                                     details: "We will talk about the coffee plant itself, the roasting process, and prepare the same beans in a variety of different ways to compare the flavor and nuances.",
-                                                     pitch: "You need coffee to live happily, why not be drinking the best tasting versions of your favorite drug?",
+                                                     title: Faker::Superhero.name,
+                                                     abstract: Faker::Hipster.sentence,
+                                                     details: Faker::Hacker.say_something_smart,
+                                                     pitch: Faker::Superhero.power,
                                                      session_format: long_session,
                                                      track: track_2)
 
   soft_waitlisted_proposal = seed_event.proposals.create(event: seed_event,
                                                          state: "soft waitlisted",
                                                          uuid: "jkl012",
-                                                         title: "Javascript for Dummies",
-                                                         abstract: "This talk is a basic introduction to Javascript and how to use it effectively.",
-                                                         details: "Discussion will include a bit about the history of JS and some high level topics. From there we will learn enough basics to build a simple game together!",
-                                                         pitch: "You + Javascript = Besties for Life!!",
+                                                         title: Faker::Superhero.name,
+                                                         abstract: Faker::Hipster.sentence,
+                                                         details: Faker::Hacker.say_something_smart,
+                                                         pitch: Faker::Superhero.power,
                                                          session_format: short_session,
                                                          track: track_3)
 
   soft_accepted_proposal = seed_event.proposals.create(event: seed_event,
                                                        state: "soft accepted",
                                                        uuid: "mno345",
-                                                       title: "Vegan Ice Cream",
-                                                       abstract: "This is a hands on class where we will make some delicious dairy-and-egg-free concoctions!",
-                                                       details: "Participants will learn the basics of how to make a healthy animal-free ice cream as well as how to come up with amazing flavor combinations.",
-                                                       pitch: "Who doesn't love ice cream?",
+                                                       title: Faker::Superhero.name,
+                                                       abstract: Faker::Hipster.sentence,
+                                                       details: Faker::Hacker.say_something_smart,
+                                                       pitch: Faker::Superhero.power,
                                                        session_format: internal_session,
                                                        track: track_1)
 
   soft_rejected_proposal = seed_event.proposals.create(event: seed_event,
                                                        state: "soft rejected",
                                                        uuid: "xyz999",
-                                                       title: "DIY Unicorn Hat in 30 minutes",
-                                                       abstract: "You need to keep your head warm, why not do it with style?",
-                                                       details: "It's arts and crafts time! Learn how to make the hat of your dreams with the things already lying around your house.",
-                                                       pitch: "Have you really lived this long without a unicorn hat?",
+                                                       title: Faker::Superhero.name,
+                                                       abstract: Faker::Hipster.sentence,
+                                                       details: Faker::Hacker.say_something_smart,
+                                                       pitch: Faker::Superhero.power,
                                                        session_format: short_session,
                                                        track: track_2)
 
   withdrawn_proposal = seed_event.proposals.create(event: seed_event,
                                                    state: "withdrawn",
                                                    uuid: "pqr678",
-                                                   title: "Mystical Vortices",
-                                                   abstract: "Learn spiritual energy technics to help cure what ails you.",
-                                                   details: "We will enter into the portable vortex I carry in my bag at all times and explore the realms of the unreal.",
-                                                   pitch: "Uh, I said VORTICES - what more motivation for coming do you need??",
+                                                   title: Faker::Superhero.name,
+                                                   abstract: Faker::Hipster.sentence,
+                                                   details: Faker::Hacker.say_something_smart,
+                                                   pitch: Faker::Superhero.power,
                                                    session_format: lightning_talk,
                                                    track: track_1)
 
@@ -217,9 +216,50 @@ If your talk is about seed data in Rails apps, we want to hear about it!
                                    body: "Uhhhh... is this for real? I can't decide if this is amazing or insane.",
                                    type: "InternalComment")
 
+  # Program Sessions
+  accepted_proposal_1 = seed_event.proposals.create(event: seed_event,
+                                                    uuid: "xoxoxo",
+                                                    state: "accepted",
+                                                    title: Faker::Superhero.name,
+                                                    abstract: Faker::Hipster.sentence,
+                                                    details: Faker::Hacker.say_something_smart,
+                                                    pitch: Faker::Superhero.power,
+                                                    session_format: long_session,
+                                                    track: track_1,
+                                                    confirmed_at: Time.current)
+
+  accepted_proposal_2 = seed_event.proposals.create(event: seed_event,
+                                                    uuid: "oxoxox",
+                                                    state: "accepted",
+                                                    title: Faker::Superhero.name,
+                                                    abstract: Faker::Hipster.sentence,
+                                                    details: Faker::Hacker.say_something_smart,
+                                                    pitch: Faker::Superhero.power,
+                                                    session_format: long_session,
+                                                    track: track_3,
+                                                    confirmed_at: Time.current)
+
+  program_session_1 = seed_event.program_sessions.create(event: seed_event,
+                                                         proposal: accepted_proposal_1,
+                                                         title: accepted_proposal_1.title,
+                                                         abstract: accepted_proposal_1.abstract,
+                                                         track: accepted_proposal_1.track,
+                                                         session_format: accepted_proposal_1.session_format)
+
+  program_session_2 = seed_event.program_sessions.create(event: seed_event,
+                                                         proposal: accepted_proposal_2,
+                                                         title: accepted_proposal_2.title,
+                                                         abstract: accepted_proposal_2.abstract,
+                                                         track: accepted_proposal_2.track,
+                                                         session_format: accepted_proposal_2.session_format)
+
+  accepted_proposal_1.speakers.create(speaker_name: speaker_4.name, speaker_email: speaker_4.email, user: speaker_4, program_session: program_session_1, event: seed_event)
+  accepted_proposal_1.speakers.create(speaker_name: speaker_5.name, speaker_email: speaker_5.email, user: speaker_5, program_session: program_session_1, event: seed_event)
+  accepted_proposal_2.speakers.create(speaker_name: speaker_2.name, speaker_email: speaker_2.email, user: speaker_2, program_session: program_session_2, event: seed_event)
 
   ### SapphireConf -- this is an event in the early set-up/draft stage
   sapphire_start_date = 10.months.from_now
+  pwd = "userpass"
 
   # Core Event Info
   sapphire_guidelines = %Q[
@@ -236,7 +276,7 @@ If you are on the cutting edge with savvy Sapphire skills, we want you!
 
   sapphire_event = Event.create(name: "SapphireConf",
                                 slug: "sapphireconf",
-                                url: "https://en.wikipedia.org/wiki/Sapphire",
+                                url: Faker::Internet.url,
                                 contact_email: "info@sapphire.event",
                                 start_date: sapphire_start_date,
                                 end_date: sapphire_start_date + 1,

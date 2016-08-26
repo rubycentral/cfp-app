@@ -5,12 +5,18 @@ class Speaker < ActiveRecord::Base
   belongs_to :program_session
 
   has_many :proposals, through: :user
-  has_many :program_sessions, through: :user
+  has_many :program_sessions
 
   serialize :info, Hash
 
-  validates :user, :event, presence: true
+  validates :event, presence: true
   validates :bio, length: {maximum: 500}
+  validates :name, :email, presence: true, unless: :skip_name_email_validation
+  validates_format_of :email, with: Devise.email_regexp
+
+  attr_accessor :skip_name_email_validation
+
+  scope :in_program, -> { Speaker.where("program_session_id IS NOT NULL") }
 
   def name
     speaker_name.present? ? speaker_name : user.try(:name)

@@ -1,6 +1,6 @@
 class Staff::ProposalsController < Staff::ApplicationController
-  before_filter :require_proposal, except: [:index, :new, :create, :edit_all]
-  before_filter :prevent_self, only: [:show, :update]
+  before_action :require_proposal, except: [:index, :new, :create, :edit_all]
+  before_action :prevent_self, only: [:show, :update]
 
   decorates_assigned :proposal, with: Staff::ProposalDecorator
 
@@ -22,7 +22,7 @@ class Staff::ProposalsController < Staff::ApplicationController
   def index
     proposals = @event.proposals.includes(:event, :review_taggings, :proposal_taggings, :ratings, {speakers: :user}).load
 
-    session[:prev_page] = {name: 'Proposals', path: event_staff_proposals_path}
+    session[:prev_page] = {name: "Proposals", path: event_staff_proposals_path}
 
     taggings_count = Tagging.count_by_tag(@event)
 
@@ -58,10 +58,10 @@ class Staff::ProposalsController < Staff::ApplicationController
 
   def update
     if @proposal.update_without_touching_updated_by_speaker_at(proposal_params)
-      flash[:info] = 'Proposal Updated'
-      redirect_to event_staff_proposal_path(@event, @proposal)
+      flash[:info] = "Proposal Updated"
+      redirect_to event_staff_proposal_url(@event, @proposal)
     else
-      flash[:danger] = 'There was a problem saving your proposal; please review the form for issues and try again.'
+      flash[:danger] = "There was a problem saving your proposal; please review the form for issues and try again."
       render :edit
     end
   end
@@ -82,10 +82,10 @@ class Staff::ProposalsController < Staff::ApplicationController
     altered_params = proposal_params.merge!("state" => "accepted", "confirmed_at" => DateTime.now)
     @proposal = @event.proposals.new(altered_params)
     if @proposal.save
-      flash[:success] = 'Proposal Added'
+      flash[:success] = "Proposal Added"
       redirect_to event_staff_program_url(@event)
     else
-      flash.now[:danger] = 'There was a problem saving your proposal; please review the form for issues and try again.'
+      flash.now[:danger] = "There was a problem saving your proposal; please review the form for issues and try again."
       render :new
     end
   end

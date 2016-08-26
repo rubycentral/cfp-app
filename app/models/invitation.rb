@@ -10,7 +10,7 @@ class Invitation < ActiveRecord::Base
     transaction do
       self.user = user
       self.state = State::ACCEPTED
-      proposal.speakers.create(user: user, event: proposal.event)
+      proposal.speakers.create(user: user, event: proposal.event, skip_name_email_validation: true)
       save
     end
   end

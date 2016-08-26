@@ -2,10 +2,10 @@
   .col-md-12
     .page-header.clearfix
       .btn-nav.pull-right
-        =link_to(event_staff_path(event), class: "btn btn-primary") do
+        = link_to event_staff_path(event), class: "btn btn-primary" do
           &laquo; Return to Event
       %h1
-        = event
+        = current_event
         Speakers
 
 .row
@@ -16,17 +16,26 @@
           %th
           %th
           %th
-          %th
         %tr
           %th Name
           %th Email
-          %th Proposal Title
-          %th Proposal Status
+          %th Program Session Title
+          %th Actions
       %tbody
-        - proposals.each do |proposal|
-          - proposal.speakers.each do |speaker|
-            %tr
-              %td=link_to speaker.name, edit_profile_event_staff_speaker_path(event, speaker)
-              %td= speaker.email
-              %td= link_to proposal.title, event_staff_proposal_path(event, proposal)
-              %td= proposal.state_label(small: true)
+        - @program_speakers.each do |speaker|
+          %tr{ id: "speaker-#{speaker.id}" }
+            %td= speaker.name
+            %td= speaker.email
+            %td= link_to speaker.program_session.title, "#" # should this go to a program session show page?
+            %td{ id: "speaker-action-buttons-#{speaker.id}" }
+              %span>
+                = link_to "Edit", edit_event_staff_speaker_path(current_event, speaker), class: "btn btn-primary btn-xs"
+              %span>
+                = link_to "Add Speaker", new_event_staff_program_session_speaker_path(current_event, speaker.program_session), class: "btn btn-primary btn-xs"
+              %span>
+                - if speaker.program_session.multiple_speakers?
+                  = link_to "Remove",
+                    event_staff_speaker_path(current_event, speaker),
+                    method: :delete,
+                    data: { confirm: "Are you sure you want to remove this speaker?" },
+                    class: "btn btn-danger btn-xs"

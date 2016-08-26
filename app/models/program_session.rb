@@ -36,6 +36,10 @@ class ProgramSession < ActiveRecord::Base
       ps
     end
   end
+
+  def multiple_speakers?
+    speakers.count > 1
+  end
 end
 
 # == Schema Information

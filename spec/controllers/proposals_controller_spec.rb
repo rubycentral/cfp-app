@@ -28,9 +28,7 @@ describe ProposalsController, type: :controller do
           session_format_id: proposal.session_format.id,
           speakers_attributes: {
             '0' => {
-              bio: 'my bio',
-              user_id: user.id,
-              event_id: event.id
+              bio: 'my bio'
             }
           }
         }

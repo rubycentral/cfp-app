@@ -13,6 +13,9 @@ feature "User's can interact with notifications" do
         visit root_path
         within ".navbar" do
           expect(page).to have_link("", href: "/notifications")
+        end
+
+        within ".badge" do
           expect(page).to_not have_content("1")
         end
       end

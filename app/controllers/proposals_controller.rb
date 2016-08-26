@@ -32,7 +32,7 @@ class ProposalsController < ApplicationController
   end
 
   def set_confirmed
-    @proposal.update(confirmed_at: DateTime.now,
+    @proposal.update(confirmed_at: DateTime.current,
                      confirmation_notes: params[:confirmation_notes])
     redirect_to confirm_event_proposal_url(slug: @proposal.event.slug, uuid: @proposal),
       flash: { success: 'Thank you for confirming your participation' }
@@ -61,7 +61,7 @@ class ProposalsController < ApplicationController
       flash[:info] = setup_flash_message
       redirect_to event_proposal_url(event_slug: @event.slug, uuid: @proposal)
     else
-      flash[:danger] = 'There was a problem saving your proposal.'
+      flash[:danger] = "There was a problem saving your proposal."
       render :new
     end
   end
@@ -80,12 +80,12 @@ class ProposalsController < ApplicationController
 
   def update
     if params[:confirm]
-      @proposal.update(confirmed_at: DateTime.now)
-      redirect_to event_event_proposals_url(slug: @event.slug, uuid: @proposal), flash: { success: 'Thank you for confirming your participation' }
+      @proposal.update(confirmed_at: DateTime.current)
+      redirect_to event_event_proposals_url(slug: @event.slug, uuid: @proposal), flash: { success: "Thank you for confirming your participation" }
     elsif @proposal.update_and_send_notifications(proposal_params)
       redirect_to event_proposal_url(event_slug: @event.slug, uuid: @proposal)
     else
-      flash[:danger] = 'There was a problem saving your proposal.'
+      flash[:danger] = "There was a problem saving your proposal."
       render :edit
     end
   end
@@ -113,14 +113,14 @@ class ProposalsController < ApplicationController
   def require_invite_or_speaker
     unless @proposal.has_speaker?(current_user) || @proposal.has_invited?(current_user)
       redirect_to root_path
-      flash[:danger] = 'You are not an invited speaker for the proposal you are trying to access.'
+      flash[:danger] = "You are not an invited speaker for the proposal you are trying to access."
     end
   end
 
   def require_speaker
     unless @proposal.has_speaker?(current_user)
       redirect_to root_path
-      flash[:danger] = 'You are not a listed speaker for the proposal you are trying to access.'
+      flash[:danger] = "You are not a listed speaker for the proposal you are trying to access."
     end
   end
 

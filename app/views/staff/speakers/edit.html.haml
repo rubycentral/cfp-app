@@ -1,18 +1,28 @@
-= link_to(event_staff_proposal_path(speaker.proposal.event, speaker.proposal),
-              class: "btn btn-primary", id: "back") do
+.row
+  .col-md-12
+    .page-header.clearfix
+      .btn-nav.pull-right
+        =  link_to("« Return to Speaker List", event_staff_speakers_path(current_event), class: "btn btn-primary", id: "back")
 
-  &laquo; Return to Proposal
+      %h1 Edit Speaker
 
-%p
-= simple_form_for speaker, url: [ event, :staff, speaker ] do |f|
-  .row
-    %fieldset.col-md-4
-      = f.input :speaker_name, placeholder: speaker.user.try(:name)
-      = f.input :speaker_email, placeholder: speaker.user.try(:email)
-      %p
-      = f.input :bio, maxlength: :lookup,
-        placeholder: 'Bio for speaker for the event program'
+.row
+  .col-md-12
+    %p
+    = simple_form_for speaker, url: [ event, :staff, speaker ] do |f|
+      .row
+        %fieldset.col-md-6
+          = f.label "Name"
+          = f.text_field :speaker_name, class: "form-control", placeholder: @speaker.name
+          %br
+          = f.label "Email"
+          = f.text_field :speaker_email, class: "form-control", placeholder: @speaker.email
+          %br
+          = f.label :bio
+          = f.text_area :bio, class: "form-control", value: speaker.bio,
+          placeholder: "Bio for the event program", rows: 7, maxlength: 500
+          %p.help-block Bio is limited to 500 characters.
 
-  .row.col-md-12.form-submit
-    %button.pull-right.btn.btn-success{:type => "submit"} Save
-
+      .row.col-md-12.form-submit.btn-toolbar
+        = link_to("Cancel", event_staff_speakers_path(current_event), class: "button pull-right btn btn-danger")
+        %button.pull-right.btn.btn-success{:type => "submit"} Save

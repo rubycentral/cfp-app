@@ -7,6 +7,15 @@ FactoryGirl.define do
     pitch "Baseball."
     session_format { SessionFormat.first || FactoryGirl.create(:session_format) }
 
+    factory :proposal_with_track do
+      event { Event.first || FactoryGirl.create(:event) }
+      sequence(:title) { |i| "A fine proposal#{i}" }
+      abstract Faker::Hacker.say_something_smart
+      details Faker::Hipster.sentence
+      pitch Faker::Superhero.name
+      track
+      session_format { SessionFormat.first || FactoryGirl.create(:session_format) }
+    end
 
     trait :with_reviewer_public_comment do
       after(:create) do |proposal|
@@ -24,6 +33,13 @@ FactoryGirl.define do
 
     trait :with_speaker do
       after(:create) do |proposal|
+        proposal.speakers << FactoryGirl.create(:speaker, event: proposal.event)
+      end
+    end
+
+    trait :with_two_speakers do
+      after(:create) do |proposal|
+        proposal.speakers << FactoryGirl.create(:speaker, event: proposal.event)
         proposal.speakers << FactoryGirl.create(:speaker, event: proposal.event)
       end
     end

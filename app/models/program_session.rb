@@ -9,11 +9,32 @@ class ProgramSession < ActiveRecord::Base
   belongs_to :track
   belongs_to :session_format
   has_one :time_slot
+  has_many :speakers
 
   validates :event, :session_format, :title, :state, presence: true
 
   scope :unscheduled, -> do
     where(state: ACTIVE).where.not(id: TimeSlot.pluck(:program_session_id))
+  end
+
+  def self.create_from_proposal(proposal)
+    self.transaction do
+      ps = ProgramSession.create!(event_id: proposal.event_id,
+                                  proposal_id: proposal.id,
+                                  title: proposal.title,
+                                  abstract: proposal.abstract,
+                                  track_id: proposal.track_id,
+                                  session_format_id: proposal.session_format_id)
+
+      #attach proposal speakers to new program session
+      ps.speakers << proposal.speakers
+      ps.speakers.each do |speaker|
+        (speaker.speaker_name = speaker.user.name) if speaker.speaker_name.blank?
+        (speaker.speaker_email = speaker.user.email) if speaker.speaker_email.blank?
+        speaker.save!
+      end
+      ps
+    end
   end
 end
 

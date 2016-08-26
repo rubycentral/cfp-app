@@ -24,10 +24,10 @@ class Staff::EventsController < Staff::ApplicationController
   def update_guidelines
     authorize_update
     if @event.update(params.require(:event).permit(:guidelines))
-      flash[:info] = 'Your guidelines were updated.'
+      flash[:info] = "Your guidelines were updated."
       redirect_to event_staff_guidelines_path
     else
-      flash[:danger] = 'There was a problem saving your guidelines; please review the form for issues and try again.'
+      flash[:danger] = "There was a problem saving your guidelines; please review the form for issues and try again."
       render :guidelines
     end
   end
@@ -38,9 +38,9 @@ class Staff::EventsController < Staff::ApplicationController
   def update_status
     authorize_update
     if @event.update(params.require(:event).permit(:state))
-      redirect_to event_staff_info_path(@event), notice: 'Event status was successfully updated.'
+      redirect_to event_staff_info_path(@event), notice: "Event status was successfully updated."
     else
-      flash[:danger] = 'There was a problem updating the event status. Please try again.'
+      flash[:danger] = "There was a problem updating the event status. Please try again."
       render :info
     end
   end
@@ -81,10 +81,15 @@ class Staff::EventsController < Staff::ApplicationController
   def update
     authorize_update
     if @event.update_attributes(event_params)
-      flash[:info] = 'Your event was saved.'
-      redirect_to event_staff_info_path(@event)
+      flash[:info] = "Your event was saved."
+      if session[:target]
+        redirect_to session[:target]
+        session[:target].clear
+      else
+        redirect_to event_staff_info_path(@event)
+      end
     else
-      flash[:danger] = 'There was a problem saving your event; please review the form for issues and try again.'
+      flash[:danger] = "There was a problem saving your event; please review the form for issues and try again."
       render :edit
     end
   end

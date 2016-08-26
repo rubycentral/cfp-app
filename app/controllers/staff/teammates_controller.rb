@@ -2,6 +2,7 @@ class Staff::TeammatesController < Staff::ApplicationController
   # what is this? review this line - probably junk
   skip_before_filter :require_proposal, only: [:update], if: proc {|c| current_user && current_user.reviewer? }
   before_action :enable_staff_subnav
+  before_action :require_contact_email, only: [:create]
   respond_to :html, :json
 
   def index
@@ -16,7 +17,7 @@ class Staff::TeammatesController < Staff::ApplicationController
     invitation = current_event.teammates.build(params.require(:teammate).permit(:email, :role))
 
     if invitation.invite
-      TeammateInvitationMailer.create(invitation).deliver_now
+        TeammateInvitationMailer.create(invitation).deliver_now
       redirect_to event_staff_teammates_path(current_event),
         flash: { info: "Invitation to #{invitation.email} was sent."}
     else

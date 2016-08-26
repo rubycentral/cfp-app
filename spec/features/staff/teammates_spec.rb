@@ -26,6 +26,22 @@ feature "Staff Organizers can manage teammates" do
       expect(page).to have_text("harrypotter@hogwarts.edu")
       expect(page).to have_text("pending")
     end
+
+    it "invitation can't be sent if contact email isn't set", js: true do
+      incomplete_event = create(:event, name: "My Event", contact_email: "")
+      create(:teammate, event: incomplete_event, user: organizer_user, role: "organizer")
+
+      login_as(organizer_user)
+      visit event_staff_teammates_path(incomplete_event)
+
+      click_link "Invite new teammate"
+      fill_in "Email", with: "harrypotter@hogwarts.edu"
+      select("reviewer", from: "Role")
+      click_button "Invite"
+
+      expect(current_path).to eq(event_staff_edit_path(incomplete_event))
+      expect(page).to have_content "You must set a contact email for this event before inviting teammates."
+    end
   end
 
   context "editing existing teammates" do

@@ -13,6 +13,14 @@ class Staff::ApplicationController < ApplicationController
     end
   end
 
+  def require_contact_email
+    if @event.contact_email.empty?
+      session[:target] = request.path
+      flash[:danger] = "You must set a contact email for this event before inviting teammates."
+      redirect_to event_staff_edit_path(@event)
+    end
+  end
+
   def staff_signed_in?
     user_signed_in? && @event && (current_user.organizer_for_event?(@event) || current_user.reviewer_for_event?(@event))
   end

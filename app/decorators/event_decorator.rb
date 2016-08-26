@@ -8,7 +8,7 @@ class EventDecorator < ApplicationDecorator
   end
 
   def proposals_you_rated_message
-    rated_count = h.current_user.ratings.for_event(object).size
+    rated_count = h.current_user.ratings.not_withdrawn.for_event(object).size
     proposals_count = object.proposals.not_withdrawn.not_owned_by(h.current_user).size
 
     message = "#{rated_count}/#{proposals_count}"

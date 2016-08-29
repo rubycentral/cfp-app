@@ -97,32 +97,32 @@
                 %td.text-primary
                   %strong Event Url:
                 - if event.url.present?
-                  %td.set= link_to "Set", event_staff_info_path
+                  %td.set= link_to "Set", event_staff_edit_path
                 - else
-                  %td.missing= link_to "Missing", event_staff_info_path
+                  %td.missing= link_to "Missing", event_staff_edit_path
               %tr
                 %td.text-primary
                   %strong Event Dates:
                 - if event.start_date.present? && event.end_date.present?
-                  %td.set= link_to "Set", event_staff_info_path
+                  %td.set= link_to "Set", event_staff_edit_path
                 - else
-                  %td.missing= link_to "Missing", event_staff_info_path
+                  %td.missing= link_to "Missing", event_staff_edit_path
               %tr
                 %td.text-primary
                   %strong Contact Email:
                 - if event.contact_email.present?
-                  %td.set= link_to "Set", event_staff_info_path
+                  %td.set= link_to "Set", event_staff_edit_path
                 - else
-                  %td.missing= link_to "Missing", event_staff_info_path
+                  %td.missing= link_to "Missing", event_staff_edit_path
               %tr
                 %td.text-primary
                   %strong CFP Closes Date:
                 - if event.closes_at && (event.closes_at > Time.current)
-                  %td.set= link_to "Set", event_staff_info_path
+                  %td.set= link_to "Set", event_staff_edit_path
                 -elsif event.closes_at && (event.closes_at <= Time.current)
-                  %td.missing= link_to "Date has Passed", event_staff_info_path
+                  %td.missing= link_to "Date has Passed", event_staff_edit_path
                 - else
-                  %td.missing= link_to "Missing", event_staff_info_path
+                  %td.missing= link_to "Missing", event_staff_edit_path
               %tr
                 %td.text-primary
                   %strong Public Session Formats:

@@ -2,9 +2,9 @@
   .col-md-12
     .page-header
       %h1
-        #{event} Speaker Email Notifications
+        Speaker Email Notification Templates
 
 .row
   .col-md-12
-    = form_for event, url: event_staff_update_path(event), html: {role: 'form'} do |f|
+    = form_for event, url: event_staff_update_speaker_emails_path(event), html: {role: 'form'} do |f|
       = render partial: "speaker_notifications_form", locals: {f: f}

@@ -1,33 +1,21 @@
 .row
-  .col-md-6
+  .col-md-7
     %fieldset
-      %h2 Speaker Notifications
-      %p.help-block These fields control the text that is displayed in notification emails that are sent to speakers.
-      - f.object.speaker_notification_emails.each do |type, text|
-        .form-group
-          = f.label type
-          = f.text_area type, class: 'form-control', rows: 10, placeholder: "Please enter some text", value: text, autofocus: true
-  .col-md-6
-    %fieldset
-      .panel.panel-default
-        .panel-heading
-          .panel-title Email markup
-      .panel-body
-        %p Paragraphs are separated by two newlines.
-        %p
-          You can insert the proposal title using:
-          %br
-          %code ::proposal_title::
-        %p
-          You can insert the confirmation link* using:
-          %br
-          %code ::confirmation_link::
-        %p
-          You can insert the confirmation link with some link text using:
-          %br
-          %code ::This is my link text|confirmation_link::
-        %p.help-block * confirmation link is not available in Reject emails
-        %br
-        %br
-        - if current_user.organizer_for_event?(event)
-          %button.pull-left.btn.btn-lg.btn-success{type: "submit"} Save
+      - SpeakerEmailTemplate::TYPES.each do |type_key|
+        = render partial: "speaker_notification_email_template", locals: {f: f, type_key: type_key, type_text: SpeakerEmailTemplate::DISPLAY_TYPES[type_key], text: f.object.speaker_notification_emails[type_key]}
+  .col-md-5.email-markup-help
+    %h3 Email markup
+    %p Paragraphs are separated by two newlines.
+    %p
+      You can insert the proposal title using:
+      %br
+      %code ::proposal_title::
+    %p
+      You can insert the confirmation link* using:
+      %br
+      %code ::confirmation_link::
+    %p
+      You can insert the confirmation link with some link text using:
+      %br
+      %code ::This is my link text|confirmation_link::
+    %p.help-block * confirmation link is not available in Reject emails

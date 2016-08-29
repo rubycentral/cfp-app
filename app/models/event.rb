@@ -50,6 +50,13 @@ class Event < ActiveRecord::Base
     validates :guidelines, presence: { message: 'Guidelines must be defined before event can be opened.' }
   end
 
+  def remove_speaker_email_template(template)
+    attr = SpeakerEmailTemplate::TYPES.find { |type| type == template }
+    if attr
+      update_attribute(attr, "")
+    end
+  end
+
   def public_tags?
     proposal_tags.any?
   end

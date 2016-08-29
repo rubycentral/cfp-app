@@ -80,4 +80,28 @@ module ApplicationHelper
     "#{controller_path.tr('/','_')}_#{action_name}"
   end
 
+  def speaker_nav?
+    current_user.proposals.present? || current_user.pending_invitations.present?
+  end
+
+  def review_nav?
+    current_user.reviewer_for_event?(current_event)
+  end
+
+  def program_nav?
+    # add program team to the check
+    current_user.organizer_for_event?(current_event)
+  end
+
+  def schedule_nav?
+    current_user.organizer_for_event?(current_event)
+  end
+
+  def staff_nav?
+    event_staff?(current_event)
+  end
+
+  def admin_nav?
+    current_user.admin?
+  end
 end

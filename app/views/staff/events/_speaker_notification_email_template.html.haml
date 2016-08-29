@@ -1,0 +1,15 @@
+%section.template-section{class: "template-#{type}"}
+  = f.label type
+  .template-short
+    %p= text.truncate(100)
+  .template-preview
+    %p= text
+  .template-edit.form-group
+    = f.text_area type, class: 'form-control', rows: 10, placeholder: "Please enter some text", value: text
+  .form-group
+    %button.btn.btn-sm.btn-primary.template-preview-btn Preview
+    %button.btn.btn-sm.btn-primary.template-exit-preview-btn Exit Preview
+    %button.btn.btn-sm.btn-primary.template-edit-btn Edit
+    %button.btn.btn-sm.btn-primary.template-save-btn Save
+    %button.btn.btn-sm.btn-primary.template-remove-btn Remove
+    %button.btn.btn-sm.btn-primary.template-cancel-btn Cancel

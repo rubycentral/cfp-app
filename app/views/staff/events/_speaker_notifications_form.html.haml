@@ -4,9 +4,7 @@
       %h2 Speaker Notifications
       %p.help-block These fields control the text that is displayed in notification emails that are sent to speakers.
       - f.object.speaker_notification_emails.each do |type, text|
-        .form-group
-          = f.label type
-          = f.text_area type, class: 'form-control', rows: 10, placeholder: "Please enter some text", value: text
+        = render partial: "speaker_notification_email_template", locals: {f: f, type: type, text: text}
   .col-md-6
     %fieldset
       .panel.panel-default

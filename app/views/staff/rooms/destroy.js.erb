@@ -8,3 +8,6 @@ reloadTimeSlotsTable(<%=raw time_slots.rows.to_json %>);
   document.getElementById('missing-prereq-messages').innerHTML =
     '<%=j unmet_requirements(room.event) %>';
 <% end %>
+
+document.getElementById('flash').innerHTML = '<%=j show_flash %>';
+$("html, body").animate({ scrollTop: 0 }, "slow");

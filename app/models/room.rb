@@ -2,7 +2,7 @@ class Room < ActiveRecord::Base
   belongs_to :event
   has_many :time_slots
 
-  validates :name, uniqueness: true
+  validates :name, uniqueness: true, presence: true
   scope :by_grid_position, -> {where.not(grid_position: nil).order(:grid_position)}
 end
 

@@ -29,6 +29,15 @@
   }
 }
 
+#room-new-dialog {
+  .errors {
+    background-color: #edd1d1;
+    color: darken(#edd1d1, 50%);
+    border-radius: .25em;
+    padding-left: .25em;
+  }
+}
+
 .tab-content { margin-top: 20px; }
 
 #schedule {

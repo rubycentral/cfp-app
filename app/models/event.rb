@@ -106,7 +106,7 @@ class Event < ActiveRecord::Base
   end
 
   def generate_slug
-    self.slug = name.parameterize if slug.blank?
+    self.slug = name.parameterize if name.present? && slug.blank?
   end
 
   def to_s

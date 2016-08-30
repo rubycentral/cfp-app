@@ -69,7 +69,7 @@ If your talk is about seed data in Rails apps, we want to hear about it!
                             review_tags: %w(beginner intermediate advanced))
 
   # Session Formats
-  lightning_talk   = seed_event.public_session_formats.create(name: "Lightning Talk", duration: 5, description: "Warp speed! Live your audience breathless and thirsty for more.")
+  lightning_talk   = seed_event.public_session_formats.create(name: "Lightning Talk", duration: 5, description: "Warp speed! Leave your audience breathless and thirsty for more.")
   short_session    = seed_event.public_session_formats.create(name: "Short Talk", duration: 40, description: "Kinda short! Talk fast. Talk hard.")
   long_session     = seed_event.public_session_formats.create(name: "Long Talk", duration: 120, description: "Longer talk allows a speaker put more space in between words, hand motions.")
   internal_session = seed_event.session_formats.create(name: "Beenote", public: false, duration: 180, description: "Involves live bees.")

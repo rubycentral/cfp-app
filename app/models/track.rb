@@ -4,6 +4,7 @@ class Track < ActiveRecord::Base
   has_many :proposals
 
   validates :name, uniqueness: {scope: :event}, presence: true
+  validates :description, length: {maximum: 250}
 
   def self.count_by_track(event)
     event.tracks.joins(:program_sessions).group(:name).count

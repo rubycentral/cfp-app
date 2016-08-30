@@ -1,4 +1,5 @@
 class Staff::TracksController < Staff::SchedulesController
+
   before_action :set_track, only: [:edit, :update, :destroy]
 
   def index
@@ -19,8 +20,10 @@ class Staff::TracksController < Staff::SchedulesController
 
   def create
     track = @event.tracks.build(track_params)
-    unless track.save
-      flash.now[:warning] = "There was a problem saving your track"
+    if track.save
+      flash.now[:success] = "#{track.name} has been added to tracks."
+    else
+      flash.now[:danger] = "There was a problem saving your track, #{track.errors.full_messages.join(", ")}."
     end
     respond_to do |format|
       format.js do
@@ -30,7 +33,11 @@ class Staff::TracksController < Staff::SchedulesController
   end
 
   def update
-    @track.update_attributes(track_params)
+    if @track.update_attributes(track_params)
+      flash.now[:success] = "#{@track.name} has been updated."
+    else
+      flash.now[:danger] = "There was a problem updating your track, #{@track.errors.full_messages.join(", ")}."
+    end
     respond_to do |format|
       format.js do
         render locals: { track: @track }
@@ -39,9 +46,11 @@ class Staff::TracksController < Staff::SchedulesController
   end
 
   def destroy
-    @track.destroy
-
-    flash.now[:info] = "This track has been deleted."
+    if @track.destroy
+      flash.now[:success] = "#{@track.name} has been deleted from tracks."
+    else
+      flash.now[:danger] = "There was a problem deleting the #{@track.name} track."
+    end
     respond_to do |format|
       format.js do
         render locals: { track: @track }

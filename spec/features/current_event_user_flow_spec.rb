@@ -58,7 +58,7 @@ feature "A user sees correct information for the current event and their role" d
     expect(current_path).to eq(events_path)
 
     within ".navbar" do
-      expect(page).to have_link("CFPApp")
+      expect(page).to have_link("CFP App")
       expect(page).to_not have_link("My Proposals")
       expect(page).to have_link("", href: "/notifications")
       expect(page).to have_link(normal_user.name)
@@ -113,7 +113,7 @@ feature "A user sees correct information for the current event and their role" d
     signin(normal_user.email, normal_user.password)
 
     within ".navbar" do
-      expect(page).to have_content("CFPApp")
+      expect(page).to have_content("CFP App")
       expect(page).to have_link("", href: "/notifications")
       expect(page).to have_link(normal_user.name)
     end

@@ -10,7 +10,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   helper_method :current_event
-  helper_method :user_signed_in?
   helper_method :reviewer?
   helper_method :organizer?
   helper_method :event_staff?
@@ -46,7 +45,7 @@ class ApplicationController < ActionController::Base
 
   def set_current_event(event_id)
     @current_event = Event.find_by(id: event_id).try(:decorate)
-    session[:current_event_id] = event_id
+    session[:current_event_id] = @current_event.try(:id)
     @current_event
   end
 
@@ -58,8 +57,10 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:sign_up, keys: [:pending_invite_email])
   end
 
-  def event_staff?(current_event)
-    current_user && current_event.teammates.where(user_id: current_user.id).any?
+  def event_staff?(event)
+    if event && current_user
+      event.teammates.where(user_id: current_user.id).any?
+    end
   end
 
   def reviewer?
@@ -68,10 +69,6 @@ class ApplicationController < ActionController::Base
 
   def organizer?
     @is_organizer ||= current_user.organizer?
-  end
-
-  def user_signed_in?
-    current_user.present?
   end
 
   def require_user

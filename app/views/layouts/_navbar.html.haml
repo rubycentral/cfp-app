@@ -5,30 +5,44 @@
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      - if current_event && current_event.slug
+      - if current_event
         = link_to "#{current_event.name} CFP", event_path(current_event), class: 'navbar-brand'
       - else
-        = link_to "#{Rails.application.class.parent_name}", events_path, class: 'navbar-brand'
+        = link_to "CFP App", events_path, class: 'navbar-brand'
 
     .collapse.navbar-collapse
-      - if user_signed_in?
+      - if current_user
         %ul.nav.navbar-nav.navbar-right
-          - if current_user.proposals.present? || current_user.pending_invitations.present?
-            = render partial: "layouts/nav/proposals_link"
+          - if speaker_nav?
+            %li{class: "my-proposals-link"}
+              = link_to proposals_path do
+                %i.fa.fa-file-text
+                %span My Proposals
 
-          - if current_event && current_user.reviewer_for_event?(current_event)
-            = render partial: "layouts/nav/reviewer_nav"
+          - if review_nav?
+            %li{class: "event-proposals-link"}
+              = link_to event_staff_proposals_path(current_event) do
+                %i.fa.fa-file-text
+                %span Review Proposals
 
-          - if current_event && current_user.organizer_for_event?(current_event)
-            = render partial: "layouts/nav/organizer_nav"
+          - if program_nav?
+            %li{class: "#{request.path == event_staff_program_path(current_event) ? 'active' : ''}"}
+              = link_to event_staff_program_path(current_event) do
+                %i.fa.fa-list
+                %span Program
+          - if schedule_nav?
+            %li{class: "#{request.path == event_staff_time_slots_path(current_event) ? 'active' : ''}"}
+              = link_to event_staff_time_slots_path(current_event) do
+                %i.fa.fa-calendar
+                Schedule
 
-          - if current_event && policy(current_event).staff?
+          - if staff_nav?
             %li{class: "event-dashboard-link"}
               = link_to event_staff_path(current_event) do
                 %i.fa.fa-dashboard
                 %span Event Dashboard
 
-          - if current_user && current_user.admin?
+          - if admin_nav?
             = render partial: "layouts/nav/admin_nav"
 
           = render partial: "layouts/nav/notifications_list"
@@ -39,14 +53,5 @@
         %ul.nav.navbar-nav.navbar-right
           %li= link_to "Log in", new_user_session_path
 
-- if action_name == "current_styleguide" && user_signed_in?
-  .subnavbar
-    .subnavbar-inner
-      .container-fluid
-        %ul.mainnav
-          %li{class: "#{request.path == events_path ? 'active' : ''}"}
-            =link_to events_path do
-              %i.fa.fa-dashboard
-              %span Dashboard
-
-= render partial: "layouts/nav/staff_subnav" if display_staff_subnav?
+- if display_staff_subnav?
+  = render partial: "layouts/nav/staff_subnav"

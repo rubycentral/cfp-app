@@ -1,8 +1,0 @@
-%li{class: "#{request.path == event_staff_program_path(current_event) ? 'active' : ''}"}
-  = link_to event_staff_program_path(current_event) do
-    %i.fa.fa-list
-    %span Program
-%li{class: "#{request.path == event_staff_time_slots_path(current_event) ? 'active' : ''}"}
-  = link_to event_staff_time_slots_path(current_event) do
-    %i.fa.fa-calendar
-    Schedule

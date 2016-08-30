@@ -1,0 +1,19 @@
+.navbar.navbar-default.program-subnav
+  .container-fluid
+    %ul.nav.navbar-nav
+      %li
+        = link_to selection_event_staff_program_proposals_path do
+          %i.fa.fa-gavel
+          %span Selection
+      %li
+        = link_to event_staff_program_proposals_path do
+          %i.fa.fa-balance-scale
+          %span Proposals
+      %li
+        = link_to event_staff_program_sessions_path do
+          %i.fa.fa-check
+          %span Sessions
+      %li
+        = link_to event_staff_program_speakers_path do
+          %i.fa.fa-users
+          %span Speakers

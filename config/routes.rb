@@ -51,14 +51,24 @@ Rails.application.routes.draw do
 
       resources :teammates, path: 'team'
 
-      controller :program do
-        get 'program' => 'program#show'
-        get 'program-selection' => 'program#selection'
+      # Reviewer flow for proposals
+      resources :proposals, controller: 'proposal_reviews', only: [:index, :show, :update], param: :uuid do
+        resources :ratings, only: [:create, :update], defaults: {format: :js}
       end
 
-      scope path: 'program' do
+      scope :program, as: 'program' do
+        get '/', to: 'program#show'
+
+        resources :proposals, param: :uuid do
+          collection do
+            get 'selection'
+          end
+          post :finalize
+          post :update_state
+        end
+
         resources :speakers, only: [:index, :show, :edit, :update, :destroy]
-        resources :program_sessions do
+        resources :program_sessions, as: 'sessions' do
           resources :speakers, only: [:new, :create]
         end
       end
@@ -67,16 +77,6 @@ Rails.application.routes.draw do
       resources :time_slots, except: :show
       resources :session_formats, except: :show
       resources :tracks, except: [:show]
-      # Reviewer flow for proposals
-      resources :proposals, controller: 'proposal_reviews', only: [:index, :show, :update], param: :uuid do
-        resources :ratings, only: [:create, :update], defaults: {format: :js}
-      end
-      # Organizer flow for proposals (temporary. will probably get refactored)
-      resources :proposals, param: :uuid do
-        resources :speakers, only: [:new, :create]
-        post :finalize
-        post :update_state
-      end
 
       controller :speakers do
         get :speaker_emails, action: :emails #returns json of speaker emails

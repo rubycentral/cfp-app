@@ -29,13 +29,13 @@
             %td= link_to speaker.program_session.title, "#" # should this go to a program session show page?
             %td{ id: "speaker-action-buttons-#{speaker.id}" }
               %span>
-                = link_to "Edit", edit_event_staff_speaker_path(current_event, speaker), class: "btn btn-primary btn-xs"
+                = link_to "Edit", edit_event_staff_program_speaker_path(current_event, speaker), class: "btn btn-primary btn-xs"
               %span>
                 = link_to "Add Speaker", new_event_staff_program_session_speaker_path(current_event, speaker.program_session), class: "btn btn-primary btn-xs"
               %span>
                 - if speaker.program_session.multiple_speakers?
                   = link_to "Remove",
-                    event_staff_speaker_path(current_event, speaker),
+                    event_staff_program_speaker_path(current_event, speaker),
                     method: :delete,
                     data: { confirm: "Are you sure you want to remove this speaker?" },
                     class: "btn btn-danger btn-xs"

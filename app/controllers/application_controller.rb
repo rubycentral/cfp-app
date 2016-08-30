@@ -13,7 +13,8 @@ class ApplicationController < ActionController::Base
   helper_method :reviewer?
   helper_method :organizer?
   helper_method :event_staff?
-  helper_method :display_staff_subnav?
+  helper_method :display_staff_event_subnav?
+  helper_method :display_staff_program_subnav?
 
   before_action :current_event
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -114,11 +115,19 @@ class ApplicationController < ActionController::Base
     @title = title[0..25] if title
   end
 
-  def enable_staff_subnav
+  def enable_staff_event_subnav
     @display_staff_subnav = true
   end
 
-  def display_staff_subnav?
+  def display_staff_event_subnav?
     @display_staff_subnav
+  end
+
+  def enable_staff_program_subnav
+    @display_program_subnav = true
+  end
+
+  def display_staff_program_subnav?
+    @display_program_subnav
   end
 end

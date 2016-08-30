@@ -36,7 +36,7 @@ feature "Organizers can manage speakers for Program Sessions" do
   before :each do
     logout
     login_as(organizer_user)
-    visit event_staff_speakers_path(event)
+    visit event_staff_program_speakers_path(event)
   end
 
   context "An organizer" do
@@ -87,7 +87,7 @@ feature "Organizers can manage speakers for Program Sessions" do
       fill_in "speaker[speaker_email]", with: "zorro@swords.com"
       click_on "Save"
 
-      expect(current_path).to eq(event_staff_speakers_path(event))
+      expect(current_path).to eq(event_staff_program_speakers_path(event))
 
       expect(page).to have_content "Zorro has been added to #{program_session_2.title}"
 
@@ -151,7 +151,7 @@ feature "Organizers can manage speakers for Program Sessions" do
         click_on "Edit"
       end
 
-      expect(current_path).to eq(edit_event_staff_speaker_path(event, speaker_3))
+      expect(current_path).to eq(edit_event_staff_program_speaker_path(event, speaker_3))
 
       fill_in "speaker[speaker_name]", with: "New Name"
       fill_in "speaker[speaker_email]", with: "new@email.com"
@@ -159,7 +159,7 @@ feature "Organizers can manage speakers for Program Sessions" do
 
       click_on "Save"
 
-      expect(current_path).to eq(event_staff_speakers_path(event))
+      expect(current_path).to eq(event_staff_program_speakers_path(event))
 
       expect(page).to_not have_content(old_name)
       expect(page).to_not have_content(old_email)

@@ -7,7 +7,7 @@ class Staff::ProfilesController < Staff::ApplicationController
   def update
     @user = Speaker.find(params[:id]).user
     if @user.update(user_params)
-      redirect_to event_staff_speakers_url(event)
+      redirect_to event_staff_program_speakers_url(event)
     else
       if @user.email == ""
         @user.errors[:email].clear

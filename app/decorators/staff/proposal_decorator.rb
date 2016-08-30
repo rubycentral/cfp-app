@@ -27,7 +27,7 @@ class Staff::ProposalDecorator < ProposalDecorator
 
   def title_link
     link = h.link_to h.truncate(object.title, length: 45),
-                     h.event_staff_proposal_path(object.event, object)
+                     h.event_staff_program_proposal_path(object.event, object)
     link += state_label(small: true) if object.withdrawn?
 
     link
@@ -111,7 +111,7 @@ class Staff::ProposalDecorator < ProposalDecorator
   end
 
   def update_state_path(state)
-    h.event_staff_proposal_update_state_path(object.event, object, new_state: state)
+    h.event_staff_program_proposal_update_state_path(object.event, object, new_state: state)
   end
 
   def buttons

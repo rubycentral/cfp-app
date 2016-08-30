@@ -1,4 +1,6 @@
 class Staff::ProgramController < Staff::ApplicationController
+  before_action :enable_staff_program_subnav
+
   def show
     accepted_proposals =
         @event.proposals.for_state(Proposal::State::ACCEPTED)

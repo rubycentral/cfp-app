@@ -2,6 +2,8 @@ class Staff::ProposalsController < Staff::ApplicationController
   before_action :require_proposal, except: [:index, :new, :create, :edit_all]
   before_action :prevent_self, only: [:show, :update]
 
+  before_action :enable_staff_program_subnav
+
   decorates_assigned :proposal, with: Staff::ProposalDecorator
 
   def finalize
@@ -88,6 +90,9 @@ class Staff::ProposalsController < Staff::ApplicationController
       flash.now[:danger] = "There was a problem saving your proposal; please review the form for issues and try again."
       render :new
     end
+  end
+
+  def selection
   end
 
   private

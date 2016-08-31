@@ -1,5 +1,5 @@
 class Staff::EventsController < Staff::ApplicationController
-  before_action :enable_staff_subnav
+  before_action :enable_staff_event_subnav
 
   def edit
     authorize @event, :edit?

@@ -22,19 +22,20 @@
           - if review_nav?
             %li{class: "event-proposals-link"}
               = link_to event_staff_proposals_path(current_event) do
-                %i.fa.fa-file-text
+                %i.fa.fa-balance-scale
                 %span Review Proposals
 
           - if program_nav?
             %li{class: "#{request.path == event_staff_program_path(current_event) ? 'active' : ''}"}
               = link_to event_staff_program_path(current_event) do
-                %i.fa.fa-list
+                %i.fa.fa-sitemap
                 %span Program
+
           - if schedule_nav?
             %li{class: "#{request.path == event_staff_time_slots_path(current_event) ? 'active' : ''}"}
               = link_to event_staff_time_slots_path(current_event) do
                 %i.fa.fa-calendar
-                Schedule
+                %span Schedule
 
           - if staff_nav?
             %li{class: "event-dashboard-link"}
@@ -53,5 +54,8 @@
         %ul.nav.navbar-nav.navbar-right
           %li= link_to "Log in", new_user_session_path
 
-- if display_staff_subnav?
-  = render partial: "layouts/nav/staff_subnav"
+- if display_staff_event_subnav?
+  = render partial: "layouts/nav/staff/event_subnav"
+
+- elsif display_staff_program_subnav?
+  = render partial: "layouts/nav/staff/program_subnav"

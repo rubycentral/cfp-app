@@ -1,5 +1,5 @@
 class Staff::TeammatesController < Staff::ApplicationController
-  before_action :enable_staff_subnav
+  before_action :enable_staff_event_subnav
   before_action :require_contact_email, only: [:create]
   respond_to :html, :json
 

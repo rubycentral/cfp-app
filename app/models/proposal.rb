@@ -42,6 +42,7 @@ class Proposal < ActiveRecord::Base
   after_save :save_tags, :save_review_tags, :touch_updated_by_speaker_at
 
   scope :accepted, -> { where(state: ACCEPTED) }
+  scope :soft_accepted, -> { where(state: SOFT_ACCEPTED) }
   scope :confirmed, -> { where("confirmed_at IS NOT NULL") }
   scope :submitted, -> { where(state: SUBMITTED) }
   scope :soft_rejected, -> { where(state: SOFT_REJECTED) }
@@ -50,9 +51,11 @@ class Proposal < ActiveRecord::Base
   scope :not_withdrawn, -> {where.not(state: WITHDRAWN)}
   scope :not_owned_by, ->(user) {where.not(id: user.proposals.pluck(:id))}
   scope :waitlisted, -> { where(state: WAITLISTED) }
+  scope :soft_waitlisted, -> { where(state: SOFT_WAITLISTED) }
   scope :for_state, ->(state) do
     where(state: state).order(:title).includes(:event, {speakers: :user}, :review_taggings)
   end
+  scope :in_track, ->(track) { where(track: track)}
 
   scope :emails, -> { joins(speakers: :user).pluck(:email).uniq }
 
@@ -200,6 +203,56 @@ class Proposal < ActiveRecord::Base
     success = update_attributes(params)
     @dont_touch_updated_by_speaker_at = false
     success
+  end
+
+  ## Stats
+
+  def self.rated_count(event, include_withdrawn=false)
+    q = event.proposals.rated
+    q = q.not_withdrawn if include_withdrawn
+    q.size
+  end
+
+  def self.total_count(event, include_withdrawn=false)
+    q = event.proposals
+    q = q.not_withdrawn if include_withdrawn
+    q.size
+  end
+
+  def self.user_rated_count(user, event, include_withdrawn=false)
+    q = user.ratings.for_event(event)
+    q = q.not_withdrawn if include_withdrawn
+    q.size
+  end
+
+  def self.user_ratable_count(user, event, include_withdrawn=false)
+    q = event.proposals.not_owned_by(user)
+    q = q.not_withdrawn if include_withdrawn
+    q.size
+  end
+
+  def self.accepted_count(event, track='all')
+    q = event.proposals.accepted
+    q = q.in_track(track) unless track=='all'
+    q.size
+  end
+
+  def self.waitlisted_count(event, track='all')
+    q = event.proposals.waitlisted
+    q = q.in_track(track) unless track=='all'
+    q.size
+  end
+
+  def self.soft_accepted_count(event, track='all')
+    q = event.proposals.soft_accepted
+    q = q.in_track(track) unless track=='all'
+    q.size
+  end
+
+  def self.soft_waitlisted_count(event, track='all')
+    q = event.proposals.soft_waitlisted
+    q = q.in_track(track) unless track=='all'
+    q.size
   end
 
   private

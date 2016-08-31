@@ -2,22 +2,15 @@ class EventDecorator < ApplicationDecorator
   delegate_all
 
   def proposals_rated_overall_message
-    overall_rated_count = event.proposals.rated.not_withdrawn.size
-    total_proposals_count = object.proposals.not_withdrawn.size
+    overall_rated_count = Proposal.rated_count(object)
+    total_proposals_count = Proposal.total_count(object)
     "#{overall_rated_count}/#{total_proposals_count}"
   end
 
   def proposals_you_rated_message
-    rated_count = h.current_user.ratings.not_withdrawn.for_event(object).size
-    proposals_count = object.proposals.not_withdrawn.not_owned_by(h.current_user).size
-
-    message = "#{rated_count}/#{proposals_count}"
-    #
-    # if rated_count == proposals_count
-    #   message += " (\/)!_!(\/) You rated everything? Nice work! (\/)!_!(\/)"
-    # end
-
-    message
+    rated_count = Proposal.user_rated_count(h.current_user, object)
+    proposals_count = Proposal.user_ratable_count(h.current_user, object)
+    "#{rated_count}/#{proposals_count}"
   end
 
   def path_for(user)

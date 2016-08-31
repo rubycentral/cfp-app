@@ -36,6 +36,11 @@ class Staff::ProposalsController < Staff::ApplicationController
   end
 
   def selection
+    @proposals = @event.proposals.working_program
+                 .includes(:event, :review_taggings, :ratings,
+                           {speakers: :user}).load
+    @proposals = Staff::ProposalsDecorator.decorate(@proposals)
+    @taggings_count = Tagging.count_by_tag(@event)
   end
 
   def finalize

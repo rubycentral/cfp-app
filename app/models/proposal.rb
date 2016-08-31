@@ -42,18 +42,19 @@ class Proposal < ActiveRecord::Base
   after_save :save_tags, :save_review_tags, :touch_updated_by_speaker_at
 
   scope :accepted, -> { where(state: ACCEPTED) }
-  scope :soft_accepted, -> { where(state: SOFT_ACCEPTED) }
-  scope :confirmed, -> { where("confirmed_at IS NOT NULL") }
+  scope :waitlisted, -> { where(state: WAITLISTED) }
   scope :submitted, -> { where(state: SUBMITTED) }
+  scope :confirmed, -> { where("confirmed_at IS NOT NULL") }
+
   scope :soft_accepted, -> { where(state: SOFT_ACCEPTED) }
   scope :soft_waitlisted, -> { where(state: SOFT_WAITLISTED) }
   scope :soft_rejected, -> { where(state: SOFT_REJECTED) }
+  scope :working_program, -> { where(state: [SOFT_ACCEPTED, SOFT_WAITLISTED]) }
+
   scope :unrated, -> { where('id NOT IN ( SELECT proposal_id FROM ratings )') }
   scope :rated, -> { where('id IN ( SELECT proposal_id FROM ratings )') }
   scope :not_withdrawn, -> {where.not(state: WITHDRAWN)}
   scope :not_owned_by, ->(user) {where.not(id: user.proposals.pluck(:id))}
-  scope :waitlisted, -> { where(state: WAITLISTED) }
-  scope :soft_waitlisted, -> { where(state: SOFT_WAITLISTED) }
   scope :for_state, ->(state) do
     where(state: state).order(:title).includes(:event, {speakers: :user}, :review_taggings)
   end

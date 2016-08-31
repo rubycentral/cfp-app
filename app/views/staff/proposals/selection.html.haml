@@ -44,17 +44,18 @@
     %ul.selection-counts
       %li.total.soft-accepted
         %span Soft Accepted
-        %span.badge 1
+        %span.badge= @soft_accepted_count
       %li.total.soft-waitlisted
         %span Soft Waitlisted
-        %span.badge 1
+        %span.badge= @soft_waitlisted_count
       %li
         %span By Track:
         %form.track-select{:action => '', :method => 'get'}
           %select{:name => 'param_name'}
             %option{:value => 'A'} All
             %option{:value => 'B'} General
-            %option{:value => 'C'} Track blah
+            %option{:value => 'C'} Track one
+            %option{:value => 'D'} Track two
       %li.by-track.soft-accepted
         %span Soft Accepted
         %span.badge 1

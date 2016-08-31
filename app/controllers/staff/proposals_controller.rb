@@ -2,6 +2,7 @@ class Staff::ProposalsController < Staff::ApplicationController
   before_action :require_proposal, only: [:show, :update_state, :finalize]
 
   before_action :enable_staff_program_subnav
+  before_action :set_proposal_counts
 
   decorates_assigned :proposal, with: Staff::ProposalDecorator
 

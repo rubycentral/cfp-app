@@ -3,10 +3,10 @@
     %ul.nav.navbar-nav
       %li.static.total.soft-accepted
         %span Soft Accepted
-        %span.badge 12
+        %span.badge= @soft_accepted_count
       %li.static.total.soft-waitlisted
         %span Soft Waitlisted
-        %span.badge 9
+        %span.badge= @soft_waitlisted_count
       %li.static
         %span By Track:
         %form.track-select{:action => '', :method => 'get'}

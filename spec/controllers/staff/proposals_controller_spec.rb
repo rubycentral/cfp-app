@@ -35,14 +35,14 @@ describe Staff::ProposalsController, type: :controller do
   describe "POST 'update_state'" do
     it "returns http redirect" do
       post 'update_state', event_slug: event, proposal_uuid: proposal.uuid
-      expect(response).to redirect_to(event_staff_proposals_path(event))
+      expect(response).to redirect_to(event_staff_program_proposals_path(event))
     end
   end
 
   describe "POST 'finalize'" do
     it "returns http redirect" do
       post :finalize, event_slug: event, proposal_uuid: proposal.uuid
-      expect(response).to redirect_to(event_staff_proposal_path(event, proposal))
+      expect(response).to redirect_to(event_staff_program_proposal_path(event, proposal))
     end
 
     it "finalizes the state" do
@@ -64,28 +64,6 @@ describe Staff::ProposalsController, type: :controller do
         expect(Staff::ProposalMailer).to receive(mail_action).and_return(mail)
         post :finalize, event_slug: event, proposal_uuid: proposal.uuid
       end
-    end
-  end
-
-  context "reviewer has a submitted proposal" do
-    let!(:speaker) { create(:speaker, user: reviewer) }
-    let!(:speaker_proposal) { create(:proposal, speakers: [ speaker ], event: event) }
-
-    before :each do
-      sign_out(user)
-      sign_in(reviewer)
-    end
-
-
-    it "prevents reviewers from viewing their own proposals" do
-      get :show, event_slug: event.slug, uuid: speaker_proposal
-      expect(response).to redirect_to(event_staff_proposals_path(event_slug: event.slug))
-    end
-
-    it "prevents reviewers from updating their own proposals" do
-      get :update, event_slug: event.slug, uuid: speaker_proposal,
-        proposal: { review_tags: [ 'tag' ] }
-      expect(speaker_proposal.review_tags).to_not eq([ 'tag' ])
     end
   end
 

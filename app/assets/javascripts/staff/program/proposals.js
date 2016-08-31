@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
-  cfpDataTable('#organizer-proposals.datatable', ['number', 'number',
-      'number', 'number', 'text', 'text', 'text', 'text', 'text', null],
+  cfpDataTable('#organizer-proposals.datatable', ['number', 'number', 'number',
+        'text', 'text', 'text', 'text', 'text', 'text', 'text', null],
     {
       stateSaveParams: function () {
         var rows = $('[data-proposal-id]');
@@ -10,7 +10,8 @@ $(document).ready(function () {
           uuids.push($(row).data('proposal-uuid'));
         });
         localStorage.proposal_uuid_table_order = JSON.stringify(uuids);
-      }
+      },
+      'sDom': '<"top"i>Crt<"bottom"lp><"clear">'
     });
 
   // Replace next proposal link with valid proposal path

@@ -33,4 +33,11 @@
 .label-compact {
   font-size: $font-size-compact;
   display: inline-block;
+  padding: .2em .6em .35em;
+}
+
+.other-proposal-status .label,
+.proposal-status .label {
+  display: inline-block;
+  padding: .2em .6em .1em;
 }

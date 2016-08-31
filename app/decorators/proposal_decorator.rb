@@ -102,7 +102,6 @@ class ProposalDecorator < ApplicationDecorator
     state ||= self.state
 
     classes = "label #{state_class(state)}"
-    classes += ' status' unless small
     classes += ' label-mini' if small
 
     state += ' & confirmed' if proposal.confirmed? && show_confirmed

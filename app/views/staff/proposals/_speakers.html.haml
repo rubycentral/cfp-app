@@ -4,8 +4,3 @@
       = link_to(speaker.name, event_staff_program_speaker_path(speaker.proposal.event, speaker))
     %p
       = speaker.bio
-
-  - if current_user.organizer_for_event?(event)
-    = link_to(new_event_staff_program_proposal_speaker_path(event, @proposal), class: "btn btn-primary") do
-      %i.fa.fa-plus
-      Add Speakers

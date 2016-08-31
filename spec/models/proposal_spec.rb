@@ -177,20 +177,10 @@ describe Proposal do
         expect(proposal.state).to eq(WAITLISTED)
       end
 
-      it "converts symbolized state before saving" do
-        states = {
-          soft_rejected: SOFT_REJECTED,
-          soft_accepted: SOFT_ACCEPTED,
-          soft_waitlisted: SOFT_WAITLISTED,
-          soft_withdrawn: SOFT_WITHDRAWN,
-          accepted: ACCEPTED
-        }
-
-        proposal = create(:proposal)
-        states.each do |symbol, string|
-          proposal.update_state(symbol)
-          expect(proposal.state).to eq(string)
-        end
+      it "rejects invalid states" do
+        proposal = create(:proposal, state: ACCEPTED)
+        proposal.update_state('almonds!')
+        expect(proposal.errors.messages[:state][0]).to eq("'almonds!' not a valid state.")
       end
     end
   end

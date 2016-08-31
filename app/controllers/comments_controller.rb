@@ -5,23 +5,30 @@ class CommentsController < ApplicationController
     comment_attributes = comment_params.merge(proposal: @proposal,
                                               user: current_user)
 
-    case comment_type
-    when 'PublicComment'
-      @comment = @proposal.public_comments.create!(comment_attributes)
-    when 'InternalComment'
-      @comment = @proposal.internal_comments.create!(comment_attributes)
+    if comment_type == 'InternalComment'
+      @comment = @proposal.internal_comments.create(comment_attributes)
     else
-      raise "Unknown comment type: #{comment_type}"
+      @comment = @proposal.public_comments.create(comment_attributes)
+    end
+
+    if @comment.valid?
+      flash[:info] = "Your comment has been added"
+    else
+      flash[:danger] = "Couldn't post comment: #{@comment.errors.full_messages.to_sentence}"
     end
 
     # this action is used by the proposal show page for both speaker
     # and reviewer, so we reload the page they commented from
-    redirect_to :back, info: "Your comment has been added"
+    redirect_to :back
   end
 
   private
   def comment_type
-    params[:type] || 'PublicComment'
+    @comment_type ||= valid_comment_types.find{|t| t==params[:type]} || 'PublicComment'
+  end
+
+  def valid_comment_types
+    @valid_comment_types ||= ['PublicComment', 'InternalComment']
   end
 
   def comment_params

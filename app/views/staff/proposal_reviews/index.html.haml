@@ -30,7 +30,7 @@
   .col-sm-6.text-right
     %small.text-right <em>Hint:</em> Hold <kbd>shift</kbd> to sort by multiple columns
 .row
-  .col-md-offset-8.col-md-4
+  .col-sm-offset-6.col-sm-6
     %button.btn.btn-primary.btn-sm.pull-right#sort_reset Reset Sort Order
 
 .row
@@ -71,7 +71,8 @@
             %td.ratings-count
               = proposal.ratings.size
             %td.title
-              = proposal.title_link
+              = proposal.title_link_for_review
+              = state_label(small: true) if proposal.withdrawn?
             %td.session-format
               = proposal.session_format_name
             %td.track

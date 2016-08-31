@@ -1,4 +1,5 @@
 module Proposal::State
+  extend ActiveSupport::Concern
 
   # TODO: Currently a defect exists in the rake db:migrate task that is
   # causing our files to be loaded more than once. Because our files are being
@@ -27,5 +28,20 @@ module Proposal::State
       SOFT_WAITLISTED => WAITLISTED,
       SOFT_WITHDRAWN => WITHDRAWN
     }
+  end
+
+  included do
+    def self.valid_states
+      @valid_states ||= Proposal::State.constants.map{|c| const_get(c) if const_get(c).is_a?(String)}.compact!
+    end
+
+    # Create all state accessor methods like (accepted?, waitlisted?, etc...)
+    Proposal::State.constants.each do |constant|
+      next unless const_get(constant).is_a?(String)
+      method_name = constant.to_s.downcase + '?'
+      define_method(method_name) do
+        Proposal::State.const_get(constant) == self.state
+      end
+    end
   end
 end

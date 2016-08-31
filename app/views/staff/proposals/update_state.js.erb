@@ -3,14 +3,12 @@ if ($('table#organizer-proposals').length > 0) {
 
   var row = $('tr[data-proposal-id=<%= proposal.id %>]');
 
-  row.find(".actions .btn").toggleClass("hidden");
-
-  row.find(".status span").remove();
-  row.find(".status").append('<%=j proposal.state_label(small: true) %>');
+  row.find(".state-buttons .btn").toggleClass("hidden");
+  row.find(".proposal-status").html('<%=j proposal.state_label(small: true, show_confirmed: true) %>');
 
 } else {
   <%# We are in staff/proposals/show %>
 
-  $('#state_buttons').html('<%=j proposal.state_buttons %>');
-  $('#current_state').html('<%=j proposal.state_label %>');
+  $('.state-buttons').html('<%=j proposal.state_buttons(show_finalize: false) %>');
+  $('.proposal-status').html('<%=j proposal.state_label(small: true, show_confirmed: true) %>');
 }

@@ -91,12 +91,12 @@ feature 'Sign In', :devise do
     expect(current_path).to eq(admin_events_path)
   end
 
-  # Scenario: Speaker User gets redirected to the my proposals page
+  # Scenario: Speaker User gets redirected to the events page
   #   Given I exist as an speaker user
   #   And I am not signed in
   #   When I sign in
-  #   Then I see see the events_path
-  scenario 'speaker goes to the proposals_path' do
+  #   Then I see the events_path
+  scenario 'speaker with proposals goes to their proposals' do
     proposal = create(:proposal)
     speaker = create(:speaker)
     proposal.speakers << speaker
@@ -104,7 +104,7 @@ feature 'Sign In', :devise do
 
     signin(user.email, user.password)
     expect(current_path).to eq(proposals_path)
-    expect(page).to have_content(proposal.title)
+    expect(page).to have_content("Signed in successfully")
   end
 
   # Scenario: Incomplete User gets redirected to the edit_profile_path

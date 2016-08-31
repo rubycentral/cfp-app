@@ -31,10 +31,14 @@ class ApplicationController < ActionController::Base
       edit_profile_path
     elsif request.referrer.present? && request.referrer != new_user_session_url
       request.referrer
+    elsif event_staff?(current_event)
+      event_staff_path(current_event)
+    elsif user.proposals.any?
+      proposals_path
     elsif user.admin?
       admin_events_path
-    elsif user.proposals.any? #speaker
-      proposals_path
+    elsif current_event
+      event_path(current_event)
     else
       root_path
     end

@@ -2,6 +2,7 @@ class Staff::ProposalsController < Staff::ApplicationController
   before_action :require_proposal, only: [:show, :update_state, :finalize]
 
   before_action :enable_staff_program_subnav
+  before_action :set_proposal_counts
 
   decorates_assigned :proposal, with: Staff::ProposalDecorator
 
@@ -36,6 +37,11 @@ class Staff::ProposalsController < Staff::ApplicationController
   end
 
   def selection
+    @proposals = @event.proposals.working_program
+                 .includes(:event, :review_taggings, :ratings,
+                           {speakers: :user}).load
+    @proposals = Staff::ProposalsDecorator.decorate(@proposals)
+    @taggings_count = Tagging.count_by_tag(@event)
   end
 
   def finalize

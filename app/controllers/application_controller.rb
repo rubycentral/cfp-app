@@ -130,4 +130,9 @@ class ApplicationController < ActionController::Base
   def display_staff_program_subnav?
     @display_program_subnav
   end
+
+  def set_proposal_counts
+    @soft_accepted_count ||= Proposal.soft_accepted_count(current_event)
+    @soft_waitlisted_count ||= Proposal.soft_waitlisted_count(current_event)
+  end
 end

@@ -1,0 +1,103 @@
+.event-info-bar
+  .row
+    .col-md-8
+      .event-info.event-info-dense
+        %strong.event-title= event.name
+        - if event.start_date? && event.end_date?
+          %span.event-meta
+            %i.fa.fa-fw.fa-calendar
+            = event.date_range
+    .col-md-4.text-right.text-right-responsive
+      .event-info.event-info-dense
+        %span{:class => "event-meta event-status-badge event-status-#{event.status}"}
+          CFP
+          = event.status
+        - if event.open?
+          %span.event-meta
+            CFP closes:
+            %strong= event.closes_at(:month_day_year)
+.row
+  &nbsp;
+
+.row
+  .col-sm-offset-6.col-sm-6
+    .btn-nav.text-right
+      = link_to event_staff_proposals_path(format: "csv"), id: "download_link", class: "btn btn-info btn-sm" do
+        %span.glyphicon.glyphicon-download-alt
+        Download CSV
+.row
+  &nbsp;
+
+-#- if event.public_tags? && @taggings_count.present?
+-#  .row
+-#    .col-sm-7
+-#      - @taggings_count.sort_by{|k,v| v}.reverse.each_slice(6).to_a.each do |row|
+-#        %ul#columns.list-inline
+-#          -row.each do |name, count|
+-#            %li
+-#              .label.label-success
+-#                = name
+-#                = count
+
+.row
+  .col-sm-8.text-left
+    %ul.selection-counts
+      %li.total.soft-accepted
+        %span Soft Accepted
+        %span.badge= @soft_accepted_count
+      %li.total.soft-waitlisted
+        %span Soft Waitlisted
+        %span.badge= @soft_waitlisted_count
+      %li
+        %span By Track:
+        %form.track-select{:action => '', :method => 'get'}
+          %select{:name => 'param_name'}
+            %option{:value => 'A'} All
+            %option{:value => 'B'} General
+            %option{:value => 'C'} Track one
+            %option{:value => 'D'} Track two
+      %li.by-track.soft-accepted
+        %span Soft Accepted
+        %span.badge 1
+      %li.by-track.soft-waitlisted
+        %span Soft Waitlisted
+        %span.badge 1
+  .col-sm-4.text-right
+    %small.text-right <em>Hint:</em> Hold <kbd>shift</kbd> to sort by multiple columns
+
+.row
+  .col-md-12
+    %table#organizer-proposals-selection.datatable.table.table-striped.proposal-list
+      %thead
+        %tr
+          %th
+          %th
+          %th
+          %th
+          %th
+          %th
+          %th
+          %th.actions
+        %tr
+          %th Score
+          %th Speakers
+          %th Talk Title
+          %th Track
+          %th Session Format
+          %th Reviewer Tags
+          %th Status
+          %th.actions Soft Actions (Internal)
+      %tbody
+        - @proposals.each do |proposal|
+          %tr{ class: "proposal-#{proposal.id}", data: { 'proposal-id' => proposal.id, 'proposal-uuid' => proposal.uuid } }
+            %td= proposal.average_rating
+            %td= proposal.speaker_names
+            %td= proposal.title_link
+            %td= proposal.track_name
+            %td= proposal.session_format_name
+            %td= proposal.review_tags_labels
+            %td
+              %span.proposal-status= proposal.state_label(small: true, show_confirmed: true)
+            %td
+              %span.state-buttons= proposal.small_state_buttons
+

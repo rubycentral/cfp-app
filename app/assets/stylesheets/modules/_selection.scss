@@ -1,0 +1,20 @@
+ul.selection-counts {
+  padding: 0;
+
+  li {
+    display: inline;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom:    $navbar-padding-vertical;
+    padding-top:    $navbar-padding-vertical;
+
+    .track-select {
+      display: inline;
+    }
+  }
+
+  li.dropdown > a {
+    padding-bottom:    $navbar-padding-vertical;
+    padding-top:    $navbar-padding-vertical;
+  }
+}

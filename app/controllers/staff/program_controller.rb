@@ -1,5 +1,6 @@
 class Staff::ProgramController < Staff::ApplicationController
   before_action :enable_staff_program_subnav
+  before_action :set_proposal_counts
 
   def show
     accepted_proposals =

@@ -44,6 +44,8 @@ class Proposal < ActiveRecord::Base
   scope :accepted, -> { where(state: ACCEPTED) }
   scope :confirmed, -> { where("confirmed_at IS NOT NULL") }
   scope :submitted, -> { where(state: SUBMITTED) }
+  scope :soft_accepted, -> { where(state: SOFT_ACCEPTED) }
+  scope :soft_waitlisted, -> { where(state: SOFT_WAITLISTED) }
   scope :soft_rejected, -> { where(state: SOFT_REJECTED) }
   scope :unrated, -> { where('id NOT IN ( SELECT proposal_id FROM ratings )') }
   scope :rated, -> { where('id IN ( SELECT proposal_id FROM ratings )') }

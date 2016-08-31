@@ -3,6 +3,18 @@
 }
 
 .navbar-nav {
+  li.static {
+    color: #ccc;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom:    $navbar-padding-vertical;
+    padding-top:    $navbar-padding-vertical;
+
+    .track-select {
+      display: inline;
+    }
+  }
+
   li.dropdown > a {
     padding-bottom:    $navbar-padding-vertical;
     padding-top:    $navbar-padding-vertical;

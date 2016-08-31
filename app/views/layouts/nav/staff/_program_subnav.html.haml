@@ -1,6 +1,26 @@
 .navbar.navbar-default.program-subnav
   .container-fluid
     %ul.nav.navbar-nav
+      %li.static.total.soft-accepted
+        %span Soft Accepted
+        %span.badge 12
+      %li.static.total.soft-waitlisted
+        %span Soft Waitlisted
+        %span.badge 9
+      %li.static
+        %span By Track:
+        %form.track-select{:action => '', :method => 'get'}
+          %select{:name => 'param_name'}
+            %option{:value => 'A'} All
+            %option{:value => 'B'} General
+            %option{:value => 'C'} Track blah
+      %li.static.by-track.soft-accepted
+        %span Soft Accepted
+        %span.badge 11
+      %li.static.by-track.soft-waitlisted
+        %span Soft Waitlisted
+        %span.badge 10
+    %ul.nav.navbar-nav.navbar-right
       %li
         = link_to selection_event_staff_program_proposals_path do
           %i.fa.fa-gavel

@@ -1,8 +1,9 @@
 class ProgramSession < ActiveRecord::Base
   ACTIVE = 'active'
   INACTIVE = 'inactive'
+  WAITLISTED = 'waitlisted'
 
-  STATES = [INACTIVE, ACTIVE]
+  STATES = [INACTIVE, ACTIVE, WAITLISTED]
 
   belongs_to :event
   belongs_to :proposal
@@ -16,6 +17,9 @@ class ProgramSession < ActiveRecord::Base
   scope :unscheduled, -> do
     where(state: ACTIVE).where.not(id: TimeSlot.pluck(:program_session_id))
   end
+  scope :active, -> { where(state: ACTIVE) }
+  scope :inactive, -> { where(state: INACTIVE) }
+  scope :waitlisted, -> { where(state: WAITLISTED) }
 
   def self.create_from_proposal(proposal)
     self.transaction do
@@ -39,6 +43,10 @@ class ProgramSession < ActiveRecord::Base
 
   def multiple_speakers?
     speakers.count > 1
+  end
+
+  def scheduled?
+    time_slot.present?
   end
 end
 

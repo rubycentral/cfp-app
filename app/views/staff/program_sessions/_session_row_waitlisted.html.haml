@@ -1,0 +1,10 @@
+%tr{ data: { 'session-id' => program_session.id } }
+  %td= link_to(program_session.title,
+      event_staff_program_session_path(program_session.event, program_session))
+  %td= program_session.speaker_names
+  %td= program_session.speaker_emails
+  %td labels~
+  -#= program_session.review_tags_labels
+  %td= program_session.track_name
+  %td notes~
+    -#truncate(program_session.confirmation_notes, :length => 100)

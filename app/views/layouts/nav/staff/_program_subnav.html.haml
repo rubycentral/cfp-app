@@ -21,19 +21,19 @@
         %span Soft Waitlisted
         %span.badge 10
     %ul.nav.navbar-nav.navbar-right
-      %li
+      %li{class: program_subnav_item_class("event-program-proposals-selection-link")}
         = link_to selection_event_staff_program_proposals_path do
           %i.fa.fa-gavel
           %span Selection
-      %li
+      %li{class: program_subnav_item_class("event-program-proposals-link")}
         = link_to event_staff_program_proposals_path do
           %i.fa.fa-balance-scale
           %span Proposals
-      %li
+      %li{class: program_subnav_item_class("event-program-sessions-link")}
         = link_to event_staff_program_sessions_path do
           %i.fa.fa-check
           %span Sessions
-      %li
+      %li{class: program_subnav_item_class("event-program-speakers-link")}
         = link_to event_staff_program_speakers_path do
           %i.fa.fa-users
           %span Speakers

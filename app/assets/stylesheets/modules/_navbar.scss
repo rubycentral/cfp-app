@@ -139,61 +139,15 @@
 
 .navbar-default.program-subnav {
   border-radius: 0;
-  background-color: #22635E;
-  border-color: #22635E;
-}
+  background-color: $dark-blue;
+  border-color: $dark-blue;
 
-
-//Body ids for setting navbar li > a to active state
-//This replaces checking the path in views
-#notifications_index {
-  .navbar-default {
-    .navbar-nav {
-      li.notifications-link {
-        > a {
-          color: $navbar-default-link-active-color;
-          background-color: $navbar-default-link-active-bg;
-        }
-      }
+  li.active {
+    border-bottom: 3px solid darken($dark-blue, 10%);
+    > a , a:hover, a:focus {
+      color: darken($white, 10%);
+      background-color: lighten($dark-blue, 10%);
     }
   }
 }
 
-#proposals_index {
-  .navbar-default {
-    .navbar-nav {
-      li.my-proposals-link {
-        > a {
-          color: $navbar-default-link-active-color;
-          background-color: $navbar-default-link-active-bg;
-        }
-      }
-    }
-  }
-}
-
-#staff_proposals_index {
-  .navbar-default {
-    .navbar-nav {
-      li.event-proposals-link {
-        > a {
-          color: $navbar-default-link-active-color;
-          background-color: $navbar-default-link-active-bg;
-        }
-      }
-    }
-  }
-}
-
-#staff_events_show {
-  .navbar-default {
-    .navbar-nav {
-      li.event-dashboard-link {
-        > a {
-          color: $navbar-default-link-active-color;
-          background-color: $navbar-default-link-active-bg;
-        }
-      }
-    }
-  }
-}

@@ -79,6 +79,8 @@
         = render partial: 'proposals/confirmation_notes', locals: {proposal: proposal, notes: proposal.confirmation_notes}
 
     .col-md-4
+      - if event.public_tags?
+        = render partial: 'shared/proposals/tags_form', locals: { event: event, proposal: proposal }
       = render partial: 'shared/proposals/rating_form', locals: { event: event, proposal: proposal, rating: @rating }
 
       - if proposal.proposal_data?

@@ -3,6 +3,16 @@
 }
 
 .navbar-nav {
+  &.program-counts {
+    .split {
+      clear: left;
+    }
+
+    .no-top-padding {
+      padding-top: 0
+    }
+  }
+
   li.static {
     color: #ccc;
     padding-left: 15px;

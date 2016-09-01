@@ -1,4 +1,5 @@
 class Staff::ProgramController < Staff::ApplicationController
+  before_action :tracks
   before_action :enable_staff_program_subnav
   before_action :set_proposal_counts
 

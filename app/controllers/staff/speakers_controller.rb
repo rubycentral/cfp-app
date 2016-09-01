@@ -1,9 +1,11 @@
 class Staff::SpeakersController < Staff::ApplicationController
+  before_action :tracks
+  before_action :enable_staff_program_subnav
+  before_action :set_proposal_counts
+
   decorates_assigned :speaker
   before_action :set_program_session, only: [:new, :create]
   before_action :speaker_count_check, only: [:destroy]
-  before_action :enable_staff_program_subnav
-  before_action :set_proposal_counts
 
   def index
     @program_speakers = current_event.speakers.in_program

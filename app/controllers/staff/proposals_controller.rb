@@ -1,8 +1,9 @@
 class Staff::ProposalsController < Staff::ApplicationController
-  before_action :require_proposal, only: [:show, :update_state, :finalize]
-
+  before_action :tracks
   before_action :enable_staff_program_subnav
   before_action :set_proposal_counts
+
+  before_action :require_proposal, only: [:show, :update_state, :finalize]
 
   decorates_assigned :proposal, with: Staff::ProposalDecorator
 
@@ -42,6 +43,14 @@ class Staff::ProposalsController < Staff::ApplicationController
                            {speakers: :user}).load
     @proposals = Staff::ProposalsDecorator.decorate(@proposals)
     @taggings_count = Tagging.count_by_tag(@event)
+  end
+
+  def program_counts
+    track = params[:trackId]
+    render :json =>
+      { :soft_accepted_count => Proposal.soft_accepted_count(current_event, track),
+        :soft_waitlisted_count => Proposal.soft_waitlisted_count(current_event, track)
+      }
   end
 
   def finalize

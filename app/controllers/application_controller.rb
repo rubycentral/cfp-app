@@ -132,6 +132,10 @@ class ApplicationController < ActionController::Base
     @display_program_subnav
   end
 
+  def tracks
+    @tracks ||= current_event.tracks
+  end
+
   def set_proposal_counts
     @soft_accepted_count ||= Proposal.soft_accepted_count(current_event)
     @soft_waitlisted_count ||= Proposal.soft_waitlisted_count(current_event)

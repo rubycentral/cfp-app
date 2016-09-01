@@ -14,31 +14,31 @@
       - if current_user
         %ul.nav.navbar-nav.navbar-right
           - if speaker_nav?
-            %li{class: "my-proposals-link"}
+            %li{class: nav_item_class("my-proposals-link")}
               = link_to proposals_path do
                 %i.fa.fa-file-text
                 %span My Proposals
 
           - if review_nav?
-            %li{class: "event-proposals-link"}
+            %li{class: nav_item_class("event-review-proposals-link")}
               = link_to event_staff_proposals_path(current_event) do
                 %i.fa.fa-balance-scale
                 %span Review Proposals
 
           - if program_nav?
-            %li{class: "#{request.path == selection_event_staff_program_proposals_path(current_event) ? 'active' : ''}"}
+            %li{class: nav_item_class("event-program-link")}
               = link_to selection_event_staff_program_proposals_path(current_event) do
                 %i.fa.fa-sitemap
                 %span Program
 
           - if schedule_nav?
-            %li{class: "#{request.path == event_staff_time_slots_path(current_event) ? 'active' : ''}"}
+            %li{class: nav_item_class("event-schedule-link")}
               = link_to event_staff_time_slots_path(current_event) do
                 %i.fa.fa-calendar
                 %span Schedule
 
           - if staff_nav?
-            %li{class: "event-dashboard-link"}
+            %li{class: nav_item_class("event-dashboard-link")}
               = link_to event_staff_path(current_event) do
                 %i.fa.fa-dashboard
                 %span Event Dashboard

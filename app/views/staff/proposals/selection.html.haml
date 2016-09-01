@@ -1,3 +1,4 @@
+%h1 Program Selection
 .event-info-bar
   .row
     .col-md-8
@@ -19,12 +20,6 @@
 .row
   &nbsp;
 
-.row
-  .col-sm-offset-6.col-sm-6
-    .btn-nav.text-right
-      = link_to event_staff_proposals_path(format: "csv"), id: "download_link", class: "btn btn-info btn-sm" do
-        %span.glyphicon.glyphicon-download-alt
-        Download CSV
 .row
   &nbsp;
 
@@ -48,20 +43,6 @@
       %li.total.soft-waitlisted
         %span Soft Waitlisted
         %span.badge= @soft_waitlisted_count
-      %li
-        %span By Track:
-        %form.track-select{:data => {:event => current_event.id}}
-          %select{:name => 'track'}
-            %option{:value => 'all'} All
-            %option{:value => 'general'} General
-            - @tracks.each do |track|
-              %option{:value => track.id}= track.name
-      %li.by-track.soft-accepted
-        %span Soft Accepted
-        %span.badge 1
-      %li.by-track.soft-waitlisted
-        %span Soft Waitlisted
-        %span.badge 1
   .col-sm-4.text-right
     %small.text-right <em>Hint:</em> Hold <kbd>shift</kbd> to sort by multiple columns
 

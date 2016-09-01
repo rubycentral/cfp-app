@@ -1,26 +1,5 @@
 .navbar.navbar-default.program-subnav
   .container-fluid
-    %ul.nav.navbar-nav
-      %li.static.total.soft-accepted
-        %span Soft Accepted
-        %span.badge= @soft_accepted_count
-      %li.static.total.soft-waitlisted
-        %span Soft Waitlisted
-        %span.badge= @soft_waitlisted_count
-      %li.static
-        %span By Track:
-        %form.track-select{:action => '', :method => 'get'}
-          %select{:name => 'param_name'}
-            %option{:value => 'A'} All
-            %option{:value => 'B'} General
-            - @tracks.each do |track|
-              %option{:value => 'C'}= track.name
-      %li.static.by-track.soft-accepted
-        %span Soft Accepted
-        %span.badge 11
-      %li.static.by-track.soft-waitlisted
-        %span Soft Waitlisted
-        %span.badge 10
     %ul.nav.navbar-nav.navbar-right
       %li{class: program_subnav_item_class("event-program-proposals-selection-link")}
         = link_to selection_event_staff_program_proposals_path do
@@ -38,3 +17,28 @@
         = link_to event_staff_program_speakers_path do
           %i.fa.fa-users
           %span Speakers
+
+    %ul.nav.navbar-nav.program-counts
+      %li.static
+        %span Program Count:
+      %li.static.total.soft-accepted
+        %span Soft Accepted
+        %span.badge= @soft_accepted_count
+      %li.static.total.soft-waitlisted
+        %span Soft Waitlisted
+        %span.badge= @soft_waitlisted_count
+      - if @tracks.any?
+        %li.static.no-top-padding.split
+          %span By Track:
+          %form.track-select{:data => {:event => current_event.id}}
+            %select{:name => 'track'}
+              %option{:value => 'all'} All
+              %option{:value => 'general'} General
+              - @tracks.each do |track|
+                %option{:value => track.id}= track.name
+        %li.static.no-top-padding.by-track.soft-accepted
+          %span Soft Accepted
+          %span.badge 1
+        %li.static.no-top-padding.by-track.soft-waitlisted
+          %span Soft Waitlisted
+          %span.badge 1

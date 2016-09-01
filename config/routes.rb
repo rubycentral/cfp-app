@@ -57,7 +57,7 @@ Rails.application.routes.draw do
       end
 
       scope :program, as: 'program' do
-        get '/', to: 'program#show'
+        get '/', to: 'program_sessions#index', as: 'sessions'
 
         resources :proposals, param: :uuid do
           collection do

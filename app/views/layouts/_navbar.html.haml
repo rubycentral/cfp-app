@@ -26,7 +26,7 @@
                 %span Review Proposals
 
           - if program_nav?
-            %li{class: "#{request.path == event_staff_program_path(current_event) ? 'active' : ''}"}
+            %li{class: "#{request.path == selection_event_staff_program_proposals_path(current_event) ? 'active' : ''}"}
               = link_to selection_event_staff_program_proposals_path(current_event) do
                 %i.fa.fa-sitemap
                 %span Program

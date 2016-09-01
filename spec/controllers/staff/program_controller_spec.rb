@@ -5,9 +5,11 @@ describe Staff::ProgramController, type: :controller do
 
   describe "GET #show" do
     it "returns http success" do
-      sign_in(create(:organizer, event: event))
-      get :show, event_slug: event
-      expect(response).to be_success
+      pending 'probably going to drop this'
+      fail
+      # sign_in(create(:organizer, event: event))
+      # get :show, event_slug: event
+      # expect(response).to be_success
     end
   end
 end

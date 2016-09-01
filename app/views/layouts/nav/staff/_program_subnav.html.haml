@@ -13,7 +13,8 @@
           %select{:name => 'param_name'}
             %option{:value => 'A'} All
             %option{:value => 'B'} General
-            %option{:value => 'C'} Track blah
+            - @tracks.each do |track|
+              %option{:value => 'C'}= track.name
       %li.static.by-track.soft-accepted
         %span Soft Accepted
         %span.badge 11

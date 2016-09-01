@@ -50,12 +50,12 @@
         %span.badge= @soft_waitlisted_count
       %li
         %span By Track:
-        %form.track-select{:action => '', :method => 'get'}
-          %select{:name => 'param_name'}
-            %option{:value => 'A'} All
-            %option{:value => 'B'} General
-            %option{:value => 'C'} Track one
-            %option{:value => 'D'} Track two
+        %form.track-select{:data => {:event => current_event.id}}
+          %select{:name => 'track'}
+            %option{:value => 'all'} All
+            %option{:value => 'general'} General
+            - @tracks.each do |track|
+              %option{:value => track.id}= track.name
       %li.by-track.soft-accepted
         %span Soft Accepted
         %span.badge 1

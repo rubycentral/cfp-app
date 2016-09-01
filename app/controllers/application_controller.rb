@@ -19,9 +19,6 @@ class ApplicationController < ActionController::Base
 
   before_action :current_event
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :tracks
-  before_action :enable_staff_program_subnav
-  before_action :set_proposal_counts
 
   layout 'application'
   decorates_assigned :event

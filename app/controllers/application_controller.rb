@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
   helper_method :event_staff?
   helper_method :display_staff_event_subnav?
   helper_method :display_staff_program_subnav?
+  helper_method :program_tracks
 
   before_action :current_event
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -132,8 +133,8 @@ class ApplicationController < ActionController::Base
     @display_program_subnav
   end
 
-  def tracks
-    @tracks ||= current_event.tracks
+  def program_tracks
+    @program_tracks ||= current_event && current_event.tracks.any? ? current_event.tracks : []
   end
 
   def set_proposal_counts

@@ -37,7 +37,7 @@ class Staff::ProposalDecorator < ProposalDecorator
 
   def title_link_for_review
     h.link_to h.truncate(object.title, length: 45),
-              h.event_staff_program_proposal_path(object.event, object)
+              h.event_staff_proposal_path(object.event, object)
   end
 
   def title_link
@@ -121,7 +121,6 @@ class Staff::ProposalDecorator < ProposalDecorator
       [ 'Accept', SOFT_ACCEPTED, 'btn-success', !object.draft? ],
       [ 'Waitlist', SOFT_WAITLISTED, 'btn-warning', !object.draft? ],
       [ 'Reject', SOFT_REJECTED, 'btn-danger', !object.draft? ],
-      [ 'Withdraw', SOFT_WITHDRAWN, 'btn-danger', !object.draft? ],
       [ 'Promote', ACCEPTED, 'btn-success', !object.waitlisted? ],
       [ 'Decline', REJECTED, 'btn-danger', !object.waitlisted? ],
       [ 'Reset Status', SUBMITTED, 'btn-default', object.draft? || object.finalized? ]

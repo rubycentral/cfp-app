@@ -20,6 +20,7 @@ class ProgramSession < ActiveRecord::Base
   scope :active, -> { where(state: ACTIVE) }
   scope :inactive, -> { where(state: INACTIVE) }
   scope :waitlisted, -> { where(state: WAITLISTED) }
+  scope :active_or_inactive, -> { where(state: [ACTIVE, INACTIVE]) }
 
   def self.create_from_proposal(proposal)
     self.transaction do

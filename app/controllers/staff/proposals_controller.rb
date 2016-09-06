@@ -2,7 +2,7 @@ class Staff::ProposalsController < Staff::ApplicationController
   before_action :enable_staff_program_subnav
   before_action :set_proposal_counts
 
-  before_action :require_proposal, only: [:show, :update_state, :finalize]
+  before_action :require_proposal, only: [:show, :update_state, :update_track, :finalize]
 
   decorates_assigned :proposal, with: Staff::ProposalDecorator
 
@@ -34,6 +34,14 @@ class Staff::ProposalsController < Staff::ApplicationController
       format.html { redirect_to event_staff_program_proposals_path(@proposal.event) }
       format.js
     end
+  end
+
+  def update_track
+    authorize @proposal
+
+    @proposal.update(track_id: params[:track_id])
+
+    render partial: '/staff/proposals/inline_track_edit'
   end
 
   def selection

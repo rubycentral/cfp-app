@@ -26,4 +26,18 @@ $(function() {
       });
     }
   });
+
+  $(document).on('change', '.proposal-track-select', function () {
+    $trackSelect = $(this);
+    var trackId = $trackSelect.val();
+    var url = $trackSelect.data('targetPath');
+
+    $trackSelect.closest('td').load(url, { track_id: trackId });
+    // {
+    //   url: url,
+    //   dataType: 'json',
+    //   data: { track_id: trackId },
+    //   type: 'POST'
+    // });
+  });
 });

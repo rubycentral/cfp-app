@@ -63,7 +63,8 @@
             %td= proposal.average_rating
             %td= proposal.speaker_names
             %td= proposal.title_link
-            %td= proposal.track_name
+            %td
+              = render 'inline_track_edit', proposal: proposal
             %td= proposal.session_format_name
             %td= proposal.review_tags_labels
             %td

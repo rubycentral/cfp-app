@@ -1,5 +1,5 @@
 %ul.list-unstyled.other_proposals
-  -if other_proposals.present?
+  - if other_proposals.present?
     -other_proposals.each do |proposal|
       %li
         =link_to truncate(proposal.title, length: 55), event_staff_program_proposal_path(event, proposal)

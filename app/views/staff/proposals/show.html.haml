@@ -56,42 +56,65 @@
             .proposal-meta-item
               %strong Status:
               %span.proposal-status #{proposal.state_label(small: true)}
-            .proposal-meta-item
-              %strong Updated:
-              %span #{proposal.updated_in_words}
+            -if proposal.review_tags.present?
+              .proposal-meta-item
+                %strong Reviewer Tags:
+                %span.proposal-reviewer-tags #{proposal.review_tags_labels}
 
   .row
     .col-md-4
       = render partial: 'proposals/contents', locals: { proposal: proposal }
 
     .col-md-4
-      %h3 Other Proposals
-      = render partial: 'other_proposals', locals: { event: event, other_proposals: @other_proposals }
+      .widget.widget-card.flush-top
+        .widget-header
+          %h3 Speakers
+        .widget-content
+          = render partial: 'staff/proposals/speakers', locals: { speakers: proposal.speakers }
 
-      %h3 Speakers
-      = render partial: 'staff/proposals/speakers', locals: { speakers: proposal.speakers }
+        .widget-header
+          %h3 Other Proposals
+        .widget-content
+          = render partial: 'other_proposals', locals: { event: event, other_proposals: @other_proposals }
 
-      %h3 Public Comments
-      = render partial: 'proposals/comments', locals: { proposal: proposal, comments: proposal.public_comments }
+      .widget.widget-card.flush-top
+        .widget-header
+          %i.fa.fa-comments
+          %h3= pluralize(proposal.public_comments.count, 'public comment')
+        .widget-content
+          = render partial: 'proposals/comments', locals: { proposal: proposal, comments: proposal.public_comments }
 
-      - if proposal.accepted?
-        %h3 Confirmation Notes
-        = render partial: 'proposals/confirmation_notes', locals: {proposal: proposal, notes: proposal.confirmation_notes}
+          - if proposal.accepted?
+            .widget-header
+              %h3 Confirmation Notes
+            .widget-content
+              = render partial: 'proposals/confirmation_notes', locals: {proposal: proposal, notes: proposal.confirmation_notes}
 
     .col-md-4
-      - if event.public_tags?
-        = render partial: 'shared/proposals/tags_form', locals: { event: event, proposal: proposal }
-      = render partial: 'shared/proposals/rating_form', locals: { event: event, proposal: proposal, rating: @rating }
+      .widget.widget-card.widget-card-alt.flush-top
+        .widget-header
+          %h3 Review
+        .widget-content
+          = render partial: 'shared/proposals/rating_form', locals: { event: event, proposal: proposal, rating: @rating }
 
-      - if proposal.proposal_data?
-        %h3 Video URL
-        = proposal.proposal_data[:video_url]
-        %br/
+        - if event.reviewer_tags?
+          .widget-header
+            %h3 Reviewer Tags
+          .widget-content
+            = render partial: 'shared/proposals/tags_form', locals: { event: event, proposal: proposal }
 
-        %h3 Slides URL
-        = proposal.proposal_data[:slides_url]
+      -#Gonna migrate this over to ProgramSession show page in the near future
+      -#- if proposal.proposal_data?
+      -#  %h3 Video URL
+      -#  = proposal.proposal_data[:video_url]
+      -#  %br/
+      -#
+      -#  %h3 Slides URL
+      -#  = proposal.proposal_data[:slides_url]
 
-      - unless proposal.has_speaker?(current_user)
-        .internal-comments
-          %h3 Internal Comments
-          = render partial: 'proposals/comments', locals: { proposal: proposal, comments: proposal.internal_comments }
+        .internal-comments{ style: proposal.internal_comments_style }
+          .widget-header
+            %i.fa.fa-comments
+            %h3= pluralize(proposal.internal_comments.count, 'internal comment')
+          .widget-content
+            = render partial: 'proposals/comments', locals: { proposal: proposal, comments: proposal.internal_comments }

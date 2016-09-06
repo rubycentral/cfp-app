@@ -58,11 +58,12 @@
             -if proposal.review_tags.present?
               .proposal-meta-item
                 %strong Reviewer Tags:
-                %span #{proposal.review_tags_labels}
+                %span.proposal-reviewer-tags #{proposal.review_tags_labels}
 
   .row
     .col-md-4
       = render partial: 'reviewer_contents', locals: { proposal: proposal }
+
     .col-md-4
       .widget.widget-card.flush-top
         .widget-header
@@ -71,6 +72,7 @@
         .widget-content
           = render partial: 'proposals/comments',
             locals: { proposal: proposal, comments: proposal.public_comments }
+
     .col-md-4
       .widget.widget-card.widget-card-alt.flush-top
         .widget-header
@@ -78,8 +80,11 @@
         .widget-content
           = render partial: 'shared/proposals/rating_form', locals: { event: event, proposal: proposal, rating: rating }
 
-        - if event.public_tags?
-          = render partial: 'shared/proposals/tags_form', locals: { event: event, proposal: proposal }
+        - if event.reviewer_tags?
+          .widget-header
+            %h3 Reviewer Tags
+          .widget-content
+            = render partial: 'shared/proposals/tags_form', locals: { event: event, proposal: proposal }
 
         .internal-comments{ style: proposal.internal_comments_style }
           .widget-header

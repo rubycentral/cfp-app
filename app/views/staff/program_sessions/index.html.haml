@@ -20,10 +20,14 @@
   &nbsp;
 
 .row
-  .col-md-12
+  .col-md-10
     %h3
-      Active Sessions
-      %span.badge= @active_sessions.count
+      Sessions
+      %span.badge= @sessions.count
+  .col-md-2.text-right
+    = link_to 'New Session', new_event_staff_program_session_path(event), class: 'btn btn-md btn-success'
+.row
+  .col-md-12
     %table#program-sessions.datatable.table.table-striped
       %thead
         %tr
@@ -32,24 +36,20 @@
           %th
           %th
           %th
-          %th
-          %th
         %tr
           %th Title
           %th Speaker
-          %th Email
-          %th Tags
           %th Track
           %th Scheduled
-          %th Notes
+          %th Status
       %tbody
-        = render partial: 'session_row_active', collection: @active_sessions, as: :program_session
+        = render partial: 'session_row_active', collection: @sessions, as: :program_session
 %hr
 
 .row
   .col-md-12
     %h3
-      Waitlisted
+      Waitlist
       %span.badge= @waitlisted_sessions.count
     %table.table.table-striped
       %thead

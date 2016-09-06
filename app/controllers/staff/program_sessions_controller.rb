@@ -6,12 +6,12 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
   decorates_assigned :waitlisted_sessions, with: Staff::ProgramSessionDecorator
 
   def index
-    @active_sessions = @event.program_sessions.active
+    @sessions = @event.program_sessions.active_or_inactive
     @waitlisted_sessions = @event.program_sessions.waitlisted
 
     session[:prev_page] = { name: 'Program', path: event_staff_program_sessions_path(@event) }
 
-    @active_sessions = Staff::ProgramSessionDecorator.decorate_collection(@active_sessions)
+    @sessions = Staff::ProgramSessionDecorator.decorate_collection(@sessions)
     @waitlisted_sessions = Staff::ProgramSessionDecorator.decorate_collection(@waitlisted_sessions)
   end
 end

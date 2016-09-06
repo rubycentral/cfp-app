@@ -2,7 +2,6 @@
   = proposal.title_input(f)
 
   - opts_session_formats = event.session_formats.publicly_viewable.map {|st| [st.name, st.id]}
-
   - if opts_session_formats.length > 1
     = f.association :session_format, collection: opts_session_formats, include_blank: 'None selected', required: true, input_html: {class: 'dropdown'},
       hint: "The format your proposal will follow."#, popover_icon: { content: session_format_tooltip }
@@ -10,10 +9,15 @@
     = f.association :session_format, collection: opts_session_formats, include_blank: false, input_html: {readonly: "readonly"},
       hint: "The format your proposal will follow."#, popover_icon: { content: "Only One Session Format for #{event.name}" }
 
-  - opts_tracks = event.tracks.map {|t| [t.name, t.id]}
-  -if opts_tracks.length > 0
+  - if event.multiple_tracks? && !proposal.has_reviewer_activity?
+    - opts_tracks = event.tracks.map {|t| [t.name, t.id]}
     = f.association :track, collection: opts_tracks, include_blank: 'General – No Suggested Track', input_html: {class: 'dropdown'},
       hint: "Optional: suggest a specific track to be considered for."#, popover_icon: { content: track_tooltip }
+  - else
+    .form-group
+      = f.label :track, 'Track'
+      %div #{proposal.track_name}
+
 
   = proposal.abstract_input(f, abstract_tooltip)
 

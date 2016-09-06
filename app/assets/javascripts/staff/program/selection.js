@@ -32,7 +32,7 @@ $(function() {
     var trackId = $trackSelect.val();
     var url = $trackSelect.data('targetPath');
 
-    $trackSelect.closest('td').load(url, { track_id: trackId });
+    $trackSelect.closest('td, span, div').load(url, { track_id: trackId });
     // {
     //   url: url,
     //   dataType: 'json',

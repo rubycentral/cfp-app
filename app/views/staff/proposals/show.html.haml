@@ -43,9 +43,6 @@
             .proposal-meta-item
               %strong Format:
               %span #{proposal.session_format_name}
-            .proposal-meta-item
-              %strong Track:
-              %span #{proposal.track_name}
             -if proposal.tags.present?
               .proposal-meta-item
                 %strong Tags:
@@ -53,6 +50,10 @@
       .col-sm-6.text-right
         .proposal-info-bar
           .proposal-meta.proposal-description
+            .proposal-meta-item
+              %strong Track:
+              %span
+                = render 'inline_track_edit', proposal: proposal
             .proposal-meta-item
               %strong Status:
               %span.proposal-status #{proposal.state_label(small: true)}

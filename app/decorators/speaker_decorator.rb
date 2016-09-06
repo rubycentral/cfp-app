@@ -17,18 +17,4 @@ class SpeakerDecorator < ApplicationDecorator
   def bio
     object.bio.present? ? object.bio : object.user.try(:bio)
   end
-
-  def delete_button
-    h.button_to h.event_staff_program_speaker_path,
-                form_class: "inline-block form-inline",
-                method: :delete,
-                data: {
-                  confirm:
-                    'This will delete this speaker. Are you sure you want to do this? It can not be undone.'
-                },
-                class: 'btn btn-danger navbar-btn',
-                id: 'delete' do
-      bang('Delete Speaker')
-    end
-  end
 end

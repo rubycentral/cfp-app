@@ -30,11 +30,11 @@ def create_seed_data
   track_director   = User.create(name: "Track Director", email: "track@seed.event", password: pwd, password_confirmation: pwd, confirmed_at: Time.now)
   reviewer         = User.create(name: "Reviewer", email: "review@seed.event", password: pwd, password_confirmation: pwd, confirmed_at: Time.now)
   speaker_reviewer = User.create(name: "Speak and Review", email: "both@seed.event", password: pwd, password_confirmation: pwd, confirmed_at: Time.now)
-  speaker_1        = User.create(name: "Speaker1", email: "speak1@seed.event", password: pwd, password_confirmation: pwd, confirmed_at: Time.now)
-  speaker_2        = User.create(name: "Speaker2", email: "speak2@seed.event", password: pwd, password_confirmation: pwd, confirmed_at: Time.now)
-  speaker_3        = User.create(name: "Speaker3", email: "speak3@seed.event", password: pwd, password_confirmation: pwd, confirmed_at: Time.now)
-  speaker_4        = User.create(name: "Speaker4", email: "speak4@seed.event", password: pwd, password_confirmation: pwd, confirmed_at: Time.now)
-  speaker_5        = User.create(name: "Speaker5", email: "speak5@seed.event", password: pwd, password_confirmation: pwd, confirmed_at: Time.now)
+  speaker_1        = User.create(name: "Jenny Talksalot", email: "speak1@seed.event", password: pwd, password_confirmation: pwd, confirmed_at: Time.now)
+  speaker_2        = User.create(name: "Pamela Speakerson", email: "speak2@seed.event", password: pwd, password_confirmation: pwd, confirmed_at: Time.now)
+  speaker_3        = User.create(name: "Jim Talksman", email: "speak3@seed.event", password: pwd, password_confirmation: pwd, confirmed_at: Time.now)
+  speaker_4        = User.create(name: "Mark Speaksmith", email: "speak4@seed.event", password: pwd, password_confirmation: pwd, confirmed_at: Time.now)
+  speaker_5        = User.create(name: "Erin McTalky", email: "speak5@seed.event", password: pwd, password_confirmation: pwd, confirmed_at: Time.now)
 
   ### SeedConf -- event is in the middle of the CFP
   seed_start_date = 8.months.from_now
@@ -253,9 +253,9 @@ If your talk is about seed data in Rails apps, we want to hear about it!
                                                          track: accepted_proposal_2.track,
                                                          session_format: accepted_proposal_2.session_format)
 
-  accepted_proposal_1.speakers.create(speaker_name: speaker_4.name, speaker_email: speaker_4.email, user: speaker_4, program_session: program_session_1, event: seed_event)
-  accepted_proposal_1.speakers.create(speaker_name: speaker_5.name, speaker_email: speaker_5.email, user: speaker_5, program_session: program_session_1, event: seed_event)
-  accepted_proposal_2.speakers.create(speaker_name: speaker_2.name, speaker_email: speaker_2.email, user: speaker_2, program_session: program_session_2, event: seed_event)
+  accepted_proposal_1.speakers.create(speaker_name: speaker_4.name, speaker_email: speaker_4.email, bio: "Experiential foodtruck consectetur thinker-maker-doer agile irure thought leader tempor thought leader. SpaceTeam commodo nulla personas sit in mollit iterate workflow dolore food-truck incididunt. In veniam eu sunt esse dolore sunt cortado anim anim. Lorem do experiential prototype velit workflow thinker-maker-doer 360 campaign thinker-maker-doer deserunt quis non.", user: speaker_4, program_session: program_session_1, event: seed_event)
+  accepted_proposal_1.speakers.create(speaker_name: speaker_5.name, speaker_email: speaker_5.email, bio: "Prototype irure cortado consectetur driven laboru in. Bootstrapping physical computing lorem in Duis viral piverate incididunt anim. Aute SpaceTeam ullamco earned media experiential aliqua moleskine fugiat physical computing.", user: speaker_5, program_session: program_session_1, event: seed_event)
+  accepted_proposal_2.speakers.create(speaker_name: speaker_2.name, speaker_email: speaker_2.email, bio: "Id fugiat ex dolor personas in ipsum actionable insight grok actionable insight amet non adipisicing. In irure pair programming sed id food-truck consequat officia reprehenderit in engaging thinker-maker-doer. Experiential irure moleskine sunt quis ideate thought leader paradigm hacker Steve Jobs. Unicorn ea Duis integrate culpa ut voluptate workflow reprehenderit officia prototype intuitive ideate.", user: speaker_2, program_session: program_session_2, event: seed_event)
 
   ### SapphireConf -- this is an event in the early set-up/draft stage
   sapphire_start_date = 10.months.from_now

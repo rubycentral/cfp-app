@@ -2,7 +2,8 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
   before_action :enable_staff_program_subnav
   before_action :set_proposal_counts
 
-  decorates_assigned :active_sessions, with: Staff::ProgramSessionDecorator
+  decorates_assigned :program_session, with: Staff::ProgramSessionDecorator
+  decorates_assigned :sessions, with: Staff::ProgramSessionDecorator
   decorates_assigned :waitlisted_sessions, with: Staff::ProgramSessionDecorator
 
   def index
@@ -10,8 +11,10 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
     @waitlisted_sessions = @event.program_sessions.waitlisted
 
     session[:prev_page] = { name: 'Program', path: event_staff_program_sessions_path(@event) }
+  end
 
-    @sessions = Staff::ProgramSessionDecorator.decorate_collection(@sessions)
-    @waitlisted_sessions = Staff::ProgramSessionDecorator.decorate_collection(@waitlisted_sessions)
+  def show
+    @program_session = @event.program_sessions.find(params[:id])
+    @speakers = @program_session.speakers
   end
 end

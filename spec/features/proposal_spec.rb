@@ -146,8 +146,8 @@ feature "Proposals" do
       let!(:speaker) { create(:speaker, proposal: proposal, user: user) }
 
       before do
-        visit confirm_event_proposal_path(event_slug: proposal.event.slug, uuid: proposal)
-          click_button "Confirm"
+        visit event_proposal_path(event_slug: proposal.event.slug, uuid: proposal)
+        click_link "Confirm"
       end
 
       it "marks the proposal as confirmed" do
@@ -155,7 +155,9 @@ feature "Proposals" do
       end
 
       it "redirects the user to the proposal page" do
+        expect(current_path).to eq(event_proposal_path(event_slug: proposal.event.slug, uuid: proposal))
         expect(page).to have_text(proposal.title)
+        expect(page).to have_text("You have confirmed your participation in #{proposal.event.name}.")
       end
     end
 
@@ -164,25 +166,14 @@ feature "Proposals" do
 
       before do
         proposal.update(confirmed_at: DateTime.now)
-        visit confirm_event_proposal_path(event_slug: proposal.event.slug, uuid: proposal)
+        visit event_proposal_path(event_slug: proposal.event.slug, uuid: proposal)
       end
 
       it "does not show the confirmation link" do
         expect(page).not_to have_link('Confirm my participation')
       end
-
-      it "says when the proposal was confirmed" do
-        expect(page).to have_text("This proposal was confirmed on")
-      end
     end
 
-    context "with a speaker who isn't on the proposal" do
-      it "allows the user to access the confirmation page" do
-        path = confirm_event_proposal_path(event_slug: proposal.event.slug, uuid: proposal)
-        visit path
-        expect(current_path).to eq(path)
-      end
-    end
   end
 
   context "when deleted" do

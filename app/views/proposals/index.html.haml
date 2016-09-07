@@ -86,7 +86,7 @@
                         %span #{proposal.updated_in_words}
                     .flex-item.flex-item-fixed.flex-item-padded
                       .proposal-status
-                        = proposal.public_state(small: true)
+                        = proposal.speaker_state(small: true)
                       .proposal-meta
                         %i.fa.fa-fw.fa-comments
                         = pluralize(proposal.public_comments.count, 'comment')

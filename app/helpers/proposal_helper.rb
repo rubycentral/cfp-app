@@ -34,4 +34,8 @@ module ProposalHelper
     "Your bio should be short, no longer than 500 characters. It's related to why you're speaking about this topic."
   end
 
+  def notes_tooltip
+    "Please note any scheduling conflicts, or any additional information an organizer may need to schedule your talk."
+  end
+
 end

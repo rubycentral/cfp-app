@@ -63,11 +63,6 @@ class Staff::ProposalDecorator < ProposalDecorator
       end
   end
 
-  def confirm_link
-    h.link_to 'confirmation page',
-              h.confirm_proposal_url(event_slug: object.event.slug, uuid: object)
-  end
-
   def organizer_confirm
       object.state == "accepted" && object.confirmed_at == nil
   end

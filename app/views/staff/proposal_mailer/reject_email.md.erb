@@ -1,4 +1,4 @@
-<% unless @event.reject.blank? %>
+<% if @event.reject.present? %>
   <%= Staff::ProposalMailerTemplate.new(@event.reject, @event,
       @proposal, [ :proposal_title ]).render %>
 <% else %>

@@ -23,16 +23,16 @@
       .col-md-offset-8.col-md-4.text-right
         - if proposal.has_speaker?(current_user)
           .clearfix
-            - unless proposal.withdrawn? || proposal.accepted? || proposal.confirmed?
+            - if proposal.speaker_can_edit?(current_user)
               = link_to edit_event_proposal_path(event_slug: event.slug, uuid: proposal), class: 'btn btn-primary' do
                 %span.glyphicon.glyphicon-edit
                 Edit
-              -if proposal.has_reviewer_activity?
-                = proposal.withdraw_button
-              -else
-                = link_to event_proposal_path, method: :delete, data: {confirm: 'This will delete your talk. Are you sure you want to do this? It can not be undone.'}, class: 'btn btn-warning', id: 'delete' do
-                  %span.glyphicon.glyphicon-exclamation-sign
-                  Delete Proposal
+            - if proposal.speaker_can_withdraw?(current_user)
+              = proposal.withdraw_button
+            - if proposal.speaker_can_delete?(current_user)
+              = link_to event_proposal_path, method: :delete, data: {confirm: 'This will delete your talk. Are you sure you want to do this? It can not be undone.'}, class: 'btn btn-warning', id: 'delete' do
+                %span.glyphicon.glyphicon-exclamation-sign
+                Delete Proposal
 
   .page-header.page-header-slim
     .row
@@ -60,7 +60,7 @@
           .proposal-meta.proposal-description
             .proposal-meta-item
               %strong Status:
-              %span #{proposal.public_state(small: true)}
+              %span #{proposal.speaker_state(small: true)}
             .proposal-meta-item
               %strong Updated:
               %span #{proposal.updated_in_words}
@@ -77,28 +77,28 @@
 
         .row
           .col-md-8
-            - if (proposal.has_speaker?(current_user) && invitations.any?)
-              %h4.control-label Invited Speakers
-              - invitations.each do |invitation|
-                .clearfix
-                  %ul.invitation
-                    %li
-                      = invitation.state_label
-                      = invitation.email
-                      .pull-right
-                        - unless invitation.declined?
-                          = link_to 'Resend',
-                            resend_invitation_path(invitation_slug: invitation.slug, proposal_uuid: proposal.uuid),
-                            class: 'btn btn-xs btn-primary'
-                        = link_to 'Remove',
-                          invitation_path(invitation_slug: invitation.slug, proposal_uuid: proposal.uuid),
-                          method: :delete,
-                          class: 'btn btn-xs btn-danger',
-                          data: {confirm: 'Are you sure you want to remove this invitation?'}
+            - if proposal.invitations_enabled?(current_user)
+              - if invitations.any?
+                %h4.control-label Invited Speakers
+                - invitations.each do |invitation|
+                  .clearfix
+                    %ul.invitation
+                      %li
+                        = invitation.state_label
+                        = invitation.email
+                        .pull-right
+                          - unless invitation.declined?
+                            = link_to 'Resend',
+                              resend_invitation_path(invitation_slug: invitation.slug, proposal_uuid: proposal.uuid),
+                              class: 'btn btn-xs btn-primary'
+                          = link_to 'Remove',
+                            invitation_path(invitation_slug: invitation.slug, proposal_uuid: proposal.uuid),
+                            method: :delete,
+                            class: 'btn btn-xs btn-danger',
+                            data: {confirm: 'Are you sure you want to remove this invitation?'}
 
-              %hr
-            .new-speaker-invite
-              - if proposal.has_speaker?(current_user)
+                %hr
+              .new-speaker-invite
                 = link_to "Invite a Speaker", "#", class: "btn btn-success btn-xs speaker-invite-btn",
                   data: { toggle: "modal", target: "#new-speaker-invitation" },
                   id: "invite-new-speaker"
@@ -106,6 +106,20 @@
 
     - if proposal.has_speaker?(current_user)
       .col-md-4
+        - if proposal.awaiting_confirmation?
+          .widget.widget-card.confirmation
+            .widget-header
+              %h2 Confirm participation in #{proposal.event.name}
+            .widget-content
+              = proposal.confirm_button
+              = proposal.decline_button
+        - elsif proposal.confirmed?
+          .widget.widget-card
+            .widget-content
+              = simple_form_for proposal, url: update_notes_event_proposal_path(slug: proposal.event.slug, uuid: proposal), wrapper: :vertical_form, method: :post do |f|
+                = f.input :confirmation_notes, label: "Notes for the #{event.name} team", input_html: { rows: 6, placeholder: 'Notes' },
+                popover_icon: { content: notes_tooltip, placement: 'left' }
+                %button.btn.btn-success.pull-right(type="submit") Update
         .widget.widget-card
           .widget-header
             %i.fa.fa-comments

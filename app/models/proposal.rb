@@ -143,6 +143,22 @@ class Proposal < ActiveRecord::Base
     self.confirmed_at.present?
   end
 
+  def awaiting_confirmation?
+    finalized? && !confirmed?
+  end
+
+  def speaker_can_edit?(user)
+    has_speaker?(user) && !(withdrawn? || accepted? || confirmed?)
+  end
+
+  def speaker_can_withdraw?(user)
+    speaker_can_edit?(user) && has_reviewer_activity?
+  end
+
+  def speaker_can_delete?(user)
+    speaker_can_edit?(user) && !has_reviewer_activity?
+  end
+
   def to_param
     uuid
   end
@@ -163,6 +179,14 @@ class Proposal < ActiveRecord::Base
         squared_reducted_total = squared_reducted_total + (score - average)**2
       end
       Math.sqrt(squared_reducted_total/(scores.length))
+    end
+  end
+
+  def confirm
+    transaction do
+      update!(confirmed_at: DateTime.current)
+      ps = ProgramSession.create_from_proposal(self)
+      ps.persisted?
     end
   end
 

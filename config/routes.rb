@@ -17,9 +17,9 @@ Rails.application.routes.draw do
     post '/proposals' => 'proposals#create', as: :event_proposals
 
     resources :proposals, param: :uuid do
-      member { get :confirm }
-      member { post :set_confirmed }
+      member { post :confirm }
       member { post :withdraw }
+      member { post :update_notes }
       member { delete :destroy }
     end
 

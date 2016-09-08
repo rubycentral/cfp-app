@@ -18,7 +18,7 @@ feature "Staff Organizers can manage teammates" do
     it "invites a new teammate", js: true do
       visit event_staff_teammates_path(invitation.event)
 
-      click_link "Invite new teammate"
+      click_link "Invite New Teammate"
       fill_in "Email", with: "harrypotter@hogwarts.edu"
       select("reviewer", from: "Role")
       click_button "Invite"
@@ -34,7 +34,7 @@ feature "Staff Organizers can manage teammates" do
       login_as(organizer_user)
       visit event_staff_teammates_path(incomplete_event)
 
-      click_link "Invite new teammate"
+      click_link "Invite New Teammate"
       fill_in "Email", with: "harrypotter@hogwarts.edu"
       select("reviewer", from: "Role")
       click_button "Invite"

@@ -119,6 +119,7 @@ class ProposalDecorator < ApplicationDecorator
 
   def title_input(form)
     form.input :title,
+    autofocus: true,
     maxlength: :lookup, input_html: { class: 'watched js-maxlength-alert' },
     hint: "Publicly viewable title. Ideally catchy, interesting, essence of the talk. Limited to 60 characters."
   end

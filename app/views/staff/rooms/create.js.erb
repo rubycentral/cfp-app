@@ -1,23 +1,23 @@
-$('#room-new-dialog').modal('hide');
+$("#room-new-dialog").modal("hide");
 
 <% if room.persisted? %>
-  $('#organizer-rooms').append('<%=j render room %>');
+  $("#organizer-rooms").append("<%=j render room %>");
   clearFields([
-    '#room_name',
-    '#room_room_number',
-    '#room_level',
-    '#room_address',
-    '#room_capacity'
-  ], '#room-new-dialog');
+    "#room_name",
+    "#room_room_number",
+    "#room_level",
+    "#room_address",
+    "#room_capacity"
+  ], "#room-new-dialog");
 
   <% if !has_missing_requirements?(room.event) %>
-    $('#time-slot-prereqs').addClass('hidden')
-    $('#add-time-slot').removeClass('disabled')
+    $("#time-slot-prereqs").addClass("hidden")
+    $("#add-time-slot").removeClass("disabled")
   <% else %>
-    document.getElementById('missing-prereq-messages').innerHTML =
-      '<%=j unmet_requirements(room.event) %>';
+    document.getElementById("missing-prereq-messages").innerHTML =
+      "<%=j unmet_requirements(room.event) %>";
   <% end %>
 
 <% end %>
 
-document.getElementById('flash').innerHTML = '<%=j show_flash %>';
+document.getElementById("flash").innerHTML = "<%=j show_flash %>";

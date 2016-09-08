@@ -8,4 +8,8 @@ $(document).ready(function() {
     $('.edit-guidelines-btn').hide();
   });
 
+  $( ".edit-guidelines-btn" ).click(function() {
+    $( "#text-box" ).focus();
+  });
+
 });

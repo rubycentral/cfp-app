@@ -57,7 +57,7 @@
             .widget-header
               - if current_user.organizer_for_event?(current_event)
                 .pull-right
-                  = link_to "Invite new teammate", "#", class: "btn btn-primary btn-sm invite-btn",
+                  = link_to "Invite New Teammate", "#", class: "btn btn-primary btn-sm invite-btn",
                     data: { toggle: "modal", target: "#new-teammate-invitation" },
                     id: "invite-new-teammate"
               %i.fa.fa-envelope-o

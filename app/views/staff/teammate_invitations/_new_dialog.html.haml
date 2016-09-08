@@ -1,4 +1,4 @@
-%div{ id: "new-teammate-invitation", class: 'modal fade' }
+%div{ id: "new-teammate-invitation", class: "modal fade" }
   .modal-dialog
     .modal-content
       = simple_form_for(:teammate, url: event_staff_teammates_path(event)) do |f|
@@ -10,5 +10,5 @@
           = f.input :role, as: :select, collection: Teammate::STAFF_ROLES, class: "form-control"
 
         .modal-footer
-          %button.btn.btn-default{'data-dismiss' => "modal"} Cancel
           %button.pull-right.btn.btn-success{type: "submit"} Invite
+          %button.btn.btn-default{"data-dismiss" => "modal"} Cancel

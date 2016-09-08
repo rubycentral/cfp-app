@@ -10,7 +10,7 @@
         - if event.url?
           %span.event-meta
             %i.fa.fa-fw.fa-external-link-square
-            = link_to(event.url, event.url, target: '_blank')
+            = link_to(event.url, event.url, target: "_blank")
         - if event.contact_email?
           %span.event-meta
             %i.fa.fa-fw.fa-envelope
@@ -25,43 +25,40 @@
 
 .row.margin-top
   .col-md-4.col-md-push-8
+    .event-info.event-info-block.callout
+      .call-header
+        .label.label-success.label-large.inline-block
+          CFP
+          = event.status
 
-    - if event.open?
-      .event-info.event-info-block.callout
-        .call-header
-          .label.label-success.label-large.inline-block
-            CFP
-            = event.status
-        - if event.closes_at?
-          %dl.margin-top
-            %dt.event-label
-              CFP closes:
-            %dd.event-callout
-              = event.closes_at(:long_with_zone)
-            %dd.margin-top
-              %strong= time_ago_in_words(event.closes_at)
-              left to submit your proposal
-        %div
-          = link_to 'Submit a proposal', new_event_proposal_path, class: 'btn btn-primary'
-    - else
-      .event-info.event-info-block.callout
-        .call-header
-          .label.label-success.label-large.inline-block
-            CFP
-            = event.status
-          .panel-body
-            %p The CFP has not yet opened.  
-            %p Please check back soon!
+      - if event.open?
+        %dl.margin-top
+          %dt.event-label
+            CFP closes:
+          %dd.event-callout
+            = event.closes_at(:long_with_zone)
+          %dd.margin-top
+            %strong= time_ago_in_words(event.closes_at)
+            left to submit your proposal
+          %div
+            = link_to "Submit a proposal", new_event_proposal_path, class: "btn btn-primary"
+      - elsif event.closed?
+        .panel-body
+          %p
+            The CFP closed on
+            %strong= event.closes_at(:long_with_zone)
+          %p Thank you for all submitted proposals!
+      - elsif event.draft?
+        .panel-body
+          %p The CFP has not yet opened.  
+          %p Please check back soon!
 
     - if event.proposals.count > 5
       .stats
         %h2 CFP Stats
-        = pluralize(event.proposals.count, 'proposal')
+        = pluralize(event.proposals.count, "proposal")
         = event.line_chart
 
   .col-md-8.col-md-pull-4
     .markdown
-      - if event.closed?
-        Closed on
-        %strong= event.closes_at(:long_with_zone)
       = markdown(event.guidelines)

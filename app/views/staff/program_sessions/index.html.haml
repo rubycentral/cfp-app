@@ -2,20 +2,20 @@
   .row
     .col-md-8
       .event-info.event-info-dense
-        %strong.event-title= event.name
-        - if event.start_date? && event.end_date?
+        %strong.event-title= current_event.name
+        - if current_event.start_date? && current_event.end_date?
           %span.event-meta
             %i.fa.fa-fw.fa-calendar
-            = event.date_range
+            = current_event.date_range
     .col-md-4.text-right.text-right-responsive
       .event-info.event-info-dense
-        %span{:class => "event-meta event-status-badge event-status-#{event.status}"}
+        %span{:class => "event-meta event-status-badge event-status-#{current_event.status}"}
           CFP
-          = event.status
-        - if event.open?
+          = current_event.status
+        - if current_event.open?
           %span.event-meta
             CFP closes:
-            %strong= event.closes_at(:month_day_year)
+            %strong= current_event.closes_at(:month_day_year)
 .row
   &nbsp;
 
@@ -25,7 +25,8 @@
       Sessions
       %span.badge= sessions.count
   .col-md-2.text-right
-    = link_to "+ New Session", new_event_staff_program_session_path(event), class: "btn btn-success btn-sm"
+    - if current_user.organizer_for_event?(current_event)
+      = link_to "+ New Session", new_event_staff_program_session_path(current_event), class: "btn btn-success btn-sm"
 
 .row
   .col-md-12
@@ -52,14 +53,17 @@
     %h3
       Waitlist
       %span.badge= waitlisted_sessions.count
-    %table.table.table-striped
+    %table#waitlisted-program-sessions.datatable.table.table-striped
       %thead
+        %tr
+          %th
+          %th
+          %th
+          %th
         %tr
           %th Title
           %th Speaker
-          %th Email
-          %th Tags
           %th Track
-          %th Notes
+          %th Status
       %tbody
         = render partial: 'session_row_waitlisted', collection: waitlisted_sessions, as: :program_session

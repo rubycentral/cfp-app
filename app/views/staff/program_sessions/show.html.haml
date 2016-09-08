@@ -2,34 +2,35 @@
   .row
     .col-md-8
       .event-info.event-info-dense
-        %strong.event-title= event.name
-        - if event.start_date? && event.end_date?
+        %strong.event-title= current_event.name
+        - if current_event.start_date? && current_event.end_date?
           %span.event-meta
             %i.fa.fa-fw.fa-calendar
-            = event.date_range
+            = current_event.date_range
     .col-md-4.text-right.text-right-responsive
       .event-info.event-info-dense
-        %span{:class => "event-meta event-status-badge event-status-#{event.status}"}
+        %span{:class => "event-meta event-status-badge event-status-#{current_event.status}"}
           CFP
-          = event.status
-        - if event.open?
+          = current_event.status
+        - if current_event.open?
           %span.event-meta
             CFP closes:
-            %strong= event.closes_at(:month_day_year)
-
-#proposal
-  .proposal-actions-bar
-    .row
-      .col-md-offset-8.col-md-4.text-right.clearfix
-        .btn-nav.pull-right
-          = link_to "« Return to Sessions", event_staff_program_sessions_path, class: "btn btn-primary btn-sm", id: "back"
+            %strong= current_event.closes_at(:month_day_year)
 
   .page-header.page-header-slim
     .row
-      .col-md-6
-        %h1= program_session.title
+      .col-md-12
+        .btn-navbar.pull-right
+          - if current_user.organizer_for_event?(current_event)
+            = link_to edit_event_staff_program_session_path(current_event, @program_session), class: 'btn btn-primary' do
+              %span.glyphicon.glyphicon-edit
+              Edit
+        %h1 Program Session
   .row
     .col-md-6
+      .program-session-item
+        %h3.control-label Title
+        %p= @program_session.title
       .program-session-item
         %h3.control-label Format
         %p #{program_session.session_format_name}
@@ -49,22 +50,22 @@
         - if program_session.proposal.present?
           .proposal-link
             %h3.control-label Proposal
-            %p= link_to program_session.proposal.title, event_staff_program_proposal_path(@event, program_session.proposal)
+            %p= link_to program_session.proposal.title, event_staff_program_proposal_path(current_event, program_session.proposal)
       .program-session-item.session-speakers
         .session-speakers-header.clearfix
           %h3.control-label.pull-left
             Speakers
-          = link_to "Add Speaker", new_event_staff_program_session_speaker_path(@event, program_session), class: "btn btn-success btn-xs pull-right new-speaker"
+          - if current_user.organizer_for_event?(current_event)
+            = link_to "Add Speaker", new_event_staff_program_session_speaker_path(current_event, program_session), class: "btn btn-success btn-xs pull-right new-speaker"
         - @speakers.each do |speaker|
           %section
             .session-speaker-header.clearfix
               .pull-left
-                %b.speaker-name= link_to speaker.name, event_staff_program_speaker_path(@event, speaker)
+                %b.speaker-name= link_to speaker.name, event_staff_program_speaker_path(current_event, speaker)
                 %p= speaker.email
-              .session-speaker-actions.pull-right
-                .edit-session-speaker= link_to "Edit", edit_event_staff_program_speaker_path(@event, speaker), class: "btn btn-primary btn-xs"
-                - if program_session.multiple_speakers?
-                  .remove-session-speaker= link_to "Remove", event_staff_program_speaker_path(@event, speaker), method: :delete, data: { confirm: "Are you sure you want to remove this speaker?" }, class: "btn btn-danger btn-xs"
-            -# %p= speaker.email
-            -# %p= speaker.bio
+              - if current_user.organizer_for_event?(current_event)
+                .session-speaker-actions.pull-right
+                  .edit-session-speaker= link_to "Edit", edit_event_staff_program_speaker_path(current_event, speaker), class: "btn btn-primary btn-xs"
+                  - if program_session.multiple_speakers?
+                    .remove-session-speaker= link_to "Remove", event_staff_program_speaker_path(current_event, speaker), method: :delete, data: { confirm: "Are you sure you want to remove this speaker?" }, class: "btn btn-danger btn-xs"
             %p &nbsp;

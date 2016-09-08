@@ -1,5 +1,4 @@
 class Staff::ProgramSessionDecorator < ApplicationDecorator
-  include Proposal::State
   decorates_association :speakers
   delegate_all
 
@@ -19,7 +18,7 @@ class Staff::ProgramSessionDecorator < ApplicationDecorator
     session_format.name
   end
 
-  def state_label(large: false, state: nil, show_confirmed: false)
+  def state_label(large: false, state: nil)
     state ||= self.state
 
     classes = "label #{state_class(state)}"
@@ -47,13 +46,5 @@ class Staff::ProgramSessionDecorator < ApplicationDecorator
 
   def scheduled?
     time_slot.present?
-  end
-
-  def track_name
-    track.name
-  end
-
-  def session_format_name
-    session_format.name
   end
 end

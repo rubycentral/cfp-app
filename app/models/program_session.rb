@@ -12,7 +12,11 @@ class ProgramSession < ActiveRecord::Base
   has_one :time_slot
   has_many :speakers
 
+  accepts_nested_attributes_for :speakers
+
   validates :event, :session_format, :title, :state, presence: true
+
+  after_destroy :destroy_speakers
 
   scope :unscheduled, -> do
     where(state: ACTIVE).where.not(id: TimeSlot.pluck(:program_session_id))
@@ -51,6 +55,11 @@ class ProgramSession < ActiveRecord::Base
     speakers.count > 1
   end
 
+  private
+
+  def destroy_speakers
+    speakers.each { |speaker| speaker.destroy unless speaker.proposal_id.present? }
+  end
 end
 
 # == Schema Information

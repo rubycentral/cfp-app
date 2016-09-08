@@ -46,9 +46,6 @@ class ProgramSession < ActiveRecord::Base
     speakers.count > 1
   end
 
-  def scheduled?
-    time_slot.present?
-  end
 end
 
 # == Schema Information

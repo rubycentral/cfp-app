@@ -1,0 +1,28 @@
+.program-session-item {
+  margin-bottom: 2em;
+}
+
+.session-speakers {
+  width: 80%;
+
+  .session-speakers-header, section {
+    border-bottom: 1px solid $gray-lighter;
+
+    .new-speaker {
+      margin-bottom: $padding-small-vertical;
+    }
+  }
+
+  .session-speaker-header {
+    margin-top: $padding-small-vertical;
+  }
+
+  .edit-session-speaker,
+  .remove-session-speaker {
+    .btn {
+      width: 100%;
+      margin-bottom: $padding-small-vertical;
+    }
+  }
+
+}

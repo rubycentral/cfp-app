@@ -23,9 +23,10 @@
   .col-md-10
     %h3
       Sessions
-      %span.badge= @sessions.count
+      %span.badge= sessions.count
   .col-md-2.text-right
-    = link_to 'New Session', new_event_staff_program_session_path(event), class: 'btn btn-md btn-success'
+    = link_to "+ New Session", new_event_staff_program_session_path(event), class: "btn btn-success btn-sm"
+
 .row
   .col-md-12
     %table#program-sessions.datatable.table.table-striped
@@ -43,14 +44,14 @@
           %th Scheduled
           %th Status
       %tbody
-        = render partial: 'session_row_active', collection: @sessions, as: :program_session
+        = render partial: 'session_row_active', collection: sessions, as: :program_session
 %hr
 
 .row
   .col-md-12
     %h3
       Waitlist
-      %span.badge= @waitlisted_sessions.count
+      %span.badge= waitlisted_sessions.count
     %table.table.table-striped
       %thead
         %tr
@@ -61,4 +62,4 @@
           %th Track
           %th Notes
       %tbody
-        = render partial: 'session_row_waitlisted', collection: @waitlisted_sessions, as: :program_session
+        = render partial: 'session_row_waitlisted', collection: waitlisted_sessions, as: :program_session

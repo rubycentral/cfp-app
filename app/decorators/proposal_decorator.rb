@@ -104,7 +104,7 @@ class ProposalDecorator < ApplicationDecorator
     classes = "label #{state_class(state)}"
     classes += ' label-mini' if small
 
-    state += ' & confirmed' if proposal.confirmed? && show_confirmed
+    # state += ' & confirmed' if proposal.confirmed? && show_confirmed
 
     h.content_tag :span, state, class: classes
   end

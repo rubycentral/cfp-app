@@ -32,7 +32,12 @@
       .col-md-6.text-right
         - if proposal.organizer_confirm
           = link_to "Confirm for Speaker", confirm_event_proposal_path(slug: proposal.event.slug, uuid: proposal), class: "btn btn-primary btn-sm"
-        %span.state-buttons #{proposal.state_buttons(show_finalize: false)}
+        .proposal-info-bar
+          .proposal-meta.proposal-description
+            .proposal-meta-item
+              %strong Status:
+              %span.proposal-status #{proposal.state_label(small: true)}
+            %span.state-buttons #{proposal.state_buttons(show_finalize: false)}
     .row
       .col-sm-6
         .proposal-info-bar
@@ -54,9 +59,6 @@
               %strong Track:
               %span
                 = render 'inline_track_edit', proposal: proposal
-            .proposal-meta-item
-              %strong Status:
-              %span.proposal-status #{proposal.state_label(small: true)}
             -if proposal.review_tags.present?
               .proposal-meta-item
                 %strong Reviewer Tags:

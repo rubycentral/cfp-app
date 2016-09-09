@@ -1,14 +1,14 @@
 .navbar.navbar-default.program-subnav
   .container-fluid
     %ul.nav.navbar-nav.navbar-right
-      %li{class: program_subnav_item_class("event-program-proposals-selection-link")}
-        = link_to selection_event_staff_program_proposals_path do
-          %i.fa.fa-gavel
-          %span Selection
       %li{class: program_subnav_item_class("event-program-proposals-link")}
         = link_to event_staff_program_proposals_path do
           %i.fa.fa-balance-scale
           %span Proposals
+      %li{class: program_subnav_item_class("event-program-proposals-selection-link")}
+        = link_to selection_event_staff_program_proposals_path do
+          %i.fa.fa-gavel
+          %span Selection
       %li{class: program_subnav_item_class("event-program-sessions-link")}
         = link_to event_staff_program_sessions_path do
           %i.fa.fa-check
@@ -18,27 +18,30 @@
           %i.fa.fa-users
           %span Speakers
 
-    %ul.nav.navbar-nav.program-counts
+    %ul.nav.navbar-nav.session-counts
       %li.static
-        %span Program Count:
-      %li.static.total.soft-accepted
-        %span Soft Accepted
-        %span.badge= @soft_accepted_count
-      %li.static.total.soft-waitlisted
-        %span Soft Waitlisted
-        %span.badge= @soft_waitlisted_count
+        %span.title Sessions:
+        %div.counts-container
+          .total.all-accepted
+            %span Accepted
+            %span.badge= @all_accepted_count
+          .total.all-waitlisted
+            %span Waitlisted
+            %span.badge= @all_waitlisted_count
+
       - if program_tracks.any?
-        %li.static.no-top-padding.split
-          %span By Track:
-          %form.track-select{:data => {:event => current_event.slug}}
-            %select{:id => 'track-select', :name => 'track'}
-              %option{:value => 'all'} All
-              %option{:value => 'general'} General
+        %li.static
+          %span.title By Track:
+          %form.track-select{data: {event: current_event.slug}}
+            %select{id: 'track-select', name: 'track'}
+              %option{value: 'all'} All
+              %option General
               - program_tracks.each do |track|
-                %option{:value => track.id}= track.name
-        %li.static.no-top-padding.by-track.soft-accepted
-          %span Soft Accepted
-          %span.badge 0
-        %li.static.no-top-padding.by-track.soft-waitlisted
-          %span Soft Waitlisted
-          %span.badge 0
+                %option{value: track.id}= track.name
+          %div.counts-container
+            .by-track.all-accepted
+              %span Accepted
+              %span.badge 0
+            .by-track.all-waitlisted
+              %span Waitlisted
+              %span.badge 0

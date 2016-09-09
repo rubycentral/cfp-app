@@ -54,11 +54,11 @@ class Staff::ProposalsController < Staff::ApplicationController
     @taggings_count = Tagging.count_by_tag(@event)
   end
 
-  def program_counts
-    track = params[:trackId]
-    render :json =>
-      { :soft_accepted_count => Proposal.soft_accepted_count(current_event, track),
-        :soft_waitlisted_count => Proposal.soft_waitlisted_count(current_event, track)
+  def session_counts
+    track = params[:track_id]
+    render json: {
+        all_accepted_count: Proposal.all_accepted_count(current_event, track),
+        all_waitlisted_count: Proposal.all_waitlisted_count(current_event, track)
       }
   end
 

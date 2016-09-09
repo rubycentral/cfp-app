@@ -7,5 +7,5 @@ $(document).ready(function () {
   $('.cancel-status-change').click(function() {
     $('.status-dropdown').hide();
     $('.btn-nav').show();
-  })
+  });
 });

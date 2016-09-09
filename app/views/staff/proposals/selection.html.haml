@@ -27,11 +27,11 @@
   .col-sm-8.text-left
     %ul.selection-counts
       %li.total.soft-accepted
-        %span Soft Accepted
-        %span.badge= @soft_accepted_count
+        %span Accepted
+        %span.badge= @all_accepted_count
       %li.total.soft-waitlisted
-        %span Soft Waitlisted
-        %span.badge= @soft_waitlisted_count
+        %span Waitlisted
+        %span.badge= @all_waitlisted_count
   .col-sm-4.text-right
     %small.text-right <em>Hint:</em> Hold <kbd>shift</kbd> to sort by multiple columns
 
@@ -63,8 +63,7 @@
             %td= proposal.average_rating
             %td= proposal.speaker_names
             %td= proposal.title_link
-            %td
-              = render 'inline_track_edit', proposal: proposal
+            %td= proposal.track_name
             %td= proposal.session_format_name
             %td= proposal.review_tags_labels
             %td

@@ -138,7 +138,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_proposal_counts
-    @soft_accepted_count ||= Proposal.soft_accepted_count(current_event)
-    @soft_waitlisted_count ||= Proposal.soft_waitlisted_count(current_event)
+    @all_accepted_count ||= Proposal.all_accepted_count(current_event)
+    @all_waitlisted_count ||= Proposal.all_waitlisted_count(current_event)
   end
 end

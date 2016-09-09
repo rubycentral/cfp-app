@@ -60,7 +60,7 @@ Rails.application.routes.draw do
         resources :proposals, param: :uuid do
           collection do
             get 'selection'
-            get 'program_counts'
+            get 'session_counts'
           end
           post :finalize
           post :update_state

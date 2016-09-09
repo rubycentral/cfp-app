@@ -3,22 +3,40 @@
 }
 
 .navbar-nav {
-  &.program-counts {
-    .split {
-      clear: left;
+  &.session-counts {
+    .title {
+      color: #fff;
     }
 
-    .no-top-padding {
-      padding-top: 0
+    .track-select {
+      margin-left: 6px;
+    }
+
+    .counts-container {
+      font-size: $font-size-xs;
+      margin-left: 6px;
+
+      .badge {
+        font-size: $font-size-xs;
+        margin-top: -2px;
+        padding: 1px 8px;
+      }
+
+      .all-accepted > span:first-child,
+      .all-waitlisted > span:first-child {
+        display: inline-block;
+        width: 55px;
+      }
     }
   }
 
+
   li.static {
+    height: 58px;
+    display: inline-flex;
+    align-items: center;
     color: #ccc;
     padding-left: 15px;
-    padding-right: 15px;
-    padding-bottom:    $navbar-padding-vertical;
-    padding-top:    $navbar-padding-vertical;
 
     .track-select {
       display: inline;

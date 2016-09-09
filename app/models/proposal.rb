@@ -258,6 +258,18 @@ class Proposal < ActiveRecord::Base
     q.size
   end
 
+  def self.all_accepted_count(event, track='all')
+    q = event.proposals.where(state: [ACCEPTED, SOFT_ACCEPTED])
+    q = q.in_track(track) unless track=='all'
+    q.size
+  end
+
+  def self.all_waitlisted_count(event, track='all')
+    q = event.proposals.where(state: [WAITLISTED, SOFT_WAITLISTED])
+    q = q.in_track(track) unless track=='all'
+    q.size
+  end
+
   private
 
   def save_tags

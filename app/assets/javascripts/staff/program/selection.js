@@ -6,8 +6,8 @@ $(function() {
 
   $('.track-select').change(function () {
     var successFn = function (data) {
-      $('.by-track.soft-accepted').find('.badge').text(data.soft_accepted_count);
-      $('.by-track.soft-waitlisted').find('.badge').text(data.soft_waitlisted_count);
+      $('.by-track.all-accepted').find('.badge').text(data.all_accepted_count);
+      $('.by-track.all-waitlisted').find('.badge').text(data.all_waitlisted_count);
       $('.by-track').show();
     };
 
@@ -18,9 +18,9 @@ $(function() {
       $('.by-track').hide();
     } else {
       $.ajax({
-        url: '/events/' + eventSlug + '/staff/program/proposals/program_counts',
+        url: '/events/' + eventSlug + '/staff/program/proposals/session_counts',
         dataType: 'json',
-        data: { trackId: trackId },
+        data: { track_id: trackId },
         type: 'GET',
         success: successFn
       });

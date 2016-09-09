@@ -106,14 +106,14 @@
           .widget-content
             = render partial: 'shared/proposals/tags_form', locals: { event: event, proposal: proposal }
 
-      -#Gonna migrate this over to ProgramSession show page in the near future
-      -#- if proposal.proposal_data?
-      -#  %h3 Video URL
-      -#  = proposal.proposal_data[:video_url]
-      -#  %br/
-      -#
-      -#  %h3 Slides URL
-      -#  = proposal.proposal_data[:slides_url]
+          -#Gonna migrate this over to ProgramSession show page in the near future
+          -#- if proposal.proposal_data?
+          -#  %h3 Video URL
+          -#  = proposal.proposal_data[:video_url]
+          -#  %br/
+          -#
+          -#  %h3 Slides URL
+          -#  = proposal.proposal_data[:slides_url]
 
         .internal-comments{ style: proposal.internal_comments_style }
           .widget-header

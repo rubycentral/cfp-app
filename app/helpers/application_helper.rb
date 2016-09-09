@@ -89,8 +89,7 @@ module ApplicationHelper
   end
 
   def program_nav?
-    # add program team to the check
-    current_user.organizer_for_event?(current_event)
+    current_user.program_team_for_event?(current_event)
   end
 
   def schedule_nav?

@@ -45,6 +45,8 @@ class Staff::ProposalsController < Staff::ApplicationController
   end
 
   def selection
+    session[:prev_page] = {name: 'Selection', path: selection_event_staff_program_proposals_path}
+
     @proposals = @event.proposals.working_program
                  .includes(:event, :review_taggings, :ratings,
                            {speakers: :user}).load

@@ -26,6 +26,8 @@ module ActivateNavigation
     {} #TBD
   end
 
+  private
+
   def matches_nav_path?(key, paths={})
     if paths.is_a?(String)
       return paths==request.path
@@ -34,7 +36,7 @@ module ActivateNavigation
       return matches_nav_path?(nil, paths.values) if key.nil?
       return paths.any?{|k, p| k==key && matches_nav_path?(nil, p) } # only recurse if the key matches
 
-    elsif paths.is_a?(Array) || key.nil?
+    elsif paths.is_a?(Array)
       return paths.any?{|p| !p.nil? && matches_nav_path?(nil, p) }
     end
   end
@@ -68,7 +70,7 @@ module ActivateNavigation
         'event-program-proposals-selection-link' => [
             add_path(:selection_event_staff_program_proposals, current_event),
             # add_path(:event_staff_program_proposal, current_event, @proposal)
-            #How to leverage session[:prev_page] here ?
+            #How to leverage session[:prev_page] here? Considering lamdas
         ],
         'event-program-proposals-link' => [
             add_path(:event_staff_program_proposals, current_event),

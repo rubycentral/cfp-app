@@ -13,7 +13,7 @@
       .row
         %fieldset.col-md-6
           = f.label "Name"
-          = f.text_field :speaker_name, class: "form-control", placeholder: @speaker.name
+          = f.text_field :speaker_name, class: "form-control", placeholder: @speaker.name, autofocus: true
           %br
           = f.label "Email"
           = f.text_field :speaker_email, class: "form-control", placeholder: @speaker.email

@@ -21,7 +21,7 @@
             from the review committee during the review process.
           .form-group
             = f.label :name
-            = f.text_field :name, class: 'form-control', placeholder: 'Your name'
+            = f.text_field :name, class: 'form-control', placeholder: 'Your name', autofocus: true
           %p
             = f.label :bio
             = f.text_area :bio, class: 'form-control', placeholder: 'Enter your bio', rows: 7, maxlength: 500

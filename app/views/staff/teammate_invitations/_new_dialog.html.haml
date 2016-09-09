@@ -3,10 +3,10 @@
     .modal-content
       = simple_form_for(:teammate, url: event_staff_teammates_path(event)) do |f|
         .modal-header
-          %h3 Invite a new teammate
+          %h3 Invite a New Teammate
         .modal-body
           = f.error_notification
-          = f.input :email, class: "form-control"
+          = f.input :email, class: "form-control", autofocus: true
           = f.input :role, as: :select, collection: Teammate::STAFF_ROLES, class: "form-control"
 
         .modal-footer

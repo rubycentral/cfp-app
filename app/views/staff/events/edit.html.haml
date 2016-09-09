@@ -11,7 +11,7 @@
       .row
         %fieldset.col-md-6
           %h2 Event Information
-          = f.input :name, placeholder: 'Name of the event'
+          = f.input :name, placeholder: 'Name of the event', autofocus: true
           = f.input :slug, placeholder: 'Slug for the event URL, may be left blank once event name is filled out',
             hint: "The slug will be used in public facing URLs. If you leave this field blank, a slug will be generated based on the name."
           = f.input :url, label: "URL", placeholder: 'Event\'s URL'

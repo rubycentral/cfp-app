@@ -8,4 +8,8 @@ $(document).ready(function () {
     $('.status-dropdown').hide();
     $('.btn-nav').show();
   });
+
+  $('.modal').on('shown.bs.modal', function() {
+    $(this).find('[autofocus]').focus();
+  });
 });

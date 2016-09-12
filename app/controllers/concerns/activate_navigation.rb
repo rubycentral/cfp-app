@@ -43,10 +43,13 @@ module ActivateNavigation
 
   def nav_item_map
     @nav_item_map ||= {
-        'my-proposals-link' => add_path(:proposals),
+        'my-proposals-link' => [
+            add_path(:proposals),
+            add_path(:event_proposal, current_event, @proposal.try(:uuid?) ? @proposal : nil)
+        ],
         'event-review-proposals-link' => [
             add_path(:event_staff_proposals, current_event),
-            add_path(:event_staff_proposal, current_event, @proposal)
+            add_path(:event_staff_proposal, current_event, @proposal.try(:uuid?) ? @proposal : nil)
         ],
         'event-program-link' => program_subnav_item_map.values,
         'event-schedule-link' => add_path(:event_staff_time_slots, current_event),
@@ -74,7 +77,7 @@ module ActivateNavigation
         ],
         'event-program-proposals-link' => [
             add_path(:event_staff_program_proposals, current_event),
-            add_path(:event_staff_program_proposal, current_event, @proposal)
+            add_path(:event_staff_program_proposal, current_event, @proposal.try(:uuid?) ? @proposal : nil)
         ],
         'event-program-sessions-link' => add_path(:event_staff_program_sessions, current_event),
         'event-program-speakers-link' => add_path(:event_staff_program_speakers, current_event),

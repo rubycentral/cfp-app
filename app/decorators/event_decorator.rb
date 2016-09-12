@@ -2,14 +2,14 @@ class EventDecorator < ApplicationDecorator
   delegate_all
 
   def proposals_rated_overall_message
-    overall_rated_count = Proposal.rated_count(object)
-    total_proposals_count = Proposal.total_count(object)
+    overall_rated_count = event.stats.rated_proposals
+    total_proposals_count = event.stats.total_proposals
     "#{overall_rated_count}/#{total_proposals_count}"
   end
 
   def proposals_you_rated_message
-    rated_count = Proposal.user_rated_count(h.current_user, object)
-    proposals_count = Proposal.user_ratable_count(h.current_user, object)
+    rated_count = event.stats.user_rated_proposals(h.current_user)
+    proposals_count = event.stats.user_ratable_proposals(h.current_user)
     "#{rated_count}/#{proposals_count}"
   end
 
@@ -32,7 +32,7 @@ class EventDecorator < ApplicationDecorator
   end
 
   def cfp_days_remaining
-    ((object.closes_at - DateTime.now).to_i / 1.day) if object.closes_at && (object.closes_at - DateTime.now).to_i / 1.day > 1
+    ((object.closes_at - DateTime.current).to_i / 1.day) if object.closes_at && (object.closes_at - DateTime.now).to_i / 1.day > 1
   end
 
   def closes_at(format = nil)

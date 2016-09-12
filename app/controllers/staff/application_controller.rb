@@ -2,6 +2,8 @@ class Staff::ApplicationController < ApplicationController
   before_action :require_event
   before_action :require_staff
 
+  helper_method :sticky_selected_track
+
   private
 
   # Must be an organizer on @event
@@ -43,6 +45,14 @@ class Staff::ApplicationController < ApplicationController
       flash[:notice] = "Can't review your own proposal!"
       redirect_to event_staff_proposals_url(event_slug: @proposal.event.slug)
     end
+  end
+
+  def sticky_selected_track
+    session["event/#{current_event.id}/program/track"] if current_event
+  end
+
+  def sticky_selected_track=(id)
+    session["event/#{current_event.id}/program/track"] = id if current_event
   end
 
 end

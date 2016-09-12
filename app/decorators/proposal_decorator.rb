@@ -134,8 +134,7 @@ class ProposalDecorator < ApplicationDecorator
       hint: 'A concise, engaging description for the public program. Limited to 600 characters.'#, popover_icon: { content: tooltip }
   end
 
-  def standalone_track_select()
-
+  def standalone_track_select
     h.select_tag :track, h.options_for_select(track_options, object.track_id), include_blank: 'General – No Suggested Track',
                class: 'proposal-track-select', data: { target_path: h.event_staff_program_proposal_update_track_path(object.event, object) }
   end

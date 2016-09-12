@@ -58,7 +58,10 @@ class Proposal < ActiveRecord::Base
   scope :for_state, ->(state) do
     where(state: state).order(:title).includes(:event, {speakers: :user}, :review_taggings)
   end
-  scope :in_track, ->(track) { where(track: track)}
+  scope :in_track, ->(track) do
+    track = nil if track.try(:strip).blank?
+    where(track: track)
+  end
 
   scope :emails, -> { joins(speakers: :user).pluck(:email).uniq }
 
@@ -206,68 +209,6 @@ class Proposal < ActiveRecord::Base
     success = update_attributes(params)
     @dont_touch_updated_by_speaker_at = false
     success
-  end
-
-  ## Stats
-
-  def self.rated_count(event, include_withdrawn=false)
-    q = event.proposals.rated
-    q = q.not_withdrawn if include_withdrawn
-    q.size
-  end
-
-  def self.total_count(event, include_withdrawn=false)
-    q = event.proposals
-    q = q.not_withdrawn if include_withdrawn
-    q.size
-  end
-
-  def self.user_rated_count(user, event, include_withdrawn=false)
-    q = user.ratings.for_event(event)
-    q = q.not_withdrawn if include_withdrawn
-    q.size
-  end
-
-  def self.user_ratable_count(user, event, include_withdrawn=false)
-    q = event.proposals.not_owned_by(user)
-    q = q.not_withdrawn if include_withdrawn
-    q.size
-  end
-
-  def self.accepted_count(event, track='all')
-    q = event.proposals.accepted
-    q = q.in_track(track) unless track=='all'
-    q.size
-  end
-
-  def self.waitlisted_count(event, track='all')
-    q = event.proposals.waitlisted
-    q = q.in_track(track) unless track=='all'
-    q.size
-  end
-
-  def self.soft_accepted_count(event, track='all')
-    q = event.proposals.soft_accepted
-    q = q.in_track(track) unless track=='all'
-    q.size
-  end
-
-  def self.soft_waitlisted_count(event, track='all')
-    q = event.proposals.soft_waitlisted
-    q = q.in_track(track) unless track=='all'
-    q.size
-  end
-
-  def self.all_accepted_count(event, track='all')
-    q = event.proposals.where(state: [ACCEPTED, SOFT_ACCEPTED])
-    q = q.in_track(track) unless track=='all'
-    q.size
-  end
-
-  def self.all_waitlisted_count(event, track='all')
-    q = event.proposals.where(state: [WAITLISTED, SOFT_WAITLISTED])
-    q = q.in_track(track) unless track=='all'
-    q.size
   end
 
   private

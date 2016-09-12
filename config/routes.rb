@@ -68,7 +68,7 @@ Rails.application.routes.draw do
         end
 
         resources :speakers, only: [:index, :show, :edit, :update, :destroy]
-        resources :program_sessions, as: 'sessions' do
+        resources :program_sessions, as: 'sessions', path: 'sessions' do
           resources :speakers, only: [:new, :create]
         end
       end

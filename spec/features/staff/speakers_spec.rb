@@ -58,87 +58,6 @@ feature "Organizers can manage speakers for Program Sessions" do
       expect(page).to_not have_content(speaker_2.email)
     end
 
-    it "Only sees remove button if program session has mutiple speakers" do
-      row_1 = find("tr#speaker-#{speaker_3.id}")
-      row_2 = find("tr#speaker-#{speaker_4.id}")
-      row_3 = find("tr#speaker-#{speaker_5.id}")
-
-      within row_1 do
-        expect(page).to have_link "Remove"
-      end
-
-      within row_2 do
-        expect(page).to have_link "Remove"
-      end
-
-      within row_3 do
-        expect(page).to_not have_link "Remove"
-      end
-    end
-
-    it "Can add a new speaker to a program session" do
-      row = find("tr#speaker-#{speaker_5.id}")
-      within row do
-        click_on "Add Speaker"
-      end
-
-      expect(current_path).to eq(new_event_staff_program_session_speaker_path(event, program_session_2.id))
-      fill_in "speaker[speaker_name]", with: "Zorro"
-      fill_in "speaker[speaker_email]", with: "zorro@swords.com"
-      click_on "Save"
-
-      expect(current_path).to eq(event_staff_program_speakers_path(event))
-
-      expect(page).to have_content "Zorro has been added to #{program_session_2.title}"
-
-      expect(page).to have_css("tr#speaker-#{speaker_1.user_id}")
-      expect(page).to have_content "Zorro"
-      expect(page).to have_content "zorro@swords.com"
-
-      within "tr#speaker-#{Speaker.last.id}" do
-        expect(page).to have_content(program_session_2.title)
-      end
-    end
-
-    it "Can't add a new speaker with an invalid email" do
-      row = find("tr#speaker-#{speaker_5.id}")
-      within row do
-        click_on "Add Speaker"
-      end
-
-      fill_in "speaker[speaker_name]", with: "Orion"
-      fill_in "speaker[speaker_email]", with: "dkfjasdlkjflkdfkl"
-      click_on "Save"
-
-      expect(page).to have_content "There was a problem saving this speaker."
-    end
-
-    it "Can't add a speaker without an email" do
-      row = find("tr#speaker-#{speaker_5.id}")
-      within row do
-        click_on "Add Speaker"
-      end
-
-      fill_in "speaker[speaker_name]", with: "Orion"
-      fill_in "speaker[speaker_email]", with: ""
-      click_on "Save"
-
-      expect(page).to have_content "There was a problem saving this speaker."
-    end
-
-    it "Can't add a speaker without a name" do
-      row = find("tr#speaker-#{speaker_5.id}")
-      within row do
-        click_on "Add Speaker"
-      end
-
-      fill_in "speaker[speaker_name]", with: ""
-      fill_in "speaker[speaker_email]", with: "goodemail@example.com"
-      click_on "Save"
-
-      expect(page).to have_content "There was a problem saving this speaker."
-    end
-
     it "Can edit a program sessions speaker" do
       row = find("tr#speaker-#{speaker_3.id}")
       old_name = speaker_3.name
@@ -218,20 +137,6 @@ feature "Organizers can manage speakers for Program Sessions" do
       click_on "Save"
 
       expect(page).to have_content "There was a problem updating this speaker."
-    end
-
-    it "Can delete a program session speaker", js: true do
-      row = find("tr#speaker-#{speaker_4.id}")
-    
-      within row do
-        page.accept_confirm { click_on "Remove" }
-      end
-
-      expect(page).to have_content "#{speaker_4.name} has been removed from #{speaker_4.program_session.title}."
-      page.reset!
-
-      expect(page).to_not have_content speaker_4.name
-      expect(page).to_not have_content speaker_4.email
     end
   end
 end

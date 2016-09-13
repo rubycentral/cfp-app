@@ -3,19 +3,19 @@
     .col-md-8
       .event-info.event-info-dense
         %strong.event-title= event.name
-        - if event.start_date? && event.end_date?
+        - if current_event.start_date? && current_event.end_date?
           %span.event-meta
             %i.fa.fa-fw.fa-calendar
-            = event.date_range
+            = current_event.date_range
     .col-md-4.text-right.text-right-responsive
       .event-info.event-info-dense
-        %span{:class => "event-meta event-status-badge event-status-#{event.status}"}
+        %span{:class => "event-meta event-status-badge event-status-#{current_event.status}"}
           CFP
-          = event.status
-        - if event.open?
+          = current_event.status
+        - if current_event.open?
           %span.event-meta
             CFP closes:
-            %strong= event.closes_at(:month_day_year)
+            %strong= current_event.closes_at(:month_day_year)
 .row
   .col-md-12
     .page-header.clearfix
@@ -34,23 +34,21 @@
         %tr
           %th Name
           %th Email
-          %th Program Session Title
-          %th Actions
+          %th Session
+          %th Track
+          %th Format
+          - if current_user.organizer_for_event?(current_event)
+            %th Actions
       %tbody
         - @program_speakers.each do |speaker|
           %tr{ id: "speaker-#{speaker.id}" }
-            %td= speaker.name
+            %td= link_to speaker.name, event_staff_program_speaker_path(current_event, speaker)
             %td= speaker.email
             %td= link_to speaker.program_session.title, event_staff_program_session_path(current_event, speaker.program_session)
-            %td{ id: "speaker-action-buttons-#{speaker.id}" }
-              %span>
-                = link_to "Edit", edit_event_staff_program_speaker_path(current_event, speaker), class: "btn btn-primary btn-xs"
-              %span>
-                = link_to "Add Speaker", new_event_staff_program_session_speaker_path(current_event, speaker.program_session), class: "btn btn-primary btn-xs"
-              %span>
-                - if speaker.program_session.multiple_speakers?
-                  = link_to "Remove",
-                    event_staff_program_speaker_path(current_event, speaker),
-                    method: :delete,
-                    data: { confirm: "Are you sure you want to remove this speaker?" },
-                    class: "btn btn-danger btn-xs"
+            %td= speaker.program_session.track.try(:name)
+            %td= speaker.program_session.session_format.name
+            - if current_user.organizer_for_event?(current_event)
+              %td{ id: "speaker-action-buttons-#{speaker.id}" }
+                %span>
+                  = link_to "Edit", edit_event_staff_program_speaker_path(current_event, speaker), class: "btn btn-primary btn-xs"
+

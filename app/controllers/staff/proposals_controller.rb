@@ -1,6 +1,6 @@
 class Staff::ProposalsController < Staff::ApplicationController
   before_action :enable_staff_program_subnav
-  before_action :set_proposal_counts
+  before_action :set_proposal_counts, only: [:index, :show, :selection]
 
   before_action :require_proposal, only: [:show, :update_state, :update_track, :finalize]
 
@@ -56,9 +56,10 @@ class Staff::ProposalsController < Staff::ApplicationController
 
   def session_counts
     track = params[:track_id]
+    self.sticky_selected_track = track
     render json: {
-        all_accepted_count: Proposal.all_accepted_count(current_event, track),
-        all_waitlisted_count: Proposal.all_waitlisted_count(current_event, track)
+        all_accepted_proposals: current_event.stats.all_accepted_proposals(sticky_selected_track),
+        all_waitlisted_proposals: current_event.stats.all_waitlisted_proposals(sticky_selected_track)
       }
   end
 

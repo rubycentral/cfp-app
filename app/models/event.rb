@@ -206,6 +206,10 @@ class Event < ActiveRecord::Base
     errors.add(:url, "must be valid")
   end
 
+  def stats
+    @stats ||= EventStats.new(self)
+  end
+
   private
 
   def update_closes_at_if_manually_closed

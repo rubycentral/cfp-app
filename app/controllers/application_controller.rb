@@ -142,7 +142,11 @@ class ApplicationController < ActionController::Base
   end
 
   def set_proposal_counts
-    @all_accepted_count ||= Proposal.all_accepted_count(current_event)
-    @all_waitlisted_count ||= Proposal.all_waitlisted_count(current_event)
+    @all_accepted_count ||= current_event.stats.all_accepted_proposals
+    @all_waitlisted_count ||= current_event.stats.all_waitlisted_proposals
+    unless sticky_selected_track == 'all'
+      @all_accepted_track_count ||= current_event.stats.all_accepted_proposals(sticky_selected_track)
+      @all_waitlisted_track_count ||= current_event.stats.all_waitlisted_proposals(sticky_selected_track)
+    end
   end
 end

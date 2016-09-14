@@ -21,6 +21,11 @@ class ProgramSession < ActiveRecord::Base
   scope :inactive, -> { where(state: INACTIVE) }
   scope :waitlisted, -> { where(state: WAITLISTED) }
   scope :active_or_inactive, -> { where(state: [ACTIVE, INACTIVE]) }
+  scope :without_proposal, -> { where(proposal: nil) }
+  scope :in_track, ->(track) do
+    track = nil if track.try(:strip).blank?
+    where(track: track)
+  end
 
   def self.create_from_proposal(proposal)
     self.transaction do

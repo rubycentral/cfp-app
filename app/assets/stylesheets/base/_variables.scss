@@ -33,6 +33,7 @@ $brand-info-alt:        $dark-blue !default;
 $brand-warning:         lighten($gold, 20%) !default ; //$dark-red;
 $brand-danger:          adjust-color($dark-red, $lightness: 30%, $saturation: 30%) !default;
 $brand-accent:          $gold !default;
+$brand-gray:            #ccc;
 
 
 
@@ -188,6 +189,10 @@ $btn-warning-border:             darken($btn-warning-bg, 5%) !default;
 $btn-danger-color:               #fff !default;
 $btn-danger-bg:                  $brand-danger !default;
 $btn-danger-border:              darken($btn-danger-bg, 5%) !default;
+
+$btn-gray-color:               #000 !default;
+$btn-gray-bg:                  $brand-gray !default;
+$btn-gray-border:              darken($btn-gray-bg, 5%) !default;
 
 $btn-link-disabled-color:        $gray-light !default;
 

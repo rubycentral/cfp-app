@@ -37,19 +37,13 @@ feature "Speaker Emails" do
     it "can edit speaker emails", js: true do
       visit event_staff_speaker_email_notifications_path(event)
 
-      expect(page).to have_button "Save"
-
-      fill_in "event[accept]", with: "Yay! You've been accepted to speak!"
-      click_on "Save"
-
-      expect(page).to have_content "Your event was saved."
-      expect(current_path).to eq(event_staff_info_path(event))
-
-      visit event_staff_speaker_email_notifications_path(event)
-
-      within "#event_accept" do
-        expect(page).to have_content("Yay! You've been accepted to speak!")
+      within first('.template-section') do
+        find_button("Edit").click
+        fill_in "event[accept]", with: "Yay! You've been accepted to speak!"
+        find_button("Save").click
       end
+
+      expect(page).to have_content "Your speaker email templates were updated."
     end
   end
 
@@ -59,24 +53,13 @@ feature "Speaker Emails" do
     it "can edit speaker emails", js: true do
       visit event_staff_speaker_email_notifications_path(event)
 
-      expect(page).to have_button "Save"
-
-      fill_in "event[reject]", with: "Oh.. sorry..."
-      fill_in "event[waitlist]", with: "You have to wait!"
-      click_on "Save"
-
-      expect(page).to have_content "Your event was saved."
-      expect(current_path).to eq(event_staff_info_path(event))
-
-      visit event_staff_speaker_email_notifications_path(event)
-
-      within "#event_reject" do
-        expect(page).to have_content("Oh.. sorry...")
+      within first('.template-section') do
+        find_button("Edit").click
+        fill_in "event[accept]", with: "Yay! You've been accepted to speak!"
+        find_button("Save").click
       end
 
-      within "#event_waitlist" do
-        expect(page).to have_content("You have to wait!")
-      end
+      expect(page).to have_content "Your speaker email templates were updated."
     end
   end
 

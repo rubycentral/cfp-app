@@ -142,3 +142,49 @@ $event-draft-text:    $state-info-text;
 .event-status-closed {
   @extend .label-default;
 }
+
+.template-section {
+  padding-bottom: 1em;
+
+  .notice {
+    color: $dark-red;
+    font-style: italic;
+    margin: .5em 0;
+  }
+
+  .template-title {
+    display: inline;
+  }
+
+  .template-actions {
+    float: right;
+
+    .btn-gray {
+      color: $btn-gray-color;
+      background-color: $btn-gray-bg;
+      border: 1px solid $btn-gray-border;
+
+      &:hover, &:active {
+        background-color: darken($btn-gray-bg, 10%);
+      }
+    }
+  }
+
+  .template-preview .contents,
+  .template-short .contents  {
+    background-color: $beige;
+    border: 1px solid darken($beige, 10%);
+    border-radius: 5px;
+    margin: 1em 0;
+    padding: 10px;
+
+    ul {
+      list-style-type: disc;
+    }
+  }
+
+  .template-short .contents {
+    height: 55px;
+    overflow: hidden;
+  }
+}

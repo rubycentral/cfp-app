@@ -48,6 +48,8 @@ Rails.application.routes.draw do
       patch :update_guidelines
 
       get '/speaker-emails' => 'events#speaker_emails', as: :speaker_email_notifications
+      patch :update_speaker_emails
+      patch '/remove_speaker_email_template/:type' => 'events#remove_speaker_email_template', as: :remove_speaker_email_template
 
       resources :teammates, path: 'team'
 

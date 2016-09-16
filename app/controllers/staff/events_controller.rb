@@ -18,6 +18,28 @@ class Staff::EventsController < Staff::ApplicationController
   def speaker_emails
   end
 
+  def update_speaker_emails
+    authorize_update
+    if @event.update(params.require(:event).permit(:accept, :reject, :waitlist))
+      flash[:info] = "Your speaker email templates were updated."
+      redirect_to event_staff_speaker_email_notifications_path
+    else
+      flash[:danger] = "There was a problem saving your email templates; please review the form for issues and try again."
+      render :speaker_email_notifications
+    end
+  end
+
+  def remove_speaker_email_template
+    authorize_update
+    if @event.remove_speaker_email_template(params[:type].to_sym)
+      flash[:info] = "Your speaker email templates were updated."
+      redirect_to event_staff_speaker_email_notifications_path
+    else
+      flash[:danger] = "There was a problem saving your email templates; please review the form for issues and try again."
+      render :speaker_email_notifications
+    end
+  end
+
   def guidelines
   end
 

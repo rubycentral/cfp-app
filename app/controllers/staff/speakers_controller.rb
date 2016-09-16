@@ -2,7 +2,6 @@ class Staff::SpeakersController < Staff::ApplicationController
   before_action :enable_staff_program_subnav
   before_action :set_proposal_counts
 
-  decorates_assigned :speaker
   before_action :set_program_session, only: [:new, :create]
   before_action :speaker_count_check, only: [:destroy]
 
@@ -12,6 +11,7 @@ class Staff::SpeakersController < Staff::ApplicationController
 
   def new
     @speaker = Speaker.new
+    authorize @speaker
   end
 
   def create
@@ -33,6 +33,7 @@ class Staff::SpeakersController < Staff::ApplicationController
 
   def edit
     @speaker = current_event.speakers.find(params[:id])
+    authorize @speaker
   end
 
   def update

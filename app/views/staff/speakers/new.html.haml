@@ -19,7 +19,7 @@
             = f.text_field :speaker_email, class: "form-control"
             %br
             = f.label :bio
-            = f.text_area :bio, class: "form-control", value: speaker.bio,
+            = f.text_area :bio, class: "form-control", value: @speaker.bio,
             placeholder: "Bio for the event program", rows: 7, maxlength: 500
             %p.help-block Bio is limited to 500 characters.
 

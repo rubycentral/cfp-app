@@ -19,8 +19,10 @@ class Staff::SessionFormatsController < Staff::ApplicationController
 
   def create
     session_format = @event.session_formats.build(session_format_params)
-    unless session_format.save
-      flash.now[:warning] = "There was a problem saving your session format"
+    if session_format.save
+      flash.now[:success] = "#{session_format.name} has been added to session formats."
+    else
+      flash.now[:danger] = "There was a problem saving your session format, #{session_format.errors.full_messages.join(", ")}."
     end
     respond_to do |format|
       format.js do
@@ -30,7 +32,11 @@ class Staff::SessionFormatsController < Staff::ApplicationController
   end
 
   def update
-    @session_format.update_attributes(session_format_params)
+    if @session_format.update_attributes(session_format_params)
+      flash.now[:success] = "#{@session_format.name} has been updated."
+    else
+      flash.now[:danger] = "There was a problem updating your session format, #{@session_format.errors.full_messages.join(", ")}."
+    end
     respond_to do |format|
       format.js do
         render locals: { session_format: @session_format }
@@ -39,8 +45,11 @@ class Staff::SessionFormatsController < Staff::ApplicationController
   end
 
   def destroy
-    @session_format.destroy
-    flash.now[:info] = "This session format has been deleted."
+    if @session_format.destroy
+      flash.now[:success] = "#{@session_format.name} has been deleted from session formats."
+    else
+      flash.now[:danger] = "There was a problem deleting the #{@session_format.name} session format."
+    end
     respond_to do |format|
       format.js do
         render locals: { session_format: @session_format }

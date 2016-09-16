@@ -1,3 +1,5 @@
+$("#config-modal .errors").html("");
+
 <% if track.persisted? %>
   $('#config-modal').modal('hide');
   $('#tracks').append('<%=j render track %>');
@@ -7,7 +9,9 @@
     '#track_guidelines'
   ], '#track-new-dialog');
 <% else %>
-  $('#config-modal .errors').append('<%=  track.errors.full_messages.join(", ") %>');
+  $("#track-error").remove();
+  $("#config-modal .errors").append("<p id='track-error'><%=  track.errors.full_messages.join(", ") %></p>");
 <% end %>
 
 document.getElementById('flash').innerHTML = '<%=j show_flash %>';
+$("html, body").animate({ scrollTop: 0 }, "slow");

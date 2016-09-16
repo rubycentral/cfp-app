@@ -1,6 +1,7 @@
-$("#room-new-dialog").modal("hide");
+$("#room-new-dialog .errors").html("");
 
 <% if room.persisted? %>
+  $("#room-new-dialog").modal("hide");
   $("#organizer-rooms").append("<%=j render room %>");
   clearFields([
     "#room_name",
@@ -9,15 +10,9 @@ $("#room-new-dialog").modal("hide");
     "#room_address",
     "#room_capacity"
   ], "#room-new-dialog");
-
-  <% if !has_missing_requirements?(room.event) %>
-    $("#time-slot-prereqs").addClass("hidden")
-    $("#add-time-slot").removeClass("disabled")
-  <% else %>
-    document.getElementById("missing-prereq-messages").innerHTML =
-      "<%=j unmet_requirements(room.event) %>";
-  <% end %>
-
+<% else %>
+  $("#room-new-dialog .errors").append("<%= room.errors.full_messages.join(', ') %>");
 <% end %>
 
 document.getElementById("flash").innerHTML = "<%=j show_flash %>";
+$("html, body").animate({ scrollTop: 0 }, "slow");

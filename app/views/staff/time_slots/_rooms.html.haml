@@ -25,4 +25,5 @@
           .modal-content
             .modal-header
               %h3 New Room
+              .errors
             = render partial: "staff/rooms/form", locals: { room: Room.new }

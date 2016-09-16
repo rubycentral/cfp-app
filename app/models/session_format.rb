@@ -3,8 +3,8 @@ class SessionFormat < ActiveRecord::Base
   has_many :time_slots
   has_many :proposals
 
-  validates_presence_of :name, :event
-  validates_uniqueness_of :name, scope: :event
+  validates_presence_of :event
+  validates :name, uniqueness: {scope: :event}, presence: true
 
   scope :sort_by_name, ->{ order(:name) }
   scope :publicly_viewable, ->{ where(public: true)}

@@ -5,7 +5,7 @@
         - if comment.user.present?
           .info{ title: comment.created_at.to_s }
             %p.name
-              #{proposal.has_speaker?(comment.user) ? 'speaker' : comment.user.name}
+              = commenter_name(comment)
             %span.time #{comment.created_at.to_s(:day_at_time)}
         .text
           =markdown(comment.body)

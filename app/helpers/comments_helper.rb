@@ -8,4 +8,12 @@ module CommentsHelper
       'from_user left reviewer-comment'
     end
   end
+
+  def commenter_name(comment)
+    if program_mode?
+      comment.user.name
+    else
+      comment.proposal.has_speaker?(comment.user) ? 'speaker' : comment.user.name
+    end
+  end
 end

@@ -57,5 +57,5 @@
 - if display_staff_event_subnav?
   = render partial: "layouts/nav/staff/event_subnav"
 
-- elsif display_staff_program_subnav?
+- elsif program_mode?
   = render partial: "layouts/nav/staff/program_subnav"

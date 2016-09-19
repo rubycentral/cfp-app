@@ -39,9 +39,8 @@ class Staff::ApplicationController < ApplicationController
     user_signed_in? && current_user.reviewer?
   end
 
-  # Prevent reviewers from reviewing their own proposals.
-  def prevent_self
-    if @proposal.has_speaker?(current_user)
+  def prevent_self_review
+    if !program_mode? && @proposal.has_speaker?(current_user)
       flash[:notice] = "Can't review your own proposal!"
       redirect_to event_staff_proposals_url(event_slug: @proposal.event.slug)
     end

@@ -1,15 +1,15 @@
 # Policy for Proposals, though for now covering blind review functionality.
 class ProposalPolicy < ApplicationPolicy
-  def reviewer_index?
+  def reviewer?
     @user.staff_for?(@current_event)
   end
 
-  def reviewer_show?
+  def review?
     @user.staff_for?(@current_event) && !@record.has_speaker?(@user)
   end
 
-  def reviewer_update?
-    @user.staff_for?(@current_event) && !@record.has_speaker?(@user)
+  def rate?
+    @user.staff_for?(@current_event)
   end
 
   def update_state?

@@ -1,11 +1,12 @@
 #rating-form
-  - unless proposal.has_speaker?(current_user)
+  - if allow_rating?(proposal)
     = simple_form_for [event, :staff, proposal, rating], remote: true do |f|
+      = program_tracker
       = f.input :score, label: 'Rating', collection: (1..5), include_blank: true,
         input_html: { style: 'width: 60px', onchange: '$(this).trigger("submit.rails");'},
         disabled: proposal.withdrawn?, popover_icon: { content: rating_tooltip }
 
-  - unless rating.new_record?
+  - if show_ratings?(rating)
     %dl.dl-horizontal.ratings_list.margin-top
       - proposal.ratings.each do |rating|
         %dt= "#{rating.user.name}:"

@@ -20,7 +20,7 @@ class Staff::SpeakersController < Staff::ApplicationController
     authorize @speaker
     if @speaker.save
       flash[:success] = "#{@speaker.name} has been added to #{@program_session.title}"
-      redirect_to event_staff_program_speakers_path(current_event)
+      redirect_to event_staff_program_session_path(current_event, @program_session)
     else
       flash[:danger] = "There was a problem saving this speaker."
       render :new
@@ -52,10 +52,10 @@ class Staff::SpeakersController < Staff::ApplicationController
     authorize @speaker
     if @speaker.destroy
       flash[:info] = "#{speaker.name} has been removed from #{speaker.program_session.title}."
-      redirect_to event_staff_program_speakers_path(current_event)
+      redirect_to event_staff_program_session_path(current_event, @speaker.program_session)
     else
       flash[:danger] = "There was a problem removing #{speaker.name}."
-      redirect_to event_staff_program_speakers_path(current_event)
+      redirect_to event_staff_program_session_path(current_event, @speaker.program_session)
     end
   end
 

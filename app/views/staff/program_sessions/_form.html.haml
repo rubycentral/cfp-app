@@ -1,43 +1,29 @@
-= simple_form_for proposal, url: [ event, :staff, proposal ] do |f|
+= simple_form_for @program_session, url: [ event, :staff, @program_session ] do |f|
   .row
     %fieldset.col-md-6
-      %h4 Proposal
-      = proposal.title_input(f)
-      = proposal.abstract_input(f)
-      %section.inline-block
-        = f.label :video_url
-        = f.text_field :video_url, class: "form-control"
-      %section.inline-block
-        = f.label :slides_url
-        = f.text_field :slides_url, class: "form-control"
-
-  - if event.public_tags?
-    .row
+      = f.input :title, maxlength: 60, input_html: { class: 'watched js-maxlength-alert', rows: 1 }
+      = f.association :session_format, as: :select, collection: current_event.session_formats, label: "Format",
+        include_blank: false, required: true
+      = f.association :track, as: :select, collection: current_event.tracks, label: "Track"
+      - unless @program_session.new_record?
+        = f.input :state, as: :select, collection: session_states_collection, label: "State",
+          include_blank: false, required: true
+      = f.input :abstract, maxlength: 605, input_html: { class: 'watched js-maxlength-alert', rows: 5 }
+      -# %section.inline-block
+      -#   = f.label :video_url
+      -#   = f.text_field :video_url, class: "form-control"
+      -# %section.inline-block
+      -#   = f.label :slides_url
+      -#   = f.text_field :slides_url, class: "form-control"
+    - if @program_session.new_record?
       %fieldset.col-md-6
-        %section
-          %p
-          = f.label :review_tags, label: "Review Tags (#{event.review_tags.length})"
-          = f.select :review_tags, options_for_select(event.review_tags, proposal.review_tags), {}, {class: 'multiselect review-tags form-control', multiple: true}
-
-
-  .row
-    %fieldset.col-md-6
-      -#%h4 Speaker
-      -#= f.simple_fields_for :speakers do |speaker_fields|
-      -#  = speaker_fields.simple_fields_for :user, @user do |user_fields|
-      -#    = user_fields.input :name
-      -#    = user_fields.input :email
-      -#  = speaker_fields.input :bio, maxlength: :lookup,
-      -#    placeholder: 'Bio for speaker for the event program.'
-
-      - if @event.custom_fields?
-        %h4 Custom Fields
-        - @event.custom_fields.each do |custom_field|
-          .form-group
-          = f.label custom_field
-          = text_field_tag "proposal[custom_fields][#{custom_field}]", proposal.custom_fields[custom_field], class: "form-control"
-          %p
+        %h4 Speaker
+        = f.simple_fields_for :speakers, url: [ @event, :staff] do |speaker|
+          = speaker.input :speaker_name, label: "Name"
+          = speaker.input :speaker_email, label: "Email"
+          = speaker.input :bio, maxlength: :lookup, input_html: { class: 'watched js-maxlength-alert', rows: 5 }
 
   .row
     .col-sm-12
-      %button.pull-right.btn.btn-primary.btn-lg{type: "submit"} Save
+      =submit_tag("Save", class: "pull-right btn btn-success", type: "submit")
+      = link_to "Cancel", event_staff_program_sessions_path(current_event), {:class=>"cancel-form pull-right btn btn-danger"}

@@ -253,6 +253,11 @@ If your talk is about seed data in Rails apps, we want to hear about it!
                                                          track: accepted_proposal_2.track,
                                                          session_format: accepted_proposal_2.session_format)
 
+  program_session_3 = seed_event.program_sessions.create(event: seed_event,
+                                                         title: "Keynote Session",
+                                                         abstract: "The keynote session will kick off the conference for all attendees.",
+                                                         session_format: internal_session)
+
   accepted_proposal_1.speakers.create(speaker_name: speaker_4.name, speaker_email: speaker_4.email, bio: "Experiential foodtruck consectetur thinker-maker-doer agile irure thought leader tempor thought leader. SpaceTeam commodo nulla personas sit in mollit iterate workflow dolore food-truck incididunt. In veniam eu sunt esse dolore sunt cortado anim anim. Lorem do experiential prototype velit workflow thinker-maker-doer 360 campaign thinker-maker-doer deserunt quis non.", user: speaker_4, program_session: program_session_1, event: seed_event)
   accepted_proposal_1.speakers.create(speaker_name: speaker_5.name, speaker_email: speaker_5.email, bio: "Prototype irure cortado consectetur driven laboru in. Bootstrapping physical computing lorem in Duis viral piverate incididunt anim. Aute SpaceTeam ullamco earned media experiential aliqua moleskine fugiat physical computing.", user: speaker_5, program_session: program_session_1, event: seed_event)
   accepted_proposal_2.speakers.create(speaker_name: speaker_2.name, speaker_email: speaker_2.email, bio: "Id fugiat ex dolor personas in ipsum actionable insight grok actionable insight amet non adipisicing. In irure pair programming sed id food-truck consequat officia reprehenderit in engaging thinker-maker-doer. Experiential irure moleskine sunt quis ideate thought leader paradigm hacker Steve Jobs. Unicorn ea Duis integrate culpa ut voluptate workflow reprehenderit officia prototype intuitive ideate.", user: speaker_2, program_session: program_session_2, event: seed_event)

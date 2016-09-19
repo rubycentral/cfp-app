@@ -38,7 +38,8 @@
       .program-session-item
         %h3.control-label Bio
         %p= @speaker.bio
-      .program-session-item
-        %h3.control-label Program Session
-        %p= link_to @speaker.program_session.title, event_staff_program_session_path(current_event, @speaker.program_session)
+      - if @speaker.program_session
+        .program-session-item
+          %h3.control-label Program Session
+          %p= link_to @speaker.program_session.title, event_staff_program_session_path(current_event, @speaker.program_session)
 

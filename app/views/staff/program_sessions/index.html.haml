@@ -20,12 +20,15 @@
   &nbsp;
 
 .row
-  .col-md-10
+  .col-md-8
     %h3
       Sessions
       %span.badge= sessions.count
-  .col-md-2.text-right
+  .col-md-4.text-right
     - if current_user.organizer_for_event?(current_event)
+      = link_to event_staff_program_sessions_path(format: "json"), class: "btn btn-info btn-sm" do
+        %span.glyphicon.glyphicon-download-alt
+        Download as JSON
       = link_to "+ New Session", new_event_staff_program_session_path(current_event), class: "btn btn-success btn-sm"
 
 .row

@@ -1,12 +1,12 @@
 class Staff::ProposalReviewsController < Staff::ApplicationController
   before_action :require_proposal, except: [:index]
-  before_action :prevent_self, except: [:index]
+  before_action :prevent_self_review, except: [:index]
 
   decorates_assigned :proposal, with: Staff::ProposalDecorator
   respond_to :html, :js
 
   def index
-    authorize Proposal, :reviewer_index?
+    authorize Proposal, :reviewer?
     set_title('Review Proposals')
 
     proposals = policy_scope(Proposal)
@@ -22,7 +22,7 @@ class Staff::ProposalReviewsController < Staff::ApplicationController
   end
 
   def show
-    authorize @proposal, :reviewer_show?
+    authorize @proposal, :review?
     set_title(@proposal.title)
 
     rating = current_user.rating_for(@proposal)
@@ -34,7 +34,7 @@ class Staff::ProposalReviewsController < Staff::ApplicationController
   end
 
   def update
-    authorize @proposal, :reviewer_update?
+    authorize @proposal, :review?
 
     unless @proposal.update_without_touching_updated_by_speaker_at(proposal_review_tags_params)
       flash[:danger] = 'There was a problem saving the proposal.'

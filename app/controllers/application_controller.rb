@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   helper_method :organizer?
   helper_method :event_staff?
   helper_method :display_staff_event_subnav?
-  helper_method :display_staff_program_subnav?
+  helper_method :program_mode?
   helper_method :program_tracks
 
   before_action :current_event
@@ -133,7 +133,7 @@ class ApplicationController < ActionController::Base
     @display_program_subnav = true
   end
 
-  def display_staff_program_subnav?
+  def program_mode?
     @display_program_subnav
   end
 

@@ -1,4 +1,4 @@
-- unless proposal.has_speaker?(current_user)
+- if show_proposal?(proposal)
   %tr{ class: "proposal-#{proposal.id}", data: { 'proposal-id' => proposal.id, 'proposal-uuid' => proposal.uuid } }
     %td= proposal.average_rating
     %td= proposal.ratings.size

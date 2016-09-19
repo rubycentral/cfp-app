@@ -5,9 +5,13 @@
         =link_to truncate(proposal.title, length: 55), event_staff_program_proposal_path(event, proposal)
         &nbsp;
         %span.other-proposal-status= proposal.state_label(small: true)
-        %span.other-proposal-rating
-          Rating:
-          = proposal.average_rating ? number_with_precision(proposal.average_rating, precision: 1) : "No Rating"
+        .rating-and-track
+          .other-proposal-rating
+            %b Rating:
+            = proposal.average_rating ? number_with_precision(proposal.average_rating, precision: 1) : "No Rating"
+          .other-proposal-track
+            %b Track:
+            = proposal.track_name
   -else
     %li
       None

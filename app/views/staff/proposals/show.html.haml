@@ -71,14 +71,14 @@
     .col-md-4
       .widget.widget-card.flush-top
         .widget-header
-          %h3 Speakers
-        .widget-content
-          = render partial: 'staff/proposals/speakers', locals: { speakers: proposal.speakers }
-
-        .widget-header
           %h3 Other Proposals
         .widget-content
           = render partial: 'other_proposals', locals: { event: event, other_proposals: @other_proposals }
+
+        .widget-header
+          %h3 Speakers
+        .widget-content
+          = render partial: 'staff/proposals/speakers', locals: { speakers: proposal.speakers }
 
       .widget.widget-card.flush-top
         .widget-header

@@ -33,15 +33,19 @@
       margin-right: 10px;
     }
   }
-  .other_proposals li{ margin-bottom: 5px;}
+  .other_proposals li{ margin-bottom: 10px;}
   .other_proposal_tags {
     padding-left: 10px;
     margin-bottom: 7px;
   }
 
-  .other-proposal-rating {
+  .other-proposal-rating,
+  .other-proposal-track {
     display: inline-block;
-    margin-left: 8px;
+  }
+
+  .other-proposal-track {
+    margin-left: 1em;
   }
 }
 

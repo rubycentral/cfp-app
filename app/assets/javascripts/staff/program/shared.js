@@ -8,12 +8,12 @@ $(function() {
   client.on('beforecopy', function() {
     var ids = [];
     $('.datatable tbody tr').each(function(i, row) {
-      ids.push(row.dataset.proposalId);
+      ids.push(row.dataset.sessionId);
     });
 
     $.ajax({
       url: btnCopy.data('url'),
-      data: { proposal_ids: ids },
+      data: { session_ids: ids },
       async: false,
       success: function(obj) {
         client.setText(obj.emails.join(','));

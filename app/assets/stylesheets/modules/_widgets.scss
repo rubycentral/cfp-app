@@ -11,6 +11,10 @@
     margin-top: .5em;
   }
 
+  &.confirmation {
+    border: 2px solid $brand_danger;
+  }
+
   .widget-header {
     background: $beige;
     border: 1px solid #d6d6d6;
@@ -32,6 +36,18 @@
       top: -8px;
       text-shadow: 1px 1px 2px rgba(255,255,255,.5);
     }
+
+    h2 {
+      color: #525252;
+      display: inline-block;
+      font-size: 20px;
+      font-weight: 800;
+      margin: 0 3em 10px 0;
+      position: relative;
+      top: -8px;
+      text-shadow: 1px 1px 2px rgba(255,255,255,.5);
+    }
+
     .btn {
       margin: 5px 5px 0 0;
     }

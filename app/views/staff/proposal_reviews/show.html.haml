@@ -51,7 +51,7 @@
           .proposal-meta.proposal-description
             .proposal-meta-item
               %strong Status:
-              = proposal.public_state(small: true)
+              = proposal.reviewer_state(small: true)
             .proposal-meta-item
               %strong Updated:
               %span #{proposal.updated_in_words}

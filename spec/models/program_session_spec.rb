@@ -84,6 +84,20 @@ describe ProgramSession do
       end
     end
 
+    it "sets bio from user on each speaker" do
+      proposal.speakers.each do |speaker|
+        expect(speaker.bio).to eq(nil)
+      end
+
+      session = ProgramSession.create_from_proposal(proposal)
+
+      session.speakers.each do |speaker|
+        expect(speaker.bio.present?).to eq(true)
+        expect(speaker.bio).to eq(speaker.user.bio)
+        expect(speaker.changed?).to be(false)
+      end
+    end
+
     it "does not overwrite speaker_name if it already has a value" do
       my_proposal = create(:proposal)
       user = create(:user, name: "Fluffy", email: "fluffy@email.com")
@@ -105,16 +119,34 @@ describe ProgramSession do
       my_proposal = create(:proposal)
       user = create(:user, name: "Fluffy", email: "fluffy@email.com" )
       create(:speaker,
-              user_id: user.id,
-              event_id: my_proposal.event_id,
-              proposal_id: my_proposal.id,
-              speaker_email: "unicorn@email.com")
+             user_id: user.id,
+             event_id: my_proposal.event_id,
+             proposal_id: my_proposal.id,
+             speaker_email: "unicorn@email.com")
 
       ProgramSession.create_from_proposal(my_proposal)
       ps_speaker = my_proposal.speakers.first
 
       expect(ps_speaker.speaker_name).to eq("Fluffy")
       expect(ps_speaker.speaker_email).to eq("unicorn@email.com")
+      expect(ps_speaker.changed?).to be(false) #returns true if there are unsaved changes
+    end
+
+    it "does not overwrite bio if it already has a value" do
+      my_proposal = create(:proposal)
+      user = create(:user, name: "Fluffy", email: "fluffy@email.com", bio: "Fluffy rules all day." )
+      create(:speaker,
+             user_id: user.id,
+             event_id: my_proposal.event_id,
+             proposal_id: my_proposal.id,
+             bio: "Went to Unicorniversity of Ohio.")
+
+      ProgramSession.create_from_proposal(my_proposal)
+      ps_speaker = my_proposal.speakers.first
+
+      expect(ps_speaker.speaker_name).to eq("Fluffy")
+      expect(ps_speaker.speaker_email).to eq("fluffy@email.com")
+      expect(ps_speaker.bio).to eq("Went to Unicorniversity of Ohio.")
       expect(ps_speaker.changed?).to be(false) #returns true if there are unsaved changes
     end
 

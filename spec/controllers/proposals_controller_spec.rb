@@ -44,30 +44,22 @@ describe ProposalsController, type: :controller do
     end
   end
 
-  describe "GET #confirm" do
-    it "allows any user with an accepted proposal" do
-      authorized = create(:speaker)
-      unauthorized = create(:speaker)
-      proposal = create(:proposal, event: event, speakers: [ authorized ], state: "accepted")
-      allow_any_instance_of(ProposalsController).to receive(:current_user) { unauthorized.user }
-      post :confirm, event_slug: event.slug, uuid: proposal.uuid
-      expect(response).to be_success
-    end
-  end
-
-  describe "POST #set_confirmed" do
+  describe "POST #confirm" do
     it "confirms a proposal" do
       proposal = create(:proposal, confirmed_at: nil)
       allow_any_instance_of(ProposalsController).to receive(:current_user) { create(:speaker) }
-      post :set_confirmed, event_slug: proposal.event.slug, uuid: proposal.uuid
+      post :confirm, event_slug: proposal.event.slug, uuid: proposal.uuid
       expect(proposal.reload).to be_confirmed
     end
 
-    it "can set confirmation_notes" do
+  end
+
+  describe "POST #update_notes" do
+    it "sets confirmation_notes" do
       proposal = create(:proposal, confirmation_notes: nil)
       allow_any_instance_of(ProposalsController).to receive(:current_user) { create(:speaker) }
-      post :set_confirmed, event_slug: proposal.event.slug, uuid: proposal.uuid,
-        confirmation_notes: 'notes'
+      post :update_notes, event_slug: proposal.event.slug, uuid: proposal.uuid,
+           proposal: {confirmation_notes: 'notes'}
       expect(proposal.reload.confirmation_notes).to eq('notes')
     end
   end

@@ -1,7 +1,7 @@
 module StaffHelper
 
   def allow_rating?(proposal)
-    program_mode? || !proposal.has_speaker?(current_user)
+    (program_mode? || !proposal.has_speaker?(current_user)) && !proposal.finalized?
   end
 
   def show_ratings?(rating)

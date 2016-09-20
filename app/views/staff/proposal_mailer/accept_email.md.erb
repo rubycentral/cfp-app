@@ -1,4 +1,4 @@
-<% unless @event.accept.blank? %>
+<% if @event.accept.present? %>
   <%= Staff::ProposalMailerTemplate.new(@event.accept, @event, @proposal).render %>
  <% else %>
     Congratulations! We'd love to include your talk, <%= @proposal.title %>, at <%= @event.name %>.

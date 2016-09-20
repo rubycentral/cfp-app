@@ -26,11 +26,9 @@ feature "Event Dashboard" do
     end
 
     it "cannot create new events" do
-      # pending "This fails because it sends them to login and then Devise sends to events path and changes flash"
       visit new_admin_event_path
       expect(page.current_path).to eq(events_path)
-      #Losing the flash on redirect here.
-      # expect(page).to have_text("You must be signed in as an administrator")
+      expect(page).to have_text("You must be signed in as an administrator")
     end
 
     it "can edit events" do

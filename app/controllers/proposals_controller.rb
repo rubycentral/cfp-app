@@ -3,10 +3,8 @@ class ProposalsController < ApplicationController
   before_action :require_user
   before_action :require_proposal, except: [ :index, :create, :new, :parse_edit_field ]
   before_action :require_invite_or_speaker, only: [:show]
-  skip_before_action :require_invite_or_speaker, only: [:destroy]
 
   before_action :require_speaker, only: [:edit, :update]
-  before_action :require_waitlisted_or_accepted_state, only: [:confirm]
 
   decorates_assigned :proposal
 
@@ -28,14 +26,22 @@ class ProposalsController < ApplicationController
   end
 
   def confirm
-
+    if @proposal.confirm
+      flash[:success] = "You have confirmed your participation in #{@proposal.event.name}."
+    else
+      flash[:danger] = "There was a problem confirming your participation in #{@proposal.event.name}: #{@proposal.errors.full_messages.join(', ')}"
+    end
+    redirect_to event_proposal_path(slug: @proposal.event.slug, uuid: @proposal)
   end
 
-  def set_confirmed
-    @proposal.update(confirmed_at: DateTime.current,
-                     confirmation_notes: params[:confirmation_notes])
-    redirect_to confirm_event_proposal_url(slug: @proposal.event.slug, uuid: @proposal),
-      flash: { success: 'Thank you for confirming your participation' }
+  def update_notes
+    if @proposal.update(confirmation_notes: notes_params[:confirmation_notes])
+      flash[:success] = "Confirmation notes successfully updated."
+      redirect_to event_proposal_path(slug: @proposal.event.slug, uuid: @proposal)
+    else
+      flash[:danger] = "There was a problem updating confirmation notes."
+      render :show
+    end
   end
 
   def withdraw
@@ -108,6 +114,10 @@ class ProposalsController < ApplicationController
     params.require(:proposal).permit(:title, {tags: []}, :session_format_id, :track_id, :abstract, :details, :pitch, custom_fields: @event.custom_fields,
                                      comments_attributes: [:body, :proposal_id, :user_id],
                                      speakers_attributes: [:bio, :id])
+  end
+
+  def notes_params
+    params.require(:proposal).permit(:confirmation_notes)
   end
 
   def require_invite_or_speaker

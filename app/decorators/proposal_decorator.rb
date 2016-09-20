@@ -4,14 +4,26 @@ class ProposalDecorator < ApplicationDecorator
   delegate_all
   decorates_association :speakers
 
-  def public_state(small: false)
-    public_state = if state.include?('soft')
+  def speaker_state(small: false)
+    speaker_state = if object.awaiting_confirmation?
+      'Waiting for speaker confirmation'
+    elsif state.include?('soft')
       SUBMITTED
     else
       state
     end
 
-    state_label(small: small, state: public_state)
+    state_label(small: small, state: speaker_state)
+  end
+
+  def reviewer_state(small: false)
+    reviewer_state = if state.include?('soft')
+      SUBMITTED
+    else
+      state
+    end
+
+    state_label(small: small, state: reviewer_state, show_confirmed: false)
   end
 
   def state
@@ -93,9 +105,27 @@ class ProposalDecorator < ApplicationDecorator
       id: 'withdraw'
   end
 
+  def confirm_button
+    h.link_to 'Confirm',
+              h.confirm_event_proposal_path(uuid: object, event_slug: object.event.slug),
+              method: :post,
+              class: 'btn btn-success'
+  end
+
+  def decline_button
+    h.link_to bang('Decline'),
+              h.withdraw_event_proposal_path(uuid: object, event_slug: object.event.slug),
+              method: :post,
+              data: {
+                  confirm: 'This will remove your talk from consideration and send an ' +
+                      'email to the event coordinator. Are you sure you want to do this?'
+              },
+              class: 'btn btn-warning'
+  end
+
   def confirm_link
     h.link_to 'confirmation page',
-      h.confirm_event_proposal_url(event_slug: object.event.slug, uuid: object)
+      h.event_proposal_url(object.event, object)
   end
 
   def state_label(small: false, state: nil, show_confirmed: false)
@@ -104,7 +134,7 @@ class ProposalDecorator < ApplicationDecorator
     classes = "label #{state_class(state)}"
     classes += ' label-mini' if small
 
-    # state += ' & confirmed' if proposal.confirmed? && show_confirmed
+    state += ' & confirmed' if proposal.confirmed? && show_confirmed
 
     h.content_tag :span, state, class: classes
   end
@@ -141,6 +171,10 @@ class ProposalDecorator < ApplicationDecorator
 
   def track_options
     @track_options ||= object.event.tracks.map {|t| [t.name, t.id]}
+  end
+
+  def invitations_enabled?(user)
+    object.has_speaker?(user) && !object.finalized?
   end
 
   private

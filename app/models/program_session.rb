@@ -45,6 +45,7 @@ class ProgramSession < ActiveRecord::Base
       ps.speakers.each do |speaker|
         (speaker.speaker_name = speaker.user.name) if speaker.speaker_name.blank?
         (speaker.speaker_email = speaker.user.email) if speaker.speaker_email.blank?
+        (speaker.bio = speaker.user.bio) if speaker.bio.blank?
         speaker.save!
       end
       ps

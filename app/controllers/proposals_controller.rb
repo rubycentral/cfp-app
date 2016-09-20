@@ -4,7 +4,7 @@ class ProposalsController < ApplicationController
   before_action :require_proposal, except: [ :index, :create, :new, :parse_edit_field ]
   before_action :require_invite_or_speaker, only: [:show]
 
-  before_action :require_speaker, only: [:edit, :update]
+  before_action :require_speaker, except: [ :index, :create, :new, :parse_edit_field ]
 
   decorates_assigned :proposal
 
@@ -47,7 +47,7 @@ class ProposalsController < ApplicationController
   def withdraw
     @proposal.withdraw unless @proposal.confirmed?
     flash[:info] = "Your withdrawal request has been submitted."
-    redirect_to event_event_proposals_url(slug: @proposal.event.slug, uuid: @proposal)
+    redirect_to event_proposal_url(slug: @proposal.event.slug, uuid: @proposal)
   end
 
   def destroy

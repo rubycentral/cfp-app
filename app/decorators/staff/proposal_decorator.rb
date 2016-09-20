@@ -20,7 +20,7 @@ class Staff::ProposalDecorator < ProposalDecorator
       end
     end
 
-    btns << finalize_state_button if show_finalize
+    btns << finalize_state_button if show_finalize && h.policy(proposal).finalize?
 
     btns.join("\n").html_safe
   end
@@ -61,10 +61,6 @@ class Staff::ProposalDecorator < ProposalDecorator
       id: 'delete' do
         bang('Delete Proposal')
       end
-  end
-
-  def organizer_confirm
-      object.state == "accepted" && object.confirmed_at == nil
   end
 
   def created_at

@@ -66,7 +66,7 @@ module ApplicationHelper
 
   def copy_email_btn
     link_to "<i class='fa fa-files-o'></i> Copy Speaker Emails".html_safe, '#',
-            data: {url: event_staff_speaker_emails_path(@event)},
+            data: {url: speaker_emails_event_staff_program_sessions_path(current_event)},
             class: "btn btn-primary btn-sm",
             id: 'copy-filtered-speaker-emails'
   end

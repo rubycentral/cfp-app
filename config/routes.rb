@@ -73,6 +73,9 @@ Rails.application.routes.draw do
         resources :program_sessions, as: 'sessions', path: 'sessions' do
           resources :speakers, only: [:new, :create]
           post :update_state
+          collection do
+            get 'speaker_emails'
+          end
         end
       end
 
@@ -80,10 +83,6 @@ Rails.application.routes.draw do
       resources :time_slots, except: :show
       resources :session_formats, except: :show
       resources :tracks, except: [:show]
-
-      controller :speakers do
-        get :speaker_emails, action: :emails #returns json of speaker emails
-      end
     end
   end
 

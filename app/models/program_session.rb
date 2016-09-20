@@ -30,6 +30,7 @@ class ProgramSession < ActiveRecord::Base
     track = nil if track.try(:strip).blank?
     where(track: track)
   end
+  scope :emails, -> { joins(:speakers).pluck(:speaker_email).uniq }
 
   def self.create_from_proposal(proposal)
     self.transaction do

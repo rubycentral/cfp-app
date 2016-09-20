@@ -59,13 +59,6 @@ class Staff::SpeakersController < Staff::ApplicationController
     end
   end
 
-  def emails
-    emails = Proposal.where(id: params[:proposal_ids]).emails
-    respond_to do |format|
-      format.json { render json: {emails: emails} }
-    end
-  end
-
   private
 
   def speaker_params

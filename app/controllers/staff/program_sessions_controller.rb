@@ -11,6 +11,11 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
     @waitlisted_sessions = @event.program_sessions.waitlisted
 
     session[:prev_page] = { name: 'Program', path: event_staff_program_sessions_path(@event) }
+
+    respond_to do |format|
+      format.html { render }
+      format.json { render_json(@event.program_sessions.active, filename: json_filename)}
+    end
   end
 
   def show
@@ -72,4 +77,7 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
                                             speakers_attributes: [:id, :bio, :speaker_name, :speaker_email])
   end
 
+  def json_filename
+    "#{current_event.slug}-program-#{DateTime.current.to_s(:number)}"
+  end
 end

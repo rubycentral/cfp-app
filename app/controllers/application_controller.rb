@@ -115,8 +115,8 @@ class ApplicationController < ActionController::Base
         :waitlist, :opens_at, :start_date, :end_date)
   end
 
-  def render_json(object)
-    send_data(render_to_string(json: object))
+  def render_json(object, options={})
+    send_data(render_to_string(json: object), options)
   end
 
   def set_title(title)

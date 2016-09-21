@@ -13,7 +13,7 @@ module SimpleForm
         input_html_options[:data]['original-title'] ||= popover_title if popover_title
         input_html_options[:data][:content] ||= popover_content
         input_html_options[:data][:animation] ||= false
-        input_html_options[:data][:container] ||= 'body'
+        input_html_options[:data][:container] ||= popover_container if popover_container
         nil
       end
 
@@ -59,6 +59,11 @@ module SimpleForm
       def popover_placement
         popover = options[:popover_icon]
         popover.is_a?(Hash) ? popover[:placement] : 'right'
+      end
+
+      def popover_container
+        popover = options[:popover_icon]
+        popover.is_a?(Hash) ? popover[:container] : 'body'
       end
     end
   end

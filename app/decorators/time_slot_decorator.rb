@@ -50,7 +50,7 @@ class TimeSlotDecorator < Draper::Decorator
     end
 
     program_sessions.map do |ps|
-      notes = ps.confirmation_notes || ''
+      notes = ps.proposal.try(:confirmation_notes) || ''
 
       h.content_tag :option, ps.title, value: ps.id,
                     data: {'confirmation-notes' => notes}, selected: ps == object.program_session

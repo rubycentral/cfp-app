@@ -131,6 +131,14 @@ class Proposal < ActiveRecord::Base
                             message: "Proposal, #{title}, withdrawn")
   end
 
+  def confirm
+    transaction do
+      update!(confirmed_at: DateTime.current)
+      ps = ProgramSession.create_from_proposal(self)
+      ps.persisted?
+    end
+  end
+
   def draft?
     self.state == SUBMITTED
   end
@@ -144,7 +152,7 @@ class Proposal < ActiveRecord::Base
   end
 
   def awaiting_confirmation?
-    finalized? && !confirmed?
+    finalized? && (accepted? || waitlisted?) && !confirmed?
   end
 
   def speaker_can_edit?(user)
@@ -179,14 +187,6 @@ class Proposal < ActiveRecord::Base
         squared_reducted_total = squared_reducted_total + (score - average)**2
       end
       Math.sqrt(squared_reducted_total/(scores.length))
-    end
-  end
-
-  def confirm
-    transaction do
-      update!(confirmed_at: DateTime.current)
-      ps = ProgramSession.create_from_proposal(self)
-      ps.persisted?
     end
   end
 

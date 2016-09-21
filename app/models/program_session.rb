@@ -39,7 +39,9 @@ class ProgramSession < ActiveRecord::Base
                                   title: proposal.title,
                                   abstract: proposal.abstract,
                                   track_id: proposal.track_id,
-                                  session_format_id: proposal.session_format_id)
+                                  session_format_id: proposal.session_format_id,
+                                  state: proposal.waitlisted? ? WAITLISTED : ACTIVE
+      )
 
       #attach proposal speakers to new program session
       ps.speakers << proposal.speakers

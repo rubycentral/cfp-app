@@ -3,8 +3,7 @@ class Staff::ProposalsController < Staff::ApplicationController
   before_action :set_proposal_counts, only: [:index, :show, :selection]
   before_action :skip_policy_scope
 
-
-  before_action :require_proposal, only: [:show, :update_state, :update_track, :finalize]
+  before_action :require_proposal, only: [:show, :update_state, :update_track, :finalize, :confirm_for_speaker]
 
   decorates_assigned :proposal, with: Staff::ProposalDecorator
 
@@ -71,6 +70,18 @@ class Staff::ProposalsController < Staff::ApplicationController
     @proposal.finalize
     send_state_mail(@proposal.state)
     redirect_to event_staff_program_proposal_path(@proposal.event, @proposal)
+  end
+
+  def confirm_for_speaker
+    authorize @proposal
+
+    if @proposal.confirm
+      flash[:success] = "Proposal confirmed for #{@proposal.event.name}."
+    else
+      flash[:danger] = "There was a problem with confirmation: #{@proposal.errors.full_messages.join(', ')}"
+    end
+
+    redirect_to event_staff_program_proposal_path(slug: @proposal.event.slug, uuid: @proposal)
   end
 
   private

@@ -48,6 +48,7 @@ describe ProposalsController, type: :controller do
     it "confirms a proposal" do
       proposal = create(:proposal, confirmed_at: nil)
       allow_any_instance_of(ProposalsController).to receive(:current_user) { create(:speaker) }
+      allow(controller).to receive(:require_speaker).and_return(nil)
       post :confirm, event_slug: proposal.event.slug, uuid: proposal.uuid
       expect(proposal.reload).to be_confirmed
     end
@@ -58,6 +59,7 @@ describe ProposalsController, type: :controller do
     it "sets confirmation_notes" do
       proposal = create(:proposal, confirmation_notes: nil)
       allow_any_instance_of(ProposalsController).to receive(:current_user) { create(:speaker) }
+      allow(controller).to receive(:require_speaker).and_return(nil)
       post :update_notes, event_slug: proposal.event.slug, uuid: proposal.uuid,
            proposal: {confirmation_notes: 'notes'}
       expect(proposal.reload.confirmation_notes).to eq('notes')
@@ -68,6 +70,7 @@ describe ProposalsController, type: :controller do
     let(:proposal) { create(:proposal, event: event) }
     let(:user) { create(:user) }
     before { allow(controller).to receive(:current_user).and_return(user) }
+    before { allow(controller).to receive(:require_speaker).and_return(nil) }
 
     it "sets the state to withdrawn for unconfirmed proposals" do
       post :withdraw, event_slug: event.slug, uuid: proposal.uuid

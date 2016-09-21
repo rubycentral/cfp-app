@@ -9,7 +9,7 @@ class Staff::ProposalMailerTemplate
   end
 
   def render
-    format_paragraphs
+    # format_paragraphs
     replace_link_tags
     replace_simple_tags
     @template.html_safe
@@ -46,7 +46,7 @@ class Staff::ProposalMailerTemplate
   end
 
   def confirmation_link
-    confirm_event_proposal_url(url_params(event_slug: @event.slug, uuid: @proposal))
+    event_proposal_url(url_params(event_slug: @event.slug, uuid: @proposal))
   end
 
   def url_params(hash)

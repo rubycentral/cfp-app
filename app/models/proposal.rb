@@ -31,7 +31,6 @@ class Proposal < ActiveRecord::Base
   serialize :proposal_data, Hash
 
   attr_accessor :tags, :review_tags, :updating_user
-  attr_accessor :video_url, :slide_url
 
   accepts_nested_attributes_for :public_comments, reject_if: Proc.new { |comment_attributes| comment_attributes[:body].blank? }
   accepts_nested_attributes_for :speakers
@@ -90,22 +89,6 @@ class Proposal < ActiveRecord::Base
       end
     end
     proposals
-  end
-
-  def video_url
-    proposal_data[:video_url]
-  end
-
-  def slides_url
-    proposal_data[:slides_url]
-  end
-
-  def video_url=(video_url)
-    proposal_data[:video_url] = video_url
-  end
-
-  def slides_url=(slides_url)
-    proposal_data[:slides_url] = slides_url
   end
 
   def custom_fields=(custom_fields)

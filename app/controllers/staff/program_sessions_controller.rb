@@ -79,7 +79,7 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
 
   def program_session_params
     params.require(:program_session).permit(:id, :session_format_id, :track_id, :title,
-                                            :abstract, :state,
+                                            :abstract, :state, :video_url, :slides_url,
                                             speakers_attributes: [:id, :bio, :speaker_name, :speaker_email])
   end
 

@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 20160927205019) do
     t.text     "state",             default: "active"
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
+    t.text     "info"
   end
 
   add_index "program_sessions", ["event_id"], name: "index_program_sessions_on_event_id", using: :btree

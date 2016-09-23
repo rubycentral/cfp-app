@@ -5,6 +5,8 @@ class TimeSlot < ActiveRecord::Base
 
   STANDARD_LENGTH = 40.minutes
 
+  before_save :clear_fields_if_session
+
   scope :day, -> (num) { where(conference_day: num).order(:start_time).order(room_name: :asc) }
   scope :start_times_by_day, -> (num) { day(num+1).pluck(:start_time).uniq }
   scope :by_room, -> do
@@ -18,6 +20,14 @@ class TimeSlot < ActiveRecord::Base
       slot.delete("session_id")
       slot.delete("desc")
       self.create!(slot)
+    end
+  end
+
+  def clear_fields_if_session
+    if program_session
+      self.title = ''
+      self.presenter = ''
+      self.description = ''
     end
   end
 

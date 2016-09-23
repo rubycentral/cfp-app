@@ -1,16 +1,4 @@
 module TimeSlotHelper
-  def track_options(time_slot)
-    selected = time_slot.track_id
-
-    options_from_collection_for_select(@event.tracks.all, :id, :name, selected)
-  end
-
-  def room_options(time_slot)
-    selected = time_slot.try(:room).try(:id)
-
-    options_from_collection_for_select(@event.rooms.all, :id, :name, selected)
-  end
-
   def unmet_requirements(event)
     @_unmet_requirements ||= event.unmet_requirements_for_scheduling.map do |msg|
       content_tag :li, msg, class: 'list-group-item custom-list-group-item-danger'

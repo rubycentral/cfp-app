@@ -3,14 +3,9 @@
   background-color: #f2dede;
 }
 
-.time-slot-edit-dialog {
-  form {
-    text-align: left;
-
-    .form-group {
-      display: block;
-      margin-bottom: 15px;
-    }
+#staff_time_slots_index {
+  .form-inline {
+    margin-bottom: 15px;
   }
 }
 
@@ -29,7 +24,7 @@
   }
 }
 
-#room-new-dialog {
+.modal-dialog {
   .errors {
     background-color: #edd1d1;
     color: darken(#edd1d1, 50%);

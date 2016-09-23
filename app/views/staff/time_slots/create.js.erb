@@ -1,7 +1,20 @@
-<% if save_and_add %>
-  $('#add-time-slot').click();
+$("#time-slot-new-dialog .errors").html("");
+
+<% if @time_slot.persisted? %>
+  <% if local_assigns[:save_and_add] %>
+    $('#time_slot_title').val('');
+    $('#time_slot_presenter').val('');
+    $('#time_slot_description').val('');
+    $('#time_slot_program_session_id').val('').change();
+
+  <% else %>
+    $('#time-slot-new-dialog').modal('hide');
+  <% end %>
+  addTimeSlotRow(<%=raw time_slot_decorated.row.to_json %>);
+
 <% else %>
-  $('#time-slot-new-dialog').modal('hide');
+  $("#time-slot-new-dialog .errors").html("<%= @time_slot.errors.full_messages.join(', ') %>");
 <% end %>
 
-addTimeSlotRow(<%=raw time_slot_decorator.row.to_json %>);
+document.getElementById("flash").innerHTML = "<%=j show_flash %>";
+$("html, body").animate({ scrollTop: 0 }, "slow");

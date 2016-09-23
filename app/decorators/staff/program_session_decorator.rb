@@ -15,7 +15,7 @@ class Staff::ProgramSessionDecorator < ApplicationDecorator
   end
 
   def session_format_name
-    session_format.name
+    object.session_format.try(:name)
   end
 
   def state_label(large: false, state: nil)
@@ -44,7 +44,10 @@ class Staff::ProgramSessionDecorator < ApplicationDecorator
     h.markdown(object.abstract)
   end
 
-  def scheduled?
-    time_slot.present?
+  def scheduled_for
+    day = object.time_slot.conference_day
+    from = object.time_slot.start_time.to_s(:time)
+    to = object.time_slot.end_time.to_s(:time)
+    "Day #{day}, #{from} - #{to}"
   end
 end

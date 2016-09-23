@@ -1,33 +1,24 @@
-.form-group
-  = f.label :conference_day
-  = f.select :conference_day, event.days_for,  class: 'form-control', placeholder: ''
-.form-group
-  = f.label :start_time
-  = f.text_field :start_time, class: 'form-control', value: time_slot.start_time
-.form-group
-  = f.label :end_time
-  = f.text_field :end_time, class: 'form-control', value: time_slot.end_time
-.form-group
-  = f.label :room_id
-  = f.select :room_id, room_options(time_slot), { include_blank: true }, class: 'form-control', placeholder: ''
-.form-group
-  = f.label :track_id
-  = f.select :track_id, track_options(time_slot), { include_blank: true }, class: 'form-control', placeholder: ''
-.form-group
-  = f.label :program_session_id
-  = f.select :program_session_id, time_slot.unscheduled_program_sessions,
-      { include_blank: true },
-      class: 'form-control available-proposals', placeholder: ''
-  %p#confirmation-notes.help-block
-    = time_slot.proposal_confirm_notes
+.form-inline
+  = f.input :conference_day, collection: event.days_for, label: 'Day'
+  = f.input :room_id, collection: current_event.rooms, include_blank: true
+.form-inline
+  = f.input :start_time, as: :string, input_html: { value: time_slot.start_time }
+  = f.input :end_time, as: :string, input_html: { value: time_slot.end_time }
+-#= f.input :track_id, collection: current_event.tracks, include_blank: true
+= f.input :program_session_id, collection: time_slot.unscheduled_program_sessions, include_blank: true,
+  input_html: { class: 'available-proposals' }
+.selected-session-info
+  .session-meta-item
+    %strong Presenter:
+    %p.speaker= time_slot.display_presenter
+  .session-meta-item
+    %strong Abstract:
+    %p.abstract= time_slot.display_description
+  .session-meta-item
+    %strong Confirmation Notes:
+    %p.confirmation-notes= time_slot.session_confirmation_notes
 
-%fieldset#time-slot-description
-  .form-group
-    = f.label :title
-    = f.text_field :title, class: 'form-control', placeholder: ''
-  .form-group
-    = f.label :presenter
-    = f.text_field :presenter, class: 'form-control', placeholder: ''
-  .form-group
-    = f.label :description
-    = f.text_area :description, class: 'form-control', placeholder: ''
+%fieldset.supplemental-fields{class: time_slot.supplemental_fields_visibility_css }
+  = f.input :title, as: :string
+  = f.input :presenter, as: :string
+  = f.input :description, as: :text

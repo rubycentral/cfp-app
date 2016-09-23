@@ -52,7 +52,7 @@ feature "User's can interact with notifications" do
         visit root_path
         within ".navbar" do
           click_link("Notifications Toggle")
-          click_link("View All Notifications")
+          click_link("View all notifications")
         end
 
         expect(current_path).to eq(notifications_path)

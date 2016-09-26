@@ -1,9 +1,0 @@
-%tr{ data: { 'proposal-id' => proposal.id } }
-  %td= link_to(proposal.title,
-      event_staff_proposal_path(proposal.event, uuid: proposal))
-  %td= proposal.speaker_names
-  %td= proposal.speaker_emails
-  %td= proposal.review_tags_labels
-  %td= proposal.state_label(small: true)
-  %td= proposal.confirmed? ? '✓' : ''
-  %td= truncate(proposal.confirmation_notes, :length => 100)

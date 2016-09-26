@@ -59,6 +59,14 @@ class ProgramSession < ActiveRecord::Base
     speakers.count > 1
   end
 
+  def confirmation_notes?
+    proposal.try(:confirmation_notes?)
+  end
+
+  def confirmation_notes
+    proposal.try(:confirmation_notes)
+  end
+
   private
 
   def destroy_speakers

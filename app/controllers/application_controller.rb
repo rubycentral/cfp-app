@@ -11,9 +11,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   helper_method :current_event
-  helper_method :reviewer?
-  helper_method :organizer?
-  helper_method :event_staff?
   helper_method :display_staff_event_subnav?
   helper_method :program_mode?
   helper_method :program_tracks
@@ -33,7 +30,7 @@ class ApplicationController < ActionController::Base
       request.referrer
     elsif session[:target]
       session.delete(:target)
-    elsif event_staff?(current_event)
+    elsif user.staff_for?(current_event)
       event_staff_path(current_event)
     elsif user.proposals.any?
       proposals_path
@@ -70,14 +67,6 @@ class ApplicationController < ActionController::Base
     if event && current_user
       event.teammates.where(user_id: current_user.id).any?
     end
-  end
-
-  def reviewer?
-    @is_reviewer ||= current_user.reviewer?
-  end
-
-  def organizer?
-    @is_organizer ||= current_user.organizer?
   end
 
   def require_user
@@ -141,14 +130,5 @@ class ApplicationController < ActionController::Base
 
   def program_tracks
     @program_tracks ||= current_event && current_event.tracks.any? ? current_event.tracks : []
-  end
-
-  def set_proposal_counts
-    @all_accepted_count ||= current_event.stats.all_accepted_proposals
-    @all_waitlisted_count ||= current_event.stats.all_waitlisted_proposals
-    unless sticky_selected_track == 'all'
-      @all_accepted_track_count ||= current_event.stats.all_accepted_proposals(sticky_selected_track)
-      @all_waitlisted_track_count ||= current_event.stats.all_waitlisted_proposals(sticky_selected_track)
-    end
   end
 end

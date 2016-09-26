@@ -49,7 +49,7 @@ class Proposal < ActiveRecord::Base
   scope :soft_accepted, -> { where(state: SOFT_ACCEPTED) }
   scope :soft_waitlisted, -> { where(state: SOFT_WAITLISTED) }
   scope :soft_rejected, -> { where(state: SOFT_REJECTED) }
-  scope :working_program, -> { where(state: [SOFT_ACCEPTED, SOFT_WAITLISTED]) }
+  scope :working_program, -> { where(state: [SOFT_ACCEPTED, SOFT_WAITLISTED, ACCEPTED, WAITLISTED]) }
 
   scope :unrated, -> { where('id NOT IN ( SELECT proposal_id FROM ratings )') }
   scope :rated, -> { where('id IN ( SELECT proposal_id FROM ratings )') }

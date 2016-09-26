@@ -112,8 +112,6 @@ class Staff::ProposalDecorator < ProposalDecorator
       [ 'Accept', SOFT_ACCEPTED, 'btn-success', !object.draft? ],
       [ 'Waitlist', SOFT_WAITLISTED, 'btn-warning', !object.draft? ],
       [ 'Reject', SOFT_REJECTED, 'btn-danger', !object.draft? ],
-      [ 'Promote', ACCEPTED, 'btn-success', !object.waitlisted? ],
-      [ 'Decline', REJECTED, 'btn-danger', !object.waitlisted? ],
       [ 'Reset Status', SUBMITTED, 'btn-default', object.draft? || object.finalized? ]
     ]
   end

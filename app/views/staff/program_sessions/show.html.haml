@@ -45,12 +45,15 @@
     .col-md-6
       .program-session-item
         %h3.control-label Status
-        %p.proposal-status #{program_session.state_label(large: true)}
+        %p.session-status #{program_session.state_label(large: true)}
       .program-session-item
         - if program_session.proposal.present?
           .proposal-link
             %h3.control-label Proposal
             %p= link_to program_session.proposal.title, event_staff_program_proposal_path(current_event, program_session.proposal)
+      .program-session-item
+        %h3.control-label Confirmation Notes
+        %p= render 'confirmation_notes', program_session: program_session
       .program-session-item.session-speakers
         .session-speakers-header.clearfix
           %h3.control-label.pull-left

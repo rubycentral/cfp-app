@@ -117,8 +117,7 @@ class ProposalDecorator < ApplicationDecorator
               h.withdraw_event_proposal_path(uuid: object, event_slug: object.event.slug),
               method: :post,
               data: {
-                  confirm: 'This will remove your talk from consideration and send an ' +
-                      'email to the event coordinator. Are you sure you want to do this?'
+                  confirm: 'This will remove your talk from consideration and notify the event staff. Are you sure you want to do this?'
               },
               class: 'btn btn-warning'
   end
@@ -137,6 +136,15 @@ class ProposalDecorator < ApplicationDecorator
     state += ' & confirmed' if proposal.confirmed? && show_confirmed
 
     h.content_tag :span, state, class: classes
+  end
+
+  def confirmation_notes_link
+    return '' unless object.confirmation_notes.present?
+    id = h.dom_id(object, 'notes')
+    h.link_to '#', id: id, title: 'Confirmation notes', class: 'popover-trigger', role: 'button', tabindex: 0, data: {
+        toggle: 'popover', content: object.confirmation_notes, target: "##{id}", trigger: 'manual'} do
+      h.content_tag(:i, '', class: 'fa fa-file')
+    end
   end
 
   def updated_in_words

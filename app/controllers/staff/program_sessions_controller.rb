@@ -1,6 +1,5 @@
 class Staff::ProgramSessionsController < Staff::ApplicationController
-  before_action :enable_staff_program_subnav
-  before_action :set_proposal_counts
+  include ProgramSupport
 
   decorates_assigned :program_session, with: Staff::ProgramSessionDecorator
   decorates_assigned :sessions, with: Staff::ProgramSessionDecorator

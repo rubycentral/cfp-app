@@ -2,41 +2,13 @@ class Staff::ApplicationController < ApplicationController
   before_action :require_event
   before_action :require_staff
 
-  helper_method :sticky_selected_track
-
   private
 
-  # Must be an organizer on @event
   def require_staff
-    unless event_staff?(current_event)
-      session[:target] = request.path
+    unless current_user.staff_for?(current_event)
       flash[:danger] = "You must be signed in as event staff to access this page."
-      redirect_to root_path
+      redirect_to events_path
     end
-  end
-
-  def require_contact_email
-    if @event.contact_email.empty?
-      session[:target] = request.path
-      flash[:danger] = "You must set a contact email for this event before inviting teammates."
-      redirect_to event_staff_edit_path(@event)
-    end
-  end
-
-  def staff_signed_in?
-    user_signed_in? && @event && (current_user.organizer_for_event?(@event) || current_user.reviewer_for_event?(@event))
-  end
-
-  def require_reviewer
-    unless reviewer_signed_in?
-      session[:target] = request.path
-      flash[:danger] = "You must be signed in as an reviewer to access this page."
-      redirect_to new_user_session_url
-    end
-  end
-
-  def reviewer_signed_in?
-    user_signed_in? && current_user.reviewer?
   end
 
   def prevent_self_review
@@ -46,12 +18,11 @@ class Staff::ApplicationController < ApplicationController
     end
   end
 
-  def sticky_selected_track
-    session["event/#{current_event.id}/program/track"] if current_event
-  end
-
-  def sticky_selected_track=(id)
-    session["event/#{current_event.id}/program/track"] = id if current_event
+  def require_program_team
+    unless current_user.program_team_for_event?(current_event)
+      flash[:danger] = "You must be a member of the program team to access this page."
+      redirect_to event_staff_path(current_event)
+    end
   end
 
 end

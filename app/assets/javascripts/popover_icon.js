@@ -9,14 +9,10 @@ $(document).ready(function() {
     $.each($("[data-toggle~='popover']"), function(i, pop) {
       pop = $(pop);
       if (pop.is(toggle)) {
-        if ($('.ratings-popover').length) {
-          $('.ratings-popover').remove();
-        } else {
-          pop.popover('show')
-             .data('bs.popover')
-             .tip()
-             .addClass('ratings-popover');
-        }
+        pop.popover('toggle');
+        pop.data('bs.popover')
+            .tip()
+            .addClass('active-popover');
       } else {
         pop.popover('hide');
       }

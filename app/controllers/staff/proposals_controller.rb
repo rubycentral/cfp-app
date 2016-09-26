@@ -1,7 +1,5 @@
 class Staff::ProposalsController < Staff::ApplicationController
-  before_action :enable_staff_program_subnav
-  before_action :set_proposal_counts, only: [:index, :show, :selection]
-  before_action :skip_policy_scope
+  include ProgramSupport
 
   before_action :require_proposal, only: [:show, :update_state, :update_track, :finalize, :confirm_for_speaker]
 

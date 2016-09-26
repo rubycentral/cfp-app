@@ -97,7 +97,7 @@ module ApplicationHelper
   end
 
   def staff_nav?
-    event_staff?(current_event)
+    current_user.staff_for?(current_event)
   end
 
   def admin_nav?

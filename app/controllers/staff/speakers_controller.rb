@@ -1,6 +1,5 @@
 class Staff::SpeakersController < Staff::ApplicationController
-  before_action :enable_staff_program_subnav
-  before_action :set_proposal_counts
+  include ProgramSupport
 
   before_action :set_program_session, only: [:new, :create]
   before_action :speaker_count_check, only: [:destroy]

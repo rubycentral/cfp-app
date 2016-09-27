@@ -85,6 +85,7 @@ If your talk is about seed data in Rails apps, we want to hear about it!
   seed_event.rooms.create(name: "Venus Theater", room_number: "VEN-T", level: "2", address: "123 Universe Drive", capacity: 75)
 
   # Event Team
+  seed_event.teammates.create(user: admin, email: admin.email, role: "organizer", state: Teammate::ACCEPTED)
   seed_event.teammates.create(user: organizer, email: organizer.email, role: "organizer", state: Teammate::ACCEPTED, notifications: false)
   seed_event.teammates.create(user: track_director, email: track_director.email, role: "program team", state: Teammate::ACCEPTED)
   seed_event.teammates.create(user: reviewer, email: reviewer.email, role: "reviewer", state: Teammate::ACCEPTED)
@@ -290,6 +291,7 @@ If you are on the cutting edge with savvy Sapphire skills, we want you!
                                 review_tags: %w(beginner intermediate advanced))
 
   # Event Team
+  sapphire_event.teammates.create(user: admin, email: admin.email, role: "organizer", state: Teammate::ACCEPTED)
   sapphire_event.teammates.create(user: organizer, email: organizer.email, role: "organizer", state: Teammate::ACCEPTED)
 end
 

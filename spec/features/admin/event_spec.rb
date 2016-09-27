@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 feature "Event Dashboard" do
   let(:event) { create(:event, name: "My Event") }
@@ -6,7 +6,7 @@ feature "Event Dashboard" do
   let!(:admin_teammate) { create(:teammate,
                                    event: event,
                                    user: admin_user,
-                                   role: 'organizer'
+                                   role: "organizer"
                                   )
   }
 
@@ -22,8 +22,9 @@ feature "Event Dashboard" do
       fill_in "End date", with: DateTime.now + 15.days
       fill_in "Closes at", with: DateTime.now + 15.days
       click_button "Save"
-      admin_user.reload
-      expect(admin_user.organizer_events.last.name).to eql("My Other Event")
+
+      event = Event.last
+      expect(admin_user.organizer_for_event?(event)).to be(true)
     end
 
     it "must provide correct url syntax if a url is given" do
@@ -37,17 +38,16 @@ feature "Event Dashboard" do
     end
 
     it "can edit an event" do
-      skip "pending admin edit permissions discussion"
       visit event_staff_edit_path(event)
       fill_in "Name", with: "My Finest Event Evar For Realz"
-      click_button 'Save'
+      click_button "Save"
       expect(page).to have_text("My Finest Event Evar For Realz")
     end
 
     it "can delete events" do
       skip "pending admin delete permissions discussion"
       visit event_staff_edit_path(event)
-      click_link 'Delete Event'
+      click_link "Delete Event"
       expect(page).not_to have_text("My Event")
     end
   end

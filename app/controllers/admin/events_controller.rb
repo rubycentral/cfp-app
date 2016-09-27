@@ -8,11 +8,11 @@ class Admin::EventsController < Admin::ApplicationController
   def create
     @event = Event.new(event_params)
     if @event.save
-			@event.teammates.build(email: current_user.email, role: 'organizer').accept(current_user)
-      flash[:info] = 'Your event was saved.'
+			@event.teammates.build(email: current_user.email, role: "organizer").accept(current_user)
+      flash[:info] = "Your event was saved."
       redirect_to event_staff_url(@event)
     else
-      flash[:danger] = 'There was a problem saving your event; please review the form for issues and try again.'
+      flash[:danger] = "There was a problem saving your event; please review the form for issues and try again."
       render :new
     end
   end

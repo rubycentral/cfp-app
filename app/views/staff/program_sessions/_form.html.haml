@@ -4,7 +4,7 @@
       = f.input :title, maxlength: 60, input_html: { class: 'watched js-maxlength-alert', rows: 1 }
       = f.association :session_format, as: :select, collection: current_event.session_formats, label: "Format",
         include_blank: false, required: true
-      = f.association :track, as: :select, collection: current_event.tracks, label: "Track"
+      = f.association :track, as: :select, collection: current_event.tracks, label: "Track", include_blank: true
       - unless @program_session.new_record?
         = f.input :state, as: :select, collection: session_states_collection, label: "State",
           include_blank: false, required: true

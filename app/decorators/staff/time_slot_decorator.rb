@@ -52,6 +52,8 @@ class Staff::TimeSlotDecorator < Draper::Decorator
 
     program_sessions.map do |ps|
       [ps.title, ps.id, { selected: ps == object.program_session, data: {
+          'title' => ps.title,
+          'track' => ps.track.try(:name),
           'speaker' => speaker_names(ps),
           'abstract' => ps.abstract,
           'confirmation-notes' => ps.proposal.try(:confirmation_notes) || ''
@@ -63,14 +65,6 @@ class Staff::TimeSlotDecorator < Draper::Decorator
     object.program_session.try(:proposal).try(:confirmation_notes)
   end
 
-  def display_title
-    if object.program_session.present?
-      object.program_session.title
-    else
-      object.title
-    end
-  end
-
   def linked_title
     if object.program_session.present?
       h.link_to(object.program_session.title,
@@ -80,32 +74,28 @@ class Staff::TimeSlotDecorator < Draper::Decorator
     end
   end
 
+  def display_title
+    object.program_session && object.program_session.title || object.title
+  end
+
   def display_presenter
-    if object.program_session.present?
-      speaker_names(object.program_session)
-    else
-      object.presenter
-    end
+    object.program_session && speaker_names(object.program_session) || object.presenter
   end
 
   def display_description
-    if object.program_session.present?
-      object.program_session.try(:abstract)
-    else
-      object.description
-    end
-  end
-
-  def track_id
-    object.program_session.try(:track_id)
+    object.program_session && object.program_session.abstract || object.description
   end
 
   def track_name
-    object.program_session.try(:track).try(:name)
+    object.program_session && object.program_session.track.try(:name) || object.track.try(:name)
+  end
+
+  def track_id
+    object.program_session && object.program_session.track_id || object.track_id
   end
 
   def room_name
-    object.try(:room).try(:name)
+    object.room.try(:name)
   end
 
   def conference_wide_title

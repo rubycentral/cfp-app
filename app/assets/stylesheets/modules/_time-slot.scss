@@ -24,6 +24,12 @@
   }
 }
 
+#organizer-time-slots {
+  td:last-child {
+    white-space: nowrap;
+  }
+}
+
 .modal-dialog {
   .errors {
     background-color: #edd1d1;

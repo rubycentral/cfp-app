@@ -1,6 +1,5 @@
 $(document).ready(function() {
   initTimeSlotsTable();
-  initTimeSlotTimePickers();
 });
 
 function initTimeSlotsTable() {
@@ -10,38 +9,42 @@ function initTimeSlotsTable() {
 }
 
 function initTimeSlotTimePickers() {
-  $('#time-slot-start-time, #time-slot-end-time').timepicker({
+  $('#time_slot_start_time, #time_slot_end_time').timepicker({
       timeFormat: 'HH:mm'
   });
 }
 
-function setUpTimeSlotDialog(dialog) {
-  dialog.find('#cancel').click(function(e) {
-    dialog.empty();
-    dialog.modal('hide');
-    return false;
-  });
-
+function setUpTimeSlotDialog($dialog) {
   initTimeSlotTimePickers();
 
-  var proposalSelect = $('#session_proposal_id');
-  var fields = $('#session_title, #session_presenter, #session_description');
+  $(document).on('change', '.available-proposals', onSessionSelectChange);
 
-  var toggleFields = function() {
-    if (proposalSelect.val() === '') {
-      fields.prop('disabled', false);
-    } else {
-      fields.prop('disabled', true);
+  updateInfoFields($dialog.find('.available-proposals'));
+
+  function updateInfoFields($select) {
+    var $form = $select.closest('form');
+    var $fields = $form.find('.supplemental-fields');
+    var $info = $form.find('.selected-session-info');
+
+    var data = $select.find(':selected').data();
+    if (data) {
+      $info.find('.speaker').html(data['speaker']);
+      $info.find('.abstract').html(data['abstract']);
+      $info.find('.confirmation-notes').html(data['confirmationNotes']);
     }
-  };
 
-  proposalSelect.change(function() {
-    toggleFields();
-    var notes = $(this).find(':selected').data('confirmation-notes');
-    $('#confirmation-notes').text(notes);
-  });
+    if ($select.val() === '') {
+      $fields.show();
+      $info.hide();
+    } else {
+      $fields.hide();
+      $info.show();
+    }
+  }
 
-  toggleFields();
+  function onSessionSelectChange(ev) {
+    updateInfoFields($(this));
+  }
 }
 
 function clearFields(fields, opt_parent) {
@@ -59,7 +62,7 @@ function clearFields(fields, opt_parent) {
   }
 }
 
-function renderTimeSlots(html) {
+function renderTimeSlots(html) { // currently unused
   $('#time_slots').html(html);
   initTimeSlotsTable();
 }

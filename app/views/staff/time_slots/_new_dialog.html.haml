@@ -1,10 +1,9 @@
 .modal-dialog
   .modal-content
-    = form_for [event, time_slot], remote: true,
-        url: event_staff_time_slots_path(event),
-        html: {role: 'form'} do |f|
+    = simple_form_for [current_event, :staff, time_slot], remote: true, html: {role: 'form'} do |f|
       .modal-header
         %h3 New Time Slot
+        .errors
       .modal-body
         = render partial: 'staff/time_slots/form',
             locals: {f: f, time_slot: time_slot}

@@ -67,6 +67,10 @@ class ProgramSession < ActiveRecord::Base
     proposal.try(:confirmation_notes)
   end
 
+  def scheduled?
+    time_slot.present?
+  end
+
   private
 
   def destroy_speakers

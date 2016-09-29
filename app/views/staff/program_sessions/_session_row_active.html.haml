@@ -3,6 +3,6 @@
       event_staff_program_session_path(program_session.event, program_session))
   %td= program_session.speakers.map { |speaker| link_to speaker.name, event_staff_program_speaker_path(program_session.event, speaker) }.join(", ").html_safe
   %td= program_session.track_name
-  %td= program_session.scheduled? ? '✓' : ''
+  %td= program_session.scheduled? ? program_session.scheduled_for : ''
   %td= program_session.state
   -#truncate(program_session.confirmation_notes, :length => 100)

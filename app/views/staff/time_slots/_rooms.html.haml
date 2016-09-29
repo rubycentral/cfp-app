@@ -23,7 +23,13 @@
       #room-new-dialog.modal.fade
         .modal-dialog
           .modal-content
-            .modal-header
-              %h3 New Room
-              .errors
-            = render partial: "staff/rooms/form", locals: { room: Room.new }
+            = simple_form_for [ event, :staff, Room.new ], remote: true do |f|
+              .modal-header
+                %h3 New Room
+                .errors
+              .modal-body
+                = render partial: "staff/rooms/form", locals: { f: f }
+              .modal-footer
+                .btn-toolbar
+                  %button.pull-right.btn.btn-primary{:type => "submit"} Save
+                  %button.btn.btn-default{"data-dismiss" => "modal"} Cancel

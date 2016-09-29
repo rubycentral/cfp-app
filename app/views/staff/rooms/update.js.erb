@@ -1,5 +1,7 @@
+$("#room-edit-<%= room.id %> .errors").html("");
+
 <% if @room.errors.present? %>
-  $("#room-new-dialog .errors").append("<%= @room.errors.full_messages.join(', ') %>");
+  $("#room-edit-<%= room.id %> .errors").append("<%= @room.errors.full_messages.join(', ') %>");
 <% else %>
   $("#room-edit-<%= room.id %>").modal("hide");
 

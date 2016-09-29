@@ -18,6 +18,13 @@
     %div{ id: "room-edit-#{room.id}", class: 'modal fade' }
       .modal-dialog
         .modal-content
-          .modal-header
-            %h3 Edit Room
-          = render partial: 'staff/rooms/form', locals: { room: room }
+          = simple_form_for [ event, :staff, room ], remote: true do |f|
+            .modal-header
+              %h3 Edit Room
+              .errors
+            .modal-body
+              = render partial: 'staff/rooms/form', locals: { room: room, f: f }
+            .modal-footer
+              .btn-toolbar
+                %button.pull-right.btn.btn-primary{:type => "submit"} Save
+                %button.btn.btn-default{"data-dismiss" => "modal"} Cancel

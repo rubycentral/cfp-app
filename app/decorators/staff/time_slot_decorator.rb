@@ -1,4 +1,5 @@
-class TimeSlotDecorator < Draper::Decorator
+class Staff::TimeSlotDecorator < Draper::Decorator
+  decorates :time_slot
   delegate_all
 
   def start_time
@@ -15,7 +16,7 @@ class TimeSlotDecorator < Draper::Decorator
 
   def row_data(buttons: false)
     row = [object.conference_day, start_time, end_time, linked_title,
-           presenter, room_name, track_name, time_slot_id]
+           display_presenter, room_name, track_name]
 
     row << action_links if buttons
     row
@@ -50,18 +51,19 @@ class TimeSlotDecorator < Draper::Decorator
     end
 
     program_sessions.map do |ps|
-      notes = ps.proposal.try(:confirmation_notes) || ''
-
-      h.content_tag :option, ps.title, value: ps.id,
-                    data: {'confirmation-notes' => notes}, selected: ps == object.program_session
-    end.join.html_safe
+      [ps.title, ps.id, { selected: ps == object.program_session, data: {
+          'speaker' => speaker_names(ps),
+          'abstract' => ps.abstract,
+          'confirmation-notes' => ps.proposal.try(:confirmation_notes) || ''
+      }}]
+    end
   end
 
-  def proposal_confirm_notes
+  def session_confirmation_notes
     object.program_session.try(:proposal).try(:confirmation_notes)
   end
 
-  def title
+  def display_title
     if object.program_session.present?
       object.program_session.title
     else
@@ -72,14 +74,26 @@ class TimeSlotDecorator < Draper::Decorator
   def linked_title
     if object.program_session.present?
       h.link_to(object.program_session.title,
-                h.event_staff_proposal_path(object.event, object.program_session.proposal))
+                h.event_staff_program_session_path(object.event, object.program_session))
     else
       object.title
     end
   end
 
-  def presenter
-    object.program_session.try(:proposal).try(:speaker_names) || object.presenter
+  def display_presenter
+    if object.program_session.present?
+      speaker_names(object.program_session)
+    else
+      object.presenter
+    end
+  end
+
+  def display_description
+    if object.program_session.present?
+      object.program_session.try(:abstract)
+    else
+      object.description
+    end
   end
 
   def track_id
@@ -98,7 +112,17 @@ class TimeSlotDecorator < Draper::Decorator
     title + ": " + room_name
   end
 
+  def supplemental_fields_visibility_css
+    object.program_session.present? ? 'hidden' : ''
+  end
+
   def cell_data_attr
     {"time-slot-edit-path" => h.edit_event_staff_time_slot_path(object.event, object), toggle: 'modal', target: "#time-slot-edit-dialog"}
+  end
+
+  private
+
+  def speaker_names(session)
+    session.speakers.map(&:name).join(', ') if session
   end
 end

@@ -2,8 +2,8 @@ $('table#organizer-rooms #room_<%= room.id %>').remove();
 reloadTimeSlotsTable(<%=raw time_slots.rows.to_json %>);
 
 <% if has_missing_requirements?(room.event) %>
-  $('#time-slot-prereqs').removeClass('hidden')
-  $('#add-time-slot').addClass('disabled')
+  $('#time-slot-prereqs').removeClass('hidden');
+  $('#add-time-slot').addClass('disabled');
 
   document.getElementById('missing-prereq-messages').innerHTML =
     '<%=j unmet_requirements(room.event) %>';

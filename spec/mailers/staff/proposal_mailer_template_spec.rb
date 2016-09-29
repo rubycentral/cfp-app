@@ -7,20 +7,6 @@ describe Staff::ProposalMailerTemplate do
   let(:proposal) { create(:proposal, event: event) }
 
   describe "render" do
-    # it "converts double linefeeds to paragraphs" do
-    #   template = "Line one.\n\nLine two.\nMore line two.\n\nLine three."
-    #
-    #   rendered = Staff::ProposalMailerTemplate.new(template, event, proposal).render
-    #   expect(rendered).to match(%r{^Line one.\n.*?\nLine three.$}m) # multiline match
-    # end
-
-    # it "converts double carriage returns/linefeeds to paragraphs" do
-    #   template = "Line one.\r\n\r\nLine two.\r\nMore line two.\r\n\r\nLine three."
-    #
-    #   rendered = Staff::ProposalMailerTemplate.new(template, event, proposal).render
-    #   expect(rendered).to match(%r{^Line one.\n.*?\nLine three.$}m) # multiline match
-    # end
-
     it "passes unknown tags as themselves" do
       template = "::no_tag:: and ::fake_tag::.\n\n::tag_alone::"
       rendered = Staff::ProposalMailerTemplate.new(template, event, proposal).render
@@ -35,13 +21,9 @@ describe Staff::ProposalMailerTemplate do
     end
 
     it "substitutes confirmation link" do
-      template = "Line one with raw link ::confirmation_link:: " +
-        "and ::my custom link|confirmation_link:: interpolated.\n\n" +
-        "Another ::custom link|confirmation_link:: in the third line."
+      template = "A line with a raw link ::confirmation_link::"
       rendered = Staff::ProposalMailerTemplate.new(template, event, proposal).render
       expect(rendered).to match(%r{raw link http://localhost:3000#{event_proposal_path(event, proposal)}})
-      expect(rendered).to match(%r{<a href='http://localhost:3000#{event_proposal_path(event, proposal)}'>my custom link</a>})
-      expect(rendered).to match(%r{<a href='http://localhost:3000#{event_proposal_path(event, proposal)}'>custom link</a>})
     end
 
     it "only substitutes whitelisted tags" do

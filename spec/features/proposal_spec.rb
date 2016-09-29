@@ -197,7 +197,7 @@ feature "Proposals" do
     before do
       visit event_proposal_path(event_slug: event.slug, uuid: proposal)
       click_link 'Withdraw'
-      expect(page).to have_content("Your withdrawal request has been submitted.")
+      expect(page).to have_content("As requested, your talk has been removed for consideration.")
     end
 
     it "sends a notification to reviewers" do

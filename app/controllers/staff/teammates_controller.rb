@@ -62,4 +62,11 @@ class Staff::TeammatesController < Staff::ApplicationController
     team_counts
   end
 
+  def require_contact_email
+    if current_event.contact_email.empty?
+      flash[:danger] = "You must set a contact email for this event before inviting teammates."
+      redirect_to event_staff_edit_path(@event)
+    end
+  end
+
 end

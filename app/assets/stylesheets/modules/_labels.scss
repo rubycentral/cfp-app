@@ -36,8 +36,12 @@
   padding: .2em .6em .35em;
 }
 
-.other-proposal-status .label,
-.proposal-status .label {
+.other-proposal-status .label-mini,
+.proposal-status .label-mini {
   display: inline-block;
   padding: .2em .6em .1em;
+}
+
+.session-status .label-large {
+  padding: 0 5px 0;
 }

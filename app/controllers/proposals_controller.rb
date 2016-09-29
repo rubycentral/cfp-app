@@ -46,7 +46,7 @@ class ProposalsController < ApplicationController
 
   def withdraw
     @proposal.withdraw unless @proposal.confirmed?
-    flash[:info] = "Your withdrawal request has been submitted."
+    flash[:info] = "As requested, your talk has been removed for consideration."
     redirect_to event_proposal_url(slug: @proposal.event.slug, uuid: @proposal)
   end
 

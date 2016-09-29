@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160804194731) do
+ActiveRecord::Schema.define(version: 20160927205019) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -215,6 +215,7 @@ ActiveRecord::Schema.define(version: 20160804194731) do
     t.text     "presenter"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "track_id"
   end
 
   add_index "time_slots", ["conference_day"], name: "index_time_slots_on_conference_day", using: :btree

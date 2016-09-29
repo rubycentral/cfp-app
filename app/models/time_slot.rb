@@ -1,6 +1,7 @@
 class TimeSlot < ActiveRecord::Base
   belongs_to :program_session
   belongs_to :room
+  belongs_to :track
   belongs_to :event
 
   STANDARD_LENGTH = 40.minutes
@@ -23,28 +24,21 @@ class TimeSlot < ActiveRecord::Base
     end
   end
 
+  def self.track_names
+    pluck(:track_name).uniq
+  end
+
   def clear_fields_if_session
     if program_session
       self.title = ''
       self.presenter = ''
       self.description = ''
+      self.track_id
     end
-  end
-
-  def self.track_names
-    pluck(:track_name).uniq
   end
 
   def takes_two_time_slots?
     (end_time - start_time) > STANDARD_LENGTH
-  end
-
-  def desc
-    if program_session
-      program_session.abstract
-    else
-      description
-    end
   end
 
 end
@@ -65,6 +59,7 @@ end
 #  presenter          :text
 #  created_at         :datetime
 #  updated_at         :datetime
+#  track_id           :integer
 #
 # Indexes
 #

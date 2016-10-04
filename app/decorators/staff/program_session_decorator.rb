@@ -54,9 +54,13 @@ class Staff::ProgramSessionDecorator < ApplicationDecorator
   end
 
   def scheduled_for
-    day = object.time_slot.conference_day
-    from = object.time_slot.start_time.to_s(:time)
-    to = object.time_slot.end_time.to_s(:time)
-    "Day #{day}, #{from} - #{to}"
+    parts = []
+    if object.time_slot
+      ts = object.time_slot
+      parts << ts.conference_day if ts.conference_day.present?
+      parts << ts.start_time.to_s(:time) if ts.start_time.present?
+      parts << ts.room.name if ts.room.present?
+    end
+    parts.join(', ')
   end
 end

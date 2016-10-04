@@ -10,7 +10,7 @@ class Staff::TimeSlotsController < Staff::SchedulesController
     respond_to do |format|
       format.html
       format.csv { send_data time_slots.to_csv }
-      format.json { render_json(time_slots) }
+      format.json { render_json(time_slots, filename: json_filename) }
     end
   end
 
@@ -90,5 +90,9 @@ private
 
   def time_slot_decorated
     @time_slot_decorated ||= Staff::TimeSlotDecorator.decorate(@time_slot)
+  end
+
+  def json_filename
+    "#{current_event.slug}-schedule-#{DateTime.current.to_s(:db_just_date)}.json"
   end
 end

@@ -194,7 +194,7 @@ class ProposalDecorator < ApplicationDecorator
   def state_class(state)
     case state
     when NOT_ACCEPTED
-      if h.reviewer?
+      if h.current_user.reviewer_for_event?(object.event)
         'label-danger'
       else
         'label-info'

@@ -5,4 +5,5 @@
   %td= program_session.track_name
   %td= program_session.scheduled? ? program_session.scheduled_for : ''
   %td= program_session.state
-  -#truncate(program_session.confirmation_notes, :length => 100)
+  %td= program_session.confirmation_notes_link
+

@@ -138,15 +138,6 @@ class ProposalDecorator < ApplicationDecorator
     h.content_tag :span, state, class: classes
   end
 
-  def confirmation_notes_link
-    return '' unless object.confirmation_notes.present?
-    id = h.dom_id(object, 'notes')
-    h.link_to '#', id: id, title: 'Confirmation notes', class: 'popover-trigger', role: 'button', tabindex: 0, data: {
-        toggle: 'popover', content: object.confirmation_notes, target: "##{id}", trigger: 'manual'} do
-      h.content_tag(:i, '', class: 'fa fa-file')
-    end
-  end
-
   def updated_in_words
     "#{h.time_ago_in_words(object.updated_by_speaker_at)} ago"
   end
@@ -194,7 +185,7 @@ class ProposalDecorator < ApplicationDecorator
   def state_class(state)
     case state
     when NOT_ACCEPTED
-      if h.reviewer?
+      if h.current_user.reviewer_for_event?(object.event)
         'label-danger'
       else
         'label-info'

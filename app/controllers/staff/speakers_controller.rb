@@ -50,10 +50,10 @@ class Staff::SpeakersController < Staff::ApplicationController
   def destroy
     authorize @speaker
     if @speaker.destroy
-      flash[:info] = "#{speaker.name} has been removed from #{speaker.program_session.title}."
+      flash[:info] = "#{@speaker.name} has been removed from #{@speaker.program_session.title}."
       redirect_to event_staff_program_session_path(current_event, @speaker.program_session)
     else
-      flash[:danger] = "There was a problem removing #{speaker.name}."
+      flash[:danger] = "There was a problem removing #{@speaker.name}."
       redirect_to event_staff_program_session_path(current_event, @speaker.program_session)
     end
   end

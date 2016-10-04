@@ -16,6 +16,8 @@ class ProgramSession < ActiveRecord::Base
 
   validates :event, :session_format, :title, :state, presence: true
 
+  serialize :info, Hash
+
   after_destroy :destroy_speakers
 
   scope :unscheduled, -> do
@@ -71,6 +73,22 @@ class ProgramSession < ActiveRecord::Base
     time_slot.present?
   end
 
+  def video_url
+    info[:video_url]
+  end
+
+  def slides_url
+    info[:slides_url]
+  end
+
+  def video_url=(video_url)
+    info[:video_url] = video_url
+  end
+
+  def slides_url=(slides_url)
+    info[:slides_url] = slides_url
+  end
+
   private
 
   def destroy_speakers
@@ -92,6 +110,7 @@ end
 #  state             :text             default("active")
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  info              :text
 #
 # Indexes
 #

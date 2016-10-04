@@ -9,12 +9,11 @@
         = f.input :state, as: :select, collection: session_states_collection, label: "State",
           include_blank: false, required: true
       = f.input :abstract, maxlength: 605, input_html: { class: 'watched js-maxlength-alert', rows: 5 }
-      -# %section.inline-block
-      -#   = f.label :video_url
-      -#   = f.text_field :video_url, class: "form-control"
-      -# %section.inline-block
-      -#   = f.label :slides_url
-      -#   = f.text_field :slides_url, class: "form-control"
+      = f.label :video_url
+      = f.text_field :video_url, class: "form-control"
+
+      = f.label :slides_url
+      = f.text_field :slides_url, class: "form-control"
     - if @program_session.new_record?
       %fieldset.col-md-6
         %h4 Speaker

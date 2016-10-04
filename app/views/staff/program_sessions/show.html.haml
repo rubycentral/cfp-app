@@ -41,6 +41,12 @@
         %h3.control-label Abstract
         .markdown{ data: { 'field-id' => 'program_session_abstract' } }
           = program_session.abstract_markdown
+      .program-session-item
+        %h3.control-label Video URL
+        = link_to program_session.video_url
+      .program-session-item
+        %h3.control-label Slides URL
+        = link_to program_session.slides_url
 
     .col-md-6
       .program-session-item

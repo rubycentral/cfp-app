@@ -25,10 +25,12 @@ feature "Organizers can manage program sessions" do
     visit edit_event_staff_program_session_path(event, program_session)
 
     fill_in "Title", with: "New Session Title"
+    fill_in "Video url", with: "http://www.youtube.com"
     click_on "Save"
 
     expect(current_path).to eq(event_staff_program_session_path(event, program_session))
     expect(page).to have_content("New Session Title")
+    expect(page).to have_link("http://www.youtube.com")
   end
 
   scenario "organizer can add speaker to program session" do

@@ -1,12 +1,14 @@
-class Staff::TimeSlotsController < Staff::SchedulesController
+class Staff::TimeSlotsController < Staff::ApplicationController
+  include ScheduleSupport
 
   before_action :set_time_slot, only: [:edit, :update, :destroy]
   before_action :set_time_slots, only: :index
 
   helper_method :time_slot_decorated
 
+  decorates_assigned :time_slots, with: Staff::TimeSlotDecorator
+
   def index
-    @rooms = current_event.rooms.by_grid_position
     respond_to do |format|
       format.html
       format.csv { send_data time_slots.to_csv }
@@ -78,7 +80,7 @@ class Staff::TimeSlotsController < Staff::SchedulesController
     end
   end
 
-private
+  private
 
   def time_slot_params
     params.require(:time_slot).permit(:conference_day, :room_id, :start_time, :end_time, :program_session_id, :title, :track_id, :presenter, :description)
@@ -86,6 +88,11 @@ private
 
   def set_time_slot
     @time_slot = current_event.time_slots.find(params[:id])
+  end
+
+  def set_time_slots
+    @time_slots = current_event.time_slots
+                      .includes(:room, program_session: { proposal: {speakers: :user }})
   end
 
   def time_slot_decorated

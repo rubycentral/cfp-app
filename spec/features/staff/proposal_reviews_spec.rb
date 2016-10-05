@@ -86,7 +86,7 @@ feature "Review Proposals" do
   end
 
   context "reviewer is viewing a specific proposal" do
-    it_behaves_like "a proposal page", :event_staff_proposal_path
+    it_behaves_like "a proposal page", :event_staff_proposal_path, js: true
 
     it "only shows them the internal comments once they've rated it", js: true do
       skip "PLEASE FIX ME!"

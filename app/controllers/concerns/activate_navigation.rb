@@ -23,7 +23,7 @@ module ActivateNavigation
   end
 
   def schedule_subnav_item_class(key)
-    {} #TBD
+    return 'active' if matches_nav_path?(key, schedule_subnav_item_map)
   end
 
   private
@@ -52,7 +52,7 @@ module ActivateNavigation
             add_path(:event_staff_proposal, current_event, @proposal.try(:uuid?) ? @proposal : nil)
         ],
         'event-program-link' => program_subnav_item_map.values,
-        'event-schedule-link' => add_path(:event_staff_time_slots, current_event),
+        'event-schedule-link' => add_path(:event_staff_schedule_grid, current_event),
         'event-dashboard-link' => event_subnav_item_map.values,
     }
   end
@@ -81,6 +81,14 @@ module ActivateNavigation
         ],
         'event-program-sessions-link' => add_path(:event_staff_program_sessions, current_event),
         'event-program-speakers-link' => add_path(:event_staff_program_speakers, current_event),
+    }
+  end
+
+  def schedule_subnav_item_map
+    @schedule_subnav_item_map ||= {
+      'event-schedule-time-slots-link' => add_path(:event_staff_schedule_time_slots, current_event),
+      'event-schedule-rooms-link' => add_path(:event_staff_schedule_rooms, current_event),
+      'event-schedule-grid-link' => add_path(:event_staff_schedule_grid, current_event)
     }
   end
 

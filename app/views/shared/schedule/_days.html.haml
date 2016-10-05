@@ -8,8 +8,8 @@
           = room.name
 
   %tbody
-    - conference_day = ConferenceDay.new(day, @event)
-    - conference_day.time_slots.each do |conf_slot|
+    - conference_day = ConferenceDay.new(day, current_event)
+    - conference_day.conf_slots.each do |conf_slot|
       %tr
         %td
           %p
@@ -29,9 +29,9 @@
               %td.time-slot{rowspan: (2 if takes_two), data: ts.cell_data_attr}
                 .session-content
                   %p.session-title
-                    = ts.display_title
+                    = ts.title
                   %p.speaker-name
-                    = ts.display_presenter
+                    = ts.presenter
 
 
 

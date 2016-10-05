@@ -217,6 +217,10 @@ class Event < ActiveRecord::Base
     @stats ||= EventStats.new(self)
   end
 
+  def days
+    (end_date.to_date - start_date.to_date).to_i + 1
+  end
+
   private
 
   def update_closes_at_if_manually_closed

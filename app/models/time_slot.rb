@@ -13,6 +13,7 @@ class TimeSlot < ActiveRecord::Base
   scope :by_room, -> do
     joins(:room).where.not(rooms: {grid_position: nil}).sort_by { |slot| slot.room.grid_position }
   end
+  scope :grid_order, -> { joins(:room).order(:conference_day, 'rooms.grid_position', :start_time) }
 
   def self.import(file)
     raw_json = file.read # maybe open as well
@@ -41,6 +42,41 @@ class TimeSlot < ActiveRecord::Base
     (end_time - start_time) > STANDARD_LENGTH
   end
 
+  def title
+    program_session && program_session.title || super
+  end
+
+  def presenter
+    speaker_names || super
+  end
+
+  def description
+    program_session && program_session.abstract || super
+  end
+
+  def track_name
+    if program_session
+      program_session.track_name
+    else
+      track.try(:name)
+    end
+  end
+
+  def track_id
+    program_session && program_session.track_id || super
+  end
+
+  def room_name
+    room.try(:name)
+  end
+
+  def speaker_names
+    program_session && program_session.speaker_names
+  end
+
+  def session_confirmation_notes
+    program_session.try(:proposal).try(:confirmation_notes)
+  end
 end
 
 # == Schema Information

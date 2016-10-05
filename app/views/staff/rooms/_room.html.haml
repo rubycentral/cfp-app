@@ -9,7 +9,7 @@
     = link_to 'Edit', '#', class: 'btn btn-primary btn-xs',
       data: { toggle: 'modal', target: "#room-edit-#{room.id}" }
 
-    = link_to 'Remove', event_staff_room_path(event, room),
+    = link_to 'Remove', event_staff_schedule_room_path(event, room),
       method: :delete,
       remote: true,
       data: { confirm: "Are you sure you want to remove this room?" },
@@ -18,7 +18,7 @@
     %div{ id: "room-edit-#{room.id}", class: 'modal fade' }
       .modal-dialog
         .modal-content
-          = simple_form_for [ event, :staff, room ], remote: true do |f|
+          = simple_form_for [ event, :staff, :schedule, room ], remote: true do |f|
             .modal-header
               %h3 Edit Room
               .errors

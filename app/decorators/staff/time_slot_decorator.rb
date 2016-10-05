@@ -44,7 +44,7 @@ class Staff::TimeSlotDecorator < Draper::Decorator
   end
 
   def unscheduled_program_sessions
-    program_sessions = object.event.program_sessions.unscheduled
+    program_sessions = object.event.program_sessions.unscheduled.sorted_by_title
 
     if object.program_session
       program_sessions.unshift(object.program_session)

@@ -23,6 +23,7 @@ class ProgramSession < ActiveRecord::Base
   scope :unscheduled, -> do
     where(state: ACTIVE).where.not(id: TimeSlot.pluck(:program_session_id))
   end
+  scope :sorted_by_title, -> { order(:title)}
   scope :active, -> { where(state: ACTIVE) }
   scope :inactive, -> { where(state: INACTIVE) }
   scope :waitlisted, -> { where(state: WAITLISTED) }

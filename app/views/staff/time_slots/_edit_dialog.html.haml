@@ -1,7 +1,7 @@
 %div{ id: "time-slot-edit-#{time_slot.id}" }
   .modal-dialog
     .modal-content
-      = simple_form_for [event, :staff, time_slot], url: event_staff_time_slot_path(time_slot.event, time_slot), remote: true, html: {role: 'form'} do |f|
+      = simple_form_for [event, :staff, time_slot], url: event_staff_schedule_time_slot_path(time_slot.event, time_slot), remote: true, html: {role: 'form'} do |f|
         .modal-header
           %h3 Edit Time Slot
           .errors

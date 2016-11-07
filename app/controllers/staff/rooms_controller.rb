@@ -1,10 +1,14 @@
-class Staff::RoomsController < Staff::SchedulesController
+class Staff::RoomsController < Staff::ApplicationController
+  include ScheduleSupport
 
-  before_action :set_time_slots, only: [:update, :destroy]
   before_action :set_room, only: [:update, :destroy]
 
+  def index
+    @rooms = current_event.rooms.grid_order
+  end
+
   def create
-    room = @event.rooms.build(room_params)
+    room = current_event.rooms.build(room_params)
     if room.save
       flash.now[:success] = "#{room.name} has been added to rooms."
     else
@@ -50,7 +54,7 @@ class Staff::RoomsController < Staff::SchedulesController
   end
 
   def set_room
-    @room = @event.rooms.find(params[:id])
+    @room = current_event.rooms.find(params[:id])
   end
 
 end

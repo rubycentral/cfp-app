@@ -33,7 +33,7 @@
 
           - if schedule_nav?
             %li{class: nav_item_class("event-schedule-link")}
-              = link_to event_staff_time_slots_path(current_event) do
+              = link_to event_staff_schedule_grid_path(current_event) do
                 %i.fa.fa-calendar
                 %span Schedule
 
@@ -59,3 +59,6 @@
 
 - elsif program_mode?
   = render partial: "layouts/nav/staff/program_subnav"
+
+- elsif schedule_mode?
+  = render partial: "layouts/nav/staff/schedule_subnav"

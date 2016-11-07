@@ -1,5 +1,5 @@
 .form-inline
-  = f.input :conference_day, collection: event.days_for, label: 'Day'
+  = f.input :conference_day, collection: 1..event.days, label: 'Day'
   = f.input :room_id, collection: current_event.rooms, include_blank: true
 .form-inline
   = f.input :start_time, as: :string, input_html: { value: time_slot.start_time }
@@ -9,16 +9,16 @@
 .selected-session-info
   .session-meta-item
     %strong Title:
-    %p.title= time_slot.display_title
+    %p.title= time_slot.title
   .session-meta-item
     %strong Track:
     %p.track= time_slot.track_name
   .session-meta-item
     %strong Presenter:
-    %p.speaker= time_slot.display_presenter
+    %p.speaker= time_slot.presenter
   .session-meta-item
     %strong Abstract:
-    %p.abstract= time_slot.display_description
+    %p.abstract= time_slot.description
   .session-meta-item
     %strong Confirmation Notes:
     %p.confirmation-notes= time_slot.session_confirmation_notes

@@ -62,6 +62,22 @@ class ProgramSession < ActiveRecord::Base
     speakers.count > 1
   end
 
+  def speaker_names
+    speakers.map(&:name).join(', ')
+  end
+
+  def speaker_emails
+    speakers.map(&:email).join(', ')
+  end
+
+  def session_format_name
+    session_format.try(:name)
+  end
+
+  def track_name
+    track.try(:name) || 'General'
+  end
+
   def confirmation_notes?
     proposal.try(:confirmation_notes?)
   end

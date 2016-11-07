@@ -23,7 +23,7 @@
       #room-new-dialog.modal.fade
         .modal-dialog
           .modal-content
-            = simple_form_for [ event, :staff, Room.new ], remote: true do |f|
+            = simple_form_for [ event, :staff, :schedule, Room.new ], remote: true do |f|
               .modal-header
                 %h3 New Room
                 .errors

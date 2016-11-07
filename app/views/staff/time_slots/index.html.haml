@@ -4,30 +4,12 @@
       .page-header.clearfix
         %h1= "#{event} Time Slots"
 
-  .row
-    .col-md-12
-      #content
-        %ul#tabs.nav.nav-tabs{"data-tabs" => "tabs"}
-          %li.active
-            %a{"data-toggle" => "tab", href: "#time-slot", id: 'time-slots-tab'} Time Slots
-          %li
-            %a{"data-toggle" => "tab", href: "#rooms"} Rooms
-          %li
-            %a{"data-toggle" => "tab", href: "#add-schedule"} Schedule
-
         .tab-content
           #time-slot.tab-pane.active
             .row
               .col-md-12
                 = render partial: 'time_slots'
-          #rooms.tab-pane
-            .row
-              .col-md-12
-                = render partial: 'rooms'
-          #add-schedule.tab-pane
-            .row
-              .col-md-12
-                = render partial: 'schedule'
+
         #time-slot-edit-dialog.modal.fade
 
         #time-slot-new-dialog.modal.fade

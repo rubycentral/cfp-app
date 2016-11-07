@@ -21,4 +21,5 @@
 //= require jquery-ui-timepicker-addon
 //= require bootstrap-multiselect
 //= require zeroclipboard
+//= require momentjs
 //= require_tree .

@@ -1,4 +1,5 @@
 class Staff::ApplicationController < ApplicationController
+  before_action :require_user
   before_action :require_event
   before_action :require_staff
 
@@ -21,6 +22,13 @@ class Staff::ApplicationController < ApplicationController
   def require_program_team
     unless current_user.program_team_for_event?(current_event)
       flash[:danger] = "You must be a member of the program team to access this page."
+      redirect_to event_staff_path(current_event)
+    end
+  end
+
+  def require_organizer
+    unless current_user.organizer_for_event?(current_event)
+      flash[:danger] = "You must be an organizer to access this page."
       redirect_to event_staff_path(current_event)
     end
   end

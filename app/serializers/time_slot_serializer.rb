@@ -11,16 +11,4 @@ class TimeSlotSerializer < ActiveModel::Serializer
   def track
     object.track_name
   end
-
-  def title
-    object.display_title
-  end
-
-  def presenter
-    object.display_presenter
-  end
-
-  def description
-    object.display_description
-  end
 end

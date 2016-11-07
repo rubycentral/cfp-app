@@ -1,9 +1,9 @@
-class Staff::TracksController < Staff::SchedulesController
+class Staff::TracksController < Staff::ApplicationController
 
   before_action :set_track, only: [:edit, :update, :destroy]
 
   def index
-    @tracks = @event.tracks
+    @tracks = current_event.tracks
   end
 
   def new
@@ -19,7 +19,7 @@ class Staff::TracksController < Staff::SchedulesController
   end
 
   def create
-    track = @event.tracks.build(track_params)
+    track = current_event.tracks.build(track_params)
     if track.save
       flash.now[:success] = "#{track.name} has been added to tracks."
     else
@@ -61,7 +61,7 @@ class Staff::TracksController < Staff::SchedulesController
   private
 
   def set_track
-    @track = @event.tracks.find(params[:id])
+    @track = current_event.tracks.find(params[:id])
   end
 
   def track_params

@@ -82,8 +82,12 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :rooms, only: [:create, :update, :destroy]
-      resources :time_slots, except: :show
+      scope :schedule, as: 'schedule' do
+        resources :rooms, only: [:index, :create, :update, :destroy]
+        resources :time_slots, except: :show
+        resource :grid
+      end
+
       resources :session_formats, except: :show
       resources :tracks, except: [:show]
     end

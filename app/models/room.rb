@@ -4,6 +4,7 @@ class Room < ActiveRecord::Base
 
   validates :name, uniqueness: true, presence: true
   scope :by_grid_position, -> {where.not(grid_position: nil).order(:grid_position)}
+  scope :grid_order, -> { order(:grid_position) }
 end
 
 # == Schema Information

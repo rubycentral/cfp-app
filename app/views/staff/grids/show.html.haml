@@ -1,0 +1,5 @@
+#schedule
+  - @schedule.each_day do |day|
+    .row
+      .col-md-12
+        = render partial: 'grid', locals: { schedule: @schedule, day: day }

@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_event
   helper_method :display_staff_event_subnav?
   helper_method :program_mode?
+  helper_method :schedule_mode?
   helper_method :program_tracks
 
   before_action :current_event
@@ -124,8 +125,16 @@ class ApplicationController < ActionController::Base
     @display_program_subnav = true
   end
 
+  def enable_staff_schedule_subnav
+    @display_schedule_subnav = true
+  end
+
   def program_mode?
     @display_program_subnav
+  end
+
+  def schedule_mode?
+    @display_schedule_subnav
   end
 
   def program_tracks

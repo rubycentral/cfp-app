@@ -18,8 +18,8 @@
       %fieldset.col-md-6
         %h4 Speaker
         = f.simple_fields_for :speakers, url: [ @event, :staff] do |speaker|
-          = speaker.input :speaker_name, label: "Name"
-          = speaker.input :speaker_email, label: "Email"
+          = speaker.input :speaker_name, label: "Name", required: true
+          = speaker.input :speaker_email, label: "Email", required: true
           = speaker.input :bio, maxlength: :lookup, input_html: { class: 'watched js-maxlength-alert', rows: 5 }
 
   .row

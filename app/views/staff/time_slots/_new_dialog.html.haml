@@ -1,6 +1,6 @@
 .modal-dialog
   .modal-content
-    = simple_form_for [current_event, :staff, time_slot], remote: true, html: {role: 'form'} do |f|
+    = simple_form_for [current_event, :staff, :schedule, time_slot], remote: true, html: {role: 'form'} do |f|
       .modal-header
         %h3 New Time Slot
         .errors

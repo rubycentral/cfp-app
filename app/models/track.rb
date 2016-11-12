@@ -6,6 +6,8 @@ class Track < ActiveRecord::Base
   validates :name, uniqueness: {scope: :event}, presence: true
   validates :description, length: {maximum: 250}
 
+  scope :sort_by_name, -> { order(:name) }
+
   def self.count_by_track(event)
     event.tracks.joins(:program_sessions).group(:name).count
   end

@@ -3,7 +3,7 @@ class Staff::TracksController < Staff::ApplicationController
   before_action :set_track, only: [:edit, :update, :destroy]
 
   def index
-    @tracks = current_event.tracks
+    @tracks = current_event.tracks.sort_by_name
   end
 
   def new

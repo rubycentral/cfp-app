@@ -40,7 +40,7 @@
                 - unless !current_user.organizer_for_event?(event)
                   %th Actions
             %tbody
-              = render event.tracks
+              = render event.tracks.sort_by_name
 
     #config-modal.modal.fade
       .modal-dialog

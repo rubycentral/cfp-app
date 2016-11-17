@@ -300,6 +300,7 @@ $zindex-dropdown:          1000 !default;
 $zindex-popover:           1060 !default;
 $zindex-tooltip:           1070 !default;
 $zindex-navbar-fixed:      1030 !default;
+$zindex-subnavbar:         1020 !default;
 $zindex-modal-background:  1040 !default;
 $zindex-modal:             1050 !default;
 
@@ -412,6 +413,9 @@ $navbar-default-brand-hover-bg:            transparent !default;
 $navbar-default-toggle-hover-bg:           #ddd !default;
 $navbar-default-toggle-icon-bar-bg:        #888 !default;
 $navbar-default-toggle-border-color:       #ddd !default;
+
+//Subnav
+$subnavbar-height:                         47px;
 
 
 //=== Inverted navbar

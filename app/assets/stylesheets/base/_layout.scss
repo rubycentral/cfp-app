@@ -1,5 +1,5 @@
 body {
-  padding-top: $navbar-height;
+  padding-top: $navbar-height + $subnavbar-height;
 
   // flexbox for sticky footer
   min-height: 100vh;
@@ -54,12 +54,12 @@ body {
   display: flex;
 }
 
-.flex-column  { 
-  flex-direction: column 
+.flex-column  {
+  flex-direction: column
 }
 
-.flex-wrap { 
-  flex-wrap: wrap 
+.flex-wrap {
+  flex-wrap: wrap
 }
 
 .flex-item {

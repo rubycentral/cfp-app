@@ -58,7 +58,9 @@
 */
 
 .subnavbar {
-  margin: 0 0 ;
+  margin: 0 0;
+  padding-top: $navbar-height;
+  z-index: $zindex-subnavbar;
   .subnavbar-inner {
     background: #fff;
     border-bottom: 1px solid $gray-light;
@@ -159,31 +161,24 @@
   }
 }
 
-.navbar-default.program-subnav {
+.navbar-fixed-top.program-subnav, .navbar-fixed-top.schedule-subnav {
   border-radius: 0;
   background-color: $dark-blue;
   border-color: $dark-blue;
-
+  padding-top: $navbar-height;
+  z-index: $zindex-subnavbar;
+  li > a {
+    color: $white;
+  }
+  a:hover {
+    background-color: $dark-blue;
+    color: darken($white, 10%);
+  }
   li.active {
     border-bottom: 3px solid darken($dark-blue, 10%);
-    > a , a:hover, a:focus {
+    > a, a:hover, a:focus {
       color: darken($white, 10%);
       background-color: lighten($dark-blue, 10%);
     }
   }
 }
-
-.navbar-default.schedule-subnav {
-  border-radius: 0;
-  background-color: $dark-blue;
-  border-color: $dark-blue;
-
-  li.active {
-    border-bottom: 3px solid darken($dark-blue, 10%);
-    > a , a:hover, a:focus {
-      color: darken($white, 10%);
-      background-color: lighten($dark-blue, 10%);
-    }
-  }
-}
-

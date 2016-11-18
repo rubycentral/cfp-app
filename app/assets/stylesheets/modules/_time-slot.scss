@@ -24,6 +24,12 @@
   }
 }
 
+#rooms-partial {
+  @media only screen and (max-width: 767px) {
+    margin-top: 80px;
+  }
+}
+
 #organizer-time-slots {
   td:last-child {
     white-space: nowrap;

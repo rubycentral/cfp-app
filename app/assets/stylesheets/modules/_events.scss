@@ -52,8 +52,17 @@
   }
 }
 
+
 .event-info-bar {
-  margin-top: 20px;
+  @media only screen and (min-width: 950px) {
+    margin-top: 20px;
+  }
+  @media only screen and (max-width: 767px) {
+    margin-top: 80px;
+  }
+  @media only screen and (max-width: 480px) {
+    margin-top: 120px;
+  }
 }
 
 .event-info {

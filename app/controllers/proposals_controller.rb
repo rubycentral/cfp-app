@@ -3,7 +3,6 @@ class ProposalsController < ApplicationController
   before_action :require_user
   before_action :require_proposal, except: [ :index, :create, :new, :parse_edit_field ]
   before_action :require_invite_or_speaker, only: [:show]
-
   before_action :require_speaker, except: [ :index, :create, :new, :parse_edit_field ]
 
   decorates_assigned :proposal
@@ -21,8 +20,9 @@ class ProposalsController < ApplicationController
   end
 
   def new
-    @proposal = Proposal.new(event: @event)
+    @proposal = @event.proposals.new
     @proposal.speakers.build(user: current_user)
+    flash.now[:warning] = incomplete_profile_msg unless current_user.complete?
   end
 
   def confirm
@@ -146,6 +146,15 @@ class ProposalsController < ApplicationController
   def require_waitlisted_or_accepted_state
     unless @proposal.waitlisted? || @proposal.accepted?
       redirect_to event_url(@event.slug)
+    end
+  end
+
+  def incomplete_profile_msg
+    if profile_errors = current_user.profile_errors
+      msg = "Before submitting a proposal your profile needs completing. Please correct the following: "
+      msg << profile_errors.full_messages.to_sentence
+      msg << ". Visit #{view_context.link_to('My Profile', edit_profile_path)} to update."
+      msg.html_safe
     end
   end
 end

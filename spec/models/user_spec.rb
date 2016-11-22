@@ -101,8 +101,8 @@ describe User do
   end
 
   describe "#complete?" do
-    it "returns true if name and email are present" do
-      user = build(:user, name: 'Harry', email: 'harry@hogwarts.edu')
+    it "returns true if name and email are present, and unconfirmed_email is blank" do
+      user = build(:user, name: 'Harry', email: 'harry@hogwarts.edu', unconfirmed_email: nil)
       expect(user).to be_complete
     end
 
@@ -113,6 +113,11 @@ describe User do
 
     it "returns false if email is missing" do
       user = build(:user, name: 'Harry', email: nil)
+      expect(user).to_not be_complete
+    end
+
+    it "returns false if unconfirmed_email is present" do
+      user = build(:user, name: 'Harry', email: 'harry@hogwarts.edu', unconfirmed_email: 'ron@hogwarts.edu')
       expect(user).to_not be_complete
     end
   end
@@ -214,6 +219,43 @@ describe User do
       create(:teammate, role: 'reviewer', event: event2, user: user)
 
       expect(user.role_names).to eq('reviewer')
+    end
+  end
+
+  describe "#profile_errors" do
+    let(:unconfirmed_email) { 'ron@hogwarts.edu' }
+    let(:unconfirmed_email_err_msg) { "#{unconfirmed_email} needs confirmation" }
+    let(:blank_err_msg) { "can't be blank" }
+
+    it "returns no errors if name and email are present, and unconfirmed_email is blank" do
+      user = build(:user, name: 'Harry', email: 'harry@hogwarts.edu', unconfirmed_email: nil)
+      expect(user.profile_errors).to be_empty
+    end
+
+    it "returns an error if name is missing" do
+      user = build(:user, name: nil, email: 'harry@hogwarts.edu')
+      expect(user.profile_errors.messages[:name][0]).to eq blank_err_msg
+    end
+
+    it "returns an error if email is missing" do
+      user = build(:user, name: 'Harry', email: nil)
+      expect(user.profile_errors.messages[:email][0]).to eq blank_err_msg
+    end
+
+    it "returns an error if unconfirmed_email is present" do
+      user = build(:user, name: 'Harry', email: 'harry@hogwarts.edu', unconfirmed_email: unconfirmed_email)
+      expect(user.profile_errors.messages[:email][0]).to eq unconfirmed_email_err_msg
+    end
+
+    it "returns multiple errors if name and email are blank" do
+      user = build(:user, name: nil, email: '')
+      expect(user.profile_errors.messages[:name][0]).to eq blank_err_msg
+      expect(user.profile_errors.messages[:email][0]).to eq blank_err_msg
+    end
+
+    it "returns unconfirmed email error when email is blank and unconfirmed_email is present" do
+      user = build(:user, name: 'Ron', email: '', unconfirmed_email: unconfirmed_email)
+      expect(user.profile_errors.messages[:email][0]).to eq unconfirmed_email_err_msg
     end
   end
 end

@@ -1,13 +1,13 @@
 .event-info-bar
   .row
-    .col-md-8
+    .col-md-4
       .event-info.event-info-dense
         %strong.event-title= event.name
         - if event.start_date? && event.end_date?
           %span.event-meta
             %i.fa.fa-fw.fa-calendar
             = event.date_range
-    .col-md-4.text-right.text-right-responsive
+    .col-md-4
       .event-info.event-info-dense
         %span{:class => "event-meta event-status-badge event-status-#{event.status}"}
           CFP
@@ -16,46 +16,25 @@
           %span.event-meta
             CFP closes:
             %strong= event.closes_at(:month_day_year)
-
-#proposal
-  .proposal-actions-bar
-    .row
-      .col-md-offset-8.col-md-4.text-right
-        - if proposal.has_speaker?(current_user)
-          .clearfix
-            - if proposal.speaker_can_edit?(current_user)
-              = link_to edit_event_proposal_path(event_slug: event.slug, uuid: proposal), class: 'btn btn-primary' do
-                %span.glyphicon.glyphicon-edit
-                Edit
-            - if proposal.speaker_can_withdraw?(current_user)
-              = proposal.withdraw_button
-            - if proposal.speaker_can_delete?(current_user)
-              = link_to event_proposal_path, method: :delete, data: {confirm: 'This will delete your talk. Are you sure you want to do this? It can not be undone.'}, class: 'btn btn-warning', id: 'delete' do
-                %span.glyphicon.glyphicon-exclamation-sign
-                Delete Proposal
+    .col-md-4.text-right
+      - if proposal.has_speaker?(current_user)
+        .btn-nav.clearfix
+          - if proposal.speaker_can_edit?(current_user)
+            = link_to edit_event_proposal_path(event_slug: event.slug, uuid: proposal), class: 'btn btn-primary' do
+              %span.glyphicon.glyphicon-edit
+              Edit
+          - if proposal.speaker_can_withdraw?(current_user)
+            = proposal.withdraw_button
+          - if proposal.speaker_can_delete?(current_user)
+            = link_to event_proposal_path, method: :delete, data: {confirm: 'This will delete your talk. Are you sure you want to do this? It can not be undone.'}, class: 'btn btn-warning', id: 'delete' do
+              %span.glyphicon.glyphicon-exclamation-sign
+              Delete Proposal
 
   .page-header.page-header-slim
     .row
       .col-md-8
         %h1= proposal.title
-    .row
-      .col-sm-6
-        .proposal-info-bar
-          .proposal-meta.proposal-description
-            .proposal-meta-item
-              %strong #{ 'Speaker'.pluralize(proposal.speakers.count) }:
-              %span= proposal.speakers.collect { |speaker| speaker.name }.join(', ')
-            .proposal-meta-item
-              %strong Format:
-              %span #{proposal.session_format_name}
-            .proposal-meta-item
-              %strong Track:
-              %span #{proposal.track_name}
-            -if proposal.tags.present?
-              .proposal-meta-item
-                %strong Tags:
-                %span #{proposal.tags_labels}
-      .col-sm-6.text-right
+      .col-sm-4.text-right
         .proposal-info-bar
           .proposal-meta.proposal-description
             .proposal-meta-item
@@ -64,6 +43,29 @@
             .proposal-meta-item
               %strong Updated:
               %span #{proposal.updated_in_words}
+
+    .row
+      .proposal-info-bar.clearfix
+        .proposal-meta.proposal-description.clearfix
+          .col-sm-4
+            .col-sm-6.no-pad-left
+              .proposal-meta-item
+                .info-item-heading #{ 'Speaker'.pluralize(proposal.speakers.count) }
+                = proposal.speakers.collect { |speaker| speaker.name }.join(', ')
+            .col-sm-6
+              -if proposal.tags.present?
+                .proposal-meta-item
+                  .info-item-heading Tags
+                  #{proposal.tags_labels}
+          .col-sm-4
+            .col-sm-6.no-pad-left
+              .proposal-meta-item.text-left
+                .info-item-heading Format
+                #{proposal.session_format_name}
+            .col-sm-6
+              .proposal-meta-item.text-left
+                .info-item-heading Track
+                #{proposal.track_name}
 
   .row
     .col-md-8

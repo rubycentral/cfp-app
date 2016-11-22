@@ -1,2 +1,4 @@
 document.getElementById('flash').innerHTML = '<%=j show_flash %>';
-$('.proposal-reviewer-tags').html('<%=j proposal.review_tags_labels %>');
+$('.proposal-reviewer-tags').html('<%=j proposal.review_tags_labels %>' || '<em>None</em>').toggle();
+$('#edit-tags-icon').show();
+$('.review-tags-form-wrapper').hide();

@@ -86,9 +86,9 @@ ActiveRecord::Schema.define(version: 20160927205019) do
     t.text     "abstract"
     t.integer  "track_id"
     t.integer  "session_format_id"
-    t.text     "state",             default: "active"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.text     "state",             default: "draft"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.text     "info"
   end
 

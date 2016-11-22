@@ -35,6 +35,8 @@ class Staff::ProposalReviewsController < Staff::ApplicationController
 
   def update
     authorize @proposal, :review?
+    tags = params[:proposal][:review_tags].downcase
+    params[:proposal][:review_tags] = Tagging.tags_string_to_array(tags)
 
     unless @proposal.update_without_touching_updated_by_speaker_at(proposal_review_tags_params)
       flash[:danger] = 'There was a problem saving the proposal.'
@@ -47,6 +49,6 @@ class Staff::ProposalReviewsController < Staff::ApplicationController
   private
 
   def proposal_review_tags_params
-    params.fetch(:proposal, {}).permit({review_tags: []})
+    params.fetch(:proposal, {}).permit(review_tags: [])
   end
 end

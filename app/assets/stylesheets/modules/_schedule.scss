@@ -1,13 +1,6 @@
-
 #schedule {
-  @media only screen and (min-width: 950px) {
-    margin-top: 20px;
-  }
-  @media only screen and (max-width: 767px) {
-      margin-top: 110px;
-  }
+  margin-top: 20px;
 }
-
 
 .schedule-grid {
   $day-start: 8*60px;

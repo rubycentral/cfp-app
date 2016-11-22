@@ -35,8 +35,6 @@ $brand-danger:          adjust-color($dark-red, $lightness: 30%, $saturation: 30
 $brand-accent:          $gold !default;
 $brand-gray:            #ccc;
 
-
-
 //== Scaffolding
 //
 //## Settings for some of the most global styles.
@@ -413,10 +411,6 @@ $navbar-default-brand-hover-bg:            transparent !default;
 $navbar-default-toggle-hover-bg:           #ddd !default;
 $navbar-default-toggle-icon-bar-bg:        #888 !default;
 $navbar-default-toggle-border-color:       #ddd !default;
-
-//Subnav
-$subnavbar-height:                         47px;
-
 
 //=== Inverted navbar
 // Reset inverted navbar basics

@@ -14,6 +14,7 @@ gem 'sass-rails', '~> 5.0.4'
 gem 'haml', '~> 4.0.4'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'rails-assets-momentjs', source: 'https://rails-assets.org'
+gem 'selectize-rails'
 
 gem 'devise', '~> 4.1.1'
 gem 'omniauth-github'

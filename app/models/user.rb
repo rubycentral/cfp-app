@@ -72,7 +72,7 @@ class User < ActiveRecord::Base
   end
 
   def complete?
-    self.name.present? && self.email.present?
+    name.present? && email.present? && unconfirmed_email.blank?
   end
 
   def organizer?
@@ -121,6 +121,16 @@ class User < ActiveRecord::Base
     Digest::MD5.hexdigest(email.to_s.downcase)
   end
 
+  def profile_errors
+    profile_errors = ActiveModel::Errors.new(self)
+    profile_errors.add(:name, :blank, message: "can't be blank") if name.blank?
+    if unconfirmed_email.present?
+      profile_errors.add(:email, :unconfirmed, message: "#{unconfirmed_email} needs confirmation")
+    else
+      profile_errors.add(:email, :blank, message: "can't be blank") if email.blank?
+    end
+    profile_errors
+  end
 end
 
 # == Schema Information

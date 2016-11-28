@@ -46,10 +46,10 @@ describe ProgramSession do
       expect(session.proposal_id).to eq(proposal.id)
     end
 
-    it "creates a program session that is active" do
+    it "creates a program session that is live" do
       session = ProgramSession.create_from_proposal(proposal)
 
-      expect(session.state).to eq("active")
+      expect(session.state).to eq("live")
     end
 
     it "sets program session id for all speakers" do

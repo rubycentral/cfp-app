@@ -22,11 +22,11 @@ class Staff::ProgramSessionDecorator < ApplicationDecorator
 
   def state_class(state)
     case state
-    when ProgramSession::ACTIVE
+    when ProgramSession::LIVE
       'label-success'
     when ProgramSession::WAITLISTED
       'label-warning'
-    when ProgramSession::INACTIVE
+    when ProgramSession::DRAFT
       'label-default'
     else
       'label-default'

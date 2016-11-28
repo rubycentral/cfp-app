@@ -7,7 +7,7 @@ class CreateProgramSessions < ActiveRecord::Migration
       t.text :abstract
       t.references :track, index: true
       t.references :session_format, index: true
-      t.text :state, default: ProgramSession::ACTIVE
+      t.text :state, default: ProgramSession::DRAFT
 
       t.timestamps null: false
     end

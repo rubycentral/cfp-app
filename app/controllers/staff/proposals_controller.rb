@@ -25,7 +25,11 @@ class Staff::ProposalsController < Staff::ApplicationController
   end
 
   def update_state
-    authorize @proposal
+    if @proposal.finalized?
+      authorize @proposal, :update_finalized_state?
+    else
+      authorize @proposal, :update_state?
+    end
 
     @proposal.update_state(params[:new_state])
 

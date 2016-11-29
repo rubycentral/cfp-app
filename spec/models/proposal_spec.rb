@@ -109,7 +109,7 @@ describe Proposal do
 
   describe "#confirmed?" do
     it "returns true if proposal has been confirmed" do
-      proposal = create(:proposal, confirmed_at: DateTime.now)
+      proposal = create(:proposal, state: Proposal::ACCEPTED, confirmed_at: DateTime.now)
       expect(proposal).to be_confirmed
     end
 

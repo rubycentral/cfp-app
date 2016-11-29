@@ -16,6 +16,10 @@ class ProposalPolicy < ApplicationPolicy
     @user.program_team_for_event?(@current_event)
   end
 
+  def update_finalized_state?
+    @user.organizer_for_event?(@current_event)
+  end
+
   def update_track?
     @user.program_team_for_event?(@current_event)
   end

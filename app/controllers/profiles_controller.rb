@@ -3,6 +3,7 @@ class ProfilesController < ApplicationController
 
   def edit
     current_user.valid?
+    flash.now[:warning] = incomplete_profile_msg unless current_user.complete?
   end
 
   def update
@@ -25,5 +26,13 @@ class ProfilesController < ApplicationController
 
   def user_params
     params.require(:user).permit(:bio, :gender, :ethnicity, :country, :name, :email, :password, :password_confirmation)
+  end
+
+  def incomplete_profile_msg
+    if profile_errors = current_user.profile_errors
+      msg = 'Your profile is incomplete. Please correct the following: '
+      msg << profile_errors.full_messages.to_sentence + '.'
+      msg.html_safe
+    end
   end
 end

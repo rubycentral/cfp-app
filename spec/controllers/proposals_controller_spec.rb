@@ -5,6 +5,10 @@ describe ProposalsController, type: :controller do
 
   describe 'GET #new' do
     let(:user) { create :user }
+    let(:action) { :new }
+    let(:params) do
+      { event_slug: event.slug }
+    end
 
     before { sign_in user }
 
@@ -14,78 +18,17 @@ describe ProposalsController, type: :controller do
         expect(response.status).to eq(200)
       end
 
-      it 'does not return a flash message' do
+      it 'does not return a flash warning' do
         get :new, { event_slug: event.slug }
-        expect(flash[:danger]).not_to be_present
+        expect(flash[:warning]).not_to be_present
       end
     end
 
     context 'user profile is incomplete' do
-      let(:base_msg) { 'Before submitting a proposal your profile needs completing. Please correct the following:' }
-      let(:unconfirmed_email_msg) { " Email #{user.unconfirmed_email} needs confirmation" }
-      let(:link_msg) { ". Visit <a href=\"/profile\">My Profile</a> to update." }
-      let(:blank_name_msg) { " Name can't be blank" }
-      let(:blank_email_msg) { " Email can't be blank" }
-      let(:blank_name_and_email_msg) { " Name can't be blank and Email can't be blank" }
-      let(:unconfirmed_email_and_blank_name_msg) do
-        " Name can't be blank and Email #{user.unconfirmed_email} needs confirmation"
-      end
+      let(:lead_in_msg) { 'Before submitting a proposal your profile needs completing. Please correct the following:' }
+      let(:trailing_msg) { ". Visit <a href=\"/profile\">My Profile</a> to update." }
 
-      it 'should succeed' do
-        get :new, { event_slug: event.slug }
-        expect(response.status).to eq(200)
-      end
-
-      context 'name is missing' do
-        let(:msg) { base_msg + blank_name_msg + link_msg }
-
-        before { user.update(name: nil) }
-
-        it_behaves_like 'an incomplete profile notifier'
-      end
-
-      context 'email is missing' do
-        let(:user) { create :user, email: '', provider: 'twitter' }
-        let(:msg) { base_msg + blank_email_msg + link_msg }
-
-        it_behaves_like 'an incomplete profile notifier'
-      end
-
-      context 'name and email are missing' do
-        let(:user) { create :user, email: '', name: nil, provider: 'twitter' }
-        let(:msg) do
-          base_msg + blank_name_and_email_msg + link_msg
-        end
-
-        it_behaves_like 'an incomplete profile notifier'
-      end
-
-      context 'an unconfirmed email is present' do
-        let(:msg) { base_msg + unconfirmed_email_msg + link_msg }
-
-        before { user.update(unconfirmed_email: 'changed@email.com') }
-
-        it_behaves_like 'an incomplete profile notifier'
-
-        context 'name is missing' do
-          let(:msg) do
-            base_msg + unconfirmed_email_and_blank_name_msg + link_msg
-          end
-
-          before { user.update(name: nil) }
-
-          it_behaves_like 'an incomplete profile notifier'
-        end
-
-        context 'email is missing' do
-          let(:user) do
-            create :user, email: '', provider: 'twitter'
-          end
-          let(:msg) { base_msg + unconfirmed_email_msg + link_msg }
-
-          it_behaves_like 'an incomplete profile notifier'
-        end
-      end
+      it_behaves_like 'an incomplete profile notifier'
     end
   end
 

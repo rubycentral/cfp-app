@@ -41,7 +41,7 @@
             = f.label :email
             = f.email_field :email, class: 'form-control', placeholder: 'Your email address', value: current_user.unconfirmed_email.present? ? current_user.unconfirmed_email : current_user.email
             - if current_user.unconfirmed_email.present?
-              %p.help-block This email has not been confirmed yet.
+              %p.help-block.red-text This email has not been confirmed yet.
           .form-group
             = f.label :password
             = f.password_field :password, class: 'form-control', placeholder: 'Password'

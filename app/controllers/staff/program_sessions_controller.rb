@@ -6,14 +6,14 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
   decorates_assigned :waitlisted_sessions, with: Staff::ProgramSessionDecorator
 
   def index
-    @sessions = current_event.program_sessions.active_or_inactive
+    @sessions = current_event.program_sessions.live_or_draft
     @waitlisted_sessions = current_event.program_sessions.waitlisted
 
     session[:prev_page] = { name: 'Program', path: event_staff_program_sessions_path(current_event) }
 
     respond_to do |format|
       format.html { render }
-      format.json { render_json(current_event.program_sessions.active, filename: json_filename)}
+      format.json { render_json(current_event.program_sessions.live, filename: json_filename)}
     end
   end
 
@@ -49,7 +49,7 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
   def create
     @program_session = current_event.program_sessions.build(program_session_params)
     authorize @program_session
-    @program_session.state = ProgramSession::INACTIVE
+    @program_session.state = ProgramSession::DRAFT
     @program_session.speakers.each { |speaker| speaker.event_id = current_event.id }
     if @program_session.save
       redirect_to event_staff_program_session_path(current_event,  @program_session)

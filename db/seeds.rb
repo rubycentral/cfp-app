@@ -242,6 +242,7 @@ If your talk is about seed data in Rails apps, we want to hear about it!
 
   program_session_1 = seed_event.program_sessions.create(event: seed_event,
                                                          proposal: accepted_proposal_1,
+                                                         state: ProgramSession::LIVE,
                                                          title: accepted_proposal_1.title,
                                                          abstract: accepted_proposal_1.abstract,
                                                          track: accepted_proposal_1.track,
@@ -249,12 +250,14 @@ If your talk is about seed data in Rails apps, we want to hear about it!
 
   program_session_2 = seed_event.program_sessions.create(event: seed_event,
                                                          proposal: accepted_proposal_2,
+                                                         state: ProgramSession::LIVE,
                                                          title: accepted_proposal_2.title,
                                                          abstract: accepted_proposal_2.abstract,
                                                          track: accepted_proposal_2.track,
                                                          session_format: accepted_proposal_2.session_format)
 
   program_session_3 = seed_event.program_sessions.create(event: seed_event,
+                                                         state: ProgramSession::LIVE,
                                                          title: "Keynote Session",
                                                          abstract: "The keynote session will kick off the conference for all attendees.",
                                                          session_format: internal_session)

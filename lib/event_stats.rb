@@ -67,7 +67,7 @@ class EventStats
   end
 
   def active_custom_sessions(track='all')
-    q = event.program_sessions.active.without_proposal
+    q = event.program_sessions.live.without_proposal
     q = filter_by_track(q, track)
     q.size
   end

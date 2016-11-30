@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :program_session do
     sequence(:title) { |i| "Default Session #{i}" }
     abstract "Just some abstract"
-    state ProgramSession::ACTIVE
+    state ProgramSession::LIVE
     session_format
     event { Event.first || FactoryGirl.create(:event) }
 

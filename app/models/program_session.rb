@@ -1,9 +1,9 @@
 class ProgramSession < ActiveRecord::Base
-  ACTIVE = 'active'
-  INACTIVE = 'inactive'
+  LIVE = 'live'
+  DRAFT = 'draft'
   WAITLISTED = 'waitlisted'
 
-  STATES = [INACTIVE, ACTIVE, WAITLISTED]
+  STATES = [DRAFT, LIVE, WAITLISTED]
 
   belongs_to :event
   belongs_to :proposal
@@ -21,13 +21,13 @@ class ProgramSession < ActiveRecord::Base
   after_destroy :destroy_speakers
 
   scope :unscheduled, -> do
-    where(state: ACTIVE).where.not(id: TimeSlot.pluck(:program_session_id))
+    where(state: LIVE).where.not(id: TimeSlot.pluck(:program_session_id))
   end
   scope :sorted_by_title, -> { order(:title)}
-  scope :active, -> { where(state: ACTIVE) }
-  scope :inactive, -> { where(state: INACTIVE) }
+  scope :live, -> { where(state: LIVE) }
+  scope :draft, -> { where(state: DRAFT) }
   scope :waitlisted, -> { where(state: WAITLISTED) }
-  scope :active_or_inactive, -> { where(state: [ACTIVE, INACTIVE]) }
+  scope :live_or_draft, -> { where(state: [LIVE, DRAFT]) }
   scope :without_proposal, -> { where(proposal: nil) }
   scope :in_track, ->(track) do
     track = nil if track.try(:strip).blank?
@@ -43,7 +43,7 @@ class ProgramSession < ActiveRecord::Base
                                   abstract: proposal.abstract,
                                   track_id: proposal.track_id,
                                   session_format_id: proposal.session_format_id,
-                                  state: proposal.waitlisted? ? WAITLISTED : ACTIVE
+                                  state: proposal.waitlisted? ? WAITLISTED : LIVE
       )
 
       #attach proposal speakers to new program session

@@ -59,7 +59,7 @@ class Staff::ProposalDecorator < ProposalDecorator
       },
       class: 'btn btn-danger navbar-btn',
       id: 'delete' do
-        bang('Delete Proposal')
+        h.bang('Delete Proposal')
       end
   end
 

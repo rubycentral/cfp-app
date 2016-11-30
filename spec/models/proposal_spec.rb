@@ -163,10 +163,10 @@ describe Proposal do
         end
       end
 
-      it "doesn't change a SUBMITTED proposal" do
+      it "changes a SUBMITTED proposal to REJECTED" do
         proposal = create(:proposal, state: SUBMITTED)
-        expect(proposal.finalize).to be_falsey
-        expect(proposal.reload.state).to eq(SUBMITTED)
+        expect(proposal.finalize).to be_truthy
+        expect(proposal.reload.state).to eq(REJECTED)
       end
     end
 

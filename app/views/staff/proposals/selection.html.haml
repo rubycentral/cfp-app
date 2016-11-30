@@ -1,4 +1,3 @@
-%h1 Program Selection
 .event-info-bar
   .row
     .col-md-8
@@ -18,8 +17,10 @@
             CFP closes:
             %strong= event.closes_at(:month_day_year)
 .row
-  &nbsp;
-
+  .col-md-8
+    %h1 Program Selection
+  .col.md-4.text-right
+    = finalize_remaining_button
 .row
   &nbsp;
 

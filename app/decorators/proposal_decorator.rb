@@ -94,7 +94,7 @@ class ProposalDecorator < ApplicationDecorator
   end
 
   def withdraw_button
-    h.link_to bang('Withdraw Proposal'),
+    h.link_to h.bang('Withdraw Proposal'),
       h.withdraw_event_proposal_path(uuid: object, event_slug: object.event.slug),
       method: :post,
       data: {
@@ -113,7 +113,7 @@ class ProposalDecorator < ApplicationDecorator
   end
 
   def decline_button
-    h.link_to bang('Decline'),
+    h.link_to h.bang('Decline'),
               h.withdraw_event_proposal_path(uuid: object, event_slug: object.event.slug),
               method: :post,
               data: {

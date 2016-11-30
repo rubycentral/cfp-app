@@ -71,6 +71,26 @@ module ApplicationHelper
             id: 'copy-filtered-speaker-emails'
   end
 
+  def finalize_remaining_button
+    return unless policy(Proposal).finalize? && Proposal.soft_states.size > 0
+
+    link_to finalize_remaining_event_staff_program_proposals_path,
+                method: :post,
+                class: 'btn btn-danger navbar-btn',
+                data: {
+                    confirm:
+                        'This will finalize the status of all proposals and ' +
+                            'send emails to speakers. Proceed?'
+                } do
+      bang('Finalize Remaining')
+    end
+  end
+
+  def bang(label)
+    content_tag(:span, '',
+                class: 'glyphicon glyphicon-exclamation-sign') + ' ' + label
+  end
+
   def modal(identifier, title = '')
     body = capture { yield }
     render 'shared/modal', identifier: identifier, body: body, title: title

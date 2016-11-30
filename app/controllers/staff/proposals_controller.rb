@@ -70,8 +70,28 @@ class Staff::ProposalsController < Staff::ApplicationController
     authorize @proposal, :finalize?
 
     @proposal.finalize
-    send_state_mail(@proposal.state)
+    send_state_mail(@proposal)
     redirect_to event_staff_program_proposal_path(@proposal.event, @proposal)
+  end
+
+  def finalize_remaining
+    authorize Proposal, :finalize?
+
+    @remaining = Proposal.soft_states
+    @remaining.each do |prop|
+      prop.finalize
+    end
+    errors = @remaining.map do |prop|
+      send_state_mail(prop) unless prop.changed?
+      prop.errors.full_messages.join(', ')
+    end.compact!
+
+    if errors.present?
+      flash[:danger] = "There was a problem finalizing #{errors.size} proposals: \n#{errors.join("\n")}"
+    else
+      flash[:success] = "Successfully finalized remaining proposals."
+    end
+    redirect_to selection_event_staff_program_proposals_path
   end
 
   def confirm_for_speaker
@@ -88,14 +108,14 @@ class Staff::ProposalsController < Staff::ApplicationController
 
   private
 
-  def send_state_mail(state)
-    case state
+  def send_state_mail(proposal)
+    case proposal.state
       when Proposal::State::ACCEPTED
-        Staff::ProposalMailer.accept_email(@event, @proposal).deliver_now
+        Staff::ProposalMailer.accept_email(current_event, proposal).deliver_now
       when Proposal::State::REJECTED
-        Staff::ProposalMailer.reject_email(@event, @proposal).deliver_now
+        Staff::ProposalMailer.reject_email(current_event, proposal).deliver_now
       when Proposal::State::WAITLISTED
-        Staff::ProposalMailer.waitlist_email(@event, @proposal).deliver_now
+        Staff::ProposalMailer.waitlist_email(current_event, proposal).deliver_now
     end
   end
 end

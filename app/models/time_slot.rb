@@ -34,7 +34,7 @@ class TimeSlot < ActiveRecord::Base
       self.title = ''
       self.presenter = ''
       self.description = ''
-      self.track_id
+      self.track_id = nil
     end
   end
 

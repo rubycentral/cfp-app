@@ -36,11 +36,11 @@ function setUpTimeSlotDialog($dialog) {
     }
 
     if ($select.val() === '') {
-      $fields.show();
-      $info.hide();
+      $fields.removeClass('hidden');
+      $info.addClass('hidden');
     } else {
-      $fields.hide();
-      $info.show();
+      $fields.addClass('hidden');
+      $info.removeClass('hidden');
     }
   }
 

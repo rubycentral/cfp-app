@@ -8,7 +8,19 @@ class TimeSlotSerializer < ActiveModel::Serializer
     object.room_name
   end
 
+  def title
+    object.session_title || object.title
+  end
+
+  def presenter
+    object.session_presenter || object.presenter
+  end
+
+  def description
+    object.session_description || object.description
+  end
+
   def track
-    object.track_name
+    object.session_track_name || object.track_name
   end
 end

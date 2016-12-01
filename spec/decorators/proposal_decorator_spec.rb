@@ -40,7 +40,6 @@ describe ProposalDecorator do
         SUBMITTED,
         SOFT_ACCEPTED,
         SOFT_WAITLISTED,
-        SOFT_WITHDRAWN,
         SOFT_REJECTED
       ]
 

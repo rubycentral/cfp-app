@@ -9,7 +9,7 @@ class Staff::ProposalDecorator < ProposalDecorator
     end
   end
 
-  def state_buttons(states: nil, show_finalize: true, show_confirm_for_speaker: false, small: false)
+  def state_buttons(states: nil, show_finalize: true, show_hard_reset: false, show_confirm_for_speaker: false, small: false)
     btns = buttons.map do |text, state, btn_type, hidden|
       if states.nil? || states.include?(state)
         state_button(text, update_state_path(state),
@@ -20,6 +20,7 @@ class Staff::ProposalDecorator < ProposalDecorator
     end
 
     btns << reset_state_button
+    btns << hard_reset_button if show_hard_reset
     btns << finalize_state_button if show_finalize
     btns << confirm_for_speaker_button if show_confirm_for_speaker
 
@@ -104,12 +105,19 @@ class Staff::ProposalDecorator < ProposalDecorator
 
   def reset_state_button
     state_button('Reset Status', update_state_path(SUBMITTED),
-                 data: object.finalized? ? {
-                     confirm:
-                         "This proposal's status has been finalized. Proceed with status reset?"
-                 } : {},
                  type: 'btn-default',
                  hidden: reset_button_hidden?)
+  end
+
+  def hard_reset_button
+    state_button('Hard Reset', update_state_path(SUBMITTED),
+                 data: {
+                     confirm:
+                         "This proposal's status has been finalized. Proceed with status reset?"
+                 },
+                 small: true,
+                 type: 'btn-danger',
+                 hidden: hard_reset_button_hidden?)
   end
 
   def confirm_for_speaker_button
@@ -134,12 +142,16 @@ class Staff::ProposalDecorator < ProposalDecorator
   end
 
   def finalize_button_hidden?
-    !h.policy(object).finalize? || object.draft? || object.finalized?
+    object.draft? || object.finalized? || !h.policy(object).finalize?
   end
 
   def reset_button_hidden?
-    object.draft? || object.confirmed? || !h.policy(proposal).update_state? ||
-      (object.finalized? && !h.policy(proposal).update_finalized_state?)
+    object.draft? || object.finalized? || object.confirmed? ||
+        !h.policy(proposal).update_state?
+  end
+
+  def hard_reset_button_hidden?
+    object.confirmed? || !(object.finalized? && h.policy(proposal).finalize?)
   end
 
   def confirm_for_speaker_button_hidden?

@@ -135,7 +135,7 @@ describe Proposal do
   describe "state changing" do
     describe "#finalized?" do
       it "returns false for all soft states" do
-        soft_states = [ SOFT_ACCEPTED, SOFT_WITHDRAWN, SOFT_WAITLISTED,
+        soft_states = [ SOFT_ACCEPTED, SOFT_WAITLISTED,
                         SOFT_REJECTED, SUBMITTED ]
 
         soft_states.each do |state|

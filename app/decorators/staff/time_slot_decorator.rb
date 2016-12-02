@@ -16,7 +16,7 @@ class Staff::TimeSlotDecorator < Draper::Decorator
 
   def row_data(buttons: false)
     row = [object.conference_day, start_time, end_time, linked_title,
-           object.presenter, object.room_name, object.track_name]
+           display_presenter, object.room_name, display_track_name]
 
     row << action_links if buttons
     row
@@ -53,17 +53,17 @@ class Staff::TimeSlotDecorator < Draper::Decorator
     program_sessions.map do |ps|
       [ps.title, ps.id, { selected: ps == object.program_session, data: {
           'title' => ps.title,
-          'track' => ps.track.try(:name),
+          'track' => ps.track_name,
           'speaker' => ps.speaker_names,
           'abstract' => ps.abstract,
-          'confirmation-notes' => ps.proposal.try(:confirmation_notes) || ''
+          'confirmation-notes' => ps.confirmation_notes || ''
       }}]
     end
   end
 
   def linked_title
     if object.program_session.present?
-      h.link_to(object.program_session.title,
+      h.link_to(object.session_title,
                 h.event_staff_program_session_path(object.event, object.program_session))
     else
       object.title
@@ -71,7 +71,7 @@ class Staff::TimeSlotDecorator < Draper::Decorator
   end
 
   def conference_wide_title
-    object.title + ": " + room_name
+    display_title + ": " + room_name
   end
 
   def supplemental_fields_visibility_css
@@ -89,11 +89,27 @@ class Staff::TimeSlotDecorator < Draper::Decorator
     {
         starts: starts,
         duration: ends - starts,
-        track: object.track_name,
+        track: display_track_name,
         edit_path:  h.edit_event_staff_schedule_time_slot_path(object.event, object),
         toggle: 'modal',
         target: '#time-slot-edit-dialog'
     }
+  end
+
+  def display_title
+    object.session_title || object.title
+  end
+
+  def display_presenter
+    object.session_presenter || object.presenter
+  end
+
+  def display_track_name
+    object.session_track_name || object.track_name
+  end
+
+  def display_description
+    object.session_description || object.description
   end
 
   private

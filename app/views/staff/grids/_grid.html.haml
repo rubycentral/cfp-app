@@ -8,4 +8,4 @@
         - slots.each do |ts|
           - ts = Staff::TimeSlotDecorator.decorate(ts)
           .time-slot{id: "time_slot_#{dom_id(ts)}", data: ts.item_data}
-            .title=ts.title
+            .title=ts.display_title

@@ -25,7 +25,11 @@ class Staff::ProposalsController < Staff::ApplicationController
   end
 
   def update_state
-    authorize @proposal
+    if @proposal.finalized?
+      authorize @proposal, :finalize?
+    else
+      authorize @proposal, :update_state?
+    end
 
     @proposal.update_state(params[:new_state])
 
@@ -63,7 +67,7 @@ class Staff::ProposalsController < Staff::ApplicationController
   end
 
   def finalize
-    authorize @proposal
+    authorize @proposal, :finalize?
 
     @proposal.finalize
     send_state_mail(@proposal.state)
@@ -71,7 +75,7 @@ class Staff::ProposalsController < Staff::ApplicationController
   end
 
   def confirm_for_speaker
-    authorize @proposal
+    authorize @proposal, :finalize?
 
     if @proposal.confirm
       flash[:success] = "Proposal confirmed for #{@proposal.event.name}."

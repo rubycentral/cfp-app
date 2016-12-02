@@ -26,6 +26,8 @@ class Proposal < ActiveRecord::Base
   validates :abstract, length: {maximum: 625}
   validates :title, length: {maximum: 60}
   validates_inclusion_of :state, in: valid_states, allow_nil: true, message: "'%{value}' not a valid state."
+  validates_inclusion_of :state, in: FINAL_STATES, allow_nil: false, message: "'%{value}' not a confirmable state.",
+                         if: :confirmed_at_changed?
 
   serialize :last_change
   serialize :proposal_data, Hash
@@ -120,6 +122,8 @@ class Proposal < ActiveRecord::Base
       ps = ProgramSession.create_from_proposal(self)
       ps.persisted?
     end
+  rescue ActiveRecord::RecordInvalid
+    false
   end
 
   def draft?

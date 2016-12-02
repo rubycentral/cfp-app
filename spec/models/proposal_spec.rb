@@ -109,7 +109,7 @@ describe Proposal do
 
   describe "#confirmed?" do
     it "returns true if proposal has been confirmed" do
-      proposal = create(:proposal, confirmed_at: DateTime.now)
+      proposal = create(:proposal, state: Proposal::ACCEPTED, confirmed_at: DateTime.now)
       expect(proposal).to be_confirmed
     end
 
@@ -135,7 +135,7 @@ describe Proposal do
   describe "state changing" do
     describe "#finalized?" do
       it "returns false for all soft states" do
-        soft_states = [ SOFT_ACCEPTED, SOFT_WITHDRAWN, SOFT_WAITLISTED,
+        soft_states = [ SOFT_ACCEPTED, SOFT_WAITLISTED,
                         SOFT_REJECTED, SUBMITTED ]
 
         soft_states.each do |state|

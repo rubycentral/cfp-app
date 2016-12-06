@@ -42,6 +42,14 @@ class TimeSlot < ActiveRecord::Base
     (end_time - start_time) > STANDARD_LENGTH
   end
 
+  def track_name
+    track.try(:name)
+  end
+
+  def room_name
+    room.try(:name)
+  end
+
   def session_title
     program_session && program_session.title
   end
@@ -60,14 +68,6 @@ class TimeSlot < ActiveRecord::Base
 
   def session_track_name
     program_session && program_session.track_name
-  end
-
-  def track_name
-    track.try(:name)
-  end
-
-  def room_name
-    room.try(:name)
   end
 
   def session_speaker_names

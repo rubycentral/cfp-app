@@ -54,9 +54,7 @@ class Staff::TimeSlotDecorator < Draper::Decorator
       [ps.title, ps.id, { selected: ps == object.program_session, data: {
           'title' => ps.title,
           'track' => ps.track_name,
-          'speaker' => ps.speaker_names,
-          'abstract' => ps.abstract,
-          'confirmation-notes' => ps.confirmation_notes || ''
+          'speaker' => ps.speaker_names
       }}]
     end
   end
@@ -89,10 +87,9 @@ class Staff::TimeSlotDecorator < Draper::Decorator
     {
         starts: starts,
         duration: ends - starts,
-        track: display_track_name,
-        edit_path:  h.edit_event_staff_schedule_time_slot_path(object.event, object),
+        edit_path:  h.edit_event_staff_schedule_grid_time_slot_path(object.event, object),
         toggle: 'modal',
-        target: '#time-slot-edit-dialog'
+        target: '#grid-time-slot-edit-dialog'
     }
   end
 

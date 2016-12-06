@@ -31,8 +31,6 @@ function setUpTimeSlotDialog($dialog) {
       $info.find('.title').html(data['title']);
       $info.find('.track').html(data['track']);
       $info.find('.speaker').html(data['speaker']);
-      $info.find('.abstract').html(data['abstract']);
-      $info.find('.confirmation-notes').html(data['confirmationNotes']);
     }
 
     if ($select.val() === '') {

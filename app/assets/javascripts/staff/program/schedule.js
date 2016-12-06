@@ -13,17 +13,20 @@ $(function() {
     if (Number.isInteger(day)) {
       gridSelector = '#schedule_day_' + day + gridSelector;
     }
-    $(gridSelector + ' .time-slot').each(function(i, slot) {
-      var $slot = $(slot);
-      $slot.css({
-        height: $slot.data('duration') + 'px',
-        top: ($slot.data('starts') - dayStart) + 'px'
-      })
-    });
 
+    $(gridSelector + ' .time-slot').each(function(i, slot) {
+      initTimeSlot($(slot));
+    });
     $(gridSelector + ' .ruler').each(function(i, ruler) {
       initRuler($(ruler));
     });
+  }
+
+  function initTimeSlot($slot) {
+    $slot.css({
+      height: $slot.data('duration') + 'px',
+      top: ($slot.data('starts') - dayStart) + 'px'
+    })
   }
 
   function initRuler($ruler) {

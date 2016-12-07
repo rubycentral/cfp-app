@@ -54,7 +54,9 @@ class Staff::TimeSlotDecorator < Draper::Decorator
       [ps.title, ps.id, { selected: ps == object.program_session, data: {
           'title' => ps.title,
           'track' => ps.track_name,
-          'speaker' => ps.speaker_names
+          'speaker' => ps.speaker_names,
+          'abstract' => ps.abstract,
+          'confirmation-notes' => ps.confirmation_notes || ''
       }}]
     end
   end

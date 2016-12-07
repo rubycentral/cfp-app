@@ -16,6 +16,12 @@
   .session-meta-item
     %strong Presenter:
     %p.speaker= time_slot.session_presenter
+  .session-meta-item
+    %strong Abstract:
+    %p.abstract= time_slot.session_description
+  .session-meta-item
+    %strong Confirmation Notes:
+    %p.confirmation-notes= time_slot.session_confirmation_notes
 
 %fieldset.supplemental-fields{class: time_slot.supplemental_fields_visibility_css }
   = f.input :title, as: :string

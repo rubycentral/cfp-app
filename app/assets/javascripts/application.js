@@ -22,4 +22,5 @@
 //= require bootstrap-multiselect
 //= require zeroclipboard
 //= require momentjs
+//= require selectize
 //= require_tree .

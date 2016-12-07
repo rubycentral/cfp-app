@@ -124,7 +124,7 @@ end
 #  abstract          :text
 #  track_id          :integer
 #  session_format_id :integer
-#  state             :text             default("active")
+#  state             :text             default("draft")
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  info              :text

@@ -20,6 +20,18 @@
   display: inline-block;
 }
 
+.inline {
+  display: inline;
+}
+
+.no-pad-left {
+  padding-left: 0;
+}
+
+.full-width {
+  width: 100%;
+}
+
 .bg-gray-base { background-color: $gray-base; }
 .bg-gray-darker { background-color: $gray-darker; }
 .bg-gray-dark { background-color: $gray-dark; }

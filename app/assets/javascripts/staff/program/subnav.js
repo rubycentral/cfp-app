@@ -31,4 +31,9 @@ $(function() {
     updateVisibility();
   }
 
+  // On-demand body padding for fixed subnav pages
+  if($('[class*="subnav"]').length > 0) {
+    var padTop = $('[class*="subnav"]').height();
+    $('body').css('padding-top', '+=' + padTop + 'px');
+  }
 });

@@ -1,13 +1,13 @@
 .event-info-bar
   .row
-    .col-md-8
+    .col-md-4
       .event-info.event-info-dense
         %strong.event-title= event.name
         - if event.start_date? && event.end_date?
           %span.event-meta
             %i.fa.fa-fw.fa-calendar
             = event.date_range
-    .col-md-4.text-right.text-right-responsive
+    .col-md-4
       .event-info.event-info-dense
         %span{:class => "event-meta event-status-badge event-status-#{event.status}"}
           CFP
@@ -16,20 +16,16 @@
           %span.event-meta
             CFP closes:
             %strong= event.closes_at(:month_day_year)
-
-#proposal
-  .proposal-actions-bar
-    .row
-      .col-md-offset-8.col-md-4.text-right.clearfix
-        .btn-nav.pull-right
-          = smart_return_button
-          =link_to "Next Proposal", event_staff_program_proposal_path(uuid: "PLACEHOLDER"), class: "next-proposal btn btn-primary btn-sm", data: {"proposal-uuid" => proposal.uuid }
+    .col-md-4.text-right.clearfix
+      .btn-nav.pull-right
+        = smart_return_button
+        =link_to "Next Proposal", event_staff_program_proposal_path(uuid: "PLACEHOLDER"), class: "next-proposal btn btn-primary btn-sm", data: {"proposal-uuid" => proposal.uuid }
 
   .page-header.page-header-slim
     .row
-      .col-md-6
+      .col-md-7
         %h1= proposal.title
-      .col-md-6.text-right
+      .col-md-5.text-right
         .proposal-info-bar
           .proposal-meta.proposal-description
             .proposal-meta-item
@@ -37,30 +33,39 @@
               %span.proposal-status #{proposal.state_label(small: true)}
             %span.state-buttons #{proposal.state_buttons(show_confirm_for_speaker: true, show_hard_reset: true)}
     .row
-      .col-sm-6
-        .proposal-info-bar
-          .proposal-meta.proposal-description
-            .proposal-meta-item
-              %strong #{ 'Speaker'.pluralize(proposal.speakers.count) }:
-              %span= proposal.speakers.collect { |speaker| speaker.name }.join(', ')
-            .proposal-meta-item
-              %strong Format:
-              %span #{proposal.session_format_name}
-            -if proposal.tags.present?
+      .proposal-info-bar.clearfix
+        .proposal-meta.proposal-description.clearfix
+          .col-sm-4
+            .col-sm-6.no-pad-left
               .proposal-meta-item
-                %strong Tags:
-                %span #{proposal.tags_labels}
-      .col-sm-6.text-right
-        .proposal-info-bar
-          .proposal-meta.proposal-description
-            .proposal-meta-item
-              %strong Track:
-              %span
-                = render 'inline_track_edit', proposal: proposal
-            -if proposal.review_tags.present?
+                .info-item-heading #{ 'Speaker'.pluralize(proposal.speakers.count) }
+                = proposal.speakers.collect { |speaker| speaker.name }.join(', ')
+            .col-sm-6
+              -if proposal.tags.present?
+                .proposal-meta-item
+                  .info-item-heading Tags
+                  #{proposal.tags_labels}
+          .col-sm-4
+            .col-sm-6.no-pad-left
               .proposal-meta-item
-                %strong Reviewer Tags:
-                %span.proposal-reviewer-tags #{proposal.review_tags_labels}
+                .info-item-heading Format
+                #{proposal.session_format_name}
+            .col-sm-6
+              .proposal-meta-item.full-width
+                .info-item-heading Track
+                %span
+                  = render 'inline_track_edit', proposal: proposal
+          .col-sm-4
+            .proposal-meta-item.col-sm-12.no-pad-left
+              .info-item-heading Reviewer Tags
+              .proposal-reviewer-tags
+                -if proposal.review_tags.present?
+                  #{proposal.review_tags_labels}
+                -else
+                  %em None
+              #edit-tags-icon.fa.fa-pencil
+            .review-tags-form-wrapper
+              = render 'shared/proposals/tags_form', locals: { event: event, proposal: proposal }
 
   .row
     .col-md-4
@@ -81,7 +86,7 @@
       .widget.widget-card.flush-top
         .widget-header
           %i.fa.fa-comments
-          %h3= pluralize(proposal.public_comments.count, 'public comment')
+          %h3.comments-heading= pluralize(proposal.public_comments.count, 'Public Comment')
         .widget-content
           = render partial: 'proposals/comments', locals: { proposal: proposal, comments: proposal.public_comments }
 
@@ -98,15 +103,9 @@
         .widget-content
           = render partial: 'shared/proposals/rating_form', locals: { event: event, proposal: proposal, rating: @rating }
 
-        - if event.reviewer_tags?
-          .widget-header
-            %h3 Reviewer Tags
-          .widget-content
-            = render partial: 'shared/proposals/tags_form', locals: { event: event, proposal: proposal }
-
         .internal-comments
           .widget-header
             %i.fa.fa-comments
-            %h3= pluralize(proposal.internal_comments.count, 'internal comment')
+            %h3.comments-heading= pluralize(proposal.internal_comments.count, 'Internal Comment')
           .widget-content
             = render partial: 'proposals/comments', locals: { proposal: proposal, comments: proposal.internal_comments }

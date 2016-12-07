@@ -1,7 +1,7 @@
 class Staff::ProposalsController < Staff::ApplicationController
   include ProgramSupport
 
-  before_action :require_proposal, only: [:show, :update_state, :update_track, :finalize, :confirm_for_speaker]
+  before_action :require_proposal, only: [:show, :update_state, :update_track, :update_session_format, :finalize, :confirm_for_speaker]
 
   decorates_assigned :proposal, with: Staff::ProposalDecorator
 
@@ -44,7 +44,15 @@ class Staff::ProposalsController < Staff::ApplicationController
 
     @proposal.update(track_id: params[:track_id])
 
-    render partial: '/staff/proposals/inline_track_edit'
+    render partial: '/shared/proposals/inline_track_edit'
+  end
+
+  def update_session_format
+    authorize @proposal
+
+    @proposal.update(session_format_id: params[:session_format_id])
+
+    render partial: '/shared/proposals/inline_format_edit'
   end
 
   def selection

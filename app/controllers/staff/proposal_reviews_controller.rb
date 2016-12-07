@@ -29,8 +29,9 @@ class Staff::ProposalReviewsController < Staff::ApplicationController
     rating.touch unless rating.new_record?
 
     current_user.notifications.mark_as_read_for_proposal(request.url)
+    track_and_format_edit = current_user.program_team_for_event?(current_event)
 
-    render locals: { rating: rating }
+    render locals: { rating: rating, track_and_format_edit: track_and_format_edit }
   end
 
   def update

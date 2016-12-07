@@ -68,6 +68,7 @@ Rails.application.routes.draw do
           post :finalize
           post :update_state
           post :update_track
+          post :update_session_format
           member do
             post :confirm_for_speaker
           end

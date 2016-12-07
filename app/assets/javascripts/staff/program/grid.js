@@ -1,29 +1,34 @@
-$(function() {
+(function($, window) {
+  if (typeof(window.Grid) !== 'undefined') {
+    return window.Grid;
+  }
+
   // ruler properties
   const dayStart = 60*8;  // minutes
   const dayEnd = 60*20;
   const step = 60;
   const verticalScale = 1.0;
 
-  initGrid();
-  $(document).on('click', '.schedule-grid .time-slot', onTimeSlotClick);
-
   function initGrid(day) {
     var gridSelector = '.schedule-grid';
     if (Number.isInteger(day)) {
       gridSelector = '#schedule_day_' + day + gridSelector;
     }
-    $(gridSelector + ' .time-slot').each(function(i, slot) {
-      var $slot = $(slot);
-      $slot.css({
-        height: $slot.data('duration') + 'px',
-        top: ($slot.data('starts') - dayStart) + 'px'
-      })
-    });
 
+    $(gridSelector + ' .time-slot').each(function(i, slot) {
+      initTimeSlot($(slot));
+    });
     $(gridSelector + ' .ruler').each(function(i, ruler) {
       initRuler($(ruler));
     });
+  }
+
+  function initTimeSlot($slot) {
+    $slot.css({
+      height: $slot.data('duration') + 'px',
+      top: ($slot.data('starts') - dayStart) + 'px'
+    });
+    $slot.click(onTimeSlotClick);
   }
 
   function initRuler($ruler) {
@@ -41,4 +46,14 @@ $(function() {
       }
     });
   }
+
+  window.Grid = {
+    init: initGrid,
+    initTimeSlot: initTimeSlot
+  };
+
+})(jQuery, window);
+
+$(function() {
+  window.Grid.init();
 });

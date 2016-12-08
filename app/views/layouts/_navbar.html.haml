@@ -23,7 +23,7 @@
             %li{class: nav_item_class("event-review-proposals-link")}
               = link_to event_staff_proposals_path(current_event) do
                 %i.fa.fa-balance-scale
-                %span Review Proposals
+                %span Review
 
           - if program_nav?
             %li{class: nav_item_class("event-program-link")}
@@ -41,7 +41,7 @@
             %li{class: nav_item_class("event-dashboard-link")}
               = link_to event_staff_path(current_event) do
                 %i.fa.fa-dashboard
-                %span Event Dashboard
+                %span Dashboard
 
           - if admin_nav?
             = render partial: "layouts/nav/admin_nav"

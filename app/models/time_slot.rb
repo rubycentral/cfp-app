@@ -4,6 +4,8 @@ class TimeSlot < ActiveRecord::Base
   belongs_to :track
   belongs_to :event
 
+  DEFAULT_TIME = Time.current.beginning_of_day.change(hour: 9)
+  DEFAULT_DURATION = 60 # minutes
   STANDARD_LENGTH = 40.minutes
 
   before_save :clear_fields_if_session

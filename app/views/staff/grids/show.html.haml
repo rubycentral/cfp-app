@@ -1,7 +1,13 @@
 #schedule
-  - @schedule.each_day do |day|
-    .row
-      .col-md-12
-        = render partial: 'grid', locals: { schedule: @schedule, day: day }
+  %ul.nav.nav-tabs{role: 'tablist'}
+    - @schedule.each_day do |day|
+      %li{role: 'presentation', class: day==1 ? 'active' : ''}
+        = link_to "Day #{day}", "#grid_day_#{day}", data: {toggle: 'tab'}, role: 'tab'
+  .row
+    .col-md-12
+      .tab-content
+        - @schedule.each_day do |day|
+          .tab-pane{class: day==1 ? 'active' : '', id: "grid_day_#{day}", role: 'tabpanel'}
+            = render partial: 'grid', locals: { schedule: @schedule, day: day }
 
 #grid-time-slot-edit-dialog.modal.fade

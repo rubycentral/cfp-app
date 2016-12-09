@@ -8,6 +8,7 @@
       .tab-content
         - @schedule.each_day do |day|
           .tab-pane{class: day==1 ? 'active' : '', id: "grid_day_#{day}", role: 'tabpanel'}
+            %h2.clearfix= @schedule.date_from_day(day).to_s(:event_day)
             = render partial: 'grid', locals: { schedule: @schedule, day: day }
 
 #grid-time-slot-edit-dialog.modal.fade

@@ -1,5 +1,4 @@
 .schedule-grid{id: "schedule_day_#{day}"}
-  %h2= date
   %ul.ruler
   - schedule.each_room(day) do |room, slots|
     .room-column

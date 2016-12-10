@@ -1,6 +1,43 @@
+// 2016.04.18
+.navbar {
+	height: 61px;
+}
+.navbar-inverse {
+	background-image: image-url('headerbg_2016.png');
+	background-repeat: repeat-x;
+	background-size: 73px 60px;
+	border-color: #fff;
+}
+.navbar-inverse .navbar-nav > li > a {
+  color: #f3f3f3;
+}
+.navbar-inverse .navbar-nav > .dropdown > a .caret {
+  border-top-color: #f3f3f3;
+  border-bottom-color: #f3f3f3;
+}
+.logo-rubykaigi2016 {
+	width: 195px;
+	height: 24px;
+}
+.navbar-brand {
+  float: left;
+  padding: 18px 15px;
+}
+@media (min-width: 768px) {
+  .navbar-nav > li > a {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+}
+.navbar-inverse .navbar-collapse,
+.navbar-inverse .navbar-form {
+  border-color: #000;
+}
+
+
 @media (max-width: 690px) {
   .navbar-collapse {
-    background-color: #eee;
+    background-color: #000; // #fff → #af2300 2016.04.18
   }
   .navbar-nav li a.review_nav {
     color: #999;

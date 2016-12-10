@@ -13,8 +13,30 @@ class SpeakerDecorator < ApplicationDecorator
     "#{object.name} (#{object.email})"
   end
 
+  def link_to_github
+    if (github = person && person.services.find_by(provider: 'github'))
+      gh_login = Rails.cache.fetch "gh_#{github.uid}" do
+        JSON.parse(Net::HTTP.get(URI("https://api.github.com/user/#{github.uid}")))['login']
+      end
+      h.link_to "@#{gh_login}", "https://github.com/#{gh_login}", target: '_blank'
+    else
+      'none'
+    end
+  end
+
+  def link_to_twitter
+    if (twitter = person && person.services.find_by(provider: 'twitter'))
+      tw_screen_name = Rails.cache.fetch "tw_#{twitter.uid}" do
+        Twitter::REST::Client.new(consumer_key: ENV['TWITTER_KEY'], consumer_secret: ENV['TWITTER_SECRET']).user(twitter.uid.to_i).screen_name
+      end
+      h.link_to "@#{tw_screen_name}", "https://twitter.com/#{tw_screen_name}", target: '_blank'
+    else
+      'none'
+    end
+  end
+
   def bio
-    speaker.bio.present? ? speaker.bio : speaker.person.bio
+    speaker.bio.present? ? speaker.bio : speaker.person.try(:bio) || 'N/A'
   end
 
   def delete_button

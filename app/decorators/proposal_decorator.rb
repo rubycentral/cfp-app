@@ -46,15 +46,15 @@ class ProposalDecorator < ApplicationDecorator
   end
 
   def speaker_name
-    speaker ? speaker.name : ''
+    speaker && speaker.person ? speaker.name : ''
   end
 
   def speaker_names
-    object.speakers.map(&:name).join(', ')
+    object.speakers.map {|s| s.name if s.person}.compact.join(', ')
   end
 
   def speaker_emails
-    object.speakers.map(&:email).join(', ')
+    object.speakers.map {|s| s.name if s.person}.compact.join(', ')
   end
 
   def bio
@@ -86,8 +86,7 @@ class ProposalDecorator < ApplicationDecorator
   end
 
   def confirm_link
-    h.link_to 'confirmation page',
-      h.confirm_proposal_url(slug: object.event.slug, uuid: object)
+    h.confirm_proposal_url(slug: object.event.slug, uuid: object)
   end
 
   def state_label(small: false, state: nil, show_confirmed: false)

@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 def select_demographics(args)
-  fill_in 'person[gender]',    with: args[:gender]
-  fill_in 'person[ethnicity]', with: args[:ethnicity]
+  fill_in 'user[gender]',    with: args[:gender]
+  fill_in 'user[ethnicity]', with: args[:ethnicity]
 
-  select(args[:country], from: 'person[country]')
+  select(args[:country], from: 'user[country]')
 end
 
 feature 'User Profile' do
-  let(:user) { create(:person) }
+  let(:user) { create(:user) }
 
   before { login_user(user) }
 

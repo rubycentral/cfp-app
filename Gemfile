@@ -47,14 +47,13 @@ group :development do
   gem 'quiet_assets'
   gem 'rack-mini-profiler'
   gem 'haml-rails'
-  gem "spring-commands-rspec", require: false
-
+  gem 'spring-commands-rspec', require: false
   gem 'web-console', '~> 2.0'
 end
 
 group :development, :test do
   gem 'capybara', '>= 2.2'
-  gem 'capybara-webkit', '~> 1.6.0' # Requires local installation of QT (`brew install qt`)
+  gem 'capybara-webkit', '~> 1.6.0' # Local QT install req'd (`brew install qt`)
   gem 'database_cleaner'
   gem 'dotenv-rails'
   gem 'factory_girl_rails'

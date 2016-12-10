@@ -4,6 +4,6 @@ FactoryGirl.define do
     uname "foo"
     uid "foo@example.com"
     uemail "foo@example.com"
-    person
+    user
   end
 end

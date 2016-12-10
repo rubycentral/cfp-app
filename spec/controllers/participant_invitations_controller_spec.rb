@@ -4,7 +4,7 @@ describe ParticipantInvitationsController, type: :controller do
   let(:invitation) { create(:participant_invitation, role: 'organizer') }
 
   describe "GET 'accept'" do
-    let(:user) { create(:person) }
+    let(:user) { create(:user) }
 
     before { login(user) }
 

@@ -14,7 +14,7 @@ class SpeakerDecorator < ApplicationDecorator
   end
 
   def bio
-    speaker.bio.present? ? speaker.bio : speaker.person.bio
+    speaker.bio.present? ? speaker.bio : speaker.user.bio
   end
 
   def delete_button

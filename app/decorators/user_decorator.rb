@@ -1,4 +1,4 @@
-class PersonDecorator < ApplicationDecorator
+class UserDecorator < ApplicationDecorator
   delegate_all
 
   def proposal_path(proposal)

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Person do
+describe User do
 
   describe ".authenticate" do
     let(:uid) { '123' }
@@ -21,19 +21,19 @@ describe Person do
     end
 
     context "User already exists" do
-      let!(:user) { create(:person, email: email, name: name) }
+      let!(:user) { create(:user, email: email, name: name) }
 
-      it "doesn't create a new person" do
+      it "doesn't create a new user" do
         expect {
-          Person.authenticate(auth_hash, user)
-        }.to_not change { Person.count }
+          User.authenticate(auth_hash, user)
+        }.to_not change { User.count }
       end
 
       context "Using a new service" do
         it "creates a new service" do
           service, user = nil, nil
           expect {
-            service, user = Person.authenticate(auth_hash, user)
+            service, user = User.authenticate(auth_hash, user)
           }.to change { Service.count }.by(1)
 
           expect(service.uemail).to eq(email)
@@ -41,38 +41,38 @@ describe Person do
         end
 
         it "adds the new service to the user" do
-          service, returned_user = Person.authenticate(auth_hash, user)
+          service, returned_user = User.authenticate(auth_hash, user)
           expect(user.services).to match_array([service])
         end
 
         it "returns the provided user" do
-          service, returned_user = Person.authenticate(auth_hash, user)
+          service, returned_user = User.authenticate(auth_hash, user)
           expect(returned_user).to eq(user)
         end
       end
 
       context "Using an existing service" do
         let!(:service) {
-          create(:service, provider: provider, uid: uid, account_name: account_name, person: user) }
+          create(:service, provider: provider, uid: uid, account_name: account_name, user: user) }
 
         it "doesn't create a new service" do
           expect {
-            Person.authenticate(auth_hash, user)
+            User.authenticate(auth_hash, user)
           }.to_not change { Service.count }
         end
 
         it "doesn't add new services to the user" do
-          service, user = Person.authenticate(auth_hash, user)
+          service, user = User.authenticate(auth_hash, user)
           expect(user.services).to match_array([service])
         end
 
         # Some users have had issues with oauth returning a different ID when they are signing in
         context "with a new oauth ID" do
-          it "finds the correct person" do
+          it "finds the correct user" do
             service, user = nil, nil
             expect {
-              service, user = Person.authenticate(auth_hash.merge('uid' => 'different'), user)
-            }.to_not change { Person.count }
+              service, user = User.authenticate(auth_hash.merge('uid' => 'different'), user)
+            }.to_not change { User.count }
 
             expect(user.email).to eq(email)
             expect(service.account_name).to eq(account_name)
@@ -83,12 +83,12 @@ describe Person do
     end
 
     context "User doesn't yet exist" do
-      it "creates a new person" do
-        expect { Person.authenticate(auth_hash) }.to change { Person.count }.by(1)
+      it "creates a new user" do
+        expect { User.authenticate(auth_hash) }.to change { User.count }.by(1)
       end
 
       it "sets user's email and name" do
-        service, user = Person.authenticate(auth_hash)
+        service, user = User.authenticate(auth_hash)
         expect(user.email).to eq(email)
         expect(user.name).to eq(name)
       end
@@ -96,7 +96,7 @@ describe Person do
       it "creates a new service for user" do
         service, user = nil, nil
         expect {
-          service, user = Person.authenticate(auth_hash)
+          service, user = User.authenticate(auth_hash)
         }.to change { Service.count }.by(1)
         expect(user.services).to eq([service])
       end
@@ -105,12 +105,12 @@ describe Person do
     context "User doesn't have an email" do
       let(:email) { '' }
 
-      it "creates a new person" do
-        expect { Person.authenticate(auth_hash) }.to change { Person.count }.by(1)
+      it "creates a new user" do
+        expect { User.authenticate(auth_hash) }.to change { User.count }.by(1)
       end
 
       it "sets user's email to nil while still setting name" do
-        service, user = Person.authenticate(auth_hash)
+        service, user = User.authenticate(auth_hash)
         expect(user.email).to eq(nil)
         expect(user.name).to eq(name)
       end
@@ -119,159 +119,159 @@ describe Person do
 
   describe '#new' do
     it 'should default to non-admin' do
-      expect(Person.new).not_to be_admin
+      expect(User.new).not_to be_admin
     end
   end
 
   describe "#gravatar_hash" do
     it "returns an md5 hash of the email" do
       email = 'name@example.com'
-      person = create(:person, email: email)
-      expect(person.gravatar_hash).to eq(Digest::MD5.hexdigest(email))
+      user = create(:user, email: email)
+      expect(user.gravatar_hash).to eq(Digest::MD5.hexdigest(email))
     end
   end
 
   describe "#connected?" do
     it "returns true for a connected service provider" do
       provider = 'github'
-      person = create(:person)
-      create(:service, provider: provider, person: person)
+      user = create(:user)
+      create(:service, provider: provider, user: user)
 
-      expect(person).to be_connected(provider)
+      expect(user).to be_connected(provider)
     end
 
     it "returns false for a non-connected provider" do
-      person = create(:person)
-      expect(person).to_not be_connected('some_provider')
+      user = create(:user)
+      expect(user).to_not be_connected('some_provider')
     end
   end
 
   describe "#complete?" do
     it "returns true if name and email are present" do
-      person = create(:person, name: 'Harry', email: 'harry@hogwarts.edu')
-      expect(person).to be_complete
+      user = create(:user, name: 'Harry', email: 'harry@hogwarts.edu')
+      expect(user).to be_complete
     end
 
     it "returns false if name is missing" do
-      person = create(:person, name: nil, email: 'harry@hogwarts.edu')
-      expect(person).to_not be_complete
+      user = create(:user, name: nil, email: 'harry@hogwarts.edu')
+      expect(user).to_not be_complete
     end
 
     it "returns false if email is missing" do
-      person = create(:person, name: 'Harry', email: nil)
-      expect(person).to_not be_complete
+      user = create(:user, name: 'Harry', email: nil)
+      expect(user).to_not be_complete
     end
   end
 
   describe '#reviewer?' do
-    let(:person) { create(:person, :reviewer) }
+    let(:user) { create(:user, :reviewer) }
 
     it 'is true when reviewer for any event' do
-      expect(person).to be_reviewer
+      expect(user).to be_reviewer
     end
     it 'is false when not reviewer of any event' do
-      person.participants.map { |p| p.update_attribute(:role, 'not_reviewer') }
-      expect(person).not_to be_reviewer
+      user.participants.map { |p| p.update_attribute(:role, 'not_reviewer') }
+      expect(user).not_to be_reviewer
     end
   end
 
   describe '#organizer?' do
-    let(:person) { create(:person, :organizer) }
+    let(:user) { create(:user, :organizer) }
 
     it 'is true when organizer for any event' do
-      expect(person).to be_organizer
+      expect(user).to be_organizer
     end
     it 'is false when not organizer of any event' do
-      person.participants.map { |p| p.update_attribute(:role, 'not_organizer') }
-      expect(person).not_to be_organizer
+      user.participants.map { |p| p.update_attribute(:role, 'not_organizer') }
+      expect(user).not_to be_organizer
     end
   end
 
   describe "organizer or reviewer for event" do
     let(:event1) { create(:event) }
     let(:event2) { create(:event) }
-    let(:person) { create(:person) }
+    let(:user) { create(:user) }
 
     describe '#reviewer_for_event?' do
       before do
-        create(:participant, event: event1, person: person, role: 'reviewer')
-        create(:participant, event: event2, person: person, role: 'not_reviewer')
+        create(:participant, event: event1, user: user, role: 'reviewer')
+        create(:participant, event: event2, user: user, role: 'not_reviewer')
       end
 
       it 'is true when reviewer for the event' do
-        expect(person).to be_reviewer_for_event(event1)
+        expect(user).to be_reviewer_for_event(event1)
       end
       it 'is false when not reviewer of the event' do
-        expect(person).not_to be_reviewer_for_event(event2)
+        expect(user).not_to be_reviewer_for_event(event2)
       end
     end
 
     describe '#organizer_for_event?' do
       before do
-        create(:participant, event: event1, person: person, role: 'organizer')
-        create(:participant, event: event2, person: person, role: 'not_organizer')
+        create(:participant, event: event1, user: user, role: 'organizer')
+        create(:participant, event: event2, user: user, role: 'not_organizer')
       end
 
       it 'is true when organizer for the event' do
-        expect(person).to be_organizer_for_event(event1)
+        expect(user).to be_organizer_for_event(event1)
       end
       it 'is false when not organizer of the event' do
-        expect(person).not_to be_organizer_for_event(event2)
+        expect(user).not_to be_organizer_for_event(event2)
       end
     end
   end
 
   describe "#rating_for" do
-    let(:person) { create(:person) }
+    let(:user) { create(:user) }
     let(:proposal) { create(:proposal) }
 
     it "returns the proposal's rating if user has rated it" do
-      rating = create(:rating, person: person, proposal: proposal)
-      expect(person.rating_for(proposal)).to eq(rating)
+      rating = create(:rating, user: user, proposal: proposal)
+      expect(user.rating_for(proposal)).to eq(rating)
     end
 
     it "returns new rating if user has not rated the proposal" do
-      rating = person.rating_for(proposal)
+      rating = user.rating_for(proposal)
       expect(rating).to be
-      expect(rating.person).to eq(person)
+      expect(rating.user).to eq(user)
       expect(rating.proposal).to eq(proposal)
     end
   end
 
   describe "#role_names" do
     let(:event) { create(:event) }
-    let(:person) { create(:person) }
+    let(:user) { create(:user) }
     let!(:participant) {
-      create(:participant, role: 'reviewer', event: event, person: person) }
+      create(:participant, role: 'reviewer', event: event, user: user) }
 
     it "returns the role names for a reviewer" do
-      expect(person.role_names).to eq('reviewer')
+      expect(user.role_names).to eq('reviewer')
     end
 
     it "returns multiple roles" do
-      create(:participant, role: 'organizer', event: create(:event), person: person)
-      role_names = person.role_names
+      create(:participant, role: 'organizer', event: create(:event), user: user)
+      role_names = user.role_names
       expect(role_names).to include('reviewer')
       expect(role_names).to include('organizer')
     end
 
     it "returns unique roles" do
       event2 = create(:event)
-      create(:participant, role: 'reviewer', event: event2, person: person)
+      create(:participant, role: 'reviewer', event: event2, user: user)
 
-      expect(person.role_names).to eq('reviewer')
+      expect(user.role_names).to eq('reviewer')
     end
   end
 
   describe "#assign_open_invitations" do
-    it "assigns open invitations to the person" do
+    it "assigns open invitations to the user" do
       email = "harry.potter@hogwarts.edu"
       invitation = create(:invitation, email: email,
                           state: Invitation::State::PENDING)
-      person = create(:person, email: email)
+      user = create(:user, email: email)
 
-      person.assign_open_invitations
-      expect(invitation.reload.person).to eq(person)
+      user.assign_open_invitations
+      expect(invitation.reload.user).to eq(user)
     end
   end
 end

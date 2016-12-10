@@ -18,7 +18,7 @@ class ProposalsController < ApplicationController
 
   def new
     @proposal = Proposal.new(event: @event)
-    @proposal.speakers.build(person: current_user)
+    @proposal.speakers.build(user: current_user)
   end
 
   def confirm
@@ -101,8 +101,8 @@ class ProposalsController < ApplicationController
 
   def proposal_params
     params.require(:proposal).permit(:title, {tags: []}, :abstract, :details, :pitch, custom_fields: @event.custom_fields,
-                                     comments_attributes: [:body, :proposal_id, :person_id],
-                                     speakers_attributes: [:bio, :person_id, :id])
+                                     comments_attributes: [:body, :proposal_id, :user_id],
+                                     speakers_attributes: [:bio, :user_id, :id])
   end
 
   def require_speaker

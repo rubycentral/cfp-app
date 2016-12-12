@@ -18,6 +18,7 @@
       return;
     }
     initTrackColors();
+    addGridLineStyle();
     initGrid($grids);
   }
 
@@ -56,16 +57,18 @@
     for (var i=dayStart; i<=dayEnd; i+=step) {
       $item = $ruler.append('<li>'+ m.minutes(step).format('hh:mma') +'</li>');
     }
-
-    // To draw the lines, use a dynamically generated pseudo-element rule.
-    var $columns = $ruler.closest('.schedule-grid').find('.room-column');
-    var lineWidth = $columns.length * $columns.width() + 10;
-    document.styleSheets[0].addRule('.schedule-grid .ruler li:after','width: '+lineWidth+'px;');
   }
 
   function initTrackColors() {
     trackCssClasses = $('#schedule').data('tracks-css');
     trackColors = palette('tol-rainbow', trackCssClasses.length);
+  }
+
+  function addGridLineStyle() {
+    // The ruler's ticks are extended by changing their width dynamically.
+    var $columns = $('.schedule-grid:first').find('.room-column');
+    var lineWidth = $columns.length * $columns.width() + 10;
+    $('<style>.schedule-grid .ruler li:after { width: '+lineWidth+'px; }</style>').appendTo('head');
   }
 
   function onTimeSlotClick(ev) {

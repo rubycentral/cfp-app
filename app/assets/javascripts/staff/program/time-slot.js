@@ -10,42 +10,64 @@ function initTimeSlotsTable() {
 
 function initTimeSlotTimePickers() {
   $('#time_slot_start_time, #time_slot_end_time').timepicker({
-      timeFormat: 'HH:mm'
+      timeFormat: 'HH:mm',
+      stepMinute: 5
   });
 }
 
 function setUpTimeSlotDialog($dialog) {
   initTimeSlotTimePickers();
 
-  $(document).on('change', '.available-proposals', onSessionSelectChange);
+  $dialog.find('.available-proposals').change(onSessionSelectChange);
+  $dialog.find('.start-time').change(onTimeChange);
 
-  updateInfoFields($dialog.find('.available-proposals'));
+  updateInfoFields($dialog);
 
-  function updateInfoFields($select) {
-    var $form = $select.closest('form');
-    var $fields = $form.find('.supplemental-fields');
-    var $info = $form.find('.selected-session-info');
+  function updateInfoFields($container) {
+    var $selected = $container.find('.available-proposals :selected');
+    var $fields = $container.find('.supplemental-fields');
+    var $info = $container.find('.selected-session-info');
+    var $endTime = $container.find('.end-time');
 
-    var data = $select.find(':selected').data();
-    if (data) {
-      $info.find('.title').html(data['title']);
-      $info.find('.track').html(data['track']);
-      $info.find('.speaker').html(data['speaker']);
-      $info.find('.abstract').html(data['abstract']);
-      $info.find('.confirmation-notes').html(data['confirmationNotes']);
-    }
+    var data = $selected.data();
+    $info.find('.title').html(data['title']);
+    $info.find('.track').html(data['track']);
+    $info.find('.speaker').html(data['speaker']);
+    $info.find('.abstract').html(data['abstract']);
 
-    if ($select.val() === '') {
+    if ($selected.val() === '') {
       $fields.removeClass('hidden');
       $info.addClass('hidden');
+      $endTime.prop('readonly', false);
     } else {
       $fields.addClass('hidden');
       $info.removeClass('hidden');
+      $endTime.prop('readonly', true);
+    }
+  }
+
+  function updateEndTime($container) {
+    var $selected = $container.find('.available-proposals :selected');
+    var $startTime = $container.find('.start-time');
+    var $endTime = $container.find('.end-time');
+
+    var sid = $selected.val();
+    var start = $startTime.val();
+    if (sid.length > 0 && start.length > 0) {
+      var m = moment(start, 'HH:mm').add($selected.data('duration'), 'minutes');
+      $endTime.val(m.format('HH:mm'));
     }
   }
 
   function onSessionSelectChange(ev) {
-    updateInfoFields($(this));
+    var $form = $(this).closest('form');
+    updateInfoFields($form);
+    updateEndTime($form);
+  }
+
+  function onTimeChange(ev) {
+    var $form = $(this).closest('form');
+    updateEndTime($form);
   }
 }
 

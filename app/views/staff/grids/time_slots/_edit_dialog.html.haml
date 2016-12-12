@@ -1,13 +1,12 @@
-%div{ id: "time-slot-quick-edit-#{time_slot.id}" }
-  .modal-dialog
-    .modal-content
-      = simple_form_for [event, :staff, :schedule, :grid, time_slot], remote: true, html: {role: 'form'} do |f|
-        .modal-header
-          %h3 Edit Time Slot
-          .errors
-        .modal-body
-          = render partial: 'staff/grids/time_slots/form',
-              locals: {f: f, time_slot: time_slot }
-        .modal-footer
-          %button.pull-right.btn.btn-primary{:type => "submit"} Save
-          %button#cancel.btn.btn-default{'data-dismiss' => "modal"} Cancel
+.modal-dialog
+  .modal-content
+    = simple_form_for [event, :staff, :schedule, :grid, time_slot], remote: true, html: {role: 'form'} do |f|
+      .modal-header
+        %h3 Edit Time Slot
+        .errors
+      .modal-body
+        = render partial: 'staff/grids/time_slots/form',
+            locals: {f: f, time_slot: time_slot }
+      .modal-footer
+        %button.btn.btn-default{'data-dismiss' => "modal"} Cancel
+        %button.btn.btn-primary{:type => "submit"} Save

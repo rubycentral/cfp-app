@@ -52,11 +52,11 @@ class Staff::TimeSlotDecorator < Draper::Decorator
 
     program_sessions.map do |ps|
       [ps.title, ps.id, { selected: ps == object.program_session, data: {
-          'title' => ps.title,
-          'track' => ps.track_name,
-          'speaker' => ps.speaker_names,
-          'abstract' => ps.abstract,
-          'confirmation-notes' => ps.confirmation_notes || ''
+          title: ps.title,
+          track: ps.track_name,
+          speaker: ps.speaker_names,
+          abstract: ps.abstract,
+          duration: ps.session_format.duration
       }}]
     end
   end

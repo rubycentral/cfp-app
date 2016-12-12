@@ -20,8 +20,9 @@ class Staff::TimeSlotsController < Staff::ApplicationController
     if session[:sticky_time_slot]
       @time_slot = current_event.time_slots.build(session[:sticky_time_slot])
     else
-      date = DateTime.current.beginning_of_hour
-      @time_slot = current_event.time_slots.build(start_time: date, end_time: date)
+      start_time = TimeSlot::DEFAULT_TIME
+      end_time = start_time + TimeSlot::DEFAULT_DURATION.minutes
+      @time_slot = current_event.time_slots.build(start_time: start_time, end_time: end_time)
     end
 
     respond_to do |format|

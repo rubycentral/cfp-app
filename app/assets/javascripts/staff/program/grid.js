@@ -3,39 +3,69 @@
     return window.Grid;
   }
 
-  // ruler properties
-  const dayStart = 60*8;  // minutes
-  const dayEnd = 60*20;
+  // Grid properties
+  const dayStart = 60*9;  // minutes
+  const dayEnd = 60*19;
   const step = 60;
-  const verticalScale = 1.0;
+  const verticalScale = 3.0;
 
-  function initGrid(day) {
-    var gridSelector = '.schedule-grid';
-    if (Number.isInteger(day)) {
-      gridSelector = '#schedule_day_' + day + gridSelector;
+  var trackCssClasses = [];
+  var trackColors = [];
+
+  function init() {
+    var $grids = $('.schedule-grid');
+    if ($grids.length == 0) {
+      return;
     }
+    initTrackColors();
+    initGrid($grids);
+  }
 
-    $(gridSelector + ' .time-slot').each(function(i, slot) {
+  function initGrid($grid) {
+    $grid.find('.time-slot').each(function(i, slot) {
       initTimeSlot($(slot));
     });
-    $(gridSelector + ' .ruler').each(function(i, ruler) {
+    $grid.find('.ruler').each(function(i, ruler) {
       initRuler($(ruler));
     });
   }
 
+  function initGridDay(day) {
+    initGrid($('#schedule_day_' + day));
+  }
+
   function initTimeSlot($slot) {
     $slot.css({
-      height: $slot.data('duration') + 'px',
-      top: ($slot.data('starts') - dayStart) + 'px'
+      height: ($slot.data('duration') * verticalScale) + 'px',
+      top: (($slot.data('starts') - dayStart) * verticalScale) + 'px'
     });
+
+    var trackCss = $slot.data('trackCss');
+    var i = trackCssClasses.indexOf(trackCss);
+    if (i >= 0) {
+      $slot.find('.track').css({
+        color: '#FFF',
+        backgroundColor: '#' + trackColors[i]
+      });
+    }
     $slot.click(onTimeSlotClick);
   }
 
   function initRuler($ruler) {
     var m = moment().startOf('day').minutes(dayStart-step);
     for (var i=dayStart; i<=dayEnd; i+=step) {
-      $ruler.append('<li>'+ m.minutes(step).format('hh:mma') +'</li>')
+      $item = $ruler.append('<li>'+ m.minutes(step).format('hh:mma') +'</li>');
     }
+
+    // To draw the lines, use a dynamically generated pseudo-element rule.
+    var $columns = $ruler.closest('.schedule-grid').find('.room-column');
+    var lineWidth = $columns.length * $columns.width() + 10;
+    document.styleSheets[0].addRule('.schedule-grid .ruler li:after','width: '+lineWidth+'px;');
+  }
+
+  function initTrackColors() {
+    trackCssClasses = $('#schedule').data('tracks-css');
+    trackColors = palette('tol-rainbow', trackCssClasses.length);
   }
 
   function onTimeSlotClick(ev) {
@@ -48,7 +78,8 @@
   }
 
   window.Grid = {
-    init: initGrid,
+    init: init,
+    initGridDay: initGridDay,
     initTimeSlot: initTimeSlot
   };
 

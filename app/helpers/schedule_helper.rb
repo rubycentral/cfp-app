@@ -6,4 +6,12 @@ module ScheduleHelper
       "#{time_slot.start_time.strftime(fmt)} - #{time_slot.end_time.strftime(fmt)}"
     end
   end
+
+  def grid_data
+    tracks = current_event.tracks.sort_by_name.pluck(:name).map(&:parameterize)
+    {
+        tracks_css: tracks
+    }
+  end
+
 end

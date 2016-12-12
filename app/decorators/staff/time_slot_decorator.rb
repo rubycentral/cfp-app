@@ -82,13 +82,14 @@ class Staff::TimeSlotDecorator < Draper::Decorator
     {"time-slot-edit-path" => h.edit_event_staff_schedule_time_slot_path(object.event, object), toggle: 'modal', target: "#time-slot-edit-dialog"}
   end
 
-  def item_data
+  def ts_data
     ts = object
     starts = (ts.start_time.to_i - ts.start_time.beginning_of_day.to_i)/60
     ends = (ts.end_time.to_i - ts.end_time.beginning_of_day.to_i)/60
     {
         starts: starts,
         duration: ends - starts,
+        track_css: display_track_name.try(:parameterize),
         edit_path:  h.edit_event_staff_schedule_grid_time_slot_path(object.event, object),
         toggle: 'modal',
         target: '#grid-time-slot-edit-dialog'

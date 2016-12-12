@@ -1,4 +1,4 @@
-#schedule
+#schedule{data: grid_data}
   %ul.nav.nav-tabs{role: 'tablist'}
     - @schedule.each_day do |day|
       %li{role: 'presentation', class: day==1 ? 'active' : ''}

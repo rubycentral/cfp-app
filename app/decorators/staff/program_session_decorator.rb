@@ -33,6 +33,10 @@ class Staff::ProgramSessionDecorator < ApplicationDecorator
     end
   end
 
+  def track_name
+    object.track_name || 'General'
+  end
+
   def abstract_markdown
     h.markdown(object.abstract)
   end

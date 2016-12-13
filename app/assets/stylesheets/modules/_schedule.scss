@@ -7,10 +7,10 @@
   $day-end: 19*60px;
   $time-range: $day-end - $day-start;
   $time-step: 60px;
-  $vertical-scale: 3.0;
+  $vertical-scale: 2.5;
   $pixel-range: $time-range * $vertical-scale;
   $pixel-step: $time-step * $vertical-scale;
-  $column-width: 150px;
+  $column-width: 122px;
 
   display: flex;
   flex-flow: row nowrap;
@@ -119,7 +119,17 @@
     .presenter {
       padding: 5px 5px 5px 10px;
       color: $brand-primary;
+      font-size: $font-size-small;
     }
   }
+}
 
+#grid-time-slot-edit-dialog {
+  .modal-header > h3 {
+    display: inline-block;
+  }
+  .time-slot-info {
+    margin-left: 50px;
+    display: inline-block;
+  }
 }

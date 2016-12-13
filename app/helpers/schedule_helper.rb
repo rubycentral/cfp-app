@@ -14,4 +14,12 @@ module ScheduleHelper
     }
   end
 
+  def grid_position_css(room)
+    'no-grid-position' if room.grid_position.blank?
+  end
+
+  def current_day_css(day, current_day)
+    'active' if day == current_day
+  end
+
 end

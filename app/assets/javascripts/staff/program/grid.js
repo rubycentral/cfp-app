@@ -55,7 +55,7 @@
   function initRuler($ruler) {
     var m = moment().startOf('day').minutes(dayStart-step);
     for (var i=dayStart; i<=dayEnd; i+=step) {
-      $item = $ruler.append('<li>'+ m.minutes(step).format('hh:mma') +'</li>');
+      $ruler.append('<li>'+ m.minutes(step).format('hh:mma') +'</li>');
     }
   }
 

@@ -29,12 +29,6 @@ $(function() {
     var html = $.parseHTML(response);
     var opt = $('option:selected', html).text();
 
-    if (selectName == 'track') {
-      if (/General/i.test(opt)) {
-        var opt = 'General'
-      }
-    }
-
     $('#' + selectName + '-name').html(opt);
     $('#edit-' + selectName + '-wrapper').hide();
     $('#current-' + selectName).show();

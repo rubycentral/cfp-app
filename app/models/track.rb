@@ -1,4 +1,6 @@
 class Track < ActiveRecord::Base
+  NO_TRACK_NAME = 'General'.freeze
+
   belongs_to :event
   has_many :program_sessions
   has_many :proposals

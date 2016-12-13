@@ -48,7 +48,15 @@ class ProposalDecorator < ApplicationDecorator
   end
 
   def track_name
-    object.track.try(:name) || 'General'
+    object.track.try(:name) || Track::NO_TRACK_NAME
+  end
+
+  def no_track_name_for_speakers
+    "#{Track::NO_TRACK_NAME} - No Suggested Track"
+  end
+
+  def track_name_for_speakers
+    object.track.try(:name) || no_track_name_for_speakers
   end
 
   def review_tags_labels
@@ -164,7 +172,7 @@ class ProposalDecorator < ApplicationDecorator
   end
 
   def standalone_track_select
-    h.select_tag :track, h.options_for_select(track_options, object.track_id), include_blank: 'General – No Suggested Track',
+    h.select_tag :track, h.options_for_select(track_options, object.track_id), include_blank: Track::NO_TRACK_NAME,
                class: 'proposal-track-select', data: { target_path: h.event_staff_program_proposal_update_track_path(object.event, object) }
   end
 

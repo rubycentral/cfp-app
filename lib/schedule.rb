@@ -18,6 +18,10 @@ class Schedule
     end
   end
 
+  def date_from_day(day)
+    event.start_date + (day-1).days
+  end
+
   def rooms
     @rooms ||= init_rooms
   end

@@ -158,16 +158,16 @@ feature "A user sees correct information for the current event and their role" d
       expect(page).to have_link(reviewer_user.name)
       expect(page).to_not have_link("My Proposals")
       expect(page).to have_link("", href: "/notifications")
-      expect(page).to have_content("Review Proposals")
+      expect(page).to have_content("Review")
     end
 
-    click_on "Review Proposals"
+    click_on "Review"
 
     within ".navbar" do
       expect(page).to have_link(event_1.name)
     end
 
-    click_on "Event Dashboard"
+    click_on "Dashboard"
 
     within ".subnavbar" do
       expect(page).to have_content("Dashboard")
@@ -187,7 +187,7 @@ feature "A user sees correct information for the current event and their role" d
       expect(page).to have_link(reviewer_user.name)
       expect(page).to_not have_link("My Proposals")
       expect(page).to have_link("", href: "/notifications")
-      expect(page).to_not have_content("Review Proposals")
+      expect(page).to_not have_content("Review")
     end
   end
 
@@ -204,15 +204,15 @@ feature "A user sees correct information for the current event and their role" d
     within ".navbar" do
       expect(page).to have_content(event_2.name)
       expect(page).to_not have_link("My Proposals")
-      expect(page).to have_content("Review Proposals")
+      expect(page).to have_content("Review")
       expect(page).to have_content("Program")
       expect(page).to have_content("Schedule")
-      expect(page).to have_content("Event Dashboard")
+      expect(page).to have_content("Dashboard")
       expect(page).to have_link("", href: "/notifications")
       expect(page).to have_link(organizer_user.name)
     end
 
-    click_on "Event Dashboard"
+    click_on "Dashboard"
 
     within ".navbar" do
       expect(page).to have_content(event_2.name)
@@ -238,10 +238,10 @@ feature "A user sees correct information for the current event and their role" d
       expect(page).to have_content(event_1.name)
       expect(page).to have_content("My Proposals")
       expect(page).to have_link("", href: "/notifications")
-      expect(page).to_not have_content("Review Proposals")
+      expect(page).to_not have_content("Review")
       expect(page).to_not have_content("Program")
       expect(page).to_not have_content("Schedule")
-      expect(page).to_not have_content("Event Dashboard")
+      expect(page).to_not have_content("Dashboard")
     end
   end
 
@@ -264,7 +264,7 @@ feature "A user sees correct information for the current event and their role" d
       expect(page).to_not have_link("My Proposals")
       expect(page).to have_content("Program")
       expect(page).to have_content("Schedule")
-      expect(page).to have_content("Review Proposals")
+      expect(page).to have_content("Review")
     end
 
     click_on "Admin"

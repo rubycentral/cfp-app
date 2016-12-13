@@ -75,7 +75,7 @@ class ProgramSession < ActiveRecord::Base
   end
 
   def track_name
-    track.try(:name) || 'General'
+    track.try(:name)
   end
 
   def confirmation_notes?

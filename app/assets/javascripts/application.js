@@ -23,4 +23,5 @@
 //= require zeroclipboard
 //= require momentjs
 //= require selectize
+//= require palette.js
 //= require_tree .

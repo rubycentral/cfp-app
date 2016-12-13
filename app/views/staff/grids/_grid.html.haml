@@ -1,7 +1,7 @@
 .schedule-grid{id: "schedule_day_#{day}"}
   %ul.ruler
   - schedule.each_room(day) do |room, slots|
-    .room-column
+    .room-column{class: grid_position_css(room)}
       .column-header= room.name
       .time-slots
         &nbsp;

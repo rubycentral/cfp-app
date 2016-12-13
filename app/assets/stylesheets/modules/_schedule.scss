@@ -4,18 +4,18 @@
 
 .schedule-grid {
   $day-start: 8*60px;
-  $day-end: 20*60px;
+  $day-end: 19*60px;
   $time-range: $day-end - $day-start;
   $time-step: 60px;
-  $vertical-scale: 1.0;
+  $vertical-scale: 2.5;
   $pixel-range: $time-range * $vertical-scale;
   $pixel-step: $time-step * $vertical-scale;
+  $column-width: 122px;
 
   display: flex;
   flex-flow: row nowrap;
   align-items: stretch;
-
-  font-size: $font-size-xs;
+  overflow: hidden;
   margin-bottom: 20px;
   border-collapse: collapse;
 
@@ -26,56 +26,110 @@
   }
 
   .ruler {
+    width: 70px;
+    height: $pixel-range;
     border-radius: 2px;
     color: #000;
-    margin: 18px 0 0 0;
-    width: 70px;
+    font-size: $font-size-xs;
+    margin: 87px 0 0 0;
     white-space: nowrap;
-    height: $pixel-range;
   }
 
   .ruler li {
     height: $pixel-step;
     text-align: center;
     position: relative;
-  }
 
-  .ruler li:before {
-    content: '';
-    position: absolute;
-    border-bottom: 1px solid #999;
-    width: .64em;
-    top: .6em;
-    right: 0;
+    &:after {
+      content: '';
+      position: absolute;
+      border-bottom: 1px solid rgba(0,0,0, .5);
+      width: 10px;
+      top: .6em;
+      left: 60px;
+      z-index: 5;
+    }
   }
 
   .room-column {
-    width: 110px;
-    padding: 6px;
-    margin: 0 6px;
-    background: rgba(170, 57, 57, 0.3);
+    width: $column-width;
+    padding: 0;
+    margin: 0;
+
+    &.no-grid-position .column-header {
+      background: rgb(220, 220, 220);
+    }
+
+    &.no-grid-position .time-slots {
+      background: rgb(240, 240, 240);
+    }
   }
 
   .column-header {
-    font-size: $font-size-small;
-    line-height: $line-height-small;
-    font-weight: 800;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
+    height: 90px;
+    font-size: $font-size-large;
+    line-height: $line-height-large;
+    text-align: center;
+    text-transform: uppercase;
+    color: #666;
+    background: rgb(204, 204, 204);
+    border-right: 1px solid #FFF;
+  }
+
+  .time-slots, .time-slots .time-slot {
+    border-style: solid;
+    border-color: rgba(0,0,0,.2);
   }
 
   .time-slots {
-    height: $pixel-range;
     position: relative;
+    height: $pixel-range;
+    width: $column-width;
+    background: rgb(230, 230, 230);
+    margin-top: 4px;
+    border-width: 0 1px 0 0;
+  }
+
+  .room-column:first-of-type .time-slots {
+    border-width: 0 1px 0 1px;
   }
 
   .time-slot {
     position: absolute;
-    border: 2px solid #567714;
     width: 100%;
-    text-align: center;
-    background: #D4EE9F;
-    cursor: default;
-  }
+    text-align: left;
+    background: #FFF;
+    cursor: pointer;
+    z-index: 10;
+    border-width: 1px 0 1px 0;
 
+    .track {
+      padding: 5px 5px 5px 10px;
+      font-style: italic;
+    }
+
+    .title {
+      padding: 5px 5px 5px 10px;
+    }
+
+    .presenter {
+      padding: 5px 5px 5px 10px;
+      color: $brand-primary;
+      font-size: $font-size-small;
+    }
+  }
+}
+
+#grid-time-slot-edit-dialog {
+  .modal-header > h3 {
+    display: inline-block;
+  }
+  .time-slot-info {
+    margin-left: 50px;
+    display: inline-block;
+  }
 }

@@ -60,9 +60,9 @@ class Proposal < ActiveRecord::Base
   scope :for_state, ->(state) do
     where(state: state).order(:title).includes(:event, {speakers: :user}, :review_taggings)
   end
-  scope :in_track, ->(track) do
-    track = nil if track.try(:strip).blank?
-    where(track: track)
+  scope :in_track, ->(track_id) do
+    track_id = nil if track_id.try(:strip) == ''
+    where(track_id: track_id)
   end
 
   scope :emails, -> { joins(speakers: :user).pluck(:email).uniq }

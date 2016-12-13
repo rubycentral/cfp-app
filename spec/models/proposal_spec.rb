@@ -49,6 +49,20 @@ describe Proposal do
   #   end
   # end
 
+  describe 'scope :in_track' do
+    let(:track1) { create :track, name: 'Track 1' }
+    let(:track1_proposals) { create_list :proposal, 3, track: track1 }
+    let(:no_track_proposals) { create_list :proposal, 2, track: nil }
+
+    it 'returns proposals of the given track' do
+      expect(Proposal.in_track(track1.id)).to match_array(track1_proposals)
+    end
+
+    it 'returns proposals with no track' do
+      expect(Proposal.in_track('')).to match_array(no_track_proposals)
+    end
+  end
+
   describe "scope :emails" do
     it "returns all attached email addresses" do
       user1 = create(:user, email: 'user1@test.com')

@@ -107,6 +107,28 @@
   }
 }
 
+#review-stats-table, #program-stats-table, #team-activity-table {
+  thead > tr > th {
+    text-align: center;
+  }
+  tbody {
+    > tr > td:not(:first-of-type) {
+      text-align: center;
+    }
+  }
+}
+
+#review-stats-table, #program-stats-table {
+  tbody {
+    > tr:last-of-type > td:first-of-type {
+      text-align: center;
+    }
+    > tr:last-of-type {
+      font-weight: bold;
+      font-style: italic;
+    }
+  }
+}
 // Event status badges
 $event-open-bg:       $state-success-bg;
 $event-open-border:   $state-success-border;

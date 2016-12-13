@@ -34,7 +34,7 @@ class Staff::ProgramSessionDecorator < ApplicationDecorator
   end
 
   def track_name
-    object.track_name || Track::NO_TRACK_NAME
+    object.track_name || Track::NO_TRACK
   end
 
   def abstract_markdown

@@ -32,6 +32,21 @@ describe Staff::ProposalsController, type: :controller do
     end
   end
 
+  describe "POST 'update_session_format'" do
+    let(:session_format) { create :session_format }
+
+    it 'updates the format' do
+      post 'update_session_format', event_slug: event, proposal_uuid: proposal.uuid, session_format_id: session_format.id
+      proposal.reload
+      expect(proposal.session_format_id).to eq session_format.id
+    end
+
+    it 'renders the inline edit partial' do
+      post 'update_session_format', event_slug: event, proposal_uuid: proposal.uuid, session_format_id: session_format.id
+      expect(response).to render_template partial: '_inline_format_edit'
+    end
+  end
+
   describe "POST 'update_state'" do
     it "returns http redirect" do
       post 'update_state', event_slug: event, proposal_uuid: proposal.uuid

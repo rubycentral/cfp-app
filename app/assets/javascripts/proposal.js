@@ -25,13 +25,36 @@ $(function() {
     $('.speaker-invite-form').toggle();
   });
 
+  // Track editing
+  $('#edit-track-icon').click(function() {
+    $('#current-track').hide();
+    $('#edit-track-wrapper').show();
+  });
+
+  $('#cancel-track-editing').click(function() {
+    $('#edit-track-wrapper').hide();
+    $('#current-track').show();
+  });
+
+  // Format editing
+  $('#edit-format-icon').click(function() {
+    $('#current-format').hide();
+    $('#edit-format-wrapper').show();
+  });
+
+  $('#cancel-format-editing').click(function() {
+    $('#edit-format-wrapper').hide();
+    $('#current-format').show();
+  });
+
+  // Reviewer tags editing
   $('#edit-tags-icon').click(function() {
     $('.proposal-reviewer-tags, #edit-tags-icon').toggle();
-    $('.review-tags-form-wrapper').slideToggle();
+    $('#review-tags-form-wrapper').slideToggle();
   });
 
   $('#cancel-tags-editing').click(function() {
-    $('.review-tags-form-wrapper').toggle();
+    $('#review-tags-form-wrapper').toggle();
     $('.proposal-reviewer-tags, #edit-tags-icon').toggle();
   });
 

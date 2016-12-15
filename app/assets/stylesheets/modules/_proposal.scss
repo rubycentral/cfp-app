@@ -147,13 +147,26 @@ div.col-md-4 {
   }
 }
 
-#edit-tags-icon {
+#edit-tags-icon, #edit-track-icon, #edit-format-icon {
   color: $bright-blue;
   font-size: $font-size-large;
   margin-left: 5px;
 }
 
-.review-tags-form-wrapper {
+#track, #format {
+  width: 80%;
+}
+
+#edit-format-wrapper, #edit-track-wrapper {
+  display: none;
+}
+
+#cancel-format-editing, #cancel-track-editing {
+  padding: 2px 5px;
+  vertical-align: top;
+}
+
+#review-tags-form-wrapper {
   display: none;
   padding: 0;
   text-align: left;

@@ -47,14 +47,31 @@
                   #{proposal.tags_labels}
           .col-sm-4
             .col-sm-6.no-pad-left
-              .proposal-meta-item
+              .proposal-meta-item.full-width
                 .info-item-heading Format
-                #{proposal.session_format_name}
+                #current-format
+                  #format-name.pull-left
+                    #{proposal.session_format_name}
+                  #edit-format-icon.fa.fa-pencil
+                #edit-format-wrapper
+                  %span
+                    = render 'shared/proposals/inline_format_edit', proposal: proposal
+                  #cancel-format-editing.btn.btn-danger.btn-sm
+                    %span.glyphicon.glyphicon-remove
+
             .col-sm-6
               .proposal-meta-item.full-width
                 .info-item-heading Track
-                %span
-                  = render 'inline_track_edit', proposal: proposal
+                #current-track
+                  #track-name.pull-left
+                    #{proposal.track_name}
+                  #edit-track-icon.fa.fa-pencil
+                #edit-track-wrapper
+                  %span
+                    = render 'shared/proposals/inline_track_edit', proposal: proposal
+                  #cancel-track-editing.btn.btn-danger.btn-sm
+                    %span.glyphicon.glyphicon-remove
+
           .col-sm-4
             .proposal-meta-item.col-sm-12.no-pad-left
               .info-item-heading Reviewer Tags
@@ -64,7 +81,7 @@
                 -else
                   %em None
               #edit-tags-icon.fa.fa-pencil
-            .review-tags-form-wrapper
+            #review-tags-form-wrapper
               = render 'shared/proposals/tags_form', locals: { event: event, proposal: proposal }
 
   .row

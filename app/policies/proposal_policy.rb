@@ -20,6 +20,10 @@ class ProposalPolicy < ApplicationPolicy
     @user.program_team_for_event?(@current_event)
   end
 
+  def update_session_format?
+    @user.program_team_for_event?(@current_event)
+  end
+
   def finalize?
     @user.organizer_for_event?(@current_event)
   end

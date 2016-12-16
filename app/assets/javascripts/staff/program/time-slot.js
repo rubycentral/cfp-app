@@ -86,6 +86,12 @@ function clearFields(fields, opt_parent) {
   }
 }
 
+function setupBulkTimeSlotCreateDialog() {
+  $(document).on('change', '#bulk-time-slot-create-dialog .session-format-select', function(ev) {
+
+  });
+}
+
 function renderTimeSlots(html) { // currently unused
   $('#time_slots').html(html);
   initTimeSlotsTable();

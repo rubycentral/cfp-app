@@ -1,0 +1,11 @@
+.modal-dialog
+  .modal-content
+    = simple_form_for bulk, url: bulk_preview_event_staff_schedule_grid_time_slots_path, remote: true, html: {role: 'form'} do |f|
+      .modal-header
+        %h3 Bulk Generate Time Slots
+      .errors
+      .modal-body
+        = render partial: 'staff/grids/time_slots/bulk_form', locals: {f: f}
+      .modal-footer
+        %button.btn.btn-default.bulk-cancel{'data-dismiss' => "modal"} Cancel
+        %button.btn.btn-success{:type => "submit"} Preview

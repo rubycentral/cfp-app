@@ -27,6 +27,9 @@ class TimeSlot < ActiveRecord::Base
     end
   end
 
+  def self.bulk_build(params)
+  end
+
   def self.track_names
     pluck(:track_name).uniq
   end

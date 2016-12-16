@@ -1,0 +1,12 @@
+(function($) {
+  var $modal = $('#bulk-time-slot-create-dialog');
+
+  var $grid = $('#schedule_day_<%= @bulk.day %>');
+  var $bar = $grid.closest('.grid-wrapper').find('.bulk-preview-bar');
+  $bar.html('<%=j render partial: 'bulk_preview_bar', locals: { bulk: @bulk} %>');
+  $grid.replaceWith('<%=j render partial: 'staff/grids/grid', locals: { schedule: @schedule, day: @bulk.day} %>');
+
+  window.Grid.initGridDay(<%= @bulk.day %>);
+  $modal.modal('hide');
+
+})(jQuery);

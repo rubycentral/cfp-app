@@ -7,7 +7,7 @@
   const dayStart = 60*9;  // minutes
   const dayEnd = 60*19;
   const step = 60;
-  const verticalScale = 3.0;
+  const verticalScale = 2.5;
 
   var trackCssClasses = [];
   var trackColors = [];
@@ -72,12 +72,12 @@
   }
 
   function onTimeSlotClick(ev) {
-    $.ajax({
-      url: $(this).data('editPath'),
-      success: function(data) {
-        $(ev.target).closest('.schedule-grid');
-      }
-    });
+    var url = $(this).data('editPath');
+    if (url == null || url.length==0) {
+      return;
+    }
+
+    $.ajax({ url: url });
   }
 
   window.Grid = {

@@ -1,0 +1,7 @@
+= f.input :day, as: :select, collection: 1..event.days, include_blank: false
+= f.input :rooms, as: :check_boxes, collection: current_event.rooms.grid_order, wrapper: :vertical_radio_and_checkboxes
+= f.input :start_times, as: :string
+.form-inline
+  = f.input :duration, as: :string, input_html: {class: 'time-slot-duration'}
+  = f.input :session_format, as: :select, collection: session_format_duration_options,
+      input_html: {class: 'session-format-select'}, label: '&nbsp;'.html_safe

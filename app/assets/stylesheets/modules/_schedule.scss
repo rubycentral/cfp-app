@@ -2,6 +2,16 @@
   margin-top: 20px;
 }
 
+.grid-wrapper {
+  display: inline-block;
+
+  .bulk-preview-bar {
+    form {
+      display: inline-block;
+    }
+  }
+}
+
 .schedule-grid {
   $day-start: 8*60px;
   $day-end: 19*60px;
@@ -12,7 +22,7 @@
   $pixel-step: $time-step * $vertical-scale;
   $column-width: 122px;
 
-  display: flex;
+  display: inline-flex;
   flex-flow: row nowrap;
   align-items: stretch;
   overflow: hidden;

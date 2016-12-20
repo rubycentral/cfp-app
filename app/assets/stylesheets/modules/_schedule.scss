@@ -143,3 +143,9 @@
     display: inline-block;
   }
 }
+
+#bulk-time-slot-create-dialog {
+  input.time-slot-duration {
+    width: 80px;
+  }
+}

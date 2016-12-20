@@ -1,6 +1,6 @@
-var editDialog = $('#grid-time-slot-edit-dialog');
+var $dialog = $('#grid-time-slot-edit-dialog');
 
-editDialog.html('<%=j render partial: 'edit_dialog',
+$dialog.html('<%=j render partial: 'edit_dialog',
       locals: { time_slot: time_slot_decorated, event: event } %>');
 
-setUpTimeSlotDialog(editDialog);
+window.Schedule.TimeSlots.initDialog($dialog);

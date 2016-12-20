@@ -24,8 +24,8 @@ class Staff::Grids::TimeSlotsController < Staff::ApplicationController
     @bulk = TimeSlotBulk.new(day: params[:day])
   end
 
-  def bulk_edit
-    @bulk = TimeSlotBulk.new(bulk_time_slot_params)
+  def bulk_cancel
+    @schedule = Schedule.new(current_event)
   end
 
   def bulk_preview
@@ -34,6 +34,10 @@ class Staff::Grids::TimeSlotsController < Staff::ApplicationController
     slots = @bulk.build_time_slots
     @schedule = Schedule.new(current_event)
     @schedule.add_preview_slots(slots)
+  end
+
+  def bulk_edit
+    @bulk = TimeSlotBulk.new(bulk_time_slot_params)
   end
 
   def bulk_create
@@ -51,6 +55,7 @@ class Staff::Grids::TimeSlotsController < Staff::ApplicationController
 
   def bulk_time_slot_params
     params.require(:time_slot_bulk).permit(:day, :duration, {rooms: []}, :start_times)
+        .merge(event: current_event)
   end
 
   def set_time_slot

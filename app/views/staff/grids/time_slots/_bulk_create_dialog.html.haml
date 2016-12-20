@@ -5,7 +5,7 @@
         %h3 Bulk Generate Time Slots
       .errors
       .modal-body
-        = render partial: 'staff/grids/time_slots/bulk_form', locals: {f: f}
+        = render partial: 'staff/grids/time_slots/bulk_form', locals: {f: f, bulk: bulk}
       .modal-footer
         %button.btn.btn-default.bulk-cancel{'data-dismiss' => "modal"} Cancel
         %button.btn.btn-success{:type => "submit"} Preview

@@ -1,27 +1,26 @@
-$(document).ready(function() {
-  initTimeSlotsTable();
-});
+(function($, window) {
+  if (typeof(window.Schedule) === 'undefined') {
+    window.Schedule = {};
+  }
+  if (typeof(window.Schedule.TimeSlots) !== 'undefined') {
+    return window.Schedule.TimeSlots;
+  }
 
-function initTimeSlotsTable() {
-  cfpDataTable('#organizer-time-slots.datatable', [ 'number', 'text',
-    'text', 'text', 'text', 'text', 'text' ],
-    { "aaSorting": [ [0,'asc'], [1,'asc'] ] });
-}
+  function initDialog($dialog) {
+    initTimePickers();
 
-function initTimeSlotTimePickers() {
-  $('#time_slot_start_time, #time_slot_end_time').timepicker({
+    $dialog.find('.available-proposals').change(onSessionSelectChange);
+    $dialog.find('.start-time').change(onTimeChange);
+
+    updateInfoFields($dialog);
+  }
+
+  function initTimePickers() {
+    $('#time_slot_start_time, #time_slot_end_time').timepicker({
       timeFormat: 'HH:mm',
       stepMinute: 5
-  });
-}
-
-function setUpTimeSlotDialog($dialog) {
-  initTimeSlotTimePickers();
-
-  $dialog.find('.available-proposals').change(onSessionSelectChange);
-  $dialog.find('.start-time').change(onTimeChange);
-
-  updateInfoFields($dialog);
+    });
+  }
 
   function updateInfoFields($container) {
     var $selected = $container.find('.available-proposals :selected');
@@ -69,58 +68,54 @@ function setUpTimeSlotDialog($dialog) {
     var $form = $(this).closest('form');
     updateEndTime($form);
   }
-}
 
-function clearFields(fields, opt_parent) {
-  var parentNode = opt_parent === undefined ? null : $(opt_parent);
 
-  var node;
-  for(var i = 0; i < fields.length; ++i) {
-    if (parentNode !== null) {
-      node = parentNode.find(fields[i]);
+
+  function initTable() {
+    cfpDataTable('#organizer-time-slots.datatable', [ 'number', 'text',
+          'text', 'text', 'text', 'text', 'text' ],
+        { "aaSorting": [ [0,'asc'], [1,'asc'] ] });
+  }
+
+  function getDataTable() {
+    return $('#organizer-time-slots.datatable').dataTable();
+  }
+
+  function reloadTable(rows) {
+    var table = getDataTable();
+    table.fnClearTable();
+
+    for (var i = 0; i < rows.length; ++i) {
+      addRow(rows[i], table);
+    }
+  }
+
+  function addRow(row_obj, opt_table) {
+    var table;
+
+    if (opt_table === undefined) {
+      table = getDataTable();
     } else {
-      node = $(fields[i]);
+      table = opt_table;
     }
 
-    node.val('');
-  }
-}
+    var index = table.fnAddData(row_obj.values);
 
-function setupBulkTimeSlotCreateDialog() {
-  $(document).on('change', '#bulk-time-slot-create-dialog .session-format-select', function(ev) {
-
-  });
-}
-
-function renderTimeSlots(html) { // currently unused
-  $('#time_slots').html(html);
-  initTimeSlotsTable();
-}
-
-function getTimeSlotsTable() {
-  return $('#organizer-time-slots.datatable').dataTable();
-}
-
-function reloadTimeSlotsTable(rows) {
-  var table = getTimeSlotsTable();
-  table.fnClearTable();
-
-  for (var i = 0; i < rows.length; ++i) {
-    addTimeSlotRow(rows[i], table);
-  }
-}
-
-function addTimeSlotRow(row_obj, opt_table) {
-  var table;
-
-  if (opt_table === undefined) {
-    table = getTimeSlotsTable();
-  } else {
-    table = opt_table;
+    var row = $(table.fnGetNodes(index));
+    row.attr('id', 'time_slot_' + row_obj.id);
   }
 
-  var index = table.fnAddData(row_obj.values);
 
-  var row = $(table.fnGetNodes(index));
-  row.attr('id', 'time_slot_' + row_obj.id);
-}
+  window.Schedule.TimeSlots = {
+    initTable: initTable,
+    reloadTable: reloadTable,
+    addRow: addRow,
+
+    initDialog: initDialog
+  };
+
+})(jQuery, window);
+
+$(document).ready(function() {
+  window.Schedule.TimeSlots.initTable();
+});

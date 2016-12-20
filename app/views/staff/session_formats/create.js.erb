@@ -1,7 +1,7 @@
 <% if session_format.persisted? %>
   $("#config-modal").modal("hide");
   $("#session-formats").append("<%=j render session_format %>");
-  clearFields([
+  window.Utilities.clearFields([
     "#session_format_name",
     "#session_format_description",
     "#session_format_duration",

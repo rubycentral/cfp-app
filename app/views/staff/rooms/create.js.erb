@@ -3,7 +3,7 @@ $("#room-new-dialog .errors").html("");
 <% if room.persisted? %>
   $("#room-new-dialog").modal("hide");
   $("#organizer-rooms").append("<%=j render room %>");
-  clearFields([
+  window.Utilities.clearFields([
     "#room_name",
     "#room_room_number",
     "#room_level",

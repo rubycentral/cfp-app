@@ -3,7 +3,7 @@ $("#config-modal .errors").html("");
 <% if track.persisted? %>
   $('#config-modal').modal('hide');
   $('#tracks').append('<%=j render track %>');
-  clearFields([
+  window.Utilities.clearFields([
     '#track_name',
     '#track_description',
     '#track_guidelines'

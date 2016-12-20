@@ -27,26 +27,20 @@ module ScheduleHelper
               bulk_new_event_staff_schedule_grid_time_slots_path(current_event, day),
               class: 'btn btn-primary btn-sm',
               remote: true,
-              data: {toggle: 'modal', target: "#bulk-time-slot-create-dialog"})
-  end
-
-  def edit_bulk_preview_button
-    link_to('Edit', '#',
-            class: 'btn btn-info btn-sm',
-            data: {toggle: 'modal', target: "#bulk-time-slot-create-dialog"})
+              data: {toggle: 'modal', target: '#bulk-time-slot-create-dialog'}
+    )
   end
 
   def cancel_bulk_preview_button(day)
     link_to('Cancel',
-            '#', # bulk_cancel_event_staff_schedule_grid_time_slots_path(current_event, day),
-            class: 'btn btn-default btn-sm bulk-cancel')
+            bulk_cancel_event_staff_schedule_grid_time_slots_path(current_event, day),
+            class: 'btn btn-default btn-sm bulk-cancel',
+            remote: true
+    )
   end
 
   def session_format_duration_options
     current_event.session_formats.sort_by_name.map {|sf| [sf.name, sf.duration]}
   end
 
-  def bulk_form_start_times(start_times)
-    start_times.map {|t| t.to_s(:time)}.join(',')
-  end
 end

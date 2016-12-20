@@ -1,6 +1,9 @@
 (function($, window) {
-  if (typeof(window.Grid) !== 'undefined') {
-    return window.Grid;
+  if (typeof(window.Schedule) === 'undefined') {
+    window.Schedule = {};
+  }
+  if (typeof(window.Schedule.Grid) !== 'undefined') {
+    return window.Schedule.Grid;
   }
 
   // Grid properties
@@ -71,6 +74,20 @@
     $('<style>.schedule-grid .ruler li:after { width: '+lineWidth+'px; }</style>').appendTo('head');
   }
 
+  function initBulkCreateDialog($dialog) {
+    var $format = $dialog.find('select.session-format');
+    var $duration = $dialog.find('.time-slot-duration');
+
+    $format.change(function(ev) {
+      $duration.val($format.val());
+    });
+    $duration.keyup(function(ev) {
+      if ($duration.is(':focus')) {
+        $format.val('');
+      }
+    });
+  }
+
   function onTimeSlotClick(ev) {
     var url = $(this).data('editPath');
     if (url == null || url.length==0) {
@@ -80,14 +97,15 @@
     $.ajax({ url: url });
   }
 
-  window.Grid = {
+  window.Schedule.Grid = {
     init: init,
     initGridDay: initGridDay,
-    initTimeSlot: initTimeSlot
+    initTimeSlot: initTimeSlot,
+    initBulkDialog: initBulkCreateDialog
   };
 
 })(jQuery, window);
 
 $(function() {
-  window.Grid.init();
+  window.Schedule.Grid.init();
 });

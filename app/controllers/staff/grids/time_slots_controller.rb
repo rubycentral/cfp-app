@@ -20,42 +20,10 @@ class Staff::Grids::TimeSlotsController < Staff::ApplicationController
     end
   end
 
-  def bulk_new
-    @bulk = TimeSlotBulk.new(day: params[:day])
-  end
-
-  def bulk_cancel
-    @schedule = Schedule.new(current_event)
-  end
-
-  def bulk_preview
-    @bulk = TimeSlotBulk.new(bulk_time_slot_params)
-
-    slots = @bulk.build_time_slots
-    @schedule = Schedule.new(current_event)
-    @schedule.add_preview_slots(slots)
-  end
-
-  def bulk_edit
-    @bulk = TimeSlotBulk.new(bulk_time_slot_params)
-  end
-
-  def bulk_create
-    @bulk = TimeSlotBulk.new(bulk_time_slot_params)
-    if @bulk.create_time_slots
-      flash[:success] = "Time slots successfully created."
-    end
-  end
-
   private
 
   def time_slot_params
     params.require(:time_slot).permit(:conference_day, :room_id, :start_time, :end_time, :program_session_id, :title, :track_id, :presenter, :description)
-  end
-
-  def bulk_time_slot_params
-    params.require(:time_slot_bulk).permit(:day, :duration, {rooms: []}, :start_times)
-        .merge(event: current_event)
   end
 
   def set_time_slot

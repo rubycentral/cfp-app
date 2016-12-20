@@ -4,7 +4,7 @@
   var $gridDay = $('#schedule_day_<%= @bulk.day %>');
   var $bar = $gridDay.closest('.grid-wrapper').find('.bulk-preview-bar');
 
-  $bar.html('<%=j render partial: 'bulk_preview_bar', locals: { bulk: @bulk} %>');
+  $bar.html('<%=j render partial: 'preview_bar', locals: { bulk: @bulk} %>');
   $gridDay.replaceWith('<%=j render partial: 'staff/grids/grid', locals: { schedule: @schedule, day: @bulk.day} %>');
 
   grid.initGridDay(<%= @bulk.day %>);

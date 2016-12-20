@@ -24,16 +24,16 @@ module ScheduleHelper
 
   def generate_grid_button(day)
     link_to('Generate Grid',
-              bulk_new_event_staff_schedule_grid_time_slots_path(current_event, day),
-              class: 'btn btn-primary btn-sm',
-              remote: true,
-              data: {toggle: 'modal', target: '#bulk-time-slot-create-dialog'}
+            new_event_staff_schedule_grid_bulk_time_slot_path(current_event, day),
+            class: 'btn btn-primary btn-sm',
+            remote: true,
+            data: {toggle: 'modal', target: '#bulk-time-slot-create-dialog'}
     )
   end
 
   def cancel_bulk_preview_button(day)
     link_to('Cancel',
-            bulk_cancel_event_staff_schedule_grid_time_slots_path(current_event, day),
+            cancel_event_staff_schedule_grid_bulk_time_slot_path(current_event, day),
             class: 'btn btn-default btn-sm bulk-cancel',
             remote: true
     )

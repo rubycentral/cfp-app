@@ -52,7 +52,9 @@
         backgroundColor: '#' + trackColors[i]
       });
     }
-    $slot.click(onTimeSlotClick);
+    if (!$slot.hasClass('preview')) {
+      $slot.click(onTimeSlotClick);
+    }
   }
 
   function initRuler($ruler) {

@@ -131,16 +131,14 @@
       color: $brand-primary;
       font-size: $font-size-small;
     }
-  }
-}
 
-#grid-time-slot-edit-dialog {
-  .modal-header > h3 {
-    display: inline-block;
-  }
-  .time-slot-info {
-    margin-left: 50px;
-    display: inline-block;
+    &.preview {
+      cursor: default;
+      background: $brand-info;
+      .title {
+        color: #fff;
+      }
+    }
   }
 }
 

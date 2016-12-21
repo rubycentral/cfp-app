@@ -40,7 +40,7 @@ module ScheduleHelper
   end
 
   def session_format_duration_options
-    current_event.session_formats.sort_by_name.map {|sf| [sf.name, sf.duration]}
+    current_event.session_formats.sort_by_name.map {|sf| ["#{sf.name} (#{sf.duration} min)", sf.duration]}
   end
 
 end

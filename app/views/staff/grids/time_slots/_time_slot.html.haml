@@ -1,4 +1,9 @@
-.time-slot{id: "time_slot_#{dom_id(ts)}", data: ts.ts_data}
-  .track=ts.display_track_name || '&nbsp;'.html_safe
-  .title=ts.display_title
-  .presenter=ts.display_presenter
+.time-slot{id: "time_slot_#{dom_id(ts)}", data: ts.ts_data, class: ts.preview_css}
+  - if ts.configured?
+    .track=ts.display_track_name || '&nbsp;'.html_safe
+    .title=ts.display_title
+    .presenter=ts.display_presenter
+  - elsif ts.persisted?
+    .title Click to Configure
+  - else
+    .title Preview

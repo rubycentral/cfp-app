@@ -52,7 +52,7 @@
 
     var sid = $selected.val();
     var start = $startTime.val();
-    if (sid.length > 0 && start.length > 0) {
+    if (sid && sid.length > 0 && start && start.length > 0) {
       var m = moment(start, 'HH:mm').add($selected.data('duration'), 'minutes');
       $endTime.val(m.format('HH:mm'));
     }

@@ -22,6 +22,4 @@ $("#room-edit-<%= room.id %> .errors").html("");
   }
 <% end %>
 
-window.Schedule.TimeSlots.reloadTable(<%=raw time_slots.rows.to_json %>);
-
 document.getElementById("flash").innerHTML = "<%=j show_flash %>";

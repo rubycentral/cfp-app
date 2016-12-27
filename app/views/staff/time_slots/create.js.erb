@@ -10,7 +10,7 @@ $("#time-slot-new-dialog .errors").html("");
   <% else %>
     $('#time-slot-new-dialog').modal('hide');
   <% end %>
-  addTimeSlotRow(<%=raw time_slot_decorated.row.to_json %>);
+  window.Schedule.TimeSlots.addRow(<%=raw time_slot_decorated.row.to_json %>);
 
 <% else %>
   $("#time-slot-new-dialog .errors").html("<%= @time_slot.errors.full_messages.join(', ') %>");

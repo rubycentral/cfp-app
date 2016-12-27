@@ -22,4 +22,25 @@ module ScheduleHelper
     'active' if day == current_day
   end
 
+  def generate_grid_button(day)
+    link_to('Generate Grid',
+            new_event_staff_schedule_grid_bulk_time_slot_path(current_event, day),
+            class: 'btn btn-primary btn-sm',
+            remote: true,
+            data: {toggle: 'modal', target: '#bulk-time-slot-create-dialog'}
+    )
+  end
+
+  def cancel_bulk_preview_button(day)
+    link_to('Cancel',
+            cancel_event_staff_schedule_grid_bulk_time_slot_path(current_event, day),
+            class: 'btn btn-default btn-sm bulk-cancel',
+            remote: true
+    )
+  end
+
+  def session_format_duration_options
+    current_event.session_formats.sort_by_name.map {|sf| ["#{sf.name} (#{sf.duration} min)", sf.duration]}
+  end
+
 end

@@ -1,13 +1,16 @@
 (function($, window) {
-  if (typeof(window.Grid) !== 'undefined') {
-    return window.Grid;
+  if (typeof(window.Schedule) === 'undefined') {
+    window.Schedule = {};
+  }
+  if (typeof(window.Schedule.Grid) !== 'undefined') {
+    return window.Schedule.Grid;
   }
 
   // Grid properties
   const dayStart = 60*9;  // minutes
   const dayEnd = 60*19;
   const step = 60;
-  const verticalScale = 3.0;
+  const verticalScale = 2.5;
 
   var trackCssClasses = [];
   var trackColors = [];
@@ -49,7 +52,9 @@
         backgroundColor: '#' + trackColors[i]
       });
     }
-    $slot.click(onTimeSlotClick);
+    if (!$slot.hasClass('preview')) {
+      $slot.click(onTimeSlotClick);
+    }
   }
 
   function initRuler($ruler) {
@@ -71,23 +76,38 @@
     $('<style>.schedule-grid .ruler li:after { width: '+lineWidth+'px; }</style>').appendTo('head');
   }
 
-  function onTimeSlotClick(ev) {
-    $.ajax({
-      url: $(this).data('editPath'),
-      success: function(data) {
-        $(ev.target).closest('.schedule-grid');
+  function initBulkCreateDialog($dialog) {
+    var $format = $dialog.find('select.session-format');
+    var $duration = $dialog.find('.time-slot-duration');
+
+    $format.change(function(ev) {
+      $duration.val($format.val());
+    });
+    $duration.keyup(function(ev) {
+      if ($duration.is(':focus')) {
+        $format.val('');
       }
     });
   }
 
-  window.Grid = {
+  function onTimeSlotClick(ev) {
+    var url = $(this).data('editPath');
+    if (url == null || url.length==0) {
+      return;
+    }
+
+    $.ajax({ url: url });
+  }
+
+  window.Schedule.Grid = {
     init: init,
     initGridDay: initGridDay,
-    initTimeSlot: initTimeSlot
+    initTimeSlot: initTimeSlot,
+    initBulkDialog: initBulkCreateDialog
   };
 
 })(jQuery, window);
 
 $(function() {
-  window.Grid.init();
+  window.Schedule.Grid.init();
 });

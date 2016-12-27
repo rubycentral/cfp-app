@@ -2,6 +2,16 @@
   margin-top: 20px;
 }
 
+.grid-wrapper {
+  display: inline-block;
+
+  .bulk-preview-bar {
+    form {
+      display: inline-block;
+    }
+  }
+}
+
 .schedule-grid {
   $day-start: 8*60px;
   $day-end: 19*60px;
@@ -12,7 +22,7 @@
   $pixel-step: $time-step * $vertical-scale;
   $column-width: 122px;
 
-  display: flex;
+  display: inline-flex;
   flex-flow: row nowrap;
   align-items: stretch;
   overflow: hidden;
@@ -121,15 +131,19 @@
       color: $brand-primary;
       font-size: $font-size-small;
     }
+
+    &.preview {
+      cursor: default;
+      background: $brand-info;
+      .title {
+        color: #fff;
+      }
+    }
   }
 }
 
-#grid-time-slot-edit-dialog {
-  .modal-header > h3 {
-    display: inline-block;
-  }
-  .time-slot-info {
-    margin-left: 50px;
-    display: inline-block;
+#bulk-time-slot-create-dialog {
+  input.time-slot-duration {
+    width: 80px;
   }
 }

@@ -1,0 +1,6 @@
+= f.input :day, as: :hidden
+- bulk.rooms.each do |r|
+  = f.input :rooms, as: :hidden, input_html: {value: r, multiple: true}
+= f.input :start_times, as: :hidden
+= f.input :duration, as: :hidden
+= f.input :session_format, as: :hidden

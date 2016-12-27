@@ -30,6 +30,14 @@ class Schedule
     @slots ||= init_slots
   end
 
+  def add_preview_slots(slots)
+    slots.each do |s|
+      self.slots[s.conference_day] ||= {}
+      self.slots[s.conference_day][s.room] ||= []
+      self.slots[s.conference_day][s.room] << s
+    end
+  end
+
   private
 
   def init_rooms

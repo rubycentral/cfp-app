@@ -1,5 +1,5 @@
 $('table#organizer-rooms #room_<%= room.id %>').remove();
-reloadTimeSlotsTable(<%=raw time_slots.rows.to_json %>);
+window.Schedule.TimeSlots.reloadTable(<%=raw time_slots.rows.to_json %>);
 
 <% if has_missing_requirements?(room.event) %>
   $('#time-slot-prereqs').removeClass('hidden');
@@ -10,4 +10,3 @@ reloadTimeSlotsTable(<%=raw time_slots.rows.to_json %>);
 <% end %>
 
 document.getElementById('flash').innerHTML = '<%=j show_flash %>';
-$("html, body").animate({ scrollTop: 0 }, "slow");

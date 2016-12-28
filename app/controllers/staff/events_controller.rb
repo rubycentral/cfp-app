@@ -6,12 +6,7 @@ class Staff::EventsController < Staff::ApplicationController
   end
 
   def show
-    teammates = @event.teammates.accepted
-
-    render locals: {
-             event: @event.decorate,
-             teammates: teammates
-           }
+    render locals: { event: @event.decorate }
   end
 
   #Edit Speaker Notification Emails

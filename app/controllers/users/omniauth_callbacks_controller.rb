@@ -1,5 +1,5 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  before_filter :check_current_user, only: [:twitter, :github]
+  before_action :check_current_user, only: [:twitter, :github]
 
   def twitter
     authenticate_with_hash

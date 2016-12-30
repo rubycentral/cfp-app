@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 ruby '2.3.1'
 
-gem 'rails', '4.2.5'
-gem 'puma', '~> 2.13'
+gem 'rails', '5.0.1'
+gem 'puma', '~> 3.6.2'
 
 gem 'pg'
 
@@ -26,9 +26,9 @@ gem 'country_select', '~> 1.3.1'
 gem 'redcarpet', '~> 3.0.0'
 gem 'coderay', '~> 1.0'
 gem 'bootstrap-multiselect-rails', '~> 0.9.9'
-gem 'active_model_serializers', '~> 0.8.1'
-gem 'draper'
-gem 'simple_form', '3.1.1'
+gem 'active_model_serializers', '~> 0.10.0'
+gem 'draper', '3.0.0.pre1'
+gem 'simple_form', '~> 3.3.1'
 gem 'zeroclipboard-rails'
 gem 'responders', '~> 2.0'
 gem 'pundit'
@@ -46,7 +46,6 @@ group :development do
   gem 'binding_of_caller'
   gem 'foreman'
   gem 'launchy'
-  gem 'quiet_assets'
   gem 'rack-mini-profiler'
   gem 'haml-rails'
   gem 'spring-commands-rspec', require: false

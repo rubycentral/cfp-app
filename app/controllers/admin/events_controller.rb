@@ -1,5 +1,5 @@
 class Admin::EventsController < Admin::ApplicationController
-  before_filter :require_event, only: [:destroy, :archive, :unarchive]
+  before_action :require_event, only: [:destroy, :archive, :unarchive]
 
   def new
     @event = Event.new

@@ -108,7 +108,7 @@
 }
 
 #review-stats-table, #program-stats-table, #team-activity-table {
-  thead > tr > th {
+  thead > tr > th:not(:first-of-type) {
     text-align: center;
   }
   tbody {
@@ -120,15 +120,13 @@
 
 #review-stats-table, #program-stats-table {
   tbody {
-    > tr:last-of-type > td:first-of-type {
-      text-align: center;
-    }
-    > tr:last-of-type {
+    > tr:first-of-type {
       font-weight: bold;
-      font-style: italic;
+      background-color: $state-success-bg;
     }
   }
 }
+
 // Event status badges
 $event-open-bg:       $state-success-bg;
 $event-open-border:   $state-success-border;

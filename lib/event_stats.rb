@@ -72,71 +72,32 @@ class EventStats
     q.size
   end
 
-  def proposals(track_id='all')
-    q = event.proposals
-    q = filter_by_track(q, track_id)
-    q.size
-  end
-
-  def ratings(track_id='all')
-    q = event.proposals.rated
-    q = filter_by_track(q, track_id)
-    q.map(&:ratings).flatten.size
-  end
-
-  def public_comments(track_id='all')
-    q = event.proposals
-    q = filter_by_track(q, track_id)
-    q.map(&:public_comments).flatten.size
-  end
-
-  def internal_comments(track_id='all')
-    q = event.proposals
-    q = filter_by_track(q, track_id)
-    q.map(&:internal_comments).flatten.size
-  end
-
-  def user_comments(user)
-    q = event.proposals
-
-    public_comments = q.map(&:public_comments).flatten
-    internal_comments = q.map(&:internal_comments).flatten
-
-    {
-      public: public_comments.select { |c| c.user_id == user.id }.size,
-      internal: internal_comments.select { |c| c.user_id == user.id }.size
-    }
-  end
-
   def review
-    stats = Hash[event.tracks.map do |t|
-      [t.name, track_review_stats(t.id)]
-    end]
-
-    stats.merge!(no_track_review_stats) if event.closed?
-    stats.sort.to_h.merge('Total' => track_review_stats)
+    stats = {'Total' => track_review_stats}
+    event.tracks.each do |track|
+      stats[track.name] = track_review_stats(track.id)
+    end
+    stats
   end
 
   def track_review_stats(track_id='all')
+    p = event.proposals
+    p = filter_by_track(p, track_id) unless track_id == 'all'
     {
-      proposals: proposals(track_id),
-      reviews: ratings(track_id),
-      public_comments: public_comments(track_id),
-      internal_comments: internal_comments(track_id)
+      proposals: p.count,
+      reviews: p.rated.count,
+      public_comments: PublicComment.joins(:proposal).where(proposal: p).count,
+      internal_comments: InternalComment.joins(:proposal).where(proposal: p).count
     }
   end
 
-  def no_track_review_stats
-    { Track::NO_TRACK => track_review_stats('') }
-  end
-
   def program
-    stats = Hash[event.tracks.map do |t|
-      [t.name, track_program_stats(t.id)]
-    end]
-
-    stats.merge!(no_track_program_stats) if event.closed?
-    stats.sort.to_h.merge('Total' => track_program_stats)
+    stats = {'Total' => track_program_stats}
+    stats[Track::NO_TRACK] = track_program_stats('')
+    event.tracks.each do |track|
+      stats[track.name] = track_program_stats(track.id)
+    end
+    stats
   end
 
   def track_program_stats(track_id='all')
@@ -148,26 +109,20 @@ class EventStats
     }
   end
 
-  def no_track_program_stats
-    { Track::NO_TRACK => track_program_stats('') }
-  end
-
   def team
-    team = event.teammates.accepted.reject { |t| t.user.ratings.empty? }
+    stats = {}
 
-    Hash[team.sort_by(&:name).map do |t|
-      [t.user.name, teammate_stats(t.user)]
-    end]
-  end
-
-  def teammate_stats(user)
-    comments = user_comments(user)
-
-    {
-      reviews: user_rated_proposals(user),
-      public_comments: comments[:public],
-      internal_comments: comments[:internal]
-    }
+    event.teammates.active.alphabetize.each do |teammate|
+      rating_count = teammate.ratings_count(event)
+      if rating_count > 0
+        stats[teammate.name] = {
+          reviews: rating_count,
+          public_comments: PublicComment.where(user_id: teammate.user_id).joins(proposal: :event).where(proposals: {event_id: event}).count,
+          internal_comments: InternalComment.where(user_id: teammate.user_id).joins(proposal: :event).where(proposals: {event_id: event}).count,
+        }
+      end
+    end
+    stats
   end
 
   private

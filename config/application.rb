@@ -22,6 +22,6 @@ module CFPApp
       g.template_engine :haml
     end
 
-    config.active_record.time_zone_aware_types = [:datetime, :time]
+    config.active_record.time_zone_aware_types = [:datetime]
   end
 end

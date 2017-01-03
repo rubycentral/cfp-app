@@ -5,9 +5,9 @@ describe Users::OmniauthCallbacksController, type: :controller do
   describe '#twitter' do
     let(:twitter_auth_hash) { OmniAuth.config.mock_auth[:twitter] }
     let(:github_auth_hash) { OmniAuth.config.mock_auth[:github] }
-    let(:user) { build_stubbed(:user) }
-    let(:invitation) { build_stubbed(:invitation, slug: "abc123", email: 'foo@example.com') }
-    let(:other_invitation) { build_stubbed(:invitation, slug: "def456", email: 'foo@example.com') }
+    let(:user) { build(:user) }
+    let(:invitation) { build(:invitation, slug: "abc123", email: 'foo@example.com') }
+    let(:other_invitation) { build(:invitation, slug: "def456", email: 'foo@example.com') }
 
     before :each do
       session[:invitation_slug] = invitation.slug

@@ -134,7 +134,7 @@ describe Proposal do
   end
 
   # describe "#scheduled?" do
-  #   let(:proposal) { build_stubbed(:proposal, state: ACCEPTED) }
+  #   let(:proposal) { build(:proposal, state: ACCEPTED) }
   #
   #   it "returns true for scheduled proposals" do
   #     create(:time_slot, proposal: proposal)
@@ -357,7 +357,7 @@ describe Proposal do
       ]
 
       values.each do |value|
-        proposal = build_stubbed(:proposal)
+        proposal = build(:proposal)
         value[:scores].each do |i|
           attrs = attributes_for(:rating, score: i)
           proposal.ratings.build(attrs)
@@ -368,7 +368,7 @@ describe Proposal do
     end
 
     it "returns nil if array is empty" do
-      proposal = build_stubbed(:proposal, ratings: [])
+      proposal = build(:proposal, ratings: [])
       expect(proposal.standard_deviation).to be_nil
     end
   end

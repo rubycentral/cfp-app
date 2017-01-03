@@ -10,7 +10,7 @@ class Admin::EventsController < Admin::ApplicationController
     if @event.save
 			@event.teammates.build(email: current_user.email, role: "organizer").accept(current_user)
       flash[:info] = "Your event was saved."
-      redirect_to event_staff_url(@event)
+      redirect_to event_staff_path(@event)
     else
       flash[:danger] = "There was a problem saving your event; please review the form for issues and try again."
       render :new
@@ -20,7 +20,7 @@ class Admin::EventsController < Admin::ApplicationController
   def destroy
     @event.destroy
     flash[:info] = "Your event has been deleted."
-    redirect_to events_url
+    redirect_to events_path
   end
 
   def archive
@@ -30,7 +30,7 @@ class Admin::EventsController < Admin::ApplicationController
     else
       flash[:danger] = "Event not found. Unable to archive."
     end
-    redirect_to admin_events_url
+    redirect_to admin_events_path
   end
 
   def unarchive
@@ -40,7 +40,7 @@ class Admin::EventsController < Admin::ApplicationController
     else
       flash[:danger] = "Event not found. Unable to unarchive."
     end
-    redirect_to admin_events_url
+    redirect_to admin_events_path
   end
 
   def index

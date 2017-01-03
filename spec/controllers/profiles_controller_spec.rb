@@ -37,7 +37,7 @@ describe ProfilesController, type: :controller do
     before { allow(controller).to receive(:current_user).and_return(user) }
 
     it "updates the user record" do
-      put :update, params
+      put :update, params: params
       expect(response.code).to eq("302")
     end
   end

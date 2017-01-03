@@ -53,8 +53,8 @@ group :development do
 end
 
 group :development, :test do
-  gem 'capybara', '>= 2.2'
-  gem 'capybara-webkit', '~> 1.6.0' # Local QT install req'd (`brew install qt`)
+  gem 'capybara'
+  gem 'capybara-webkit' # Local QT install req'd (`brew install qt`)
   gem 'database_cleaner'
   gem 'dotenv-rails'
   gem 'factory_girl_rails'
@@ -64,6 +64,7 @@ group :development, :test do
   gem 'guard-livereload', '~> 2.1.1'
   gem 'rspec'
   gem 'rspec-rails'
+  gem 'rails-controller-testing'
   gem 'timecop'
   gem 'spring'
   gem 'pry-rails'

@@ -1,4 +1,4 @@
-class Track < ActiveRecord::Base
+class Track < ApplicationRecord
   NO_TRACK = 'General'
 
   belongs_to :event

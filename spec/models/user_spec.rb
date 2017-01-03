@@ -38,7 +38,7 @@ describe User do
         user = build(:user, email: "")
         expect {
           user.save!
-        }.to raise_error
+        }.to raise_error "Validation failed: Email can't be blank"
       end
 
       it "returns no error if password and provider but no email" do

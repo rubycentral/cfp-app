@@ -28,7 +28,8 @@ Rails.application.configure do
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false
 
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.default_url_options = { host: 'http://test.host' }
+  # config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   config.action_mailer.default_options = {from: 'cfp@example.org'}
   config.action_mailer.perform_caching = false
 

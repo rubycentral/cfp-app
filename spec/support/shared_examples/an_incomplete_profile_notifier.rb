@@ -1,6 +1,6 @@
 RSpec.shared_examples_for 'an incomplete profile flash message' do
   it 'includes the missing requirements in a flash message' do
-    get action, params
+    get action, params: params
     expect(flash[:warning]).to eq msg
   end
 end

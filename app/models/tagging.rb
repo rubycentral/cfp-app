@@ -1,4 +1,4 @@
-class Tagging < ActiveRecord::Base
+class Tagging < ApplicationRecord
   belongs_to :proposal
 
   scope :proposal, -> { where(internal: false).order('tag ASC') }

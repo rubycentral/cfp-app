@@ -1,4 +1,4 @@
-class Speaker < ActiveRecord::Base
+class Speaker < ApplicationRecord
   belongs_to :user
   belongs_to :event
   belongs_to :proposal

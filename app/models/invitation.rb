@@ -1,6 +1,6 @@
 require 'digest/sha1'
 
-class Invitation < ActiveRecord::Base
+class Invitation < ApplicationRecord
   include Invitable
 
   belongs_to :proposal

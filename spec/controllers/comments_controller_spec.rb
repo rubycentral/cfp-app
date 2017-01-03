@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe CommentsController, type: :controller do
   describe "POST #create" do
-    let(:proposal) { build_stubbed(:proposal, uuid: 'abc123') }
-    let(:user) { build_stubbed(:user) }
+    let(:proposal) { create(:proposal, uuid: 'abc123') }
+    let(:user) { create(:user) }
     let(:referer_path) { event_proposal_path(event_slug: proposal.event.slug, uuid: proposal) }
     let(:mailer) { double("CommentNotificationMailer.speaker_notification") }
 
@@ -13,8 +13,8 @@ describe CommentsController, type: :controller do
     end
 
     context "Public comments" do
-      let(:comment_user) { build_stubbed(:user) }
-      let(:comment) { build_stubbed(:comment, type: "PublicComment", user: comment_user) }
+      let(:comment_user) { create(:user) }
+      let(:comment) { create(:comment, type: "PublicComment", user: comment_user) }
       let(:params) { { public_comment: { body: 'foo', proposal_id: proposal.id }, type: "PublicComment" } }
 
       before do
@@ -26,19 +26,19 @@ describe CommentsController, type: :controller do
       it "adds a comment to the proposal" do
         # expect(PublicComment).to receive(:create).and_return(comment)
         expect {
-          post :create, params
+          post :create, params: params
         }.to change {PublicComment.count}.by(1)
       end
 
       it "returns to the referer" do
-        post :create, params
+        post :create, params: params
         expect(response).to redirect_to(referer_path)
       end
 
       it "sends an email notification to the speaker" do
         allow(CommentNotificationMailer).to receive(:speaker_notification).and_return(mailer)
         expect(mailer).to receive(:deliver_now)
-        post :create, params
+        post :create, params: params
       end
 
       it "sends an email notification to all speakers" do
@@ -46,7 +46,7 @@ describe CommentsController, type: :controller do
         proposal = create(:proposal, speakers: speakers)
         allow(Proposal).to receive(:find).and_return(proposal)
         expect {
-          post :create, params
+          post :create, params: params
         }.to change(ActionMailer::Base.deliveries, :count).by(1)
 
         email = ActionMailer::Base.deliveries.last
@@ -55,9 +55,9 @@ describe CommentsController, type: :controller do
     end
 
     context "Internal comments" do
-      let(:comment) { build_stubbed(:comment, type: "InternalComment") }
+      let(:comment) { build(:comment, type: "InternalComment") }
       let(:params) { { internal_comment: { body: 'foo', proposal_id: proposal.id }, type: "InternalComment" } }
-      let(:reviewer) { build_stubbed(:reviewer)}
+      let(:reviewer) { build(:reviewer)}
 
       before do
         allow_any_instance_of(CommentsController).to receive(:current_user) { reviewer }
@@ -66,18 +66,18 @@ describe CommentsController, type: :controller do
       it "adds the comment to the proposal" do
         # expect(InternalComment).to receive(:create).and_return(comment)
         expect {
-          post :create, params
+          post :create, params: params
         }.to change {InternalComment.count}.by(1)
       end
 
       it "returns to the referer" do
-        post :create, params
+        post :create, params: params
         expect(response).to redirect_to(referer_path)
       end
 
       it "does not send a notification email to the speaker" do
         expect(mailer).not_to receive(:deliver)
-        post :create, params
+        post :create, params: params
       end
     end
   end

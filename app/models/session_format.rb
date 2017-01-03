@@ -1,4 +1,4 @@
-class SessionFormat < ActiveRecord::Base
+class SessionFormat < ApplicationRecord
   belongs_to :event
   has_many :time_slots
   has_many :proposals

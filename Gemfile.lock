@@ -81,14 +81,15 @@ GEM
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
     builder (3.2.2)
-    capybara (2.4.4)
+    capybara (2.7.1)
+      addressable
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    capybara-webkit (1.6.0)
-      capybara (>= 2.3.0, < 2.5.0)
+    capybara-webkit (1.11.1)
+      capybara (>= 2.3.0, < 2.8.0)
       json
     chartkick (2.2.1)
     coderay (1.1.1)
@@ -249,7 +250,7 @@ GEM
     pry-rescue (1.4.4)
       interception (>= 0.5)
       pry
-    public_suffix (2.0.4)
+    public_suffix (2.0.5)
     puma (3.6.2)
     pundit (1.1.0)
       activesupport (>= 3.0.0)
@@ -272,6 +273,10 @@ GEM
       railties (= 5.0.1)
       sprockets-rails (>= 2.0.0)
     rails-assets-momentjs (2.17.1)
+    rails-controller-testing (1.0.1)
+      actionpack (~> 5.x)
+      actionview (~> 5.x)
+      activesupport (~> 5.x)
     rails-dom-testing (2.0.2)
       activesupport (>= 4.2.0, < 6.0)
       nokogiri (~> 1.6)
@@ -379,8 +384,8 @@ DEPENDENCIES
   binding_of_caller
   bootstrap-multiselect-rails (~> 0.9.9)
   bootstrap-sass (~> 3.3.6)
-  capybara (>= 2.2)
-  capybara-webkit (~> 1.6.0)
+  capybara
+  capybara-webkit
   chartkick
   coderay (~> 1.0)
   country_select (~> 1.3.1)
@@ -414,6 +419,7 @@ DEPENDENCIES
   rack-timeout (~> 0.2.4)
   rails (= 5.0.1)
   rails-assets-momentjs!
+  rails-controller-testing
   rails_12factor
   redcarpet (~> 3.0.0)
   responders (~> 2.0)

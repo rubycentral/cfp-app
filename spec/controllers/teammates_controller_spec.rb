@@ -10,7 +10,7 @@ describe TeammatesController, type: :controller do
 
     it "creates an accepted teammate for current user" do
       expect(invitation.state).to eq(Teammate::PENDING)
-      get :accept, token: invitation.token
+      get :accept, params: {token: invitation.token}
       expect(user).to be_reviewer_for_event(invitation.event)
       invitation.reload
       expect(invitation.state).to eq(Teammate::ACCEPTED)
@@ -19,12 +19,12 @@ describe TeammatesController, type: :controller do
 
   describe "GET 'decline'" do
     it "redirects to root url" do
-      get "decline", token: invitation.token
+      get :decline, params: {token: invitation.token}
       expect(response).to redirect_to(root_url)
     end
 
     it "sets invitation state to declined" do
-      get "decline", token: invitation.token
+      get :decline, params: {token: invitation.token}
       expect(invitation.reload.state).to eq(Teammate::DECLINED)
     end
   end

@@ -10,7 +10,7 @@ describe Staff::ProgramSessionsController, type: :controller do
       ps = create(:program_session, event: event)
       speakers = create_list(:speaker, 5, :with_name, :with_email, program_session: ps)
       sign_in(create(:organizer, event: event))
-      xhr :get, :speaker_emails, event_slug: event, session_ids: [ ps.id ]
+      get :speaker_emails, xhr: true, params: {event_slug: event, session_ids: [ ps.id ]}
       speakers.each do |speaker|
         expect(response.body).to match(speaker.email)
       end

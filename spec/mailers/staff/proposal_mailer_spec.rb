@@ -29,7 +29,7 @@ describe Staff::ProposalMailer do
     it "uses the default template if event's accept is blank" do
       event.update_attribute(:accept, "")
       mail.deliver_now
-      expect(ActionMailer::Base.deliveries.first.subject).to eq("Your proposal for #{event} has been accepted")
+      expect(ActionMailer::Base.deliveries.last.subject).to eq("Your proposal for #{event} has been accepted")
     end
 
     it "gives the speaker the ability to submit feedback and ask any questions they may have" do
@@ -58,7 +58,7 @@ describe Staff::ProposalMailer do
     it "uses the default template if event's reject is blank" do
       event.update_attribute(:reject, "")
       mail.deliver_now
-      expect(ActionMailer::Base.deliveries.first.subject).to eq("Your proposal for #{event} has not been accepted")
+      expect(ActionMailer::Base.deliveries.last.subject).to eq("Your proposal for #{event} has not been accepted")
     end
   end
 
@@ -82,7 +82,7 @@ describe Staff::ProposalMailer do
     it "uses the default template if event's waitlist is blank" do
       event.update_attribute(:waitlist, "")
       mail.deliver_now
-      expect(ActionMailer::Base.deliveries.first.subject).to eq("Your proposal for #{event} has been added to the waitlist")
+      expect(ActionMailer::Base.deliveries.last.subject).to eq("Your proposal for #{event} has been added to the waitlist")
     end
   end
 end

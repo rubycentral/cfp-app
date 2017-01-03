@@ -18,7 +18,7 @@ describe Admin::EventsController, type: :controller do
 
     it "archives the event" do
       sign_in(create(:admin))
-      post :archive, event_slug: @event.slug
+      post :archive, params: {event_slug: @event.slug}
       expect(response).to redirect_to(admin_events_path)
     end
   end

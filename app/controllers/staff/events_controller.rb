@@ -1,6 +1,8 @@
 class Staff::EventsController < Staff::ApplicationController
   before_action :enable_staff_event_subnav
 
+  helper_method :sticky_template_test_email
+
   def edit
     authorize @event, :edit?
   end
@@ -121,6 +123,19 @@ class Staff::EventsController < Staff::ApplicationController
     redirect_to event_staff_path(@event)
   end
 
+  def test_speaker_template
+    authorize_update
+
+    self.sticky_template_test_email = template_test_params[:email]
+    send_to = sticky_template_test_email
+    @type_key = template_test_params[:type_key]
+    template_display_name = SpeakerEmailTemplate::DISPLAY_TYPES[@type_key]
+
+    Staff::ProposalMailer.send_test_email(send_to, @type_key, current_event).deliver_now
+
+    flash.now[:info] = "'#{template_display_name}' test email successfully sent to #{send_to}."
+  end
+
   private
 
   def event_params
@@ -129,6 +144,18 @@ class Staff::EventsController < Staff::ApplicationController
         :valid_review_tags, :custom_fields_string, :state, :guidelines,
         :closes_at, :speaker_notification_emails, :accept, :reject,
         :waitlist, :opens_at, :start_date, :end_date)
+  end
+
+  def template_test_params
+    @template_test_params ||= params.require(:speaker_email_template).permit(:type_key, :email)
+  end
+
+  def sticky_template_test_email
+    session["event/#{@event.id}/template_test_email"] if @event
+  end
+
+  def sticky_template_test_email=(email)
+    session["event/#{@event.id}/template_test_email"] = email if @event
   end
 
   def authorize_update

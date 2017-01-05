@@ -126,21 +126,22 @@ RSpec.shared_examples_for 'an open event stats' do
     {
       track1.name => track1_program_stats,
       track2.name => track2_program_stats,
-      'Total' => total_program_stats
+      'Total' => total_program_stats,
+      Track::NO_TRACK => no_track_program_stats
     }
   end
 
   ### Team Stats
   let(:teammate1_stats) do
     {
-      reviews: user1.ratings.count,
+      reviews: user1.ratings.not_withdrawn.for_event(event).count,
       public_comments: user1.comments.where(type: 'PublicComment').count,
       internal_comments: user1.comments.where(type: 'InternalComment').count
     }
   end
   let(:teammate2_stats) do
     {
-      reviews: user2.ratings.count,
+      reviews: user2.ratings.not_withdrawn.for_event(event).count,
       public_comments: user2.comments.where(type: 'PublicComment').count,
       internal_comments: user2.comments.where(type: 'InternalComment').count
     }

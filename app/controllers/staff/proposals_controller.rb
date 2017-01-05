@@ -78,7 +78,7 @@ class Staff::ProposalsController < Staff::ApplicationController
     authorize @proposal, :finalize?
 
     @proposal.finalize
-    send_state_mail(@proposal)
+    Staff::ProposalMailer.send_email(@proposal).deliver_now
     redirect_to event_staff_program_proposal_path(@proposal.event, @proposal)
   end
 
@@ -90,7 +90,7 @@ class Staff::ProposalsController < Staff::ApplicationController
       prop.finalize
     end
     errors = @remaining.map do |prop|
-      send_state_mail(prop) unless prop.changed?
+      Staff::ProposalMailer.send_email(prop).deliver_now unless prop.changed?
       prop.errors.full_messages.join(', ')
     end.compact!
 
@@ -114,16 +114,4 @@ class Staff::ProposalsController < Staff::ApplicationController
     redirect_to event_staff_program_proposal_path(slug: @proposal.event.slug, uuid: @proposal)
   end
 
-  private
-
-  def send_state_mail(proposal)
-    case proposal.state
-      when Proposal::State::ACCEPTED
-        Staff::ProposalMailer.accept_email(current_event, proposal).deliver_now
-      when Proposal::State::REJECTED
-        Staff::ProposalMailer.reject_email(current_event, proposal).deliver_now
-      when Proposal::State::WAITLISTED
-        Staff::ProposalMailer.waitlist_email(current_event, proposal).deliver_now
-    end
-  end
 end

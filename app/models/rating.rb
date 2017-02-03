@@ -1,4 +1,4 @@
-class Rating < ActiveRecord::Base
+class Rating < ApplicationRecord
   belongs_to :proposal
   belongs_to :user
 

@@ -1,6 +1,6 @@
 require 'digest/sha1'
 
-class Proposal < ActiveRecord::Base
+class Proposal < ApplicationRecord
   include Proposal::State
 
   has_many :public_comments, dependent: :destroy
@@ -56,7 +56,7 @@ class Proposal < ActiveRecord::Base
   scope :unrated, -> { where('id NOT IN ( SELECT proposal_id FROM ratings )') }
   scope :rated, -> { where('id IN ( SELECT proposal_id FROM ratings )') }
   scope :not_withdrawn, -> {where.not(state: WITHDRAWN)}
-  scope :not_owned_by, ->(user) {where.not(id: user.proposals.pluck(:id))}
+  scope :not_owned_by, ->(user) { where.not(id: user.proposals.map(&:id)) }
   scope :for_state, ->(state) do
     where(state: state).order(:title).includes(:event, {speakers: :user}, :review_taggings)
   end
@@ -78,7 +78,7 @@ class Proposal < ActiveRecord::Base
                  'LEFT OUTER JOIN comments AS c ON c.user_id = users.id')
         .where("teammates.event_id = ? AND (r.proposal_id = ? or (c.proposal_id = ? AND c.type = 'PublicComment'))",
                event.id, id, id)
-        .where.not(id: speakers.map(&:user_id)).uniq
+        .where.not(id: speakers.map(&:user_id)).distinct
   end
 
   # Return all proposals from speakers of this proposal. Does not include this proposal.

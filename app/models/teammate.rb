@@ -1,4 +1,4 @@
-class Teammate < ActiveRecord::Base
+class Teammate < ApplicationRecord
 
   PENDING = "pending"
   ACCEPTED = "accepted"

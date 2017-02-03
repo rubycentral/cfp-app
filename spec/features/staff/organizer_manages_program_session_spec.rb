@@ -2,10 +2,11 @@ require 'rails_helper'
 
 feature "Organizers can manage program sessions" do
 
-  let(:event) { create(:event) }
-  let(:program_session) { create(:program_session, event: event) }
+  let!(:event) { create(:event) }
+  let!(:session_format) { create(:session_format, event: event) }
+  let!(:program_session) { create(:program_session, event: event, session_format: session_format) }
 
-  let(:organizer_user) { create(:user) }
+  let!(:organizer_user) { create(:user) }
   let!(:organizer) { create(:teammate, :organizer, user: organizer_user, event: event) }
 
   before :each do
@@ -50,7 +51,6 @@ feature "Organizers can manage program sessions" do
   end
 
   scenario "organizer can create program session with a speaker" do
-    session_format = create(:session_format)
     visit event_staff_program_sessions_path(event)
 
     click_link("New Session")

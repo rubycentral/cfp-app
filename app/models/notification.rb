@@ -1,4 +1,4 @@
-class Notification < ActiveRecord::Base
+class Notification < ApplicationRecord
   belongs_to :user
   UNREAD_LIMIT = 10
 

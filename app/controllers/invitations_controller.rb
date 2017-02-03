@@ -46,19 +46,19 @@ class InvitationsController < ApplicationController
       flash[:danger] = "We could not invite #{params[:speaker][:email]} as a speaker; please try again later."
     end
 
-    redirect_to :back
+    redirect_back fallback_location: event_proposal_path(@proposal.event, uuid: @proposal)
   end
 
   def destroy
     @invitation.destroy
     flash[:info] = "You have removed the invitation for #{@invitation.email}."
-    redirect_to :back
+    redirect_back fallback_location: event_proposal_path(@proposal.event, uuid: @proposal)
   end
 
   def resend
     SpeakerInvitationMailer.create(@invitation, current_user).deliver_now
     flash[:info] = "You have resent an invitation to #{@invitation.email}."
-    redirect_to :back
+    redirect_back fallback_location: event_proposal_path(@proposal.event, uuid: @proposal)
   end
 
   private

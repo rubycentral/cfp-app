@@ -1,4 +1,4 @@
-class ProgramSession < ActiveRecord::Base
+class ProgramSession < ApplicationRecord
   LIVE = 'live'
   DRAFT = 'draft'
   WAITLISTED = 'waitlisted'

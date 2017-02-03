@@ -1,4 +1,4 @@
-class TimeSlot < ActiveRecord::Base
+class TimeSlot < ApplicationRecord
   belongs_to :program_session
   belongs_to :room
   belongs_to :track

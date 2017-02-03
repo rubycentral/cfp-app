@@ -8,7 +8,7 @@ describe Staff::RoomsController, type: :controller do
     it "destroys the room with ajax" do
       room = create(:room, event: event)
       expect {
-        xhr :delete, :destroy, id: room, event_slug: event
+        delete :destroy, xhr: true, params: {id: room, event_slug: event}
       }.to change(Room, :count).by(-1)
       expect(response).to be_success
     end

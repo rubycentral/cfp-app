@@ -23,14 +23,14 @@ describe Staff::ProposalMailerTemplate do
     it "substitutes confirmation link" do
       template = "A line with a raw link ::confirmation_link::"
       rendered = Staff::ProposalMailerTemplate.new(template, event, proposal).render
-      expect(rendered).to match(%r{raw link http://localhost:3000#{event_proposal_path(event, proposal)}})
+      expect(rendered).to match(%r{raw link http://test.host#{event_proposal_path(event, proposal)}})
     end
 
     it "only substitutes whitelisted tags" do
       template = "Line one with raw link ::confirmation_link:: and ::proposal_title::"
       rendered =
         Staff::ProposalMailerTemplate.new(template, event, proposal, [:proposal_title]).render
-      expect(rendered).to_not match(%r{raw link http://localhost:3000/events/.*?/confirm})
+      expect(rendered).to_not match(%r{raw link http://test.host/events/.*?/confirm})
       expect(rendered).to include(proposal.title)
     end
   end

@@ -1,4 +1,4 @@
-class Event < ActiveRecord::Base
+class Event < ApplicationRecord
   has_many :teammates, dependent: :destroy
   has_many :proposals, dependent: :destroy
   has_many :speakers

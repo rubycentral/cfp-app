@@ -67,18 +67,10 @@ describe Staff::ProposalsController, type: :controller do
     end
 
     it "sends appropriate emails" do
-      state_to_email = {
-        Proposal::State::SOFT_ACCEPTED => :accept_email,
-        Proposal::State::SOFT_WAITLISTED => :waitlist_email,
-        Proposal::State::SOFT_REJECTED => :reject_email
-      }
-
-      state_to_email.each do |state, mail_action|
-        proposal = create(:proposal, state: state)
-        mail = double(:mail, deliver_now: nil)
-        expect(Staff::ProposalMailer).to receive(mail_action).and_return(mail)
-        post :finalize, params: {event_slug: event, proposal_uuid: proposal.uuid}
-      end
+      proposal = create(:proposal, state: Proposal::State::SOFT_ACCEPTED)
+      mail = double(:mail, deliver_now: nil)
+      expect(Staff::ProposalMailer).to receive('send_email').and_return(mail)
+      post :finalize, event_slug: event, proposal_uuid: proposal.uuid
     end
   end
 

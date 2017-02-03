@@ -29,9 +29,16 @@ $(document).ready(function() {
     $parent.show();
 
     $parent.find('.template-preview, .template-short').hide();
-    $parent.find('.template-exit-preview-btn, .template-edit-btn, .template-preview-btn').hide();
+    $parent.find('.template-exit-preview-btn, .template-edit-btn, .template-preview-btn, .template-test-btn').hide();
     $('.email-markup-help').show();
     $parent.find('.template-edit').show();
     $parent.find('.template-save-btn, .template-remove-btn, .template-cancel-btn').show();
+  });
+
+  $('.modal-content').keypress(function(e){
+    if(e.which == 13) {
+      $(this).find('form').submit();
+      e.preventDefault();
+    }
   });
 });

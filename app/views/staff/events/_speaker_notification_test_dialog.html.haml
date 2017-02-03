@@ -1,0 +1,15 @@
+.modal.fade{id: "test-template-#{type_key}-dialog"}
+  .modal-dialog
+    .modal-content
+      = simple_form_for :speaker_email_template, url: event_staff_test_speaker_template_path(@event), method: 'post', remote: true, html: {role: 'form'} do |f|
+        .modal-header
+          %h3 Send Test '#{SpeakerEmailTemplate::DISPLAY_TYPES[type_key]}' Email
+        .errors
+
+        .modal-body
+          = f.input :type_key, as: :hidden, input_html: {value: type_key}
+          = f.input :email, label: 'Send To', as: :string, autofocus: true, input_html: {value: sticky_template_test_email || current_user.email}
+
+        .modal-footer
+          %button.btn.btn-default{'data-dismiss' => 'modal', type: 'button'} Cancel
+          %button.btn.btn-success{type: 'submit'} Send

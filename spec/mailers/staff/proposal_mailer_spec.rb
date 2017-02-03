@@ -84,5 +84,44 @@ describe Staff::ProposalMailer do
       mail.deliver_now
       expect(ActionMailer::Base.deliveries.last.subject).to eq("Your proposal for #{event} has been added to the waitlist")
     end
+
+  end
+
+  describe "send_email" do
+    it "selects the appropriate template to use based on proposal state" do
+      proposal.state = Proposal::ACCEPTED
+      Staff::ProposalMailer.send_email(proposal).deliver_now
+      expect(ActionMailer::Base.deliveries.last.subject).to eq("Your proposal for #{event} has been accepted")
+
+      proposal.state = Proposal::REJECTED
+      Staff::ProposalMailer.send_email(proposal).deliver_now
+      expect(ActionMailer::Base.deliveries.last.subject).to eq("Your proposal for #{event} has not been accepted")
+
+      proposal.state = Proposal::WAITLISTED
+      Staff::ProposalMailer.send_email(proposal).deliver_now
+      expect(ActionMailer::Base.deliveries.last.subject).to eq("Your proposal for #{event} has been added to the waitlist")
+    end
+  end
+
+  describe "send_test_email" do
+    it "sends a test email to the given address using the specified template" do
+      Staff::ProposalMailer.send_test_email('test@e.mail', 'accept', event).deliver_now
+      mail = ActionMailer::Base.deliveries.last
+      expect(mail.subject).to eq("Your proposal for #{event} has been accepted")
+      expect(mail.to[0]).to eq('test@e.mail')
+      expect(mail.bcc).to be_empty
+
+      Staff::ProposalMailer.send_test_email('test@b.mail', 'reject', event).deliver_now
+      mail = ActionMailer::Base.deliveries.last
+      expect(mail.subject).to eq("Your proposal for #{event} has not been accepted")
+      expect(mail.to[0]).to eq('test@b.mail')
+      expect(mail.bcc).to be_empty
+
+      Staff::ProposalMailer.send_test_email('test@g.mail', 'waitlist', event).deliver_now
+      mail = ActionMailer::Base.deliveries.last
+      expect(mail.subject).to eq("Your proposal for #{event} has been added to the waitlist")
+      expect(mail.to[0]).to eq('test@g.mail')
+      expect(mail.bcc).to be_empty
+    end
   end
 end

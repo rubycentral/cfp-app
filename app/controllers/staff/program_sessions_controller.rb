@@ -80,7 +80,8 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
   def program_session_params
     params.require(:program_session).permit(:id, :session_format_id, :track_id, :title,
                                             :abstract, :state, :video_url, :slides_url,
-                                            speakers_attributes: [:id, :bio, :speaker_name, :speaker_email])
+                                            speakers_attributes: [:id, :bio, :speaker_name, :speaker_email],
+                                            proposal_attributes: [:id, :confirmation_notes])
   end
 
   def json_filename

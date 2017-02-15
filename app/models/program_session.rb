@@ -13,6 +13,7 @@ class ProgramSession < ApplicationRecord
   has_many :speakers
 
   accepts_nested_attributes_for :speakers
+  accepts_nested_attributes_for :proposal
 
   validates :event, :session_format, :title, :state, presence: true
 

@@ -9,9 +9,11 @@
       = f.input :abstract, maxlength: 605, input_html: { class: 'watched js-maxlength-alert', rows: 5 }
       = f.label :video_url
       = f.text_field :video_url, class: "form-control"
-
       = f.label :slides_url
       = f.text_field :slides_url, class: "form-control"
+      - if @program_session.proposal.present?
+        = f.simple_fields_for :proposal do |proposal|
+          = proposal.input :confirmation_notes, label: "Confirmation Notes"
     - if @program_session.new_record?
       %fieldset.col-md-6
         %h4 Speaker

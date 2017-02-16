@@ -8,6 +8,13 @@
   $gridDay.replaceWith('<%=j render partial: 'staff/grids/grid', locals: { schedule: @schedule, day: @bulk.day} %>');
 
   grid.initGridDay(<%= @bulk.day %>);
+
+  var $tabs = $('.nav-tabs > li');
+  $tabs.removeClass('active');
+  $('.tab-pane').removeClass('active');
+  $('a[href="#grid_day_<%= @bulk.day %>"]').parent().addClass('active');
+  $('#grid_day_<%= @bulk.day %>').addClass('active');
+
   $dialog.modal('hide');
 
 })(jQuery);

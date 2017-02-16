@@ -10,6 +10,10 @@ class Staff::TimeSlotDecorator < Draper::Decorator
     object.end_time.try(:to_s, :time)
   end
 
+  def session_duration
+    "#{object.session_duration.try(:to_s, :time)} minutes"
+  end
+
   def time_slot_id
     object.id
   end

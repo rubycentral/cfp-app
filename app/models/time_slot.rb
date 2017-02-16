@@ -4,6 +4,8 @@ class TimeSlot < ApplicationRecord
   belongs_to :track
   belongs_to :event
 
+  attr_reader :session_duration
+
   DEFAULT_TIME = Time.current.beginning_of_day.change(hour: 9)
   DEFAULT_DURATION = 60 # minutes
   STANDARD_LENGTH = 40.minutes
@@ -81,6 +83,10 @@ class TimeSlot < ApplicationRecord
 
   def session_confirmation_notes
     program_session && program_session.confirmation_notes
+  end
+
+  def session_duration
+    (end_time - start_time).to_i/60
   end
 end
 

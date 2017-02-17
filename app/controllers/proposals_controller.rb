@@ -20,6 +20,11 @@ class ProposalsController < ApplicationController
   end
 
   def new
+    if @event.closed?
+      redirect_to event_path (@event)
+      flash[:danger] = "The CFP is closed for proposal submissions."
+      return
+    end
     @proposal = @event.proposals.new
     @proposal.speakers.build(user: current_user)
     flash.now[:warning] = incomplete_profile_msg unless current_user.complete?
@@ -57,6 +62,11 @@ class ProposalsController < ApplicationController
   end
 
   def create
+    if @event.closed? && @event.closes_at < 1.hour.ago
+      redirect_to event_path (@event)
+      flash[:danger] = "The CFP is closed for proposal submissions."
+      return
+    end
     @proposal = @event.proposals.new(proposal_params)
     speaker = @proposal.speakers[0]
     speaker.user_id = current_user.id

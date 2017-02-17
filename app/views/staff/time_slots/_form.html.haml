@@ -4,6 +4,8 @@
 .form-inline
   = f.input :start_time, as: :string, input_html: { value: time_slot.start_time, class: 'start-time' }
   = f.input :end_time, as: :string, input_html: { value: time_slot.end_time, class: 'end-time' }
+  - if time_slot.start_time && time_slot.end_time
+    = f.input :length, disabled: true, input_html: { value: time_slot.session_duration }
 = f.input :program_session_id, collection: time_slot.unscheduled_program_sessions,
   input_html: { class: 'available-proposals' }
 .selected-session-info

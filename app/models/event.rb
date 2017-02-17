@@ -135,7 +135,7 @@ class Event < ApplicationRecord
     elsif draft?
       STATUSES[:draft]
     else
-    STATUSES[:closed]
+      STATUSES[:closed]
     end
   end
 

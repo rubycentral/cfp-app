@@ -3,6 +3,7 @@ require 'rails_helper'
 feature "Proposals" do
   let!(:user) { create(:user) }
   let!(:event) { create(:event, state: 'open') }
+  let!(:closed_event) { create(:event, state: 'closed') }
   let!(:session_format) { create(:session_format, name: 'Only format')}
   let(:session_format2) { create(:session_format, name: '2nd format')}
 
@@ -28,6 +29,17 @@ feature "Proposals" do
   before { login_as(user) }
   after { ActionMailer::Base.deliveries.clear }
 
+  context "when navigating to new proposal page" do
+    context "after closing time" do
+      it "redirects and displays flash" do
+        visit new_event_proposal_path(event_slug: closed_event.slug)
+
+        expect(current_path).to eq event_path(closed_event)
+        expect(page).to have_text("The CFP is closed for proposal submissions.")
+      end
+    end
+  end
+
   context "when submitting" do
     context "with invalid proposal" do
       before :each do
@@ -45,6 +57,32 @@ feature "Proposals" do
 
       it "shows Abstract validation if blank on submit" do
         expect(page).to have_text("Abstract *can't be blank")
+      end
+    end
+
+    context "less than one hour after CFP closes" do
+      before :each do
+        go_to_new_proposal
+        event.update(state: 'closed')
+        event.update(closes_at: 55.minutes.ago)
+        create_proposal
+      end
+
+      it "submits successfully" do
+        expect(page).to have_text("Thank you! Your proposal has been submitted and may be reviewed at any time while the CFP is open.")
+      end
+    end
+
+    context "more than one hour after CFP closes" do
+      before :each do
+        go_to_new_proposal
+        event.update(state: 'closed')
+        event.update(closes_at: 65.minutes.ago)
+        create_proposal
+      end
+
+      it "does not submit" do
+        expect(page).to have_text("The CFP is closed for proposal submissions.")
       end
     end
 

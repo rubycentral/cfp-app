@@ -28,6 +28,8 @@ class Staff::ProgramSessionDecorator < ApplicationDecorator
       'label-warning'
     when ProgramSession::DRAFT
       'label-default'
+    when ProgramSession::DECLINED
+      'label-danger'
     else
       'label-default'
     end

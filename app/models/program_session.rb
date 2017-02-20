@@ -2,8 +2,9 @@ class ProgramSession < ApplicationRecord
   LIVE = 'live'
   DRAFT = 'draft'
   WAITLISTED = 'waitlisted'
+  DECLINED = 'declined'
 
-  STATES = [DRAFT, LIVE, WAITLISTED]
+  STATES = [DRAFT, LIVE, WAITLISTED, DECLINED]
 
   belongs_to :event
   belongs_to :proposal
@@ -28,7 +29,7 @@ class ProgramSession < ApplicationRecord
   scope :live, -> { where(state: LIVE) }
   scope :draft, -> { where(state: DRAFT) }
   scope :waitlisted, -> { where(state: WAITLISTED) }
-  scope :live_or_draft, -> { where(state: [LIVE, DRAFT]) }
+  scope :non_waitlisted, -> { where(state: [LIVE, DRAFT, DECLINED]) }
   scope :without_proposal, -> { where(proposal: nil) }
   scope :in_track, ->(track) do
     track = nil if track.try(:strip).blank?

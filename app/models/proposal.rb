@@ -107,7 +107,13 @@ class Proposal < ApplicationRecord
   end
 
   def finalize
-    update_state(SOFT_TO_FINAL[state]) if SOFT_TO_FINAL.has_key?(state)
+    transaction do
+      update_state(SOFT_TO_FINAL[state]) if SOFT_TO_FINAL.has_key?(state)
+      ps = ProgramSession.create_draft_from_proposal(self)
+      ps.persisted?
+    end
+  rescue ActiveRecord::RecordInvalid
+    false
   end
 
   def withdraw
@@ -119,10 +125,16 @@ class Proposal < ApplicationRecord
 
   def confirm
     transaction do
-      update!(confirmed_at: DateTime.current)
-      ps = ProgramSession.create_from_proposal(self)
+      self.update(confirmed_at: DateTime.current)
+      ps = self.program_session
+      ps.update(state: self.waitlisted? ? ProgramSession::WAITLISTED : ProgramSession::LIVE) if ps.present?
       ps.persisted?
     end
+  #   transaction do
+  #     update!(confirmed_at: DateTime.current)
+  #     ps = ProgramSession.create_from_proposal(self)
+  #     ps.persisted?
+  #   end
   rescue ActiveRecord::RecordInvalid
     false
   end

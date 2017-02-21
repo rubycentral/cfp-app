@@ -77,8 +77,12 @@ class Staff::ProposalsController < Staff::ApplicationController
   def finalize
     authorize @proposal, :finalize?
 
-    @proposal.finalize
-    Staff::ProposalMailer.send_email(@proposal).deliver_now
+    if @proposal.finalize
+      Staff::ProposalMailer.send_email(@proposal).deliver_now
+      flash[:success] = "Proposal finalized for #{@proposal.event.name}."
+    else
+      flash[:danger] = "There was a problem finalizing the proposal: #{@proposal.errors.full_messages.join(', ')}"
+    end
     redirect_to event_staff_program_proposal_path(@proposal.event, @proposal)
   end
 

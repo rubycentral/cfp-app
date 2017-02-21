@@ -60,6 +60,29 @@ class ProgramSession < ApplicationRecord
     end
   end
 
+  def self.create_draft_from_proposal(proposal)
+    self.transaction do
+      ps = ProgramSession.create!(event_id: proposal.event_id,
+                                  proposal_id: proposal.id,
+                                  title: proposal.title,
+                                  abstract: proposal.abstract,
+                                  track_id: proposal.track_id,
+                                  session_format_id: proposal.session_format_id,
+                                  state: DRAFT
+      )
+
+      #attach proposal speakers to new program session
+      ps.speakers << proposal.speakers
+      ps.speakers.each do |speaker|
+        (speaker.speaker_name = speaker.user.name) if speaker.speaker_name.blank?
+        (speaker.speaker_email = speaker.user.assign_email) if speaker.speaker_email.blank?
+        (speaker.bio = speaker.user.bio) if speaker.bio.blank?
+        speaker.save!
+      end
+      ps
+    end
+  end
+
   def multiple_speakers?
     speakers.count > 1
   end

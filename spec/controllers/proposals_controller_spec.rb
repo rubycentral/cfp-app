@@ -65,6 +65,7 @@ describe ProposalsController, type: :controller do
   describe "POST #confirm" do
     it "confirms a proposal" do
       proposal = create(:proposal, state: Proposal::ACCEPTED, confirmed_at: nil)
+      ProgramSession.create_draft_from_proposal(proposal)
       allow_any_instance_of(ProposalsController).to receive(:current_user) { create(:speaker) }
       allow(controller).to receive(:require_speaker).and_return(nil)
       post :confirm, params: {event_slug: proposal.event.slug, uuid: proposal.uuid}

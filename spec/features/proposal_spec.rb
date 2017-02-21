@@ -178,7 +178,10 @@ feature "Proposals" do
   context "when confirming" do
     let(:proposal) { create(:proposal) }
 
-    before { proposal.update(state: Proposal::State::ACCEPTED) }
+    before do
+      proposal.update(state: Proposal::State::ACCEPTED)
+      ProgramSession.create_draft_from_proposal(proposal)
+    end
 
     context "when the proposal has not yet been confirmed" do
       let!(:speaker) { create(:speaker, proposal: proposal, user: user) }

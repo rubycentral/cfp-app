@@ -12,7 +12,8 @@ class Staff::TimeSlotsController < Staff::ApplicationController
     respond_to do |format|
       format.html
       format.csv { send_data time_slots.to_csv }
-      format.json { render_json(time_slots, filename: json_filename) }
+      # note: we don't use the decorator with the json output
+      format.json { render_json(@time_slots, filename: json_filename) }
     end
   end
 

@@ -130,13 +130,14 @@ class Proposal < ApplicationRecord
       ps.update(state: self.waitlisted? ? ProgramSession::WAITLISTED : ProgramSession::LIVE) if ps.present?
       ps.persisted?
     end
-  #   transaction do
-  #     update!(confirmed_at: DateTime.current)
-  #     ps = ProgramSession.create_from_proposal(self)
-  #     ps.persisted?
-  #   end
   rescue ActiveRecord::RecordInvalid
     false
+  end
+
+  def decline
+    self.update(state: WITHDRAWN)
+    self.update(confirmed_at: DateTime.current)
+    self.program_session.update(state: ProgramSession::DECLINED)
   end
 
   def draft?

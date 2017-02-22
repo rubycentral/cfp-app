@@ -122,7 +122,7 @@ class ProposalDecorator < ApplicationDecorator
 
   def decline_button
     h.link_to h.bang('Decline'),
-              h.withdraw_event_proposal_path(uuid: object, event_slug: object.event.slug),
+              h.decline_event_proposal_path(uuid: object, event_slug: object.event.slug),
               method: :post,
               data: {
                   confirm: 'This will remove your talk from consideration and notify the event staff. Are you sure you want to do this?'

@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     resources :proposals, param: :uuid do
       member { post :confirm }
       member { post :withdraw }
+      member { post :decline }
       member { post :update_notes }
       member { delete :destroy }
     end

@@ -57,6 +57,12 @@
           .proposal-link
             %h3.control-label Proposal
             %p= link_to program_session.proposal.title, event_staff_program_proposal_path(current_event, program_session.proposal)
+          - if program_session.proposal.confirmed?
+            %p= "Confirmed at: #{program_session.proposal.confirmed_at.to_s(:month_day_year)}"
+          - else
+            = link_to 'Confirm for Speaker', confirm_for_speaker_event_staff_program_proposal_path(slug: program_session.proposal.event.slug, uuid: program_session.proposal),
+              class: "btn btn-primary btn-sm",
+              method: :post
       .program-session-item
         %h3.control-label Confirmation Notes
         %p= render 'confirmation_notes', program_session: program_session

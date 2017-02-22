@@ -55,6 +55,12 @@ class ProposalsController < ApplicationController
     redirect_to event_proposal_url(slug: @proposal.event.slug, uuid: @proposal)
   end
 
+  def decline
+    @proposal.decline
+    flash[:info] = "As requested, your talk has been removed for consideration."
+    redirect_to event_proposal_url(slug: @proposal.event.slug, uuid: @proposal)
+  end
+
   def destroy
     @proposal.destroy
     flash[:info] = "Your proposal has been deleted."

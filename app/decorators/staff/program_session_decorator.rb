@@ -39,6 +39,12 @@ class Staff::ProgramSessionDecorator < ApplicationDecorator
     object.track_name || Track::NO_TRACK
   end
 
+  def confirmed_status
+    if (object.proposal.present? && object.proposal.confirmed_at.present?) || (object.proposal.nil? && object.state == ProgramSession::LIVE)
+      h.content_tag(:i, '', class: 'fa fa-check')
+    end
+  end
+
   def abstract_markdown
     h.markdown(object.abstract)
   end

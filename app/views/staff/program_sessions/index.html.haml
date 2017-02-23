@@ -44,6 +44,7 @@
           %th
           %th
           %th
+          %th
         %tr
           %th Title
           %th Speaker
@@ -51,6 +52,7 @@
           %th Track
           %th Scheduled
           %th Status
+          %th Confirmed
           %th Notes
       %tbody
         = render partial: 'session_row_active', collection: sessions, as: :program_session
@@ -69,12 +71,14 @@
           %th
           %th
           %th
+          %th
         %tr
           %th Title
           %th Speaker
           %th Format
           %th Track
           %th Status
+          %th Confirmed
           %th Notes
       %tbody
         = render partial: 'session_row_waitlisted', collection: waitlisted_sessions, as: :program_session

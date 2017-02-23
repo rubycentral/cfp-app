@@ -124,14 +124,9 @@ class Proposal < ApplicationRecord
   end
 
   def confirm
-    transaction do
-      self.update(confirmed_at: DateTime.current)
-      ps = self.program_session
-      ps.update(state: self.waitlisted? ? ProgramSession::WAITLISTED : ProgramSession::LIVE) if ps.present?
-      ps.persisted?
-    end
-  rescue ActiveRecord::RecordInvalid
-    false
+    self.update(confirmed_at: DateTime.current)
+    ps = self.program_session
+    ps.update(state: self.waitlisted? ? ProgramSession::WAITLISTED : ProgramSession::LIVE) if ps.present?
   end
 
   def decline

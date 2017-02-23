@@ -30,15 +30,6 @@ class ProposalsController < ApplicationController
     flash.now[:warning] = incomplete_profile_msg unless current_user.complete?
   end
 
-  def confirm
-    if @proposal.confirm
-      flash[:success] = "You have confirmed your participation in #{@proposal.event.name}."
-    else
-      flash[:danger] = "There was a problem confirming your participation in #{@proposal.event.name}: #{@proposal.errors.full_messages.join(', ')}"
-    end
-    redirect_to event_proposal_path(slug: @proposal.event.slug, uuid: @proposal)
-  end
-
   def update_notes
     if @proposal.update(confirmation_notes: notes_params[:confirmation_notes])
       flash[:success] = "Confirmation notes successfully updated."
@@ -47,6 +38,12 @@ class ProposalsController < ApplicationController
       flash[:danger] = "There was a problem updating confirmation notes."
       render :show
     end
+  end
+
+  def confirm
+    @proposal.confirm
+    flash[:success] = "You have confirmed your participation in #{@proposal.event.name}."
+    redirect_to event_proposal_path(slug: @proposal.event.slug, uuid: @proposal)
   end
 
   def withdraw

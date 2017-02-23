@@ -72,9 +72,6 @@ Rails.application.routes.draw do
           post :update_state
           post :update_track
           post :update_session_format
-          member do
-            post :confirm_for_speaker
-          end
         end
 
         resources :speakers, only: [:index, :show, :edit, :update, :destroy]
@@ -83,6 +80,9 @@ Rails.application.routes.draw do
           post :update_state
           collection do
             get 'speaker_emails'
+          end
+          member do
+            post :confirm_for_speaker
           end
         end
       end

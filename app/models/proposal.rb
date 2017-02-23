@@ -117,22 +117,24 @@ class Proposal < ApplicationRecord
   end
 
   def withdraw
-    self.update(state: WITHDRAWN)
+    update(state: WITHDRAWN)
 
     Notification.create_for(reviewers, proposal: self,
                             message: "Proposal, #{title}, withdrawn")
   end
 
   def confirm
-    self.update(confirmed_at: DateTime.current)
-    ps = self.program_session
-    ps.update(state: self.waitlisted? ? ProgramSession::WAITLISTED : ProgramSession::LIVE) if ps.present?
+    update(confirmed_at: DateTime.current)
+
+    if program_session.present?
+      new_state = waitlisted? ?  ProgramSession::WAITLISTED : ProgramSession::LIVE
+      program_session.update(state: new_state)
+    end
   end
 
   def decline
-    self.update(state: WITHDRAWN)
-    self.update(confirmed_at: DateTime.current)
-    self.program_session.update(state: ProgramSession::DECLINED)
+    update(state: WITHDRAWN, confirmed_at: DateTime.current)
+    program_session.update(state: ProgramSession::DECLINED)
   end
 
   def draft?

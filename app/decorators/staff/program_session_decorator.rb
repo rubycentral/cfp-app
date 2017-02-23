@@ -53,4 +53,20 @@ class Staff::ProgramSessionDecorator < ApplicationDecorator
     end
     parts.join(', ')
   end
+
+  def complete_video_url
+    if object.video_url.include?("://")
+      object.video_url
+    else
+      "http://#{object.video_url}"
+    end
+  end
+
+  def complete_slides_url
+    if object.slides_url.include?("://")
+      object.slides_url
+    else
+      "http://#{object.slides_url}"
+    end
+  end
 end

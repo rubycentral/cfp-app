@@ -28,6 +28,14 @@ class ProposalPolicy < ApplicationPolicy
     @user.organizer_for_event?(@current_event)
   end
 
+  def bulk_finalize?
+    @user.organizer_for_event?(@current_event)
+  end
+
+  def finalize_by_state?
+    @user.organizer_for_event?(@current_event)
+  end
+
   def confirm_for_speaker?
     @user.organizer_for_event?(@current_event)
   end

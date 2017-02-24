@@ -19,8 +19,9 @@
 .row
   .col-md-8
     %h1 Program Selection
-  .col.md-4.text-right
-    = finalize_remaining_button
+  - if Proposal.soft_states.size > 0
+    .col.md-4.text-right
+      = bulk_finalize_button
 .row
   &nbsp;
 

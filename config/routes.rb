@@ -65,7 +65,8 @@ Rails.application.routes.draw do
           collection do
             get 'selection'
             get 'session_counts'
-            post 'finalize_remaining'
+            get 'bulk_finalize'
+            post 'finalize_by_state'
           end
           post :finalize
           post :update_state

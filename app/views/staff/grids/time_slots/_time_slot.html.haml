@@ -1,8 +1,8 @@
 .time-slot{id: "time_slot_#{dom_id(ts)}", data: ts.ts_data, class: ts.preview_css}
   - if ts.configured?
-    .track=ts.display_track_name || '&nbsp;'.html_safe
-    .title=ts.display_title
-    .presenter=ts.display_presenter
+    .track=truncate((ts.display_track_name || '&nbsp;'.html_safe), length: 30)
+    .title=truncate(ts.display_title, length: 50)
+    .presenter=truncate(ts.display_presenter, length: 30)
   - elsif ts.persisted?
     .title
   - else

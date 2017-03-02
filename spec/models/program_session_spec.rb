@@ -160,4 +160,25 @@ describe ProgramSession do
     end
 
   end
+
+  describe "#destroy" do
+
+    it "destroys speakers if speaker has no proposal_id" do
+      ps = create(:program_session)
+      speaker = create(:speaker, event_id: ps.event_id, program_session_id: ps.id)
+      ps.destroy
+
+      expect(Speaker.all).not_to include(speaker)
+    end
+
+    it "removes program_session_id from speaker if speaker has proposal_id" do
+      proposal = create(:proposal, :with_speaker)
+      ps = create(:program_session, proposal_id: proposal.id)
+      ps.speakers << proposal.speakers
+      ps.destroy
+
+      expect(Speaker.all).to include(proposal.speakers.first)
+      expect(proposal.speakers.first.program_session_id).to eq(nil)
+    end
+  end
 end

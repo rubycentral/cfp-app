@@ -18,11 +18,11 @@
 }
 
 .icon-twitter {
-  background-image: url(twitter_32.png);
+  background-image: asset-url("twitter_32.png");
   @include icon-generic;
 }
 
 .icon-github {
-  background-image: url(github_32.png);
+  background-image: asset-url("github_32.png");
   @include icon-generic;
 }

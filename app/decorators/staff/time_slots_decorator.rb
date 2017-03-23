@@ -2,7 +2,7 @@ class Staff::TimeSlotsDecorator < Draper::CollectionDecorator
   def to_csv
     CSV.generate do |csv|
       columns = [ :conference_day, :start_time, :end_time, :title,
-        :presenter, :room_name, :track_name, :desc ]
+        :presenter, :room_name, :track_name, :description ]
 
       csv << columns
       each do |session|

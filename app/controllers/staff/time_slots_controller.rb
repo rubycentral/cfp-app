@@ -93,7 +93,7 @@ class Staff::TimeSlotsController < Staff::ApplicationController
   end
 
   def set_time_slots
-    @time_slots = current_event.time_slots
+    @time_slots = current_event.time_slots.grid_order
                       .includes(:room, program_session: { proposal: {speakers: :user }})
   end
 

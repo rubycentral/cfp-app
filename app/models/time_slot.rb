@@ -17,7 +17,7 @@ class TimeSlot < ApplicationRecord
   scope :by_room, -> do
     joins(:room).where.not(rooms: {grid_position: nil}).sort_by { |slot| slot.room.grid_position }
   end
-  scope :grid_order, -> { joins(:room).order(:conference_day, 'rooms.grid_position', :start_time) }
+  scope :grid_order, -> { joins(:room).order(:conference_day, :start_time, 'rooms.grid_position') }
 
   def self.import(file)
     raw_json = file.read # maybe open as well
@@ -79,6 +79,10 @@ class TimeSlot < ApplicationRecord
 
   def session_speaker_names
     program_session && program_session.speaker_names
+  end
+
+  def session_format_name
+    program_session && program_session.session_format.try(:name)
   end
 
   def session_confirmation_notes

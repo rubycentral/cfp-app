@@ -83,6 +83,9 @@ Rails.application.routes.draw do
           collection do
             get 'speaker_emails'
           end
+          member do
+            patch :promote
+          end
         end
       end
 

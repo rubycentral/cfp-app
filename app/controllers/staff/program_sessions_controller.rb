@@ -60,6 +60,18 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
     end
   end
 
+  def promote
+    @program_session = current_event.program_sessions.find(params[:id])
+    authorize @program_session
+
+    if @program_session.update(state: ProgramSession::LIVE)
+      flash[:success] = "#{@program_session.title} was successfully promoted to #{@program_session.state}."
+    else
+      flash[:danger] = "There was a problem promoting this program session."
+    end
+    redirect_to event_staff_program_sessions_path(current_event)
+  end
+
   def destroy
     @program_session = current_event.program_sessions.find(params[:id])
     authorize @program_session

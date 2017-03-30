@@ -1,4 +1,4 @@
 $(document).ready(function() {
-  cfpDataTable('.user.datatable', ['text', 'text', 'text', 'date-range']);
+  cfpDataTable('.users.datatable', ['text', 'text']);
   $('.dataTables_info').addClass('text-muted');
 });

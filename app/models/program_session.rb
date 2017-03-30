@@ -111,7 +111,13 @@ class ProgramSession < ApplicationRecord
   private
 
   def destroy_speakers
-    speakers.each { |speaker| speaker.destroy unless speaker.proposal_id.present? }
+    speakers.each do |speaker|
+      if speaker.proposal_id.present?
+        speaker.update(program_session_id: nil)
+      else
+        speaker.destroy
+      end
+    end
   end
 end
 

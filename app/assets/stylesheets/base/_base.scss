@@ -1,5 +1,15 @@
 .alert {
-  margin-top: 20px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: $zindex-alert;
+}
+
+@media (min-width: $screen-md) {
+
+  .alert {
+    width: 50%;
+  }
 }
 
 .share {

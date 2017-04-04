@@ -37,7 +37,7 @@ class Staff::ProposalReviewsController < Staff::ApplicationController
 
   def update
     if program_mode?
-      authorize @proposal, :review_as_organizer?
+      authorize @proposal, :review_as_program_team?
     else
       authorize @proposal, :review?
     end

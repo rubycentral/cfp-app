@@ -1,6 +1,8 @@
 class Staff::ProgramSessionsController < Staff::ApplicationController
   include ProgramSupport
 
+  before_action :enable_staff_program_subnav
+
   decorates_assigned :program_session, with: Staff::ProgramSessionDecorator
   decorates_assigned :sessions, with: Staff::ProgramSessionDecorator
   decorates_assigned :waitlisted_sessions, with: Staff::ProgramSessionDecorator

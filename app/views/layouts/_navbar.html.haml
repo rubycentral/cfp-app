@@ -16,31 +16,29 @@
           - if speaker_nav?
             %li{class: nav_item_class("my-proposals-link")}
               = link_to proposals_path do
-                %i.fa.fa-file-text
                 %span My Proposals
 
           - if review_nav?
             %li{class: nav_item_class("event-review-proposals-link")}
               = link_to event_staff_proposals_path(current_event) do
-                %i.fa.fa-balance-scale
                 %span Review
 
           - if program_nav?
-            %li{class: nav_item_class("event-program-link")}
+            %li{class: nav_item_class("event-selection-link")}
               = link_to event_staff_program_proposals_path(current_event) do
-                %i.fa.fa-sitemap
+                %span Selection
+            %li{class: nav_item_class("event-program-link")}
+              = link_to event_staff_program_sessions_path(current_event) do
                 %span Program
 
           - if schedule_nav?
             %li{class: nav_item_class("event-schedule-link")}
               = link_to event_staff_schedule_grid_path(current_event) do
-                %i.fa.fa-calendar
                 %span Schedule
 
           - if staff_nav?
             %li{class: nav_item_class("event-dashboard-link")}
               = link_to event_staff_path(current_event) do
-                %i.fa.fa-dashboard
                 %span Dashboard
 
           - if admin_nav?
@@ -57,7 +55,10 @@
 - if display_staff_event_subnav?
   = render partial: "layouts/nav/staff/event_subnav"
 
-- elsif program_mode?
+- elsif display_staff_selection_subnav?
+  = render partial: "layouts/nav/staff/selection_subnav"
+
+- elsif display_staff_program_subnav?
   = render partial: "layouts/nav/staff/program_subnav"
 
 - elsif schedule_mode?

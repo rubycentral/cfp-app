@@ -17,5 +17,12 @@
       %h2 Demographics
       %p= render :partial => 'shared/demographics', :locals => {:f => f}
 
+      %h2 Services
+      - person.services.each do |service|
+        %p
+          = service.provider.capitalize
+          = link_to "Delete", admin_person_service_path(person, service), method: :delete, data: {confirm: "Are you sure?"}
+
+
   .row.col-md-12.form-submit
     %button.pull-right.btn.btn-success{:type => "submit"} Save

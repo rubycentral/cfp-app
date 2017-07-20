@@ -40,7 +40,7 @@ end
 #  person_id   :integer
 #  parent_id   :integer
 #  body        :text
-#  type        :string(255)
+#  type        :string
 #  created_at  :datetime
 #  updated_at  :datetime
 #

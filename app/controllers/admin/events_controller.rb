@@ -24,7 +24,7 @@ class Admin::EventsController < Admin::ApplicationController
   end
 
   def archive
-    @event = Event.find_by_id(params[:event_id])
+    @event = Event.find_by(id: params[:event_id])
     if @event
       @event.archive
       flash[:warning] = "#{@event.name} is now archived."
@@ -35,7 +35,7 @@ class Admin::EventsController < Admin::ApplicationController
   end
 
   def unarchive
-    @event = Event.find_by_id(params[:event_id])
+    @event = Event.find_by(id: params[:event_id])
     if @event
       @event.unarchive
       flash[:warning] = "#{@event.name} is now current."

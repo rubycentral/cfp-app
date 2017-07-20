@@ -43,7 +43,7 @@ class Organizer::ProposalsController < Organizer::ApplicationController
       end
     end
 
-    current_user.notifications.mark_as_read_for_proposal(reviewer_event_proposal_path(@event, @proposal))
+    current_user.notifications.mark_as_read_for_proposal(reviewer_event_proposal_url(@event, @proposal))
     render locals: {
              speakers: @proposal.speakers.decorate,
              other_proposals: Organizer::ProposalsDecorator.decorate(other_proposals),
@@ -95,7 +95,8 @@ class Organizer::ProposalsController < Organizer::ApplicationController
     # add updating_person to params so Proposal does not update last_change attribute when updating_person is organizer_for_event?
     params.require(:proposal).permit(:title, {review_tags: []}, :abstract, :details, :pitch, :slides_url, :video_url, custom_fields: @event.custom_fields,
                                      comments_attributes: [:body, :proposal_id, :person_id],
-                                     speakers_attributes: [:bio, :person_id, :id, person_attributes: [:id, :name, :email]])
+                                     speakers_attributes: [:bio, :person_id, :id,
+                                                           person_attributes: [:id, :name, :email, :bio]])
   end
 
   def send_state_mail(state)

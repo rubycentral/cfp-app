@@ -1,3 +1,14 @@
+.proposals {
+  .event-title {
+    font-weight: bolder;
+  }
+  .btn{
+    display: block;
+    width: 150px;
+    margin-top: 1em;
+  }
+}
+
 #proposal {
   input#email { width: 80%; }
   select#rating_score {
@@ -48,6 +59,12 @@ ul {
   list-style-type: none;
   li.proposal .label {
     margin-right: 1em;
+  }
+  li.proposal {
+    border-bottom: 1px solid #ddd;
+    &:last-of-type {
+      border-bottom: none;
+    }
   }
 }
 
@@ -141,4 +158,15 @@ span.disabled-state {
     font-weight: normal;
   }
   dd { margin-left: 150px; }
+}
+
+span.glyphicon-question-sign {
+  font-size: 1.3em;
+  display: inline-block;
+}
+
+div.col-md-4 {
+    h3 {
+      display: inline-block;
+    }
 }

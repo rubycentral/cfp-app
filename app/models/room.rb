@@ -11,10 +11,10 @@ end
 # Table name: rooms
 #
 #  id            :integer          not null, primary key
-#  name          :string(255)
-#  room_number   :string(255)
-#  level         :string(255)
-#  address       :string(255)
+#  name          :string
+#  room_number   :string
+#  level         :string
+#  address       :string
 #  capacity      :integer
 #  event_id      :integer
 #  created_at    :datetime

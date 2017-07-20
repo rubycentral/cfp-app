@@ -24,7 +24,7 @@ class ProposalDecorator < ApplicationDecorator
   end
 
   def average_rating
-    h.number_with_precision(object.average_rating, precision: 1) || 'no average'
+    h.number_with_precision(object.average_rating, precision: 1) || ''
   end
 
   def score_for(person)
@@ -121,7 +121,7 @@ class ProposalDecorator < ApplicationDecorator
 
   def abstract_input(form)
     form.input :abstract, placeholder: 'What is your talk about?',
-      maxlength: :lookup, input_html: { class: 'watched js-maxlength-alert', rows: 5 },
+      maxlength: 1000, input_html: { class: 'watched js-maxlength-alert', rows: 5 },
       hint: 'Provide a concise description for the program limited to 600 characters or less.'
   end
 

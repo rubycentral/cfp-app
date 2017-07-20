@@ -50,7 +50,7 @@ describe CommentsController, type: :controller do
         }.to change(ActionMailer::Base.deliveries, :count).by(1)
 
         email = ActionMailer::Base.deliveries.last
-        expect(email.bcc).to match_array(speakers.map(&:email))
+        expect(email.to).to match_array(speakers.map(&:email))
       end
     end
 

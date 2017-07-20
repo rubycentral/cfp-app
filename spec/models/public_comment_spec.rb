@@ -137,7 +137,7 @@ describe PublicComment do
           proposal.public_comments.create(attributes_for(:comment, person: reviewer))
         }.to change(ActionMailer::Base.deliveries, :count).by(1)
 
-        expect(ActionMailer::Base.deliveries.last.bcc).to match_array(speakers.map(&:email))
+        expect(ActionMailer::Base.deliveries.last.to).to match_array(speakers.map(&:email))
       end
     end
   end

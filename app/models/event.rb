@@ -26,6 +26,7 @@ class Event < ActiveRecord::Base
 
   validates :name, :contact_email, presence: true
   validates :slug, presence: true, uniqueness: true
+  validates :closes_at, presence: true
 
   before_validation :generate_slug
   before_save :update_closes_at_if_manually_closed
@@ -83,6 +84,10 @@ class Event < ActiveRecord::Base
     state == 'open' && closes_at < Time.current
   end
 
+  def status
+    open? ? 'open' : 'closed'
+  end
+
   def unmet_requirements_for_scheduling
     missing_prereqs = []
 
@@ -138,11 +143,11 @@ end
 # Table name: events
 #
 #  id                          :integer          not null, primary key
-#  name                        :string(255)
-#  slug                        :string(255)
-#  url                         :string(255)
-#  contact_email               :string(255)
-#  state                       :string(255)      default("closed")
+#  name                        :string
+#  slug                        :string
+#  url                         :string
+#  contact_email               :string
+#  state                       :string           default("closed")
 #  opens_at                    :datetime
 #  closes_at                   :datetime
 #  start_date                  :datetime

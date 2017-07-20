@@ -6,14 +6,14 @@ describe PersonDecorator do
       speaker = create(:speaker)
       proposal = create(:proposal, speakers: [ speaker ])
       expect(speaker.person.decorate.proposal_path(proposal)).to(
-        eq(h.proposal_path(proposal.event.slug, proposal)))
+        eq(h.proposal_url(proposal.event.slug, proposal)))
     end
 
     it "returns the path for a reviewer" do
       reviewer = create(:person, :reviewer)
       proposal = create(:proposal)
       expect(reviewer.decorate.proposal_path(proposal)).to(
-        eq(h.reviewer_event_proposal_path(proposal.event, proposal)))
+        eq(h.reviewer_event_proposal_url(proposal.event, proposal)))
     end
   end
 end

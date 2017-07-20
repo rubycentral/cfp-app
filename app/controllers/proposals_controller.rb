@@ -28,7 +28,7 @@ class ProposalsController < ApplicationController
   def set_confirmed
     @proposal.update(confirmed_at: DateTime.now,
                      confirmation_notes: params[:confirmation_notes])
-    redirect_to proposal_url(slug: @event.slug, uuid: @proposal),
+    redirect_to confirm_proposal_url(slug: @proposal.event.slug, uuid: @proposal),
       flash: { success: 'Thank you for confirming your participation' }
   end
 

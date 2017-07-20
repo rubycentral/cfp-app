@@ -23,9 +23,9 @@ end
 #  id          :integer          not null, primary key
 #  proposal_id :integer
 #  person_id   :integer
-#  email       :string(255)
-#  state       :string(255)      default("pending")
-#  slug        :string(255)
+#  email       :string
+#  state       :string           default("pending")
+#  slug        :string
 #  created_at  :datetime
 #  updated_at  :datetime
 #

@@ -67,7 +67,8 @@ class Organizer::SpeakersController < Organizer::ApplicationController
   private
 
   def speaker_params
-    params.require(:speaker).permit(:bio, :email)
+    params.require(:speaker).permit(:bio, :email,
+                              person_attributes: [:id, :name, :email, :bio])
   end
 
   def set_proposal

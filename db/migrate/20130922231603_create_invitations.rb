@@ -5,7 +5,7 @@ class CreateInvitations < ActiveRecord::Migration
       t.references :person, index: true
       t.string :email
       t.string :state, default: 'pending'
-      t.string :slug, index: true
+      t.string :slug
       t.timestamps
     end
 

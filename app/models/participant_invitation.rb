@@ -23,11 +23,11 @@ end
 # Table name: participant_invitations
 #
 #  id         :integer          not null, primary key
-#  email      :string(255)
-#  state      :string(255)
-#  slug       :string(255)
-#  role       :string(255)
-#  token      :string(255)
+#  email      :string
+#  state      :string
+#  slug       :string
+#  role       :string
+#  token      :string
 #  event_id   :integer
 #  created_at :datetime
 #  updated_at :datetime

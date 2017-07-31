@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20151217214608) do
   enable_extension "plpgsql"
   enable_extension "hstore"
 
-  create_table "comments", force: true do |t|
+  create_table "comments", force: :cascade do |t|
     t.integer  "proposal_id"
     t.integer  "person_id"
     t.integer  "parent_id"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20151217214608) do
   add_index "comments", ["person_id"], name: "index_comments_on_person_id", using: :btree
   add_index "comments", ["proposal_id"], name: "index_comments_on_proposal_id", using: :btree
 
-  create_table "events", force: true do |t|
+  create_table "events", force: :cascade do |t|
     t.string   "name"
     t.string   "slug"
     t.string   "url"
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20151217214608) do
 
   add_index "events", ["slug"], name: "index_events_on_slug", using: :btree
 
-  create_table "invitations", force: true do |t|
+  create_table "invitations", force: :cascade do |t|
     t.integer  "proposal_id"
     t.integer  "person_id"
     t.string   "email"
@@ -68,18 +68,18 @@ ActiveRecord::Schema.define(version: 20151217214608) do
   add_index "invitations", ["proposal_id"], name: "index_invitations_on_proposal_id", using: :btree
   add_index "invitations", ["slug"], name: "index_invitations_on_slug", unique: true, using: :btree
 
-  create_table "notifications", force: true do |t|
+  create_table "notifications", force: :cascade do |t|
     t.integer  "person_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.string   "message"
     t.datetime "read_at"
     t.string   "target_path"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "notifications", ["person_id"], name: "index_notifications_on_person_id", using: :btree
 
-  create_table "participant_invitations", force: true do |t|
+  create_table "participant_invitations", force: :cascade do |t|
     t.string   "email"
     t.string   "state"
     t.string   "slug"
@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(version: 20151217214608) do
     t.datetime "updated_at"
   end
 
-  create_table "participants", force: true do |t|
+  create_table "participants", force: :cascade do |t|
     t.integer  "event_id"
     t.integer  "person_id"
     t.string   "role"
@@ -102,7 +102,7 @@ ActiveRecord::Schema.define(version: 20151217214608) do
   add_index "participants", ["event_id"], name: "index_participants_on_event_id", using: :btree
   add_index "participants", ["person_id"], name: "index_participants_on_person_id", using: :btree
 
-  create_table "people", force: true do |t|
+  create_table "people", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
     t.text     "bio"
@@ -112,7 +112,7 @@ ActiveRecord::Schema.define(version: 20151217214608) do
     t.datetime "updated_at"
   end
 
-  create_table "proposals", force: true do |t|
+  create_table "proposals", force: :cascade do |t|
     t.integer  "event_id"
     t.string   "state",                 default: "submitted"
     t.string   "uuid"
@@ -120,11 +120,11 @@ ActiveRecord::Schema.define(version: 20151217214608) do
     t.text     "abstract"
     t.text     "details"
     t.text     "pitch"
+    t.text     "last_change"
+    t.text     "confirmation_notes"
     t.datetime "confirmed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "last_change"
-    t.text     "confirmation_notes"
     t.datetime "updated_by_speaker_at"
     t.text     "proposal_data"
   end
@@ -132,7 +132,7 @@ ActiveRecord::Schema.define(version: 20151217214608) do
   add_index "proposals", ["event_id"], name: "index_proposals_on_event_id", using: :btree
   add_index "proposals", ["uuid"], name: "index_proposals_on_uuid", unique: true, using: :btree
 
-  create_table "ratings", force: true do |t|
+  create_table "ratings", force: :cascade do |t|
     t.integer  "proposal_id"
     t.integer  "person_id"
     t.integer  "score"
@@ -143,7 +143,7 @@ ActiveRecord::Schema.define(version: 20151217214608) do
   add_index "ratings", ["person_id"], name: "index_ratings_on_person_id", using: :btree
   add_index "ratings", ["proposal_id"], name: "index_ratings_on_proposal_id", using: :btree
 
-  create_table "rooms", force: true do |t|
+  create_table "rooms", force: :cascade do |t|
     t.string   "name"
     t.string   "room_number"
     t.string   "level"
@@ -157,7 +157,7 @@ ActiveRecord::Schema.define(version: 20151217214608) do
 
   add_index "rooms", ["event_id"], name: "index_rooms_on_event_id", using: :btree
 
-  create_table "services", force: true do |t|
+  create_table "services", force: :cascade do |t|
     t.string   "provider"
     t.string   "uid"
     t.integer  "person_id"
@@ -170,7 +170,7 @@ ActiveRecord::Schema.define(version: 20151217214608) do
 
   add_index "services", ["person_id"], name: "index_services_on_person_id", using: :btree
 
-  create_table "sessions", force: true do |t|
+  create_table "sessions", force: :cascade do |t|
     t.integer  "conference_day"
     t.time     "start_time"
     t.time     "end_time"
@@ -187,7 +187,7 @@ ActiveRecord::Schema.define(version: 20151217214608) do
 
   add_index "sessions", ["event_id"], name: "index_sessions_on_event_id", using: :btree
 
-  create_table "speakers", force: true do |t|
+  create_table "speakers", force: :cascade do |t|
     t.integer  "proposal_id"
     t.integer  "person_id"
     t.text     "bio"
@@ -198,7 +198,7 @@ ActiveRecord::Schema.define(version: 20151217214608) do
   add_index "speakers", ["person_id"], name: "index_speakers_on_person_id", using: :btree
   add_index "speakers", ["proposal_id"], name: "index_speakers_on_proposal_id", using: :btree
 
-  create_table "taggings", force: true do |t|
+  create_table "taggings", force: :cascade do |t|
     t.integer  "proposal_id"
     t.string   "tag"
     t.boolean  "internal",    default: false
@@ -208,7 +208,7 @@ ActiveRecord::Schema.define(version: 20151217214608) do
 
   add_index "taggings", ["proposal_id"], name: "index_taggings_on_proposal_id", using: :btree
 
-  create_table "tracks", force: true do |t|
+  create_table "tracks", force: :cascade do |t|
     t.text     "name"
     t.integer  "event_id"
     t.datetime "created_at"

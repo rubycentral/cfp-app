@@ -37,7 +37,7 @@ describe CommentsController, type: :controller do
 
       it "sends an email notification to the speaker" do
         allow(ProposalMailer).to receive(:comment_notification).and_return(mailer)
-        expect(mailer).to receive(:deliver)
+        expect(mailer).to receive(:deliver_now)
         post :create, params
       end
 
@@ -50,7 +50,7 @@ describe CommentsController, type: :controller do
         }.to change(ActionMailer::Base.deliveries, :count).by(1)
 
         email = ActionMailer::Base.deliveries.last
-        expect(email.bcc).to match_array(speakers.map(&:email))
+        expect(email.to).to match_array(speakers.map(&:email))
       end
     end
 

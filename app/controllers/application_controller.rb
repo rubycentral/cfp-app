@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  require "csv"
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
@@ -13,7 +14,7 @@ class ApplicationController < ActionController::Base
 
   private
   def current_user
-    @current_user ||= Person.find_by_id(session[:uid])
+    @current_user ||= Person.find_by(id: session[:uid])
   end
 
   def reviewer?
@@ -33,7 +34,7 @@ class ApplicationController < ActionController::Base
         session[:target] = request.path
       end
       flash[:danger] = "You must be signed in to access this page. If you haven't created an account, please create one."
-      redirect_to new_session_path
+      redirect_to new_session_url
     end
   end
 

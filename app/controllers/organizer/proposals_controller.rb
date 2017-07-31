@@ -6,7 +6,7 @@ class Organizer::ProposalsController < Organizer::ApplicationController
   def finalize
     @proposal.finalize
     send_state_mail(@proposal.state)
-    redirect_to organizer_event_proposal_path(@proposal.event, @proposal)
+    redirect_to organizer_event_proposal_url(@proposal.event, @proposal)
   end
 
   def update_state
@@ -43,7 +43,7 @@ class Organizer::ProposalsController < Organizer::ApplicationController
       end
     end
 
-    current_user.notifications.mark_as_read_for_proposal(reviewer_event_proposal_path(@event, @proposal))
+    current_user.notifications.mark_as_read_for_proposal(reviewer_event_proposal_url(@event, @proposal))
     render locals: {
              speakers: @proposal.speakers.decorate,
              other_proposals: Organizer::ProposalsDecorator.decorate(other_proposals),
@@ -58,7 +58,7 @@ class Organizer::ProposalsController < Organizer::ApplicationController
   def update
     if @proposal.update_without_touching_updated_by_speaker_at(proposal_params)
       flash[:info] = 'Proposal Updated'
-      redirect_to organizer_event_proposals_path(slug: @event.slug)
+      redirect_to organizer_event_proposals_url(slug: @event.slug)
     else
       flash[:danger] = 'There was a problem saving your proposal; please review the form for issues and try again.'
       render :edit
@@ -68,7 +68,7 @@ class Organizer::ProposalsController < Organizer::ApplicationController
   def destroy
     @proposal.destroy
     flash[:info] = "Your proposal has been deleted."
-    redirect_to organizer_event_proposals_path(@event)
+    redirect_to organizer_event_proposals_url(@event)
   end
 
   def new
@@ -82,7 +82,7 @@ class Organizer::ProposalsController < Organizer::ApplicationController
     @proposal = @event.proposals.new(altered_params)
     if @proposal.save
       flash[:success] = 'Proposal Added'
-      redirect_to organizer_event_program_path(@event)
+      redirect_to organizer_event_program_url(@event)
     else
       flash.now[:danger] = 'There was a problem saving your proposal; please review the form for issues and try again.'
       render :new
@@ -95,17 +95,18 @@ class Organizer::ProposalsController < Organizer::ApplicationController
     # add updating_person to params so Proposal does not update last_change attribute when updating_person is organizer_for_event?
     params.require(:proposal).permit(:title, {review_tags: []}, :abstract, :details, :pitch, :slides_url, :video_url, custom_fields: @event.custom_fields,
                                      comments_attributes: [:body, :proposal_id, :person_id],
-                                     speakers_attributes: [:bio, :person_id, :id, person_attributes: [:id, :name, :email]])
+                                     speakers_attributes: [:bio, :person_id, :id,
+                                                           person_attributes: [:id, :name, :email, :bio]])
   end
 
   def send_state_mail(state)
     case state
       when Proposal::State::ACCEPTED
-        Organizer::ProposalMailer.accept_email(@event, @proposal).deliver
+        Organizer::ProposalMailer.accept_email(@event, @proposal).deliver_now
       when Proposal::State::REJECTED
-        Organizer::ProposalMailer.reject_email(@event, @proposal).deliver
+        Organizer::ProposalMailer.reject_email(@event, @proposal).deliver_now
       when Proposal::State::WAITLISTED
-        Organizer::ProposalMailer.waitlist_email(@event, @proposal).deliver
+        Organizer::ProposalMailer.waitlist_email(@event, @proposal).deliver_now
     end
   end
 end

@@ -25,6 +25,6 @@ namespace :proposals do
   def reject_proposal(event, proposal)
     puts "rejecting: #{proposal.id}: #{proposal.speakers.first.email} - #{proposal.title}"
     proposal.update_state(Proposal::State::REJECTED)
-    Organizer::ProposalMailer.reject_email(event, proposal).deliver
+    Organizer::ProposalMailer.reject_email(event, proposal).deliver_now
   end
 end

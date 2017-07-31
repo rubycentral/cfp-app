@@ -7,7 +7,7 @@ class Admin::ApplicationController < ApplicationController
     unless admin_signed_in?
       session[:target] = request.path
       flash[:danger] = "You must be signed in as an administrator to access this page."
-      redirect_to new_session_path
+      redirect_to new_session_url
     end
   end
 

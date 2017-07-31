@@ -10,7 +10,7 @@ class Reviewer::ApplicationController < ApplicationController
     unless reviewer_signed_in?
       session[:target] = request.path
       flash[:danger] = "You must be signed in as an reviewer to access this page."
-      redirect_to new_session_path
+      redirect_to new_session_url
     end
   end
 
@@ -25,7 +25,7 @@ class Reviewer::ApplicationController < ApplicationController
   # Prevent reviewers from reviewing their own proposals
   def prevent_self
     if current_user.proposals.include?(@proposal)
-      redirect_to reviewer_event_proposals_path
+      redirect_to reviewer_event_proposals_url
     end
   end
 end

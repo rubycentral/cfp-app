@@ -17,7 +17,11 @@ class Proposal < ActiveRecord::Base
   has_one :track, through: :session
 
   validates :title, :abstract, presence: true
-  validates :abstract, length: {maximum: 600}
+
+  # This used to be 600, but it's so confusing for users that the browser
+  # uses \r\n for newlines and they're over the 600 limit because of 
+  # bytes they can't see. So we give them a bit of tolerance.
+  validates :abstract, length: {maximum: 1000}
   validates :title, length: {maximum: 60}
 
   serialize :last_change
@@ -202,7 +206,6 @@ class Proposal < ActiveRecord::Base
       update_tags(proposal_taggings, @tags, false)
     end
   end
-  @dont_touch_updated_by_speaker_at
 
   def save_review_tags
     if @review_tags
@@ -252,17 +255,17 @@ end
 #
 #  id                    :integer          not null, primary key
 #  event_id              :integer
-#  state                 :string(255)      default("submitted")
-#  uuid                  :string(255)
-#  title                 :string(255)
+#  state                 :string           default("submitted")
+#  uuid                  :string
+#  title                 :string
 #  abstract              :text
 #  details               :text
 #  pitch                 :text
+#  last_change           :text
+#  confirmation_notes    :text
 #  confirmed_at          :datetime
 #  created_at            :datetime
 #  updated_at            :datetime
-#  last_change           :text
-#  confirmation_notes    :text
 #  updated_by_speaker_at :datetime
 #  proposal_data         :text
 #

@@ -17,5 +17,7 @@
             = proposal.update_state_link(Proposal::State::WITHDRAWN)
             = proposal.update_state_link(Proposal::State::SUBMITTED)
       %li= proposal.delete_button
-%h1 Edit #{proposal.title} for #{event} as Organizer
+%h3 #{event}
+%h1 #{proposal.title}
+
 = render partial: 'form', locals: { proposal: proposal }

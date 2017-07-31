@@ -19,7 +19,7 @@ class Admin::PeopleController < Admin::ApplicationController
   # PATCH/PUT /admin/people/1
   def update
     if @person.update(person_params)
-      redirect_to admin_people_path, flash: { info: "#{@person.name} was successfully updated." }
+      redirect_to admin_people_url, flash: { info: "#{@person.name} was successfully updated." }
     else
       render :edit, locals: { person: @person }
     end
@@ -29,7 +29,7 @@ class Admin::PeopleController < Admin::ApplicationController
   def destroy
     person_name = @person.name
     @person.destroy
-    redirect_to admin_people_path, flash: { info: "#{person_name} was successfully destroyed." }
+    redirect_to admin_people_url, flash: { info: "#{person_name} was successfully destroyed." }
   end
 
   private

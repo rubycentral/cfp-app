@@ -4,7 +4,7 @@ class SpeakerDecorator < ApplicationDecorator
 
   def gravatar
     image_url =
-      "http://www.gravatar.com/avatar/#{object.gravatar_hash}?s=50"
+      "https://www.gravatar.com/avatar/#{object.gravatar_hash}?s=50"
 
     h.image_tag(image_url, class: 'pull-left speaker-image')
   end

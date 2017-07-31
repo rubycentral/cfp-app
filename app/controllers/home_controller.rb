@@ -6,9 +6,9 @@ class HomeController < ApplicationController
   def show
     @event = Event.live.first
     if @event
-      redirect_to event_path(@event.slug)
+      redirect_to event_url(@event.slug)
     else
-      redirect_to events_path
+      redirect_to events_url
     end
   end
 

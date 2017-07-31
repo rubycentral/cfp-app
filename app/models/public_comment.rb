@@ -7,7 +7,7 @@ class PublicComment < Comment
   # Send emails to speakers when reviewer creates a comment
   def send_emails
     if person.reviewer_for_event?(proposal.event)
-      ProposalMailer.comment_notification(proposal, self).deliver
+      ProposalMailer.comment_notification(proposal, self).deliver_now
     end
   end
 
@@ -40,7 +40,7 @@ end
 #  person_id   :integer
 #  parent_id   :integer
 #  body        :text
-#  type        :string(255)
+#  type        :string
 #  created_at  :datetime
 #  updated_at  :datetime
 #

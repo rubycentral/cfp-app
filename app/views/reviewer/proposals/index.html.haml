@@ -44,7 +44,7 @@
             %th Rated?
         %tbody
           - proposals.each do |proposal|
-            %tr{ class: "proposal-#{proposal.id}" }
+            %tr{ class: "proposal-#{proposal.id}", data: { 'proposal-id' => proposal.id, 'proposal-uuid' => proposal.uuid } }
               %td.average-rating
                 = proposal.average_rating if proposal.score_for(current_user).present?
               %td.my-rating

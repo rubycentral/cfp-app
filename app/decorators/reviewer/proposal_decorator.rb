@@ -3,7 +3,7 @@ class Reviewer::ProposalDecorator < ProposalDecorator
 
   def title_link
     link = h.link_to h.truncate(object.title, length: 45),
-      h.reviewer_event_proposal_path(object.event, object)
+                     h.reviewer_event_proposal_path(object.event, object)
 
     link += state_label(small: true) if object.withdrawn?
 

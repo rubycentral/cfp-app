@@ -25,7 +25,7 @@ class Organizer::EventsController < Organizer::ApplicationController
   def update_custom_fields
     if @event.update_attributes(event_params)
       flash[:info] = 'Your event was saved.'
-      redirect_to organizer_event_path(@event)
+      redirect_to organizer_event_url(@event)
     else
       flash[:danger] = flash[:danger] = 'There was a problem saving your event; please review the form for issues and try again.'
       render :edit_custom_fields
@@ -35,7 +35,7 @@ class Organizer::EventsController < Organizer::ApplicationController
   def update
     if @event.update_attributes(event_params)
       flash[:info] = 'Your event was saved.'
-      redirect_to organizer_event_path(@event)
+      redirect_to organizer_event_url(@event)
     else
       flash[:danger] = 'There was a problem saving your event; please review the form for issues and try again.'
       render :edit

@@ -13,6 +13,7 @@ class Staff::EventsController < Staff::ApplicationController
 
   #Edit Speaker Notification Emails
   def speaker_emails
+    @event.initialize_speaker_emails
   end
 
   def update_speaker_emails

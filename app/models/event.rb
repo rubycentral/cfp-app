@@ -50,6 +50,12 @@ class Event < ApplicationRecord
     validates :guidelines, presence: { message: 'Guidelines must be defined before event can be opened.' }
   end
 
+  def initialize_speaker_emails
+    SpeakerEmailTemplate::TYPES.each do |type|
+      speaker_notification_emails[type] ||= ""
+    end
+  end
+
   def remove_speaker_email_template(template)
     attr = SpeakerEmailTemplate::TYPES.find { |type| type == template }
     if attr
@@ -251,7 +257,7 @@ end
 #  proposal_tags               :text
 #  review_tags                 :text
 #  custom_fields               :text
-#  speaker_notification_emails :text             default({:accept=>"", :reject=>"", :waitlist=>""})
+#  speaker_notification_emails :text
 #  created_at                  :datetime
 #  updated_at                  :datetime
 #

@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -24,10 +23,9 @@ ActiveRecord::Schema.define(version: 20160927205019) do
     t.string   "type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["proposal_id"], name: "index_comments_on_proposal_id", using: :btree
+    t.index ["user_id"], name: "index_comments_on_user_id", using: :btree
   end
-
-  add_index "comments", ["proposal_id"], name: "index_comments_on_proposal_id", using: :btree
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "events", force: :cascade do |t|
     t.string   "name"
@@ -46,12 +44,11 @@ ActiveRecord::Schema.define(version: 20160927205019) do
     t.text     "proposal_tags"
     t.text     "review_tags"
     t.text     "custom_fields"
-    t.text     "speaker_notification_emails", default: "---\n:accept: ''\n:reject: ''\n:waitlist: ''\n"
+    t.text     "speaker_notification_emails"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["slug"], name: "index_events_on_slug", using: :btree
   end
-
-  add_index "events", ["slug"], name: "index_events_on_slug", using: :btree
 
   create_table "invitations", force: :cascade do |t|
     t.integer  "proposal_id"
@@ -61,12 +58,11 @@ ActiveRecord::Schema.define(version: 20160927205019) do
     t.string   "slug"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["proposal_id", "email"], name: "index_invitations_on_proposal_id_and_email", unique: true, using: :btree
+    t.index ["proposal_id"], name: "index_invitations_on_proposal_id", using: :btree
+    t.index ["slug"], name: "index_invitations_on_slug", unique: true, using: :btree
+    t.index ["user_id"], name: "index_invitations_on_user_id", using: :btree
   end
-
-  add_index "invitations", ["proposal_id", "email"], name: "index_invitations_on_proposal_id_and_email", unique: true, using: :btree
-  add_index "invitations", ["proposal_id"], name: "index_invitations_on_proposal_id", using: :btree
-  add_index "invitations", ["slug"], name: "index_invitations_on_slug", unique: true, using: :btree
-  add_index "invitations", ["user_id"], name: "index_invitations_on_user_id", using: :btree
 
   create_table "notifications", force: :cascade do |t|
     t.integer  "user_id"
@@ -75,9 +71,8 @@ ActiveRecord::Schema.define(version: 20160927205019) do
     t.datetime "read_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["user_id"], name: "index_notifications_on_user_id", using: :btree
   end
-
-  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
   create_table "program_sessions", force: :cascade do |t|
     t.integer  "event_id"
@@ -90,12 +85,11 @@ ActiveRecord::Schema.define(version: 20160927205019) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.text     "info"
+    t.index ["event_id"], name: "index_program_sessions_on_event_id", using: :btree
+    t.index ["proposal_id"], name: "index_program_sessions_on_proposal_id", using: :btree
+    t.index ["session_format_id"], name: "index_program_sessions_on_session_format_id", using: :btree
+    t.index ["track_id"], name: "index_program_sessions_on_track_id", using: :btree
   end
-
-  add_index "program_sessions", ["event_id"], name: "index_program_sessions_on_event_id", using: :btree
-  add_index "program_sessions", ["proposal_id"], name: "index_program_sessions_on_proposal_id", using: :btree
-  add_index "program_sessions", ["session_format_id"], name: "index_program_sessions_on_session_format_id", using: :btree
-  add_index "program_sessions", ["track_id"], name: "index_program_sessions_on_track_id", using: :btree
 
   create_table "proposals", force: :cascade do |t|
     t.integer  "event_id"
@@ -114,12 +108,11 @@ ActiveRecord::Schema.define(version: 20160927205019) do
     t.datetime "confirmed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["event_id"], name: "index_proposals_on_event_id", using: :btree
+    t.index ["session_format_id"], name: "index_proposals_on_session_format_id", using: :btree
+    t.index ["track_id"], name: "index_proposals_on_track_id", using: :btree
+    t.index ["uuid"], name: "index_proposals_on_uuid", unique: true, using: :btree
   end
-
-  add_index "proposals", ["event_id"], name: "index_proposals_on_event_id", using: :btree
-  add_index "proposals", ["session_format_id"], name: "index_proposals_on_session_format_id", using: :btree
-  add_index "proposals", ["track_id"], name: "index_proposals_on_track_id", using: :btree
-  add_index "proposals", ["uuid"], name: "index_proposals_on_uuid", unique: true, using: :btree
 
   create_table "ratings", force: :cascade do |t|
     t.integer  "proposal_id"
@@ -127,10 +120,9 @@ ActiveRecord::Schema.define(version: 20160927205019) do
     t.integer  "score"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["proposal_id"], name: "index_ratings_on_proposal_id", using: :btree
+    t.index ["user_id"], name: "index_ratings_on_user_id", using: :btree
   end
-
-  add_index "ratings", ["proposal_id"], name: "index_ratings_on_proposal_id", using: :btree
-  add_index "ratings", ["user_id"], name: "index_ratings_on_user_id", using: :btree
 
   create_table "rooms", force: :cascade do |t|
     t.integer  "event_id"
@@ -142,9 +134,8 @@ ActiveRecord::Schema.define(version: 20160927205019) do
     t.integer  "grid_position"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["event_id"], name: "index_rooms_on_event_id", using: :btree
   end
-
-  add_index "rooms", ["event_id"], name: "index_rooms_on_event_id", using: :btree
 
   create_table "session_formats", force: :cascade do |t|
     t.integer  "event_id"
@@ -154,9 +145,8 @@ ActiveRecord::Schema.define(version: 20160927205019) do
     t.boolean  "public",      default: true
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.index ["event_id"], name: "index_session_formats_on_event_id", using: :btree
   end
-
-  add_index "session_formats", ["event_id"], name: "index_session_formats_on_event_id", using: :btree
 
   create_table "speakers", force: :cascade do |t|
     t.integer  "user_id"
@@ -169,12 +159,11 @@ ActiveRecord::Schema.define(version: 20160927205019) do
     t.text     "info"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["event_id"], name: "index_speakers_on_event_id", using: :btree
+    t.index ["program_session_id"], name: "index_speakers_on_program_session_id", using: :btree
+    t.index ["proposal_id"], name: "index_speakers_on_proposal_id", using: :btree
+    t.index ["user_id"], name: "index_speakers_on_user_id", using: :btree
   end
-
-  add_index "speakers", ["event_id"], name: "index_speakers_on_event_id", using: :btree
-  add_index "speakers", ["program_session_id"], name: "index_speakers_on_program_session_id", using: :btree
-  add_index "speakers", ["proposal_id"], name: "index_speakers_on_proposal_id", using: :btree
-  add_index "speakers", ["user_id"], name: "index_speakers_on_user_id", using: :btree
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "proposal_id"
@@ -182,9 +171,8 @@ ActiveRecord::Schema.define(version: 20160927205019) do
     t.boolean  "internal",    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["proposal_id"], name: "index_taggings_on_proposal_id", using: :btree
   end
-
-  add_index "taggings", ["proposal_id"], name: "index_taggings_on_proposal_id", using: :btree
 
   create_table "teammates", force: :cascade do |t|
     t.integer  "event_id"
@@ -199,10 +187,9 @@ ActiveRecord::Schema.define(version: 20160927205019) do
     t.datetime "declined_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["event_id"], name: "index_teammates_on_event_id", using: :btree
+    t.index ["user_id"], name: "index_teammates_on_user_id", using: :btree
   end
-
-  add_index "teammates", ["event_id"], name: "index_teammates_on_event_id", using: :btree
-  add_index "teammates", ["user_id"], name: "index_teammates_on_user_id", using: :btree
 
   create_table "time_slots", force: :cascade do |t|
     t.integer  "program_session_id"
@@ -217,12 +204,11 @@ ActiveRecord::Schema.define(version: 20160927205019) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "track_id"
+    t.index ["conference_day"], name: "index_time_slots_on_conference_day", using: :btree
+    t.index ["event_id"], name: "index_time_slots_on_event_id", using: :btree
+    t.index ["program_session_id"], name: "index_time_slots_on_program_session_id", using: :btree
+    t.index ["room_id"], name: "index_time_slots_on_room_id", using: :btree
   end
-
-  add_index "time_slots", ["conference_day"], name: "index_time_slots_on_conference_day", using: :btree
-  add_index "time_slots", ["event_id"], name: "index_time_slots_on_event_id", using: :btree
-  add_index "time_slots", ["program_session_id"], name: "index_time_slots_on_program_session_id", using: :btree
-  add_index "time_slots", ["room_id"], name: "index_time_slots_on_room_id", using: :btree
 
   create_table "tracks", force: :cascade do |t|
     t.integer  "event_id"
@@ -231,9 +217,8 @@ ActiveRecord::Schema.define(version: 20160927205019) do
     t.text     "guidelines"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["event_id"], name: "index_tracks_on_event_id", using: :btree
   end
-
-  add_index "tracks", ["event_id"], name: "index_tracks_on_event_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
@@ -257,12 +242,11 @@ ActiveRecord::Schema.define(version: 20160927205019) do
     t.datetime "remember_created_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", using: :btree
+    t.index ["email"], name: "index_users_on_email", using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", using: :btree
+    t.index ["uid"], name: "index_users_on_uid", using: :btree
   end
-
-  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", using: :btree
-  add_index "users", ["email"], name: "index_users_on_email", using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", using: :btree
-  add_index "users", ["uid"], name: "index_users_on_uid", using: :btree
 
   add_foreign_key "session_formats", "events"
 end

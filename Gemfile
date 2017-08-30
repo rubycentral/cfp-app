@@ -1,14 +1,14 @@
 source 'https://rubygems.org'
-ruby '2.3.1'
+ruby '2.3.4'
 
-gem 'rails', '5.0.1'
+gem 'rails', '5.0.5'
 gem 'puma', '~> 3.6.2'
 
 gem 'pg'
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'jquery-datatables-rails', github: "rweng/jquery-datatables-rails"
+gem 'jquery-datatables-rails'
 gem 'uglifier', '>= 1.3.0'
 gem 'sass-rails', '~> 5.0.4'
 gem 'haml', '~> 4.0.4'

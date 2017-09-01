@@ -12,6 +12,8 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_event
   helper_method :display_staff_event_subnav?
+  helper_method :display_staff_selection_subnav?
+  helper_method :display_staff_program_subnav?
   helper_method :program_mode?
   helper_method :schedule_mode?
   helper_method :program_tracks
@@ -121,8 +123,20 @@ class ApplicationController < ActionController::Base
     @display_staff_subnav
   end
 
+  def enable_staff_selection_subnav
+    @display_selection_subnav = true
+  end
+
+  def display_staff_selection_subnav?
+    @display_selection_subnav
+  end
+
   def enable_staff_program_subnav
     @display_program_subnav = true
+  end
+
+  def display_staff_program_subnav?
+    @display_program_subnav
   end
 
   def enable_staff_schedule_subnav
@@ -130,7 +144,7 @@ class ApplicationController < ActionController::Base
   end
 
   def program_mode?
-    @display_program_subnav
+    @display_program_subnav || @display_selection_subnav
   end
 
   def schedule_mode?

@@ -2,6 +2,7 @@ class Staff::ProposalsController < Staff::ApplicationController
   include ProgramSupport
 
   before_action :require_proposal, only: [:show, :update_state, :update_track, :update_session_format, :finalize]
+  before_action :enable_staff_selection_subnav
 
   decorates_assigned :proposal, with: Staff::ProposalDecorator
 

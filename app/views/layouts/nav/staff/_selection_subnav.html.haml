@@ -1,12 +1,12 @@
 .navbar.navbar-fixed-top.program-subnav
   .container-fluid
     %ul.nav.navbar-nav.navbar-right
-      %li{class: subnav_item_class("event-program-sessions-link")}
-        = link_to event_staff_program_sessions_path do
-          %span Sessions
-      %li{class: subnav_item_class("event-program-speakers-link")}
-        = link_to event_staff_program_speakers_path do
-          %span Speakers
+      %li{class: subnav_item_class("event-program-proposals-link")}
+        = link_to event_staff_program_proposals_path do
+          %span Proposals
+      %li{class: subnav_item_class("event-program-proposals-selection-link")}
+        = link_to selection_event_staff_program_proposals_path do
+          %span Selection
 
     %ul.nav.navbar-nav.session-counts
       %li.static

@@ -57,6 +57,7 @@ module ActivateNavigation
             starts_with_path(:event_event_proposals, current_event)
         ],
         'event-review-proposals-link' => starts_with_path(:event_staff_proposals, current_event),
+        'event-selection-link' => selection_subnav_item_map,
         'event-program-link' => program_subnav_item_map,
         'event-schedule-link' => schedule_subnav_item_map,
         'event-dashboard-link' => event_subnav_item_map,
@@ -77,14 +78,19 @@ module ActivateNavigation
     }
   end
 
-  def program_subnav_item_map
-    @program_subnav_item_map ||= {
+  def selection_subnav_item_map
+    @selection_subnav_item_map ||= {
         'event-program-proposals-selection-link' => [
             starts_with_path(:selection_event_staff_program_proposals, current_event),
         # add_path(:event_staff_program_proposal, current_event, @proposal)
         #How to leverage session[:prev_page] here? Considering lamdas
         ],
-        'event-program-proposals-link' => starts_with_path(:event_staff_program_proposals, current_event),
+        'event-program-proposals-link' => starts_with_path(:event_staff_program_proposals, current_event)
+    }
+  end
+
+  def program_subnav_item_map
+    @program_subnav_item_map ||= {
         'event-program-sessions-link' => starts_with_path(:event_staff_program_sessions, current_event),
         'event-program-speakers-link' => starts_with_path(:event_staff_program_speakers, current_event)
     }

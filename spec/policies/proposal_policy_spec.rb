@@ -29,4 +29,22 @@ RSpec.describe ProposalPolicy do
       expect(subject).not_to permit(pundit_user(speaker.user), speaker)
     end
   end
+
+  permissions :bulk_finalize? do
+    it 'denies program_team users' do
+      expect(subject).not_to permit(pundit_user(program_team), speaker)
+    end
+
+    it 'allows organizer users' do
+      expect(subject).to permit(pundit_user(organizer), speaker)
+    end
+
+    it 'denies reviewer users' do
+      expect(subject).not_to permit(pundit_user(reviewer), speaker)
+    end
+
+    it 'denies speaker users' do
+      expect(subject).not_to permit(pundit_user(speaker.user), speaker)
+    end
+  end
 end

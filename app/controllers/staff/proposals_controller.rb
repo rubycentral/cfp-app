@@ -87,10 +87,18 @@ class Staff::ProposalsController < Staff::ApplicationController
     redirect_to event_staff_program_proposal_path(@proposal.event, @proposal)
   end
 
-  def finalize_remaining
-    authorize Proposal, :finalize?
+  def bulk_finalize
+    authorize Proposal, :bulk_finalize?
 
-    @remaining = Proposal.soft_states
+    @remaining_by_state = Proposal.soft_states.group_by{ |proposal| proposal.state }
+  end
+
+  def finalize_by_state
+    state = params[:proposals_state]
+    @remaining = Proposal.where(state: state)
+
+    authorize @remaining, :finalize?
+
     @remaining.each do |prop|
       prop.finalize
     end
@@ -102,9 +110,9 @@ class Staff::ProposalsController < Staff::ApplicationController
     if errors.present?
       flash[:danger] = "There was a problem finalizing #{errors.size} proposals: \n#{errors.join("\n")}"
     else
-      flash[:success] = "Successfully finalized remaining proposals."
+      flash[:success] = "Successfully finalized remaining #{params[:proposals_state]} proposals."
     end
-    redirect_to selection_event_staff_program_proposals_path
+    redirect_to bulk_finalize_event_staff_program_proposals_path
   end
 
 end

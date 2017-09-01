@@ -80,6 +80,15 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
     flash[:info] = "Program session was successfully deleted."
   end
 
+  def confirm_for_speaker
+    @program_session = current_event.program_sessions.find(params[:id])
+    authorize @program_session
+    @program_session.proposal.confirm
+    flash[:success] = "Proposal confirmed for #{@program_session.proposal.event.name}."
+
+    redirect_to event_staff_program_session_path(current_event, @program_session)
+  end
+
   def speaker_emails
     emails = current_event.program_sessions.where(id: params[:session_ids]).emails
     respond_to do |format|

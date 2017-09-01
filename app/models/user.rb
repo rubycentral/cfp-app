@@ -117,6 +117,14 @@ class User < ApplicationRecord
     self.teammates.collect {|p| p.role}.uniq.join(", ")
   end
 
+  def assign_email
+    if email.blank? && unconfirmed_email.present?
+      unconfirmed_email
+    else
+      email
+    end
+  end
+
   def self.gravatar_hash(email)
     Digest::MD5.hexdigest(email.to_s.downcase)
   end

@@ -178,7 +178,10 @@ feature "Proposals" do
   context "when confirming" do
     let(:proposal) { create(:proposal) }
 
-    before { proposal.update(state: Proposal::State::ACCEPTED) }
+    before do
+      proposal.update(state: Proposal::State::ACCEPTED)
+      ProgramSession.create_draft_from_proposal(proposal)
+    end
 
     context "when the proposal has not yet been confirmed" do
       let!(:speaker) { create(:speaker, proposal: proposal, user: user) }
@@ -244,6 +247,32 @@ feature "Proposals" do
 
     it "redirects to the proposal show page" do
       expect(page).to have_text(proposal.title)
+    end
+  end
+
+  context "when declined" do
+
+    before do
+      @proposal = create(:proposal, state: Proposal::State::ACCEPTED)
+      speaker = create(:speaker, proposal: @proposal, user: user)
+      @proposal.speakers << speaker
+      ProgramSession.create_draft_from_proposal(@proposal)
+      visit event_proposal_path(event_slug: @proposal.event.slug, uuid: @proposal)
+      click_link "Decline"
+    end
+
+    it "marks the proposal as withdrawn" do
+      expect(@proposal.reload.withdrawn?).to be_truthy
+    end
+
+    it "marks the proposal as confirmed" do
+      expect(@proposal.reload.confirmed?).to be_truthy
+    end
+
+    it "redirects the user to the proposal page" do
+      expect(current_path).to eq(event_proposal_path(event_slug: @proposal.event.slug, uuid: @proposal))
+      expect(page).to have_text(@proposal.title)
+      expect(page).to have_text("As requested, your talk has been removed for consideration.")
     end
   end
 end

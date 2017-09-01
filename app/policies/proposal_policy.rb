@@ -8,6 +8,10 @@ class ProposalPolicy < ApplicationPolicy
     @user.staff_for?(@current_event) && !@record.has_speaker?(@user)
   end
 
+  def review_as_program_team?
+    @user.program_team_for_event?(@current_event)
+  end
+
   def rate?
     @user.staff_for?(@current_event)
   end
@@ -33,10 +37,6 @@ class ProposalPolicy < ApplicationPolicy
   end
 
   def finalize_by_state?
-    @user.organizer_for_event?(@current_event)
-  end
-
-  def confirm_for_speaker?
     @user.organizer_for_event?(@current_event)
   end
 

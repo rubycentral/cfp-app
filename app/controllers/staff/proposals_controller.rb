@@ -1,7 +1,8 @@
 class Staff::ProposalsController < Staff::ApplicationController
   include ProgramSupport
 
-  before_action :require_proposal, only: [:show, :update_state, :update_track, :update_session_format, :finalize, :confirm_for_speaker]
+  before_action :require_proposal, only: [:show, :update_state, :update_track, :update_session_format, :finalize]
+  before_action :enable_staff_selection_subnav
 
   decorates_assigned :proposal, with: Staff::ProposalDecorator
 
@@ -77,8 +78,12 @@ class Staff::ProposalsController < Staff::ApplicationController
   def finalize
     authorize @proposal, :finalize?
 
-    @proposal.finalize
-    Staff::ProposalMailer.send_email(@proposal).deliver_now
+    if @proposal.finalize
+      Staff::ProposalMailer.send_email(@proposal).deliver_now
+      flash[:success] = "Proposal finalized for #{@proposal.event.name}."
+    else
+      flash[:danger] = "There was a problem finalizing the proposal: #{@proposal.errors.full_messages.join(', ')}"
+    end
     redirect_to event_staff_program_proposal_path(@proposal.event, @proposal)
   end
 
@@ -108,18 +113,6 @@ class Staff::ProposalsController < Staff::ApplicationController
       flash[:success] = "Successfully finalized remaining #{params[:proposals_state]} proposals."
     end
     redirect_to bulk_finalize_event_staff_program_proposals_path
-  end
-
-  def confirm_for_speaker
-    authorize @proposal, :finalize?
-
-    if @proposal.confirm
-      flash[:success] = "Proposal confirmed for #{@proposal.event.name}."
-    else
-      flash[:danger] = "There was a problem with confirmation: #{@proposal.errors.full_messages.join(', ')}"
-    end
-
-    redirect_to event_staff_program_proposal_path(slug: @proposal.event.slug, uuid: @proposal)
   end
 
 end

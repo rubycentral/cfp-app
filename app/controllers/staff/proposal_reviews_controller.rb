@@ -1,4 +1,5 @@
 class Staff::ProposalReviewsController < Staff::ApplicationController
+  before_action :track_program_use
   before_action :require_proposal, except: [:index]
   before_action :prevent_self_review, except: [:index]
 
@@ -35,7 +36,11 @@ class Staff::ProposalReviewsController < Staff::ApplicationController
   end
 
   def update
-    authorize @proposal, :review?
+    if program_mode?
+      authorize @proposal, :review_as_program_team?
+    else
+      authorize @proposal, :review?
+    end
     tags = params[:proposal][:review_tags].downcase
     params[:proposal][:review_tags] = Tagging.tags_string_to_array(tags)
 
@@ -51,5 +56,11 @@ class Staff::ProposalReviewsController < Staff::ApplicationController
 
   def proposal_review_tags_params
     params.fetch(:proposal, {}).permit(review_tags: [])
+  end
+
+  def track_program_use
+    if params[:program]
+      enable_staff_program_subnav
+    end
   end
 end

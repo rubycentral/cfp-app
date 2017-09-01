@@ -8,6 +8,10 @@ module StaffHelper
     program_mode? || rating.persisted?
   end
 
+  def allow_review?(proposal)
+    (program_mode? || !proposal.has_speaker?(current_user)) && !proposal.finalized?
+  end
+
   def show_proposal?(proposal)
     program_mode? || !proposal.has_speaker?(current_user)
   end

@@ -451,7 +451,7 @@ describe Proposal do
     end
   end
 
-  context "When propsal has multiple speakers" do
+  context "When proposal has multiple speakers" do
     it "displays the oldest speaker first" do
       proposal = create(:proposal)
       secondary_speaker = create(:speaker, created_at: 2.weeks.ago, proposal: proposal)

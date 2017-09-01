@@ -12,7 +12,7 @@ RSpec.describe ProgramSessionPolicy do
     CurrentEventContext.new(user, program_session.event)
   end
 
-  permissions :new?, :create?, :edit?, :update?, :update_state?, :destroy? do
+  permissions :new?, :create?, :edit?, :update?, :update_state?, :promote?, :destroy? do
 
     it 'denies program_team users' do
       expect(subject).not_to permit(pundit_user(program_team), program_session)

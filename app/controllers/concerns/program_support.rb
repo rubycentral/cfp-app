@@ -5,7 +5,6 @@ module ProgramSupport
 
   included do
     before_action :require_program_team
-    before_action :enable_staff_program_subnav
     before_action :set_proposal_counts
 
     helper_method :sticky_selected_track

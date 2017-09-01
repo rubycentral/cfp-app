@@ -1,6 +1,8 @@
 class Staff::ProgramSessionsController < Staff::ApplicationController
   include ProgramSupport
 
+  before_action :enable_staff_program_subnav
+
   decorates_assigned :program_session, with: Staff::ProgramSessionDecorator
   decorates_assigned :sessions, with: Staff::ProgramSessionDecorator
   decorates_assigned :waitlisted_sessions, with: Staff::ProgramSessionDecorator
@@ -60,12 +62,33 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
     end
   end
 
+  def promote
+    @program_session = current_event.program_sessions.find(params[:id])
+    authorize @program_session
+
+    if @program_session.update(state: ProgramSession::LIVE)
+      flash[:success] = "#{@program_session.title} was successfully promoted to #{@program_session.state}."
+    else
+      flash[:danger] = "There was a problem promoting this program session."
+    end
+    redirect_to event_staff_program_sessions_path(current_event)
+  end
+
   def destroy
     @program_session = current_event.program_sessions.find(params[:id])
     authorize @program_session
     @program_session.destroy
     redirect_to event_staff_program_sessions_path(event)
     flash[:info] = "Program session was successfully deleted."
+  end
+
+  def confirm_for_speaker
+    @program_session = current_event.program_sessions.find(params[:id])
+    authorize @program_session
+    @program_session.proposal.confirm
+    flash[:success] = "Proposal confirmed for #{@program_session.proposal.event.name}."
+
+    redirect_to event_staff_program_session_path(current_event, @program_session)
   end
 
   def speaker_emails

@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     resources :proposals, param: :uuid do
       member { post :confirm }
       member { post :withdraw }
+      member { post :decline }
       member { post :update_notes }
       member { delete :destroy }
     end
@@ -72,9 +73,6 @@ Rails.application.routes.draw do
           post :update_state
           post :update_track
           post :update_session_format
-          member do
-            post :confirm_for_speaker
-          end
         end
 
         resources :speakers, only: [:index, :show, :edit, :update, :destroy]
@@ -83,6 +81,10 @@ Rails.application.routes.draw do
           post :update_state
           collection do
             get 'speaker_emails'
+          end
+          member do
+            post :confirm_for_speaker
+            patch :promote
           end
         end
       end

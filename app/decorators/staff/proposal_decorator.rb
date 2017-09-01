@@ -9,7 +9,7 @@ class Staff::ProposalDecorator < ProposalDecorator
     end
   end
 
-  def state_buttons(states: nil, show_finalize: true, show_hard_reset: false, show_confirm_for_speaker: false, small: false)
+  def state_buttons(states: nil, show_finalize: true, show_hard_reset: false, small: false)
     btns = buttons.map do |text, state, btn_type, hidden|
       if states.nil? || states.include?(state)
         state_button(text, update_state_path(state),
@@ -22,7 +22,6 @@ class Staff::ProposalDecorator < ProposalDecorator
     btns << reset_state_button
     btns << hard_reset_button if show_hard_reset
     btns << finalize_state_button if show_finalize
-    btns << confirm_for_speaker_button if show_confirm_for_speaker
 
     btns.join("\n").html_safe
   end
@@ -120,15 +119,6 @@ class Staff::ProposalDecorator < ProposalDecorator
                  hidden: hard_reset_button_hidden?)
   end
 
-  def confirm_for_speaker_button
-    return if confirm_for_speaker_button_hidden?
-
-    h.link_to 'Confirm for Speaker',
-            h.confirm_for_speaker_event_staff_program_proposal_path(slug: proposal.event.slug, uuid: proposal),
-            method: :post,
-            class: "btn btn-primary btn-sm"
-  end
-
   def update_state_path(state)
     h.event_staff_program_proposal_update_state_path(object.event, object, new_state: state)
   end
@@ -152,9 +142,5 @@ class Staff::ProposalDecorator < ProposalDecorator
 
   def hard_reset_button_hidden?
     object.confirmed? || !(object.finalized? && h.policy(proposal).finalize?)
-  end
-
-  def confirm_for_speaker_button_hidden?
-    !(object.awaiting_confirmation? && h.policy(object).confirm_for_speaker?)
   end
 end

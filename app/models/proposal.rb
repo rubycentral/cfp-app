@@ -107,24 +107,34 @@ class Proposal < ApplicationRecord
   end
 
   def finalize
-    update_state(SOFT_TO_FINAL[state]) if SOFT_TO_FINAL.has_key?(state)
+    transaction do
+      update_state(SOFT_TO_FINAL[state]) if SOFT_TO_FINAL.has_key?(state)
+      ps = ProgramSession.create_draft_from_proposal(self)
+      ps.persisted?
+    end
+  rescue ActiveRecord::RecordInvalid
+    false
   end
 
   def withdraw
-    self.update(state: WITHDRAWN)
+    update(state: WITHDRAWN)
 
     Notification.create_for(reviewers, proposal: self,
                             message: "Proposal, #{title}, withdrawn")
   end
 
   def confirm
-    transaction do
-      update!(confirmed_at: DateTime.current)
-      ps = ProgramSession.create_from_proposal(self)
-      ps.persisted?
+    update(confirmed_at: DateTime.current)
+
+    if program_session.present?
+      new_state = waitlisted? ?  ProgramSession::WAITLISTED : ProgramSession::LIVE
+      program_session.update(state: new_state)
     end
-  rescue ActiveRecord::RecordInvalid
-    false
+  end
+
+  def decline
+    update(state: WITHDRAWN, confirmed_at: DateTime.current)
+    program_session.update(state: ProgramSession::DECLINED)
   end
 
   def draft?

@@ -28,7 +28,12 @@ class ProgramSessionPolicy < ApplicationPolicy
     @user.organizer_for_event?(@current_event)
   end
 
+
   def confirm_for_speaker?
+    @user.organizer_for_event?(@current_event)
+  end
+  
+  def promote?
     @user.organizer_for_event?(@current_event)
   end
 

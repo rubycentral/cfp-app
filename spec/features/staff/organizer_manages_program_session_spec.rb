@@ -13,6 +13,28 @@ feature "Organizers can manage program sessions" do
     login_as(organizer_user)
   end
 
+  context "organizer can promote program session" do
+    let!(:waitlisted_session) { create(:program_session, event: event, session_format: session_format, state: ProgramSession::WAITLISTED) }
+
+    scenario "from program session index", js: true do
+      visit event_staff_program_sessions_path(event)
+      page.accept_confirm do
+        find('tr', text: waitlisted_session.title).click_link("Promote")
+      end
+
+      expect(waitlisted_session.reload.state).to eq(ProgramSession::LIVE)
+    end
+
+    scenario "from program session show page", js: true do
+      visit event_staff_program_session_path(event, waitlisted_session)
+      page.accept_confirm do
+        click_link("Promote")
+      end
+
+      expect(waitlisted_session.reload.state).to eq(ProgramSession::LIVE)
+    end
+  end
+
   scenario "organizer can view program session" do
     visit event_staff_program_session_path(event, program_session)
 

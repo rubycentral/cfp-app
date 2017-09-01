@@ -2,7 +2,13 @@ class TimeSlotSerializer < ActiveModel::Serializer
   attributes :conference_day, :start_time, :end_time, :program_session_id, :title, :presenter,
     :room, :track, :description
 
-  #NOTE: object references a TimeSlotDecorator
+  def start_time
+    object.start_time.try(:to_s, :time)
+  end
+
+  def end_time
+    object.end_time.try(:to_s, :time)
+  end
 
   def room
     object.room_name

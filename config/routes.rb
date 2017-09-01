@@ -83,6 +83,7 @@ Rails.application.routes.draw do
           end
           member do
             post :confirm_for_speaker
+            patch :promote
           end
         end
       end

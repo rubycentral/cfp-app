@@ -8,6 +8,10 @@ class ProposalPolicy < ApplicationPolicy
     @user.staff_for?(@current_event) && !@record.has_speaker?(@user)
   end
 
+  def review_as_organizer?
+    @user.organizer_for_event?(@current_event)
+  end
+
   def rate?
     @user.staff_for?(@current_event)
   end

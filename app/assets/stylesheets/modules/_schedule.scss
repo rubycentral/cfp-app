@@ -20,7 +20,7 @@
   $vertical-scale: 2.5;
   $pixel-range: $time-range * $vertical-scale;
   $pixel-step: $time-step * $vertical-scale;
-  $column-width: 122px;
+  $column-width: 180px;
 
   display: inline-flex;
   flex-flow: row nowrap;
@@ -77,17 +77,21 @@
 
   .column-header {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
     height: 90px;
-    font-size: $font-size-large;
-    line-height: $line-height-large;
+    font-size: $font-size-base;
+    line-height: $line-height-base;
     text-align: center;
-    text-transform: uppercase;
     color: #666;
     background: rgb(204, 204, 204);
     border-right: 1px solid #FFF;
+
+    .room-number {
+      font-style: italic;
+    }
   }
 
   .time-slots, .time-slots .time-slot {
@@ -112,6 +116,7 @@
     position: absolute;
     width: 100%;
     text-align: left;
+    font-size: $font-size-small;
     background: #FFF;
     cursor: pointer;
     z-index: 10;
@@ -120,6 +125,8 @@
     .track {
       padding: 5px 5px 5px 10px;
       font-style: italic;
+      overflow-x: hidden;
+      white-space: nowrap;
     }
 
     .title {
@@ -129,7 +136,9 @@
     .presenter {
       padding: 5px 5px 5px 10px;
       color: $brand-primary;
-      font-size: $font-size-small;
+      font-size: $font-size-xs;
+      overflow-x: hidden;
+      white-space: nowrap;
     }
 
     &.preview {

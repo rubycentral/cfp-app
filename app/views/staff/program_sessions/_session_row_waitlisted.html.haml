@@ -6,4 +6,5 @@
   %td= program_session.track_name
   %td= program_session.state_label
   %td= program_session.confirmed_status
+  %td= link_to 'Promote', promote_event_staff_program_session_path(program_session.event, program_session), method: :patch, data: { confirm: "Are you sure you want to promote #{program_session.title}?" }, class: 'btn btn-warning btn-xs'
   %td= program_session.confirmation_notes_link

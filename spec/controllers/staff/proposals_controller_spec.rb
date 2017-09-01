@@ -66,6 +66,12 @@ describe Staff::ProposalsController, type: :controller do
       expect(assigns(:proposal).state).to eq(Proposal::State::ACCEPTED)
     end
 
+    it "creates a draft program session" do
+      proposal = create(:proposal, event: event, state: Proposal::State::SOFT_ACCEPTED)
+      post :finalize, params: {event_slug: event, proposal_uuid: proposal.uuid}
+      expect(assigns(:proposal).program_session.state).to eq(ProgramSession::DRAFT)
+    end
+
     it "sends appropriate emails" do
       proposal = create(:proposal, state: Proposal::State::SOFT_ACCEPTED)
       mail = double(:mail, deliver_now: nil)

@@ -109,4 +109,14 @@ feature "Organizers can manage program sessions" do
     expect(event.speakers).to include(speaker)
     expect(event.proposals).to include(speaker.proposal)
   end
+
+  scenario "organizer can confirm program session for speaker" do
+    program_session_with_proposal = create(:program_session_with_proposal, :with_speaker, event: event, session_format: session_format)
+    visit event_staff_program_session_path(event, program_session_with_proposal)
+
+    click_link("Confirm for Speaker")
+
+    expect(page).to have_content("Proposal confirmed for #{event.name}.")
+    expect(page).not_to have_link("Confirm for Speaker")
+  end
 end

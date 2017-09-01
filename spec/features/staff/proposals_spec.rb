@@ -122,6 +122,10 @@ feature "Organizers can manage proposals" do
       it "sends an email notification to the speaker" do
         expect(ActionMailer::Base.deliveries.last.to).to include(speaker_user.email)
       end
+
+      it "creates a draft program session" do
+        expect(proposal.program_session.state).to eq(ProgramSession::DRAFT)
+      end
     end
 
     context "Waitlisting a proposal" do
@@ -137,6 +141,10 @@ feature "Organizers can manage proposals" do
 
       it "sends an email notification to the speaker" do
         expect(ActionMailer::Base.deliveries.last.to).to include(speaker_user.email)
+      end
+
+      it "creates a draft program session" do
+        expect(proposal.program_session.state).to eq(ProgramSession::DRAFT)
       end
     end
 

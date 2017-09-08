@@ -83,6 +83,10 @@ class ProgramSession < ApplicationRecord
     end
   end
 
+  def live?
+    state == LIVE
+  end
+
   def multiple_speakers?
     speakers.count > 1
   end

@@ -315,6 +315,7 @@ describe ProgramSession do
         expect(speaker.changed?).to be(false)
       end
     end
+  end
 
   describe "#destroy" do
 

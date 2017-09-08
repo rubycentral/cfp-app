@@ -25,8 +25,9 @@
             = link_to edit_event_staff_program_session_path(current_event, @program_session), class: 'btn btn-primary' do
               %span.glyphicon.glyphicon-edit
               Edit
-            = link_to 'Promote', promote_event_staff_program_session_path(program_session.event, program_session),
-              method: :patch, data: { confirm: "Are you sure you want to promote #{program_session.title}?" }, class: 'btn btn-warning'
+            - unless program_session.live?
+              = link_to 'Promote', promote_event_staff_program_session_path(program_session.event, program_session),
+                method: :patch, data: { confirm: "Are you sure you want to promote #{program_session.title}?" }, class: 'btn btn-warning'
         %h1 Program Session
   .row
     .col-md-6

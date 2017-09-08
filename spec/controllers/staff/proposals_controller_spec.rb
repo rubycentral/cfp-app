@@ -76,7 +76,7 @@ describe Staff::ProposalsController, type: :controller do
       proposal = create(:proposal, state: Proposal::State::SOFT_ACCEPTED)
       mail = double(:mail, deliver_now: nil)
       expect(Staff::ProposalMailer).to receive('send_email').and_return(mail)
-      post :finalize, event_slug: event, proposal_uuid: proposal.uuid
+      post :finalize, params: {event_slug: event, proposal_uuid: proposal.uuid}
     end
   end
 

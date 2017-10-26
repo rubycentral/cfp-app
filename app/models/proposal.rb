@@ -110,7 +110,7 @@ class Proposal < ApplicationRecord
     transaction do
       update_state(SOFT_TO_FINAL[state]) if SOFT_TO_FINAL.has_key?(state)
       if becomes_program_session?
-        ps = ProgramSession.create_draft_from_proposal(self)
+        ps = ProgramSession.create_from_proposal(self)
         ps.persisted?
       else
         true

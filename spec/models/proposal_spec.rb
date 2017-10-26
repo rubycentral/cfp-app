@@ -213,7 +213,7 @@ describe Proposal do
           prop.finalize
         end
 
-        expect(waitlisted_proposal.reload.program_session.state).to eq('draft')
+        expect(waitlisted_proposal.reload.program_session.state).to eq('waitlisted')
         expect(accepted_proposal.reload.program_session.state).to eq('draft')
         expect(rejected_proposal.reload.program_session).to be_nil
         expect(submitted_proposal.reload.program_session).to be_nil

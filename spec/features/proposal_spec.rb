@@ -180,7 +180,7 @@ feature "Proposals" do
 
     before do
       proposal.update(state: Proposal::State::ACCEPTED)
-      ProgramSession.create_draft_from_proposal(proposal)
+      ProgramSession.create_from_proposal(proposal)
     end
 
     context "when the proposal has not yet been confirmed" do
@@ -256,7 +256,7 @@ feature "Proposals" do
       @proposal = create(:proposal, state: Proposal::State::ACCEPTED)
       speaker = create(:speaker, proposal: @proposal, user: user)
       @proposal.speakers << speaker
-      ProgramSession.create_draft_from_proposal(@proposal)
+      ProgramSession.create_from_proposal(@proposal)
       visit event_proposal_path(event_slug: @proposal.event.slug, uuid: @proposal)
       click_link "Decline"
     end

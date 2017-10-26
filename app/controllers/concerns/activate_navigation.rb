@@ -85,6 +85,7 @@ module ActivateNavigation
         # add_path(:event_staff_program_proposal, current_event, @proposal)
         #How to leverage session[:prev_page] here? Considering lamdas
         ],
+        'event-program-bulk-finalize-link' => starts_with_path(:bulk_finalize_event_staff_program_proposals, current_event),
         'event-program-proposals-link' => starts_with_path(:event_staff_program_proposals, current_event)
     }
   end

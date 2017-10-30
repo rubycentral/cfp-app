@@ -129,11 +129,13 @@ class Proposal < ApplicationRecord
 
   def confirm
     update(confirmed_at: DateTime.current)
-
     if program_session.present?
-      new_state = waitlisted? ?  ProgramSession::WAITLISTED : ProgramSession::LIVE
-      program_session.update(state: new_state)
+      program_session.confirm
     end
+  end
+
+  def promote
+    update(state: ACCEPTED) if state == WAITLISTED
   end
 
   def decline

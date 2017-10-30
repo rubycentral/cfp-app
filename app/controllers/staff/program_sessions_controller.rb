@@ -8,8 +8,7 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
   decorates_assigned :waitlisted_sessions, with: Staff::ProgramSessionDecorator
 
   def index
-    @sessions = current_event.program_sessions.non_waitlisted
-    @waitlisted_sessions = current_event.program_sessions.waitlisted
+    @sessions = current_event.program_sessions
 
     session[:prev_page] = { name: 'Program', path: event_staff_program_sessions_path(current_event) }
 
@@ -66,7 +65,7 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
     @program_session = current_event.program_sessions.find(params[:id])
     authorize @program_session
 
-    if @program_session.update(state: ProgramSession::LIVE)
+    if @program_session.promote
       flash[:success] = "#{@program_session.title} was successfully promoted to #{@program_session.state}."
     else
       flash[:danger] = "There was a problem promoting this program session."

@@ -31,7 +31,22 @@
         Download as JSON
       = copy_email_btn
       = link_to "+ New Session", new_event_staff_program_session_path(current_event), class: "btn btn-success btn-sm"
-
+.row
+  .col-md-8
+    %h4.quick-filter-tabs
+      .tab#program
+        %h4
+          Program
+          %span.badge= sessions.object.program.count
+      .tab#waitlist
+        %h4
+          Waitlist
+          %span.badge= sessions.object.waitlisted.count
+      .tab#declined
+        %h4
+          Declined
+          %span.badge= sessions.object.declined.count
+      .indicator
 .row
   .col-md-12
     %table#program-sessions.datatable.table.table-striped
@@ -44,7 +59,7 @@
           %th
           %th
           %th
-          %th
+          %th.hidden
         %tr
           %th Title
           %th Speaker
@@ -52,34 +67,10 @@
           %th Track
           %th Scheduled
           %th Status
-          %th Confirmed
+          %th Actions
           %th Notes
+          %th.hidden
+
       %tbody
         = render partial: 'session_row_active', collection: sessions, as: :program_session
 %hr
-
-.row
-  .col-md-12
-    %h3
-      Waitlist
-      %span.badge= waitlisted_sessions.count
-    %table#waitlisted-program-sessions.datatable.table.table-striped
-      %thead
-        %tr
-          %th
-          %th
-          %th
-          %th
-          %th
-          %th
-        %tr
-          %th Title
-          %th Speaker
-          %th Format
-          %th Track
-          %th Status
-          %th Confirmed
-          %th
-          %th Notes
-      %tbody
-        = render partial: 'session_row_waitlisted', collection: waitlisted_sessions, as: :program_session

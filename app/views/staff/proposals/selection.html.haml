@@ -19,9 +19,6 @@
 .row
   .col-md-8
     %h1 Program Selection
-  - if Proposal.soft_states.size > 0
-    .col.md-4.text-right
-      = bulk_finalize_button
 .row
   &nbsp;
 
@@ -72,4 +69,3 @@
               %span.proposal-status= proposal.state_label(small: true, show_confirmed: true)
             %td
               %span.state-buttons= proposal.small_state_buttons
-

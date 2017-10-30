@@ -168,6 +168,26 @@ describe Proposal do
       end
     end
 
+    describe "#becomes_program_session?" do
+      it "returns true for WAITLISTED and  ACCEPTED" do
+        states = [ ACCEPTED, WAITLISTED ]
+
+        states.each do |state|
+          proposal = create(:proposal, state: state)
+          expect(proposal).to be_becomes_program_session
+        end
+      end
+
+      it "returns false for SUBMITTED and REJECTED" do
+        states = [ SUBMITTED, REJECTED ]
+
+        states.each do |state|
+          proposal = create(:proposal, state: state)
+          expect(proposal).to_not be_becomes_program_session
+        end
+      end
+    end
+
     describe "#finalize" do
       it "changes a soft state to a finalized state" do
         Proposal::SOFT_TO_FINAL.each do |key, val|
@@ -181,6 +201,22 @@ describe Proposal do
         proposal = create(:proposal, state: SUBMITTED)
         expect(proposal.finalize).to be_truthy
         expect(proposal.reload.state).to eq(REJECTED)
+      end
+
+      it "creates a draft program session for WAITLISTED and ACCEPTED proposals, but not for REJECTED or SUBMITTED" do
+        waitlisted_proposal = create(:proposal, state: SOFT_WAITLISTED)
+        accepted_proposal = create(:proposal, state: SOFT_ACCEPTED)
+        rejected_proposal = create(:proposal, state: SOFT_REJECTED)
+        submitted_proposal = create(:proposal, state: SUBMITTED)
+
+        Proposal.all.each do |prop|
+          prop.finalize
+        end
+
+        expect(waitlisted_proposal.reload.program_session.state).to eq('waitlisted')
+        expect(accepted_proposal.reload.program_session.state).to eq('draft')
+        expect(rejected_proposal.reload.program_session).to be_nil
+        expect(submitted_proposal.reload.program_session).to be_nil
       end
     end
 

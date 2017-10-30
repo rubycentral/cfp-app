@@ -109,8 +109,12 @@ class Proposal < ApplicationRecord
   def finalize
     transaction do
       update_state(SOFT_TO_FINAL[state]) if SOFT_TO_FINAL.has_key?(state)
-      ps = ProgramSession.create_draft_from_proposal(self)
-      ps.persisted?
+      if becomes_program_session?
+        ps = ProgramSession.create_from_proposal(self)
+        ps.persisted?
+      else
+        true
+      end
     end
   rescue ActiveRecord::RecordInvalid
     false
@@ -143,6 +147,10 @@ class Proposal < ApplicationRecord
 
   def finalized?
     FINAL_STATES.include?(state)
+  end
+
+  def becomes_program_session?
+    BECOMES_PROGRAM_SESSION.include?(state)
   end
 
   def confirmed?

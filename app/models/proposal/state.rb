@@ -28,6 +28,8 @@ module Proposal::State
       SOFT_WAITLISTED => WAITLISTED,
       SUBMITTED => REJECTED
     }
+
+    BECOMES_PROGRAM_SESSION = [ ACCEPTED, WAITLISTED ]
   end
 
   included do

@@ -71,8 +71,12 @@ module ApplicationHelper
             id: 'copy-filtered-speaker-emails'
   end
 
-  def bulk_finalize_button
-    link_to 'Bulk Finalize', bulk_finalize_event_staff_program_proposals_path, class: 'btn btn-warning navbar-btn'
+  def finalize_info
+    if current_event.proposals.soft_states.any?
+      content_tag(:span, "You can use the following bulk actions to finalize the state of all proposals.", class: "text-info")
+    else
+      content_tag(:span, "There are no proposals awaiting finalization.", class: "text-warning")
+    end
   end
 
   def bang(label)

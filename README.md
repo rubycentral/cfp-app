@@ -62,6 +62,21 @@ p.save
 
 Do make sure that the Person record you pull back is indeed your newly created user and the one that should get admin permissions!
 
+## Developping with Docker Compose
+
+It's possible to use Docker Compose to manage the database and the dependencies required to install cfp-app.
+
+```
+docker-compose run web bin/setup
+docker-compose up
+```
+
+It's possible to run test on a headless browser with:
+```
+docker-compose run web bash
+xvfb-run bin/rake spec
+```
+
 ## How to use the CFP App
 
 ### Creating your event

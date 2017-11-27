@@ -171,14 +171,42 @@ class ProposalDecorator < ApplicationDecorator
       hint: 'A concise, engaging description for the public program. Limited to 600 characters.'#, popover_icon: { content: tooltip }
   end
 
-  def standalone_track_select
-    h.select_tag :track, h.options_for_select(track_options, object.track_id), include_blank: Track::NO_TRACK,
-               class: 'proposal-track-select', data: { target_path: h.event_staff_program_proposal_update_track_path(object.event, object) }
+  def standalone_track_select(tooltip)
+    h.simple_form_for :proposal, remote: true do |f|
+      f.input :track,
+        required: false,
+        label_html: { class: 'info-item-heading' },
+        collection: track_options,
+        include_blank: Track::NO_TRACK,
+        selected: object.track_id,
+        id: 'track',
+        input_html: {
+          class: 'proposal-track-select form-control select',
+          data: {
+            target_path: h.event_staff_program_proposal_update_track_path(object.event, object)
+          },
+        },
+        popover_icon: { content: tooltip }
+    end
   end
 
-  def standalone_format_select
-    h.select_tag :format, h.options_for_select(format_options, object.session_format_id),
-               class: 'proposal-format-select', data: { target_path: h.event_staff_program_proposal_update_session_format_path(object.event, object) }
+  def standalone_format_select(tooltip)
+    h.simple_form_for :proposal, remote: true do |f|
+      f.input :format,
+        required: false,
+        label_html: { class: 'info-item-heading' },
+        collection: format_options,
+        include_blank: Track::NO_TRACK,
+        selected: object.session_format_id,
+        id: 'track',
+        input_html: {
+          class: 'proposal-format-select form-control select',
+          data: {
+            target_path: h.event_staff_program_proposal_update_session_format_path(object.event, object)
+          },
+        },
+        popover_icon: { content: tooltip }
+    end
   end
 
   def track_options

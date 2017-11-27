@@ -80,11 +80,12 @@ class User < ApplicationRecord
   end
 
   def organizer_for_event?(event)
+    #Checks for role of organizer through teammates
     teammates.organizer.for_event(event).size > 0
   end
 
   def staff_for?(event)
-    #Checks all roles
+    #Checks for any role in the event through teammates
     teammates.for_event(event).size > 0
   end
 
@@ -93,6 +94,7 @@ class User < ApplicationRecord
   end
 
   def reviewer_for_event?(event)
+    #Checks for role of reviewer through teammates
     teammates.reviewer.for_event(event).size > 0
   end
 

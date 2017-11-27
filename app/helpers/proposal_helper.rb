@@ -11,11 +11,25 @@ module ProposalHelper
   end
 
   def session_format_tooltip
-    "The format your proposal will follow."
+    content_tag(:div) do
+      concat(content_tag(:p) do
+        content_tag(:strong, "Session Format Guide")
+      end)
+      event.session_formats.each do |format|
+        concat(content_tag(:p, "#{format.name} - #{format.description}"))
+      end
+    end
   end
 
   def track_tooltip
-    "Optional: suggest a specific track to be considered for."
+    content_tag(:div) do
+      concat(content_tag(:p) do
+        content_tag(:strong, "Session Track Guide")
+      end)
+      event.tracks.each do |track|
+        concat(content_tag(:p, "#{track.name} - #{track.description}"))
+      end
+    end
   end
 
   def abstract_tooltip

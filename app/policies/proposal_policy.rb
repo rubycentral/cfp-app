@@ -21,11 +21,11 @@ class ProposalPolicy < ApplicationPolicy
   end
 
   def update_track?
-    @user.program_team_for_event?(@current_event)
+    @user.program_team_for_event?(@current_event) || @user.reviewer?
   end
 
   def update_session_format?
-    @user.program_team_for_event?(@current_event)
+    @user.program_team_for_event?(@current_event) || @user.reviewer?
   end
 
   def finalize?

@@ -24,5 +24,42 @@
       margin-bottom: $padding-small-vertical;
     }
   }
+}
 
+table#program-sessions {
+  .btn {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+.quick-filter-tabs {
+  position: relative;
+
+  .tab {
+    display: inline-block;
+    padding-right: 1em;
+    cursor: pointer;
+    color: $link-color;
+    margin-bottom: 0.5em;
+
+    .badge {
+      background-color: $link-color;
+    }
+
+    &:hover {
+      color: $link-hover-color;
+      .badge {
+        background-color: $link-hover-color;
+      }
+    }
+  }
+
+  .indicator {
+    position: absolute;
+    bottom: 0;
+    height: 5px;
+    background-color: $link-hover-color;
+    border-radius: $border-radius-base;
+  }
 }

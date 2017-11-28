@@ -69,7 +69,7 @@ describe Staff::ProposalsController, type: :controller do
     it "creates a draft program session" do
       proposal = create(:proposal, event: event, state: Proposal::State::SOFT_ACCEPTED)
       post :finalize, params: {event_slug: event, proposal_uuid: proposal.uuid}
-      expect(assigns(:proposal).program_session.state).to eq(ProgramSession::DRAFT)
+      expect(assigns(:proposal).program_session.state).to eq(ProgramSession::UNCONFIRMED_ACCEPTED)
     end
 
     it "sends appropriate emails" do

@@ -133,6 +133,56 @@ describe Proposal do
     end
   end
 
+  describe "#confirm" do
+    it "confirms the proposal" do
+      proposal = create(:proposal, state: Proposal::ACCEPTED)
+
+      proposal.confirm
+
+      expect(proposal.reload).to be_confirmed
+    end
+
+    it "updates the state of it's program session" do
+      confirmed_waitlisted_proposal = create(:proposal, state: Proposal::WAITLISTED, confirmed_at: DateTime.now)
+      unconfirmed_waitlisted_proposal = create(:proposal, state: Proposal::WAITLISTED)
+      unconfirmed_accepted_proposal = create(:proposal, state: Proposal::ACCEPTED)
+      confirmed_accepted_proposal = create(:proposal, state: Proposal::ACCEPTED, confirmed_at: DateTime.now)
+
+
+      Proposal.all.each do |prop|
+        create(:program_session, proposal: prop)
+        expect(prop.program_session).to receive(:confirm)
+        prop.confirm
+      end
+    end
+  end
+
+  describe "#promote" do
+    it "promotes from waitlisted to accepted" do
+      waitlisted = create(:proposal, state: Proposal::WAITLISTED)
+
+      waitlisted.promote
+
+      expect(waitlisted.reload.state).to eq("accepted")
+    end
+
+    it "doesn't promote from other states" do
+      create(:proposal, state: Proposal::ACCEPTED)
+      create(:proposal, state: Proposal::REJECTED)
+      create(:proposal, state: Proposal::WITHDRAWN)
+      create(:proposal, state: Proposal::NOT_ACCEPTED)
+      create(:proposal, state: Proposal::SUBMITTED)
+      create(:proposal, state: Proposal::SOFT_ACCEPTED)
+      create(:proposal, state: Proposal::SOFT_WAITLISTED)
+      create(:proposal, state: Proposal::SOFT_REJECTED)
+
+
+      Proposal.all.each do |prop|
+        expect{ prop.promote }.not_to change(prop, :state)
+      end
+    end
+  end
+
   # describe "#scheduled?" do
   #   let(:proposal) { build(:proposal, state: ACCEPTED) }
   #
@@ -213,8 +263,8 @@ describe Proposal do
           prop.finalize
         end
 
-        expect(waitlisted_proposal.reload.program_session.state).to eq('waitlisted')
-        expect(accepted_proposal.reload.program_session.state).to eq('draft')
+        expect(waitlisted_proposal.reload.program_session.state).to eq('unconfirmed waitlisted')
+        expect(accepted_proposal.reload.program_session.state).to eq('unconfirmed accepted')
         expect(rejected_proposal.reload.program_session).to be_nil
         expect(submitted_proposal.reload.program_session).to be_nil
       end

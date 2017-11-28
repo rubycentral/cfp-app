@@ -1,10 +1,39 @@
 class ProgramSession < ApplicationRecord
-  LIVE = 'live'
-  DRAFT = 'draft'
-  WAITLISTED = 'waitlisted'
+  LIVE = 'live' # confirmed accepted
+  DRAFT = 'draft' # created by organizer, not ready to be published (live)
+  UNCONFIRMED_ACCEPTED = 'unconfirmed accepted' # accepted, to be confirmed by speaker
+  UNCONFIRMED_WAITLISTED = 'unconfirmed waitlisted'
+  CONFIRMED_WAITLISTED = 'confirmed waitlisted'
   DECLINED = 'declined'
 
-  STATES = [DRAFT, LIVE, WAITLISTED, DECLINED]
+  STATES = [
+    LIVE,
+    DRAFT,
+    UNCONFIRMED_ACCEPTED,
+    UNCONFIRMED_WAITLISTED,
+    CONFIRMED_WAITLISTED,
+    DECLINED
+  ]
+
+  STATE_GROUPS = {
+    LIVE => "program",
+    DRAFT => "program",
+    UNCONFIRMED_ACCEPTED => "program",
+    UNCONFIRMED_WAITLISTED => "waitlist",
+    CONFIRMED_WAITLISTED => "waitlist",
+    DECLINED => "declined"
+  }
+
+  PROMOTIONS = {
+    DRAFT => LIVE,
+    UNCONFIRMED_WAITLISTED => UNCONFIRMED_ACCEPTED,
+    CONFIRMED_WAITLISTED => LIVE
+  }
+
+  CONFIRMATIONS = {
+    UNCONFIRMED_WAITLISTED => CONFIRMED_WAITLISTED,
+    UNCONFIRMED_ACCEPTED => LIVE
+  }
 
   belongs_to :event
   belongs_to :proposal
@@ -18,6 +47,8 @@ class ProgramSession < ApplicationRecord
 
   validates :event, :session_format, :title, :state, presence: true
 
+  validates_inclusion_of :state, in: STATES
+
   serialize :info, Hash
 
   after_destroy :destroy_speakers
@@ -28,8 +59,9 @@ class ProgramSession < ApplicationRecord
   scope :sorted_by_title, -> { order(:title)}
   scope :live, -> { where(state: LIVE) }
   scope :draft, -> { where(state: DRAFT) }
-  scope :waitlisted, -> { where(state: WAITLISTED) }
-  scope :non_waitlisted, -> { where(state: [LIVE, DRAFT, DECLINED]) }
+  scope :waitlisted, -> { where(state: [CONFIRMED_WAITLISTED, UNCONFIRMED_WAITLISTED]) }
+  scope :program, -> { where(state: [LIVE, DRAFT, UNCONFIRMED_ACCEPTED]) }
+  scope :declined, -> { where(state: DECLINED) }
   scope :without_proposal, -> { where(proposal: nil) }
   scope :in_track, ->(track) do
     track = nil if track.try(:strip).blank?
@@ -45,7 +77,7 @@ class ProgramSession < ApplicationRecord
                                   abstract: proposal.abstract,
                                   track_id: proposal.track_id,
                                   session_format_id: proposal.session_format_id,
-                                  state: proposal.waitlisted? ? WAITLISTED : DRAFT
+                                  state: proposal.waitlisted? ? UNCONFIRMED_WAITLISTED : UNCONFIRMED_ACCEPTED
       )
 
       #attach proposal speakers to new program session
@@ -57,6 +89,25 @@ class ProgramSession < ApplicationRecord
         speaker.save!
       end
       ps
+    end
+  end
+
+  def can_confirm?
+    CONFIRMATIONS.keys.include?(state)
+  end
+
+  def confirm
+    update(state: CONFIRMATIONS[state]) if can_confirm?
+  end
+
+  def can_promote?
+    PROMOTIONS.keys.include?(state)
+  end
+
+  def promote
+    update(state: PROMOTIONS[state])
+    if proposal.present?
+      proposal.promote
     end
   end
 
@@ -82,6 +133,10 @@ class ProgramSession < ApplicationRecord
 
   def track_name
     track.try(:name)
+  end
+
+  def group_name
+    STATE_GROUPS[state]
   end
 
   def confirmation_notes?

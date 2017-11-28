@@ -23,10 +23,14 @@ class Staff::ProgramSessionDecorator < ApplicationDecorator
     case state
     when ProgramSession::LIVE
       'label-success'
-    when ProgramSession::WAITLISTED
-      'label-warning'
     when ProgramSession::DRAFT
       'label-default'
+    when ProgramSession::UNCONFIRMED_ACCEPTED
+      'label-info'
+    when ProgramSession::UNCONFIRMED_WAITLISTED
+      'label-warning'
+    when ProgramSession::CONFIRMED_WAITLISTED
+      'label-warning'
     when ProgramSession::DECLINED
       'label-danger'
     else
@@ -36,12 +40,6 @@ class Staff::ProgramSessionDecorator < ApplicationDecorator
 
   def track_name
     object.track_name || Track::NO_TRACK
-  end
-
-  def confirmed_status
-    if (object.proposal.present? && object.proposal.confirmed_at.present?) || (object.proposal.nil? && object.state == ProgramSession::LIVE)
-      h.content_tag(:i, '', class: 'fa fa-check')
-    end
   end
 
   def abstract_markdown

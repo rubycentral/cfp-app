@@ -14,11 +14,12 @@ feature "Organizers can manage program sessions" do
   end
 
   context "organizer can promote program session" do
-    let!(:waitlisted_session) { create(:program_session, event: event, session_format: session_format, state: ProgramSession::WAITLISTED) }
+    let!(:waitlisted_session) { create(:program_session, event: event, session_format: session_format, state: ProgramSession::CONFIRMED_WAITLISTED) }
 
     scenario "from program session index", js: true do
       visit event_staff_program_sessions_path(event)
       page.accept_confirm do
+        page.find('#waitlist').click
         find('tr', text: waitlisted_session.title).click_link("Promote")
       end
 

@@ -71,6 +71,12 @@ module ApplicationHelper
             id: 'copy-filtered-speaker-emails'
   end
 
+  def promote_button(program_session)
+    if program_session.can_promote?
+      link_to 'Promote', promote_event_staff_program_session_path(program_session.event, program_session), method: :patch, data: { confirm: "Are you sure you want to promote #{program_session.title}?" }, class: 'btn btn-warning'
+    end
+  end
+
   def finalize_info
     if current_event.proposals.soft_states.any?
       content_tag(:span, "You can use the following bulk actions to finalize the state of all proposals.", class: "text-info")

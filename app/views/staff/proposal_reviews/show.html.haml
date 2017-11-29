@@ -54,8 +54,8 @@
           .col-sm-4
             .col-sm-6.no-pad-left
               .proposal-meta-item.full-width
-                .info-item-heading Format
                 #current-format
+                  .info-item-heading Format
                   #format-name.pull-left
                     #{proposal.session_format_name}
                   - if track_and_format_edit
@@ -63,13 +63,11 @@
                 #edit-format-wrapper
                   %span
                     = render 'shared/proposals/inline_format_edit', proposal: proposal
-                  #cancel-format-editing.btn.btn-danger.btn-sm
-                    %span.glyphicon.glyphicon-remove
-
+                  #cancel-format-editing.fa.fa-undo
             .col-sm-6
               .proposal-meta-item.full-width
-                .info-item-heading Track
                 #current-track
+                  .info-item-heading Track
                   #track-name.pull-left
                     #{proposal.track_name}
                   - if track_and_format_edit
@@ -77,9 +75,7 @@
                 #edit-track-wrapper
                   %span
                     = render 'shared/proposals/inline_track_edit', proposal: proposal
-                  #cancel-track-editing.btn.btn-danger.btn-sm
-                    %span.glyphicon.glyphicon-remove
-
+                  #cancel-track-editing.btn.fa.fa-undo
           .col-sm-4
             .proposal-meta-item.col-sm-12.no-pad-left
               .info-item-heading Reviewer Tags

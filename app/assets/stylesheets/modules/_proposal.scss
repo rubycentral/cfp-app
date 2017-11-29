@@ -161,23 +161,35 @@ div.col-md-4 {
   }
 }
 
-#edit-tags-icon, #edit-track-icon, #edit-format-icon {
+#edit-tags-icon,
+#edit-track-icon,
+#edit-format-icon,
+#cancel-format-editing,
+#cancel-track-editing {
   color: $bright-blue;
   font-size: $font-size-large;
   margin-left: 5px;
+  padding: 0;
 }
 
-#track, #format {
-  width: 80%;
+.proposal-track-select, .proposal-format-select {
+  height: auto;
 }
 
 #edit-format-wrapper, #edit-track-wrapper {
+  margin-bottom: 0;
   display: none;
-}
 
-#cancel-format-editing, #cancel-track-editing {
-  padding: 2px 5px;
-  vertical-align: top;
+  form, .select {
+    display: inline-block;
+    margin-bottom: 0;
+  }
+
+  .popover-trigger i {
+    font-size: 12px;
+    line-height: 12px;
+    float: right;
+  }
 }
 
 #review-tags-form-wrapper {
@@ -219,25 +231,32 @@ div.col-md-4 {
   .proposal-meta {
     font-size: $font-size-base;
     color: $black;
+
     .proposal-meta-item {
       display: inline-block;
       margin-right: $padding-base-horizontal;
+
       strong {
         font-size: $font-size-xs;
         color: $gray;
       }
+
       .label {
         margin-bottom: 0;
       }
+
       .info-item-heading {
         color: $gray;
         font-size: $font-size-xs;
+        font-weight: normal;
       }
+
       .proposal-reviewer-tags {
         float: left;
         max-width: 80%;
       }
     }
+
     .proposal-description {
       line-height: 1;
       margin-bottom: $padding-base-vertical * 2;

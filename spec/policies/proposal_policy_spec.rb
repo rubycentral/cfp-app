@@ -21,8 +21,8 @@ RSpec.describe ProposalPolicy do
       expect(subject).to permit(pundit_user(organizer), speaker)
     end
 
-    it 'denies reviewer users' do
-      expect(subject).not_to permit(pundit_user(reviewer), speaker)
+    it 'allows reviewer users' do
+      expect(subject).to permit(pundit_user(reviewer), speaker)
     end
 
     it 'denies speaker users' do

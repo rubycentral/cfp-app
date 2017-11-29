@@ -3,6 +3,8 @@ class Staff::ProposalsController < Staff::ApplicationController
 
   before_action :require_proposal, only: [:show, :update_state, :update_track, :update_session_format, :finalize]
   before_action :enable_staff_selection_subnav
+  skip_before_action :require_program_team, only: [:update_track, :update_session_format]
+  before_action :require_staff, only: [:update_track, :update_session_format]
 
   decorates_assigned :proposal, with: Staff::ProposalDecorator
 

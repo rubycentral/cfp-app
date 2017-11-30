@@ -25,8 +25,6 @@ feature "Event Config" do
       fill_in "Name", with: "Best Session"
       click_button "Save"
 
-      expect(page).to have_content("Best Session has been added to session formats.")
-
       within('#session-formats') do
         expect(page).to have_content("Best Session")
       end
@@ -42,8 +40,6 @@ feature "Event Config" do
 
       fill_in "Description", with: "The most exciting session."
       click_button "Save"
-
-      expect(page).to have_content("#{session_format.name} has been updated.")
 
       within("#session_format_#{session_format.id}") do
         expect(page).to have_content("The most exciting session.")
@@ -74,7 +70,6 @@ feature "Event Config" do
         page.accept_confirm { click_on "Remove" }
       end
 
-      expect(page).to have_content("#{session_format.name} has been deleted from session formats")
       page.reset!
 
       expect(page).not_to have_content session_format.name
@@ -87,8 +82,6 @@ feature "Event Config" do
 
       fill_in "Name", with: "Best Track"
       click_button "Save"
-
-      expect(page).to have_content("Best Track has been added to tracks.")
 
       within("#tracks") do
         expect(page).to have_content("Best Track")
@@ -117,8 +110,6 @@ feature "Event Config" do
 
       fill_in "Description", with: "The best track ever."
       click_button "Save"
-
-      expect(page).to have_content("#{track.name} has been updated.")
 
       within("#track_#{track.id}") do
         expect(page).to have_content("The best track ever.")
@@ -164,7 +155,6 @@ feature "Event Config" do
         page.accept_confirm { click_on "Remove" }
       end
 
-      expect(page).to have_content("#{track.name} has been deleted from tracks.")
       page.reset!
 
       expect(page).not_to have_content track.name

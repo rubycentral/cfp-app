@@ -51,7 +51,6 @@ class InvitationsController < ApplicationController
 
   def destroy
     @invitation.destroy
-    flash[:info] = "You have removed the invitation for #{@invitation.email}."
     redirect_back fallback_location: event_proposal_path(@proposal.event, uuid: @proposal)
   end
 

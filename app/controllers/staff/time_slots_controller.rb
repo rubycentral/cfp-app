@@ -36,10 +36,7 @@ class Staff::TimeSlotsController < Staff::ApplicationController
 
     @time_slot = current_event.time_slots.build(time_slot_params)
 
-    f = save_and_add ? flash : flash.now
     if @time_slot.save
-      f[:info] = "Time slot created."
-
       session[:sticky_time_slot] = {
         conference_day: @time_slot.conference_day,
         start_time: @time_slot.start_time,
@@ -47,7 +44,7 @@ class Staff::TimeSlotsController < Staff::ApplicationController
         room_id: @time_slot.room ? @time_slot.room.id : nil
       }
     else
-      f[:danger] = "There was a problem creating this time slot."
+      flash.now[:danger] = "There was a problem creating this time slot."
     end
 
     respond_to do |format|

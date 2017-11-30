@@ -20,9 +20,7 @@ class Staff::TracksController < Staff::ApplicationController
 
   def create
     track = current_event.tracks.build(track_params)
-    if track.save
-      flash.now[:success] = "#{track.name} has been added to tracks."
-    else
+    unless track.save
       flash.now[:danger] = "There was a problem saving your track, #{track.errors.full_messages.join(", ")}."
     end
     respond_to do |format|
@@ -34,7 +32,7 @@ class Staff::TracksController < Staff::ApplicationController
 
   def update
     if @track.update_attributes(track_params)
-      flash.now[:success] = "#{@track.name} has been updated."
+      flash.now[:success] = "#{@track.name} has been updated." # changes to guildlines are invisible
     else
       flash.now[:danger] = "There was a problem updating your track, #{@track.errors.full_messages.join(", ")}."
     end
@@ -46,9 +44,7 @@ class Staff::TracksController < Staff::ApplicationController
   end
 
   def destroy
-    if @track.destroy
-      flash.now[:success] = "#{@track.name} has been deleted from tracks."
-    else
+    unless @track.destroy
       flash.now[:danger] = "There was a problem deleting the #{@track.name} track."
     end
     respond_to do |format|

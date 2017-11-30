@@ -10,9 +10,7 @@ class CommentsController < ApplicationController
       @comment = @proposal.public_comments.create(comment_attributes)
     end
 
-    if @comment.valid?
-      flash[:info] = "Your comment has been added"
-    else
+    unless @comment.valid?
       flash[:danger] = "Couldn't post comment: #{@comment.errors.full_messages.to_sentence}"
     end
 

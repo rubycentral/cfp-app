@@ -30,8 +30,7 @@ class Staff::TeammatesController < Staff::ApplicationController
     if teammate.save
       respond_to do |format|
         format.html do
-          redirect_to event_staff_teammates_path(current_event),
-            flash: { info: "You have successfully updated #{teammate.name}'s role." }
+          redirect_to event_staff_teammates_path(current_event)
         end
         format.js do
           render locals: { teammate: teammate }

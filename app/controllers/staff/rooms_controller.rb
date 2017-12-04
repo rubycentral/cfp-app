@@ -9,9 +9,7 @@ class Staff::RoomsController < Staff::ApplicationController
 
   def create
     room = current_event.rooms.build(room_params)
-    if room.save
-      flash.now[:success] = "#{room.name} has been added to rooms."
-    else
+    unless room.save
       flash.now[:danger] = "There was a problem saving your room, #{room.errors.full_messages.join(", ")}"
     end
     respond_to do |format|
@@ -22,9 +20,7 @@ class Staff::RoomsController < Staff::ApplicationController
   end
 
   def update
-    if @room.update_attributes(room_params)
-      flash.now[:success] = "#{@room.name} has been updated."
-    else
+    unless @room.update_attributes(room_params)
       flash.now[:danger] = "There was a problem updating your room, #{@room.errors.full_messages.join(", ")}."
     end
     respond_to do |format|

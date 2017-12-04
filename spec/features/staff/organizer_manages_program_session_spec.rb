@@ -117,7 +117,7 @@ feature "Organizers can manage program sessions" do
 
     click_link("Confirm for Speaker")
 
-    expect(page).to have_content("Proposal confirmed for #{event.name}.")
+    expect(page).to have_content("Confirmed at:")
     expect(page).not_to have_link("Confirm for Speaker")
   end
 end

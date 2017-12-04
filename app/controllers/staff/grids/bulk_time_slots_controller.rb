@@ -23,9 +23,7 @@ class Staff::Grids::BulkTimeSlotsController < Staff::ApplicationController
 
   def create
     @bulk = BulkTimeSlot.new(bulk_time_slot_params)
-    if @bulk.create_time_slots
-      flash[:success] = "Time slots successfully created."
-    end
+    @bulk.create_time_slots
     @schedule = Schedule.new(current_event)
   end
 

@@ -47,7 +47,6 @@ class Staff::ProposalReviewsController < Staff::ApplicationController
     unless @proposal.update_without_touching_updated_by_speaker_at(proposal_review_tags_params)
       flash[:danger] = 'There was a problem saving the proposal.'
     else
-      flash[:info] = 'Review Tags were saved for this proposal'
       @proposal.reload
     end
   end

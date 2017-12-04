@@ -9,7 +9,6 @@ class Admin::EventsController < Admin::ApplicationController
     @event = Event.new(event_params)
     if @event.save
 			@event.teammates.build(email: current_user.email, role: "organizer").accept(current_user)
-      flash[:info] = "Your event was saved."
       redirect_to event_staff_path(@event)
     else
       flash[:danger] = "There was a problem saving your event; please review the form for issues and try again."
@@ -26,7 +25,6 @@ class Admin::EventsController < Admin::ApplicationController
   def archive
     if @event
       @event.archive
-      flash[:warning] = "#{@event.name} is now archived."
     else
       flash[:danger] = "Event not found. Unable to archive."
     end
@@ -36,7 +34,6 @@ class Admin::EventsController < Admin::ApplicationController
   def unarchive
     if @event
       @event.unarchive
-      flash[:warning] = "#{@event.name} is now current."
     else
       flash[:danger] = "Event not found. Unable to unarchive."
     end

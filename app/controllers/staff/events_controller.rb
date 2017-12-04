@@ -19,7 +19,6 @@ class Staff::EventsController < Staff::ApplicationController
   def update_speaker_emails
     authorize_update
     if @event.update(params.require(:event).permit(:accept, :reject, :waitlist))
-      flash[:info] = "Your speaker email templates were updated."
       redirect_to event_staff_speaker_email_notifications_path
     else
       flash[:danger] = "There was a problem saving your email templates; please review the form for issues and try again."
@@ -30,7 +29,6 @@ class Staff::EventsController < Staff::ApplicationController
   def remove_speaker_email_template
     authorize_update
     if @event.remove_speaker_email_template(params[:type].to_sym)
-      flash[:info] = "Your speaker email templates were updated."
       redirect_to event_staff_speaker_email_notifications_path
     else
       flash[:danger] = "There was a problem saving your email templates; please review the form for issues and try again."
@@ -44,7 +42,6 @@ class Staff::EventsController < Staff::ApplicationController
   def update_guidelines
     authorize_update
     if @event.update(params.require(:event).permit(:guidelines))
-      flash[:info] = "Your guidelines were updated."
       redirect_to event_staff_guidelines_path
     else
       flash[:danger] = "There was a problem saving your guidelines; please review the form for issues and try again."
@@ -101,7 +98,6 @@ class Staff::EventsController < Staff::ApplicationController
   def update
     authorize_update
     if @event.update_attributes(event_params)
-      flash[:info] = "Your event was saved."
       if session[:target]
         redirect_to session[:target]
         session[:target].clear

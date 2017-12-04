@@ -82,7 +82,6 @@ class Staff::ProposalsController < Staff::ApplicationController
 
     if @proposal.finalize
       Staff::ProposalMailer.send_email(@proposal).deliver_now
-      flash[:success] = "Proposal finalized for #{@proposal.event.name}."
     else
       flash[:danger] = "There was a problem finalizing the proposal: #{@proposal.errors.full_messages.join(', ')}"
     end

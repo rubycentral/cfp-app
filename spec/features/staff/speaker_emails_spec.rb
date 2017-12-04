@@ -43,7 +43,9 @@ feature "Speaker Emails" do
         find_button("Save").click
       end
 
-      expect(page).to have_content "Your speaker email templates were updated."
+      within first('.contents'), js: true do
+        expect(page).to have_content "Yay! You've been accepted to speak!"
+      end
     end
   end
 
@@ -52,14 +54,15 @@ feature "Speaker Emails" do
 
     it "can edit speaker emails", js: true do
       visit event_staff_speaker_email_notifications_path(event)
-
       within first('.template-section') do
         find_button("Edit").click
         fill_in "event[accept]", with: "Yay! You've been accepted to speak!"
         find_button("Save").click
       end
 
-      expect(page).to have_content "Your speaker email templates were updated."
+      within first('.contents'), js: true do
+        expect(page).to have_content "Yay! You've been accepted to speak!"
+      end
     end
   end
 

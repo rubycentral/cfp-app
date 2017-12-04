@@ -54,7 +54,6 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
     @program_session.speakers.each { |speaker| speaker.event_id = current_event.id }
     if @program_session.save
       redirect_to event_staff_program_session_path(current_event,  @program_session)
-      flash[:info] = "Program session was successfully created."
     else
       flash[:danger] = "Program session was unable to be saved: #{@program_session.errors.full_messages.to_sentence}"
       render :new
@@ -85,7 +84,6 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
     @program_session = current_event.program_sessions.find(params[:id])
     authorize @program_session
     @program_session.proposal.confirm
-    flash[:success] = "Proposal confirmed for #{@program_session.proposal.event.name}."
 
     redirect_to event_staff_program_session_path(current_event, @program_session)
   end

@@ -19,7 +19,6 @@ class Staff::SpeakersController < Staff::ApplicationController
     @speaker = @program_session.speakers.create(s_params.merge(event: current_event))
     authorize @speaker
     if @speaker.save
-      flash[:success] = "#{@speaker.name} has been added to #{@program_session.title}"
       redirect_to event_staff_program_session_path(current_event, @program_session)
     else
       flash[:danger] = "There was a problem saving this speaker."
@@ -40,7 +39,7 @@ class Staff::SpeakersController < Staff::ApplicationController
     @speaker = current_event.speakers.find(params[:id])
     authorize @speaker
     if @speaker.update(speaker_params)
-      flash[:success] = "#{@speaker.name} was successfully updated"
+      flash[:success] = "#{@speaker.name} was successfully updated" # not all edits are visible on the next screen
       redirect_to event_staff_program_speakers_path(current_event)
     else
       flash[:danger] = "There was a problem updating this speaker."
@@ -51,7 +50,6 @@ class Staff::SpeakersController < Staff::ApplicationController
   def destroy
     authorize @speaker
     if @speaker.destroy
-      flash[:info] = "#{@speaker.name} has been removed from #{@speaker.program_session.title}."
       redirect_to event_staff_program_session_path(current_event, @speaker.program_session)
     else
       flash[:danger] = "There was a problem removing #{@speaker.name}."

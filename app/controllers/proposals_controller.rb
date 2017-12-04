@@ -77,7 +77,7 @@ class ProposalsController < ApplicationController
 
     if @proposal.save
       current_user.update_bio
-      flash[:info] = setup_flash_message
+      flash[:confirm] = setup_flash_message
       redirect_to event_proposal_url(event_slug: @event.slug, uuid: @proposal)
     else
       flash[:danger] = "There was a problem saving your proposal."
@@ -148,12 +148,14 @@ class ProposalsController < ApplicationController
   end
 
   def setup_flash_message
-    message = "Thank you! Your proposal has been submitted and may be reviewed at any time while the CFP is open.\n\n"
-    message << "You are welcome to update your proposal or leave a comment at any time, just please be sure to preserve your anonymity.\n\n"
+    message = "<h2 class='text-center'>Thank you!</h2>"
+    message << "<p>Your proposal has been submitted and may be reviewed at any time while the CFP is open.  You are welcome to update your proposal or leave a comment at any time, just please be sure to preserve your anonymity."
 
     if @event.closes_at
-      message << "Expect a response regarding acceptance after the CFP closes on #{@event.closes_at.to_s(:long)}."
+      message << "  Expect a response regarding acceptance after the CFP closes on #{@event.closes_at.to_s(:long)}."
     end
+    
+    message << "</p>"
   end
 
   def require_waitlisted_or_accepted_state

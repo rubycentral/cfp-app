@@ -3,7 +3,7 @@ $(document).ready(function() {
   $('body').tooltip({selector: "[data-toggle~='tooltip']", html: true});
 
   setTimeout(function() {
-    $(".alert").alert('close');
+    $(".alert").not('.alert-confirm').alert('close');
   }, 5000);
 });
 

@@ -34,10 +34,9 @@
             .proposal-meta-item
               %strong Status:
               = proposal.reviewer_state(small: true)
-            .proposal-meta-item
-              %strong Updated:
-              %span #{proposal.updated_in_words}
-
+            - if visit_program_view
+              .proposal-meta-item
+                = link_to "Program View", event_staff_program_proposal_path(current_event, proposal), class: "btn btn-info"
     .row.proposal-info-bar-row
       .proposal-info-bar.clearfix
         .proposal-meta.proposal-description.clearfix
@@ -77,7 +76,7 @@
                     = render 'shared/proposals/inline_track_edit', proposal: proposal
                   #cancel-track-editing.btn.fa.fa-undo
           .col-sm-4
-            .proposal-meta-item.col-sm-12.no-pad-left
+            .proposal-meta-item.col-sm-8
               .info-item-heading Reviewer Tags
               .proposal-reviewer-tags
                 -if proposal.review_tags.present?
@@ -86,9 +85,11 @@
                   %em None
               - if allow_review?(proposal)
                 #edit-tags-icon.fa.fa-pencil
-            #review-tags-form-wrapper
-              = render 'shared/proposals/tags_form', locals: { event: event, proposal: proposal }
-
+              #review-tags-form-wrapper
+                = render 'shared/proposals/tags_form', locals: { event: event, proposal: proposal }
+            .proposal-meta-item.col-sm-3
+              .info-item-heading Updated
+              .proposal-updated=  proposal.updated_in_words
   .row
     .col-md-4
       = render partial: 'reviewer_contents', locals: { proposal: proposal }

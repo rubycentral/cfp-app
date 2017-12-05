@@ -154,7 +154,7 @@ class ProposalsController < ApplicationController
     if @event.closes_at
       message << "  Expect a response regarding acceptance after the CFP closes on #{@event.closes_at.to_s(:long)}."
     end
-    
+
     message << "</p>"
   end
 

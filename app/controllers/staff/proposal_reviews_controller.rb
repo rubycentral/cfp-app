@@ -31,8 +31,13 @@ class Staff::ProposalReviewsController < Staff::ApplicationController
 
     current_user.notifications.mark_as_read_for_proposal(request.url)
     track_and_format_edit = current_user.reviewer_for_event?(current_event)
+    visit_program_view = current_user.program_team_for_event?(current_event) && current_event.closed?
 
-    render locals: { rating: rating, track_and_format_edit: track_and_format_edit }
+    render locals: {
+      rating: rating,
+      track_and_format_edit: track_and_format_edit,
+      visit_program_view: visit_program_view
+    }
   end
 
   def update

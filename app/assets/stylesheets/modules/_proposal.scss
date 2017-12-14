@@ -119,23 +119,6 @@ span.disabled-state {
   }
 }
 
-.ratings_list {
-  font-size: $font-size-small;
-
-  .text-success:hover { color: #468847; }
-
-  dt {
-    text-align: left;
-    font-weight: normal;
-  }
-  dd { margin-left: 150px; }
-
-  .avg-rating {
-    font-size: $font-size-base;
-    padding-top: 4px;
-  }
-}
-
 span.glyphicon-question-sign {
   font-size: 1.3em;
   display: inline-block;

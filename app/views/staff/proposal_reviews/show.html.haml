@@ -105,7 +105,7 @@
 
     .col-md-4
       .widget.widget-card.widget-card-alt.flush-top
-        - unless allow_rating?(proposal) || show_ratings?(rating) || proposal.internal_comments_style.nil?
+        - if ratings_closed?(proposal, rating)
           .widget-header
             %h3 Rating
           .widget-content
@@ -115,7 +115,7 @@
         .widget-content
           = render partial: 'shared/proposals/rating_form', locals: { event: event, proposal: proposal, rating: rating }
 
-        .internal-comments{ style: proposal.internal_comments_style }
+        .internal-comments{ class: !rating.persisted? ? "hidden" : nil }
           .widget-header
             %i.fa.fa-comments
             %h3.comments-heading= pluralize(proposal.internal_comments.count, 'Internal Comment')

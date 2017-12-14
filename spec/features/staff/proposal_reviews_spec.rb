@@ -89,11 +89,12 @@ feature "Review Proposals" do
     it_behaves_like "a proposal page", :event_staff_proposal_path, js: true
 
     it "only shows them the internal comments once they've rated it", js: true do
-      skip "PLEASE FIX ME!"
       visit event_staff_proposal_path(event, proposal)
       expect(page).to_not have_content('Internal Comments')
 
-      select('3', from: 'Rating')
+      within("#rating-form") do
+        find("input[value='5']").set(true)
+      end
 
       expect(page).to have_content('Internal Comments')
     end

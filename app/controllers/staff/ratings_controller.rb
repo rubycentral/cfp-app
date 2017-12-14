@@ -9,7 +9,6 @@ class Staff::RatingsController < Staff::ApplicationController
 
   def create
     authorize @proposal, :rate?
-
     @rating = Rating.find_or_create_by(proposal: @proposal, user: current_user)
     @rating.update_attributes(rating_params)
     if @rating.save

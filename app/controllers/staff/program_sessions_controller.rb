@@ -8,8 +8,7 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
   decorates_assigned :waitlisted_sessions, with: Staff::ProgramSessionDecorator
 
   def index
-    @sessions = current_event.program_sessions
-
+    @sessions = current_event.program_sessions.includes(:speakers)
     session[:prev_page] = { name: 'Program', path: event_staff_program_sessions_path(current_event) }
 
     respond_to do |format|
@@ -86,13 +85,6 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
     @program_session.proposal.confirm
 
     redirect_to event_staff_program_session_path(current_event, @program_session)
-  end
-
-  def speaker_emails
-    emails = current_event.program_sessions.where(id: params[:session_ids]).emails
-    respond_to do |format|
-      format.json { render json: {emails: emails} }
-    end
   end
 
   private

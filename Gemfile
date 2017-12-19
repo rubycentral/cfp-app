@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.4.2'
 
-gem 'rails', '5.0.5'
+gem 'rails', '5.1.4'
 gem 'puma', '~> 3.6.2'
 
 gem 'pg'
@@ -16,7 +16,7 @@ gem 'bootstrap-sass', '~> 3.3.6'
 gem 'rails-assets-momentjs', source: 'https://rails-assets.org'
 gem 'selectize-rails'
 
-gem 'devise', '~> 4.1.1'
+gem 'devise', '~> 4.3.0'
 gem 'omniauth-github'
 gem 'omniauth-twitter'
 
@@ -28,12 +28,12 @@ gem 'coderay', '~> 1.0'
 gem 'bootstrap-multiselect-rails', '~> 0.9.9'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'draper', '3.0.0.pre1'
-gem 'simple_form', '~> 3.3.1'
-gem 'zeroclipboard-rails'
-gem 'responders', '~> 2.0'
+gem 'simple_form', '~> 3.5.0'
+gem 'responders', '~> 2.4.0'
 gem 'pundit'
 gem 'faker'
 gem 'actionview-encoded_mail_to'
+gem 'nokogiri', '~> 1.8.1'
 
 group :production do
   gem 'rails_12factor'
@@ -47,6 +47,7 @@ group :development do
   gem 'foreman'
   gem 'launchy'
   gem 'rack-mini-profiler'
+  gem 'html2haml', '~> 2.2.0'
   gem 'haml-rails'
   gem 'spring-commands-rspec', require: false
   gem 'web-console', '~> 2.0'

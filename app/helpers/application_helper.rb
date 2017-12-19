@@ -107,7 +107,7 @@ module ApplicationHelper
   end
 
   def program_nav?
-    current_user.program_team_for_event?(current_event)
+    (current_user.program_team_for_event?(current_event) && current_event.closed?) || current_user.organizer_for_event?(current_event)
   end
 
   def schedule_nav?

@@ -1,4 +1,2 @@
 $('#rating-form').html('<%=j render partial: "shared/proposals/rating_form",
                        locals: { event: event, proposal: proposal, rating: rating }  %>');
-$('label[for=rating_score]').fadeOut().fadeIn();
-$('.active-popover').remove();

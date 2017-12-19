@@ -1,17 +1,44 @@
+- disabled = disable_rating_form?(proposal)
 #rating-form
-  - if allow_rating?(proposal)
-    = simple_form_for [event, :staff, proposal, rating], remote: true do |f|
-      = program_tracker
-      = f.input :score, label: 'Rating', collection: (1..5), include_blank: true,
-        input_html: { style: 'width: 60px', onchange: '$(this).trigger("submit.rails");'},
-        disabled: proposal.withdrawn?, popover_icon: { content: rating_tooltip }
-
-  - if show_ratings?(rating)
-    %dl.dl-horizontal.ratings_list.margin-top
-      - proposal.ratings.each do |rating|
-        %dt= "#{rating.user.name}:"
-        %dd= rating.score
-      %dt.avg-rating.text-success
-        %strong Average rating:
-      %dd.avg-rating.text-success
-        %strong= number_with_precision(proposal.average_rating, precision: 1)
+  - if show_rating_form?(proposal, rating)
+    .col-lg-5
+      = simple_form_for [event, :staff, proposal, rating], remote: true do |f|
+        = program_tracker
+        - unless disabled
+          = link_to "#", id: "rating-tooltip-toggle", data: { container: 'body', toggle: 'popover', placement: "left", content: rating_tooltip, html: true } do
+            %i.fa.fa-question-circle
+        = f.label :score, "Rating"
+        .rating-form-wrapper
+          %ul.star-rating
+            - (1..5).each do |score|
+              %li.star-wrapper{class: disabled ? "ratings-closed" : nil}
+                = f.label :score do
+                  %span.star
+                    %i.fa.fa-star-o
+                    %i.fa.fa-star
+                  = f.check_box :score, { class: "star-rating-select",
+                      disabled: disabled }, score, nil
+            - if show_ratings_toggle?(proposal, rating)
+              %li.abstain-wrapper
+                = link_to "#", class: "abstain" do
+                  %i.fa.fa-commenting-o
+                  %i.fa.fa-commenting.hidden
+            - if show_destroy_rating?(proposal, rating)
+              %li.trash-wrapper
+                = f.label :score do
+                  %span.trash
+                    %i.fa.fa-trash
+                  = f.check_box :score, { class: "star-rating-select delete" }, "", nil
+  #show-ratings{ class: !show_ratings?(proposal, rating) ? "hidden" : nil }
+    .col-lg-7
+      - if proposal.ratings.any?
+        %dl.dl-horizontal.ratings_list
+          %dt.avg-rating.text-success
+            %strong Average rating:
+          %dd.avg-rating.text-success
+            %strong= number_with_precision(proposal.average_rating, precision: 1)
+          - proposal.ratings.each do |rating|
+            %dt= "#{rating.user.name}:"
+            %dd= rating.score
+      - else
+        %label No Ratings

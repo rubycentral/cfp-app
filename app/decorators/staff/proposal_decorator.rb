@@ -74,10 +74,6 @@ class Staff::ProposalDecorator < ProposalDecorator
     proposal.internal_comments.size + proposal.public_comments.size
   end
 
-  def internal_comments_style
-    object.was_rated_by_user?(h.current_user) ? nil : "display: none;"
-  end
-
   private
 
   def state_button(text, path, opts = {})

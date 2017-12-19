@@ -178,7 +178,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
-    json (1.8.3)
+    json (1.8.6)
     jsonapi (0.1.1.beta2)
       json (~> 1.8)
     jwt (1.5.6)
@@ -431,7 +431,7 @@ DEPENDENCIES
   zeroclipboard-rails
 
 RUBY VERSION
-   ruby 2.3.4p301
+   ruby 2.4.2p198
 
 BUNDLED WITH
-   1.15.4
+   1.16.0

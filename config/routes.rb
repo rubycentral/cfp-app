@@ -79,9 +79,6 @@ Rails.application.routes.draw do
         resources :program_sessions, as: 'sessions', path: 'sessions' do
           resources :speakers, only: [:new, :create]
           post :update_state
-          collection do
-            get 'speaker_emails'
-          end
           member do
             post :confirm_for_speaker
             patch :promote

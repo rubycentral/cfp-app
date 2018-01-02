@@ -1,4 +1,4 @@
-class CreateTeammates < ActiveRecord::Migration
+class CreateTeammates < ActiveRecord::Migration[5.1]
   def change
     create_table :teammates do |t|
       t.references :event, index: true

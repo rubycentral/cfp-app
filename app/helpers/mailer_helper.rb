@@ -3,3 +3,4 @@ module MailerHelper
     "[#{name}](#{path})"
   end
 end
+\

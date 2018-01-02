@@ -20,7 +20,6 @@
 //= require jquery-ui-sliderAccess
 //= require jquery-ui-timepicker-addon
 //= require bootstrap-multiselect
-//= require zeroclipboard
 //= require momentjs
 //= require selectize
 //= require palette.js

@@ -57,7 +57,7 @@ end
 group :development, :test do
   gem 'capybara'
   gem 'capybara-webkit' # Local QT install req'd (`brew install qt`)
-  gem 'database_cleaner'
+  gem 'database_cleaner', '~> 1.6.0'
   gem 'dotenv-rails'
   gem 'factory_girl_rails'
   gem 'growl'

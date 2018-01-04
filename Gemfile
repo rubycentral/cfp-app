@@ -34,6 +34,7 @@ gem 'pundit'
 gem 'faker'
 gem 'actionview-encoded_mail_to'
 gem 'nokogiri', '~> 1.8.1'
+gem 'erubis'
 
 group :production do
   gem 'rails_12factor'

@@ -1,5 +1,6 @@
 class Event < ApplicationRecord
   has_many :teammates, dependent: :destroy
+  has_many :staff, through: :teammates, source: :user
   has_many :proposals, dependent: :destroy
   has_many :speakers
   has_many :rooms, dependent: :destroy
@@ -225,6 +226,10 @@ class Event < ApplicationRecord
 
   def days
     (end_date.to_date - start_date.to_date).to_i + 1
+  end
+
+  def mention_names
+    teammates.pluck(:mention_name)
   end
 
   private

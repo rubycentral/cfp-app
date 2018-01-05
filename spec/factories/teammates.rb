@@ -6,6 +6,10 @@ FactoryGirl.define do
       "email#{n}@factory.com"
     end
 
+    sequence :mention_name do |n|
+      "teammate#{n}"
+    end
+
     trait :has_been_invited do
       token "token"
       role "reviewer"

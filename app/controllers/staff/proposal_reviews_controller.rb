@@ -33,6 +33,8 @@ class Staff::ProposalReviewsController < Staff::ApplicationController
     track_and_format_edit = current_user.reviewer_for_event?(current_event)
     visit_program_view = current_user.program_team_for_event?(current_event) && current_event.closed?
 
+    @mention_names = current_event.mention_names
+
     render locals: {
       rating: rating,
       track_and_format_edit: track_and_format_edit,

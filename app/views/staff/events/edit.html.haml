@@ -24,7 +24,7 @@
             = f.label :opens_at
             = f.text_field :opens_at, class: 'form-control',
               value: (f.object.opens_at.blank? ? "" : f.object.opens_at.to_s(:long_with_zone) )
-            %p.help-block "Optional. You can manually open the CFP when ready."
+            %p.help-block Optional. You can manually open the CFP when ready.
             = f.label :closes_at
             = f.text_field :closes_at, class: 'form-control',
               value: (f.object.closes_at.blank? ? "" : f.object.closes_at.to_s(:long_with_zone) )

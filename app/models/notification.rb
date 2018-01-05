@@ -5,12 +5,10 @@ class Notification < ApplicationRecord
   scope :recent_unread, -> { unread.order(created_at: :desc).limit(UNREAD_LIMIT) }
   scope :unread, -> { where(read_at: nil) }
 
-  def self.create_for(users, args = {})
+  def self.create_for(user, args = {})
     proposal = args.delete(:proposal)
-    users.each do |user|
-      args[:target_path] = user.decorate.proposal_notification_url(proposal) if proposal
-      user.notifications.create(args)
-    end
+    args[:target_path] = user.decorate.proposal_notification_url(proposal) if proposal
+    user.notifications.create(args)
   end
 
   def self.mark_as_read_for_proposal(proposal_url)

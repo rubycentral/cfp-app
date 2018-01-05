@@ -28,4 +28,18 @@ class CommentNotificationMailer < ApplicationMailer
     end
   end
 
+  def mention_notification(proposal, comment, mentioned, mention)
+    @proposal = proposal
+    @comment = comment
+    @mention = mention
+
+    to = mentioned.email
+
+    unless to.blank?
+      mail_markdown(to: to,
+                    from: @proposal.event.contact_email,
+                    subject: "#{@proposal.event.name} CFP: #{@comment.user.name} mentioned you on '#{@proposal.title}'")
+    end
+  end
+
 end

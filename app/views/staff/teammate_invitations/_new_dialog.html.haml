@@ -7,6 +7,7 @@
         .modal-body
           = f.error_notification
           = f.input :email, class: "form-control", autofocus: true
+          = f.input :mention_name, label: "Mention Name", class: "form-control", autofocus: true
           = f.input :role, as: :select, collection: Teammate::STAFF_ROLES, class: "form-control"
 
         .modal-footer

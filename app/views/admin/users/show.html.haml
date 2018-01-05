@@ -42,8 +42,8 @@
         - user.teammates.each do |teammate|
           %tr
             %td= link_to teammate.event.name, event_path(teammate.event.slug)
-            %td= teammate.role
+            %td= render partial: 'staff/teammates/role_controls', locals: { teammate: teammate}
             %td= teammate.created_at
-            %td.actions
+            %td.actions.text-center
               - if current_user.organizer_events.include?(teammate.event)
-                = render partial: 'organizer/events/teammate_controls', locals: { teammate: teammate }
+                = link_to 'Remove', event_staff_teammate_path(teammate.event, teammate), method: :delete, data: { confirm: "Are you sure you want to remove #{teammate.name}?" }, class: 'btn btn-danger btn-xs'

@@ -85,11 +85,39 @@ If your talk is about seed data in Rails apps, we want to hear about it!
   seed_event.rooms.create(name: "Venus Theater", room_number: "VEN-T", level: "2", address: "123 Universe Drive", capacity: 75)
 
   # Event Team
-  seed_event.teammates.create(user: admin, email: admin.email, role: "organizer", state: Teammate::ACCEPTED)
-  seed_event.teammates.create(user: organizer, email: organizer.email, role: "organizer", state: Teammate::ACCEPTED, notifications: false)
-  seed_event.teammates.create(user: track_director, email: track_director.email, role: "program team", state: Teammate::ACCEPTED)
-  seed_event.teammates.create(user: reviewer, email: reviewer.email, role: "reviewer", state: Teammate::ACCEPTED)
-  seed_event.teammates.create(user: speaker_reviewer, email: speaker_reviewer.email, role: "reviewer", state: Teammate::ACCEPTED)
+  seed_event.teammates.create(
+    user: admin,
+    email: admin.email,
+    role: "organizer",
+    mention_name: "admin",
+    state: Teammate::ACCEPTED
+  )
+  seed_event.teammates.create(
+    user: organizer,
+    email: organizer.email,
+    role: "organizer",
+    mention_name: "organizer",
+    state: Teammate::ACCEPTED,
+    notifications: false
+  )
+  seed_event.teammates.create(
+    user: track_director,
+    email: track_director.email,
+    role: "program team",
+    mention_name: "track_director",
+    state: Teammate::ACCEPTED
+  )
+  seed_event.teammates.create(user: reviewer,
+    email: reviewer.email,
+    role: "reviewer",
+    mention_name: "reviewer",
+    state: Teammate::ACCEPTED
+  )
+  seed_event.teammates.create(user: speaker_reviewer,
+    email: speaker_reviewer.email,
+    role: "reviewer",
+    state: Teammate::ACCEPTED
+  ) # can't be mentioned
 
   # Proposals - there are no proposals that are either fully "accepted" or offically "not accepted"
   submitted_proposal_1 = seed_event.proposals.create(event: seed_event,

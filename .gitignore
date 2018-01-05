@@ -6,4 +6,5 @@
 
 .env
 scratch.md
-
+.ruby-version
+.ruby-gemset

@@ -23,7 +23,7 @@ class PublicComment < Comment
       end
 
       Notification.create_for(@users, proposal: proposal, message: message)
-    rescue e
+    rescue => e
       logger.error("Comment Notification ran into an error: #{e.message}")
     end
   end

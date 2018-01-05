@@ -1,4 +1,4 @@
-class CreateSpeakers < ActiveRecord::Migration
+class CreateSpeakers < ActiveRecord::Migration[5.1]
   def change
     create_table :speakers do |t|
       t.references :user, index: true

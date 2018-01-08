@@ -7,6 +7,16 @@ class Teammate < ApplicationRecord
 
   STAFF_ROLES = ['reviewer', 'program team', 'organizer']
 
+  ALL = 'all'
+  MENTIONS = 'mentions'
+  IN_APP_ONLY = 'in_app_only'
+
+  NOTIFICATION_PREFERENCES =  {
+    ALL => 'All Via Email',
+    MENTIONS => 'Mention Only Via Email',
+    IN_APP_ONLY => 'In App Only'
+  }
+
   belongs_to :event
   belongs_to :user
 
@@ -83,13 +93,13 @@ end
 #  email         :string
 #  state         :string
 #  token         :string
-#  notifications :boolean          default(TRUE)
 #  invited_at    :datetime
 #  accepted_at   :datetime
 #  declined_at   :datetime
 #  created_at    :datetime
 #  updated_at    :datetime
 #  mention_name  :string
+#  notification_preference :string           default("all")
 #
 # Indexes
 #

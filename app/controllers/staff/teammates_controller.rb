@@ -4,7 +4,7 @@ class Staff::TeammatesController < Staff::ApplicationController
   respond_to :html, :json
 
   def index
-    @staff = current_event.teammates.accepted.alphabetize
+    @staff = TeammateDecorator.decorate_collection(current_event.teammates.accepted.alphabetize)
     @invitations = current_event.teammates.invitations
 
     @staff_count = group_count(@staff)

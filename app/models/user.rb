@@ -34,6 +34,8 @@ class User < ApplicationRecord
 
   before_create :check_pending_invite_email
 
+  accepts_nested_attributes_for :teammates
+
   attr_accessor :pending_invite_email
 
   def self.from_omniauth(auth, invitation_email=nil)

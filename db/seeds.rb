@@ -97,8 +97,7 @@ If your talk is about seed data in Rails apps, we want to hear about it!
     email: organizer.email,
     role: "organizer",
     mention_name: "organizer",
-    state: Teammate::ACCEPTED,
-    notifications: false
+    state: Teammate::ACCEPTED
   )
   seed_event.teammates.create(
     user: track_director,

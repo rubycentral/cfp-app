@@ -1,4 +1,5 @@
 class Event < ApplicationRecord
+
   has_many :teammates, dependent: :destroy
   has_many :staff, through: :teammates, source: :user
   has_many :proposals, dependent: :destroy

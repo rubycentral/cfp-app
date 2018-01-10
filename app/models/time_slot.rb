@@ -22,6 +22,10 @@ class TimeSlot < ApplicationRecord
   scope :scheduled, -> { where.not(title: [nil, ""]).or(where.not(program_session_id: nil)) }
   scope :empty, -> { where(program_session: nil, title: [nil, ""]) }
 
+  validate :end_time_later_than_start_time
+
+  validates :room_id, :conference_day, presence: true
+
   def self.import(file)
     raw_json = file.read # maybe open as well
     parsed_slots = JSON.parse(raw_json)
@@ -94,6 +98,12 @@ class TimeSlot < ApplicationRecord
 
   def session_duration
     (end_time - start_time).to_i/60
+  end
+
+  def end_time_later_than_start_time
+    if session_duration <= 0
+      errors.add(:end_time, 'must be later than start time')
+    end
   end
 end
 

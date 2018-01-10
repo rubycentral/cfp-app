@@ -20,20 +20,20 @@ feature "Users Admin Dashboard" do
       visit admin_users_path
 
       within("tr#user-#{admin_user.id}") do
-        expect(page).to have_content admin_teammate.name
-        expect(page).to have_content admin_teammate.email
+        expect(page).to have_content admin_user.name
+        expect(page).to have_content admin_user.email
         expect(page).to have_content admin_teammate.role
       end
 
       within("tr#user-#{organizer_user.id}") do
-        expect(page).to have_content organizer_teammate.name
-        expect(page).to have_content organizer_teammate.email
+        expect(page).to have_content organizer_user.name
+        expect(page).to have_content organizer_user.email
         expect(page).to have_content organizer_teammate.role
       end
 
       within("tr#user-#{reviewer_user.id}") do
-        expect(page).to have_content reviewer_teammate.name
-        expect(page).to have_content reviewer_teammate.email
+        expect(page).to have_content reviewer_user.name
+        expect(page).to have_content reviewer_user.email
         expect(page).to have_content reviewer_teammate.role
       end
 

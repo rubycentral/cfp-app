@@ -1,6 +1,6 @@
 $(function() {
 
-  cfpDataTable('#organizer-proposals-selection.datatable', [ 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text' ]);
+  cfpDataTable('#organizer-proposals-selection.datatable', [ 'text', 'text', 'text', null, 'text', 'text', 'text', 'text' ]);
 
   setupPopovers()
 

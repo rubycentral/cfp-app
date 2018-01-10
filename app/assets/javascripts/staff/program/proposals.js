@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
   cfpDataTable('#organizer-proposals.datatable', ['number', 'number', 'number',
-        'text', 'text', 'text', 'text', 'text', 'text', 'text', null],
+        'text', 'text', null, 'text', 'text', 'text', 'text', null],
     {
       stateSaveParams: function () {
         var rows = $('[data-proposal-id]');

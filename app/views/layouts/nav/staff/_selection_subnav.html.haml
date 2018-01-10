@@ -26,8 +26,8 @@
           %span.title By Track:
           %form.track-select{data: {event: current_event.slug}}
             %select{id: 'track-select', name: 'track'}
-              %option{value: 'all'} All
-              %option{value: ' ', selected: sticky_selected_track.blank?} General
+              %option{value: 'all', selected: sticky_selected_track.blank?} All
+              %option{value: ' '} General
               - program_tracks.each do |track|
                 %option{value: track.id, selected: track.id.to_s==sticky_selected_track}= track.name
           %div.counts-container

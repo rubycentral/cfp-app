@@ -3,7 +3,7 @@ FactoryGirl.define do
     event { Event.first || FactoryGirl.create(:event) }
 
     sequence :email do |n|
-      "email#{n}@factory.com"
+      "teammate_email#{n}@factory.com"
     end
 
     trait :has_been_invited do

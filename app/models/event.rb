@@ -37,18 +37,16 @@ class Event < ApplicationRecord
   before_validation :generate_slug
   before_save :update_closes_at_if_manually_closed
 
-  STATUSES = { open: 'open',
-               draft: 'draft',
+  STATUSES = { draft: 'draft',
+               open: 'open',
                closed: 'closed' }
 
   def to_param
     slug
   end
 
-  with_options on: :update, if: :open? do
-    validates :public_session_formats, presence: { message: 'A least one public session format must be defined before event can be opened.' }
-    validates :guidelines, presence: { message: 'Guidelines must be defined before event can be opened.' }
-  end
+  validate :checklist_complete?, on: :update,
+    if: Proc.new { |e| e.state == STATUSES[:open] }
 
   def initialize_speaker_emails
     SpeakerEmailTemplate::TYPES.each do |type|
@@ -172,14 +170,10 @@ class Event < ApplicationRecord
     missing_items
   end
 
-  def open_cfp
-    if incomplete_checklist_items.empty?
-      update_attribute(:state, STATUSES[:open])
-      true
-    else
-      errors.add(incomplete_checklist_items.join("; "))
-      false
-    end
+  def checklist_complete?
+    if (items = incomplete_checklist_items) && items.present?
+      errors.add(:base, items.join("; "))
+    end.blank?
   end
 
   def archive

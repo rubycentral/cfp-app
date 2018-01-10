@@ -63,7 +63,7 @@ If your talk is about seed data in Rails apps, we want to hear about it!
                             closes_at: 6.months.from_now,
                             state: "open",
                             start_date: seed_start_date,
-                            end_date: seed_start_date + 1,
+                            end_date: seed_start_date + 2.days,
                             guidelines: seed_guidelines,
                             proposal_tags: %w(beginner intermediate advanced),
                             review_tags: %w(beginner intermediate advanced))
@@ -80,8 +80,8 @@ If your talk is about seed data in Rails apps, we want to hear about it!
   track_3 = seed_event.tracks.create(name: "Boring Track", description: "Great if you want a nap!", guidelines: "Sleep deprivation is linked to many health problem. Get healthy here so you can be 100% for the Best Track.")
 
   # Rooms
-  seed_event.rooms.create(name: "Sun Room", room_number: "SUN", level: "12", address: "123 Universe Drive", capacity: 300)
-  seed_event.rooms.create(name: "Moon Room", room_number: "MOON", level: "6", address: "123 Universe Drive", capacity: 150)
+  sun_room = seed_event.rooms.create(name: "Sun Room", room_number: "SUN", level: "12", address: "123 Universe Drive", capacity: 300)
+  moon_room = seed_event.rooms.create(name: "Moon Room", room_number: "MOON", level: "6", address: "123 Universe Drive", capacity: 150)
   seed_event.rooms.create(name: "Venus Theater", room_number: "VEN-T", level: "2", address: "123 Universe Drive", capacity: 75)
 
   # Event Team
@@ -293,6 +293,38 @@ If your talk is about seed data in Rails apps, we want to hear about it!
   accepted_proposal_1.speakers.create(speaker_name: speaker_4.name, speaker_email: speaker_4.email, bio: "Experiential foodtruck consectetur thinker-maker-doer agile irure thought leader tempor thought leader. SpaceTeam commodo nulla personas sit in mollit iterate workflow dolore food-truck incididunt. In veniam eu sunt esse dolore sunt cortado anim anim. Lorem do experiential prototype velit workflow thinker-maker-doer 360 campaign thinker-maker-doer deserunt quis non.", user: speaker_4, program_session: program_session_1, event: seed_event)
   accepted_proposal_1.speakers.create(speaker_name: speaker_5.name, speaker_email: speaker_5.email, bio: "Prototype irure cortado consectetur driven laboru in. Bootstrapping physical computing lorem in Duis viral piverate incididunt anim. Aute SpaceTeam ullamco earned media experiential aliqua moleskine fugiat physical computing.", user: speaker_5, program_session: program_session_1, event: seed_event)
   accepted_proposal_2.speakers.create(speaker_name: speaker_2.name, speaker_email: speaker_2.email, bio: "Id fugiat ex dolor personas in ipsum actionable insight grok actionable insight amet non adipisicing. In irure pair programming sed id food-truck consequat officia reprehenderit in engaging thinker-maker-doer. Experiential irure moleskine sunt quis ideate thought leader paradigm hacker Steve Jobs. Unicorn ea Duis integrate culpa ut voluptate workflow reprehenderit officia prototype intuitive ideate.", user: speaker_2, program_session: program_session_2, event: seed_event)
+
+  #Time Slots
+
+  time_slot_1 = seed_event.time_slots.create({
+    program_session: program_session_1,
+    conference_day: 1,
+    room: sun_room,
+    start_time: "09:00",
+    end_time:  "10:00",
+    track: program_session_1.track
+  })
+
+  time_slot_2 = seed_event.time_slots.create({
+    program_session: program_session_2,
+    conference_day: 2,
+    room: moon_room,
+    start_time: "13:00",
+    end_time: "14:00",
+    track: program_session_2.track
+  })
+
+  empty_slot = seed_event.time_slots.build({
+    room: sun_room,
+    conference_day: 3,
+    start_time: "12:00",
+    end_time: "13:00",
+    title: "",
+    description: "",
+    presenter: "",
+  })
+
+  empty_slot.save(validate: false)
 
   ### SapphireConf -- this is an event in the early set-up/draft stage
   sapphire_start_date = 10.months.from_now

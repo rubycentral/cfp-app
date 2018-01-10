@@ -33,7 +33,6 @@ class Staff::TimeSlotsController < Staff::ApplicationController
 
   def create
     save_and_add = params[:button] == 'save_and_add'
-
     @time_slot = current_event.time_slots.build(time_slot_params)
 
     if @time_slot.save

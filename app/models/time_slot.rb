@@ -19,6 +19,9 @@ class TimeSlot < ApplicationRecord
   end
   scope :grid_order, -> { joins(:room).order(:conference_day, :start_time, 'rooms.grid_position') }
 
+  scope :scheduled, -> { where.not(title: [nil, ""]).or(where.not(program_session_id: nil)) }
+  scope :empty, -> { where(program_session: nil, title: [nil, ""]) }
+
   def self.import(file)
     raw_json = file.read # maybe open as well
     parsed_slots = JSON.parse(raw_json)

@@ -2,7 +2,13 @@
   %ul.nav.nav-tabs{role: 'tablist'}
     - @schedule.each_day do |day|
       %li{role: 'presentation', class: current_day_css(day, 1)}
-        = link_to "Day #{day}", "#grid_day_#{day}", data: {toggle: 'tab'}, role: 'tab'
+        = link_to "#grid_day_#{day}", data: {toggle: 'tab'}, role: 'tab' do
+          .nav-tab-content
+            .day= "Day #{day}"
+            .counts-container
+              .total.time-slots
+                %span.title Time slots
+                %span.badge= "#{@counts[day][:scheduled]}/#{@counts[day][:total]}"
   .row
     .col-md-12
       .tab-content

@@ -7,7 +7,8 @@ RSpec.shared_examples_for 'an open event stats' do
       proposals: track1.proposals.count,
       reviews: track1.proposals.map(&:ratings).flatten.count,
       public_comments: track1.proposals.map(&:public_comments).flatten.count,
-      internal_comments: track1.proposals.map(&:internal_comments).flatten.count
+      internal_comments: track1.proposals.map(&:internal_comments).flatten.count,
+      needs_review: track1.proposals.left_outer_joins(:ratings).group("proposals.id").having("count(ratings.id) < ?", 2).length
     }
   end
   let(:track2_review_stats) do
@@ -16,6 +17,7 @@ RSpec.shared_examples_for 'an open event stats' do
       reviews: track2.proposals.map(&:ratings).flatten.count,
       public_comments: track2.proposals.map(&:public_comments).flatten.count,
       internal_comments: track2.proposals.map(&:internal_comments).flatten.count,
+      needs_review: track2.proposals.left_outer_joins(:ratings).group("proposals.id").having("count(ratings.id) < ?", 2).length
     }
   end
   let(:no_track_review_stats) do
@@ -25,6 +27,8 @@ RSpec.shared_examples_for 'an open event stats' do
       reviews: props.map(&:ratings).flatten.count,
       public_comments: props.map(&:public_comments).flatten.count,
       internal_comments: props.map(&:internal_comments).flatten.count,
+      needs_review: props.left_outer_joins(:ratings).group("proposals.id").having("count(ratings.id) < ?", 2).length
+
     }
   end
   let(:total_proposals) do
@@ -47,12 +51,18 @@ RSpec.shared_examples_for 'an open event stats' do
     track2_review_stats[:internal_comments] +
     no_track_review_stats[:internal_comments]
   end
+  let(:total_needs_review) do
+    track1_review_stats[:needs_review] +
+    track2_review_stats[:needs_review] +
+    no_track_review_stats[:needs_review]
+  end
   let(:total_review_stats) do
     {
       proposals: total_proposals,
       reviews: total_reviews,
       public_comments: total_public_comments,
-      internal_comments: total_internal_comments
+      internal_comments: total_internal_comments,
+      needs_review: total_needs_review
     }
   end
   let(:review_stats) do

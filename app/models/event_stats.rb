@@ -87,7 +87,8 @@ class EventStats
       proposals: p.count,
       reviews: p.rated.count,
       public_comments: PublicComment.joins(:proposal).where(proposal: p).count,
-      internal_comments: InternalComment.joins(:proposal).where(proposal: p).count
+      internal_comments: InternalComment.joins(:proposal).where(proposal: p).count,
+      needs_review: p.left_outer_joins(:ratings).group("proposals.id").having("count(ratings.id) < ?", 2).length
     }
   end
 
@@ -107,6 +108,41 @@ class EventStats
       waitlisted: waitlisted_proposals(track_id),
       soft_waitlisted: soft_waitlisted_proposals(track_id)
     }
+  end
+
+  def schedule
+    stats = {'Total' => schedule_day_stats}
+    event.days.times do |i|
+      stats[day_name(i)] = schedule_day_stats(i)
+    end
+    stats
+  end
+
+  def schedule_day_stats(day_index="all")
+    days = day_index == "all" ? (1..event.days).to_a : day_index + 1
+    time_slots = event.time_slots.where(conference_day: days)
+    {
+      time_slots: time_slots.length,
+      scheduled_slots: time_slots.scheduled.length,
+      empty_slots: time_slots.empty.length,
+    }
+  end
+
+  def day_name(day_index)
+    (event.start_date + day_index.days).strftime("%a %b %e")
+  end
+
+  def schedule_counts
+    counts = {}
+    event.days.times do |day_index|
+      day = day_index + 1
+      day_slots = event.time_slots.where(conference_day: day)
+      counts[day] = {
+        total: day_slots.length,
+        scheduled: day_slots.scheduled.length
+      }
+    end
+    counts
   end
 
   def team

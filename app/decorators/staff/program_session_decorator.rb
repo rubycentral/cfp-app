@@ -42,6 +42,28 @@ class Staff::ProgramSessionDecorator < ApplicationDecorator
     object.track_name || Track::NO_TRACK
   end
 
+  def format_name
+    object.session_format.name
+  end
+
+  def display_speakers
+    object.speakers.pluck(:speaker_name).join(", ")
+  end
+
+  def ps_data
+    data = {
+      track_css: track_name.try(:parameterize),
+      id: object.id,
+    }
+    if object.time_slot
+      data.merge!({
+        scheduled: object.time_slot.id,
+        unschedule_time_slot_path: h.event_staff_schedule_grid_time_slot_url(object.event, object.time_slot)
+      })
+    end
+    data
+  end
+
   def abstract_markdown
     h.markdown(object.abstract)
   end

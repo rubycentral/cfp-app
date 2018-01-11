@@ -1,4 +1,5 @@
 var grid = window.Schedule.Grid;
+var drag = window.Schedule.Drag;
 var $dialog = $('#grid-time-slot-edit-dialog');
 $dialog.find('.errors').html('');
 
@@ -9,7 +10,9 @@ $dialog.find('.errors').html("<%= @time_slot.errors.full_messages.join(', ') %>"
   var $timeSlot = $('<%= "#time_slot_#{dom_id(@time_slot)}" %>');
   $timeSlot.replaceWith('<%=j render partial: 'time_slot', locals: {ts: time_slot_decorated} %>');
   $timeSlot = $($timeSlot.selector);
+  var $draggableSession = $timeSlot.find('.draggable-session-card')
   grid.initTimeSlot($timeSlot);
+  drag.initDraggableSession($draggableSession)
   $dialog.modal('hide');
 <% end %>
 

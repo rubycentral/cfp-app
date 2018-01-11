@@ -1,0 +1,7 @@
+.draggable-session-card{data: ps.ps_data}
+  .track
+    %span=truncate(ps.track_name, length: 18)
+  .session-card-body
+    .format=truncate(ps.format_name, length: 18)
+    .title=truncate(ps.title, length: 36)
+    .presenter=truncate(ps.display_speakers, length: 18)

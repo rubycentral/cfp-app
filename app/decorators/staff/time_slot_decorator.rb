@@ -90,17 +90,19 @@ class Staff::TimeSlotDecorator < Draper::Decorator
     ts = object
     starts = (ts.start_time.to_i - ts.start_time.beginning_of_day.to_i)/60
     ends = (ts.end_time.to_i - ts.end_time.beginning_of_day.to_i)/60
+
     data = {
-        starts: starts,
-        duration: ends - starts,
-        track_css: display_track_name.try(:parameterize)
+      starts: starts,
+      duration: ends - starts,
     }
 
     if ts.persisted?
-      data.merge!(edit_path: h.edit_event_staff_schedule_grid_time_slot_path(object.event, object),
-                  toggle: 'modal',
-                  target: '#grid-time-slot-edit-dialog'
-      )
+      data.merge!({
+        edit_path: h.edit_event_staff_schedule_grid_time_slot_path(object.event, object),
+        update_path: h.event_staff_schedule_grid_time_slot_url(object.event, object),
+        toggle: 'modal',
+        target: '#grid-time-slot-edit-dialog'
+      })
     end
     data
   end
@@ -123,6 +125,10 @@ class Staff::TimeSlotDecorator < Draper::Decorator
 
   def preview_css
     'preview' unless object.persisted?
+  end
+
+  def filled_with_session?
+    object.program_session.present?
   end
 
   def configured?

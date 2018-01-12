@@ -1,5 +1,21 @@
 #schedule {
   margin-top: 20px;
+
+  .nav-tab-content {
+    display: flex;
+    align-items: center;
+
+    .day {
+      font-weight: bold;
+      font-size: 1.25em;
+    }
+
+    .counts-container {
+      text-align: right;
+      margin-left: 2em;
+      color: $text-color;
+    }
+  }
 }
 
 .grid-wrapper {

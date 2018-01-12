@@ -21,8 +21,9 @@ class PublicComment < Comment
         message = "New comment on #{proposal.title}"
         CommentNotificationMailer.speaker_notification(proposal, self, @users).deliver_now
       end
-
-      Notification.create_for(@users, proposal: proposal, message: message)
+      @users.each do |user|
+        Notification.create_for(user, proposal: proposal, message: message)
+      end
     rescue => e
       logger.error("Comment Notification ran into an error: #{e.message}")
     end

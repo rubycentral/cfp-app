@@ -11,8 +11,10 @@ class Teammate < ApplicationRecord
   belongs_to :user
 
   validates_uniqueness_of :email, scope: :event
+  validates_uniqueness_of :mention_name, scope: :event, allow_blank: true
   validates :email, :event, :role, presence: true
   validates_format_of :email, :with => /@/
+  validates_format_of :mention_name, with: /\A\w+\z/, message: "cannot include punctuation or spaces", allow_blank: true
 
   scope :for_event, -> (event) { where(event: event) }
   scope :alphabetize, -> { Teammate.joins(:user).merge(User.order(name: :asc)) }
@@ -87,6 +89,7 @@ end
 #  declined_at   :datetime
 #  created_at    :datetime
 #  updated_at    :datetime
+#  mention_name  :string
 #
 # Indexes
 #

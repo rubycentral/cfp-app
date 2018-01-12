@@ -30,26 +30,28 @@
                   %tr
                     %th Name
                     %th Email
+                    %th Mention Name
                     %th Rated Proposals
                     %th Role
                     %th Email Notifications
                     - if current_user.organizer_for_event?(current_event)
-                      %th Actions
+                      %th
                 %tbody
                   - @staff.each do |teammate|
                     %tr{ id: "teammate-#{teammate.id}" }
                       %td= teammate.name
                       %td= teammate.email
+                      %td.mention-name= render partial: 'mention_name_controls', locals: { teammate: teammate }
                       %td= teammate.ratings_count(current_event)
-                      %td= teammate.role
+                      %td.role= render partial: 'role_controls', locals: { teammate: teammate }
                       %td.notifications.text-center
                         %span= teammate.comment_notifications
                         - if teammate.user == current_user
                           = render partial: "staff/events/teammate_notifications", locals: {teammate: teammate}
                       - if current_user.organizer_for_event?(current_event)
-                        %td{ id: "teammate-role-#{teammate.id}" }
+                        %td.text-center{ id: "teammate-role-#{teammate.id}" }
                           - unless teammate.user == current_user
-                            = render partial: 'staff/events/teammate_controls', locals: { teammate: teammate }
+                            = link_to 'Remove', event_staff_teammate_path(teammate.event, teammate), method: :delete, data: { confirm: "Are you sure you want to remove #{teammate.name}?" }, class: 'btn btn-danger btn-xs'
 
       .row
         .col-md-12

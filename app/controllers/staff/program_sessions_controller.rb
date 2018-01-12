@@ -20,6 +20,7 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
   def show
     @program_session = current_event.program_sessions.find(params[:id])
     @speakers = @program_session.speakers
+    @mention_names = current_event.mention_names
   end
 
   def edit

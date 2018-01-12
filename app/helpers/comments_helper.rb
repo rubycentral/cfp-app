@@ -16,4 +16,8 @@ module CommentsHelper
       comment.proposal.has_speaker?(comment.user) ? 'speaker' : comment.user.name
     end
   end
+
+  def internal?(comment)
+    comment.type == "InternalComment"
+  end
 end

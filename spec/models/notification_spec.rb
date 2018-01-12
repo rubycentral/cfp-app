@@ -4,16 +4,20 @@ describe Notification do
   describe ".create_for" do
     let(:users) { create_list(:user, 3) }
 
-    it "creates notifications for a list of users" do
+    it "creates notification for a list of user" do
       expect {
-        Notification.create_for(users)
+        users.each do |user|
+          Notification.create_for(user)
+        end
       }.to change { Notification.count }.by(users.count)
       users.each { |p| expect(p.notifications.size).to eq(1) }
     end
 
     it "sets the notification's message" do
       message = 'test message'
-      Notification.create_for(users, message: message)
+      users.each do |user|
+        Notification.create_for(user, message: message)
+      end
       users.each do |p|
         expect(p.notifications.first.message).to eq(message)
       end
@@ -21,7 +25,9 @@ describe Notification do
 
     it "sets the target path" do
       target_path = '/test_path'
-      Notification.create_for(users, target_path: target_path)
+      users.each do |user|
+        Notification.create_for(user, target_path: target_path)
+      end
       users.each do |p|
         expect(p.notifications.first.target_path).to eq(target_path)
       end
@@ -29,7 +35,9 @@ describe Notification do
 
     it "uses proposal's url if proposal is present" do
       proposal = create(:proposal)
-      Notification.create_for(users, proposal: proposal)
+      users.each do |user|
+        Notification.create_for(user, proposal: proposal)
+      end  
       users.each do |p|
         expect(p.decorate.proposal_notification_url(proposal)).to(
           eq(p.notifications.first.target_path))

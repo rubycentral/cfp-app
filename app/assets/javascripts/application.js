@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery
+//= require underscore
 //= require jquery-ui
 //= require jquery_ujs
 //= require bootstrap-sprockets
@@ -19,6 +20,7 @@
 //= require jquery.dataTables.columnFilter
 //= require jquery-ui-sliderAccess
 //= require jquery-ui-timepicker-addon
+//= require jquery.mentionsInput
 //= require bootstrap-multiselect
 //= require momentjs
 //= require selectize

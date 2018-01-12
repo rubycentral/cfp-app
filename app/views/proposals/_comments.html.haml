@@ -13,7 +13,8 @@
 = form_for comments.new do |f|
   = f.hidden_field :proposal_id
   .form-group
-    = f.text_area :body, class: 'form-control', placeholder: 'Add your comment', rows: 5
+    - input_class = internal?(f.object) ? 'form-control mention' : 'form-control'
+    = f.text_area :body, class: input_class, placeholder: 'Add your comment', rows: 5, data: { mention_names: internal?(f.object) ? @mention_names : nil }
   .form-group
     %button.btn.btn-success.save-comment(type="submit")
       %span.glyphicon.glyphicon-ok

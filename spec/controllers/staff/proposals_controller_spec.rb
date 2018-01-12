@@ -25,7 +25,7 @@ describe Staff::ProposalsController, type: :controller do
 
   describe "GET 'show'" do
     it "marks all notifications for this proposal as read" do
-      Notification.create_for([user], proposal: proposal, message: "A fancy notification")
+      Notification.create_for(user, proposal: proposal, message: "A fancy notification")
       expect{
         get :show, params: {event_slug: event, uuid: proposal.uuid}
       }.to change {user.notifications.unread.count}.by(-1)

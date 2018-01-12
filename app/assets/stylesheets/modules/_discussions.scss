@@ -20,6 +20,10 @@
   }
 }
 
+textarea.mention {
+  height: auto;
+}
+
 .message_wrap {
   background: #fefefe;
   border-width: 1px;
@@ -71,7 +75,7 @@
     font-size: 11px;
     margin-left: 6px
   }
-  
+
   // comment body
   .text {
     width: 100%;
@@ -81,6 +85,6 @@
 }
 
 
-ul.messages_layout .dropdown-menu li { 
+ul.messages_layout .dropdown-menu li {
   width:100%; font-size:11px;
 }

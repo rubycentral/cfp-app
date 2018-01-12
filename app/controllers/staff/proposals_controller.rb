@@ -25,6 +25,7 @@ class Staff::ProposalsController < Staff::ApplicationController
     @other_proposals = Staff::ProposalsDecorator.decorate(@proposal.other_speakers_proposals)
     @speakers = @proposal.speakers.decorate
     @rating = current_user.rating_for(@proposal)
+    @mention_names = current_event.mention_names
   end
 
   def update_state

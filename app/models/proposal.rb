@@ -81,6 +81,16 @@ class Proposal < ApplicationRecord
         .where.not(id: speakers.map(&:user_id)).distinct
   end
 
+  def unmentioned_reviewers(mention_names, commenter_id)
+    reviewers.where.not(id: commenter_id, teammates: {mention_name: mention_names})
+  end
+
+  def mentioned_event_staff(mention_names, commenter_id)
+    event.staff.includes(:teammates)
+      .where.not(id: commenter_id)
+      .where(teammates: {event: event, mention_name: mention_names})
+  end
+
   # Return all proposals from speakers of this proposal. Does not include this proposal.
   def other_speakers_proposals
     proposals = []
@@ -122,9 +132,10 @@ class Proposal < ApplicationRecord
 
   def withdraw
     update(state: WITHDRAWN)
-
-    Notification.create_for(reviewers, proposal: self,
+    reviewers.each do |reviewer|
+      Notification.create_for(reviewer, proposal: self,
                             message: "Proposal, #{title}, withdrawn")
+    end
   end
 
   def confirm
@@ -226,9 +237,10 @@ class Proposal < ApplicationRecord
     old_title = title
     if update_attributes(attributes)
       field_names = last_change.join(', ')
-
-      Notification.create_for(reviewers, proposal: self,
+      reviewers.each do |reviewer|
+        Notification.create_for(reviewer, proposal: self,
                               message: "Proposal, #{old_title}, updated [ #{field_names} ]")
+      end
     end
   end
 

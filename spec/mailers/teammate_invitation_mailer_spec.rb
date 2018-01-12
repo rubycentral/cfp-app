@@ -16,6 +16,8 @@ describe TeammateInvitationMailer, type: :mailer do
     end
 
     it "renders the body" do
+      expect(mail.body.encoded).to(match(invitation.mention_name))
+
       expect(mail.body.encoded).to(match(accept_teammate_url(invitation.token)))
 
       expect(mail.body.encoded).to(match(decline_teammate_url(invitation.token)))

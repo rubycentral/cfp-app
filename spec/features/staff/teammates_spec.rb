@@ -14,6 +14,21 @@ feature "Staff Organizers can manage teammates" do
 
   before { login_as(organizer_user) }
 
+  context "sees a list of teammates" do
+    it "sees relevant data about each teammate", js: true do
+      visit event_staff_teammates_path(invitation.event)
+
+      [organizer_teammate, reviewer_teammate, program_team_teammate].each do |teammate|
+        within("tr#teammate-#{teammate.id}") do
+          expect(page).to have_content teammate.email
+          expect(page).to have_content teammate.mention_name
+        end
+      end
+
+
+    end
+  end
+
   context "adding a new teammate" do
     it "invites a new teammate", js: true do
       visit event_staff_teammates_path(invitation.event)
@@ -21,10 +36,12 @@ feature "Staff Organizers can manage teammates" do
       click_link "Invite New Teammate"
       fill_in "Email", with: "harrypotter@hogwarts.edu"
       select("reviewer", from: "Role")
+      fill_in "Mention Name", with: "wizard"
       click_button "Invite"
 
       expect(page).to have_text("harrypotter@hogwarts.edu")
       expect(page).to have_text("pending")
+      expect(Teammate.last.mention_name).to eq("wizard")
     end
 
     it "invitation can't be sent if contact email isn't set", js: true do
@@ -49,14 +66,25 @@ feature "Staff Organizers can manage teammates" do
       visit event_staff_teammates_path(invitation.event)
       row = find("tr#teammate-#{program_team_teammate.id}")
 
-      within "#teammate-role-#{program_team_teammate.id}" do
-        click_link "Change Role"
-      end
+      page.execute_script("$('#teammate-#{program_team_teammate.id} .change-role').click()")
       select "reviewer", from: "Role"
+
       click_button "Save"
 
       expect(row).to have_content(program_team_teammate.email)
       expect(row).to have_content("reviewer")
+    end
+
+    it "edits an exsiting teammates mention_name", js: true do
+      visit event_staff_teammates_path(invitation.event)
+      row = find("tr#teammate-#{program_team_teammate.id}")
+
+      page.execute_script("$('#teammate-#{program_team_teammate.id} .edit-mention-name').click()")
+      fill_in "Mention Name", with: "new_mention_name"
+
+      click_button "Save"
+
+      expect(row).to have_content("new_mention_name")
     end
 
     it "removes a teammate", js: true do

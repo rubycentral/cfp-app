@@ -16,9 +16,25 @@
   }
 
   function initTimePickers() {
-    $('#time_slot_start_time, #time_slot_end_time').timepicker({
-      timeFormat: 'HH:mm',
-      stepMinute: 5
+    $('#time_slot_start_time').timepicker({
+      controlType: 'select',
+      timeFormat: 'h:mm tt',
+      stepMinute: 5,
+      maxTime: $('#time_slot_end_time').val(),
+      onSelect: function(time) {
+        $('#time_slot_end_time').timepicker('destroy');
+        initTimePickers();
+      }
+    });
+    $('#time_slot_end_time').timepicker({
+      controlType: 'select',
+      timeFormat: 'h:mm tt',
+      stepMinute: 5,
+      minTime: $('#time_slot_start_time').val(),
+      onSelect: function(time) {
+        $('#time_slot_start_time').timepicker('destroy');
+        initTimePickers();
+      }
     });
   }
 

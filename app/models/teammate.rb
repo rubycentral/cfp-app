@@ -40,6 +40,8 @@ class Teammate < ApplicationRecord
   scope :declined, -> { where(state: DECLINED) }
   scope :invitations, -> { where(state: [PENDING, DECLINED]) }
 
+  scope :all_emails, -> { where(notification_preference: ALL) }
+
   def accept(user)
     self.user = user
     self.accepted_at = Time.current
@@ -86,20 +88,20 @@ end
 #
 # Table name: teammates
 #
-#  id            :integer          not null, primary key
-#  event_id      :integer
-#  user_id       :integer
-#  role          :string
-#  email         :string
-#  state         :string
-#  token         :string
-#  invited_at    :datetime
-#  accepted_at   :datetime
-#  declined_at   :datetime
-#  created_at    :datetime
-#  updated_at    :datetime
-#  mention_name  :string
+#  id                      :integer          not null, primary key
+#  event_id                :integer
+#  user_id                 :integer
+#  role                    :string
+#  email                   :string
+#  state                   :string
+#  token                   :string
+#  invited_at              :datetime
+#  accepted_at             :datetime
+#  declined_at             :datetime
+#  created_at              :datetime
+#  updated_at              :datetime
 #  notification_preference :string           default("all")
+#  mention_name            :string
 #
 # Indexes
 #

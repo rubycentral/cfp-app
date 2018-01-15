@@ -15,7 +15,8 @@ class PublicComment < Comment
       if proposal.has_speaker?(user)
         @users = proposal.reviewers
         message = "Speaker commented on #{proposal.title}"
-        CommentNotificationMailer.reviewer_notification(proposal, self, @users.with_notifications).deliver_now
+        CommentNotificationMailer.reviewer_notification(proposal, self,
+                                    proposal.emailable_reviewers).deliver_now
       else
         @users = proposal.speakers.map(&:user)
         message = "New comment on #{proposal.title}"

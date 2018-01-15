@@ -127,17 +127,34 @@ describe PublicComment do
   end
 
   describe "#send_emails" do
+    let!(:proposal) { create(:proposal) }
+    let!(:speakers) { create_list(:speaker, 3, proposal: proposal) }
+    let!(:reviewer) { create(:user, :reviewer) }
     context "when reviewer creates a PublicComment" do
       it "should send notication to each speaker" do
-        proposal = create(:proposal)
-        speakers = create_list(:speaker, 3, proposal: proposal)
-        reviewer = create(:user, :reviewer)
-
         expect {
           proposal.public_comments.create(attributes_for(:comment, user: reviewer))
         }.to change(ActionMailer::Base.deliveries, :count).by(1)
 
         expect(ActionMailer::Base.deliveries.last.to).to match_array(speakers.map(&:email))
+      end
+    end
+
+    context 'Speaker create a PublicComment' do
+      before { proposal.public_comments.create(attributes_for(:comment, user: reviewer)) }
+      it 'should send notification to reviewer if speaker comments' do
+        expect {
+          proposal.public_comments.create(attributes_for(:comment, user: speakers.first.user))
+        }.to change(ActionMailer::Base.deliveries, :count).by(1)
+
+        expect(ActionMailer::Base.deliveries.last.to).to match_array([reviewer.email])
+      end
+
+      it 'should not send notification if reviewer has turned off email notifications' do
+        reviewer.teammates.first.update_attribute(:notification_preference, Teammate::IN_APP_ONLY)
+        expect {
+          proposal.public_comments.create(attributes_for(:comment, user: speakers.first.user))
+        }.to change(ActionMailer::Base.deliveries, :count).by(0)
       end
     end
   end

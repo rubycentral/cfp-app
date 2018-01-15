@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180106144145) do
+ActiveRecord::Schema.define(version: 20180111175100) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -186,8 +186,8 @@ ActiveRecord::Schema.define(version: 20180106144145) do
     t.datetime "declined_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string "mention_name"
     t.string "notification_preference", default: "all"
+    t.string "mention_name"
     t.index ["event_id"], name: "index_teammates_on_event_id"
     t.index ["user_id"], name: "index_teammates_on_user_id"
   end

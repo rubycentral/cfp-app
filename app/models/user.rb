@@ -7,8 +7,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :confirmable, #:validatable,
          :omniauthable, omniauth_providers: [:twitter, :github]
 
-  scope :with_notifications, -> { joins(:teammates).where(teammates: { notifications: true })}
-
   has_many :invitations,  dependent: :destroy
   has_many :teammates, dependent: :destroy
   has_many :reviewer_teammates, -> { where(role: ['reviewer', 'program team', 'organizer']) }, class_name: 'Teammate'

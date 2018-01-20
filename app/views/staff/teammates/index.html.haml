@@ -33,7 +33,7 @@
                     %th Mention Name
                     %th Rated Proposals
                     %th Role
-                    %th Email Notifications
+                    %th Notification Preference
                     - if current_user.organizer_for_event?(current_event)
                       %th
                 %tbody
@@ -44,10 +44,7 @@
                       %td.mention-name= render partial: 'mention_name_controls', locals: { teammate: teammate }
                       %td= teammate.ratings_count(current_event)
                       %td.role= render partial: 'role_controls', locals: { teammate: teammate }
-                      %td.notifications.text-center
-                        %span= teammate.comment_notifications
-                        - if teammate.user == current_user
-                          = render partial: "staff/events/teammate_notifications", locals: {teammate: teammate}
+                      %td= teammate.notification_preference
                       - if current_user.organizer_for_event?(current_event)
                         %td.text-center{ id: "teammate-role-#{teammate.id}" }
                           - unless teammate.user == current_user

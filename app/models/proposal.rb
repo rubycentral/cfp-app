@@ -81,6 +81,10 @@ class Proposal < ApplicationRecord
         .where.not(id: speakers.map(&:user_id)).distinct
   end
 
+  def emailable_reviewers
+    reviewers.merge(Teammate.all_emails)
+  end
+
   def unmentioned_reviewers(mention_names, commenter_id)
     reviewers.where.not(id: commenter_id, teammates: {mention_name: mention_names})
   end

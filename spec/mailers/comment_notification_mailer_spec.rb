@@ -38,7 +38,7 @@ describe CommentNotificationMailer do
     let(:comment) { create(:comment, proposal: proposal, type: "PublicComment", user: reviewer, body: "Reviewer comment as a Reviewer on Proposal") }
     let(:speaker) { create(:speaker) }
     let(:speaker_comment) { create(:comment, user: speaker.user, proposal: proposal) }
-    let(:mail) { CommentNotificationMailer.reviewer_notification(proposal, speaker_comment, proposal.reviewers.with_notifications) }
+    let(:mail) { CommentNotificationMailer.reviewer_notification(proposal, speaker_comment, proposal.reviewers) }
 
     context "As a Reviewer" do
       before :each do

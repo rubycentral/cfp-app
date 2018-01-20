@@ -181,12 +181,12 @@ ActiveRecord::Schema.define(version: 20180111175100) do
     t.string "email"
     t.string "state"
     t.string "token"
-    t.boolean "notifications", default: true
     t.datetime "invited_at"
     t.datetime "accepted_at"
     t.datetime "declined_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string "notification_preference", default: "all"
     t.string "mention_name"
     t.index ["event_id"], name: "index_teammates_on_event_id"
     t.index ["user_id"], name: "index_teammates_on_user_id"

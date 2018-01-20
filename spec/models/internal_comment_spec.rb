@@ -42,6 +42,15 @@ describe InternalComment do
           expect(reviewer.notifications.length).to eq(0)
         end
 
+        it 'does only creates a notification and no email when teammate preference is in app only' do
+          ActionMailer::Base.deliveries.clear
+          organizer.teammates.first.update_attributes(notification_preference: Teammate::IN_APP_ONLY)
+          expect {
+            proposal.internal_comments.create(attributes_for(:comment, :internal, user: reviewer, body: "@#{organizer.teammates.first.mention_name}, this is for you."))
+          }.to change(Notification, :count).by(1)
+            .and change(ActionMailer::Base.deliveries, :count).by(0)
+        end
+
         it "creates notifications for all teammates when reviewer comments" do
           create(:comment, proposal: proposal, type: "PublicComment", user: organizer2, body: "Organizer 2 comment" )
 

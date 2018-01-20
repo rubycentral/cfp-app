@@ -483,6 +483,31 @@ describe Proposal do
     end
   end
 
+  describe 'emailable_reviewers' do
+    let!(:proposal) { create(:proposal) }
+    let!(:no_email_reviewer) do
+      reviewer = create(:user, :reviewer)
+      reviewer.teammates.first.update_attribute(:notification_preference, Teammate::IN_APP_ONLY)
+      create(:rating, user: reviewer, proposal: proposal)
+      reviewer
+    end
+    let!(:mentions_only_reviewer) do
+      reviewer = create(:user, :reviewer)
+      reviewer.teammates.first.update_attribute(:notification_preference, Teammate::MENTIONS)
+      create(:rating, user: reviewer, proposal: proposal)
+      reviewer
+    end
+    let!(:reviewer) do
+      reviewer = create(:user, :reviewer)
+      create(:rating, user: reviewer, proposal: proposal)
+      reviewer
+    end
+
+    it 'returns only reviewers with all emails turned on' do
+      expect(proposal.emailable_reviewers).to match_array([ reviewer ])
+    end
+  end
+
   describe "#update_and_send_notifications" do
     it "sends notification to all reviewers" do
       proposal = create(:proposal, title: 'orig_title', pitch: 'orig_pitch')

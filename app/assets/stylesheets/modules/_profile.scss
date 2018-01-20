@@ -1,0 +1,12 @@
+#profiles_edit {
+  .user_teammates_notification_preference {
+    margin-bottom: 40px;
+    span.radio {
+      display: inline-block;
+      margin: 0px 10px 10px 0px;
+      label {
+        text-transform: capitalize;
+      }
+    }
+  }
+}

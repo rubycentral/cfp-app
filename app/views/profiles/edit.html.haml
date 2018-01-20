@@ -4,7 +4,7 @@
       %h1
         Edit Your Profile
 
-= form_for current_user, url: profile_path, html: {role: 'form'} do |f|
+= simple_form_for current_user, url: profile_path, html: {role: 'form'} do |f|
   .row
     %fieldset.col-md-6
       .widget
@@ -30,7 +30,7 @@
     %fieldset.col-md-6
       .widget
         .widget-header
-          %i.fa.fa-envelope
+          %i.fa.fa-lock
           - if current_user.provider.present?
             %i.fa{class: "fa-#{current_user.provider.downcase}"}
           %h3 Identity Services
@@ -55,6 +55,24 @@
                 %i{class: "fa fa-#{current_user.provider.downcase}"}
                 | Connected via
                 = current_user.provider
+
+      - if current_user.teammates.present?
+        .widget
+          .widget-header
+            %i.fa.fa-envelope
+            %h3
+              Notifications
+              = link_to "#", id: "notification-preferences-toggle",
+                data: { container: 'body', toggle: 'popover', placement: "left",
+                        content: notification_preferences_tooltip, html: true } do
+                %i.fa.fa-question-circle
+          .widget-content
+            = f.simple_fields_for :teammates do |fields|
+              - teammate = fields.object
+              %b= teammate.event.name
+              = fields.input :notification_preference,
+                collection: Teammate::NOTIFICATION_PREFERENCES.invert,
+                as: :radio_buttons, wrapper: 'horizontal_radio_and_checkboxes', label: false
 
   .row
     .col-md-12.form-submit

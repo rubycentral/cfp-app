@@ -133,10 +133,11 @@ class EventStats
   end
 
   def schedule_counts
+    time_slots = event.time_slots
     counts = {}
     event.days.times do |day_index|
       day = day_index + 1
-      day_slots = event.time_slots.where(conference_day: day)
+      day_slots = time_slots.where(conference_day: day)
       counts[day] = {
         total: day_slots.length,
         scheduled: day_slots.scheduled.length

@@ -355,6 +355,166 @@ If you are on the cutting edge with savvy Sapphire skills, we want you!
   # Event Team
   sapphire_event.teammates.create(user: admin, email: admin.email, role: "organizer", state: Teammate::ACCEPTED)
   sapphire_event.teammates.create(user: organizer, email: organizer.email, role: "organizer", state: Teammate::ACCEPTED)
+
+  ### ScheduleConf -- this is an event that is ready to be scheduled
+  schedule_conf_open_date = Date.yesterday
+  pwd = "userpass"
+
+  # Core Event Info
+  schedule_guidelines = %Q[
+# SheduleConf - The place to be in 2017!
+
+The first annual conference about Sheduling an event
+is happening in lovely Dayton, Ohio on March 1st, 2017!
+
+If you are on the cutting edge with savvy scheduling skills, we want you!
+
+## #{Faker::Hipster.sentence(4)}
+#{Faker::Hipster.paragraph(20)}
+]
+
+  schedule_event = Event.create(name: "ScheduleConf",
+                                slug: "scheduleconf",
+                                url: Faker::Internet.url,
+                                contact_email: "info@sschedule.event",
+                                opens_at: schedule_conf_open_date,
+                                closes_at: schedule_conf_open_date + 1.days,
+                                start_date: schedule_conf_open_date + 10.days,
+                                end_date: schedule_conf_open_date + 12.days,
+                                guidelines: schedule_guidelines,
+                                proposal_tags: %w(beginner intermediate advanced),
+                                review_tags: %w(beginner intermediate advanced))
+
+  # Event Team
+  schedule_event.teammates.create(user: admin, email: admin.email, role: "organizer", state: Teammate::ACCEPTED)
+  schedule_event.teammates.create(user: organizer, email: organizer.email, role: "organizer", state: Teammate::ACCEPTED)
+
+  # Session Formats
+  schedule_conf_formats = {}
+  schedule_conf_formats[0] = schedule_event.public_session_formats.create(name: "Lightning Talk", duration: 5, description: "Warp speed! Leave your audience breathless and thirsty for more.")
+  schedule_conf_formats[1] = schedule_event.public_session_formats.create(name: "Short Talk", duration: 30, description: "Kinda short! Talk fast. Talk hard.")
+  schedule_conf_formats[2] = schedule_event.public_session_formats.create(name: "Long Talk", duration: 60, description: "Longer talk allows a speaker put more space in between words, hand motions.")
+  schedule_conf_formats[3] = schedule_event.session_formats.create(name: "Beenote", public: false, duration: 90, description: "Involves live bees.")
+
+  # Tracks
+  schedule_conf_tracks = {}
+  schedule_conf_tracks[0] = schedule_event.tracks.create(name: "Best Track", description: "Better than all the other tracks.", guidelines: "Watch yourself. Watch everybody else. All of us are winners in the best track.")
+  schedule_conf_tracks[1] = schedule_event.tracks.create(name: "OK Track", description: "This track is okay.", guidelines: "Mediocrity breeds mediocrity. Let's talk about how to transcend the status quo.")
+  schedule_conf_tracks[2] = schedule_event.tracks.create(name: "Boring Track", description: "Great if you want a nap!", guidelines: "Sleep deprivation is linked to many health problem. Get healthy here so you can be 100% for the Best Track.")
+
+  # Rooms
+  conference_address = Faker::Address.street_address
+  4.times do |i|
+    schedule_event.rooms.create(name: "#{Faker::Name.last_name} Room", room_number: Faker::Number.number(3), level: 1, address: conference_address, capacity: 150)
+  end
+
+  # Program Sessions
+  120.times do |i|
+    speaker_user = User.create(name: Faker::Name.name, email: Faker::Internet.email, password: pwd, password_confirmation: pwd, confirmed_at: Time.now)
+
+    accepted_proposal = schedule_event.proposals.create({
+      event: seed_event,
+      uuid: "xoxoxo",
+      state: "accepted",
+      title: Faker::Superhero.name,
+      abstract: Faker::Hipster.sentence,
+      details: Faker::Hacker.say_something_smart,
+      pitch: Faker::Superhero.power,
+      session_format: schedule_conf_formats[(i % 4)],
+      track: schedule_conf_tracks[(i % 3)],
+      confirmed_at: Time.current
+    })
+
+    program_session = schedule_event.program_sessions.create({
+      proposal: accepted_proposal,
+      state: ProgramSession::LIVE,
+      title: accepted_proposal.title,
+      abstract: accepted_proposal.abstract,
+      track: accepted_proposal.track,
+      session_format: accepted_proposal.session_format
+    })
+
+    speaker = accepted_proposal.speakers.create({
+      speaker_name: speaker_user.name,
+      speaker_email: speaker_user.email,
+      bio: "I #{Faker::Company.bs}.",
+      user: speaker_user,
+      event: schedule_event,
+      program_session: program_session
+    })
+  end
+
+  #Create Time Slots for day 1
+  schedule_event.rooms.all.each do |room|
+    # create slots for lighting sessions
+    beginning_of_block = Time.new(2018, 02, 24, 9, 0, 0, "+09:00")
+    session_duration = 5
+    5.times do |i|
+      start_time = (beginning_of_block + (i * session_duration).minutes).strftime('%H:%M')
+      end_time = (beginning_of_block + ((i + 1) * session_duration).minutes).strftime('%H:%M')
+      empty_slot = schedule_event.time_slots.build({
+        room: room,
+        conference_day: 1,
+        start_time: start_time,
+        end_time: end_time,
+        title: "",
+        description: "",
+        presenter: "",
+      })
+      empty_slot.save(validate: false)
+    end
+
+    #create slots for short_talks
+
+    beginning_of_block = Time.new(2018, 02, 24, 10, 0, 0, "+09:00")
+    session_duration = 30
+    5.times do |i|
+      start_time = (beginning_of_block + (i * session_duration).minutes).strftime('%H:%M')
+      end_time = (beginning_of_block + ((i + 1) * session_duration).minutes).strftime('%H:%M')
+      empty_slot = schedule_event.time_slots.build({
+        room: room,
+        conference_day: 1,
+        start_time: start_time,
+        end_time: end_time,
+        title: "",
+        description: "",
+        presenter: "",
+      })
+      empty_slot.save(validate: false)
+    end
+
+    #create slots for long_talks
+
+    beginning_of_block = Time.new(2018, 02, 24, 14, 0, 0, "+09:00")
+    session_duration = 60
+    3.times do |i|
+      start_time = (beginning_of_block + (i * session_duration).minutes).strftime('%H:%M')
+      end_time = (beginning_of_block + ((i + 1) * session_duration).minutes).strftime('%H:%M')
+      empty_slot = schedule_event.time_slots.build({
+        room: room,
+        conference_day: 1,
+        start_time: start_time,
+        end_time: end_time,
+        title: "",
+        description: "",
+        presenter: "",
+      })
+      empty_slot.save(validate: false)
+    end
+
+    # create slot for a beenote
+
+    empty_slot = schedule_event.time_slots.build({
+      room: room,
+      conference_day: 1,
+      start_time: "18:00",
+      end_time: "19:30",
+      title: "",
+      description: "",
+      presenter: "",
+    })
+    empty_slot.save(validate: false)
+  end
 end
 
 run

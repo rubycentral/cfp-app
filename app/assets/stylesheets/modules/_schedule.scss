@@ -1,3 +1,8 @@
+$time-step: 60px;
+$vertical-scale: 2.5;
+$pixel-step: $time-step * $vertical-scale;
+$column-width: 180px;
+
 #schedule {
   margin-top: 20px;
 
@@ -16,34 +21,184 @@
       color: $text-color;
     }
   }
+
+  .generate-grid {
+    margin: 0 0.5em 1em 0;
+  }
+
+  .unscheduled-sessions-toggle {
+    font-size: 1.5em;
+    display: block;
+
+    .badge {
+      background-color: $bright-blue;
+      font-size: .75em;
+    }
+
+    &:hover, &:visited, &:focus {
+      text-decoration: none;
+    }
+
+    &:visited, &:focus {
+      color: $bright-blue;
+    }
+
+    &:hover {
+      color: #126799;
+      .badge {
+        background-color: #126799;
+      }
+    }
+  }
+}
+
+.search-sessions-wrapper {
+  text-align: center;
+  padding: 1em 0 0;
+}
+
+.unscheduled-sessions-widget {
+  width: $column-width + 24px;
+  margin: 2em auto;
+  max-height: 200vh;
+  overflow-y: scroll;
+}
+
+// the draggable session card has a different appearance depending on context:
+
+// in the body (as it's being dragged) and global
+body .draggable-session-card,
+body .custom-session-card {
+  margin: 1em auto;
+  width: $column-width;
+  box-shadow: 0 1px 2px rgba(0,0,0,.6);
+  height: 150px;
+  text-align: center;
+  cursor: move;
+  background-color: white;
+  z-index: 10;
+  opacity: .5;
+
+  .session-card-body {
+    padding: 1em .5em;
+    div {
+      padding: .25em 0;
+    }
+  }
+
+  .track {
+    width: 100%;
+    color: white;
+    padding: .5em;
+  }
+
+  .format {
+    font-size: .75em
+  }
+
+  .title {
+    font-weight: bold;
+  }
+}
+
+body .custom-session-card {
+  cursor: pointer;
+}
+// in the unscheduled sessions widget
+.unscheduled-sessions-widget .draggable-session-card {
+  opacity: 1
+}
+// in the grid
+.schedule-grid .draggable-session-card,
+.schedule-grid .custom-session-card {
+  opacity: 1;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  box-shadow: none;
+
+  &.small {
+    .track span,
+    .format,
+    .presenter {
+      display: none;
+    }
+
+    .title {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      color: white;
+      transform: translateY(-50%);
+    }
+
+    .track {
+      height: 100%;
+    }
+  }
+
+  &.medium {
+    .format,
+    .presenter {
+      display: none;
+    }
+
+    .title {
+      padding: 0;
+    }
+  }
+
+  &.large {
+    position: relative;
+    .session-card-body {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      transform: translateY(-50%);
+    }
+  }
 }
 
 .grid-wrapper {
   display: inline-block;
 
   .bulk-preview-bar {
+    .bar {
+      padding: 1.5em;
+      margin-left: 1em;
+      z-index: 13;
+    }
+
     form {
       display: inline-block;
+    }
+  }
+
+  .schedule-widget {
+    width: 100vw;
+    display: flex;
+
+    .unscheduled-sessions-column {
+      padding: 0 2em;
+    }
+
+    .grid-column {
+      max-width: 75%;
     }
   }
 }
 
 .schedule-grid {
-  $day-start: 8*60px;
-  $day-end: 19*60px;
-  $time-range: $day-end - $day-start;
-  $time-step: 60px;
-  $vertical-scale: 2.5;
-  $pixel-range: $time-range * $vertical-scale;
-  $pixel-step: $time-step * $vertical-scale;
-  $column-width: 180px;
-
-  display: inline-flex;
+  display: flex;
   flex-flow: row nowrap;
   align-items: stretch;
-  overflow: hidden;
+  overflow: scroll;
   margin-bottom: 20px;
   border-collapse: collapse;
+
+  .generate-grid-wrapper {
+    width: 100%;
+  }
 
   .ruler, .ruler li {
     margin: 0;
@@ -53,7 +208,6 @@
 
   .ruler {
     width: 70px;
-    height: $pixel-range;
     border-radius: 2px;
     color: #000;
     font-size: $font-size-xs;
@@ -73,7 +227,7 @@
       width: 10px;
       top: .6em;
       left: 60px;
-      z-index: 5;
+      z-index: 11;
     }
   }
 
@@ -117,7 +271,7 @@
 
   .time-slots {
     position: relative;
-    height: $pixel-range;
+    height: 100%;
     width: $column-width;
     background: rgb(230, 230, 230);
     margin-top: 4px;
@@ -136,25 +290,10 @@
     background: #FFF;
     cursor: pointer;
     z-index: 10;
-    border-width: 1px 0 1px 0;
+    border-width: 1px .5px .5px 0;
 
-    .track {
-      padding: 5px 5px 5px 10px;
-      font-style: italic;
-      overflow-x: hidden;
-      white-space: nowrap;
-    }
-
-    .title {
-      padding: 5px 5px 5px 10px;
-    }
-
-    .presenter {
-      padding: 5px 5px 5px 10px;
-      color: $brand-primary;
-      font-size: $font-size-xs;
-      overflow-x: hidden;
-      white-space: nowrap;
+    &.draggable-hover {
+      background: $beige;
     }
 
     &.preview {

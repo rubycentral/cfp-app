@@ -51,7 +51,7 @@ class Staff::ProposalReviewsController < Staff::ApplicationController
     tags = params[:proposal][:review_tags].downcase
     params[:proposal][:review_tags] = Tagging.tags_string_to_array(tags)
 
-    unless @proposal.update_without_touching_updated_by_speaker_at(proposal_review_tags_params)
+    unless @proposal.update_attributes(proposal_review_tags_params)
       flash[:danger] = 'There was a problem saving the proposal.'
     else
       @proposal.reload

@@ -16,46 +16,44 @@ feature "Organizers can manage proposals" do
 
   before :each do
     login_as(organizer_user)
+    ActionMailer::Base.deliveries.clear
   end
 
   after { ActionMailer::Base.deliveries.clear }
 
-  xcontext "Proposals Page" do
-    before { visit event_staff_proposals_path(event) }
+  context "Proposals Page" do
+    before { visit event_staff_program_proposals_path(event) }
 
     context "Soft accepting a proposal" do
-      before { click_link 'Accept' }
+      it "sets proposal state and does not notify the speaker" do
+        updated_by_speaker_at = proposal.updated_by_speaker_at
+        click_link 'Accept'
 
-      it "sets proposal state to soft accepted" do
         expect(proposal.reload.state).to eql(Proposal::State::SOFT_ACCEPTED)
-      end
-
-      it "does not send an email notification to the speaker" do
         expect(ActionMailer::Base.deliveries).to be_empty
+        expect(proposal.reload.updated_by_speaker_at).to eql(updated_by_speaker_at)
       end
     end
 
     context "Soft rejecting a proposal" do
-      before { click_link 'Reject' }
+      it "sets proposal state and does not notify the speaker" do
+        updated_by_speaker_at = proposal.updated_by_speaker_at
+        click_link 'Reject'
 
-      it "sets proposal state to soft rejected" do
         expect(proposal.reload.state).to eql(Proposal::State::SOFT_REJECTED)
-      end
-
-      it "sends an email notification to the speaker" do
         expect(ActionMailer::Base.deliveries).to be_empty
+        expect(proposal.reload.updated_by_speaker_at).to eql(updated_by_speaker_at)
       end
     end
 
     context "Soft waitlisting a proposal" do
-      before { click_link 'Waitlist' }
+      it "sets proposal state and does not notify the speaker" do
+        updated_by_speaker_at = proposal.updated_by_speaker_at
+        click_link 'Waitlist'
 
-      it "sets proposal state to soft waitlisted" do
         expect(proposal.reload.state).to eql(Proposal::State::SOFT_WAITLISTED)
-      end
-
-      it "sends an email notification to the speaker" do
         expect(ActionMailer::Base.deliveries).to be_empty
+        expect(proposal.reload.updated_by_speaker_at).to eql(updated_by_speaker_at)
       end
     end
   end
@@ -80,22 +78,22 @@ feature "Organizers can manage proposals" do
     end
   end
 
-  xcontext "Viewing a proposal" do
+  context "Viewing a proposal" do
     it_behaves_like "a proposal page", :event_staff_proposal_path
 
     before do
-      visit event_staff_proposal_path(event, proposal)
+      visit event_staff_program_proposal_path(event, proposal)
     end
 
     it "links back button to the proposals page" do
-      back = find('#back')
-      expect(back[:href]).to eq(event_staff_proposals_path(event))
+      back = find("a", :text => "« Return to Proposals")
+      expect(back[:href]).to eq(event_staff_program_proposals_path(event))
     end
 
     context "Accepting a proposal" do
       before do
         click_link 'Accept'
-        visit event_staff_proposal_path(event, proposal)
+        visit event_staff_program_proposal_path(event, proposal)
         click_link 'Finalize State'
       end
 
@@ -111,7 +109,7 @@ feature "Organizers can manage proposals" do
     context "Rejecting a proposal" do
       before do
         click_link 'Reject'
-        visit event_staff_proposal_path(event, proposal)
+        visit event_staff_program_proposal_path(event, proposal)
         click_link 'Finalize State'
       end
 
@@ -122,16 +120,12 @@ feature "Organizers can manage proposals" do
       it "sends an email notification to the speaker" do
         expect(ActionMailer::Base.deliveries.last.to).to include(speaker_user.email)
       end
-
-      it "creates a draft program session" do
-        expect(proposal.program_session.state).to eq(ProgramSession::DRAFT)
-      end
     end
 
     context "Waitlisting a proposal" do
       before do
         click_link 'Waitlist'
-        visit event_staff_proposal_path(event, proposal)
+        visit event_staff_program_proposal_path(event, proposal)
         click_link 'Finalize State'
       end
 
@@ -144,53 +138,27 @@ feature "Organizers can manage proposals" do
       end
 
       it "creates a draft program session" do
-        expect(proposal.program_session.state).to eq(ProgramSession::DRAFT)
+        expect(proposal.program_session.state).to eq(ProgramSession::UNCONFIRMED_WAITLISTED)
       end
     end
 
     context "Promoting a waitlisted proposal" do
       let(:proposal) { create(:proposal, state: Proposal::State::WAITLISTED) }
+      let(:program_session) { create(:program_session, state: ProgramSession::UNCONFIRMED_WAITLISTED, proposal: proposal) }
 
       before do
-        visit event_staff_proposal_path(event, proposal)
+        visit event_staff_program_session_path(event, program_session)
         click_link 'Promote'
       end
 
-      it "sets proposal state to waitlisted" do
+      it "sets proposal state to accepted and program session state to unconfirmed_accepted" do
         expect(proposal.reload.state).to eql(Proposal::State::ACCEPTED)
+        expect(program_session.reload.state).to eql(ProgramSession::UNCONFIRMED_ACCEPTED)
       end
 
       it "doesn't send an email notification" do
         expect(ActionMailer::Base.deliveries).to be_empty
       end
-    end
-
-    context "Declining a waitlisted proposal" do
-      let(:proposal) { create(:proposal, state: Proposal::State::WAITLISTED) }
-
-      before do
-        visit event_staff_proposal_path(event, proposal)
-        click_link 'Decline'
-      end
-
-      it "sets proposal state to waitlisted" do
-        expect(proposal.reload.state).to eql(Proposal::State::REJECTED)
-      end
-
-      it "doesn't send an email notification" do
-        expect(ActionMailer::Base.deliveries).to be_empty
-      end
-    end
-  end
-
-  xcontext "update_without_touching_updated_by_speaker_at" do
-    it "doesn't update the update_by_speaker_at column" do
-      tag = create(:tagging)
-      updated_at = 1.day.ago
-      proposal.update_column(:updated_by_speaker_at, updated_at)
-      proposal.update_without_touching_updated_by_speaker_at(review_tags: [tag.tag])
-      proposal.reload
-      expect(proposal.updated_by_speaker_at.to_s).to eq(updated_at.to_s)
     end
   end
 end

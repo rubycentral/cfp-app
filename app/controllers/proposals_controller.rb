@@ -101,7 +101,7 @@ class ProposalsController < ApplicationController
     if params[:confirm]
       @proposal.update(confirmed_at: DateTime.current)
       redirect_to event_event_proposals_url(slug: @event.slug, uuid: @proposal), flash: { success: "Thank you for confirming your participation" }
-    elsif @proposal.update_and_send_notifications(proposal_params)
+    elsif @proposal.speaker_update_and_notify(proposal_params)
       redirect_to event_proposal_url(event_slug: @event.slug, uuid: @proposal)
     else
       flash[:danger] = "There was a problem saving your proposal."

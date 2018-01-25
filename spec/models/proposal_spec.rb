@@ -412,6 +412,15 @@ describe Proposal do
         end
       end
     end
+
+    it "doesn't update the update_by_speaker_at column" do
+      tag = create(:tagging)
+      updated_at = 1.day.ago
+      proposal.update_column(:updated_by_speaker_at, updated_at)
+      proposal.update(review_tags: [tag.tag])
+      proposal.reload
+      expect(proposal.updated_by_speaker_at.to_s).to eq(updated_at.to_s)
+    end
   end
 
   describe "#average_rating" do
@@ -508,7 +517,7 @@ describe Proposal do
     end
   end
 
-  describe "#update_and_send_notifications" do
+  describe "#speaker_update_and_notify" do
     it "sends notification to all reviewers" do
       proposal = create(:proposal, title: 'orig_title', pitch: 'orig_pitch')
       reviewer = create(:user, :reviewer)
@@ -518,7 +527,7 @@ describe Proposal do
       proposal.public_comments.create(attributes_for(:comment, user: organizer))
 
       expect {
-        proposal.update_and_send_notifications(title: 'new_title', pitch: 'new_pitch')
+        proposal.speaker_update_and_notify(title: 'new_title', pitch: 'new_pitch')
       }.to change { Notification.count }.by(2)
 
       expect(reviewer.notifications.count).to eq(1)
@@ -532,7 +541,7 @@ describe Proposal do
       reviewer = create(:user, :reviewer)
       create(:rating, user: reviewer, proposal: proposal)
 
-      proposal.update_and_send_notifications(title: 'new_title')
+      proposal.speaker_update_and_notify(title: 'new_title')
       expect(Notification.last.message).to include('orig_title')
     end
 
@@ -540,8 +549,16 @@ describe Proposal do
       proposal = create(:proposal)
 
       expect {
-        proposal.update_and_send_notifications(title: '')
+        proposal.speaker_update_and_notify(title: '')
       }.to_not change { Notification.count }
+    end
+
+    it "updates updated_by_speaker_at" do
+      proposal = create(:proposal)
+
+      expect {
+        proposal.speaker_update_and_notify(title: 'new_title')
+      }.to change { proposal.updated_by_speaker_at }
     end
   end
 

@@ -38,9 +38,9 @@ class Proposal < ApplicationRecord
   accepts_nested_attributes_for :speakers
 
 
-  before_create :set_uuid
+  before_create :set_uuid, :set_updated_by_speaker_at
   before_update :save_attr_history
-  after_save :save_tags, :save_review_tags, :touch_updated_by_speaker_at
+  after_save :save_tags, :save_review_tags
 
   scope :accepted, -> { where(state: ACCEPTED) }
   scope :waitlisted, -> { where(state: WAITLISTED) }
@@ -237,9 +237,10 @@ class Proposal < ApplicationRecord
     has_public_reviewer_comments? || has_internal_reviewer_comments?
   end
 
-  def update_and_send_notifications(attributes)
+  def speaker_update_and_notify(attributes)
     old_title = title
-    if update_attributes(attributes)
+    speaker_updates = attributes.merge({updated_by_speaker_at: Time.current})
+    if update_attributes(speaker_updates)
       field_names = last_change.join(', ')
       reviewers.each do |reviewer|
         Notification.create_for(reviewer, proposal: self,
@@ -250,13 +251,6 @@ class Proposal < ApplicationRecord
 
   def has_reviewer_activity?
     ratings.present? || has_reviewer_comments?
-  end
-
-  def update_without_touching_updated_by_speaker_at(params)
-    @dont_touch_updated_by_speaker_at = true
-    success = update_attributes(params)
-    @dont_touch_updated_by_speaker_at = false
-    success
   end
 
   private
@@ -290,7 +284,7 @@ class Proposal < ApplicationRecord
   end
 
   def save_attr_history
-    if updating_user && updating_user.organizer_for_event?(event) || @dont_touch_updated_by_speaker_at
+    if updating_user && updating_user.organizer_for_event?(event)
       # Erase the record of last change if the proposal is updated by an
       # organizer
       self.last_change = nil
@@ -304,8 +298,8 @@ class Proposal < ApplicationRecord
     self.uuid = Digest::SHA1.hexdigest([event_id, title, created_at, rand(100)].map(&:to_s).join('-'))[0, 10]
   end
 
-  def touch_updated_by_speaker_at
-    touch(:updated_by_speaker_at) unless @dont_touch_updated_by_speaker_at
+  def set_updated_by_speaker_at
+    self.updated_by_speaker_at = Time.current
   end
 end
 

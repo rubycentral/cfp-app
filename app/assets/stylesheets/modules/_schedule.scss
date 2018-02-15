@@ -26,6 +26,10 @@ $column-width: 180px;
     margin: 0 0.5em 1em 0;
   }
 
+  .unscheduled-sessions {
+    position: fixed;
+  }
+
   .unscheduled-sessions-toggle {
     font-size: 1.5em;
     display: block;
@@ -318,4 +322,9 @@ input[type=number]::-webkit-outer-spin-button {
     -moz-appearance: none;
     appearance: none;
     margin: 0;
+}
+
+#staff_grids_show .page-footer {
+  background-color: white;
+  z-index: 1000;
 }

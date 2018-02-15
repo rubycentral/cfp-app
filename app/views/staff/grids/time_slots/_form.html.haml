@@ -13,6 +13,9 @@
   .session-meta-item
     %strong Abstract:
     %p.abstract= time_slot.session_description
+  .session-meta-item
+    %strong Suggested duration:
+    %p.duration= time_slot.session_suggested_duration
 
 %fieldset.supplemental-fields{class: time_slot.supplemental_fields_visibility_css }
   = f.input :title, as: :string

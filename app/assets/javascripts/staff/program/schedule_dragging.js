@@ -9,7 +9,7 @@
     function init() {
         if ($(".unscheduled-sessions").length ) {
             $('.unscheduled-sessions-toggle').on('click', toggleUnscheduledSessionsWidget)
-            $('#session_search').on('keyup', filterSessions)
+            $('input[name="session_search"]').on('keyup', filterSessions)
 
             var trackCssClasses = [];
             var trackColors = [];

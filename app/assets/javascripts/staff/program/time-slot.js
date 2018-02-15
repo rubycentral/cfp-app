@@ -10,7 +10,7 @@
     initTimePickers();
 
     $dialog.find('.available-proposals').change(onSessionSelectChange);
-    $dialog.find('.start-time').change(onTimeChange);
+    $dialog.find('.start-time, .end-time').change(onTimeChange);
 
     updateInfoFields($dialog);
   }
@@ -20,7 +20,6 @@
       controlType: 'select',
       timeFormat: 'h:mm tt',
       stepMinute: 5,
-      maxTime: $('#time_slot_end_time').val(),
       onSelect: function(time) {
         $('#time_slot_end_time').timepicker('destroy');
         initTimePickers();
@@ -30,7 +29,6 @@
       controlType: 'select',
       timeFormat: 'h:mm tt',
       stepMinute: 5,
-      minTime: $('#time_slot_start_time').val(),
       onSelect: function(time) {
         $('#time_slot_start_time').timepicker('destroy');
         initTimePickers();
@@ -43,46 +41,45 @@
     var $fields = $container.find('.supplemental-fields');
     var $info = $container.find('.selected-session-info');
     var $endTime = $container.find('.end-time');
+    var $duration = $container.find('.duration');
 
     var data = $selected.data();
     $info.find('.title').html(data['title']);
     $info.find('.track').html(data['track']);
     $info.find('.speaker').html(data['speaker']);
     $info.find('.abstract').html(data['abstract']);
+    $info.find('.duration').html(data['duration'] + " minutes");
 
     if ($selected.val() === '') {
       $fields.removeClass('hidden');
       $info.addClass('hidden');
-      $endTime.prop('readonly', false);
     } else {
       $fields.addClass('hidden');
       $info.removeClass('hidden');
-      $endTime.prop('readonly', true);
     }
   }
 
-  function updateEndTime($container) {
-    var $selected = $container.find('.available-proposals :selected');
-    var $startTime = $container.find('.start-time');
-    var $endTime = $container.find('.end-time');
+  function updateLength($container) {
+    var $length = $('.length-label .length');
+    var start = document.getElementById('time_slot_start_time').value;
+    var end = document.getElementById('time_slot_end_time').value;
 
-    var sid = $selected.val();
-    var start = $startTime.val();
-    if (sid && sid.length > 0 && start && start.length > 0) {
-      var m = moment(start, 'HH:mm').add($selected.data('duration'), 'minutes');
-      $endTime.val(m.format('hh:mm a'));
+    if (start && end) {
+      var s = moment(start, 'h:mm a');
+      var e = moment(end, 'h:mm a');
+      var diff = e.diff(s, 'minutes');
+      $length.text(diff + ' minutes');
     }
   }
 
   function onSessionSelectChange(ev) {
     var $form = $(this).closest('form');
     updateInfoFields($form);
-    updateEndTime($form);
   }
 
   function onTimeChange(ev) {
     var $form = $(this).closest('form');
-    updateEndTime($form);
+    updateLength($form)
   }
 
 

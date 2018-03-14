@@ -132,7 +132,7 @@ class ProposalDecorator < ApplicationDecorator
 
   def confirm_link
     h.link_to 'confirmation page',
-      h.event_proposal_url(object.event, object)
+      h.event_proposal_url(object.event, object, protocol: 'https')
   end
 
   def state_label(small: false, state: nil, show_confirmed: false)

@@ -37,7 +37,7 @@ describe Notification do
       proposal = create(:proposal)
       users.each do |user|
         Notification.create_for(user, proposal: proposal)
-      end  
+      end
       users.each do |p|
         expect(p.decorate.proposal_notification_url(proposal)).to(
           eq(p.notifications.first.target_path))
@@ -45,10 +45,23 @@ describe Notification do
     end
   end
 
+  describe ".create_for_all" do
+    let(:users) { create_list(:user, 3) }
+    it "calls `.create_for for each user passed" do
+      users.each do |user|
+        expect(Notification).to receive(:create_for)
+          .exactly(1).times
+          .with(user, proposal: "this one")
+      end
+
+      described_class.create_for_all(users, proposal: "this one")
+    end
+  end
+
   describe ".mark_as_read_for_proposal" do
     let!(:user) { create(:user) }
     let!(:proposal) { create(:proposal) }
-    let!(:notification) { create(:notification, :unread, user: user, target_path: "/proposal/#{proposal.id}" ) }
+    let!(:notification) { create(:notification, :unread, user: user, target_path: "/proposal/#{proposal.id}") }
 
     it "marks read for proposal" do
       expect(notification.read_at).to be_nil
@@ -71,7 +84,6 @@ describe Notification do
     it "tells you there are more than the Notification::UNREAD_LIMIT of #{Notification::UNREAD_LIMIT} notifications for user" do
       expect(user.notifications.more_unread?).to eq(true)
     end
-
   end
 
   describe ".more_unread_count" do
@@ -87,7 +99,6 @@ describe Notification do
     it "returns count of how many over UNREAD_LIMIT are unread" do
       expect(user.notifications.more_unread_count).to eq(2)
     end
-
   end
 
   describe "#mark_as_read" do
@@ -123,5 +134,4 @@ describe Notification do
       expect(@notification.short_message).to eq(@notification.message.truncate(50, omission: "..."))
     end
   end
-
 end

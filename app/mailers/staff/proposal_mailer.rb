@@ -1,4 +1,6 @@
 class Staff::ProposalMailer < ApplicationMailer
+  include FinalizationMessages
+
   attr_accessor :test_mode
 
   def send_email(proposal)
@@ -24,30 +26,27 @@ class Staff::ProposalMailer < ApplicationMailer
   end
 
   def accept_email(event, proposal)
-    @proposal = proposal.decorate
-    @event = event
-
+    @proposal      = proposal.decorate
+    @event         = event
     @template_name = 'accept_email'
-    mail_to_speakers(event, proposal,
-        "Your proposal for #{@proposal.event.name} has been accepted")
+    subject        = subject_for(proposal: @proposal, type: Proposal::State::ACCEPTED)
+    mail_to_speakers(event, proposal, subject)
   end
 
   def reject_email(event, proposal)
-    @proposal = proposal
-    @event = event
-
+    @proposal      = proposal
+    @event         = event
     @template_name = 'reject_email'
-    mail_to_speakers(event, proposal,
-       "Your proposal for #{@proposal.event.name} has not been accepted")
+    subject        = subject_for(proposal: @proposal, type: Proposal::State::REJECTED)
+    mail_to_speakers(event, proposal, subject)
   end
 
   def waitlist_email(event, proposal)
-    @proposal = proposal.decorate
-    @event = event
-
+    @proposal      = proposal.decorate
+    @event         = event
     @template_name = 'waitlist_email'
-    mail_to_speakers(event, proposal,
-      "Your proposal for #{proposal.event.name} has been added to the waitlist")
+    subject        = subject_for(proposal: proposal, type: Proposal::State::WAITLISTED)
+    mail_to_speakers(event, proposal, subject)
   end
 
   private

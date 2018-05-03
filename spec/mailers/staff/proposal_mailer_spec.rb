@@ -84,7 +84,6 @@ describe Staff::ProposalMailer do
       mail.deliver_now
       expect(ActionMailer::Base.deliveries.last.subject).to eq("Your proposal for #{event} has been added to the waitlist")
     end
-
   end
 
   describe "send_email" do

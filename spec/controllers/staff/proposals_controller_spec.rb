@@ -78,6 +78,15 @@ describe Staff::ProposalsController, type: :controller do
       expect(Staff::ProposalMailer).to receive('send_email').and_return(mail)
       post :finalize, params: {event_slug: event, proposal_uuid: proposal.uuid}
     end
+
+    it "creates a notification" do
+      proposal = create(:proposal, :with_two_speakers, event: event, state: Proposal::State::SOFT_ACCEPTED)
+      expect {
+        post :finalize, params: {event_slug: event, proposal_uuid: proposal.uuid}
+      }.to change {
+        Notification.count
+      }.by(2)
+    end
   end
 
   describe "GET 'bulk_finalize'" do

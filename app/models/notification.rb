@@ -5,6 +5,10 @@ class Notification < ApplicationRecord
   scope :recent_unread, -> { unread.order(created_at: :desc).limit(UNREAD_LIMIT) }
   scope :unread, -> { where(read_at: nil) }
 
+  def self.create_for_all(users, args = {})
+    users.each { |user| create_for(user, args) }
+  end
+
   def self.create_for(user, args = {})
     proposal = args.delete(:proposal)
     args[:target_path] = user.decorate.proposal_notification_url(proposal) if proposal
@@ -34,7 +38,6 @@ class Notification < ApplicationRecord
   def short_message
     message.truncate(50, omission: "...")
   end
-
 end
 
 # == Schema Information

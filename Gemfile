@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.4.2'
+ruby '2.4.4'
 
 gem 'rails', '5.1.4'
 gem 'puma', '~> 3.6.2'
@@ -17,7 +17,7 @@ gem 'bootstrap-sass', '~> 3.3.6'
 gem 'rails-assets-momentjs', source: 'https://rails-assets.org'
 gem 'selectize-rails'
 
-gem 'devise', '~> 4.3.0'
+gem 'devise', '~> 4.4.3'
 gem 'omniauth-github'
 gem 'omniauth-twitter'
 

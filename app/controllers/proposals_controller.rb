@@ -19,6 +19,23 @@ class ProposalsController < ApplicationController
     }
   end
 
+  def finalized_notification
+    @proposal = proposal # because drapper won't set the instance variable
+
+    email_template = case @proposal.state
+      when Proposal::State::ACCEPTED
+        'accept_email'
+      when Proposal::State::REJECTED
+        'reject_email'
+      when Proposal::State::WAITLISTED
+        'waitlist_email'
+    end
+
+    markdown_string = render_to_string "staff/proposal_mailer/#{email_template}", layout: false, formats: :md
+
+    @body = Redcarpet::Markdown.new(Redcarpet::Render::HTML).render(markdown_string)
+  end
+
   def new
     if @event.closed?
       redirect_to event_path (@event)

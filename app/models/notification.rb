@@ -7,7 +7,9 @@ class Notification < ApplicationRecord
 
   def self.create_for(user, args = {})
     proposal = args.delete(:proposal)
-    args[:target_path] = user.decorate.proposal_notification_url(proposal) if proposal
+    if proposal && args[:target_path].blank?
+      args[:target_path] = user.decorate.proposal_notification_url(proposal)
+    end
     user.notifications.create(args)
   end
 

@@ -1,5 +1,6 @@
+// $time-step: 60px;
 $time-step: 60px;
-$vertical-scale: 2.5;
+$vertical-scale: 1.5;
 $pixel-step: $time-step * $vertical-scale;
 $column-width: 180px;
 
@@ -76,7 +77,7 @@ body .custom-session-card {
   margin: 1em auto;
   width: $column-width;
   box-shadow: 0 1px 2px rgba(0,0,0,.6);
-  height: 150px;
+  height: 90px;
   text-align: center;
   cursor: move;
   background-color: white;
@@ -215,7 +216,7 @@ body .custom-session-card {
     border-radius: 2px;
     color: #000;
     font-size: $font-size-xs;
-    margin: 87px 0 0 0;
+    margin: 67px 0 0 0;
     white-space: nowrap;
   }
 
@@ -227,7 +228,7 @@ body .custom-session-card {
     &:after {
       content: '';
       position: absolute;
-      border-bottom: 1px solid rgba(0,0,0, .5);
+      border-bottom: 1px solid rgba(204,204,204, .5);
       width: 10px;
       top: .6em;
       left: 60px;
@@ -240,7 +241,7 @@ body .custom-session-card {
     padding: 0;
     margin: 0;
 
-    &.no-grid-position .column-header {
+    &.no-grid-position {
       background: rgb(220, 220, 220);
     }
 
@@ -255,12 +256,12 @@ body .custom-session-card {
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 90px;
+    height: 70px;
     font-size: $font-size-base;
     line-height: $line-height-base;
     text-align: center;
-    color: #666;
-    background: rgb(204, 204, 204);
+    color: #FFF;
+    background: #6d6b6b;
     border-right: 1px solid #FFF;
 
     .room-number {
@@ -270,7 +271,7 @@ body .custom-session-card {
 
   .time-slots, .time-slots .time-slot {
     border-style: solid;
-    border-color: rgba(0,0,0,.2);
+    border-color: rgba(204,204,204, .5);
   }
 
   .time-slots {
@@ -293,7 +294,7 @@ body .custom-session-card {
     font-size: $font-size-small;
     background: #FFF;
     cursor: pointer;
-    z-index: 10;
+    z-index: 15;
     border-width: 1px .5px .5px 0;
 
     &.draggable-hover {

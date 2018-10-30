@@ -6,6 +6,38 @@ $column-width: 180px;
 #schedule {
   margin-top: 20px;
 
+  .active {
+    .nav-tab-content {
+      .day {
+        color: $ruby-central-red;
+      }
+    }
+  }
+
+  .navbar-fixed-top.nav-tabs {
+    padding-top: $navbar-height * 2 + 5px;
+    margin-left: 2%;
+    z-index: 1000;
+    background: #fff;
+  }
+
+  .row.contained {
+    overflow: hidden;
+    position: relative;
+
+    .scroll-panel-margin {
+      position: absolute;
+      z-index: 16;
+      top: 0;
+      left: -2px;
+      bottom: 0;
+      width: 58px;
+      // border: 1px solid black;
+      background-color: #FFF;
+      height: 100%;
+    }
+  }
+
   .nav-tab-content {
     display: flex;
     align-items: center;
@@ -26,9 +58,6 @@ $column-width: 180px;
     margin: 0 0.5em 1em 0;
   }
 
-  .unscheduled-sessions {
-    position: fixed;
-  }
 
   .unscheduled-sessions-toggle {
     font-size: 1.5em;
@@ -66,6 +95,7 @@ $column-width: 180px;
   margin: 2em auto;
   max-height: 200vh;
   overflow-y: scroll;
+
 
   .draggable-session-card {
     margin: 1em auto;
@@ -156,17 +186,22 @@ body .custom-session-card {
 
 .grid-wrapper {
   display: inline-block;
+  margin-top: 25px;
 
   .bulk-preview-bar {
     .bar {
       padding: 1.5em;
       margin-left: 1em;
-      z-index: 13;
+      z-index: 1080;
     }
 
     form {
       display: inline-block;
     }
+  }
+
+  h3.clearfix {
+    margin-top: 30px;
   }
 
   .schedule-widget {
@@ -175,6 +210,8 @@ body .custom-session-card {
 
     .unscheduled-sessions-column {
       padding: 0 2em;
+      background: #fff;
+      z-index: 950;
     }
 
     .grid-column {
@@ -185,9 +222,12 @@ body .custom-session-card {
 
 .schedule-grid {
   display: flex;
+  height: 100%;
+  width: 100%;
   flex-flow: row nowrap;
   align-items: stretch;
-  overflow: scroll;
+  overflow-x: scroll;
+  overflow-y:hidden;
   margin-bottom: 20px;
   border-collapse: collapse;
 
@@ -208,6 +248,8 @@ body .custom-session-card {
     font-size: $font-size-xs;
     margin: 37px 5px 0 0;
     white-space: nowrap;
+    background-color: #FFF;
+    z-index: 14;
   }
 
   .ruler li {
@@ -253,7 +295,7 @@ body .custom-session-card {
     color: #FFF;
     background: #6d6b6b;
     border-right: 1px solid #FFF;
-
+  
     .room-number {
       font-style: italic;
     }

@@ -10,7 +10,8 @@
   var dayStart = 60*9;  // minutes
   var dayEnd = 60*19;
   const step = 60;
-  const verticalScale = 2.5;
+  const verticalScale = 1.5;
+
 
   var trackCssClasses = [];
   var trackColors = [];

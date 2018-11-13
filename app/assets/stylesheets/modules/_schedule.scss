@@ -15,10 +15,25 @@ $column-width: 180px;
   }
 
   .navbar-fixed-top.nav-tabs {
-    padding-top: $navbar-height * 2 + 5px;
+    padding-top: $navbar-height * 2 + 10px;
     margin-left: 2%;
     z-index: 1000;
     background: #fff;
+  }
+
+  .tab-pane {
+    position: relative;
+  }
+  
+  .tab-content {
+    margin-top: 50px;
+  }
+  
+  .generate-grid-wrapper {
+    position: absolute;
+    right: 5px;
+    top: -50px;
+    z-index: 1100;
   }
 
   .row.contained {
@@ -230,10 +245,6 @@ body .custom-session-card {
   overflow-y:hidden;
   margin-bottom: 20px;
   border-collapse: collapse;
-
-  .generate-grid-wrapper {
-    width: 100%;
-  }
 
   .ruler, .ruler li {
     margin: 0;

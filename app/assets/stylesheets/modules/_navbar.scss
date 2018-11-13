@@ -180,15 +180,24 @@
   li > a {
     color: $white;
   }
+
   a:hover {
     background-color: $dark-blue;
     color: darken($white, 10%);
   }
+
   li.active {
     border-bottom: 3px solid darken($dark-blue, 10%);
     > a, a:hover, a:focus {
       color: darken($white, 10%);
       background-color: lighten($dark-blue, 10%);
+    }
+  }
+
+  li.download-link a {
+    padding-left: 0;
+    &:focus {
+      background-color: $dark-blue;
     }
   }
 }

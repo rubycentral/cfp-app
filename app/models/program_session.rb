@@ -167,6 +167,14 @@ class ProgramSession < ApplicationRecord
     info[:slides_url] = slides_url
   end
 
+  def suggested_duration
+    if session_format && session_format.duration
+      "#{session_format.duration} minutes"
+    else
+      "N/A"
+    end  
+  end  
+
   private
 
   def destroy_speakers

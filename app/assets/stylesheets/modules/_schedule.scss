@@ -75,7 +75,7 @@ $column-width: 180px;
 
 
   .unscheduled-sessions-toggle {
-    font-size: 1.5em;
+    font-size: 1.25em;
     display: block;
 
     .badge {
@@ -101,16 +101,21 @@ $column-width: 180px;
 }
 
 .search-sessions-wrapper {
-  text-align: center;
   padding: 1em 0 0;
+  display: flex;
+  align-items: baseline;
+  input {
+    flex: 1;
+    margin-left: 4px;
+  }
 }
 
 .unscheduled-sessions-widget {
   width: $column-width + 24px;
-  margin: 2em auto;
+  margin: 1em auto;
   max-height: 200vh;
   overflow-y: scroll;
-
+  min-height: 100vh;
 
   .draggable-session-card {
     margin: 1em auto;
@@ -151,6 +156,10 @@ body .custom-session-card {
   .title {
     font-weight: bold;
   }
+}
+
+body .ui-draggable-dragging {
+  z-index: 1000;
 }
 
 body .custom-session-card {

@@ -9,14 +9,18 @@ class Staff::Grids::TimeSlotsController < Staff::ApplicationController
   end
 
   def update
-    if @time_slot.update_attributes(time_slot_params)
-      flash.now[:info] = "Time slot updated."
-    else
-      flash.now[:danger] = "There was a problem saving this time slot."
-    end
-
     respond_to do |format|
-      format.js
+      if @time_slot.update_attributes(time_slot_params)
+        format.json { render json: {
+          unscheduled_count: current_event.program_sessions.unscheduled.count,
+          total_count: current_event.program_sessions.count,
+          day_counts: EventStats.new(current_event).schedule_counts,
+        }, status: :ok }
+        format.html { flash.now[:info] = "Time slot updated." }
+      else
+        format.json { render json: @time_slot.error, status: :bad_request }
+        format.html { flash.now[:danger] = "There was a problem saving this time slot." }
+      end    
     end
   end
 

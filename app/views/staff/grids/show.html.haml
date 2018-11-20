@@ -15,12 +15,12 @@
       .tab-content
         - @schedule.each_day do |day|
           .tab-pane{class: current_day_css(day, 1), id: "grid_day_#{day}", role: 'tabpanel'}
+            .generate-grid-wrapper.text-right
+              = generate_grid_button(day)
             .grid-wrapper.container-fluid
               .bulk-preview-bar
               .schedule-widget
                 .grid-column
-                  .generate-grid-wrapper.text-right
-                    = generate_grid_button(day)
                   = render partial: 'grid', locals: { schedule: @schedule, day: day }
                 .unscheduled-sessions-column
                   = render partial: 'unscheduled_sessions', locals: { schedule: @schedule }

@@ -250,7 +250,7 @@ GEM
       interception (>= 0.5)
       pry
     public_suffix (2.0.5)
-    puma (3.6.2)
+    puma (3.12.0)
     pundit (1.1.0)
       activesupport (>= 3.0.0)
     rack (2.0.5)
@@ -416,7 +416,7 @@ DEPENDENCIES
   pry-rails
   pry-remote
   pry-rescue
-  puma (~> 3.6.2)
+  puma (~> 3.12.0)
   pundit
   rack-mini-profiler
   rack-timeout (~> 0.2.4)
@@ -442,4 +442,4 @@ RUBY VERSION
    ruby 2.4.4p296
 
 BUNDLED WITH
-   1.16.2
+   1.17.1

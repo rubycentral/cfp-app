@@ -90,14 +90,21 @@
         accept: '.draggable-session-card',
         hoverClass: 'draggable-hover',
         drop: function(event, ui) {
-            var $sessionCard = $(ui.draggable)
-            $sessionCard.detach().removeAttr('style').appendTo(this)
-            assignSizeClass($sessionCard, $(this))
-            assignTrackColor($sessionCard)
-            if ($sessionCard.data('scheduled')) {
-                window.Schedule.Drag.unschedule($sessionCard)
-            }
-            updateTimeSlot($(this), $sessionCard)
+          var $sessionCard = $(ui.draggable)
+          $sessionCard.detach().removeAttr('style').appendTo(this)
+          assignSizeClass($sessionCard, $(this))
+          assignTrackColor($sessionCard)
+          if ($sessionCard.data('scheduled')) {
+            window.Schedule.Drag.unschedule($sessionCard)
+          } else {
+            $sessionCard.data('scheduled', true)
+          }
+          updateTimeSlot($(this), $sessionCard)
+          $sessionCard.attr({
+            'data-toggle': null,
+            'data-target': null,
+          })  
+          $sessionCard.off('click', window.Schedule.Drag.showProgramSession)
         }
     })
   }
@@ -147,11 +154,20 @@
 
   function updateTimeSlot($timeSlot, $dragged_session) {
     $.ajax({
-        url: $timeSlot.data('updatePath'),
-        method: 'patch',
-        data: {
-            time_slot: { program_session_id: $dragged_session.data('id') }
-        }
+      url: $timeSlot.data('updatePath'),
+      method: 'patch',
+      data: {
+        time_slot: { program_session_id: $dragged_session.data('id') }
+      },
+      success: function(data) {
+        $(".unscheduled-sessions-toggle .badge").text(
+          data.unscheduled_count + "/" + data.total_count
+        )
+        $(".total.time-slots .badge").each(function(i, badge) {
+          var counts = this.day_counts[i + 1]
+          $(badge).text(counts.scheduled + "/" + counts.total)
+        }.bind(data))
+      }
     })
   }
 

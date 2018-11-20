@@ -1,0 +1,21 @@
+.modal-dialog
+  .modal-content
+    .modal-header
+      .col-xs-6
+        %h3
+          = session.title
+    .modal-body
+      .selected-session-info
+        - {'Format': 'session_format_name',
+            'Track': 'track_name',
+            'Presenter':'speaker_names',
+            'Abstract': 'abstract',
+            'Suggested Duration': 'suggested_duration',
+          }.each do |attr, getter_method|
+          - value = session.try(getter_method)
+          - if value != "" && value != nil
+            .session-meta-item
+              %strong= "#{attr}:"
+              %p=value
+    .modal-footer
+      %button.btn.btn-default{'data-dismiss' => "modal"} Close

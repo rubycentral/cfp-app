@@ -77,11 +77,11 @@ class TimeSlot < ApplicationRecord
   end
 
   def session_suggested_duration
-    if program_session && program_session.session_format && program_session.session_format.duration
-      "#{program_session.session_format.duration} minutes"
+    if program_session
+      program_session.suggested_duration
     else
-      "N/A"
-    end    
+     "N/A"
+    end
   end
 
   def session_track_id

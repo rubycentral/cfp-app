@@ -91,6 +91,7 @@ Rails.application.routes.draw do
         resources :time_slots, except: :show
         resource :grid do
           resources :time_slots, module: 'grids', only: [:new, :create, :edit, :update]
+          resources :program_sessions, module: 'grids', only: [:show]
           resource :bulk_time_slot, module: 'grids', only: [] do
             collection do
               get 'new/:day', to: 'bulk_time_slots#new', as: 'new', constraints: { day: /\d+/ }

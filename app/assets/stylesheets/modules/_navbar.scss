@@ -54,6 +54,9 @@
 }
 
 .nav {
+  display: flex;
+  align-items: center;
+  
   > li {
     > a {
       padding: 5px 10px;

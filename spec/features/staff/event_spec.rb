@@ -35,7 +35,7 @@ feature "Event Dashboard" do
       visit event_staff_info_path(organizer_teammate.event)
       expect(page).to have_content organizer_teammate.event.name
       expect(page).to have_link "Edit Info"
-      expect(page).to have_link "Change Status"
+      expect(page).not_to have_link "Change Status"
 
       click_on "Edit Info"
 
@@ -45,8 +45,12 @@ feature "Event Dashboard" do
       expect(current_path).to eq(event_staff_info_path(organizer_teammate.event))
     end
 
-    it "can change event status" do
-      visit event_staff_info_path(organizer_teammate.event)
+    it "can change event status if checklist complete" do
+      event = organizer_teammate.event
+      visit event_staff_info_path(event)
+      expect(page).not_to have_link "Change Status"
+      create(:program_session, event: event)
+      visit event_staff_info_path(event)
 
       within('.page-header') do
         expect(page).to have_content("Event Status: Draft")

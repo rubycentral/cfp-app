@@ -69,6 +69,20 @@
                 $(ui.helper).css({ backgroundColor: 'white' })
             }
         })
+        var scheduled = $session.data('scheduled')
+        $session.attr({
+          'data-toggle': scheduled ? null : 'modal',
+          'data-target': scheduled ? null : '#program-session-show-dialog'
+        })
+        $session.on('click', showProgramSession)
+    }
+
+    function showProgramSession() {
+      var url = $(this).data('showPath')
+      var scheduled = $(this).data('scheduled')
+      if (url && !scheduled) {
+        $.ajax({url: url})
+      }
     }
 
     function initDroppableSessionsWidget() {
@@ -85,17 +99,34 @@
     }
 
     function unschedule($removed) {
-        $.ajax({
-            url: $removed.data('unscheduleTimeSlotPath'),
-            method: 'patch',
-            data: { time_slot: { program_session_id: '' } }
-        })
+      $.ajax({
+        url: $removed.data('unscheduleTimeSlotPath'),
+        method: 'patch',
+        data: { time_slot: { program_session_id: '' } },
+        success: function(data) {
+          $(".unscheduled-sessions-toggle .badge").text(
+            data.unscheduled_count + "/" + data.total_count
+          )
+          $(".total.time-slots .badge").each(function(i, badge) {
+            var counts = this.day_counts[i + 1]
+            $(badge).text(counts.scheduled + "/" + counts.total)
+          }.bind(data))
+        },
+      })
+      $removed.data('scheduled', null)
+      $removed.attr({
+        'data-scheduled': null,
+        'data-toggle': 'modal',
+        'data-target': '#program-session-show-dialog'
+      })
+      $removed.on('click', showProgramSession)
     }
 
     window.Schedule.Drag = {
-        init: init,
-        initDraggableSession: initDraggableSession,
-        unschedule: unschedule,
+      initDraggableSession: initDraggableSession,
+      unschedule: unschedule,
+      init: init,
+      showProgramSession: showProgramSession,
     }
 
 

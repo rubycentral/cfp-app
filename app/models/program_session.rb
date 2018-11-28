@@ -105,10 +105,10 @@ class ProgramSession < ApplicationRecord
   end
 
   def promote
-    update(state: PROMOTIONS[state])
     if proposal.present?
       proposal.promote
     end
+    update(state: PROMOTIONS[state])
   end
 
   def live?
@@ -166,6 +166,14 @@ class ProgramSession < ApplicationRecord
   def slides_url=(slides_url)
     info[:slides_url] = slides_url
   end
+
+  def suggested_duration
+    if session_format && session_format.duration
+      "#{session_format.duration} minutes"
+    else
+      "N/A"
+    end  
+  end  
 
   private
 

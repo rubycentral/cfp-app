@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       member { post :decline }
       member { post :update_notes }
       member { delete :destroy }
+      member { get :finalized_notification }
     end
 
     get 'parse_edit_field' => 'proposals#parse_edit_field', as: :parse_edit_field_proposal
@@ -91,6 +92,7 @@ Rails.application.routes.draw do
         resources :time_slots, except: :show
         resource :grid do
           resources :time_slots, module: 'grids', only: [:new, :create, :edit, :update]
+          resources :program_sessions, module: 'grids', only: [:show]
           resource :bulk_time_slot, module: 'grids', only: [] do
             collection do
               get 'new/:day', to: 'bulk_time_slots#new', as: 'new', constraints: { day: /\d+/ }

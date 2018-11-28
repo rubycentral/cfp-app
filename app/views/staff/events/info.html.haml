@@ -9,7 +9,8 @@
           - if current_user.organizer_for_event?(event)
             .btn-nav
               = link_to "Edit Info", event_staff_edit_path(event), class: "btn btn-primary"
-              = link_to "Change Status", '#', class: "btn btn-primary status-button"
+              - if event.checklist_complete?
+                = link_to "Change Status", '#', class: "btn btn-primary status-button"
             .status-dropdown.pull-right
               = form_for(event, url: event_staff_update_status_path(event)) do |f|
                 = f.select(:state, options_for_select(Event::STATUSES.values, f.object.state))

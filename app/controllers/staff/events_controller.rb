@@ -58,6 +58,10 @@ class Staff::EventsController < Staff::ApplicationController
       redirect_to event_staff_info_path(@event), notice: "Event status was successfully updated."
     else
       flash[:danger] = "There was a problem updating the event status. Please try again."
+      flash[:danger] += @event.errors.messages.values.flatten.map do |m|
+        " <br>#{m}"
+      end.join if @event.errors.present?
+      @event.reload
       render :info
     end
   end
@@ -112,10 +116,10 @@ class Staff::EventsController < Staff::ApplicationController
 
   def open_cfp
     authorize_update
-    if @event.open_cfp
+    if @event.update_attributes(state: Event::STATUSES[:open])
       flash[:info] = "Your CFP was successfully opened."
     else
-      flash[:danger] = "There was a problem opening your CFP: #{@event.errors.full_messages.to_sentence}"
+      flash['danger alert-confirm'] = "There was a problem opening your CFP: #{@event.errors.full_messages.to_sentence}"
     end
     redirect_to event_staff_path(@event)
   end

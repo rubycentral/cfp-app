@@ -10,7 +10,8 @@
   var dayStart = 60*9;  // minutes
   var dayEnd = 60*19;
   const step = 60;
-  const verticalScale = 2.5;
+  const verticalScale = 1.5;
+
 
   var trackCssClasses = [];
   var trackColors = [];
@@ -24,12 +25,14 @@
     addGridLineStyle();
     updateDayRange($grids);
     initGrid($grids);
+    fixGridTop();
   }
 
   function updateDayRange($grids) {
     times = _.flatten(_.map($grids.find('.time-slot').toArray(), function(ts) {
         return [$(ts).data("starts"), ($(ts).data("starts") + $(ts).data("duration"))]
     }));
+    
 
     dayStart = _.min([dayStart, _.min(times)]);
     dayEnd = _.max([dayEnd, _.max(times)]);
@@ -42,6 +45,7 @@
     $grid.find('.ruler').each(function(i, ruler) {
       initRuler($(ruler));
     });
+
   }
 
   function initGridDay(day) {
@@ -49,6 +53,26 @@
     updateDayRange($grid);
     initGrid($grid);
   }
+
+  function fixGridTop() {
+    $('.schedule-grid').scroll(function(e) {
+      $('.column-header').each(function(_index, header) {
+        var positionX = $(header).parent().position().left;
+        $(header).css({
+          left: positionX
+        })
+      })
+    })
+    $(window).scroll(function(){
+      scroll = $(window).scrollTop();
+      if(scroll >= 55) {
+        $('.column-header').css({position:'fixed', width: '180px', top:'130px', zIndex:'15'})
+      } else {
+        $('.column-header').css({position:'static', width: '100%', zIndex:'10'})
+      }
+    });
+  }
+
 
   function initTimeSlot($slot) {
     $slot.css({
@@ -66,14 +90,21 @@
         accept: '.draggable-session-card',
         hoverClass: 'draggable-hover',
         drop: function(event, ui) {
-            var $sessionCard = $(ui.draggable)
-            $sessionCard.detach().removeAttr('style').appendTo(this)
-            assignSizeClass($sessionCard, $(this))
-            assignTrackColor($sessionCard)
-            if ($sessionCard.data('scheduled')) {
-                window.Schedule.Drag.unschedule($sessionCard)
-            }
-            updateTimeSlot($(this), $sessionCard)
+          var $sessionCard = $(ui.draggable)
+          $sessionCard.detach().removeAttr('style').appendTo(this)
+          assignSizeClass($sessionCard, $(this))
+          assignTrackColor($sessionCard)
+          if ($sessionCard.data('scheduled')) {
+            window.Schedule.Drag.unschedule($sessionCard)
+          } else {
+            $sessionCard.data('scheduled', true)
+          }
+          updateTimeSlot($(this), $sessionCard)
+          $sessionCard.attr({
+            'data-toggle': null,
+            'data-target': null,
+          })  
+          $sessionCard.off('click', window.Schedule.Drag.showProgramSession)
         }
     })
   }
@@ -117,17 +148,26 @@
   function addGridLineStyle() {
     // The ruler's ticks are extended by changing their width dynamically.
     var $columns = $('.schedule-grid:first').find('.room-column');
-    var lineWidth = $columns.length * $columns.width() + 10;
+    var lineWidth = $columns.length * $columns.width();
     $('<style>.schedule-grid .ruler li:after { width: '+lineWidth+'px; }</style>').appendTo('head');
   }
 
   function updateTimeSlot($timeSlot, $dragged_session) {
     $.ajax({
-        url: $timeSlot.data('updatePath'),
-        method: 'patch',
-        data: {
-            time_slot: { program_session_id: $dragged_session.data('id') }
-        }
+      url: $timeSlot.data('updatePath'),
+      method: 'patch',
+      data: {
+        time_slot: { program_session_id: $dragged_session.data('id') }
+      },
+      success: function(data) {
+        $(".unscheduled-sessions-toggle .badge").text(
+          data.unscheduled_count + "/" + data.total_count
+        )
+        $(".total.time-slots .badge").each(function(i, badge) {
+          var counts = this.day_counts[i + 1]
+          $(badge).text(counts.scheduled + "/" + counts.total)
+        }.bind(data))
+      }
     })
   }
 

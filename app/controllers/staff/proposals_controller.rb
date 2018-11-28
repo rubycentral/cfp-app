@@ -82,6 +82,7 @@ class Staff::ProposalsController < Staff::ApplicationController
     authorize @proposal, :finalize?
 
     if @proposal.finalize
+      # FinalizationNotifier.notify(@proposal)  
       Staff::ProposalMailer.send_email(@proposal).deliver_now
       @proposal.speakers.map(&:user).each do |user|
         Notification.create_for(user, proposal: @proposal,
@@ -97,7 +98,7 @@ class Staff::ProposalsController < Staff::ApplicationController
   def bulk_finalize
     authorize Proposal, :bulk_finalize?
 
-    @remaining_by_state = Proposal.soft_states.group_by{ |proposal| proposal.state }
+    @remaining_by_state = Proposal.soft_states.group_by(&:state)
   end
 
   def finalize_by_state
@@ -106,11 +107,9 @@ class Staff::ProposalsController < Staff::ApplicationController
 
     authorize @remaining, :finalize?
 
-    @remaining.each do |prop|
-      prop.finalize
-    end
+    @remaining.each(&:finalize)
     errors = @remaining.map do |prop|
-      Staff::ProposalMailer.send_email(prop).deliver_now unless prop.changed?
+      FinalizationNotifier.notify(prop) unless prop.changed?
       prop.errors.full_messages.join(', ')
     end.compact!
 
@@ -121,5 +120,4 @@ class Staff::ProposalsController < Staff::ApplicationController
     end
     redirect_to bulk_finalize_event_staff_program_proposals_path
   end
-
 end

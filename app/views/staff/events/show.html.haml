@@ -102,7 +102,7 @@
             %h3 CFP
           .widget-content
             %strong.text-primary No CFP Statistics
-            - if event.incomplete_checklist_items.empty?
+            - if event.checklist_complete?
               - if current_user.organizer_for_event?(current_event)
                 = link_to "Open CFP", event_staff_open_cfp_path(current_event), method: :patch,
                   class: "btn btn-success btn-lg cfp-button",

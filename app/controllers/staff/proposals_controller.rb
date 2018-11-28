@@ -83,6 +83,11 @@ class Staff::ProposalsController < Staff::ApplicationController
 
     if @proposal.finalize
       Staff::ProposalMailer.send_email(@proposal).deliver_now
+      @proposal.speakers.map(&:user).each do |user|
+        Notification.create_for(user, proposal: @proposal,
+          message: "Your proposal for #{@proposal.event.name} has been #{@proposal.state}",
+          target_path: finalized_notification_event_proposal_url(@proposal.event, @proposal))
+      end
     else
       flash[:danger] = "There was a problem finalizing the proposal: #{@proposal.errors.full_messages.join(', ')}"
     end

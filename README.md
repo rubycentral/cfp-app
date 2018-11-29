@@ -2,21 +2,21 @@
 
 ## WARNING
 
-This is a major upgrade from the original CFP App that is not backwards compatible.  We are in the process of rewriting many of the core data models and changing how the app works. Some functionality may be unavailable to IE9 and earlier releases.
+This is a major upgrade from the original CFP App that is not backwards compatible.  We redesigned many of the core data models and changed how the app works. Some functionality may be unavailable to IE9 and earlier versions of IE.
 
-Do not switch to this fork until further notice. We are not providing a migration path for your existing data at this time. Once this fork becomes stable we'll explore if migrating legacy cfp app databases to the new version makes sense.  Please reach out to Marty Haught if you have any questions.
+It is expected that you will install CFP App 2.0 into a new, pristine database and you will run future events on it.  If you have an existing installation of CFP App 1.0 and you want to preserve your data, you will need to handle the data migration on your own.
 
 ## Overview
 
 This is a Ruby on Rails application that lets you manage your conference's call for proposal (CFP), program and schedule.  It was written by Ruby Central to run the CFPs for RailsConf and RubyConf.
 
-The CFP App does not provide a public facing website for your conference, though we have a sister project that does integration with the CFP App's export data to give you a starting place for your website.
-
 At a high level the CFP App allows speakers to submit and manage their proposals for your event.  Organizers can create a group of reviewers that blindly review and rate talks.  Organizers can then select talks to be accepted into the program including a waitlist of proposals.  Finally organizers can create a schedule and slot confirmed talks.  Down below, I'll give a detailed description of the features and workflows of the CFP App under the section 'How to use the CFP App'
+
+The CFP App does not provide a public facing website for your conference, though we have a sister project that does integration with the CFP App's export data to give you a starting place for your website.  If you have interest in running a similar website, please reach out to Ruby Central directly at rubycentral.org.
 
 ## Getting Started
 
-Make sure you have Ruby 2.3 and Postgres installed in your environment.  This is a Rails 4.2 app and uses bundler to install all required gems.  We are also making the assumption that you're familiar with how Rails apps and setup and deployed.  If this is not the case then you'll want to refer to documentation that will bridge any gaps in the instructions below.
+Make sure you have Ruby and Postgres installed in your environment.   Check the Gemfile for the exact supported version.  This is a Rails 5 app and uses bundler to install all required gems.  We are also making the assumption that you're familiar with how Rails apps and setup and deployed.  If this is not the case then you'll want to refer to documentation that will bridge any gaps in the instructions below.
 
 Run [bin/setup](bin/setup) script to install gem dependencies and setup database for development.
 
@@ -24,7 +24,7 @@ Run [bin/setup](bin/setup) script to install gem dependencies and setup database
 bin/setup
 ```
 
-This will create `.env`, a development database with seed data. Seed will make an admin user with an email of `an@admin.com` to get started. There is a special, development only login method in Omniauth that you can use to test it out.
+This will create `.env`, a development database with seed data. Seed will make an admin user with an email of `an@admin.com` and password of `userpass` to get started. There is a special, development only login method in Omniauth that you can use to test it out.
 
 NOTE: You may need to install Qt/`qmake` to get Capybara to work; with Homebrew you can run `brew install qt`.
 
@@ -44,7 +44,7 @@ This will boot up using Foreman and allow the .env file to be read / set for use
 
 ### Environment variables
 
-[Omniauth](http://intridea.github.io/omniauth/) is set up to use Twitter and Github for logins in production. You'll want to put your own key and secret in for both. Other environment variables will include your postgres user and Rails' secret\_token.
+[Omniauth](https://github.com/omniauth/omniauth) is set up to use Twitter and Github for logins in production. You'll want to put your own key and secret in for both. Other environment variables will include your postgres user and Rails' secret\_token.
 
     TIMEZONE (defaults to Pacific if not set)
     POSTGRES_USER (dev/test only)
@@ -65,10 +65,10 @@ There are five user roles in CFP App. To log in as a user type in development mo
   - Add/archive events
   - Automatically an **Organizer** for created events
 - **Organizer:**
-  - Edit/view event pages: event dashboard, program, schedule
-  - View event proposals
-- **Track Director:**
-  - TBD
+  - Full access to everything under an event
+  - Is the only role that can modify the program and schedule
+- **Program Team:**
+  - Has full access to the Review and Selection sections
 - **Reviewer:**
   - View/rate anonymous event proposals for an event
   - Cannot rate own proposals

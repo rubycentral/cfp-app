@@ -37,7 +37,7 @@ shared_examples "a proposal page" do |path_method|
 
       it "can rate a proposal", js: true do
         within("#rating-form") do
-          find("input[value='5']").set(true)
+          find("input[value='5']", visible: false).set(true)
         end
         expect(page).to have_css('.text-success', text: 'Average rating:')
         expect(page).to have_css('.text-success', text: '5.0')

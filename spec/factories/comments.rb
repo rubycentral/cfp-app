@@ -1,10 +1,10 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :comment do
-    body "Hello"
-    type "PublicComment"
+    body { "Hello" }
+    type { "PublicComment" }
 
     trait :internal do
-      type "InternalComment"
+      type { "InternalComment" }
     end
   end
 end

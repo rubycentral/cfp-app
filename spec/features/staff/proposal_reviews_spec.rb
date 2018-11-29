@@ -91,9 +91,9 @@ feature "Review Proposals" do
     it "only shows them the internal comments once they've rated it", js: true do
       visit event_staff_proposal_path(event, proposal)
       expect(page).to_not have_content('Internal Comments')
-
+      # save_and_open_screenshot
       within("#rating-form") do
-        find("input[value='5']").set(true)
+        find("input[value='5']", visible: false).set(true)
       end
 
       expect(page).to have_content('Internal Comments')

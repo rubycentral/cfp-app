@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   sequence :name do |n|
     "User Name #{n}"
   end
@@ -10,34 +10,34 @@ FactoryGirl.define do
   factory :user do
     name
     email
-    password "12345678"
-    password_confirmation "12345678"
-    bio "A great Bio"
+    password { "12345678" }
+    password_confirmation { "12345678" }
+    bio { "A great Bio" }
     after(:create) { |user| user.confirm }
 
     trait :reviewer do
-      name "John Doe Reviewer"
+      name { "John Doe Reviewer" }
       after(:create) do |user|
-        FactoryGirl.create(:teammate, :reviewer, user: user)
+        FactoryBot.create(:teammate, :reviewer, user: user)
       end
     end
 
     trait :organizer do
-      name "John Doe Organizer"
+      name { "John Doe Organizer" }
       after(:create) do |user|
-        FactoryGirl.create(:teammate, :organizer, user: user)
+        FactoryBot.create(:teammate, :organizer, user: user)
       end
     end
 
     trait :program_team do
-      name "John Doe Program Team"
+      name { "John Doe Program Team" }
       after(:create) do |user|
-        FactoryGirl.create(:teammate, :program_team, user: user)
+        FactoryBot.create(:teammate, :program_team, user: user)
       end
     end
 
     factory :admin do
-      admin true
+      admin { true }
     end
 
     factory :organizer, traits: [ :organizer ] do

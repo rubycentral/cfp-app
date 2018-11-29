@@ -1,6 +1,6 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :invitation do
-    email 'email@factory.com'
+    email { 'email@factory.com' }
     proposal
   end
 end

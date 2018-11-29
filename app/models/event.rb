@@ -12,7 +12,7 @@ class Event < ApplicationRecord
   has_many :taggings, through: :proposals
   has_many :ratings, through: :proposals
 
-  has_many :public_session_formats, ->{ where(public: true) }, class_name: SessionFormat
+  has_many :public_session_formats, ->{ where(public: true) }, class_name: 'SessionFormat'
 
   accepts_nested_attributes_for :proposals
 

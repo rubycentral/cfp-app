@@ -1,11 +1,11 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
+# Read about factories at https://github.com/thoughtbot/factory_bot
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :room do
-    name "MyString"
-    room_number "MyString"
-    level "MyString"
-    address "MyString"
+    name { "MyString" }
+    room_number { "MyString" }
+    level { "MyString" }
+    address { "MyString" }
     event
   end
 end

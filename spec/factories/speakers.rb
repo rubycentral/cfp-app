@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   sequence :speaker_name do |n|
     "Speaker Name #{n}"
   end
@@ -9,8 +9,8 @@ FactoryGirl.define do
 
   factory :speaker do
     user
-    event { Event.first || FactoryGirl.create(:event) }
-    bio "Speaker bio"
+    event { Event.first || FactoryBot.create(:event) }
+    bio { "Speaker bio" }
 
     trait :with_name do
       speaker_name

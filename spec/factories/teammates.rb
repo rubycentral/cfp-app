@@ -1,6 +1,6 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :teammate do
-    event { Event.first || FactoryGirl.create(:event) }
+    event { Event.first || FactoryBot.create(:event) }
 
     sequence :email do |n|
       "teammate_email#{n}@factory.com"
@@ -11,21 +11,21 @@ FactoryGirl.define do
     end
 
     trait :has_been_invited do
-      token "token"
-      role "reviewer"
-      state Teammate::PENDING
+      token { "token" }
+      role { "reviewer" }
+      state { Teammate::PENDING }
     end
 
     trait :reviewer do
-      role "reviewer"
+      role { "reviewer" }
     end
 
     trait :program_team do
-      role "program team"
+      role { "program team" }
     end
 
     trait :organizer do
-      role "organizer"
+      role { "organizer" }
     end
 
   end

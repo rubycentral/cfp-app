@@ -19,7 +19,7 @@ describe Staff::TimeSlotsController, type: :controller do
       put :update, xhr: true, params: {id: conf_time_slot, event_slug: conf_time_slot.event,
           time_slot: { conference_day: 5 }}
       expect(assigns(:time_slot).conference_day).to eq(5)
-      expect(response).to be_success
+      expect(response).to be_successful
     end
 
     it "can set the program session" do

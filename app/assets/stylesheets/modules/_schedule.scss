@@ -1,0 +1,385 @@
+$time-step: 60px;
+$vertical-scale: 1.5;
+$pixel-step: $time-step * $vertical-scale;
+$column-width: 180px;
+
+#schedule {
+  margin-top: 20px;
+
+  .active {
+    .nav-tab-content {
+      .day {
+        color: $ruby-central-red;
+      }
+    }
+  }
+
+  .navbar-fixed-top.nav-tabs {
+    padding-top: $navbar-height * 2 + 10px;
+    margin-left: 2%;
+    z-index: 1000;
+    background: #fff;
+  }
+
+  .tab-pane {
+    position: relative;
+  }
+  
+  .tab-content {
+    margin-top: 50px;
+  }
+  
+  .generate-grid-wrapper {
+    position: absolute;
+    right: 5px;
+    top: -50px;
+    z-index: 1100;
+  }
+
+  .row.contained {
+    overflow: hidden;
+    position: relative;
+
+    .scroll-panel-margin {
+      position: absolute;
+      z-index: 16;
+      top: 0;
+      left: -2px;
+      bottom: 0;
+      width: 58px;
+      // border: 1px solid black;
+      background-color: #FFF;
+      height: 100%;
+    }
+  }
+
+  .nav-tab-content {
+    display: flex;
+    align-items: center;
+
+    .day {
+      font-weight: bold;
+      font-size: 1.25em;
+    }
+
+    .counts-container {
+      text-align: right;
+      margin-left: 2em;
+      color: $text-color;
+    }
+  }
+
+  .generate-grid {
+    margin: 0 0.5em 1em 0;
+  }
+
+
+  .unscheduled-sessions-toggle {
+    font-size: 1.25em;
+    display: block;
+
+    .badge {
+      background-color: $bright-blue;
+      font-size: .75em;
+    }
+
+    &:hover, &:visited, &:focus {
+      text-decoration: none;
+    }
+
+    &:visited, &:focus {
+      color: $bright-blue;
+    }
+
+    &:hover {
+      color: #126799;
+      .badge {
+        background-color: #126799;
+      }
+    }
+  }
+}
+
+.search-sessions-wrapper {
+  padding: 1em 0 0;
+  display: flex;
+  align-items: baseline;
+  input {
+    flex: 1;
+    margin-left: 4px;
+  }
+}
+
+.unscheduled-sessions-widget {
+  width: $column-width + 24px;
+  margin: 1em auto;
+  max-height: 200vh;
+  overflow-y: scroll;
+  min-height: 100vh;
+
+  .draggable-session-card {
+    margin: 1em auto;
+  }
+}
+
+// the draggable session card has a different appearance depending on context:
+
+// in the body (as it's being dragged) and global
+body .draggable-session-card,
+body .custom-session-card {
+  width: $column-width;
+  box-shadow: 0 1px 2px rgba(0,0,0,.6);
+  height: 90px;
+  text-align: center;
+  cursor: move;
+  background-color: white;
+  z-index: 10;
+  opacity: .5;
+
+  .session-card-body {
+    padding: .5em;
+    div {
+      padding: .25em 0;
+    }
+  }
+
+  .track {
+    width: 100%;
+    color: white;
+    padding: .5em;
+  }
+
+  .format {
+    font-size: .75em
+  }
+
+  .title {
+    font-weight: bold;
+  }
+}
+
+body .ui-draggable-dragging {
+  z-index: 1000;
+}
+
+body .custom-session-card {
+  cursor: pointer;
+}
+// in the unscheduled sessions widget
+.unscheduled-sessions-widget .draggable-session-card {
+  opacity: 1
+}
+// in the grid
+.schedule-grid .draggable-session-card,
+.schedule-grid .custom-session-card {
+  opacity: 1;
+  height: 100%;
+  width: 100%;
+  box-shadow: none;
+
+  &.small {
+    .title {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      padding-top: 4px;
+    }
+  }
+
+  &.medium {
+    .format,
+    .presenter {
+      display: none;
+    }
+
+    .title {
+      padding: 0;
+    }
+  }
+
+  &.large {
+    position: relative;
+    .session-card-body {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      transform: translateY(-50%);
+    }
+  }
+}
+
+.grid-wrapper {
+  display: inline-block;
+  margin-top: 25px;
+
+  .bulk-preview-bar {
+    .bar {
+      padding: 1.5em;
+      margin-left: 1em;
+      z-index: 1080;
+    }
+
+    form {
+      display: inline-block;
+    }
+  }
+
+  h3.clearfix {
+    margin-top: 30px;
+  }
+
+  .schedule-widget {
+    width: 100vw;
+    display: flex;
+
+    .unscheduled-sessions-column {
+      padding: 0 2em;
+      background: #fff;
+      z-index: 950;
+    }
+
+    .grid-column {
+      max-width: 75%;
+    }
+  }
+}
+
+.schedule-grid {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-flow: row nowrap;
+  align-items: stretch;
+  overflow-x: scroll;
+  overflow-y:hidden;
+  margin-bottom: 20px;
+  border-collapse: collapse;
+
+  .ruler, .ruler li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ruler {
+    width: 45px;
+    border-radius: 2px;
+    color: #000;
+    font-size: $font-size-xs;
+    margin: 37px 5px 0 0;
+    white-space: nowrap;
+    background-color: #FFF;
+    z-index: 14;
+  }
+
+  .ruler li {
+    height: $pixel-step;
+    text-align: center;
+    position: relative;
+
+    &:after {
+      content: '';
+      position: absolute;
+      border-bottom: 1px solid rgba(204,204,204, .5);
+      width: 10px;
+      top: .6em;
+      left: 60px;
+      z-index: 9;
+    }
+  }
+
+  .room-column {
+    width: $column-width;
+    padding: 0;
+    margin: 0;
+
+    &.no-grid-position {
+      background: rgb(220, 220, 220);
+    }
+
+    &.no-grid-position .time-slots {
+      background: rgb(240, 240, 240);
+    }
+  }
+
+  .column-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 40px;
+    font-size: $font-size-base;
+    line-height: $line-height-base;
+    text-align: center;
+    color: #FFF;
+    background: #6d6b6b;
+    border-right: 1px solid #FFF;
+  
+    .room-number {
+      font-style: italic;
+    }
+  }
+
+  .time-slots, .time-slots .time-slot {
+    border-style: solid;
+    border-color: rgba(204,204,204, .5);
+  }
+
+  .time-slots {
+    position: relative;
+    height: 100%;
+    width: $column-width;
+    background: rgb(230, 230, 230);
+    margin-top: 4px;
+    border-width: 0 1px 0 0;
+    display: flex;
+    justify-content:center;
+  }
+
+  .room-column:first-of-type .time-slots {
+    border-width: 0 1px 0 1px;
+  }
+
+  .time-slot {
+    position: absolute;
+    width: calc(100% - 6px);
+    text-align: left;
+    font-size: $font-size-small;
+    background: #FFF;
+    cursor: pointer;
+    z-index: 10;
+    border-width: 1px .5px .5px 0;
+
+    &.draggable-hover {
+      background: $beige;
+    }
+
+    &.preview {
+      cursor: default;
+      background: $brand-info;
+      .title {
+        color: #fff;
+      }
+    }
+  }
+}
+
+#bulk-time-slot-create-dialog {
+  input.time-slot-duration {
+    width: 80px;
+  }
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+#staff_grids_show .page-footer {
+  background-color: white;
+  z-index: 1000;
+}

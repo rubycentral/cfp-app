@@ -1,0 +1,49 @@
+.btn-nav {
+  .page-header & {
+    margin-top: 30px;
+  }
+  .btn {
+    margin-right: $padding-xs-horizontal;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+/**
+ * Extra large button extensions. Extends `.btn`.
+ */
+.btn-xlarge {
+  padding: 12px 22px;
+  font-size: 22px;
+  line-height: normal;
+  -webkit-border-radius: 8px;
+     -moz-border-radius: 8px;
+          border-radius: 8px;
+}
+
+.edit-guidelines-btn,
+.save-guidelines-btn,
+.cancel-guidelines-btn {
+  margin: 1em 0.5em 0 0.5em;
+}
+
+.invite-btn {
+  margin-bottom: 25px !important;
+}
+
+.btn-icon {
+  padding: 0;
+}
+
+.hint-btn {
+  color: $brand-info;
+  cursor: pointer;
+  font-size: $font-size-large;
+  margin-top: -2px;
+
+  &:active,
+  &:focus {
+    color: $brand-info;
+  }
+}

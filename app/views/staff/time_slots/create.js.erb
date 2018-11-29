@@ -1,0 +1,19 @@
+$("#time-slot-new-dialog .errors").html("");
+
+<% if @time_slot.persisted? %>
+  <% if local_assigns[:save_and_add] %>
+    $('#time_slot_title').val('');
+    $('#time_slot_presenter').val('');
+    $('#time_slot_description').val('');
+    $('#time_slot_program_session_id').val('').change();
+
+  <% else %>
+    $('#time-slot-new-dialog').modal('hide');
+  <% end %>
+  window.Schedule.TimeSlots.addRow(<%=raw time_slot_decorated.row.to_json %>);
+
+<% else %>
+  $("#time-slot-new-dialog .errors").html("<%= @time_slot.errors.full_messages.join(', ') %>");
+<% end %>
+
+document.getElementById("flash").innerHTML = "<%=j show_flash %>";

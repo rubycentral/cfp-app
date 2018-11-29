@@ -1,0 +1,8 @@
+Hello!
+A comment has been left on the proposal '<%= @proposal.title %>' for <%= @proposal.event.name %>:
+
+> <%= simple_format(@comment.body) %>
+
+<%= md_link_to 'View the proposal', event_staff_proposal_url(@proposal.event, @proposal) %>
+
+<%= render 'notification_preference_message' %>

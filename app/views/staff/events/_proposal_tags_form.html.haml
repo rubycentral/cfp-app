@@ -1,0 +1,9 @@
+#edit-proposal-tags
+  = simple_form_for @event, url: event_staff_update_proposal_tags_path, method: :put,
+    remote: true, class: "form-horizontal"  do |f|
+    = f.input :valid_proposal_tags, label: false, autofocus: true,
+      placeholder: "Separate multiple tags with commas",
+      hint: "This is a comma separated list of tags allowed for use on proposals. These limits apply to publicly displayed tags and not to tags used internally by reviewers."
+    .pull-right
+      %button.btn.btn-default#cancel-proposal-tags{type: "cancel"} Cancel
+      %button.btn.btn-primary{type: "submit"} Save

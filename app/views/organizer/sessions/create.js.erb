@@ -1,7 +1,0 @@
-<% if save_and_add %>
-  $('#add-session').click();
-<% else %>
-  $('#session-new-dialog').modal('hide');
-<% end %>
-
-addSessionRow(<%=raw session_decorator.row.to_json %>);

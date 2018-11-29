@@ -1,0 +1,71 @@
+.event-info-bar
+  .row
+    .col-md-8
+      .event-info.event-info-dense
+        %strong.event-title= event.name
+        - if event.start_date? && event.end_date?
+          %span.event-meta
+            %i.fa.fa-fw.fa-calendar
+            = event.date_range
+    .col-md-4.text-right.text-right-responsive
+      .event-info.event-info-dense
+        %span{:class => "event-meta event-status-badge event-status-#{event.status}"}
+          CFP
+          = event.status
+        - if event.open?
+          %span.event-meta
+            CFP closes:
+            %strong= event.closes_at(:month_day_year)
+.row
+  .col-md-8
+    %h1 Program Selection
+.row
+  &nbsp;
+
+.row
+  .col-sm-8.text-left
+    %ul.selection-counts
+      %li.total.soft-accepted
+        %span Accepted
+        %span.badge= @all_accepted_count
+      %li.total.soft-waitlisted
+        %span Waitlisted
+        %span.badge= @all_waitlisted_count
+  .col-sm-4.text-right
+    %small.text-right <em>Hint:</em> Hold <kbd>shift</kbd> to sort by multiple columns
+
+.row
+  .col-md-12
+    %table#organizer-proposals-selection.datatable.table.table-striped.proposal-list
+      %thead
+        %tr
+          %th
+          %th
+          %th
+          %th
+          %th
+          %th
+          %th
+          %th.actions
+        %tr
+          %th Score
+          %th Speakers
+          %th Talk Title
+          %th Track
+          %th Session Format
+          %th Reviewer Tags
+          %th Status
+          %th.actions Soft Actions (Internal)
+      %tbody
+        - @proposals.each do |proposal|
+          %tr{ class: "proposal-#{proposal.id}", data: { 'proposal-id' => proposal.id, 'proposal-uuid' => proposal.uuid } }
+            %td= proposal.average_rating
+            %td= proposal.speaker_names
+            %td= proposal.title_link
+            %td= proposal.track_name
+            %td= proposal.session_format_name
+            %td= proposal.review_tags_labels
+            %td
+              %span.proposal-status= proposal.state_label(small: true, show_confirmed: true)
+            %td
+              %span.state-buttons= proposal.small_state_buttons

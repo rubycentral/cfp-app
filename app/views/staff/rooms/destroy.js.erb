@@ -1,0 +1,11 @@
+$('table#organizer-rooms #room_<%= room.id %>').remove();
+
+<% if has_missing_requirements?(room.event) %>
+  $('#time-slot-prereqs').removeClass('hidden');
+  $('#add-time-slot').addClass('disabled');
+
+  document.getElementById('missing-prereq-messages').innerHTML =
+    '<%=j unmet_requirements(room.event) %>';
+<% end %>
+
+document.getElementById('flash').innerHTML = '<%=j show_flash %>';

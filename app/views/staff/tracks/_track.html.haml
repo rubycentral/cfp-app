@@ -1,0 +1,26 @@
+%tr{ id: "track_#{track.id}" }
+  %td= track.name
+  %td= truncate(track.description, length: 60)
+  %td
+    -if track.guidelines.present?
+      = link_to "#", data: { toggle: "modal", target: "#track-guidelines-#{track.id}" } do
+        %span.fa.fa-list-alt
+
+      %div{ id: "track-guidelines-#{track.id}", class: 'modal fade' }
+        .modal-dialog
+          .modal-content
+            .modal-header
+              %h3= "#{track.name} Guidelines"
+            .modal-body
+              = track.guidelines
+
+  - unless !current_user.organizer_for_event?(event)
+    %td
+      .pull-right
+        = link_to "Edit", edit_event_staff_track_path(event, track), remote: true,
+          class: "btn btn-primary btn-xs"
+        = link_to "Remove", event_staff_track_path(event, track),
+          method: :delete,
+          remote: true,
+          data: { confirm: "Are you sure you want to remove this track?" },
+          class: "btn btn-danger btn-xs"

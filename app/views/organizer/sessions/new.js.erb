@@ -1,9 +1,0 @@
-var newDialog = $('#session-new-dialog');
-
-newDialog[0].innerHTML =
-  '<%=j render partial: 'new_dialog',
-    locals: { session: session_decorator, event: event } %>';
-
-setUpSessionDialog(newDialog);
-
-setTimeout(function() { $('#form-flash').fadeOut(1500); }, 1000);

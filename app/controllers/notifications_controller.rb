@@ -1,5 +1,5 @@
 class NotificationsController < ApplicationController
-  before_filter :require_user
+  before_action :require_user
 
   def index
     notifications = current_user.notifications.order(created_at: :desc)
@@ -8,13 +8,14 @@ class NotificationsController < ApplicationController
 
   def show
     notification = current_user.notifications.find(params[:id])
-    notification.read
+    notification.mark_as_read
 
     redirect_to notification.target_path
   end
 
   def mark_all_as_read
-    current_user.notifications.where(read_at: nil).update_all(read_at: DateTime.now)
-    redirect_to :back
+    current_user.notifications.where(read_at: nil).update_all(read_at: Time.current)
+    flash[:notice] = "All notifications marked as read"
+    redirect_to notifications_path
   end
 end

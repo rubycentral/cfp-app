@@ -1,47 +1,40 @@
 .row
   %fieldset.col-md-6
     %h2 Event Information
-    .form-group
-      = f.label :name
-      = f.text_field :name, class: 'form-control', placeholder: 'Name of the event'
-    .form-group
-      = f.label :contact_email
-      = f.text_field :contact_email, class: 'form-control', placeholder: 'Event email'
-    .form-group
-      = f.label :slug
-      = f.text_field :slug, class: 'form-control', placeholder: 'Slug for the event URL, may be left blank'
-      %p.help-block The slug will be used in public facing URLs. If you leave this field blank, a slug will be generated based on the name.
-    .form-group
-      = f.label :url
-      = f.text_field :url, class: 'form-control', placeholder: 'Event\'s URL'
+    = f.input :name, placeholder: 'Name of the event', autofocus: true
+    = f.input :slug, placeholder: 'Slug for the event URL, may be left blank once event name is filled out',
+      hint: "The slug will be used in public facing URLs. If you leave this field blank, a slug will be generated based on the name."
+    = f.input :url, label: "URL", placeholder: 'Event\'s URL'
+    = f.input :contact_email, class: 'form-control', placeholder: 'Event email'
   %fieldset.col-md-6
     %h3 CFP Dates
-    .form-group
+    .form-group.form-inline
       = f.label :opens_at
       = f.object.cfp_opens
-      = f.text_field :opens_at, value: (f.object.opens_at.blank? ? "" : f.object.opens_at.to_s(:long_with_zone) )
-      -#%p.help-block Open proposal end date is optional. If you do not provide one the CFP will defer to its state.
-    .form-group
+      = f.text_field :opens_at, class: 'form-control', value: (f.object.opens_at.blank? ? "" : f.object.opens_at.to_s(:long_with_zone) )
+      %p.help-block Optional. You can manually open the CFP when ready.
+    .form-group.form-inline
       = f.label :closes_at
-      = f.object.cfp_closes
-      = f.text_field :closes_at, value: (f.object.closes_at.blank? ? "" : f.object.closes_at.to_s(:long_with_zone) )
-      -#%p.help-block Open proposal end date is optional. If you do not provide one the CFP will defer to its state.
+      -if f.object.cfp_closes.present?
+        %span.label.label-info= f.object.cfp_closes
+        %br/
+      = f.text_field :closes_at, class: 'form-control', value: (f.object.closes_at.blank? ? "" : f.object.closes_at.to_s(:long_with_zone) )
+      %p.help-block When the CFP will stop taking submissions. Must be set before opening the CFP.
     %h3 Event Dates
-    .form-group
+    .form-group.form-inline
       = f.label :start_date
       = f.object.start_date.to_s(:month_day_year) unless f.object.start_date.blank?
-      = f.text_field :start_date, value: (f.object.start_date.blank? ? "" : f.object.start_date.to_s(:month_day_year) )
-    .form-group
+      = f.text_field :start_date, class: 'form-control', value: (f.object.start_date.blank? ? "" : f.object.start_date.to_s(:month_day_year) )
+      %p.help-block First day of your event
+    .form-group.form-inline
       = f.label :end_date
       = f.object.end_date.to_s(:month_day_year) unless f.object.end_date.blank?
-      = f.text_field :end_date, value: (f.object.end_date.blank? ? "" : f.object.end_date.to_s(:month_day_year) )
-      -#%p.help-block Open proposal end date is optional. If you do not provide one the CFP will defer to its state.
-    .form-group
-      = f.label :state
-      = f.select :state, ['open', 'closed'], class: 'form-control'
+      = f.text_field :end_date, class: 'form-control', value: (f.object.end_date.blank? ? "" : f.object.end_date.to_s(:month_day_year) )
+      %p.help-block Last day of your event
 
 .row.col-md-12.form-submit
   - if event && event.persisted? && current_user.admin?
     = link_to 'Delete Event', admin_event_path(event), method: :delete, data: { confirm: 'Are you sure you want to delete this event?' }, class: 'btn btn-danger pull-left'
 
-  %button.pull-right.btn.btn-success{:type => "submit"} Save
+  =submit_tag("Save", class: "pull-right btn btn-success", type: "submit")
+  = link_to "Cancel", admin_events_path, {:class=>"cancel-form pull-right btn btn-danger"}

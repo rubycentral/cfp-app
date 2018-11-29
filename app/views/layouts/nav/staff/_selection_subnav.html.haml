@@ -1,0 +1,39 @@
+.navbar.navbar-fixed-top.program-subnav
+  .container-fluid
+    %ul.nav.navbar-nav.navbar-right
+      %li{class: subnav_item_class("event-program-proposals-link")}
+        = link_to event_staff_program_proposals_path do
+          %span Proposals
+      %li{class: subnav_item_class("event-program-proposals-selection-link")}
+        = link_to selection_event_staff_program_proposals_path do
+          %span Selection
+      %li{class: subnav_item_class("event-program-bulk-finalize-link")}
+        = link_to bulk_finalize_event_staff_program_proposals_path do
+          %span Bulk Finalize
+    %ul.nav.navbar-nav.session-counts
+      %li.static
+        %span.title Sessions:
+        %div.counts-container
+          .total.all-accepted
+            %span Accepted
+            %span.badge= @all_accepted_count
+          .total.all-waitlisted
+            %span Waitlisted
+            %span.badge= @all_waitlisted_count
+
+      - if program_tracks.any?
+        %li.static
+          %span.title By Track:
+          %form.track-select{data: {event: current_event.slug}}
+            %select{id: 'track-select', name: 'track'}
+              %option{value: 'all', selected: sticky_selected_track.blank?} All
+              %option{value: ' '} General
+              - program_tracks.each do |track|
+                %option{value: track.id, selected: track.id.to_s==sticky_selected_track}= track.name
+          %div.counts-container
+            .by-track.all-accepted
+              %span Accepted
+              %span.badge= @all_accepted_track_count
+            .by-track.all-waitlisted
+              %span Waitlisted
+              %span.badge= @all_waitlisted_track_count

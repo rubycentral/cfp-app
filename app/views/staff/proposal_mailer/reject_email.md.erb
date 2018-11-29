@@ -1,0 +1,13 @@
+<% if @event.reject.present? %>
+  <%= Staff::ProposalMailerTemplate.new(@event.reject, @event,
+      @proposal, [ :proposal_title ]).render %>
+<% else %>
+Thank you for your proposal to <%= @event.name %>. Our program committee received many great talk submissions this year, and that's allowed us to put together an exciting program.
+
+As a result of the number of talks submitted, however, we've had to turn down a lot of excellent proposals. I'm sorry to say that we were not able to accept your submission titled, <%= @proposal.title %>, this year. This is always the toughest part knowing that we simply can't fit all the good talks in. We hope that you'll still be able to attend the conference.
+
+Thanks again for your submission as we really appreciate your willingness to share with the community.
+
+The <%= @event.name %> Program Committee
+
+<% end %>

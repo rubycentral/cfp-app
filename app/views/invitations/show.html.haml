@@ -1,10 +1,11 @@
 .alert.alert-info.container
-  %strong= invitation.email
-  has been invited as a speaker for this talk.
-  - if ! current_user
-    You will be prompted to create an account.
-  .pull-right
-    = invitation.refuse_button
-    = invitation.accept_button
+  %strong Hello #{@invitation.email}!
+  You have been invited to be a speaker for the talk outlined below.
+  Would you like to participate?
 
-= render template: 'proposals/show', locals: { proposal: proposal }
+  .pull-right
+    = @invitation.accept_button
+    = @invitation.decline_button
+
+= render template: 'proposals/show', locals: { proposal: @proposal,
+    event: @event , invitations: @proposal.invitations.not_accepted.decorate }

@@ -1,0 +1,11 @@
+<% if @session_format.errors.present? %>
+  $("#session-error").remove();
+  $("#config-modal .errors").append("<p id='session-error'><%=  session_format.errors.full_messages.join(", ") %></p>");
+<% else %>
+  $("#config-modal").modal("hide");
+  var tableRow = $("table#session-formats #session_format_<%= @session_format.id %>");
+  tableRow.replaceWith("<%= j render @session_format %>");
+<% end %>
+
+document.getElementById("flash").innerHTML = "<%=j show_flash %>";
+$("html, body").animate({ scrollTop: 0 }, "slow");

@@ -1,0 +1,86 @@
+.event
+  .row
+    .col-md-12
+      .page-header.clearfix
+        .pull-right
+          %h3
+            %strong Event Status:
+            = event.status.capitalize
+          - if current_user.organizer_for_event?(event)
+            .btn-nav
+              = link_to "Edit Info", event_staff_edit_path(event), class: "btn btn-primary"
+              - if event.checklist_complete?
+                = link_to "Change Status", '#', class: "btn btn-primary status-button"
+            .status-dropdown.pull-right
+              = form_for(event, url: event_staff_update_status_path(event)) do |f|
+                = f.select(:state, options_for_select(Event::STATUSES.values, f.object.state))
+                = link_to "Cancel", '#', {:class=>"cancel-status-change btn btn-danger"}
+                = f.submit "Update Status", class: "btn btn-success"
+        %h1 Event Info
+
+  .row
+    .col-md-6
+      .widget.widget-table
+        .widget-header
+          %i.fa.fa-info-circle
+          %h3 Event Information
+        .widget-content
+          %table.table.table-striped.table-bordered
+            %tbody
+              %tr
+                %td.text-primary
+                  %strong Name:
+                %td= event.name
+              %tr
+                %td.text-primary
+                  %strong Slug:
+                %td= event.slug
+              %tr
+                %td.text-primary
+                  %strong URL:
+                  %td= event.url
+              %tr
+                %td.text-primary
+                  %strong Contact Email:
+                  %td= event.contact_email
+
+    .col-md-6
+      .widget.widget-table
+        .widget-header
+          %i.fa.fa-calendar
+          %h3 CFP Dates
+        .widget-content
+          %table.table.table-striped.table-bordered
+            %tbody
+              %tr
+                %td.text-primary
+                  %strong Opens at:
+                %td
+                  - if event.opens_at
+                    = event.cfp_opens
+                  - else
+                    No Date Given
+              %tr
+                %td.text-primary
+                  %strong Closes at:
+                %td
+                  - if event.closes_at
+                    = event.cfp_closes
+                  - else
+                    No Date Given
+
+      .widget.widget-table
+        .widget-header
+          %i.fa.fa-calendar
+          %h3 Event Dates
+        .widget-content
+          %table.table.table-striped.table-bordered
+            %tbody
+              %tr
+                %td.text-primary
+                  %strong Start date:
+                %td= event.start_date.try(:to_s, :month_day_year)
+              %tr
+                %td.text-primary
+                  %strong End date:
+                %td= event.end_date.try(:to_s, :month_day_year)

@@ -1,0 +1,7 @@
+.modal-content
+  .modal-header
+    %h3 Edit Track
+    .errors
+  = simple_form_for [ event, :staff, @track ], remote: true do |f|
+    .modal-body
+      = render partial: 'form', locals: {f: f}

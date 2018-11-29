@@ -1,0 +1,33 @@
+.form-inline
+  = f.input :conference_day, collection: 1..event.days, label: 'Day'
+  = f.input :room_id, collection: current_event.rooms, include_blank: true
+.form-inline
+  = f.input :start_time, as: :string, input_html: { value: time_slot.start_time, class: 'start-time' }
+  = f.input :end_time, as: :string, input_html: { value: time_slot.end_time, class: 'end-time' }
+.length-label
+  %span.bold Length:
+  %span.length="#{time_slot.session_duration}"
+= f.input :program_session_id, collection: time_slot.unscheduled_program_sessions,
+  input_html: { class: 'available-proposals' }
+.selected-session-info
+  .session-meta-item
+    %strong Title:
+    %p.title= time_slot.session_title
+  .session-meta-item
+    %strong Track:
+    %p.track= time_slot.session_track_name
+  .session-meta-item
+    %strong Presenter:
+    %p.speaker= time_slot.session_presenter
+  .session-meta-item
+    %strong Abstract:
+    %p.abstract= time_slot.session_description
+  .session-meta-item
+    %strong Suggested duration:
+    %p.duration= time_slot.session_suggested_duration
+
+%fieldset.supplemental-fields{class: time_slot.supplemental_fields_visibility_css }
+  = f.input :title, as: :string
+  = f.association :track, as: :select, collection: current_event.tracks, include_blank: true
+  = f.input :presenter, as: :string
+  = f.input :description, as: :text

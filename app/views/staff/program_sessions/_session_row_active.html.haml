@@ -1,0 +1,13 @@
+%tr{ data: { 'emails' => speakers_emails(program_session) } }
+  %td= link_to(program_session.title,
+      event_staff_program_session_path(program_session.event, program_session))
+  %td= program_session.speakers.map { |speaker| link_to speaker.name, event_staff_program_speaker_path(program_session.event, speaker) }.join(", ").html_safe
+  %td= program_session.session_format_name
+  %td= program_session.track_name
+  %td= program_session.scheduled? ? program_session.scheduled_for : 'No'
+  %td= program_session.state_label
+  %td
+    - if current_user.organizer_for_event?(current_event)
+      = promote_button(program_session)
+  %td= program_session.confirmation_notes_link
+  %td.hidden= program_session.group_name

@@ -1,0 +1,17 @@
+= teammate.mention_name
+- if current_user.organizer_for_event?(current_event)
+  = link_to '#', class: "edit-mention-name", data: { toggle: 'modal', target: "#teammate-edit-mention-name-#{teammate.id}" } do
+    .fa.fa-pencil
+
+  %div{ id: "teammate-edit-mention-name-#{teammate.id}", class: 'modal fade' }
+    .modal-dialog
+      .modal-content
+        = form_for teammate, url: event_staff_teammate_path(teammate.event, teammate), html: { role: 'form' } do |f|
+          .modal-header
+            %h3 Edit #{teammate.name}'s mention name
+          .modal-body
+            = f.label :mention_name
+            = f.text_field :mention_name
+          .modal-footer
+            %button.btn.btn-default{'data-dismiss' => "modal"} Cancel
+            %button.pull-right.btn.btn-primary{:type => "submit"} Save

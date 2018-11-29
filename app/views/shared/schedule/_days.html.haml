@@ -8,30 +8,30 @@
           = room.name
 
   %tbody
-    - conference_day = ConferenceDay.new(day, @event)
-    - conference_day.time_slots.each do |time_slot|
+    - conference_day = ConferenceDay.new(day, current_event)
+    - conference_day.conf_slots.each do |conf_slot|
       %tr
         %td
           %p
-            = row_time(time_slot)
-        - if time_slot.conference_wide?
-          - session = time_slot.conference_wide_session.decorate
-          %td.proposal-slot.session-slot{ colspan: @rooms.count, data: session.cell_data_attr}
+            = row_time(conf_slot)
+        - if conf_slot.conference_wide?
+          - ts = Staff::TimeSlotDecorator.decorate(conf_slot.conference_wide_session)
+          %td.proposal-slot.time-slot{ colspan: @rooms.count, data: ts.cell_data_attr}
             %p
-              = session.conference_wide_title
+              = ts.conference_wide_title
         - else
-          - time_slot.sessions.each_with_index do |session, i|
-            - if conference_day.session_empty?(session, i, time_slot)
+          - conf_slot.sessions.each_with_index do |ts, i|
+            - if conference_day.session_empty?(ts, i, conf_slot)
               %td
-            - elsif session.present?
-              - session = session.decorate
-              - takes_two = session.takes_two_time_slots?
-              %td.session-slot{rowspan: (2 if takes_two), data: session.cell_data_attr}
+            - elsif ts.present?
+              - ts = Staff::TimeSlotDecorator.decorate(ts)
+              - takes_two = ts.takes_two_time_slots?
+              %td.time-slot{rowspan: (2 if takes_two), data: ts.cell_data_attr}
                 .session-content
                   %p.session-title
-                    = session.title
+                    = ts.title
                   %p.speaker-name
-                    = session.presenter
+                    = ts.presenter
 
 
 

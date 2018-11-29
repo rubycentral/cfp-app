@@ -1,0 +1,206 @@
+.dropdown-toggle.gravatar-container {
+  margin-bottom: -5px;
+}
+
+.navbar-nav {
+  &.session-counts {
+    .title {
+      color: #fff;
+    }
+
+    .track-select {
+      margin-left: 6px;
+    }
+
+    .counts-container {
+      font-size: $font-size-xs;
+      margin-left: 6px;
+
+      .badge {
+        font-size: $font-size-xs;
+        margin-top: -2px;
+        padding: 1px 8px;
+      }
+
+      .all-accepted > span:first-child,
+      .all-waitlisted > span:first-child {
+        display: inline-block;
+        width: 55px;
+      }
+
+      .by-track {
+        display: none;
+      }
+    }
+  }
+
+
+  li.static {
+    height: $navbar-height;
+    display: inline-flex;
+    align-items: center;
+    color: #ccc;
+    padding-left: 15px;
+
+    .track-select {
+      display: inline;
+    }
+  }
+
+  li.dropdown > a {
+    padding-bottom:    $navbar-padding-vertical;
+    padding-top:    $navbar-padding-vertical;
+  }
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  
+  > li {
+    > a {
+      padding: 5px 10px;
+      color: $gray-light;
+    }
+  }
+  
+}
+
+/*------------------------------------------------------------------
+[3. Subnavbar / .subnavbar]
+*/
+
+.subnavbar {
+  margin: 0 0;
+  padding-top: $navbar-height;
+  z-index: $zindex-subnavbar;
+  .subnavbar-inner {
+    background: #fff;
+    border-bottom: 1px solid $gray-light;
+    height: 60px;
+  }
+  .container-fluid {
+    > ul {
+      display: inline-block;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      > li {
+        border-left: 1px solid $gray-light;
+        float: left;
+        height: 60px;
+        list-style: none;
+        margin: 0;
+        min-width: 90px;
+        padding: 0;
+        text-align: center;
+        &:last-child {
+          border-right: 1px solid $gray-light;
+        }
+        > a {
+          color: $gray-light;
+          display: block;
+          font-size: 12px;
+          font-weight: bold;
+          height: 100%;
+          padding: 0 15px;
+          @include transition(color .15s ease-in-out);
+          &:hover {
+            color: $gray-dark;
+            text-decoration: none;
+          }
+          > i {
+            display: block;
+            font-size: 20px;
+            height: 24px;
+            margin: 10px auto 0px;
+            width: 24px;
+          }
+          > span {
+            display: block;
+          }
+        }
+        &.active {
+          border-bottom: 3px solid $brand-primary;
+          > a {
+            color: $gray-darker;
+          }
+        }
+      }
+    }
+  }
+  .dropdown {
+    .dropdown-menu {
+      text-align: left;
+      -webkit-border-top-left-radius: 0;
+      -webkit-border-top-right-radius: 0;
+      -moz-border-radius-topleft: 0;
+      -moz-border-radius-topright: 0;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      a {
+        font-size: 12px;
+      }
+      &::before {
+        content: '';
+        display: inline-block;
+        border-left: 7px solid transparent;
+        border-right: 7px solid transparent;
+        border-bottom: 7px solid #CCC;
+        border-bottom-color: rgba(0, 0, 0, 0.2);
+        position: absolute;
+        top: -7px;
+        left: 9px;
+      }
+      &::after {
+        content: '';
+        display: inline-block;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-bottom: 6px solid white;
+        position: absolute;
+        top: -6px;
+        left: 10px;
+      }
+    }
+  }
+  .caret {
+    border-top-color: white;
+    border-bottom-color: white;
+    margin-top: 4px;
+  }
+  .dropdown.open .caret {
+    display: none;
+  }
+}
+
+.navbar-fixed-top.program-subnav, .navbar-fixed-top.schedule-subnav {
+  border-radius: 0;
+  background-color: $dark-blue;
+  border-color: $dark-blue;
+  padding-top: $navbar-height;
+  z-index: $zindex-subnavbar;
+  li > a {
+    color: $white;
+  }
+
+  a:hover {
+    background-color: $dark-blue;
+    color: darken($white, 10%);
+  }
+
+  li.active {
+    border-bottom: 3px solid darken($dark-blue, 10%);
+    > a, a:hover, a:focus {
+      color: darken($white, 10%);
+      background-color: lighten($dark-blue, 10%);
+    }
+  }
+
+  li.download-link a {
+    padding-left: 0;
+    &:focus {
+      background-color: $dark-blue;
+    }
+  }
+}

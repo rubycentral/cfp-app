@@ -1,0 +1,8 @@
+#show-proposal-tags
+  - if !event.public_tags? && current_user.organizer_for_event?(event)
+    = link_to "Add", event_staff_proposal_tags_path(event),
+      remote: true, class: "btn btn-success btn-sm pull-right add-proposal-tags"
+  - else
+    %p= event.valid_proposal_tags
+    = link_to "Edit", event_staff_proposal_tags_path(event),
+      remote: true, class: "btn btn-primary btn-sm pull-right edit-proposal-tags" unless !current_user.organizer_for_event?(event)

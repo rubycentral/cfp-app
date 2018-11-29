@@ -1,0 +1,9 @@
+#edit-reviewer-tags
+  = simple_form_for @event, url: event_staff_update_reviewer_tags_path, method: :put,
+    remote: true, class: "form-horizontal"  do |f|
+    = f.input :valid_review_tags, label: false, autofocus: true,
+      placeholder: 'Separate multiple tags with commas',
+      hint: "This is a comma separated list of tags allowed for use during proposal reviews. These limits apply to tags used internally by reviewers and not to publicly displayed tags."
+    .pull-right
+      %button.btn.btn-default#cancel-reviewer-tags{type: "cancel"} Cancel
+      %button.btn.btn-primary{type: "submit"} Save

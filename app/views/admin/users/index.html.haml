@@ -1,0 +1,30 @@
+.row
+  .col-md-12
+    .page-header.clearfix
+      %h1 Users Admin
+
+.row
+  .col-sm-12
+    .widget.widget-table
+      .widget-header
+        %i.fa.fa-users
+        %h3 Users
+      .widget-content
+        %table.users.datatable.table.table-striped.table-bordered
+          %thead
+            %tr
+              %th
+              %th
+              %th
+              %th
+              %th
+              %th.actions
+            %tr
+              %th Name
+              %th Email
+              %th Role
+              %th OAuth Type
+              %th Created At
+              %th.actions Actions
+          %tbody
+            = render users

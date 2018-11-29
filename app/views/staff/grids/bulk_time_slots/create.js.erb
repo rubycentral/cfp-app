@@ -1,0 +1,22 @@
+(function($) {
+  var grid = window.Schedule.Grid;
+  var $dialog = $('#bulk-time-slot-create-dialog');
+  $dialog.find('.errors').html('');
+
+  <% if @bulk.errors.present? %>
+    $dialog.find('.errors').html('<%= @bulk.errors.full_messages.join(', ') %>');
+    $dialog.modal('show');
+
+  <% else %>
+    var $gridDay = $('#schedule_day_<%= @bulk.day %>');
+    var $bar = $gridDay.closest('.grid-wrapper').find('.bulk-preview-bar');
+    $bar.html('');
+    $gridDay.replaceWith('<%=j render partial: 'staff/grids/grid', locals: { schedule: @schedule, day: @bulk.day} %>');
+
+    grid.initGridDay(<%= @bulk.day %>);
+    $dialog.modal('hide');
+  <% end %>
+
+  document.getElementById("flash").html('<%=j show_flash %>');
+
+})(jQuery);

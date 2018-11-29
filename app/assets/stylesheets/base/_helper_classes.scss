@@ -1,0 +1,47 @@
+// spacing
+.margin-top {
+  margin-top: 1em;
+}
+
+.margin-bottom {
+  margin-bottom: 1em;
+}
+
+.flush-top {
+  margin-top: 0 !important;
+}
+
+.red-text {
+  color: red !important;
+}
+// alignment
+
+.inline-block {
+  display: inline-block;
+}
+
+.inline {
+  display: inline;
+}
+
+.no-pad-left {
+  padding-left: 0;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.bg-gray-base { background-color: $gray-base; }
+.bg-gray-darker { background-color: $gray-darker; }
+.bg-gray-dark { background-color: $gray-dark; }
+.bg-gray { background-color: $gray }
+.bg-gray-light { background-color: $gray-light; }
+.bg-gray-lighter { background-color: $gray-lighter; }
+.bg-brand-primary { background-color: $brand-primary; }
+.bg-brand-success { background-color: $brand-success; }
+.bg-brand-info { background-color: $brand-info; }
+.bg-brand-info-alt { background-color: $brand-info-alt; }
+.bg-brand-warning { background-color: $brand-warning; }
+.bg-brand-danger { background-color: $brand-danger; }
+.bg-brand-accent { background-color: $brand-accent; }

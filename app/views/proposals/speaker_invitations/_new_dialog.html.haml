@@ -1,0 +1,14 @@
+%div{ id: "new-speaker-invitation", class: 'modal fade' }
+  .modal-dialog
+    .modal-content
+      = simple_form_for(:speaker, url: invitations_path(proposal_uuid: proposal.uuid)) do |f|
+        .modal-header
+          %h3 Invite a new speaker
+        .modal-body
+          = f.error_notification
+          = f.input :email, class: "form-control", autofocus: true
+
+        .modal-footer
+          .btn-toolbar
+            %button.pull-right.btn.btn-success{type: "submit"} Invite
+            %button.btn.btn-default{'data-dismiss' => "modal"} Cancel

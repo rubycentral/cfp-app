@@ -1,0 +1,23 @@
+%ul.list-unstyled.other_proposals
+  - if other_proposals.present?
+    -other_proposals.each do |proposal|
+      %li
+        .row.other-proposal-header
+          .col-sm-7.other-proposal-title=link_to truncate(proposal.title, length: 25), event_staff_program_proposal_path(event, proposal)
+          &nbsp;
+          .col-sm-5.other-proposal-status.text-right= proposal.state_label(small: true)
+        .rating-and-format
+          .other-proposal-rating.pull-right
+            %b Rating:
+            = proposal.average_rating ? number_with_precision(proposal.average_rating, precision: 1) : "No Rating"
+          .other-proposal-format
+            %b Format:
+            = proposal.session_format_name
+        .other-proposal-track
+          %b Track:
+          = proposal.track_name
+        .other-proposal-review-tags
+          = proposal.review_tags_labels
+  -else
+    %li
+      None

@@ -1,0 +1,55 @@
+.event-info-bar
+  .row
+    .col-md-8
+      .event-info.event-info-dense
+        %strong.event-title= event.name
+        - if current_event.start_date? && current_event.end_date?
+          %span.event-meta
+            %i.fa.fa-fw.fa-calendar
+            = current_event.date_range
+    .col-md-4.text-right.text-right-responsive
+      .event-info.event-info-dense
+        %span{:class => "event-meta event-status-badge event-status-#{current_event.status}"}
+          CFP
+          = current_event.status
+        - if current_event.open?
+          %span.event-meta
+            CFP closes:
+            %strong= current_event.closes_at(:month_day_year)
+.row
+  .col-md-12
+    .page-header.clearfix
+      %h1
+        = current_event
+        Speakers
+
+.row
+  .col-md-12
+    %table#organizer-speakers.datatable.table.table-striped.speaker-list
+      %thead
+        %tr
+          %th
+          %th
+          %th
+          %th
+          %th
+        %tr
+          %th Name
+          %th Email
+          %th Session
+          %th Track
+          %th Format
+          - if current_user.organizer_for_event?(current_event)
+            %th Actions
+      %tbody
+        - @program_speakers.each do |speaker|
+          %tr{ id: "speaker-#{speaker.id}" }
+            %td= link_to speaker.name, event_staff_program_speaker_path(current_event, speaker)
+            %td= speaker.email
+            %td= link_to speaker.program_session.title, event_staff_program_session_path(current_event, speaker.program_session)
+            %td= speaker.program_session.track.try(:name)
+            %td= speaker.program_session.session_format.name
+            - if current_user.organizer_for_event?(current_event)
+              %td{ id: "speaker-action-buttons-#{speaker.id}" }
+                %span>
+                  = link_to "Edit", edit_event_staff_program_speaker_path(current_event, speaker), class: "btn btn-primary btn-xs"

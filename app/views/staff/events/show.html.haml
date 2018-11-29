@@ -1,0 +1,207 @@
+.event
+  .row
+    .col-md-12
+      .page-header.info-bar
+        %h4.pull-right
+          %strong CFP Status:
+          = event.status.capitalize
+          %br
+          - if event.closes_at?
+            Closes at
+            %strong= event.closes_at(:long_with_zone)
+        %h1
+          - if event.url?
+            = link_to event.name, "#{event.url}", target: 'blank', class: 'event-title'
+          - else
+            = event.name
+        %h4
+          - if event.start_date? && event.end_date?
+            = event.date_range
+
+  .row
+    - if event.draft?
+      .col-sm-8
+        .widget.widget-table.checklist
+          .widget-header
+            %i.fa.fa-check-square-o
+            %h3 Checklist
+          .widget-content
+            %table.table.table-striped.table-bordered
+              %tbody
+                %tr
+                  %td.text-primary
+                    %strong Event Url:
+                  - if event.url.present?
+                    %td.set= link_to "Set", event_staff_edit_path
+                  - else
+                    %td.missing= link_to "Missing", event_staff_edit_path
+                %tr
+                  %td.text-primary
+                    %strong Event Dates:
+                  - if event.start_date.present? && event.end_date.present?
+                    %td.set= link_to "Set", event_staff_edit_path
+                  - else
+                    %td.missing= link_to "Missing", event_staff_edit_path
+                %tr
+                  %td.text-primary
+                    %strong Contact Email:
+                  - if event.contact_email.present?
+                    %td.set= link_to "Set", event_staff_edit_path
+                  - else
+                    %td.missing= link_to "Missing", event_staff_edit_path
+                %tr
+                  %td.text-primary
+                    %strong CFP Closes Date:
+                  - if event.closes_at && (event.closes_at > Time.current)
+                    %td.set= link_to "Set", event_staff_edit_path
+                  -elsif event.closes_at && (event.closes_at <= Time.current)
+                    %td.missing= link_to "Date has Passed", event_staff_edit_path
+                  - else
+                    %td.missing= link_to "Missing", event_staff_edit_path
+                %tr
+                  %td.text-primary
+                    %strong Public Session Formats:
+                  - if event.public_session_formats.present?
+                    %td.set= link_to event.public_session_formats.length, event_staff_config_path
+                  - else
+                    %td.missing= link_to "No Public Session Formats", event_staff_config_path
+                %tr
+                  %td.text-primary
+                    %strong Tracks:
+                  - if event.tracks.present?
+                    %td.set= link_to event.tracks.count, event_staff_config_path
+                  - else
+                    %td.optional= link_to "None (optional)", event_staff_config_path
+                %tr
+                  %td.text-primary
+                    %strong Proposal Tags:
+                  - if event.proposal_tags.present?
+                    %td.set= link_to event.proposal_tags.count, event_staff_config_path
+                  - else
+                    %td.optional= link_to "None (optional)", event_staff_config_path
+                %tr
+                  %td.text-primary
+                    %strong Review Tags:
+                  - if event.review_tags.present?
+                    %td.set= link_to event.review_tags.count, event_staff_config_path
+                  - else
+                    %td.optional= link_to "None (optional)", event_staff_config_path
+                %tr
+                  %td.text-primary
+                    %strong Guidelines:
+                  - if event.guidelines.present?
+                    %td.set= link_to "Set", event_staff_guidelines_path
+                  - else
+                    %td.missing= link_to "Missing", event_staff_guidelines_path
+
+
+      .col-sm-4
+        .widget
+          .widget-header
+            %i.fa.fa-list-alt
+            %h3 CFP
+          .widget-content
+            %strong.text-primary No CFP Statistics
+            - if event.checklist_complete?
+              - if current_user.organizer_for_event?(current_event)
+                = link_to "Open CFP", event_staff_open_cfp_path(current_event), method: :patch,
+                  class: "btn btn-success btn-lg cfp-button",
+                  data: {confirm: "Are you sure you'd like to open the CFP?" }
+              - else
+                %button.btn.btn-lg.cfp-button.disabled Open CFP
+                %p.incomplete-msg You must be an organizer to open CFP
+            - else
+              %button.btn.btn-lg.cfp-button.disabled Open CFP
+              %p.incomplete-msg Complete Checklist Items to Open CFP
+
+    - else
+      .row
+        .col-sm-12
+          .col-sm-6
+            .widget.widget-table
+              .widget-header
+                %i.fa.fa-list-alt
+                %h3 Review Statistics
+              .widget-content
+                %table.table.table-striped.table-bordered#review-stats-table
+                  %thead
+                    %tr
+                      %th.col-xs-5
+                      %th Submitted Proposals
+                      %th Rated Proposals
+                      %th Needs Review Proposals
+                      %th Public Comments
+                      %th Internal Comments
+                  %tbody
+                    - event.stats.review.each do |k, v|
+                      %tr
+                        %td= k
+                        %td= v[:proposals]
+                        %td= v[:reviews]
+                        %td= v[:needs_review]
+                        %td= v[:public_comments]
+                        %td= v[:internal_comments]
+          .col-sm-6
+            .widget.widget-table
+              .widget-header
+                %i.fa.fa-list-alt
+                %h3 Program Statistics
+              .widget-content
+                %table.table.table-striped.table-bordered#program-stats-table
+                  %thead
+                    %tr
+                      %th.col-xs-5
+                      %th Accepted
+                      %th Soft Accepted
+                      %th Waitlisted
+                      %th Soft Waitlisted
+                  %tbody
+                    - event.stats.program.each do |k, v|
+                      %tr
+                        %td= k
+                        %td= v[:accepted]
+                        %td= v[:soft_accepted]
+                        %td= v[:waitlisted]
+                        %td= v[:soft_waitlisted]
+      .row
+        .col-sm-12
+          .col-sm-6
+            .widget.widget-table
+              .widget-header
+                %i.fa.calendar
+                %h3 Schedule Statistics
+              .widget-content
+                %table.table.table-striped.table-bordered#program-stats-table
+                  %thead
+                    %tr
+                      %th.col-xs-5
+                      %th Time Slots
+                      %th Scheduled Slots
+                      %th Empty Slots
+                  %tbody
+                    - event.stats.schedule.each do |k, v|
+                      %tr
+                        %td= k
+                        %td= v[:time_slots]
+                        %td= v[:scheduled_slots]
+                        %td= v[:empty_slots]
+          .col-sm-6
+            .widget.widget-table
+              .widget-header
+                %i.fa.fa-user
+                %h3 Team Activity
+              .widget-content
+                %table.table.table-striped.table-bordered#team-activity-table
+                  %thead
+                    %tr
+                      %th.col-xs-5
+                      %th Rated Proposals
+                      %th Public Comments
+                      %th Internal Comments
+                  %tbody
+                    - event.stats.team.each do |k, v|
+                      %tr
+                        %td= k
+                        %td= v[:reviews]
+                        %td= v[:public_comments]
+                        %td= v[:internal_comments]

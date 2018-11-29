@@ -1,0 +1,55 @@
+#time_slots
+  .row
+    .col-md-12
+      %header
+        .btn-nav.pull-right
+          = link_to event_staff_schedule_time_slots_path(format: :csv), class: "btn btn-info" do
+            %span.glyphicon.glyphicon-download-alt
+            Download as CSV
+
+        %h3.pull-left Time Slots
+        = link_to "Add Time Slot",
+            new_event_staff_schedule_time_slot_path,
+            remote: true,
+            class: "btn pull-left btn-primary btn-sm pull-left " + (has_missing_requirements?(event) ? 'disabled' : ''),
+            data: { toggle: 'modal', target: "#time-slot-new-dialog" },
+            id: 'add-time-slot'
+  .row
+    .col-md-12
+      #time-slot-prereqs.clearfix{ class: has_missing_requirements?(event) ? '' : 'hidden' }
+        %h5.text-danger{ id: 'missing-prereq-head' }
+          The following must be resolved before adding a new time slot:
+        %ul#missing-prereq-messages.list-group
+          = unmet_requirements(event)
+
+  %hr
+  .row.margin-top
+    .col-md-12
+      %table#organizer-time-slots.datatable.table.table-striped
+        %thead
+          %tr
+            %th
+            %th
+            %th
+            %th
+            %th
+            %th
+            %th
+            %th
+          %tr
+            %th Conference Day
+            %th Start Time
+            %th End Time
+            %th Title
+            %th Presenter
+            %th Room
+            %th Track
+            %th.actions Actions
+        %tbody
+          - time_slots.each do |slot|
+            %tr{ id: "time_slot_#{slot.id}" }
+              - slot.row_data.each do |cell|
+                %td= cell
+              %td.actions
+                = slot.action_links
+

@@ -13,7 +13,7 @@ describe EventsController, type: :controller do
     let(:event) { create(:event, proposals: [proposal]) }
 
     it 'should succeed' do
-      get :show, slug: event.slug
+      get :show, params: {event_slug: event.slug}
       expect(response.status).to eq(200)
     end
   end

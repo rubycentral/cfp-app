@@ -1,0 +1,10 @@
+Hello!
+
+
+<%= @comment.user.name %> mentioned you in an internal comment on the proposal '<%= @proposal.title %>':
+
+> <%= simple_format(@comment.body).gsub(@mention, "<strong>#{@mention}</strong>").html_safe %>
+
+<%= md_link_to 'View the proposal', event_staff_proposal_url(@proposal.event, @proposal) %>
+
+<%= render 'notification_preference_message' %>

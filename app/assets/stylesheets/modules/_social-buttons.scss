@@ -1,0 +1,74 @@
+/*!
+ * Social Buttons for Twitter Bootstrap v0.2dev
+ *
+ * Copyright 2013 Adam Neumann
+ * Licensed under the Apache License v2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
+ */
+
+.btn-twitter {
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #1c95d0;
+  *background-color: #0271bf;
+  background-image: -moz-linear-gradient(top, #2daddc, #0271bf);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#2daddc), to(#0271bf));
+  background-image: -webkit-linear-gradient(top, #2daddc, #0271bf);
+  background-image: -o-linear-gradient(top, #2daddc, #0271bf);
+  background-image: linear-gradient(to bottom, #2daddc, #0271bf);
+  background-repeat: repeat-x;
+  border-color: #0271bf #0271bf #014473;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff2daddc', endColorstr='#ff0271bf', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+.btn-twitter:hover,
+.btn-twitter:focus,
+.btn-twitter:active,
+.btn-twitter.active,
+.btn-twitter.disabled,
+.btn-twitter[disabled] {
+  color: #ffffff;
+  background-color: #0271bf;
+  *background-color: #0262a6;
+}
+
+.btn-twitter:active,
+.btn-twitter.active {
+  background-color: #01538d \9;
+}
+
+.btn-github {
+  background-color: #f2f2f2;
+  *background-color: #e6e6e6;
+  background-image: -moz-linear-gradient(top, #fafafa, #e6e6e6);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fafafa), to(#e6e6e6));
+  background-image: -webkit-linear-gradient(top, #fafafa, #e6e6e6);
+  background-image: -o-linear-gradient(top, #fafafa, #e6e6e6);
+  background-image: linear-gradient(to bottom, #fafafa, #e6e6e6);
+  background-repeat: repeat-x;
+  border-color: #e6e6e6 #e6e6e6 #c0c0c0;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  color: #000000;
+  margin-left: 10px;
+  text-shadow: 0 0.7px 0 rgba(0, 0, 0, 0.1);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffafafa', endColorstr='#ffe6e6e6', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+.btn-github:hover,
+.btn-github:focus,
+.btn-github:active,
+.btn-github.active,
+.btn-github.disabled,
+.btn-github[disabled] {
+  color: #000000;
+  background-color: #e6e6e6;
+  *background-color: #d9d9d9;
+}
+
+.btn-github:active,
+.btn-github.active {
+  background-color: #cdcdcd \9;
+}

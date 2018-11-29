@@ -1,0 +1,89 @@
+.event-info-bar
+  .row
+    .col-md-8
+      .event-info.event-info-dense
+        %strong.event-title= event.name
+        - if event.start_date? && event.end_date?
+          %span.event-meta
+            %i.fa.fa-fw.fa-calendar
+            = event.date_range
+    .col-md-4.text-right.text-right-responsive
+      .event-info.event-info-dense
+        %span{:class => "event-meta event-status-badge event-status-#{event.status}"}
+          CFP
+          = event.status
+        - if event.open?
+          %span.event-meta
+            CFP closes:
+            %strong= event.closes_at(:month_day_year)
+.row
+  &nbsp;
+.row
+  .col-sm-6.text-left
+    .event-info.event-info-dense
+      %span
+        Total Rated:
+        %span.badge.badge-info=event.proposals_rated_overall_message
+      %span
+        You've rated:
+        %span.badge.badge-info=event.proposals_you_rated_message
+  .col-sm-6.text-right
+    %small.text-right <em>Hint:</em> Hold <kbd>shift</kbd> to sort by multiple columns
+.row
+  .col-sm-offset-6.col-sm-6
+    %button.btn.btn-primary.btn-sm.pull-right#sort_reset Reset Sort Order
+
+.row
+  .col-md-12
+    %table#reviewer-proposals.datatable.table.table-striped
+      %thead
+        %tr
+          %th
+          %th
+          %th
+          %th
+          %th
+          %th
+          %th
+          %th
+          %th
+          %th
+          %th
+        %tr
+          %th Score
+          %th Your<br/>Score
+          %th Ratings
+          %th Title
+          %th Session Format
+          %th Track
+          %th Proposal<br/>Tags
+          %th Reviewer<br/>Tags
+          %th Comments
+          %th Submitted On
+          %th Updated At
+      %tbody
+        - proposals.each do |proposal|
+          %tr{ class: "proposal-#{proposal.id}", data: { 'proposal-id' => proposal.id, 'proposal-uuid' => proposal.uuid } }
+            %td.average-rating
+              = proposal.average_rating if proposal.score_for(current_user).present?
+            %td.my-rating
+              = proposal.score_for(current_user)
+            %td.ratings-count
+              = proposal.ratings.size
+            %td.title
+              = proposal.title_link_for_review
+              = state_label(small: true) if proposal.withdrawn?
+            %td.session-format
+              = proposal.session_format_name
+            %td.track
+              = proposal.track_name
+            %td.tags
+              = proposal.tags_labels
+            %td.review-tags
+              = proposal.review_tags_labels
+            %td.comment-count
+              = proposal.comment_count
+            %td.created-at
+              = proposal.created_at
+            %td.updated-at
+              = proposal.updated_by_speaker_at

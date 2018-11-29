@@ -1,13 +1,12 @@
-- withdraw = true if withdraw.nil?
-
 .speaker.clearfix
-  = speaker.gravatar
-  - if withdraw && speaker.proposal.speakers.count > 1
-    = link_to 'Withdraw',
-      speaker_path(speaker.id),
-      method: :delete,
-      class: 'btn btn-danger btn-sm pull-right remove-speaker',
-      data: { confirm: 'This will remove the speaker from this proposal. Are you sure you want to do this?' }
+  %strong= speaker.name
 
-  %strong= speaker.name_and_email
+  - if withdraw && speaker.proposal.speakers.count > 1 && !speaker.proposal.finalized?
+    %p= link_to "Withdraw",
+        speaker_path(speaker.id),
+        method: :delete,
+        class: "btn btn-danger btn-sm pull-right remove-speaker",
+        data: { confirm: "This will remove #{speaker.name} from this proposal. Are you sure you want to do this?" }
+
   = simple_format speaker.bio
+%hr

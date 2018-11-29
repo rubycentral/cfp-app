@@ -1,0 +1,6 @@
+$('#show-reviewer-tags').replaceWith('<%= j render("reviewer_tags_form") %>');
+
+$('#cancel-reviewer-tags').on('click', function(event) {
+  event.preventDefault();
+  $('#edit-reviewer-tags').replaceWith('<%= j render("reviewer_tags") %>');
+})

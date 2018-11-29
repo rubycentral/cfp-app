@@ -1,0 +1,170 @@
+/*------------------------------------------------------------------
+[6. Widget / .widget]
+*/
+
+.widget {
+  clear: both;
+  margin: 2em 0;
+  //overflow: hidden;
+  position: relative;
+  .widget {
+    margin-top: .5em;
+  }
+
+  &.confirmation {
+    border: 2px solid $brand_danger;
+  }
+
+  .widget-header {
+    background: $beige;
+    border: 1px solid #d6d6d6;
+    height: 40px;
+    line-height: 40px;
+    @include gradient-vertical($beige, #f2efea, 0%, 100%);
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+
+    h3 {
+      color: #525252;
+      display: inline-block;
+      font-size: 14px;
+      font-weight: 800;
+      left: 10px;
+      line-height: 18px;
+      margin: 20px 3em 10px 0;
+      position: relative;
+      top: -8px;
+      text-shadow: 1px 1px 2px rgba(255,255,255,.5);
+    }
+
+    h2 {
+      color: #525252;
+      display: inline-block;
+      font-size: 20px;
+      font-weight: 800;
+      margin: 0 3em 10px 0;
+      position: relative;
+      top: -8px;
+      text-shadow: 1px 1px 2px rgba(255,255,255,.5);
+    }
+
+    .btn {
+      margin: 5px 5px 0 0;
+    }
+
+    > [class^="fa-"], > [class*=" fa-"],
+    > [class^="glyphicon-"], > [class*=" glyphicon-"] {
+      color: #555;
+      display: inline-block;
+      font-size: 16px;
+      margin: -8px -2px 0 10px;
+      vertical-align: text-top;
+    }
+  }
+
+  &.widget-nopad .widget-content {
+    padding: 0;
+  }
+
+  .widget-content {
+    background: #FFF;
+    border: 1px solid #D5D5D5;
+    padding: 20px 15px 15px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    /* Widget Content Clearfix */
+    &:before,
+    &:after {
+      content:"";
+      display:table;
+    }
+
+    &:after {
+      clear:both;
+    }
+  }
+
+  .widget-header +.widget-content {
+    border-top: none;
+    -webkit-border-top-left-radius: 0;
+    -webkit-border-top-right-radius: 0;
+    -moz-border-radius-topleft: 0;
+    -moz-border-radius-topright: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  /* Widget Table */
+  &.widget-table .widget-content {
+    padding: 0;
+  }
+
+  &.widget-table .table {
+    border: none;
+    margin-bottom: 0;
+  }
+
+  &.widget-table .table tr td:first-child {
+    border-left: none;
+  }
+
+  &.widget-table .table tr th:first-child {
+    border-left: none;
+  }
+
+  /* Widget Plain */
+  .widget-plain {
+    background: transparent;
+    border: none;
+    .widget-content {
+      background: transparent;
+      border: none;
+      padding: 0;
+    }
+  }
+}
+
+/* Widget Box */
+.widget-box {
+  .widget-content {
+    background: #FFF;
+  }
+}
+
+.widget-card {
+  background: $beige;
+  padding: 15px;
+
+  .widget-header,
+  .widget-content {
+    background: $beige;
+    border: none;
+    border-radius: 0;
+    padding: 15px 0;
+  }
+
+  .widget-header {
+    border-bottom: 1px solid #ccc;
+    height: auto;
+    line-height: 1;
+
+    > [class^="fa-"], > [class*=" fa-"],
+    > [class^="glyphicon-"], > [class*=" glyphicon-"] {
+      margin: 0;
+    }
+
+    h3 {
+      margin: 0;
+      top: auto;
+      left: auto;
+      line-height: 1;
+    }
+  }
+
+  &.widget-card-alt,
+  &.widget-card-alt .widget-header,
+  &.widget-card-alt .widget-content {
+    background: lighten($brand-info, 45%);
+  }
+}

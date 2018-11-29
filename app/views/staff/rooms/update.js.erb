@@ -1,0 +1,25 @@
+$("#room-edit-<%= room.id %> .errors").html("");
+
+<% if @room.errors.present? %>
+  $("#room-edit-<%= room.id %> .errors").append("<%= @room.errors.full_messages.join(', ') %>");
+<% else %>
+  $("#room-edit-<%= room.id %>").modal("hide");
+
+  var cells = $("table#organizer-rooms #room_<%= room.id %> td");
+  var roomName = "<%= room.name %>";
+
+  var data = [
+    roomName,
+    "<%=j room.room_number %>",
+    "<%=j room.address %>",
+    "<%=j room.level %>",
+    "<%= room.capacity %>",
+    "<%= room.grid_position %>"
+  ];
+  var length = data.length;
+  for (var i = 0; i < length; ++i) {
+    cells[i].innerText = data[i];
+  }
+<% end %>
+
+document.getElementById("flash").innerHTML = "<%=j show_flash %>";

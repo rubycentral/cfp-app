@@ -1,0 +1,35 @@
+#rooms-partial
+  .row
+    .col-md-12
+      %header
+        %h3.pull-left Rooms
+        = link_to "Add Room", "#", class: "btn btn-primary btn-sm pull-left",
+          data: { toggle: "modal", target: "#room-new-dialog" }
+        .clearfix
+  .row
+    .col-md-12
+      %table.table.table-striped#organizer-rooms
+        %thead
+          %tr
+            %th Name
+            %th Room #
+            %th Address
+            %th Level
+            %th Capacity
+            %th Grid Position
+            %th.actions Actions
+        %tbody
+          = render event.rooms
+      #room-new-dialog.modal.fade
+        .modal-dialog
+          .modal-content
+            = simple_form_for [ event, :staff, :schedule, Room.new ], remote: true do |f|
+              .modal-header
+                %h3 New Room
+                .errors
+              .modal-body
+                = render partial: "staff/rooms/form", locals: { f: f }
+              .modal-footer
+                .btn-toolbar
+                  %button.pull-right.btn.btn-primary{:type => "submit"} Save
+                  %button.btn.btn-default{"data-dismiss" => "modal"} Cancel

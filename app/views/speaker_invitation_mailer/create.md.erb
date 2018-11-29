@@ -1,0 +1,7 @@
+Hello!
+
+<%= @speaker.name %> has invited you to be a speaker for the proposal
+"<%= @proposal.title %>" at <%= @proposal.event %>.
+
+You can view the proposal and accept or decline this invitation by visiting
+ <%= md_link_to "the proposal page", invitation_url(@invitation.slug) %>.

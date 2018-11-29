@@ -3,6 +3,8 @@ ENV["RAILS_ENV"] ||= 'test'
 require 'spec_helper'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
+require 'capybara/rspec'
+require 'pundit/rspec'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -43,7 +45,6 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_base_class_for_anonymous_controllers = false
 
-  config.include FeatureHelper, type: :feature
   config.include FactoryGirl::Syntax::Methods
 
   # DB cleaning
@@ -52,6 +53,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do |example|
+    init_mock_omniauth
     DatabaseCleaner.strategy= example.metadata[:js] ? :truncation : :transaction
     DatabaseCleaner.start
   end

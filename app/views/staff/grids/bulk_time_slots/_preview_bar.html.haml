@@ -1,0 +1,15 @@
+.alert.alert-info.bar
+  .col-xs-6
+    Previewing grid changes
+  .col.xs-6.text-right
+    = cancel_bulk_preview_button(bulk.day)
+
+    = simple_form_for bulk, url: edit_event_staff_schedule_grid_bulk_time_slot_path(current_event),
+        remote: true, html: {role: 'form'} do |f|
+      = render partial: 'preview_form', locals: {f: f, bulk: bulk}
+      = f.button :submit, 'Edit', class: 'btn btn-info btn-sm'
+
+    = simple_form_for bulk, url: event_staff_schedule_grid_bulk_time_slot_path(current_event),
+        remote: true, html: {role: 'form'} do |f|
+      = render partial: 'preview_form', locals: {f: f, bulk: bulk}
+      = f.button :submit, 'Save', class: 'btn btn-primary btn-sm'

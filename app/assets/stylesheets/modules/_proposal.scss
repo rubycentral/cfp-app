@@ -1,0 +1,269 @@
+.proposal,
+.proposal-section {
+  margin-bottom: 1em;
+}
+
+.speaker {
+  > h1, > h2, > h3, > h4 {
+    margin-top: 0;
+  }
+  + .form-submit {
+    border-top: none;
+  }
+}
+
+.speaker img, .speaker-image {
+  margin: 0 0.5em 0.8em 0;
+}
+
+.proposal-actions-bar {
+  padding: 3px 0 3px 0;
+}
+
+#proposal {
+  p.count {
+    font-style: italic;
+    font-weight: bold;
+    margin-bottom: 1.5em;
+  }
+
+  ul.invitation {
+    padding: 0;
+    .label {
+      margin-right: 10px;
+    }
+  }
+}
+
+.other_proposals li {
+  margin-bottom: 20px;
+  &:last-child {
+    margin-bottom: 0px;
+  }
+}
+
+.other-proposal-header {
+  display: flex;
+  .other-proposal-title {
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.other-proposal-rating,
+.other-proposal-format,
+.other-proposal-track {
+  font-size: $font-size-small;
+}
+
+.other_proposal_tags {
+  padding-left: 10px;
+  margin-bottom: 7px;
+}
+
+#copy-emails {
+  margin: 10px;
+}
+
+#emails-for-copy {
+  display: none;
+}
+
+.proposal-list {
+  .actions { width: 180px; }
+  .date_range_filter, .text_filter { width: 100px !important; }
+}
+
+ul {
+  list-style-type: none;
+  li.proposal .label {
+    margin-right: 1em;
+  }
+  li.proposal {
+    border-bottom: 1px solid $gray-lighter;
+    &:last-of-type {
+      border-bottom: none;
+    }
+  }
+}
+
+.status.label {
+  font-size: 1.3em;
+}
+
+.twitter-share-button {
+  margin-left: .5em;
+  margin-top: 2.3em;
+}
+
+.btn.save-comment {
+  width: 105px;
+  float: right;
+}
+
+span.disabled-state {
+  padding: 3px 20px;
+  color: grey;
+}
+
+.callout {
+  border-left: solid darken(#dff0d8, 10%) 5px;
+  background-color: lighten(#dff0d8, 5%);
+  padding: $padding-base-horizontal;
+
+  .callout-title {
+    @extend .control-label;
+    margin-bottom: $padding-large-vertical * 2;
+  }
+}
+
+span.glyphicon-question-sign {
+  font-size: 1.3em;
+  display: inline-block;
+}
+
+div.col-md-4 {
+  h3 {
+    display: inline-block;
+  }
+  h3.comments-heading {
+    padding-left: 5px;
+  }
+}
+
+.invite-btns {
+  margin-top: 10px;
+}
+
+.speaker-invite-form {
+  display: none;
+  form {
+    margin-top: 0px;
+  }
+}
+
+#edit-tags-icon,
+#edit-track-icon,
+#edit-format-icon,
+#cancel-format-editing,
+#cancel-track-editing {
+  color: $bright-blue;
+  font-size: $font-size-large;
+  margin-left: 5px;
+  padding: 0;
+}
+
+.proposal-track-select, .proposal-format-select {
+  height: auto;
+}
+
+#edit-format-wrapper, #edit-track-wrapper {
+  margin-bottom: 0;
+  display: none;
+
+  form, .select {
+    display: inline-block;
+    margin-bottom: 0;
+  }
+
+  .popover-trigger i {
+    font-size: 12px;
+    line-height: 12px;
+    float: right;
+  }
+}
+
+#review-tags-form-wrapper {
+  display: none;
+  padding: 0;
+  text-align: left;
+  #autocomplete-options {
+    display: none;
+  }
+  .selectize-input.items .item {
+    background: $state-success-bg;
+    border: 1px solid darken($state-success-bg, 30%);
+    color: $state-success-text;
+    text-shadow: none;
+    .remove {
+      border-left: 1px solid darken($state-success-bg, 30%);
+    }
+  }
+  .selectize-dropdown-content > .option.active {
+    background: $state-success-bg;
+  }
+}
+
+// Refactored proposals list items
+.proposal-info-bar {
+  padding-bottom: $padding-large-vertical;
+
+  i.fa {
+    position:relative;
+    margin-top: -0.1em;
+  }
+
+  .proposal-title {
+    margin-top: 0;
+    margin-bottom: $padding-base-vertical;
+    font-weight: bold;
+  }
+
+  .proposal-meta {
+    font-size: $font-size-base;
+    color: $black;
+
+    .proposal-meta-item {
+      display: inline-block;
+      margin-right: $padding-base-horizontal;
+
+      strong {
+        font-size: $font-size-xs;
+        color: $gray;
+      }
+
+      .label {
+        margin-bottom: 0;
+      }
+
+      .info-item-heading {
+        color: $gray;
+        font-size: $font-size-xs;
+        font-weight: normal;
+      }
+
+      .proposal-reviewer-tags {
+        float: left;
+        max-width: 80%;
+      }
+    }
+
+    .proposal-description {
+      line-height: 1;
+      margin-bottom: $padding-base-vertical * 2;
+    }
+  }
+
+  .proposal-status {
+    padding-bottom: $padding-large-vertical;
+
+    .label {
+      margin-right: 0;
+    }
+  }
+
+  .invitation-status {
+    padding-bottom: $padding-large-vertical;
+
+    .label {
+      margin-right: 0;
+    }
+  }
+
+  .page-header & {
+    padding-top: $padding-large-vertical;
+    padding-bottom: 0;
+  }
+}

@@ -1,22 +1,10 @@
-.speaker.clearfix
+%fieldset
+  %legend.fieldset-legend Speaker Information
   = f.simple_fields_for :speakers, f.object.speakers do |speaker_fields|
     - speaker = speaker_fields.object.decorate
-    = link_to (edit_profile_path) do
-      = speaker.gravatar
-      %h4
-        = speaker.name_and_email
-        %br
-        .help-block.small Edit my profile
 
-    .clearfix
-    %p
-      This information will be
-      %strong hidden
-      from the review committee.
+    %p This information is <strong>not visible</strong> during the review process. Name and bio will be used publicly in the program if this proposal is selected.
 
-    = speaker_fields.hidden_field :person_id, value: speaker.person_id
+    = speaker_fields.input :name, disabled: true, tooltip: ["right", "Edit your profile to update"]
 
-    = speaker_fields.input :bio, maxlength: :lookup,
-      placeholder: 'Bio for the event program.',
-      input_html: { value: speaker.bio, rows: 4 },
-      hint: 'Bio is limited to 500 characters.'
+    = speaker_fields.input :bio, disabled: speaker.user!=current_user, maxlength: :lookup, input_html: { value: speaker.bio, rows: 4 }, hint: "Your bio should be short, no longer than 500 characters. It's related to why you're speaking about this topic."#, popover_icon: { content: bio_tooltip }

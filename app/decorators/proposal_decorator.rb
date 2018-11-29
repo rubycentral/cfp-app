@@ -4,14 +4,26 @@ class ProposalDecorator < ApplicationDecorator
   delegate_all
   decorates_association :speakers
 
-  def public_state(small: false)
-    public_state = if state.include?('soft')
+  def speaker_state(small: false)
+    speaker_state = if object.awaiting_confirmation?
+      'Waiting for speaker confirmation'
+    elsif state.include?('soft')
       SUBMITTED
     else
       state
     end
 
-    state_label(small: small, state: public_state)
+    state_label(small: small, state: speaker_state)
+  end
+
+  def reviewer_state(small: false)
+    reviewer_state = if state.include?('soft')
+      SUBMITTED
+    else
+      state
+    end
+
+    state_label(small: small, state: reviewer_state, show_confirmed: false)
   end
 
   def state
@@ -27,21 +39,37 @@ class ProposalDecorator < ApplicationDecorator
     h.number_with_precision(object.average_rating, precision: 1) || ''
   end
 
-  def score_for(person)
-    person.rating_for(object).score
+  def score_for(user)
+    user.rating_for(object).score
   end
 
-  def review_tags
+  def session_format_name
+    object.session_format.try(:name)
+  end
+
+  def track_name
+    object.track.try(:name) || Track::NO_TRACK
+  end
+
+  def no_track_name_for_speakers
+    "#{Track::NO_TRACK} - No Suggested Track"
+  end
+
+  def track_name_for_speakers
+    object.track.try(:name) || no_track_name_for_speakers
+  end
+
+  def review_tags_labels
     object.review_tags.map { |tag|
-      h.content_tag :span, tag, class: 'label label-success' }.join("\n").html_safe
+      h.content_tag :span, tag, class: 'label label-success label-compact' }.join("\n").html_safe
   end
 
-  def tags
+  def tags_labels
     object.tags.map { |tag|
-      h.content_tag :span, tag, class: 'label label-primary' }.join("\n").html_safe
+      h.content_tag :span, tag, class: 'label label-primary label-compact' }.join("\n").html_safe
   end
 
-  def review_taggings
+  def review_tags_list
     object.review_tags.join(', ')
   end
 
@@ -61,21 +89,21 @@ class ProposalDecorator < ApplicationDecorator
     speaker ? speaker.bio : ''
   end
 
-  def pitch
+  def pitch_markdown
     h.markdown(object.pitch)
   end
 
-  def details
+  def details_markdown
     h.markdown(object.details)
   end
 
-  def abstract
+  def abstract_markdown
     h.markdown(object.abstract)
   end
 
   def withdraw_button
-    h.link_to bang('Withdraw Proposal'),
-      h.withdraw_proposal_path,
+    h.link_to h.bang('Withdraw Proposal'),
+      h.withdraw_event_proposal_path(uuid: object, event_slug: object.event.slug),
       method: :post,
       data: {
         confirm: 'This will remove your talk from consideration and send an ' +
@@ -85,16 +113,33 @@ class ProposalDecorator < ApplicationDecorator
       id: 'withdraw'
   end
 
+  def confirm_button
+    h.link_to 'Confirm',
+              h.confirm_event_proposal_path(uuid: object, event_slug: object.event.slug),
+              method: :post,
+              class: 'btn btn-success'
+  end
+
+  def decline_button
+    h.link_to h.bang('Decline'),
+              h.decline_event_proposal_path(uuid: object, event_slug: object.event.slug),
+              method: :post,
+              data: {
+                  confirm: 'This will remove your talk from consideration and notify the event staff. Are you sure you want to do this?'
+              },
+              class: 'btn btn-warning'
+  end
+
   def confirm_link
     h.link_to 'confirmation page',
-      h.confirm_proposal_url(slug: object.event.slug, uuid: object)
+      h.event_proposal_url(object.event, object)
   end
 
   def state_label(small: false, state: nil, show_confirmed: false)
     state ||= self.state
 
     classes = "label #{state_class(state)}"
-    classes += ' status' unless small
+    classes += ' label-mini' if small
 
     state += ' & confirmed' if proposal.confirmed? && show_confirmed
 
@@ -102,27 +147,78 @@ class ProposalDecorator < ApplicationDecorator
   end
 
   def updated_in_words
-    "updated #{h.time_ago_in_words(object.updated_by_speaker_at)} ago"
+    "#{h.time_ago_in_words(object.updated_by_speaker_at)} ago"
   end
 
   def created_in_words
-    "created #{h.time_ago_in_words(object.created_at)} ago"
+    "#{h.time_ago_in_words(object.created_at)} ago"
   end
 
   def title_input(form)
-    form.input :title, placeholder: 'Title of the talk',
+    form.input :title,
+    autofocus: true,
     maxlength: :lookup, input_html: { class: 'watched js-maxlength-alert' },
-    hint: "Please limit your title to 60 characters or less."
+    hint: "Publicly viewable title. Ideally catchy, interesting, essence of the talk. Limited to 60 characters."
   end
 
   def speaker_input(form)
-    form.input :speaker, placeholder: 'Speaker Name'
+    form.input :speaker
   end
 
-  def abstract_input(form)
-    form.input :abstract, placeholder: 'What is your talk about?',
-      maxlength: 1000, input_html: { class: 'watched js-maxlength-alert', rows: 5 },
-      hint: 'Provide a concise description for the program limited to 600 characters or less.'
+  def abstract_input(form, tooltip = "Proposal Abstract")
+    form.input :abstract,
+      maxlength: 605, input_html: { class: 'watched js-maxlength-alert', rows: 5 },
+      hint: 'A concise, engaging description for the public program. Limited to 600 characters.'#, popover_icon: { content: tooltip }
+  end
+
+  def standalone_track_select(tooltip)
+    h.simple_form_for :proposal, remote: true do |f|
+      f.input :track,
+        required: false,
+        label_html: { class: 'info-item-heading' },
+        collection: track_options,
+        include_blank: Track::NO_TRACK,
+        selected: object.track_id,
+        id: 'track',
+        input_html: {
+          class: 'proposal-track-select form-control select',
+          data: {
+            target_path: h.event_staff_program_proposal_update_track_path(object.event, object)
+          },
+        },
+        popover_icon: { content: tooltip }
+    end
+  end
+
+  def standalone_format_select(tooltip)
+    h.simple_form_for :proposal, remote: true do |f|
+      f.input :format,
+        required: false,
+        label_html: { class: 'info-item-heading' },
+        collection: format_options,
+        include_blank: Track::NO_TRACK,
+        selected: object.session_format_id,
+        id: 'track',
+        input_html: {
+          class: 'proposal-format-select form-control select',
+          data: {
+            target_path: h.event_staff_program_proposal_update_session_format_path(object.event, object)
+          },
+        },
+        popover_icon: { content: tooltip }
+    end
+  end
+
+  def track_options
+    @track_options ||= object.event.tracks.map { |t| [t.name, t.id] }.sort
+  end
+
+  def format_options
+    @format_options ||= object.event.session_formats.map { |sf| [sf.name, sf.id] }.sort
+  end
+
+  def invitations_enabled?(user)
+    object.has_speaker?(user) && !object.finalized?
   end
 
   private
@@ -134,7 +230,7 @@ class ProposalDecorator < ApplicationDecorator
   def state_class(state)
     case state
     when NOT_ACCEPTED
-      if h.reviewer?
+      if h.current_user.reviewer_for_event?(object.event)
         'label-danger'
       else
         'label-info'

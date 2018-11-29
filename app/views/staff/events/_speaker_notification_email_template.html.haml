@@ -1,0 +1,26 @@
+%section.template-section
+  %h3.template-title= f.label "#{type_text} template"
+  .form-group.template-actions
+    - if policy(@event).update?
+      = link_to 'Test', '#', class: 'btn btn-sm btn-primary template-test-btn', data: { toggle: 'modal', target: "#test-template-#{type_key}-dialog"}
+    %button.btn.btn-sm.btn-primary.template-preview-btn Preview
+    %button.btn.btn-sm.btn-gray.template-exit-preview-btn Exit Preview
+    - if policy(@event).update?
+      %button.btn.btn-sm.btn-primary.template-edit-btn Edit
+      %button.btn.btn-sm.btn-success.template-save-btn{type: "submit"} Save
+      = link_to "Remove", event_staff_remove_speaker_email_template_path(@event, type_key), class: "btn btn-sm btn-danger template-remove-btn",
+        method: :patch, data: {confirm: 'This template will be erased and the default template will be used instead. Proceed?'}
+      = link_to "Cancel", event_staff_speaker_email_notifications_path, class: "btn btn-sm btn-gray template-cancel-btn"
+  .template-short
+    - if text.empty?
+      %p.notice= "Using default template."
+    - else
+      %div.contents= markdown(text.truncate(300))
+  .template-preview
+    - if text.empty?
+      %p.notice= "Using default template."
+    - else
+      %div.contents= markdown(text)
+  .template-edit.form-group
+    = f.text_area type_key, class: 'form-control', rows: 20, placeholder: "Please enter some text", value: text, autofocus: true
+

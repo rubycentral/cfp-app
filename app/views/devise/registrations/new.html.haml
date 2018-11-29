@@ -1,0 +1,21 @@
+.row
+  .col-sm-12.text-center
+    %h2 Sign up
+
+.row
+  = simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+
+    .form-inputs
+      .col-sm-5.col-centered
+        .well.clearfix
+          = f.error_notification
+
+          = f.input :email, required: true, autofocus: true, wrapper_html: {class: "col-sm-12"}
+          = f.input :password, required: true, wrapper_html: {class: "col-sm-12"}, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length)
+          = f.input :password_confirmation, required: true, wrapper_html: {class: "col-sm-12"}
+          = f.hidden_field :pending_invite_email, value: session[:pending_invite_email]
+
+          .form-group.col-sm-12
+            = f.button :submit, "Sign up", class: "btn btn-success"
+
+          .form-group= render "devise/shared/links"

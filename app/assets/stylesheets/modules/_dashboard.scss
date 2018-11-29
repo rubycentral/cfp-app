@@ -1,0 +1,30 @@
+#dashboard {
+  form { display: inline; }
+
+  dd { margin-bottom: 1em; }
+
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    margin-bottom: 1em;
+    list-style-type: none;
+  }
+
+  span.label {
+    margin-right: 1em;
+    display: inline-block;
+  }
+}
+
+#admin-dashboard {
+
+  .teammates { margin-left: 40px; }
+
+  .dataTables_filter { display: none; }
+}
+
+// add teammate modal needs this for autocomplete on email input
+.ui-front { z-index: 1060 !important; }

@@ -1,0 +1,45 @@
+.row
+  .col-md-12
+    .page-header
+      %h1
+        Edit #{event}
+
+.row
+  .col-md-12
+    %span.required_notification * Required
+    = simple_form_for event, url: event_staff_update_path(event), html: {role: 'form'} do |f|
+      .row
+        .col-md-6
+          %fieldset
+            %h2 Event Information
+            = f.input :name, placeholder: 'Name of the event', autofocus: true
+            = f.input :slug, placeholder: 'Slug for the event URL, may be left blank once event name is filled out',
+              hint: "The slug will be used in public facing URLs. If you leave this field blank, a slug will be generated based on the name."
+            = f.input :url, label: "URL", placeholder: 'Event\'s URL'
+            = f.input :contact_email, class: 'form-control', placeholder: 'Event email'
+
+        .col-md-3
+          %fieldset
+            %h2 CFP Dates
+            = f.label :opens_at
+            = f.text_field :opens_at, class: 'form-control',
+              value: (f.object.opens_at.blank? ? "" : f.object.opens_at.to_s(:long_with_zone) )
+            %p.help-block Optional. You can manually open the CFP when ready.
+            = f.label :closes_at
+            = f.text_field :closes_at, class: 'form-control',
+              value: (f.object.closes_at.blank? ? "" : f.object.closes_at.to_s(:long_with_zone) )
+            %p.help-block When the CFP will stop taking submissions. Must be set before opening the CFP.
+
+            %h2 Event Dates
+            = f.label :start_date
+            = f.text_field :start_date, class: 'form-control',
+              value: (f.object.start_date.blank? ? "" : f.object.start_date.to_s(:month_day_year) )
+            %p.help-block First day of your event
+            = f.label :end_date
+            = f.text_field :end_date, class: 'form-control',
+              value: (f.object.end_date.blank? ? "" : f.object.end_date.to_s(:month_day_year) )
+            %p.help-block Last day of your event
+
+      .row.col-md-12.form-submit
+        = submit_tag("Save", class: "pull-right btn btn-success", type: "submit")
+        = link_to "Cancel", event_staff_info_path(event), {:class=>"cancel-form pull-right btn btn-danger"}

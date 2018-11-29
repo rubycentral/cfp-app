@@ -1,0 +1,6 @@
+$('#show-proposal-tags').replaceWith('<%= j render("proposal_tags_form") %>');
+
+$('#cancel-proposal-tags').on('click', function(event) {
+  event.preventDefault();
+  $('#edit-proposal-tags').replaceWith('<%= j render("proposal_tags") %>');
+})

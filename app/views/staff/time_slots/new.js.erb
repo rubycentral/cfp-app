@@ -1,0 +1,8 @@
+var newDialog = $('#time-slot-new-dialog');
+
+newDialog[0].innerHTML =
+  '<%=j render partial: 'new_dialog', locals: { time_slot: time_slot_decorated, event: event } %>';
+
+window.Schedule.TimeSlots.initDialog(newDialog);
+
+setTimeout(function() { $('#form-flash').fadeOut(1500); }, 1000);

@@ -7,15 +7,18 @@ describe Event do
         create_list(:event, 3, closes_at: 3.weeks.from_now, state: 'open')
 
       create(:event, closes_at: DateTime.yesterday)
+      create(:event)
       expect(Event.live).to match_array(live_events)
     end
+  end
 
-    it "returns events in ascending cronological order" do
+  describe "closes_up" do
+    it "returns events in ascending cronological order by close date" do
       event1 = create(:event, closes_at: 1.week.from_now, state: 'open')
       event3 = create(:event, closes_at: 3.weeks.from_now, state: 'open')
       event2 = create(:event, closes_at: 2.weeks.from_now, state: 'open')
 
-      expect(Event.live).to eq([event1, event2, event3])
+      expect(Event.closes_up).to eq([event1, event2, event3])
     end
   end
 
@@ -27,6 +30,14 @@ describe Event do
 
     it "returns false for closed events" do
       event = create(:event, state: 'open', closes_at: DateTime.yesterday)
+      expect(event).to_not be_open
+
+      event = create(:event, state: nil, closes_at: 3.weeks.from_now)
+      expect(event).to_not be_open
+    end
+
+    it "returns false for draft events" do
+      event = create(:event)
       expect(event).to_not be_open
 
       event = create(:event, state: nil, closes_at: 3.weeks.from_now)
@@ -67,6 +78,18 @@ describe Event do
     expect(first_event).to be_valid
     expect(second_event).to_not be_valid
     expect(second_event.errors[:slug].size).to eq(1)
+  end
+
+  describe '#public_tags?' do
+    let(:event) { build :event }
+    it 'returns true if proposal_tags exist' do
+      event.valid_proposal_tags = 'one,two,three'
+      expect(event.public_tags?).to eq(true)
+    end
+
+    it 'returns false if proposal_tags do not exist' do
+      expect(event.public_tags?).to eq(false)
+    end
   end
 
   describe '#valid_proposal_tags=' do

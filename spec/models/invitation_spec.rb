@@ -1,23 +1,11 @@
 require 'rails_helper'
 
 describe Invitation do
+  let!(:user) { create(:user, email: 'foo@example.com') }
+  let(:proposal) { create(:proposal) }
+  let(:invitation) { create(:invitation, email: 'foo@example.com', slug: 'foo', proposal: proposal) }
+
   describe "#create" do
-    let!(:person) { create(:person, email: 'foo@example.com') }
-    let(:proposal) { create(:proposal) }
-    let(:invitation) { create(:invitation, email: 'foo@example.com', slug: 'foo', proposal: proposal) }
-
-    context "When a person record matches by email" do
-      it "locates the person record" do
-        expect(Person).to receive(:where).and_return([person])
-        create(:invitation, email: 'foo@example.com', slug: 'foo', proposal: proposal)
-      end
-
-      it "assigns the person record to the invitation" do
-        invitation.reload
-        expect(invitation.person).to eq(person)
-      end
-    end
-
     it "sets the slug" do
       invitation = build(:invitation, slug: nil)
       digest = 'deadbeef2014'
@@ -27,19 +15,28 @@ describe Invitation do
     end
   end
 
-  describe "#refuse" do
-    it "sets state as refused" do
+  describe "#decline" do
+    it "sets state as declined" do
       invitation = create(:invitation, state: nil)
-      invitation.refuse
-      expect(invitation.state).to eq(Invitation::State::REFUSED)
+      invitation.decline
+      expect(invitation.state).to eq(Invitation::State::DECLINED)
     end
   end
 
   describe "#accept" do
     it "sets state as accepted" do
-      invitation = create(:invitation, state: nil)
-      invitation.accept
+      invitation.accept(user)
       expect(invitation.state).to eq(Invitation::State::ACCEPTED)
+    end
+
+    it "sets the user on the invitation" do
+      invitation.accept(user)
+      expect(invitation.user).to eq(user)
+    end
+
+    it "creates an associated speaker record" do
+      invitation.accept(user)
+      expect(proposal.has_speaker?(user)).to eq(true)
     end
   end
 
@@ -55,15 +52,15 @@ describe Invitation do
     end
   end
 
-  describe "#refused?" do
-    it "returns true if invitation was refused" do
-      invitation = create(:invitation, state: Invitation::State::REFUSED)
-      expect(invitation).to be_refused
+  describe "#declined?" do
+    it "returns true if invitation was declined" do
+      invitation = create(:invitation, state: Invitation::State::DECLINED)
+      expect(invitation).to be_declined
     end
 
-    it "returns false if invitation was not refused" do
+    it "returns false if invitation was not declined" do
       invitation = create(:invitation, state: Invitation::State::ACCEPTED)
-      expect(invitation).to_not be_refused
+      expect(invitation).to_not be_declined
     end
   end
 end

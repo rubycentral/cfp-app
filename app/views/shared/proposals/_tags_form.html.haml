@@ -1,13 +1,13 @@
-%fieldset
-  = form_for proposal, url: reviewer_event_proposal_path(event, proposal), html: {role: 'form', remote: true} do |f|
-    .form-group
+- if allow_review?(proposal)
+  = form_for proposal, url: event_staff_proposal_path(event, proposal), html: {role: 'form', remote: true} do |f|
+    .form-group.col-sm-8.no-pad-left
       .tag-list
-        = f.label :review_tags
-        - tag_count = event.review_tags.count
-        - if tag_count > 0
-          = f.select :review_tags,
-            options_for_select(event.review_tags, proposal.object.review_tags),
-            {}, { class: 'multiselect review-tags', multiple: true }
-          %button.pull-right.btn.btn-success{:type => "submit"} Update
-        - else
-          None
+        #autocomplete-options
+          = (event.review_tags | proposal.review_tags)
+        = f.text_field :review_tags, { value: proposal.review_tags.join(','), tabindex: '-1' }
+        = program_tracker
+    .form-group.col-sm-4
+      %button.btn.btn-success.btn-sm(type="submit")
+        %span.glyphicon.glyphicon-ok
+      #cancel-tags-editing.btn.btn-danger.btn-sm
+        %span.glyphicon.glyphicon-remove

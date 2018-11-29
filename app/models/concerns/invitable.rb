@@ -1,7 +1,7 @@
 module Invitable
   module State
-    unless const_defined?(:REFUSED)
-      REFUSED = 'refused'
+    unless const_defined?(:DECLINED)
+      DECLINED = 'declined'
       PENDING = 'pending'
       ACCEPTED = 'accepted'
     end
@@ -9,8 +9,8 @@ module Invitable
 
   def self.included(klass)
     klass.scope :pending,      -> { klass.where(state: State::PENDING) }
-    klass.scope :refused,      -> { klass.where(state: State::REFUSED) }
-    klass.scope :not_accepted, -> { klass.where(state: [ State::REFUSED, State::PENDING ]) }
+    klass.scope :declined,      -> { klass.where(state: State::DECLINED) }
+    klass.scope :not_accepted, -> { klass.where(state: [ State::DECLINED, State::PENDING ]) }
 
     klass.before_create :set_default_state
     klass.before_create :set_slug
@@ -19,20 +19,16 @@ module Invitable
     klass.validates_format_of :email, :with => /@/
   end
 
-  def refuse
-    self.update(state: State::REFUSED)
-  end
-
-  def accept
-    self.update(state: State::ACCEPTED)
+  def decline
+    self.update(state: State::DECLINED)
   end
 
   def pending?
     state == State::PENDING
   end
 
-  def refused?
-    state == State::REFUSED
+  def declined?
+    state == State::DECLINED
   end
 
   private

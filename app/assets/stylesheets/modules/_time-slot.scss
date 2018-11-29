@@ -1,0 +1,57 @@
+.custom-list-group-item-danger {
+  color: #a94442;
+  background-color: #f2dede;
+}
+
+#staff_time_slots_index {
+  .form-inline {
+    margin-bottom: 15px;
+  }
+
+  .alert {
+    top: 40px;
+  }
+}
+
+#time-slot, #rooms-partial, #tracks-partial {
+  header {
+    .btn {
+      margin: 21px 0 0 15px;
+    }
+  }
+  dl {
+    dt {
+      font-weight: normal;
+      text-align: left;
+      margin-bottom: 5px;
+    }
+  }
+}
+
+#rooms-partial {
+  margin-top: 20px;
+}
+
+#organizer-time-slots {
+  td:last-child {
+    white-space: nowrap;
+  }
+}
+
+.modal-dialog {
+  .errors {
+    background-color: #edd1d1;
+    color: darken(#edd1d1, 50%);
+    border-radius: .25em;
+    padding-left: .25em;
+  }
+
+  .length-label {
+    margin-bottom: 1em;
+    .bold {
+      font-weight: bold;
+    }
+  }
+}
+
+.tab-content { margin-top: 20px; }

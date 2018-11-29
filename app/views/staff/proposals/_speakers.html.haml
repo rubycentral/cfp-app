@@ -1,0 +1,6 @@
+%section
+  - speakers.each do |speaker|
+    %b
+      = link_to(speaker.name, event_staff_program_speaker_path(speaker.proposal.event, speaker))
+    %p
+      = speaker.bio

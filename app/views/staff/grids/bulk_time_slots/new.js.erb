@@ -1,0 +1,7 @@
+(function($) {
+  var grid = window.Schedule.Grid;
+  var $dialog = $('#bulk-time-slot-create-dialog');
+  $dialog.html('<%=j render partial: 'create_dialog', locals: { bulk: @bulk} %>');
+  grid.initBulkDialog($dialog);
+
+})(jQuery);

@@ -1,0 +1,28 @@
+.subnavbar.navbar-fixed-top
+  .subnavbar-inner
+    .container-fluid
+      %ul.mainnav
+        %li{class: subnav_item_class("event-staff-dashboard-link")}
+          = link_to event_staff_path do
+            %i.fa.fa-dashboard
+            %span Dashboard
+        %li{class: subnav_item_class("event-staff-info-link")}
+          = link_to event_staff_info_path do
+            %i.fa.fa-info-circle
+            %span Info
+        %li{class: subnav_item_class("event-staff-teammates-link")}
+          = link_to event_staff_teammates_path do
+            %i.fa.fa-users
+            %span Team
+        %li{class: subnav_item_class("event-staff-config-link")}
+          = link_to event_staff_config_path do
+            %i.fa.fa-wrench
+            %span Config
+        %li{class: subnav_item_class("event-staff-guidelines-link")}
+          = link_to event_staff_guidelines_path do
+            %i.fa.fa-list
+            %span Guidelines
+        %li{class: subnav_item_class("event-staff-speaker-emails-link")}
+          = link_to event_staff_speaker_email_notifications_path do
+            %i.fa.fa-envelope-o
+            %span Speaker Emails

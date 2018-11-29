@@ -1,0 +1,45 @@
+.event-info-bar
+  .row
+    .col-md-8
+      .event-info.event-info-dense
+        %strong.event-title= current_event.name
+        - if current_event.start_date? && current_event.end_date?
+          %span.event-meta
+            %i.fa.fa-fw.fa-calendar
+            = current_event.date_range
+    .col-md-4.text-right.text-right-responsive
+      .event-info.event-info-dense
+        %span{:class => "event-meta event-status-badge event-status-#{current_event.status}"}
+          CFP
+          = current_event.status
+        - if current_event.open?
+          %span.event-meta
+            CFP closes:
+            %strong= current_event.closes_at(:month_day_year)
+
+  .page-header.page-header-slim
+    .row
+      .col-md-12
+        .btn-navbar.pull-right
+          - if current_user.organizer_for_event?(current_event)
+            = link_to edit_event_staff_program_speaker_path(current_event, @speaker), class: 'btn btn-primary' do
+              %span.glyphicon.glyphicon-edit
+              Edit
+        %h1 Speaker Profile
+
+  .row
+    .col-md-6
+      .program-session-item
+        %h3.control-label Name
+        %p= @speaker.name
+      .program-session-item
+        %h3.control-label Email
+        %p= mail_to(@speaker.email)
+      .program-session-item
+        %h3.control-label Bio
+        %p= @speaker.bio
+      - if @speaker.program_session
+        .program-session-item
+          %h3.control-label Program Session
+          %p= link_to @speaker.program_session.title, event_staff_program_session_path(current_event, @speaker.program_session)
+

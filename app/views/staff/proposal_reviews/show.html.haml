@@ -1,0 +1,124 @@
+.event-info-bar
+  .row
+    .col-md-4
+      .event-info.event-info-dense
+        %strong.event-title= event.name
+        - if event.start_date? && event.end_date?
+          %span.event-meta
+            %i.fa.fa-fw.fa-calendar
+            = event.date_range
+    .col-md-4
+      .event-info.event-info-dense
+        %span{:class => "event-meta event-status-badge event-status-#{event.status}"}
+          CFP
+          = event.status
+        - if event.open?
+          %span.event-meta
+            CFP closes:
+            %strong= event.closes_at(:month_day_year)
+    .col-md-4.text-right
+      .btn-nav
+        = link_to(event_staff_proposals_path, class: "btn btn-primary btn-sm") do
+          &laquo; Return to Proposals
+        = link_to "Next Proposal", event_staff_proposal_path(uuid: "PLACEHOLDER"), class: "next-proposal btn btn-primary btn-sm", data: {"proposal-uuid" => proposal.uuid }
+
+#proposal
+  .page-header.page-header-slim
+    .row
+      .col-md-8
+        %h1
+          = proposal.title
+      .col-sm-4.text-right
+        .proposal-info-bar
+          .proposal-meta.proposal-description
+            .proposal-meta-item
+              %strong Status:
+              = proposal.reviewer_state(small: true)
+            - if visit_program_view
+              .proposal-meta-item
+                = link_to "Program View", event_staff_program_proposal_path(current_event, proposal), class: "btn btn-info"
+    .row.proposal-info-bar-row
+      .proposal-info-bar.clearfix
+        .proposal-meta.proposal-description.clearfix
+          .col-sm-4
+            .col-sm-6.no-pad-left
+              .proposal-meta-item
+                .info-item-heading #{ 'Speaker'.pluralize(proposal.speakers.count) }
+                Blind
+            .col-sm-6
+              -if proposal.tags.present?
+                .proposal-meta-item
+                  .info-item-heading Tags
+                  #{proposal.tags_labels}
+          .col-sm-4
+            .col-sm-6.no-pad-left
+              .proposal-meta-item.full-width
+                #current-format
+                  .info-item-heading Format
+                  #format-name.pull-left
+                    #{proposal.session_format_name}
+                  - if track_and_format_edit
+                    #edit-format-icon.fa.fa-pencil
+                #edit-format-wrapper
+                  %span
+                    = render 'shared/proposals/inline_format_edit', proposal: proposal
+                  #cancel-format-editing.fa.fa-undo
+            .col-sm-6
+              .proposal-meta-item.full-width
+                #current-track
+                  .info-item-heading Track
+                  #track-name.pull-left
+                    #{proposal.track_name}
+                  - if track_and_format_edit
+                    #edit-track-icon.fa.fa-pencil
+                #edit-track-wrapper
+                  %span
+                    = render 'shared/proposals/inline_track_edit', proposal: proposal
+                  #cancel-track-editing.btn.fa.fa-undo
+          .col-sm-4
+            .proposal-meta-item.col-sm-8
+              .info-item-heading Reviewer Tags
+              .proposal-reviewer-tags
+                -if proposal.review_tags.present?
+                  #{proposal.review_tags_labels}
+                -else
+                  %em None
+              - if allow_review?(proposal)
+                #edit-tags-icon.fa.fa-pencil
+              #review-tags-form-wrapper
+                = render 'shared/proposals/tags_form', locals: { event: event, proposal: proposal }
+            .proposal-meta-item.col-sm-3
+              .info-item-heading Updated
+              .proposal-updated=  proposal.updated_in_words
+  .row
+    .col-md-4
+      = render partial: 'reviewer_contents', locals: { proposal: proposal }
+
+    .col-md-4
+      .widget.widget-card.flush-top
+        .widget-header
+          %i.fa.fa-comments
+          %h3.comments-heading= pluralize(proposal.public_comments.count, 'Public Comment')
+        .widget-content
+          = render partial: 'proposals/comments',
+            locals: { proposal: proposal, comments: proposal.public_comments }
+
+    .col-md-4
+      .widget.widget-card.widget-card-alt.flush-top
+        - if ratings_closed?(proposal, rating)
+          .widget-header
+            %h3 Rating
+          .widget-content
+            %p
+              %em Ratings are closed
+
+        .widget-content
+          = render partial: 'shared/proposals/rating_form', locals: { event: event, proposal: proposal, rating: rating }
+
+        .internal-comments{ class: !rating.persisted? ? "hidden" : nil }
+          .widget-header
+            %i.fa.fa-comments
+            %h3.comments-heading= pluralize(proposal.internal_comments.count, 'Internal Comment')
+          .widget-content
+            = render partial: 'proposals/comments',
+                locals: { proposal: proposal, comments: proposal.internal_comments }

@@ -1,0 +1,4 @@
+- if proposal.event.multiple_tracks?
+  = proposal.standalone_track_select(track_tooltip)
+- else
+  = proposal.track_name

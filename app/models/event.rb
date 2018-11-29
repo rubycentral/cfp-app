@@ -1,36 +1,71 @@
-class Event < ActiveRecord::Base
-  store_accessor :speaker_notification_emails, :accept
-  store_accessor :speaker_notification_emails, :reject
-  store_accessor :speaker_notification_emails, :waitlist
+class Event < ApplicationRecord
 
-  has_many :participants, dependent: :destroy
+  has_many :teammates, dependent: :destroy
+  has_many :staff, through: :teammates, source: :user
   has_many :proposals, dependent: :destroy
-  has_many :speakers, through: :proposals
+  has_many :speakers
   has_many :rooms, dependent: :destroy
   has_many :tracks, dependent: :destroy
-  has_many :sessions, dependent: :destroy
+  has_many :time_slots, dependent: :destroy
+  has_many :program_sessions, dependent: :destroy
+  has_many :session_formats, dependent: :destroy
   has_many :taggings, through: :proposals
   has_many :ratings, through: :proposals
-  has_many :participant_invitations
+
+  has_many :public_session_formats, ->{ where(public: true) }, class_name: SessionFormat
 
   accepts_nested_attributes_for :proposals
-
 
   serialize :proposal_tags, Array
   serialize :review_tags, Array
   serialize :custom_fields, Array
+  serialize :settings, Hash
+  serialize :speaker_notification_emails, Hash
+
+  store_accessor :speaker_notification_emails, :accept
+  store_accessor :speaker_notification_emails, :reject
+  store_accessor :speaker_notification_emails, :waitlist
 
 
-  scope :recent, -> { order('name ASC') }
-  scope :live, -> { where("state = 'open' and (closes_at is null or closes_at > ?)", Time.current).order('closes_at ASC') }
+  scope :a_to_z, -> { order('name ASC') }
+  scope :closes_up, -> { order('closes_at ASC') }
+  scope :live, -> { where("state = 'open' and (closes_at is null or closes_at > ?)", Time.current) }
+  scope :not_draft, -> { where "state != 'draft'"}
 
-  validates :name, :contact_email, presence: true
+  validates :name, presence: true
   validates :slug, presence: true, uniqueness: true
-  validates :closes_at, presence: true
+  validate :url_must_be_valid, if: :url?
 
   before_validation :generate_slug
   before_save :update_closes_at_if_manually_closed
 
+  STATUSES = { draft: 'draft',
+               open: 'open',
+               closed: 'closed' }
+
+  def to_param
+    slug
+  end
+
+  validate :checklist_complete?, on: :update,
+    if: Proc.new { |e| e.state == STATUSES[:open] }
+
+  def initialize_speaker_emails
+    SpeakerEmailTemplate::TYPES.each do |type|
+      speaker_notification_emails[type] ||= ""
+    end
+  end
+
+  def remove_speaker_email_template(template)
+    attr = SpeakerEmailTemplate::TYPES.find { |type| type == template }
+    if attr
+      update_attribute(attr, "")
+    end
+  end
+
+  def public_tags?
+    proposal_tags.any?
+  end
 
   def valid_proposal_tags
     proposal_tags.join(', ')
@@ -38,6 +73,10 @@ class Event < ActiveRecord::Base
 
   def valid_proposal_tags=(tags_string)
     self.proposal_tags = Tagging.tags_string_to_array(tags_string)
+  end
+
+  def reviewer_tags?
+    review_tags.any?
   end
 
   def valid_review_tags
@@ -57,35 +96,53 @@ class Event < ActiveRecord::Base
   end
 
   def custom_fields_string
-    custom_fields.join(',')
+    custom_fields.join(', ')
   end
 
   def fields
     self.proposals.column_names.join(', ')
   end
 
+  def multiple_tracks?
+    tracks.any?
+  end
+
+  def multiple_public_session_formats?
+    session_formats.publicly_viewable.count > 1
+  end
+
   def generate_slug
-    self.slug = name.parameterize if slug.blank?
+    self.slug = name.parameterize if name.present? && slug.blank?
   end
 
   def to_s
     name
   end
 
+  def draft?
+    state == STATUSES[:draft]
+  end
+
   def open?
-    state == 'open' && (closes_at.nil? || closes_at > Time.current)
+    state == STATUSES[:open] && (closes_at.nil? || closes_at > Time.current)
   end
 
   def closed?
-    !open?
+    !open? && !draft?
   end
 
   def past_open?
-    state == 'open' && closes_at < Time.current
+    state == STATUSES[:open] && closes_at < Time.current
   end
 
   def status
-    open? ? 'open' : 'closed'
+    if open?
+      STATUSES[:open]
+    elsif draft?
+      STATUSES[:draft]
+    else
+      STATUSES[:closed]
+    end
   end
 
   def unmet_requirements_for_scheduling
@@ -99,6 +156,26 @@ class Event < ActiveRecord::Base
     end
 
     missing_prereqs
+  end
+
+  def incomplete_checklist_items
+    missing_items = []
+
+    missing_items << "Event must have a url" unless url.present?
+    missing_items << "Event must have a start date" unless start_date
+    missing_items << "Event must have an end date" unless end_date
+    missing_items << "Event must have a contact email" unless contact_email.present?
+    missing_items << "Event must have a CFP closes at date set for a future date" unless closes_at && (closes_at > Time.current)
+    missing_items << "Event must have at least one public session format" unless public_session_formats.present?
+    missing_items << "Event must have guidelines" unless guidelines.present?
+
+    missing_items
+  end
+
+  def checklist_complete?
+    if (items = incomplete_checklist_items) && items.present?
+      errors.add(:base, items.join("; "))
+    end.blank?
   end
 
   def archive
@@ -118,21 +195,42 @@ class Event < ActiveRecord::Base
   end
 
   def cfp_opens
-    opens_at && opens_at.to_s(:long_with_zone)
+    opens_at.try(:to_s, :long_with_zone)
   end
 
   def cfp_closes
-    closes_at && closes_at.to_s(:long_with_zone)
+    closes_at.try(:to_s, :long_with_zone)
   end
 
   def conference_date(conference_day)
     start_date + (conference_day - 1).days
   end
 
+  def url_must_be_valid
+    uri = URI.parse(url)
+    unless uri.kind_of?(URI::HTTP) || uri.kind_of?(URI::HTTPS)
+      errors.add(:url, "must start with http:// or https://")
+    end
+  rescue URI::InvalidURIError
+    errors.add(:url, "must be valid")
+  end
+
+  def stats
+    @stats ||= EventStats.new(self)
+  end
+
+  def days
+    (end_date.to_date - start_date.to_date).to_i + 1
+  end
+
+  def mention_names
+    teammates.pluck(:mention_name)
+  end
 
   private
+
   def update_closes_at_if_manually_closed
-    if changes.key?(:state) && changes[:state] == ['open', 'closed']
+    if changes.key?(:state) && changes[:state] == [STATUSES[:open], STATUSES[:closed]]
       self.closes_at = DateTime.now
     end
   end
@@ -147,20 +245,21 @@ end
 #  slug                        :string
 #  url                         :string
 #  contact_email               :string
-#  state                       :string           default("closed")
+#  state                       :string           default("draft")
+#  archived                    :boolean          default(FALSE)
 #  opens_at                    :datetime
 #  closes_at                   :datetime
 #  start_date                  :datetime
 #  end_date                    :datetime
+#  info                        :text
+#  guidelines                  :text
+#  settings                    :text
 #  proposal_tags               :text
 #  review_tags                 :text
-#  guidelines                  :text
-#  policies                    :text
-#  speaker_notification_emails :hstore           default({"accept"=>"", "reject"=>"", "waitlist"=>""})
+#  custom_fields               :text
+#  speaker_notification_emails :text
 #  created_at                  :datetime
 #  updated_at                  :datetime
-#  archived                    :boolean          default(FALSE)
-#  custom_fields               :text
 #
 # Indexes
 #

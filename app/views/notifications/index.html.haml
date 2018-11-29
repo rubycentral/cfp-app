@@ -1,16 +1,26 @@
 .row
-  .col-md-6
-    %h2 Notifications
-    =link_to "Mark all as read", mark_all_as_read_notifications_path, method: :post
+  .col-sm-12
+    .page-header.clearfix
+      .btn-nav.pull-right
+        =link_to "Mark all as read", mark_all_as_read_notifications_path, method: :post, class: "btn btn-primary pull-right"
+      %h1 Notifications
+
 .row
-  .col-md-12
-    %table#notifications.table
-      %thead
-        %tr
-          %th Message
-          %th.actions Actions
-      %tbody
-        - notifications.each do |notification|
-          %tr{ class: notification.read? ? '' : 'unread' }
-            %td= notification.message
-            %td= link_to('Show', notification)
+  .col-sm-12
+    .widget.widget-table
+      .widget-header
+        %i.fa.fa-exclamation
+        %h3 Notifications
+      .widget-content
+        %table#notifications.table.table-striped.table-bordered
+          %thead
+            %tr
+              %th Message
+              %th When
+              %th.actions Actions
+          %tbody
+            - notifications.each do |notification|
+              %tr{ class: notification.read? ? '' : 'unread' }
+                %td= notification.message
+                %td= notification.created_at.to_s(:short)
+                %td= link_to('Show', notification)

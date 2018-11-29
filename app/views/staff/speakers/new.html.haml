@@ -1,0 +1,28 @@
+#speaker
+  .row
+    .col-md-12
+      .page-header.clearfix
+        .btn-nav.pull-right
+          = link_to("« Return to Speaker List", event_staff_program_speakers_path, class: "btn btn-primary", id: "back")
+
+        %h1 New Speaker
+
+  .row
+    .col-md-12
+      = form_for @speaker, url: [ event, :staff, @program_session, @speaker ], html: {role: "form"} do  |f|
+        .row
+          %fieldset.col-md-6
+            = f.label "Name"
+            = f.text_field :speaker_name, class: "form-control", autofocus: true
+            %br
+            = f.label "Email"
+            = f.text_field :speaker_email, class: "form-control"
+            %br
+            = f.label :bio
+            = f.text_area :bio, class: "form-control", value: @speaker.bio,
+            placeholder: "Bio for the event program", rows: 7, maxlength: 500
+            %p.help-block Bio is limited to 500 characters.
+
+        .row.col-md-12.form-submit.btn-toolbar
+          %button.pull-right.btn.btn-success{:type => "submit"} Save
+          = link_to("Cancel", event_staff_program_session_path(current_event, @program_session), class: "button pull-right btn btn-danger")

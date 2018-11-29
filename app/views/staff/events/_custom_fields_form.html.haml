@@ -1,0 +1,9 @@
+#edit-custom-fields
+  = simple_form_for @event, url: event_staff_update_custom_fields_path, method: :put,
+    remote: true, class: "form-horizontal"  do |f|
+    = f.input :custom_fields_string, label: false, autofocus: true,
+      placeholder: 'Separate multiple fields with commas',
+      hint: "This is a comma separated list of custom fields allowed for use on proposals."
+    .pull-right
+      %button.btn.btn-default#cancel-custom-fields{type: "cancel"} Cancel
+      %button.btn.btn-primary{type: "submit"} Save

@@ -1,6 +1,10 @@
 $(document).ready(function() {
   $("#gravatar-alert").tooltip();
-  $("#rating-tooltip").tooltip({html: true});
+  $('body').tooltip({selector: "[data-toggle~='tooltip']", html: true});
+
+  setTimeout(function() {
+    $(".alert").not('.alert-confirm').alert('close');
+  }, 5000);
 });
 
 // Datatable extension for reseting sort order

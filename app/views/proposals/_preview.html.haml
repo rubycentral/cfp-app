@@ -1,5 +1,20 @@
-#proposal-preview.panel.panel-default{ data: { 'remote-url' => parse_edit_field_proposal_path(event.slug) } }
-  .panel-heading
-    %h2.panel-title Preview
-  .panel-body
-    = render partial: 'proposals/contents', locals: { proposal: proposal }
+.row
+  .col-md-8
+    #proposal-preview{ data: { 'remote-url' => event_parse_edit_field_proposal_path(event.slug) } }
+      .proposal-info-bar
+        .proposal-meta.proposal-description
+          .proposal-meta-item
+            %strong #{ 'Speaker'.pluralize(proposal.speakers.count) }:
+            %span Blind
+          .proposal-meta-item
+            %strong Format:
+            %span #{proposal.session_format_name}
+          .proposal-meta-item
+            %strong Track:
+            %span #{proposal.track_name}
+          -if proposal.tags.present?
+            .proposal-meta-item
+              %strong Tags:
+              %span #{proposal.tags_labels}
+      %br
+      = render partial: 'proposals/contents', locals: { proposal: proposal }

@@ -1,0 +1,15 @@
+#proposal
+  .row
+    .col-md-12
+      .page-header.clearfix
+        %h1= "#{event} Time Slots"
+
+        .tab-content
+          #time-slot.tab-pane.active
+            .row
+              .col-md-12
+                = render partial: 'time_slots'
+
+        #time-slot-edit-dialog.modal.fade
+
+        #time-slot-new-dialog.modal.fade

@@ -1,0 +1,11 @@
+<% if @track.errors.present? %>
+  $("#track-error").remove();
+  $("#config-modal .errors").append("<p id='track-error'><%=  track.errors.full_messages.join(", ") %></p>");
+<% else %>
+  $("#config-modal").modal("hide");
+  var tableRow = $("table#tracks #track_<%= @track.id %>");
+  tableRow.replaceWith("<%= j render @track %>");
+<% end %>
+
+document.getElementById("flash").innerHTML = "<%=j show_flash %>";
+$("html, body").animate({ scrollTop: 0 }, "slow");

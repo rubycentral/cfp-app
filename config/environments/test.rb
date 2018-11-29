@@ -12,9 +12,11 @@ Rails.application.configure do
   # preloads Rails for running tests, you may have to set it to true.
   config.eager_load = false
 
-  # Configure static file server for tests with Cache-Control for performance.
-  config.serve_static_files   = true
-  config.static_cache_control = 'public, max-age=3600'
+  # Configure public file server for tests with Cache-Control for performance.
+  config.public_file_server.enabled = true
+  config.public_file_server.headers = {
+    'Cache-Control' => 'public, max-age=3600'
+  }
 
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true
@@ -25,6 +27,11 @@ Rails.application.configure do
 
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false
+
+  config.action_mailer.default_url_options = { host: 'http://test.host' }
+  # config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.default_options = {from: 'cfp@example.org'}
+  config.action_mailer.perform_caching = false
 
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
@@ -39,9 +46,6 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
-
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
-  config.action_mailer.default_options = {from: 'cfp@example.org'}
 
   I18n.enforce_available_locales = false
 

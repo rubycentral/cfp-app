@@ -1,0 +1,9 @@
+= f.input :name, placeholder: "Name", autofocus: true
+= f.input :description, as: :text, input_html: {rows: 6}, placeholder: "Description"
+= f.input :duration, placeholder: "#",
+  hint: "How long the session will be (in minutes)."
+= f.input :public, label: false, inline_label: "Make Public",
+  hint: "If checked, speakers will be able to select this session format when submitting proposals."
+.modal-footer
+%button.pull-right.btn.btn-primary{:type => "submit"} Save
+%button.btn.btn-default{"data-dismiss" => "modal"} Cancel

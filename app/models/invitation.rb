@@ -1,18 +1,18 @@
 require 'digest/sha1'
 
-class Invitation < ActiveRecord::Base
+class Invitation < ApplicationRecord
   include Invitable
 
   belongs_to :proposal
-  belongs_to :person
+  belongs_to :user
 
-  before_create :maybe_assign_person
-
-  private
-
-  def maybe_assign_person
-    person = Person.where("LOWER(email) = ?", self.email.downcase)
-    self.person = person.first if person.any?
+  def accept(user)
+    transaction do
+      self.user = user
+      self.state = State::ACCEPTED
+      proposal.speakers.create(user: user, event: proposal.event, skip_name_email_validation: true)
+      save
+    end
   end
 end
 
@@ -22,7 +22,7 @@ end
 #
 #  id          :integer          not null, primary key
 #  proposal_id :integer
-#  person_id   :integer
+#  user_id     :integer
 #  email       :string
 #  state       :string           default("pending")
 #  slug        :string
@@ -31,8 +31,8 @@ end
 #
 # Indexes
 #
-#  index_invitations_on_person_id              (person_id)
 #  index_invitations_on_proposal_id            (proposal_id)
 #  index_invitations_on_proposal_id_and_email  (proposal_id,email) UNIQUE
 #  index_invitations_on_slug                   (slug) UNIQUE
+#  index_invitations_on_user_id                (user_id)
 #

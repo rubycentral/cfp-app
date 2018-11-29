@@ -1,0 +1,60 @@
+.alert {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: $zindex-alert;
+}
+
+@media (min-width: $screen-md) {
+
+  .alert {
+    width: 50%;
+  }
+}
+
+.share {
+  font-size: 12px;
+}
+
+.tag-list input {
+  vertical-align: top;
+}
+.teammate {
+  margin-bottom:1em;
+}
+
+.invitation button {
+  margin-left: 1em;
+}
+.service {
+  margin-bottom: 1em;
+}
+
+.remove-speaker {
+  width: 80px;
+  margin-bottom: .5em;
+}
+
+h3.tags {
+  margin: 0 0 0.75em 0;
+}
+
+#columns {
+  float: left;
+
+  li {
+    display: block;
+    &:first-child { padding-left: 5px; }
+    padding-bottom: 3px;
+  }
+}
+
+//datepicker
+.ui-datepicker {
+  z-index: 10000 !important;
+}
+
+.guidelines-link {
+  font-style: italic;
+  margin-left: 5px;
+}

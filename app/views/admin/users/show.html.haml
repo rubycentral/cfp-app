@@ -1,0 +1,49 @@
+.row
+  %fieldset.col-md-12
+    %h1
+      = user.name
+      = link_to 'Edit', edit_admin_user_path(user), class: 'btn btn-primary btn-xs'
+    %h5
+      = user.email
+    %h5 Bio
+    %p
+      = user.bio
+
+.row
+  .col-md-12
+    %h3 Proposals
+    %table.datatable.table.table-striped
+      %thead
+        %tr
+          %th Event
+          %th Title
+          %th Status
+          %th Abstract
+      %tbody
+        - user.proposals.to_a.group_by(&:event).each do |event, talks|
+          - talks.each do |proposal|
+            %tr
+              %td= link_to event.name, event_path(event.slug)
+              %td= link_to proposal.title, proposals_path(slug: proposal.event.slug, uuid: proposal)
+              %td= proposal.state
+              %td= truncate(proposal.abstract, length: 80)
+
+.row
+  .col-md-12
+    %h3 Participation
+    %table.datatable.table.table-striped
+      %thead
+        %tr
+          %th Event
+          %th Role
+          %th Created At
+          %th.actions Actions
+      %tbody
+        - user.teammates.each do |teammate|
+          %tr
+            %td= link_to teammate.event.name, event_path(teammate.event.slug)
+            %td= render partial: 'staff/teammates/role_controls', locals: { teammate: teammate}
+            %td= teammate.created_at
+            %td.actions.text-center
+              - if current_user.organizer_events.include?(teammate.event)
+                = link_to 'Remove', event_staff_teammate_path(teammate.event, teammate), method: :delete, data: { confirm: "Are you sure you want to remove #{teammate.name}?" }, class: 'btn btn-danger btn-xs'

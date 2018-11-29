@@ -1,0 +1,26 @@
+.row
+  .col-md-12
+    .page-header.clearfix
+      %h1 Edit Speaker
+
+.row
+  .col-md-12
+    %p
+    = simple_form_for @speaker, url: [ event, :staff, :program, @speaker ] do |f|
+      .row
+        %fieldset.col-md-6
+          = f.label "Name"
+          = f.text_field :speaker_name, class: "form-control", placeholder: @speaker.name, autofocus: true
+          %br
+          = f.label "Email"
+          = f.text_field :speaker_email, class: "form-control", placeholder: @speaker.email
+          %br
+          = f.label :bio
+          = f.text_area :bio, class: "form-control", value: @speaker.bio,
+          placeholder: "Bio for the event program", rows: 7, maxlength: 500
+          %p.help-block Bio is limited to 500 characters.
+
+      .row.col-md-12.form-submit.btn-toolbar
+        %button.pull-right.btn.btn-success{:type => "submit"} Save
+        = link_to("Cancel", event_staff_program_speaker_path(current_event, @speaker), class: "button pull-right btn btn-danger")
+

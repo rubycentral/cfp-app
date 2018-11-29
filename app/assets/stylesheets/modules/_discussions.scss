@@ -1,0 +1,90 @@
+/* Message layout */
+.messages_layout {
+  margin: 0;
+  padding: 0;
+  position: relative;
+
+  li {
+    list-style: none;
+    position: relative;
+
+    &:before,
+    &:after {
+      content: "";
+      display: table;
+    }
+
+    &:after {
+      clear: both;
+    }
+  }
+}
+
+textarea.mention {
+  height: auto;
+}
+
+.message_wrap {
+  background: #fefefe;
+  border-width: 1px;
+  border-style: solid;
+  float: left;
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 10px;
+  position: relative;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: rgba(0,0,0,0.1) 0 1px 0px;
+  -moz-box-shadow: rgba(0,0,0,0.1) 0 1px 0px;
+  box-shadow: rgba(0,0,0,0.1) 0 1px 0px;
+
+  .speaker-comment &    { border-color: $bright-blue; }
+  .reviewer-comment &   { border-color: $gray-light; }
+  .organizer-comment &  { border-color: $brand-primary; }
+
+  // comment info bar
+  .info {
+    width: 100%;
+    border-bottom: 1px solid #fff;
+    line-height: 23px;
+
+    &:before,
+    &:after {
+      content: "";
+      display: table;
+    }
+
+    &:after {
+      clear: both;
+    }
+  }
+
+  .name {
+    float: left;
+    font-weight: bold;
+
+    .speaker-comment &    { color: $bright-blue; }
+    .reviewer-comment &   { color: $gray; }
+    .organizer-comment &  { color: $brand-primary; }
+  }
+
+  .time {
+    float: left;
+    font-size: 11px;
+    margin-left: 6px
+  }
+
+  // comment body
+  .text {
+    width: 100%;
+    border-top: 1px solid $gray-light;
+    padding-top: 5px
+  }
+}
+
+
+ul.messages_layout .dropdown-menu li {
+  width:100%; font-size:11px;
+}

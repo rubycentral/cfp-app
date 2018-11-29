@@ -11,35 +11,40 @@
     "heroku-postgresql"
   ],
   "scripts": {
-    "postdeploy": "bundle exec rake db:migrate"
+    "postdeploy": "bundle exec rake db:schema:load db:seed"
   },
   "env": {
     "TIMEZONE": {
-      "description": "Timezone for the Rails app"
+      "description": "Timezone for the Rails app",
+      "value": "Mountain Time (US & Canada)"
     },
     "MAIL_HOST": {
       "description": "The hostname from which emails will originate.",
-      "value": "example.com"
+      "required": true
     },
     "MAIL_FROM": {
       "description": "The email address from which emails will originate.",
-      "value": "person@example.com"
+      "required": true
     },
     "SECRET_TOKEN": {
       "description": "The secret token for the application",
       "generator": "secret"
     },
     "GITHUB_KEY": {
-      "description": "GitHub application key"
+      "description": "GitHub application key",
+      "required": true
     },
     "GITHUB_SECRET": {
-      "description": "GitHub application secret"
+      "description": "GitHub application secret",
+      "required": true
     },
     "TWITTER_KEY": {
-      "description": "Twitter application key"
+      "description": "Twitter application key",
+      "required": true
     },
     "TWITTER_SECRET": {
-      "description": "Twitter application secret"
+      "description": "Twitter application secret",
+      "required": true
     }
   }
 }

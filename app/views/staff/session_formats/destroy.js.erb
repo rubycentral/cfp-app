@@ -1,0 +1,4 @@
+$('table#session-formats #session_format_<%= session_format.id %>').remove();
+
+document.getElementById('flash').innerHTML = '<%=j show_flash %>';
+$("html, body").animate({ scrollTop: 0 }, "slow");

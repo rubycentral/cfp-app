@@ -1,0 +1,8 @@
+#show-reviewer-tags
+  - if event.valid_review_tags.empty? && current_user.organizer_for_event?(event)
+    = link_to "Add", event_staff_reviewer_tags_path(event),
+      remote: true, class: "btn btn-success btn-sm pull-right add-reviewer-tags"
+  - else
+    %p= event.valid_review_tags
+    = link_to "Edit", event_staff_reviewer_tags_path(event),
+      remote: true, class: "btn btn-primary btn-sm pull-right edit-reviewer-tags" unless !current_user.organizer_for_event?(event)

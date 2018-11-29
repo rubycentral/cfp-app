@@ -1,32 +1,37 @@
 .row
   .col-md-12
-    .toolbox.pull-right
-      = link_to 'Add Event', new_admin_event_path, class: "btn btn-primary"
+    .page-header.clearfix
+      .btn-nav.pull-right
+        =link_to "Add an Event", new_admin_event_path, class: "btn btn-primary"
+      %h1 Events Admin
+
 .row
-  .col-md-12
-    %h2 Events
-    %table.table.table-striped
-      %thead
-        %tr
-          %th Event
-          %th Dates
-          %th Status
-          %th CFP Opens At
-          %th CFP Closes At
-          %th Archive/Unarchive
-        %tr
-      %tbody
-        - @events.each do |event|
-          %tr
-            %td= link_to event.name, organizer_event_path(event)
-            %td= "#{event.start_date.to_s(:month_day) unless event.start_date.blank?} - #{event.end_date.to_s(:month_day_year) unless event.end_date.blank?}"
-            %td= event.state
-            %td= event.opens_at.to_s(:long_with_zone) unless event.opens_at.blank?
-            %td= event.closes_at.to_s(:long_with_zone) unless event.closes_at.blank?
-            - if event.current?
-              %td= link_to "Archive", admin_event_archive_path(event), method: :post, class: "btn btn-danger btn-xs", data: {confirm: "This will hide this event from reviewers and organizers. Would you like to continue?" }
-            - else
-              %td= link_to "Unarchive", admin_event_unarchive_path(event), method: :post, class: "btn btn-success btn-xs"
+  .col-sm-12
+    .widget.widget-table
+      .widget-header
+        %i.fa.fa-calendar
+        %h3 Events
 
-
-
+      .widget-content
+        %table.table.table-striped.table-bordered
+          %thead
+            %tr
+              %th Event
+              %th Dates
+              %th Status
+              %th CFP Opens At
+              %th CFP Closes At
+              %th Archive/Unarchive
+            %tr
+          %tbody
+            - @events.each do |event|
+              %tr
+                %td= link_to event.name, event_staff_edit_path(event_slug: event.slug)
+                %td= "#{event.start_date.to_s(:month_day) unless event.start_date.blank?} - #{event.end_date.to_s(:month_day_year) unless event.end_date.blank?}"
+                %td= event.state
+                %td= event.opens_at.to_s(:long_with_zone) unless event.opens_at.blank?
+                %td= event.closes_at.to_s(:long_with_zone) unless event.closes_at.blank?
+                - if event.current?
+                  %td= link_to "Archive", admin_event_archive_path(event_slug: event.slug), method: :post, class: "btn btn-danger btn-xs", data: {confirm: "This will hide this event from reviewers and organizers. Would you like to continue?" }
+                - else
+                  %td= link_to "Unarchive", admin_event_unarchive_path(event_slug: event.slug), method: :post, class: "btn btn-success btn-xs"

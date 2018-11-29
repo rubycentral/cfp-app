@@ -1,0 +1,16 @@
+<% if session_format.persisted? %>
+  $("#config-modal").modal("hide");
+  $("#session-formats").append("<%=j render session_format %>");
+  window.Utilities.clearFields([
+    "#session_format_name",
+    "#session_format_description",
+    "#session_format_duration",
+    "#session_format_public"
+  ], "#session-format-new-dialog");
+<% else %>
+  $("#session-error").remove();
+  $("#config-modal .errors").append("<p id='session-error'><%=  session_format.errors.full_messages.join(", ") %></p>");
+<% end %>
+
+document.getElementById("flash").innerHTML = "<%=j show_flash %>";
+$("html, body").animate({ scrollTop: 0 }, "slow");

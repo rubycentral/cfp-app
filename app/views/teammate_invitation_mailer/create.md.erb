@@ -1,0 +1,12 @@
+Hi there!
+
+You've been invited to the <%= @teammate.event %> team to help with the Call for Proposals as <%= @teammate.role %>. You can join the conversation as you review proposals via Internal Comments and will recieve notifications when you are mentioned by the name @<%= @teammate.mention_name %>.
+
+<%= md_link_to 'Click here to accept.', accept_teammate_url(@teammate.token) %>
+You'll be prompted to create an account if you don't already have one.
+
+<%= md_link_to 'Click here to decline.', decline_teammate_url(@teammate.token) %>
+
+You can view the event <%= md_link_to 'here', event_url(@event.slug) %>.
+
+The <%= @event.name %> Program Committee

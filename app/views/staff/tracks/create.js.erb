@@ -1,0 +1,17 @@
+$("#config-modal .errors").html("");
+
+<% if track.persisted? %>
+  $('#config-modal').modal('hide');
+  $('#tracks').append('<%=j render track %>');
+  window.Utilities.clearFields([
+    '#track_name',
+    '#track_description',
+    '#track_guidelines'
+  ], '#track-new-dialog');
+<% else %>
+  $("#track-error").remove();
+  $("#config-modal .errors").append("<p id='track-error'><%=  track.errors.full_messages.join(", ") %></p>");
+<% end %>
+
+document.getElementById('flash').innerHTML = '<%=j show_flash %>';
+$("html, body").animate({ scrollTop: 0 }, "slow");

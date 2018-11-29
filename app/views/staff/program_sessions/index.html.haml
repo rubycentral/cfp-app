@@ -1,0 +1,76 @@
+.event-info-bar
+  .row
+    .col-md-8
+      .event-info.event-info-dense
+        %strong.event-title= current_event.name
+        - if current_event.start_date? && current_event.end_date?
+          %span.event-meta
+            %i.fa.fa-fw.fa-calendar
+            = current_event.date_range
+    .col-md-4.text-right.text-right-responsive
+      .event-info.event-info-dense
+        %span{:class => "event-meta event-status-badge event-status-#{current_event.status}"}
+          CFP
+          = current_event.status
+        - if current_event.open?
+          %span.event-meta
+            CFP closes:
+            %strong= current_event.closes_at(:month_day_year)
+.row
+  &nbsp;
+
+.row
+  .col-md-8
+    %h3
+      Sessions
+      %span.badge= sessions.count
+  .col-md-4.text-right
+    - if current_user.organizer_for_event?(current_event)
+      = link_to event_staff_program_sessions_path(format: "json"), class: "btn btn-info btn-sm" do
+        %span.glyphicon.glyphicon-download-alt
+        Download as JSON
+      = copy_email_btn
+      = link_to "+ New Session", new_event_staff_program_session_path(current_event), class: "btn btn-success btn-sm"
+.row
+  .col-md-8
+    %h4.quick-filter-tabs
+      .tab#program
+        %h4
+          Program
+          %span.badge= sessions.object.program.count
+      .tab#waitlist
+        %h4
+          Waitlist
+          %span.badge= sessions.object.waitlisted.count
+      .tab#declined
+        %h4
+          Declined
+          %span.badge= sessions.object.declined.count
+      .indicator
+.row
+  .col-md-12
+    %table#program-sessions.datatable.table.table-striped
+      %thead
+        %tr
+          %th
+          %th
+          %th
+          %th
+          %th
+          %th
+          %th
+          %th.hidden
+        %tr
+          %th Title
+          %th Speaker
+          %th Format
+          %th Track
+          %th Scheduled
+          %th Status
+          %th Actions
+          %th Notes
+          %th.hidden
+
+      %tbody
+        = render partial: 'session_row_active', collection: sessions, as: :program_session
+%hr

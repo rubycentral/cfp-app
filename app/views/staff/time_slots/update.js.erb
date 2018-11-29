@@ -1,0 +1,21 @@
+$("#time-slot-edit-dialog .errors").html("");
+
+<% if @time_slot.errors.present? %>
+$("#time-slot-edit-dialog .errors").html("<%= @time_slot.errors.full_messages.join(', ') %>");
+<% else %>
+  $('#time-slot-edit-dialog').modal('hide');
+
+  var table = $('#organizer-time-slots.datatable').dataTable();
+  var row = $('table#organizer-time-slots #time_slot_<%= time_slot_decorated.id %>')[0];
+
+  var data = <%=raw time_slot_decorated.row_data.to_json %>;
+
+  <%# To avoid having to re-add the 'actions' cell we have to add the data %>
+  <%# one column at a time %>
+  var length = data.length;
+  for (var i = 0; i < length; ++i) {
+    table.fnUpdate(data[i], row, i);
+  }
+<% end %>
+
+document.getElementById("flash").innerHTML = "<%=j show_flash %>";

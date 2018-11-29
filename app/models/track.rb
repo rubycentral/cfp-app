@@ -1,11 +1,17 @@
-class Track < ActiveRecord::Base
+class Track < ApplicationRecord
+  NO_TRACK = 'General'
+
   belongs_to :event
-  has_many :session
+  has_many :program_sessions
+  has_many :proposals
 
   validates :name, uniqueness: {scope: :event}, presence: true
+  validates :description, length: {maximum: 250}
+
+  scope :sort_by_name, -> { order(:name) }
 
   def self.count_by_track(event)
-    event.tracks.joins(:session).group(:name).count
+    event.tracks.joins(:program_sessions).group(:name).count
   end
 end
 
@@ -13,11 +19,13 @@ end
 #
 # Table name: tracks
 #
-#  id         :integer          not null, primary key
-#  name       :text
-#  event_id   :integer
-#  created_at :datetime
-#  updated_at :datetime
+#  id          :integer          not null, primary key
+#  event_id    :integer
+#  name        :string
+#  description :string(250)
+#  guidelines  :text
+#  created_at  :datetime
+#  updated_at  :datetime
 #
 # Indexes
 #

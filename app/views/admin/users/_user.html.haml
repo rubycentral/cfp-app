@@ -1,0 +1,10 @@
+%tr{ id: "user-#{user.id}"}
+  %td= link_to user.name, admin_user_path(user)
+  %td= user.email
+  %td= user.role_names
+  %td= user.provider
+  %td= user.created_at.to_s(:long_with_zone)
+  %td.actions
+    = link_to 'Edit', edit_admin_user_path(user), class: 'btn btn-primary btn-xs'
+    - unless user == current_user
+      = link_to 'Delete', admin_user_path(user), method: :delete, data: { confirm: "Are you sure you want to delete this user?" }, class: 'btn btn-danger btn-xs'

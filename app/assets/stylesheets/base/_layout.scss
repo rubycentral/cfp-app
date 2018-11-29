@@ -1,0 +1,94 @@
+body {
+  padding-top: $navbar-height;
+
+  // flexbox for sticky footer
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.col-centered {
+  float: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.page-header {
+  &.page-header-slim {
+    margin-top: 20px;
+  }
+
+  h1 {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .label {
+    display: inline-block;
+    margin-bottom: $padding-base-vertical;
+    vertical-align: middle;
+  }
+
+  .meta-text {
+    margin-bottom: $padding-base-vertical;
+  }
+}
+
+.main {
+  padding-bottom: $padding-large-vertical;
+  flex: 1;
+}
+
+.page-footer {
+  margin-top: $padding-large-vertical * 2;
+
+  .page-footer-inner {
+    padding-top: $padding-large-vertical * 2;
+    padding-bottom: $padding-large-vertical * 2;
+    border-top: 1px solid $gray-lighter;
+  }
+}
+
+// Flexbox module
+.flex-container {
+  display: flex;
+}
+
+.flex-column  {
+  flex-direction: column
+}
+
+.flex-wrap {
+  flex-wrap: wrap
+}
+
+.flex-item {
+  flex: 1 1 auto;
+
+  &.flex-item-padded {
+    padding-left: $padding-base-horizontal / 2;
+    padding-right: $padding-base-horizontal / 2;
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+
+  &.flex-item-fixed {
+    flex: none;
+  }
+
+  &.flex-item-right {
+    text-align: right;
+  }
+}
+
+@media screen and (max-width: $screen-xs-max) {
+  .flex-container-md {
+    flex-direction: column;
+  }
+}

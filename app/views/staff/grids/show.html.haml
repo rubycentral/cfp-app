@@ -1,0 +1,31 @@
+#schedule{data: grid_data}
+  %ul.nav.navbar-fixed-top.nav-tabs{role: 'tablist'}
+    - @schedule.each_day do |day|
+      %li{role: 'presentation', class: current_day_css(day, 1)}
+        = link_to "#grid_day_#{day}", data: {toggle: 'tab'}, role: 'tab' do
+          .nav-tab-content
+            .day= "Day #{day}"
+            .counts-container
+              .total.time-slots
+                %span.badge= "#{@counts[day][:scheduled]}/#{@counts[day][:total]}"
+  %ul.nav.grid-nav
+  .row.contained
+    .scroll-panel-margin
+    .col-md-12
+      .tab-content
+        - @schedule.each_day do |day|
+          .tab-pane{class: current_day_css(day, 1), id: "grid_day_#{day}", role: 'tabpanel'}
+            .generate-grid-wrapper.text-right
+              = generate_grid_button(day)
+            .grid-wrapper.container-fluid
+              .bulk-preview-bar
+              .schedule-widget
+                .grid-column
+                  = render partial: 'grid', locals: { schedule: @schedule, day: day }
+                .unscheduled-sessions-column
+                  = render partial: 'unscheduled_sessions', locals: { schedule: @schedule }
+
+#grid-time-slot-edit-dialog.modal.fade
+#bulk-time-slot-create-dialog.modal.fade
+#bulk-time-slot-create-dialog.modal.fade
+#program-session-show-dialog.modal.fade

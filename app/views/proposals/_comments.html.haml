@@ -1,19 +1,21 @@
-- if comments.empty?
-  None
-
-- comments.order(:created_at).each do |comment|
-  .comment.markdown{ class: choose_class_for(comment) }
-    =markdown(comment.body)
-
-    - if comment.person.present?
-      .meta
-        %small{ title: comment.created_at.to_s }
-          #{proposal.has_speaker?(comment.person) ? 'speaker' : comment.person.name} - #{comment.created_at.to_s(:day_at_time)}
+%ul.messages_layout
+  - comments.order(:created_at).each do |comment|
+    %li.comment.markdown{ class: choose_class_for(comment) }
+      .message_wrap
+        - if comment.user.present?
+          .info{ title: comment.created_at.to_s }
+            %p.name
+              = commenter_name(comment)
+            %span.time #{comment.created_at.to_s(:day_at_time)}
+        .text
+          =markdown(comment.body)
 
 = form_for comments.new do |f|
   = f.hidden_field :proposal_id
   .form-group
-    = f.text_area :body, class: 'form-control', placeholder: 'Add your comment', rows: 13
-  %button.btn.btn-success.save-comment(type="submit")
-    %span.glyphicon.glyphicon-ok
-    Comment
+    - input_class = internal?(f.object) ? 'form-control mention' : 'form-control'
+    = f.text_area :body, class: input_class, placeholder: 'Add your comment', rows: 5, data: { mention_names: internal?(f.object) ? @mention_names : nil }
+  .form-group
+    %button.btn.btn-success.save-comment(type="submit")
+      %span.glyphicon.glyphicon-ok
+      Comment

@@ -1,0 +1,14 @@
+if ($('table.proposal-list').length > 0) {
+  <%# We are in staff/proposals/index %>
+
+  var row = $('tr[data-proposal-id=<%= proposal.id %>]');
+
+  row.find(".state-buttons .btn").toggleClass("hidden");
+  row.find(".proposal-status").html('<%=j proposal.state_label(small: true, show_confirmed: true) %>');
+
+} else {
+  <%# We are in staff/proposals/show %>
+
+  $('.state-buttons').html('<%=j proposal.state_buttons %>');
+  $('.proposal-status').html('<%=j proposal.state_label(small: true, show_confirmed: true) %>');
+}

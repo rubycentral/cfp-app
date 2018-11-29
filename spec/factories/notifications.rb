@@ -2,9 +2,18 @@
 
 FactoryGirl.define do
   factory :notification do
-    person nil
+    user nil
     message "MyString"
     read_at DateTime.now
-    target_path 'MyString'
+    target_path '/events'
+
+    trait :unread do
+      read_at nil
+    end
+
+    trait :with_long_message do
+      message "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit ut nobis nemo dolore architecto aliquam."
+    end
+
   end
 end

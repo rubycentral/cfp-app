@@ -1,0 +1,807 @@
+= javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"
+= javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.7.3/fullcalendar.min.js"
+= stylesheet_link_tag "//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.7.3/fullcalendar.min.css", media: :all
+= stylesheet_link_tag "//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.7.3/fullcalendar.print.css", media: :print
+
+.row
+  .col-sm-12
+    .widget
+      .widget-header
+        %i.fa.fa-diamond
+        %h3 Ruby Central CFP Styleguide
+      .widget-content
+        .tabbable
+          %ul.nav.nav-tabs
+            %li.active
+              %a{"data-toggle" => "tab", :href => "#colors-tab"} Headers/Colors
+            %li
+              %a{"data-toggle" => "tab", :href => "#formcontrols"} Form Controls
+            %li
+              %a{"data-toggle" => "tab", :href => "#jscontrols"} Alerts/Modals
+            %li
+              %a{"data-toggle" => "tab", :href => "#buttons-examples"} Buttons
+            %li
+              %a{"data-toggle" => "tab", :href => "#tables-examples"} Tables
+            %li
+              %a{"data-toggle" => "tab", :href => "#discussion-example"} Discussions
+            %li
+              %a{"data-toggle" => "tab", :href => "#shortcuts-example"} Shortcuts / Stats
+            %li
+              %a{"data-toggle" => "tab", :href => "#cal-news-example"} Calendar / News
+            %li
+              %a{"data-toggle" => "tab", :href => "#ui-components"} UI Elements
+
+
+          .tab-content
+            #colors-tab.tab-pane.active
+              .widget.widget-colors-headers
+                .widget-header
+                  %i.fa.fa-th-list
+                  %h3 Headers &amp; Colors
+                .widget-content
+                  .row
+                    .col-sm-12
+                      %label Headers
+                      %h1
+                        H1 with label
+                        %span.label.label-default Default
+                      %h2
+                        H2 with label
+                        %span.label.label-default Default
+                      %h3
+                        H3 with label
+                        %span.label.label-default Default
+                      %h4
+                        H4 with label
+                        %span.label.label-default Default
+                      %h5
+                        H5 with label
+                        %span.label.label-default Default
+
+                  .row
+                    .col-sm-12
+                      %br/
+                      %br/
+                      %label Colors
+                      %table.table
+                        %tbody
+                          %tr
+                            %td.bg-gray-base.white-text
+                              $gray-base
+                            %td.bg-gray-darker.white-text
+                              $gray-darker
+                            %td.bg-gray-dark.white-text
+                              $gray-dark
+                            %td.bg-gray.white-text
+                              $gray:
+                            %td.bg-gray-light.white-text
+                              $gray-light
+                            %td.bg-gray-lighter
+                              $gray-lighter
+                          %tr
+                            %td.bg-brand-primary.white-text
+                              $brand-primary
+                            %td.bg-brand-success.white-text
+                              $brand-success
+                            %td.bg-brand-info.white-text
+                              $brand-info
+                            %td.bg-brand-info-alt.white-text
+                              $brand-info-alt
+                            %td.bg-brand-warning.white-text
+                              $brand-warning
+                            %td.bg-brand-danger.white-text
+                              $brand-danger
+                          %tr
+                            %td.bg-brand-accent.white-text
+                              $brand-accent
+
+                  .row
+                    .col-sm-12
+                      %br/
+                      %br/
+                      %label Labels
+                      %br/
+                      %span.label.label-default Default
+                      %span.label.label-primary Primary
+                      %span.label.label-success Success
+                      %span.label.label-info Info
+                      %span.label.label-warning Warning
+                      %span.label.label-danger Danger
+
+                  .row
+                    .col-sm-12
+                      %br/
+                      %br/
+                      %label Badges
+                      %br/
+                      %a{href: "#"}
+                        inbox
+                        %span.badge 42
+                      %button.btn.btn-default{type: "button"}
+                        Messages
+                        %span.badge 4
+                      %button.btn.btn-primary{type: "button"}
+                        Messages
+                        %span.badge 10
+                      %span.label.label-primary.label-lg
+                        Notifications
+                        %span.badge 42
+            #formcontrols.tab-pane
+              %form#edit-profile.form-horizontal
+                %fieldset
+                  .form-group
+                    %label.control-label.col-sm-2{:for => "username"} Username
+                    .col-sm-10
+                      %input#username.disabled.form-control{:disabled => "", :type => "text", :value => "Example"}
+                        %p.help-block Your username is for logging in and cannot be changed.
+                  .form-group
+                    %label.control-label.col-sm-2{:for => "firstname"} First Name
+                    .col-sm-10
+                      %input#firstname.form-control{:type => "text", :value => "John"}
+                  .form-group
+                    %label.control-label.col-sm-2{:for => "lastname"} Last Name
+                    .col-sm-10
+                      %input#lastname.form-control{:type => "text", :value => "Donga"}
+                  .form-group
+                    %label.control-label.col-sm-2{:for => "email"} Email Address
+                    .col-sm-10
+                      %input#email.form-control{:type => "text", :value => "john.donga@egrappler.com"}
+                  .form-group
+                    %label.control-label.col-sm-2{:for => "password1"} Password
+                    .col-sm-10
+                      %input#password1.form-control{:type => "password", :value => "thisispassword"}
+                  .form-group
+                    %label.control-label.col-sm-2{:for => "password2"} Confirm
+                    .col-sm-10
+                      %input#password2.form-control{:type => "password", :value => "thisispassword"}
+                  .form-group
+                    .col-sm-12
+                      %label.control-label.col-sm-2 Checkboxes
+                      .col-sm-8
+                        %label.checkbox-inline
+                          %input{:type => "checkbox"}
+                            Option 01
+                        %label.checkbox-inline
+                          %input{:type => "checkbox"}
+                            Option 02
+                  .form-group
+                    .col-sm-12
+                      %label.control-label.col-sm-2 Radio Buttons
+                      .col-sm-8
+                        %label.radio-inline
+                          %input{:name => "radiobtns", :type => "radio"}
+                            Option 01
+                        %label.radio-inline
+                          %input{:name => "radiobtns", :type => "radio"}
+                            Option 02
+                    / /col-sm-12
+                  / /form-group
+                  .form-group
+                    %label.control-label.col-sm-2{:for => "radiobtns"} Combined Textbox
+                    .col-sm-8
+                      .input-group.col-sm-5
+                        %span.input-group-addon $
+                        %input#appendedPrependedInput.form-control{:type => "text"}
+                          %span.input-group-addon .00
+                    / /col-sm-8
+                  / /form-group
+                  .form-group
+                    %label.control-label.col-sm-2{:for => "radiobtns"} Textbox with Button Front
+                    .col-sm-6
+                      .input-group
+                        %span.input-group-btn
+                          %button.btn.btn-default{:type => "button"} Go!
+                        %input.form-control{:placeholder => "Search for...", :type => "text"}
+                      / /input-group
+                    / /.col-lg-6
+                  / /form-group
+                  .form-group
+                    %label.control-label.col-sm-2{:for => "radiobtns"} Textbox with Button Back
+                    .col-sm-6
+                      .input-group
+                        %input#appendedInputButton.form-control{:type => "text"}
+                          %span.input-group-btn
+                            %button.btn.btn-default{:type => "button"} Go!
+                  / /form-group
+                  .form-group
+                    %label.control-label.col-sm-2{:for => "radiobtns"} Textbox with Dropdown Front
+                    .col-sm-6
+                      .input-group
+                        .input-group-btn
+                          %button.btn.btn-default.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+                            Action
+                            %span.caret
+                          %ul.dropdown-menu
+                            %li
+                              %a{:href => "#"} Action
+                            %li
+                              %a{:href => "#"} Another action
+                            %li
+                              %a{:href => "#"} Something else here
+                            %li.divider{:role => "separator"}
+                            %li
+                              %a{:href => "#"} Separated link
+                        %input.form-control{"aria-label" => "...", :type => "text"}
+
+                  .form-group
+                    %label.control-label.col-sm-2{:for => "radiobtns"} Textbox with Dropdown Back
+                    .col-sm-6
+                      .input-group
+                        %input.form-control{"aria-label" => "...", :type => "text"}
+                          .input-group-btn
+                            %button.btn.btn-default.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+                              Action
+                              %span.caret
+                            %ul.dropdown-menu.dropdown-menu-right
+                              %li
+                                %a{:href => "#"} Action
+                              %li
+                                %a{:href => "#"} Another action
+                              %li
+                                %a{:href => "#"} Something else here
+                              %li.divider{:role => "separator"}
+                              %li
+                                %a{:href => "#"} Separated link
+                          / /btn-group
+                      / /input-group
+                    / /.col-lg-6
+                  / /form-group
+                  .form-group
+                    %label.control-label.col-sm-2{:for => "radiobtns"} Dropdown in a button group
+                    .col-sm-6
+                      .btn-group
+                        %a.btn.btn-primary{:href => "#"}
+                          %i.glyphicon.glyphicon-user.icon-white
+                          User
+                        %a.btn.btn-primary.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                          %span.caret
+                        %ul.dropdown-menu
+                          %li
+                            %a{:href => "#"}
+                              %i.glyphicon.glyphicon-pencil
+                              Edit
+                          %li
+                            %a{:href => "#"}
+                              %i.glyphicon.glyphicon-trash
+                              Delete
+                          %li
+                            %a{:href => "#"}
+                              %i.glyphicon.glyphicon-ban-circle
+                              Ban
+                          %li.divider
+                          %li
+                            %a{:href => "#"}
+                              %i.i
+                              Make admin
+                  .form-group
+                    %label.control-label.col-sm-2{:for => "radiobtns"} Button sizes
+                    .col-sm-8
+                      %a.btn.btn-default.btn-lg{:href => "#"}
+                        %i.glyphicon.glyphicon-star
+                        Star
+                      %a.btn.btn-default{:href => "#"}
+                        %i.glyphicon.glyphicon-star
+                        Star
+                      %a.btn.btn-default.btn-sm{:href => "#"}
+                        %i.glyphicon.glyphicon-star
+                        Star
+                      %a.btn.btn-default.btn-xs{:href => "#"}
+                        %i.glyphicon.glyphicon-star
+                        Star
+                    / /col-sm-8
+                  / /form-group
+                  %br/
+                  .form-group
+                    .col-sm-12
+                      %button.btn Cancel
+                      %button.btn.btn-primary{:type => "submit"} Save
+                  / /form-group
+
+            #jscontrols.tab-pane
+              %form#edit-profile2.form-vertical
+                %fieldset
+                  .form-group
+                    %label.control-label Alerts
+                    .controls
+                      .alert.alert-danger
+                        %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+                        %strong Danger!
+                      .alert.alert-success
+                        %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+                        %strong Success!
+                        %a.alert-link{:href => "#"} Linking to something in an alert
+                      .alert.alert-info
+                        %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+                        %strong Info!
+                      .alert.alert-warning
+                        %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+                        %strong Warning!
+                    / /controls
+                  / /form-group
+                  .form-group
+                    %label.control-label Progress Bars
+                    .row
+                      .col-sm-12
+                        .progress
+                          .progress-bar{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "50", :role => "progressbar", :style => "width: 50%;"} 50%
+                    .row
+                      .col-sm-12
+                        .progress
+                          .progress-bar{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "60", :role => "progressbar", :style => "width: 60%;"}
+                    .row
+                      .col-sm-12
+                        .progress
+                          .progress-bar.progress-bar-success{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "50", :role => "progressbar", :style => "width: 50%;"} Success
+                    .row
+                      .col-sm-12
+                        .progress
+                          .progress-bar.progress-bar-info{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "50", :role => "progressbar", :style => "width: 50%;"} Info
+                    .row
+                      .col-sm-12
+                        .progress
+                          .progress-bar.progress-bar-warning{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "50", :role => "progressbar", :style => "width: 50%;"} Warning
+                    .row
+                      .col-sm-12
+                        .progress
+                          .progress-bar.progress-bar-danger{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "50", :role => "progressbar", :style => "width: 50%;"} Danger
+                    .row
+                      .col-sm-12
+                        .progress
+                          .progress-bar.progress-bar-success.progress-bar-striped{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "20", :role => "progressbar", :style => "width: 20%;"}
+                    .row
+                      .col-sm-12
+                        .progress
+                          .progress-bar.progress-bar-info.progress-bar-striped.active{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "40", :role => "progressbar", :style => "width: 40%;"}
+                    .row
+                      .col-sm-12
+                        .progress
+                          .progress-bar.progress-bar-warning.progress-bar-striped.active{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "75", :role => "progressbar", :style => "width: 75%;"} 75%
+                    .row
+                      .col-sm-12
+                        .progress
+                          .progress-bar.progress-bar-danger.progress-bar-striped.active{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "95", :role => "progressbar", :style => "width: 95%;"} 95%
+                  / /form-group
+                  .form-group
+                    %label.control-label Modals
+                    .controls
+                      / Button to trigger modal
+                      %a.btn.btn-default{"data-toggle" => "modal", :href => "#myModal", :role => "button"}
+                        %i.glyphicon.glyphicon-modal-window
+                        Launch demo modal
+                      / Modal
+                      #myModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+                        .modal-dialog
+                          .modal-content
+                            .modal-header
+                              %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+                              %h3#myModalLabel Hi Friend!
+                            .modal-body
+                              %p Content
+                            .modal-footer
+                              %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+                              %button.btn.btn-primary Save
+                      / end myModal
+                    / /controls
+                  / /form-group
+            / /end jscontrols
+            #buttons-examples.tab-pane
+              .widget.widget-buttons
+                .widget-header
+                  %i.fa.fa-th-list
+                  %h3 Buttons
+                .widget-content
+                  .form-group
+                    %label.control-label Buttons
+                    .controls
+                      %button.btn.btn-default Default
+                      %button.btn.btn-primary{:type => "submit"} Save
+                      %button.btn.btn-info Info
+                      %button.btn.btn-danger Danger
+                      %button.btn.btn-warning Warning
+                      %button.btn.btn-invert Invert
+                      %button.btn.btn-success Success
+                      %button.btn.btn-link Cancel
+                  .form-group
+                    %button.btn.btn-xs.btn-default Default
+                    %button.btn.btn-primary.btn-xs{:type => "submit"} Save
+                    %button.btn.btn-xs.btn-info Info
+                    %button.btn.btn-xs.btn-danger Danger
+                    %button.btn.btn-xs.btn-warning Warning
+                    %button.btn.btn-xs.btn-invert Invert
+                    %button.btn.btn-xs.btn-success Success
+                    %button.btn.btn-xs.btn-link Cancel
+                  .form-group
+                    %button.btn.btn-sm.btn-default Default
+                    %button.btn.btn-primary.btn-sm{:type => "submit"} Save
+                    %button.btn.btn-sm.btn-info Info
+                    %button.btn.btn-sm.btn-danger Danger
+                    %button.btn.btn-sm.btn-warning Warning
+                    %button.btn.btn-sm.btn-invert Invert
+                    %button.btn.btn-sm.btn-success Success
+                    %button.btn.btn-sm.btn-link Cancel
+                  .form-group
+                    %button.btn.btn-lg.btn-default Default
+                    %button.btn.btn-primary.btn-lg{:type => "submit"} Save
+                    %button.btn.btn-lg.btn-info Info
+                    %button.btn.btn-lg.btn-danger Danger
+                    %button.btn.btn-lg.btn-warning Warning
+                    %button.btn.btn-lg.btn-invert Invert
+                    %button.btn.btn-lg.btn-success Success
+                    %button.btn.btn-lg.btn-link Cancel
+                  %br/
+                  .form-group
+                    %label.control-label{:for => "radiobtns"} Button sizes
+                    .row
+                      .col-sm-8
+                        %a.btn.btn-default.btn-lg{:href => "#"}
+                          %i.glyphicon.glyphicon-star
+                          Star
+                        %a.btn.btn-default{:href => "#"}
+                          %i.glyphicon.glyphicon-star
+                          Star
+                        %a.btn.btn-default.btn-sm{:href => "#"}
+                          %i.glyphicon.glyphicon-star
+                          Star
+                        %a.btn.btn-default.btn-xs{:href => "#"}
+                          %i.glyphicon.glyphicon-star
+                          Star
+                      / /col-sm-8
+                  / /form-group
+                  %br/
+                  .form-group
+                    %label.control-label Social Buttons
+                    .controls
+                      %button.btn.btn-default.btn-facebook-alt
+                        %i.fa.fa-facebook
+                        Facebook
+                      %button.btn.btn-default.btn-twitter-alt
+                        %i.fa.fa-twitter
+                        Twitter
+                      %button.btn.btn-default.btn-google-alt
+                        %i.fa.fa-google-plus
+                        Google+
+                      %button.btn.btn-default.btn-linkedin-alt
+                        %i.fa.fa-linkedin
+                        Linked In
+                      %button.btn.btn-default.btn-pinterest-alt
+                        %i.fa.fa-pinterest
+                        Pinterest
+                      %button.btn.btn-default.btn-github-alt
+                        %i.fa.fa-github
+                        Github
+                    / /controls
+                  / /form-group
+                  %br/
+                / /widget-content
+              / /widget widget-buttons
+            / /buttons-examples
+            #tables-examples.tab-pane
+              .widget.widget-table
+                .widget-header
+                  %i.fa.fa-th-list
+                  %h3 A Table Example
+                .widget-content
+                  %table.table.table-striped.table-bordered
+                    %thead
+                      %tr
+                        %th Resource
+                        %th Download
+                        %th
+                    %tbody
+                      %tr
+                        %td Bootstrap
+                        %td http://www.getbootstrap.com/
+                        %td
+                          %a.btn.btn-sm.btn-success{:href => "javascript:;"}
+                            %i.btn-icon-only.glyphicon.glyphicon-ok
+                          %a.btn.btn-danger.btn-sm{:href => "javascript:;"}
+                            %i.btn-icon-only.glyphicon.glyphicon-remove
+                      %tr
+                        %td Bootstrap
+                        %td http://www.getbootstrap.com/
+                        %td
+                          %a.btn.btn-sm.btn-success{:href => "javascript:;"}
+                            %i.btn-icon-only.glyphicon.glyphicon-ok
+                          %a.btn.btn-danger.btn-sm{:href => "javascript:;"}
+                            %i.btn-icon-only.glyphicon.glyphicon-remove
+                      %tr
+                        %td Bootstrap
+                        %td http://www.getbootstrap.com/
+                        %td
+                          %a.btn.btn-sm.btn-success{:href => "javascript:;"}
+                            %i.btn-icon-only.glyphicon.glyphicon-ok
+                          %a.btn.btn-danger.btn-sm{:href => "javascript:;"}
+                            %i.btn-icon-only.glyphicon.glyphicon-remove
+                / /widget-content
+              / /widget widget-table
+            / /tables-examples
+            #shortcuts-example.tab-pane
+              .col-sm-6
+                .widget.widget-shortcuts
+                  .widget-header
+                    %i.fa.fa-bookmark
+                    %h3 Shortcuts
+                  .widget-content
+                    .shortcuts
+                      %a.shortcut{:href => "javascript:;"}
+                        %i.shortcut-icon.glyphicon.glyphicon-list-alt
+                        %span.shortcut-label Apps
+                      %a.shortcut{:href => "javascript:;"}
+                        %i.shortcut-icon.glyphicon.glyphicon-bookmark
+                        %span.shortcut-label Bookmarks
+                      %a.shortcut{:href => "javascript:;"}
+                        %i.shortcut-icon.glyphicon.glyphicon-signal
+                        %span.shortcut-label Reports
+                      %a.shortcut{:href => "javascript:;"}
+                        %i.shortcut-icon.glyphicon.glyphicon-comment
+                        %span.shortcut-label Comments
+                      %a.shortcut{:href => "javascript:;"}
+                        %i.shortcut-icon.glyphicon.glyphicon-user
+                        %span.shortcut-label Users
+                      %a.shortcut{:href => "javascript:;"}
+                        %i.shortcut-icon.glyphicon.glyphicon-file
+                        %span.shortcut-label Notes
+                      %a.shortcut{:href => "javascript:;"}
+                        %i.shortcut-icon.glyphicon.glyphicon-picture
+                        %span.shortcut-label Photos
+                      %a.shortcut{:href => "javascript:;"}
+                        %i.shortcut-icon.glyphicon.glyphicon-tag
+                        %span.shortcut-label Tags
+                  / /widget-content
+                / /widget widget-shortcuts
+
+              .col-sm-6
+                .widget.widget-nopad
+                  .widget-header
+                    %i.fa.fa-list-alt
+                    %h3 Today's Stats
+                  .widget-content
+                    .widget.big-stats-container
+                      .widget-content
+                        %h6.bigstats
+                          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint quaerat eaque culpa delectus animi magnam assumenda. Aperiam tempore, dicta in, libero aut facere saepe eos ducimus consequatur suscipit commodi officiis!
+                        #big_stats.clearfix
+                          .stat
+                            %i.fa.fa-anchor
+                            %span.value 851
+                          .stat
+                            %i.fa.fa-thumbs-o-up
+                            %span.value 423
+                          .stat
+                            %i.fa.fa-twitter
+                            %span.value 922
+                          .stat
+                            %i.fa.fa-bullhorn
+                            %span.value 25%
+            / /shortcuts-example
+
+            #cal-news-example.tab-pane
+              .col-sm-6
+                .widget.widget-nopad.clearfix
+                  .widget-header
+                    %i.fa.fa-calendar
+                    %h3 Calendar
+                  .widget-content.clearfix
+                    #calendar
+
+              .col-sm-6
+                .widget
+                  .widget-header
+                    %i.fa.fa-newspaper-o
+                    %h3 Recent News
+                  .widget-content
+                    %ul.news-items
+                      %li
+                        .news-item-date
+                          %span.news-item-day 29
+                          %span.news-item-month Aug
+                        .news-item-detail
+                          %a.news-item-title{:href => "http://www.getbootstrap.com/thursday-roundup-40/", :target => "_blank"} Thursday Roundup # 40
+                          %p.news-item-preview This is our web design and development news series where we share our favorite design/development related articles, resources, tutorials and awesome freebies.
+                      %li
+                        .news-item-date
+                          %span.news-item-day 15
+                          %span.news-item-month Jun
+                        .news-item-detail
+                          %a.news-item-title{:href => "http://www.getbootstrap.com/retina-ready-responsive-app-landing-page-website-template-app-landing/", :target => "_blank"} Retina Ready Responsive App Landing Page Website Template – App Landing
+                          %p.news-item-preview App Landing is a retina ready responsive app landing page website template perfect for software and application developers and small business owners looking to promote their iPhone, iPad, Android Apps and software products.
+                      %li
+                        .news-item-date
+                          %span.news-item-day 29
+                          %span.news-item-month Oct
+                        .news-item-detail
+                          %a.news-item-title{:href => "http://www.getbootstrap.com/open-source-jquery-php-ajax-contact-form-templates-with-captcha-formify/", :target => "_blank"} Open Source jQuery PHP Ajax Contact Form Templates With Captcha: Formify
+                          %p.news-item-preview Formify is a contribution to lessen the pain of creating contact forms. The collection contains six different forms that are commonly used. These open source contact forms can be customized as well to suit the need for your website/application.
+                  / /widget-content
+                / /widget
+            / /cal-news-example
+
+            #discussion-example.tab-pane
+              .col-sm-6
+                .widget
+                  .widget-header
+                    %i.fa.fa-comment
+                    %h3 Discussion Content
+                  .widget-content
+                    %ul.messages_layout
+                      %li.from_user.left
+                        %a.avatar{:href => "#"}
+                          %img{:src => "img/message_avatar1.png"}/
+                        .message_wrap
+                          %span.arrow
+                          .info
+                            %a.name John Smith
+                            %span.time 1 hour ago
+                            .options_arrow
+                              .dropdown.pull-right
+                                %a#dLabel.dropdown-toggle{"data-target" => "#", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+                                  %span.caret
+                                %ul.dropdown-menu{"aria-labelledby" => "dLabel", :role => "menu"}
+                                  %li
+                                    %a{:href => "#"}
+                                      %i.glyphicon.glyphicon-share-alt.icon-large
+                                      Reply
+                                  %li
+                                    %a{:href => "#"}
+                                      %i.glyphicon.glyphicon-trash.icon-large
+                                      Delete
+                                  %li
+                                    %a{:href => "#"}
+                                      %i.glyphicon.glyphicon-share.icon-large
+                                      Share
+                          .text As an interesting side note, as a head without a body, I envy the dead. There's one way and only one way to determine if an animal is intelligent. Dissect its brain! Man, I'm sore all over. I feel like I just went ten rounds with mighty Thor.
+                      %li.by_myself.right
+                        %a.avatar{:href => "#"}
+                          %img{:src => "img/message_avatar2.png"}/
+                        .message_wrap
+                          %span.arrow
+                          .info
+                            %a.name Bender (myself)
+                            %span.time 4 hours ago
+                          .text All I want is to be a monkey of moderate intelligence who wears a suit… that's why I'm transferring to business school! I had more, but you go ahead. Man, I'm sore all over. I feel like I just went ten rounds with mighty Thor. File not found.
+                      %li.from_user.left
+                        %a.avatar{:href => "#"}
+                          %img{:src => "img/message_avatar1.png"}/
+                        .message_wrap
+                          %span.arrow
+                          .info
+                            %a.name Celeste Holm
+                            %span.time 1 Day ago
+                          .text And I'd do it again! And perhaps a third time! But that would be it. Are you crazy? I can't swallow that. And I'm his friend Jesus. No, I'm Santa Claus! And from now on you're all named Bender Jr.
+                      %li.from_user.left
+                        %a.avatar{:href => "#"}
+                          %img{:src => "img/message_avatar2.png"}/
+                        .message_wrap
+                          %span.arrow
+                          .info
+                            %a.name Mark Jobs
+                            %span.time 2 Days ago
+                          .text That's the ONLY thing about being a slave. Now, now. Perfectly symmetrical violence never solved anything. Uh, is the puppy mechanical in any way? As an interesting side note, as a head without a body, I envy the dead.
+
+            #ui-components.tab-pane
+              %h3 Event Info
+              
+              .row
+                .col-md-4
+                  .event-info.event-info-dense
+                    %strong.event-title SeedConf
+                    %span.event-meta 
+                      %i.fa.fa-fw.fa-calendar
+                      March 13, 2017
+                    %span.event-meta 
+                      %i.fa.fa-fw.fa-map-marker
+                      Phoenix, AZ
+                .col-md-4
+                  .event-info.event-info-block
+                    %strong.event-title SeedConf
+                    %span.event-meta 
+                      %i.fa.fa-fw.fa-calendar
+                      March 13, 2017
+                    %span.event-meta 
+                      %i.fa.fa-fw.fa-map-marker
+                      Phoenix, AZ
+                    %span.event-meta= link_to("http://seedconf.com")
+                    %span.event-meta= mail_to("contact@seed.event")
+                .col-md-4
+                  .panel.panel-success.event-info.event-info-panel
+                    .panel-heading
+                      CFP OPEN
+                    .panel-body
+                      %dl
+                        %dt.event-label CFP closes: 
+                        %dd.event-callout January 7, 2017 at 09:30pm MST
+                        %dd
+                          %strong 6 months left to submit your proposal
+                      %div
+                        = link_to 'Submit a proposal', '#', class: 'btn btn-primary'
+              %h3 Event Status Badges
+              
+              .event-status-badge.event-status-open CFP OPEN
+              .event-status-badge.event-status-closed CFP CLOSED
+              .event-status-badge.event-status-draft CFP DRAFT
+
+:javascript
+  $(document).ready(function() {
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+
+      if( e.target.href.split("#")[1] === "cal-news-example" && !$("#calendar").hasClass("fc-unthemed") ) {
+        var date = new Date();
+        var d = date.getDate();
+        var m = date.getMonth();
+        var y = date.getFullYear();
+
+        var calendar = $('#calendar').fullCalendar({
+          header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+          },
+          selectable: true,
+          selectHelper: true,
+          select: function(start, end, allDay) {
+            var title = prompt('Event Title:');
+            if (title) {
+              calendar.fullCalendar('renderEvent',
+                {
+                  title: title,
+                  start: start,
+                  end: end,
+                  allDay: allDay
+                },
+                true // make the event "stick"
+              );
+            }
+            calendar.fullCalendar('unselect');
+          },
+          editable: true,
+          events: [
+            {
+              title: 'All Day Event',
+              start: new Date(y, m, 1)
+            },
+            {
+              title: 'Long Event',
+              start: new Date(y, m, d+5),
+              end: new Date(y, m, d+7)
+            },
+            {
+              id: 999,
+              title: 'Repeating Event',
+              start: new Date(y, m, d-3, 16, 0),
+              allDay: false
+            },
+            {
+              id: 999,
+              title: 'Repeating Event',
+              start: new Date(y, m, d+4, 16, 0),
+              allDay: false
+            },
+            {
+              title: 'Meeting',
+              start: new Date(y, m, d, 10, 30),
+              allDay: false
+            },
+            {
+              title: 'Lunch',
+              start: new Date(y, m, d, 12, 0),
+              end: new Date(y, m, d, 14, 0),
+              allDay: false
+            },
+            {
+              title: 'Birthday Party',
+              start: new Date(y, m, d+1, 19, 0),
+              end: new Date(y, m, d+1, 22, 30),
+              allDay: false
+            },
+            {
+              title: 'EGrappler.com',
+              start: new Date(y, m, 28),
+              end: new Date(y, m, 29),
+              url: 'http://EGrappler.com/'
+            }
+          ]
+        });
+      }
+    });
+  });
+/ /Calendar

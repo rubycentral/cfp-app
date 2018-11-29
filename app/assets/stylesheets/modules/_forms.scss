@@ -1,0 +1,56 @@
+ _notification {
+  border-bottom: 1px solid darken(#edd1d1, 50%);
+  color: $brand-warning;
+  font-weight: 700;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+}
+
+.field_with_errors {
+  .form-control {
+    background-color: #edd1d1;
+  }
+  label, .help-block {
+    color: darken(#edd1d1, 50%);
+  }
+}
+
+.form-submit {
+  border-top: 1px solid $gray-light;
+  margin: 1em 0 5em;
+  padding-top: 1em;
+}
+
+.required_notification {
+  color:darken(#edd1d1, 50%);
+  font-style: italic;
+  float:right;
+}
+
+span[title="required"] {
+  color: darken(#edd1d1, 50%);
+}
+
+.control-label {
+  display: block;
+  max-width: 100%;
+  margin-bottom: 5px;
+  margin-top: 0;
+  font-size: $font-size-base;
+  font-weight: bold;
+}
+
+.cancel-form {
+  margin-right: .5em;
+}
+
+// Use a legend as the heading for major sections in a form.
+// Can also use the .fieldset-legend class to form heading styles
+// e.g., the show page for proposal
+.fieldset-legend {
+  @extend legend;
+}
+
+.cfp-date-input {
+  width: 50%;
+}

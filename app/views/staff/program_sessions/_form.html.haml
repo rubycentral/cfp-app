@@ -1,0 +1,28 @@
+= simple_form_for @program_session, url: [ event, :staff, @program_session ] do |f|
+  .row
+    %fieldset.col-md-6
+      = f.input :title, maxlength: 60, input_html: { class: 'watched js-maxlength-alert', rows: 1 }
+      = f.association :session_format, as: :select, collection: current_event.session_formats, label: "Format", required: true
+      = f.association :track, as: :select, collection: current_event.tracks, label: "Track", include_blank: true
+      - unless @program_session.new_record?
+        = f.input :state, as: :select, collection: session_states_collection, label: "State", required: true
+      = f.input :abstract, maxlength: 605, input_html: { class: 'watched js-maxlength-alert', rows: 5 }
+      = f.label :video_url
+      = f.text_field :video_url, class: "form-control"
+      = f.label :slides_url
+      = f.text_field :slides_url, class: "form-control"
+      - if @program_session.proposal.present?
+        = f.simple_fields_for :proposal do |proposal|
+          = proposal.input :confirmation_notes, label: "Confirmation Notes"
+    - if @program_session.new_record?
+      %fieldset.col-md-6
+        %h4 Speaker
+        = f.simple_fields_for :speakers, url: [ @event, :staff] do |speaker|
+          = speaker.input :speaker_name, label: "Name", required: true
+          = speaker.input :speaker_email, label: "Email", required: true
+          = speaker.input :bio, maxlength: :lookup, input_html: { class: 'watched js-maxlength-alert', rows: 5 }
+
+  .row
+    .col-sm-12
+      =submit_tag("Save", class: "pull-right btn btn-success", type: "submit")
+      = link_to "Cancel", event_staff_program_sessions_path(current_event), {:class=>"cancel-form pull-right btn btn-danger"}

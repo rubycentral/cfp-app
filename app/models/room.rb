@@ -1,9 +1,10 @@
-class Room < ActiveRecord::Base
+class Room < ApplicationRecord
   belongs_to :event
-  has_many :session
+  has_many :time_slots
 
-  validates :name, uniqueness: true
+  validates :name, uniqueness: true, presence: true
   scope :by_grid_position, -> {where.not(grid_position: nil).order(:grid_position)}
+  scope :grid_order, -> { order(:grid_position) }
 end
 
 # == Schema Information
@@ -11,15 +12,15 @@ end
 # Table name: rooms
 #
 #  id            :integer          not null, primary key
+#  event_id      :integer
 #  name          :string
 #  room_number   :string
 #  level         :string
 #  address       :string
 #  capacity      :integer
-#  event_id      :integer
+#  grid_position :integer
 #  created_at    :datetime
 #  updated_at    :datetime
-#  grid_position :integer
 #
 # Indexes
 #

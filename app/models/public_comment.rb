@@ -1,33 +1,33 @@
 class PublicComment < Comment
 
-  after_create :create_notifications, :send_emails
+  after_create :notify
 
   private
 
-  # Send emails to speakers when reviewer creates a comment
-  def send_emails
-    if person.reviewer_for_event?(proposal.event)
-      ProposalMailer.comment_notification(proposal, self).deliver_now
-    end
-  end
-
-  # Generate notifications for Comment
+  # Generate notifications for PublicComment
   # 1. If a speaker is leaving a comment,
-  #    all reviewers/organizers get an in app notification
-  #      if they have reviewed or commented on the proposal.
-  # 2. If a a reviewer/organizer leaves a comment,
+  #      all reviewers/organizers get an in app notification
+  #      if they have reviewed/rated or commented on the proposal.
+  # 2. If anyone else (reviewer/program staff/organizer) leaves a comment,
   #      only the speakers get an in app and email notification.
-  def create_notifications
-
-    if person.reviewer_for_event?(proposal.event)
-      people = proposal.speakers.map(&:person)
-      message = "#{person.name} has commented on #{proposal.title}"
-    else
-      people = proposal.reviewers
-      message = "The author has commented on #{proposal.title}"
+  def notify
+    begin
+      if proposal.has_speaker?(user)
+        @users = proposal.reviewers
+        message = "Speaker commented on #{proposal.title}"
+        CommentNotificationMailer.reviewer_notification(proposal, self,
+                                    proposal.emailable_reviewers).deliver_now
+      else
+        @users = proposal.speakers.map(&:user)
+        message = "New comment on #{proposal.title}"
+        CommentNotificationMailer.speaker_notification(proposal, self, @users).deliver_now
+      end
+      @users.each do |user|
+        Notification.create_for(user, proposal: proposal, message: message)
+      end
+    rescue => e
+      logger.error("Comment Notification ran into an error: #{e.message}")
     end
-
-    Notification.create_for(people, proposal: proposal, message: message)
   end
 end
 
@@ -37,7 +37,7 @@ end
 #
 #  id          :integer          not null, primary key
 #  proposal_id :integer
-#  person_id   :integer
+#  user_id     :integer
 #  parent_id   :integer
 #  body        :text
 #  type        :string
@@ -46,6 +46,6 @@ end
 #
 # Indexes
 #
-#  index_comments_on_person_id    (person_id)
 #  index_comments_on_proposal_id  (proposal_id)
+#  index_comments_on_user_id      (user_id)
 #

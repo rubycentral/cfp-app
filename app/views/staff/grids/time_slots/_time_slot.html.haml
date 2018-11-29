@@ -1,0 +1,13 @@
+.time-slot{id: "time_slot_#{dom_id(ts)}", data: ts.ts_data, class: ts.preview_css}
+  - if ts.filled_with_session?
+    - ps = Staff::ProgramSessionDecorator.decorate(ts.program_session)
+    = render partial: 'staff/grids/draggable_session', locals: { ps: ps }
+  - elsif ts.new_record?
+    .title Preview
+  - elsif ts.configured?
+    .custom-session-card{data: { track_css: ts.track_name.try(:parameterize)} }
+      .track
+        %span=truncate(ts.track_name, length: 18)
+      .session-card-body
+        .title=truncate(ts.display_title, length: 50)
+        .presenter=truncate(ts.display_presenter, length: 30)

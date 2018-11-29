@@ -1,0 +1,11 @@
+.schedule-grid{id: "schedule_day_#{day}"}
+  %ul.ruler
+  - schedule.each_room(day) do |room, slots|
+    .room-column{class: grid_position_css(room)}
+      .column-header
+        = room.name
+      .time-slots
+        &nbsp;
+        - slots.each do |ts|
+          - ts = Staff::TimeSlotDecorator.decorate(ts)
+          = render partial: 'staff/grids/time_slots/time_slot', locals: { ts: ts }

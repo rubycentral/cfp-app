@@ -1,14 +1,22 @@
-# CFP-App
+# CFP-App 2.0
+
+## WARNING
+
+This is a major upgrade from the original CFP App that is not backwards compatible.  We redesigned many of the core data models and changed how the app works. Some functionality may be unavailable to IE9 and earlier versions of IE.
+
+It is expected that you will install CFP App 2.0 into a new, pristine database and you will run future events on it.  If you have an existing installation of CFP App 1.0 and you want to preserve your data, you will need to handle the data migration on your own.
+
+## Overview
 
 This is a Ruby on Rails application that lets you manage your conference's call for proposal (CFP), program and schedule.  It was written by Ruby Central to run the CFPs for RailsConf and RubyConf.
 
-The CFP App does not provide a public facing website for your conference, though we have a sister project that does integration with the CFP App's export data to give you a starting place for your website.
-
 At a high level the CFP App allows speakers to submit and manage their proposals for your event.  Organizers can create a group of reviewers that blindly review and rate talks.  Organizers can then select talks to be accepted into the program including a waitlist of proposals.  Finally organizers can create a schedule and slot confirmed talks.  Down below, I'll give a detailed description of the features and workflows of the CFP App under the section 'How to use the CFP App'
+
+The CFP App does not provide a public facing website for your conference, though we have a sister project that does integration with the CFP App's export data to give you a starting place for your website.  If you have interest in running a similar website, please reach out to Ruby Central directly at rubycentral.org.
 
 ## Getting Started
 
-Make sure you have Ruby 2.3 and Postgres installed in your environment.  This is a Rails 4.2 app and uses bundler to install all required gems.  We are also making the assumption that you're familiar with how Rails apps and setup and deployed.  If this is not the case then you'll want to refer to documentation that will bridge any gaps in the instructions below.
+Make sure you have Ruby and Postgres installed in your environment.   Check the Gemfile for the exact supported version.  This is a Rails 5 app and uses bundler to install all required gems.  We are also making the assumption that you're familiar with how Rails apps and setup and deployed.  If this is not the case then you'll want to refer to documentation that will bridge any gaps in the instructions below.
 
 Run [bin/setup](bin/setup) script to install gem dependencies and setup database for development.
 
@@ -16,7 +24,7 @@ Run [bin/setup](bin/setup) script to install gem dependencies and setup database
 bin/setup
 ```
 
-This will create `.env`, a development database with seed data. Seed will make an admin user with an email of `an@admin.com` to get started. There is a special, development only login method in Omniauth that you can use to test it out.
+This will create `.env`, a development database with seed data. Seed will make an admin user with an email of `an@admin.com` and password of `userpass` to get started. There is a special, development only login method in Omniauth that you can use to test it out.
 
 NOTE: You may need to install Qt/`qmake` to get Capybara to work; with Homebrew you can run `brew install qt`.
 
@@ -26,9 +34,17 @@ Start the server:
 bin/rails server
 ```
 
+If you have the heroku toolbelt installed you can also use:
+
+```bash
+heroku local
+```
+
+This will boot up using Foreman and allow the .env file to be read / set for use locally. Runs on port 5000.
+
 ### Environment variables
 
-[Omniauth](http://intridea.github.io/omniauth/) is set up to use Twitter and Github for logins in production. You'll want to put your own key and secret in for both. Other environment variables will include your postgres user and Rails' secret\_token.
+[Omniauth](https://github.com/omniauth/omniauth) is set up to use Twitter and Github for logins in production. You'll want to put your own key and secret in for both. Other environment variables will include your postgres user and Rails' secret\_token.
 
     TIMEZONE (defaults to Pacific if not set)
     POSTGRES_USER (dev/test only)
@@ -40,6 +56,25 @@ bin/rails server
     TWITTER_KEY
     TWITTER_SECRET
 
+### User roles
+
+There are five user roles in CFP App. To log in as a user type in development mode, locate the email for each user in `seeds.rb`. The password is the same for each user, and is assigned to the variable `pwd` in the seed file.
+
+- **Admin:**
+  - Edit/delete users
+  - Add/archive events
+  - Automatically an **Organizer** for created events
+- **Organizer:**
+  - Full access to everything under an event
+  - Is the only role that can modify the program and schedule
+- **Program Team:**
+  - Has full access to the Review and Selection sections
+- **Reviewer:**
+  - View/rate anonymous event proposals for an event
+  - Cannot rate own proposals
+- **Speaker:**
+  - View/edit/delete own proposals
+
 ## Deployment on Heroku
 
 The app was written with a Heroku deployment stack in mind. You can easily deploy the application using the button below, or you can deploy it anywhere assuming you can run Ruby 2.3.0 and Rails 4.2.5 with a postgres database and an SMTP listener.
@@ -50,31 +85,30 @@ addons.
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
 Upon deploying to Heroku you will probably want to log in using Twitter or
-GitHub and then run `heroku run console` to update the first Person object to
+GitHub and then run `heroku run console` to update the first User object to
 be an admin like this:
 
-
 ```bash
-p = Person.first
-p.admin = true
-p.save
+user = User.first
+user.admin = true
+user.save
 ```
 
-Do make sure that the Person record you pull back is indeed your newly created user and the one that should get admin permissions!
+Do make sure that the User record you pull back is indeed your newly created user and the one that should get admin permissions!
 
 ## How to use the CFP App
 
 ### Creating your event
 
-You must login as an admin to create an event.  As touched on above in the deploy section you will want to either login to the app or work directly in the console.  Find your Person record or create a new one.  I do recommend you create the admin via login and then find the record via console since the Person record uses Services for authentication.  Once you find your record assign true to the admin attribute such as this:
+You must login as an admin to create an event.  As touched on above in the deploy section you will want to either login to the app or work directly in the console.  Find your User record or create a new one.  I do recommend you create the admin via login and then find the record via console since the User record uses Services for authentication.  Once you find your record assign true to the admin attribute such as this:
 
 ```bash
-p = Person.first
+p = User.first
 p.admin = true
 p.save
 ```
 
-One note, in development mode you have a special testing login called 'developer'.  With this you can login and seed a new Person record by entering name and email. Very handy for testing things locally.
+One note, in development mode you have a special testing login called 'developer'.  With this you can login and seed a new User record by entering name and email. Very handy for testing things locally.
 
 One logged in you should see your user's name with a dropdown arrow in the top right of the nav bar.  In that dropdown click on the 'Manage Events' link.  The Events page will show you all events on the system, which should be blank initially.  Click 'Add Event' to create your event.  Ideally you can fill out all this information though only name and contact email are required.
 
@@ -104,7 +138,7 @@ If you have Organizer access you will see an 'Organize' dropdown will give you t
 
 The 'Notifications' dropdown will display a count of any in app notifications you haven't read.  Clicking the dropdown will show you a list of these notifications such as 'Marty Haught has commented on <talk title>'.  You have a 'Mark all as read' and 'View all notifications' options as well.
 
-We briefly touched on the user dropdown on the far right. This is visible to all users.  From there they can sign out or visit their profile.  Their profile is how they edit their name, email or bio, allow them to connect to various services such as Github or Twitter.  If you are an admin, you will also have a People link.  This is where you manage all Person records.
+We briefly touched on the user dropdown on the far right. This is visible to all users.  From there they can sign out or visit their profile.  Their profile is how they edit their name, email or bio, allow them to connect to various services such as Github or Twitter.  If you are an admin, you will also have a Users link.  This is where you manage all User records.
 
 ### Submitting a Proposal
 
@@ -133,15 +167,15 @@ As a reviewer or organizer, you will use the 'Review' dropdown to get to the pro
 
 The list of proposals can be filtered and sorted as you see fit.  This is very important so that you can either focus on a certain tag or look at the oldest proposals that you have not rated.  The list shows the following fields:
 
-  Score: the average score across all ratings
-  Your Score: how you rated the proposal
-  Ratings: how many ratings total a talk has received
-  Title: which is also the link to view the proposal
-  Proposal Tags: the tags the speaker(s) associated with the proposal
-  Reviewer Tags: the tags the reviewers have added
-  Comments:  a total count of public comments including reviewers and speakers
-  Submitted On: the original submission date and time
-  Updated At: The last time the speaker updated the proposal
+  - Score: the average score across all ratings
+  - Your Score: how you rated the proposal
+  - Ratings: how many ratings total a talk has received
+  - Title: which is also the link to view the proposal
+  - Proposal Tags: the tags the speaker(s) associated with the proposal
+  - Reviewer Tags: the tags the reviewers have added
+  - Comments:  a total count of public comments including reviewers and speakers
+  - Submitted On: the original submission date and time
+  - Updated At: The last time the speaker updated the proposal
 
 The sort order is sticky and you can use the shift key to sort by more than one column.  Use the 'Reset Sort Order' button to clear this out.
 

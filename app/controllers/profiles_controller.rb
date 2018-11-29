@@ -1,21 +1,22 @@
 class ProfilesController < ApplicationController
-  before_filter :require_user
+  before_action :require_user
 
   def edit
-    unless current_user.complete?
-      flash.now[:danger] = "Please make sure your name and email address are present and correct."
-    end
+    current_user.valid?
+    flash.now[:warning] = incomplete_profile_msg unless current_user.complete?
   end
 
   def update
-    if current_user.update_attributes(person_params) && current_user.complete?
-      current_user.assign_open_invitations if session[:need_to_complete]
-      redirect_to (session.delete(:target) || root_url), info: "We've updated your profile. Thanks!"
-    else
-      if current_user.email == ""
-        current_user.errors[:email].clear
-        current_user.errors[:email] = " can't be blank"
+    if current_user.update_attributes(user_params)
+
+      if current_user.unconfirmed_email.present?
+        flash[:danger] = I18n.t("devise.registrations.update_needs_confirmation")
+      else
+        flash[:info] = I18n.t("devise.registrations.updated")
       end
+
+      redirect_to (session.delete(:target) || root_url)
+    else
       flash.now[:danger] = "Unable to save profile. Please correct the following: #{current_user.errors.full_messages.join(', ')}."
       render :edit
     end
@@ -23,7 +24,17 @@ class ProfilesController < ApplicationController
 
   private
 
-  def person_params
-    params.require(:person).permit(:bio, :gender, :ethnicity, :country, :name, :email)
+  def user_params
+    params.require(:user).permit(:bio, :gender, :ethnicity, :country, :name,
+                                 :email, :password, :password_confirmation,
+                                 teammates_attributes: [:id, :notification_preference])
+  end
+
+  def incomplete_profile_msg
+    if profile_errors = current_user.profile_errors
+      msg = 'Your profile is incomplete. Please correct the following: '
+      msg << profile_errors.full_messages.to_sentence + '.'
+      msg.html_safe
+    end
   end
 end

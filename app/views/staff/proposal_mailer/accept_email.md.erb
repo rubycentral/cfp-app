@@ -1,0 +1,14 @@
+<% if @event.accept.present? %>
+  <%= Staff::ProposalMailerTemplate.new(@event.accept, @event, @proposal).render %>
+ <% else %>
+Congratulations! We'd love to include your talk, <%= @proposal.title %>, at <%= @event.name %>.
+
+TO CONFIRM that you're still willing and able to present this talk, please visit the <%= @proposal.confirm_link %> .
+
+TO DECLINE (if you're no longer able to give this talk), please visit the <%= @proposal.confirm_link %>, and click the 'Decline' button.
+
+In the meantime, let us know if you have any questions. We're looking forward to seeing you there!
+
+The <%= @event.name %> Program Committee
+
+<% end %>

@@ -1,0 +1,21 @@
+.row
+  .col-md-7
+    %fieldset
+      - SpeakerEmailTemplate::TYPES.each do |type_key|
+        = render partial: "speaker_notification_email_template", locals: {f: f, type_key: type_key, type_text: SpeakerEmailTemplate::DISPLAY_TYPES[type_key], text: f.object.speaker_notification_emails[type_key]}
+  .col-md-5.email-markup-help
+    %h3 Email markup
+    %p Paragraphs are separated by two newlines.
+    %p
+      You can insert the proposal title using:
+      %br
+      %code ::proposal_title::
+    %p
+      You can insert the confirmation link* using:
+      %br
+      %code ::confirmation_link::
+    %p
+      You can insert the confirmation link with some link text using markdown:
+      %br
+      %code [link text](::confirmation_link::)
+    %p.help-block * confirmation link is not available in Reject emails

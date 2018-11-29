@@ -1,0 +1,201 @@
+.event {
+  .info-bar {
+    h4 {
+      line-height: 1.35em;
+    }
+  }
+  .checklist {
+    a {
+      color: $white;
+    }
+    .set {
+      background-color: $brand-success;
+    }
+    .missing {
+      background-color: $brand-danger;
+    }
+    .optional a {
+      color: $black;
+    }
+  }
+
+  .status-dropdown {
+    display: none;
+  }
+
+  #event_state {
+    width: 100%;
+    display: block;
+    margin-bottom:.25em;
+  }
+
+  #session_format_public {
+    height: 2em;
+    width: 2em;
+    display: inline-block;
+  }
+
+  .cfp-button {
+    display: block;
+    margin: .5em auto 0;
+    width: 65%;
+  }
+
+  .incomplete-msg {
+    background-color: $state-danger-bg;
+    border-color: $state-danger-border;
+    color: $state-danger-text;
+    padding: .25em;
+    margin: 1em 0;
+    border: 1px solid transparent;
+    border-radius: 4px;
+  }
+}
+
+.event-info-bar {
+  margin-top: 20px;
+}
+
+.event-info {
+  font-size: $font-size-base;
+
+  .event-title,
+  .event-meta {
+    display: inline-block;
+  }
+
+  .event-meta {
+    margin-left: $padding-base-horizontal;
+    color: $gray;
+
+    // display meta info on separate lines for xs screens
+    @media (max-width: $screen-xs-max) {
+      margin-left: 0;
+      display: block;
+    }
+  }
+}
+
+.event-info-block {
+  margin-bottom: $padding-large-vertical * 2;
+  position: relative;
+
+  .event-title,
+  .event-meta {
+    display: block;
+  }
+
+  .event-title {
+    font-size: $font-size-h3;
+    padding-right: 80px;
+  }
+
+  .event-callout {
+    font-size: $font-size-large;
+    font-weight: bold;
+  }
+
+  .event-meta {
+    margin-top: $padding-large-vertical / 2;
+    margin-left: 0;
+  }
+
+  .event-status-badge {
+    position: absolute;
+    right: $padding-large-vertical / 2;
+    top: $padding-large-vertical / 2;
+  }
+}
+
+#review-stats-table, #program-stats-table, #team-activity-table {
+  thead > tr > th:not(:first-of-type) {
+    text-align: center;
+  }
+  tbody {
+    > tr > td:not(:first-of-type) {
+      text-align: center;
+    }
+  }
+}
+
+#review-stats-table, #program-stats-table {
+  tbody {
+    > tr:first-of-type {
+      font-weight: bold;
+      background-color: $state-success-bg;
+    }
+  }
+}
+
+// Event status badges
+$event-open-bg:       $state-success-bg;
+$event-open-border:   $state-success-border;
+$event-open-text:     $state-success-text;
+$event-closed-bg:     $gray-lighter;
+$event-closed-border: darken($gray-lighter, 7%);
+$event-closed-text:   $gray;
+$event-draft-bg:      $state-info-bg;
+$event-draft-border:  $state-info-border;
+$event-draft-text:    $state-info-text;
+
+.event-status-badge {
+  @extend .label;
+}
+
+.event-status-open {
+  @extend .label-success;
+}
+
+.event-status-draft {
+  @extend .label-info;
+}
+
+.event-status-closed {
+  @extend .label-default;
+}
+
+.template-section {
+  padding-bottom: 1em;
+
+  .notice {
+    color: $dark-red;
+    font-style: italic;
+    margin: .5em 0;
+  }
+
+  .template-title {
+    display: inline;
+  }
+
+  .template-actions {
+    float: right;
+
+    .btn-gray {
+      color: $btn-gray-color;
+      background-color: $btn-gray-bg;
+      border: 1px solid $btn-gray-border;
+
+      &:hover, &:active {
+        background-color: darken($btn-gray-bg, 10%);
+      }
+    }
+  }
+
+  .template-preview .contents,
+  .template-short .contents  {
+    background-color: $beige;
+    border: 1px solid darken($beige, 10%);
+    border-radius: 5px;
+    margin: 1em 0;
+    padding: 10px;
+
+    ul {
+      list-style-type: disc;
+    }
+  }
+
+  .template-short .contents {
+    height: 55px;
+    overflow: hidden;
+  }
+}

@@ -1,0 +1,89 @@
+.row
+  .col-md-12
+    .page-header.clearfix
+      %h1 Event Staff
+
+      .teammate-info-bar
+        .teammate-meta
+          .teammate-meta-item
+            %strong= pluralize(@staff_count["organizer"], "organizer")
+            %span= "(" + pluralize(@pending_invite_count["organizer"], "pending invitation") + ")"
+          .teammate-meta-item
+            %strong= @staff_count["program team"]
+            %strong
+              program team
+            %span= "(" + pluralize(@pending_invite_count["program team"], "pending invitation") + ")"
+          .teammate-meta-item
+            %strong= pluralize(@staff_count["reviewer"], "reviewer")
+            %span= "(" + pluralize(@pending_invite_count["reviewer"], "pending invitation") + ")"
+          %hr
+
+      .row
+        .col-md-12
+          .widget
+            .widget-header
+              %i.fa.fa-user
+              %h3 Team
+            .widget-content
+              %table.table.table-striped.table-bordered
+                %thead
+                  %tr
+                    %th Name
+                    %th Email
+                    %th Mention Name
+                    %th Rated Proposals
+                    %th Role
+                    %th Notification Preference
+                    - if current_user.organizer_for_event?(current_event)
+                      %th
+                %tbody
+                  - @staff.each do |teammate|
+                    %tr{ id: "teammate-#{teammate.id}" }
+                      %td= teammate.name
+                      %td= teammate.email
+                      %td.mention-name= render partial: 'mention_name_controls', locals: { teammate: teammate }
+                      %td= teammate.ratings_count(current_event)
+                      %td.role= render partial: 'role_controls', locals: { teammate: teammate }
+                      %td= teammate.notification_preference
+                      - if current_user.organizer_for_event?(current_event)
+                        %td.text-center{ id: "teammate-role-#{teammate.id}" }
+                          - unless teammate.user == current_user
+                            = link_to 'Remove', event_staff_teammate_path(teammate.event, teammate), method: :delete, data: { confirm: "Are you sure you want to remove #{teammate.name}?" }, class: 'btn btn-danger btn-xs'
+
+      .row
+        .col-md-12
+          .widget
+            .widget-header
+              - if current_user.organizer_for_event?(current_event)
+                .pull-right
+                  = link_to "Invite New Teammate", "#", class: "btn btn-primary btn-sm invite-btn",
+                    data: { toggle: "modal", target: "#new-teammate-invitation" },
+                    id: "invite-new-teammate"
+              %i.fa.fa-envelope-o
+              %h3 Team Invitations
+
+            .widget-content
+              %table.table.table-striped.table-bordered
+                %thead
+                  %tr
+                    %th Email
+                    %th Status
+                    %th Role
+                    %th Invited At
+                    - if current_user.organizer_for_event?(current_event)
+                      %th Actions
+                %tbody
+                  - @invitations.each do |invite|
+                    %tr
+                      %td= invite.email
+                      %td= invite.state
+                      %td= invite.role
+                      %td= invite.created_at.to_s(:day_at_time)
+                      - if current_user.organizer_for_event?(current_event)
+                        %td= link_to 'Remove',
+                          event_staff_teammate_path(event, invite),
+                          method: :delete,
+                          data: { confirm: "Are you sure you want to remove this invite?" },
+                          class: 'btn btn-danger btn-xs'
+
+= render partial: 'staff/teammate_invitations/new_dialog', locals: { event: event }

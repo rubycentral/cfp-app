@@ -1,0 +1,65 @@
+.navbar.navbar-default.navbar-fixed-top
+  .container-fluid
+    .navbar-header
+      %button.navbar-toggle{ type: "button", data: { toggle: "collapse", target: ".navbar-collapse" } }
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      - if current_event
+        = link_to "#{current_event.name} CFP", event_path(current_event), class: 'navbar-brand'
+      - else
+        = link_to "CFP App", events_path, class: 'navbar-brand'
+
+    .collapse.navbar-collapse
+      - if current_user
+        %ul.nav.navbar-nav.navbar-right
+          - if speaker_nav?
+            %li{class: nav_item_class("my-proposals-link")}
+              = link_to proposals_path do
+                %span My Proposals
+
+          - if review_nav?
+            %li{class: nav_item_class("event-review-proposals-link")}
+              = link_to event_staff_proposals_path(current_event) do
+                %span Review
+
+          - if program_nav?
+            %li{class: nav_item_class("event-selection-link")}
+              = link_to event_staff_program_proposals_path(current_event) do
+                %span Selection
+            %li{class: nav_item_class("event-program-link")}
+              = link_to event_staff_program_sessions_path(current_event) do
+                %span Program
+
+          - if schedule_nav?
+            %li{class: nav_item_class("event-schedule-link")}
+              = link_to event_staff_schedule_grid_path(current_event) do
+                %span Schedule
+
+          - if staff_nav?
+            %li{class: nav_item_class("event-dashboard-link")}
+              = link_to event_staff_path(current_event) do
+                %span Dashboard
+
+          - if admin_nav?
+            = render partial: "layouts/nav/admin_nav"
+
+          = render partial: "layouts/nav/notifications_list"
+
+          = render partial: "layouts/nav/user_dropdown"
+
+      - else
+        %ul.nav.navbar-nav.navbar-right
+          %li= link_to "Log in", new_user_session_path
+
+- if display_staff_event_subnav?
+  = render partial: "layouts/nav/staff/event_subnav"
+
+- elsif display_staff_selection_subnav?
+  = render partial: "layouts/nav/staff/selection_subnav"
+
+- elsif display_staff_program_subnav?
+  = render partial: "layouts/nav/staff/program_subnav"
+
+- elsif schedule_mode?
+  = render partial: "layouts/nav/staff/schedule_subnav"

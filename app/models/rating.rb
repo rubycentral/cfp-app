@@ -1,11 +1,12 @@
-class Rating < ActiveRecord::Base
+class Rating < ApplicationRecord
   belongs_to :proposal
-  belongs_to :person
+  belongs_to :user
 
   scope :for_event, -> (event) { joins(:proposal).where("proposals.event_id = ?", event.id) }
+  scope :not_withdrawn, -> { joins(:proposal).where("proposals.state != ?", Proposal::State::WITHDRAWN) }
 
-  def participant
-    person.participants.where(event: proposal.event).first
+  def teammate
+    user.teammates.where(event: proposal.event).first
   end
 end
 
@@ -15,13 +16,13 @@ end
 #
 #  id          :integer          not null, primary key
 #  proposal_id :integer
-#  person_id   :integer
+#  user_id     :integer
 #  score       :integer
 #  created_at  :datetime
 #  updated_at  :datetime
 #
 # Indexes
 #
-#  index_ratings_on_person_id    (person_id)
 #  index_ratings_on_proposal_id  (proposal_id)
+#  index_ratings_on_user_id      (user_id)
 #

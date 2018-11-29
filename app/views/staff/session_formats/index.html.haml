@@ -1,0 +1,31 @@
+.row
+  .col-sm-12
+    .page-header.clearfix
+      .btn-nav.pull-right
+        = link_to 'New Session Format', new_event_staff_session_format_path(@event), class: "btn btn-primary"
+      %h1 Event Session Formats
+
+.row
+  .col-sm-12
+    - if @session_formats.any?
+      %table.table.table-striped
+        %thead
+          %tr
+            %th Name
+            %th Description
+            %th Duration
+            %th Public
+            %th{colspan: '2'} Actions
+        %tbody
+          - @session_formats.each do |st|
+            %tr
+              %td= st.name
+              %td= truncate(st.description, length: 80)
+              %td= st.duration
+              %td= 'X' if st.public?
+              %td.action-edit
+                = link_to 'Edit', edit_event_staff_session_format_path(@event, st), class: "btn btn-primary"
+              %td.action-destroy
+                = link_to 'Destroy', event_staff_session_format_path(@event, st), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"
+    -else
+      %p No session formats defined for this event.

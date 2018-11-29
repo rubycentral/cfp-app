@@ -1,0 +1,17 @@
+$("#room-new-dialog .errors").html("");
+
+<% if room.persisted? %>
+  $("#room-new-dialog").modal("hide");
+  $("#organizer-rooms").append("<%=j render room %>");
+  window.Utilities.clearFields([
+    "#room_name",
+    "#room_room_number",
+    "#room_level",
+    "#room_address",
+    "#room_capacity"
+  ], "#room-new-dialog");
+<% else %>
+  $("#room-new-dialog .errors").append("<%= room.errors.full_messages.join(', ') %>");
+<% end %>
+
+document.getElementById("flash").innerHTML = "<%=j show_flash %>";

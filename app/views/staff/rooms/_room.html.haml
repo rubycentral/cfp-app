@@ -1,0 +1,30 @@
+%tr{ id: "room_#{room.id}" }
+  %td= room.name
+  %td= room.room_number
+  %td= room.address
+  %td= room.level
+  %td= room.capacity
+  %td= room.grid_position
+  %td.actions
+    = link_to 'Edit', '#', class: 'btn btn-primary btn-xs',
+      data: { toggle: 'modal', target: "#room-edit-#{room.id}" }
+
+    = link_to 'Remove', event_staff_schedule_room_path(event, room),
+      method: :delete,
+      remote: true,
+      data: { confirm: "Are you sure you want to remove this room?" },
+      class: 'btn btn-danger btn-xs'
+
+    %div{ id: "room-edit-#{room.id}", class: 'modal fade' }
+      .modal-dialog
+        .modal-content
+          = simple_form_for [ event, :staff, :schedule, room ], remote: true do |f|
+            .modal-header
+              %h3 Edit Room
+              .errors
+            .modal-body
+              = render partial: 'staff/rooms/form', locals: { room: room, f: f }
+            .modal-footer
+              .btn-toolbar
+                %button.pull-right.btn.btn-primary{:type => "submit"} Save
+                %button.btn.btn-default{"data-dismiss" => "modal"} Cancel

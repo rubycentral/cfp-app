@@ -1,0 +1,16 @@
+- if show_proposal?(proposal)
+  %tr{ class: "proposal-#{proposal.id}", data: { 'proposal-id' => proposal.id, 'proposal-uuid' => proposal.uuid } }
+    %td= proposal.average_rating
+    %td= proposal.ratings.size
+    %td= proposal.standard_deviation
+    %td= proposal.speaker_names
+    %td= proposal.title_link
+    %td= proposal.track_name
+    %td= proposal.session_format_name
+    - if event.public_tags?
+      %td= proposal.tags_labels
+    %td= proposal.review_tags_labels
+    %td
+      %span.proposal-status= proposal.state_label(small: true, show_confirmed: true)
+    %td
+      %span.state-buttons= proposal.small_state_buttons

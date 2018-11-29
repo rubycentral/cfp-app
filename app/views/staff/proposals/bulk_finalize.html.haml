@@ -1,0 +1,25 @@
+.event
+  .row
+    .col-md-6.col-md-offset-3
+      .page-header.clearfix
+        %h1 Bulk Finalize
+        .event-info-bar
+          = finalize_info
+  .row
+    .col-md-6.col-md-offset-3
+      .widget.widget-table
+        .widget-content
+          %table.table.table-striped.table-bordered
+            %thead
+              %tr
+                %th.col-sm-9 Proposals Count
+                %th.co-sm-3.text-center Actions
+            %tbody
+              - @remaining_by_state.each do |proposals|
+                %tr
+                  %td.col-sm-9= "#{proposals.last.count} #{proposals.first} proposal".pluralize(proposals.last.count)
+                  %td.col-sm-3.text-center
+                    = link_to "Finalize", finalize_by_state_event_staff_program_proposals_path(event, proposals_state: proposals.first),
+                      method: :post,
+                      data: { confirm: "This will finalize #{proposals.last.count} proposal".pluralize(proposals.last.count) + " in the #{proposals.first} state. Proceed?" },
+                      class: "btn btn-danger btn-sm"

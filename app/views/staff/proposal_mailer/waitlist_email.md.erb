@@ -1,0 +1,15 @@
+<% if @event.waitlist.present? %>
+  <%= Staff::ProposalMailerTemplate.new(@event.waitlist, @event, @proposal).render %>
+<% else %>
+
+We have good news and bad news.  We'll start with the bad news.  We weren't able to fit your talk, <%= @proposal.title %>, into the program for <%= @event.name %>.  The good news is that we have you on our waitlist.  We keep a waitlist of talks that are ready to step in if any of the accepted talks back out or get sick.
+
+If you are willing to be a waitlisted speaker then you need to CONFIRM by visiting the <%= @proposal.confirm_link %>.
+
+TO DECLINE: if you are not interested in being a waitlisted speaker, please visit the <%= @proposal.confirm_link %>, and click the 'Decline' button.
+
+In the meantime, let us know if you have any questions. We're looking forward to seeing you!
+
+The <%= @event.name %>  Program Committee
+
+<% end %>

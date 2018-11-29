@@ -1,0 +1,54 @@
+/*------------------------------------------------------------------
+[1. Shortcuts / .shortcuts]
+*/
+
+.shortcuts {
+  text-align: center;
+}
+
+.shortcuts .shortcut {
+  background: $beige;
+  display: inline-block;
+  margin: 0 .9% 1em;
+  padding: 12px 0;
+  vertical-align: top;
+  text-decoration: none;
+  width: 22.50%;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  @include transition(all ease-in-out .15s);
+}
+
+.shortcuts .shortcut .shortcut-icon {
+  color: $gray-dark;
+  font-size: 32px;
+  margin-top: .25em;
+  margin-bottom: .25em;
+}
+
+.shortcuts .shortcut:hover {
+  background: $brand-primary;
+}
+
+.shortcuts .shortcut:hover span{
+  color: #fff;
+}
+
+.shortcuts .shortcut:hover .shortcut-icon {
+  color: #fff;
+}
+
+.shortcuts .shortcut-label {
+  display: block;
+
+  font-weight: 400;
+  color: #545454;
+}
+
+
+@media (max-width: 979px) {
+
+  .shortcuts .shortcut {
+    width: 31%;
+  }
+}

@@ -1,0 +1,7 @@
+var editDialog = $('#time-slot-edit-dialog');
+
+editDialog[0].innerHTML =
+    '<%=j render partial: 'edit_dialog',
+      locals: { time_slot: time_slot_decorated, event: event } %>';
+
+window.Schedule.TimeSlots.initDialog(editDialog);

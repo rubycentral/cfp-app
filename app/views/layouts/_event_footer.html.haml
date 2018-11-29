@@ -1,0 +1,18 @@
+.page-footer
+  .container-fluid
+    .page-footer-inner
+      .row
+        .col-md-8
+          - if current_event && current_event.slug
+            .event-info.event-info-dense
+              %strong.event-title= current_event.name
+              - if current_event.contact_email?
+                %span.event-meta
+                  Contact:
+                  %i.fa.fa-fw.fa-envelope
+                  = mail_to(current_event.contact_email, current_event.contact_email, encode: "javascript")
+          - else
+            = link_to "#{Rails.application.class.parent_name}", events_path
+        .col-md-4.text-right
+          Powered by
+          = link_to 'CFP App', 'https://github.com/rubycentral/cfp-app', target: '_blank'

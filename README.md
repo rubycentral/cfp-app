@@ -46,7 +46,7 @@ Run [bin/setup](bin/setup) script to install gem dependencies and setup database
 bin/setup
 ```
 
-This will create `.env` and a development database with seed data. Seeds will make an admin user with an email of `an@admin.com` and password of `userpass` to get you started. **There is a special development only login method in Omniauth that you can use to test it out. DEPRECATED?!**
+This will create `.env` and a development database with seed data. Seeds will make an admin user with an email of `an@admin.com` and password of `userpass` to get you started.
 
 Start the server:
 

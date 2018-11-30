@@ -1,22 +1,44 @@
-# CFP-App 2.0
+# Call for Proposals (CFP) App 2.0
 
 ## WARNING
 
-This is a major upgrade from the original CFP App that is not backwards compatible.  We redesigned many of the core data models and changed how the app works. Some functionality may be unavailable to IE9 and earlier versions of IE.
+This is a major upgrade from the original CFP App that is not backwards compatible.  We redesigned many of the core data models and changed how the app works. Some functionality may be unavailable to Internet Explorer 9 and earlier.
 
 It is expected that you will install CFP App 2.0 into a new, pristine database and you will run future events on it.  If you have an existing installation of CFP App 1.0 and you want to preserve your data, you will need to handle the data migration on your own.
 
 ## Overview
 
-This is a Ruby on Rails application that lets you manage your conference's call for proposal (CFP), program and schedule.  It was written by Ruby Central to run the CFPs for RailsConf and RubyConf.
+This is a Ruby on Rails application that lets you manage your conference's call for proposals (CFP), program and schedule.  It was written by Ruby Central to run the CFPs for RailsConf and RubyConf.
 
-At a high level the CFP App allows speakers to submit and manage their proposals for your event.  Organizers can create a group of reviewers that blindly review and rate talks.  Organizers can then select talks to be accepted into the program including a waitlist of proposals.  Finally organizers can create a schedule and slot confirmed talks.  Down below, I'll give a detailed description of the features and workflows of the CFP App under the section 'How to use the CFP App'
+At a high level the CFP App allows speakers to submit and manage their proposals for your event.  Organizers can create a group of reviewers that blindly review and rate talks.  Organizers can then select talks to be accepted into the program including a waitlist of proposals.  Finally, organizers can create a schedule and slot confirmed talks.  Down below, I'll give a detailed description of the features and workflows of the CFP App under the section ['How to use the CFP App'](#how-to-use-the-cfp-app)
 
-The CFP App does not provide a public facing website for your conference, though we have a sister project that does integration with the CFP App's export data to give you a starting place for your website.  If you have interest in running a similar website, please reach out to Ruby Central directly at rubycentral.org.
+The CFP App does not provide a public facing website for your conference, though we have a sister project that does integration with the CFP App's export data to give you a starting place for your website.  If you have interest in running a similar website, please reach out to Ruby Central directly at [rubycentral.org](http://rubycentral.org/).
 
 ## Getting Started
 
-Make sure you have Ruby and Postgres installed in your environment.   Check the Gemfile for the exact supported version.  This is a Rails 5 app and uses bundler to install all required gems.  We are also making the assumption that you're familiar with how Rails apps and setup and deployed.  If this is not the case then you'll want to refer to documentation that will bridge any gaps in the instructions below.
+### Prerequisite Requirements
+
+* Rails ~5.1.4
+* Ruby ~2.4.4 or greater
+* PostgreSQL
+
+*NOTE:* You may need to install Qt/`qmake` (Version 5.5) to get Capybara to work; with Homebrew you can try to run `brew install qt@5.5`.  Make sure to read the post-install instructions for getting `qt` into your PATH. 
+
+### TEMPORARY Qt5.5 install (chromedriver switch is in progress):
+
+*Note:* When [133](https://github.com/rubycentral/cfp-app/pull/133) is merged, this should be revisited and removed.  The following is a bit of a cluster in trying to get `capybara-webkit` to install.  We are switching, but if you need to get started, this may help:
+
+* `cd $( brew --prefix )/Homebrew/Library/Taps/homebrew/homebrew-core`
+* `git checkout 9ba3d6ef8891e5c15dbdc9333f857b13711d4e97 Formula/qt@5.5.rb`
+* Optional: `git fetch --unshallow` (if there is a ref error)
+* `brew install qt@5.5`
+* Optional Fix: `brew link --force qt@5.5 ` (if capybara-webkit still fails)
+* Optional Fix: `QMAKE="$(brew --prefix qt@5.5)/bin/qmake" gem install capybara-webkit`
+* Optional Fix: `QMAKE="$(brew --prefix qt@5.5)/bin/qmake" bundle update capybara-webkit`
+
+If you run into problems w/ Qt install, read through: [QT 5.5 Install Instructions](https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit#homebrew).  Qt 5.6 removes the required binaries for capybara-webkit to run properly.
+
+Make sure you have Ruby and Postgres installed in your environment.  Double check in the [Gemfile](../blob/master/Gemfile) for the exact supported version.  This is a Rails 5 app and uses bundler to install all required gems.  We are also making the assumption that you're familiar with how Rails apps are setup and deployed.  If this is not the case then you'll want to refer to documentation that will bridge any gaps in the instructions below.
 
 Run [bin/setup](bin/setup) script to install gem dependencies and setup database for development.
 
@@ -24,15 +46,15 @@ Run [bin/setup](bin/setup) script to install gem dependencies and setup database
 bin/setup
 ```
 
-This will create `.env`, a development database with seed data. Seed will make an admin user with an email of `an@admin.com` and password of `userpass` to get started. There is a special, development only login method in Omniauth that you can use to test it out.
-
-NOTE: You may need to install Qt/`qmake` to get Capybara to work; with Homebrew you can run `brew install qt`.
+This will create `.env` and a development database with seed data. Seeds will make an admin user with an email of `an@admin.com` and password of `userpass` to get you started. **There is a special development only login method in Omniauth that you can use to test it out. DEPRECATED?!**
 
 Start the server:
 
 ```bash
 bin/rails server
 ```
+
+Runs on port 3000.
 
 If you have the heroku toolbelt installed you can also use:
 
@@ -58,7 +80,7 @@ This will boot up using Foreman and allow the .env file to be read / set for use
 
 ### User roles
 
-There are five user roles in CFP App. To log in as a user type in development mode, locate the email for each user in `seeds.rb`. The password is the same for each user, and is assigned to the variable `pwd` in the seed file.
+There are five user roles in the CFP App. To log in as a user type in development mode, locate the email for each user in `seeds.rb`. The password is the same for each user, and is assigned to the variable `pwd` in the seed file.
 
 - **Admin:**
   - Edit/delete users
@@ -77,10 +99,9 @@ There are five user roles in CFP App. To log in as a user type in development mo
 
 ## Deployment on Heroku
 
-The app was written with a Heroku deployment stack in mind. You can easily deploy the application using the button below, or you can deploy it anywhere assuming you can run Ruby 2.3.0 and Rails 4.2.5 with a postgres database and an SMTP listener.
+The app was written with a Heroku deployment stack in mind. You can easily deploy the application using the button below, or you can deploy it anywhere assuming you can run Ruby 2.4.4 and Rails 5.1.4 with a PostgreSQL database and an SMTP listener.
 
-The Heroku stack will use the free SendGrid Starter and Heroku postgreSQL
-addons.
+The Heroku stack will use the free SendGrid Starter add-on and Heroku PostgreSQL addons.
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 

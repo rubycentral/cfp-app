@@ -1,9 +1,9 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :tagging do
-    tag "intro"
+    tag { "intro" }
   end
 
   trait :review_tagging do
-    internal true
+    internal { true }
   end
 end

@@ -20,7 +20,7 @@ feature 'Forgot Password', :devise do
   #   When I forgot password with valid credentials
   #   Then I see a success message
   scenario 'user can forgot password with valid credentials', js: true do
-    user = FactoryGirl.create(:user)
+    user = FactoryBot.create(:user)
     forgot_password(user.email)
     expect(page).to have_content I18n.t 'devise.passwords.send_instructions'
   end
@@ -31,7 +31,7 @@ feature 'Forgot Password', :devise do
   #   When I forgot password with a wrong email
   #   Then I see an invalid email message
   scenario 'user cannot forgot password with wrong email', js: true do
-    user = FactoryGirl.create(:user)
+    user = FactoryBot.create(:user)
     forgot_password('invalid@email.com')
     expect(page).to have_content 'Email * ' + I18n.t('errors.messages.not_found')
   end

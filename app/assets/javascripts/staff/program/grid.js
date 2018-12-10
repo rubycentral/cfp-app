@@ -9,8 +9,8 @@
   // Grid properties
   var dayStart = 60*9;  // minutes
   var dayEnd = 60*19;
-  const step = 60;
-  const verticalScale = 1.5;
+  var step = 60;
+  var verticalScale = 1.5;
 
 
   var trackCssClasses = [];

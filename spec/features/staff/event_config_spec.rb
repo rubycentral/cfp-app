@@ -90,11 +90,13 @@ feature "Event Config" do
 
     it "can't add a track with a description longer than 250 characters" do
       visit event_staff_config_path(event)
-      click_on "Add Track"
+      find_link("Add Track").click
 
+      find("#track_name")
       fill_in "Name", with: "Best Session"
-      fill_in "Description", with: "A really long description about  Gastropub sartorial narwhal pitchfork hashtag venmo forage gluten-free. Echo messenger bag swag. Lomo humblebrag authentic. Photo booth iphone portland cardigan pitchfork locavore ramps. Pop-up poutine photo booth fingerstache kombucha mumblecore mlkshk."
-      click_button "Save"
+      find("#track_description")
+      fill_in "Description", with: ("s" * 250 + "i")
+      find_button("Save").click
 
       expect(page).to have_content("Description is too long (maximum is 250 characters)")
       expect(page).to have_content("There was a problem saving your track, Description is too long (maximum is 250 characters).")
@@ -105,11 +107,11 @@ feature "Event Config" do
       visit event_staff_config_path(event)
 
       within("#track_#{track.id}") do
-        click_on "Edit"
+        find_link("Edit").click
       end
 
       fill_in "Description", with: "The best track ever."
-      click_button "Save"
+      find_button("Save").click
 
       within("#track_#{track.id}") do
         expect(page).to have_content("The best track ever.")
@@ -121,11 +123,12 @@ feature "Event Config" do
       visit event_staff_config_path(event)
 
       within("#track_#{track.id}") do
-        click_on "Edit"
+        find_link("Edit").click
       end
 
+      find("#track_name").native.clear
       fill_in "Name", with: ""
-      click_button "Save"
+      find_button("Save").click
 
       expect(page).to have_content("Name can't be blank.")
     end
@@ -135,11 +138,14 @@ feature "Event Config" do
       visit event_staff_config_path(event)
 
       within("#track_#{track.id}") do
-        click_on "Edit"
+        find_link("Edit").click
       end
 
-      fill_in "Description", with: "A really long description about  Gastropub sartorial narwhal pitchfork hashtag venmo forage gluten-free. Echo messenger bag swag. Lomo humblebrag authentic. Photo booth iphone portland cardigan pitchfork locavore ramps. Pop-up poutine photo booth fingerstache kombucha mumblecore mlkshk."
-      click_button "Save"
+      find("#track_name").native.clear
+      fill_in "track_name", with: track.name
+      find("#track_description").native.clear
+      fill_in "track_description", with: ("s" * 250 + "i")
+      find_button("Save").click
 
       expect(page).to have_content("Description is too long (maximum is 250 characters)")
       expect(page).to have_content("There was a problem updating your track, Description is too long (maximum is 250 characters).")

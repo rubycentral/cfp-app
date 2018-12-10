@@ -10,7 +10,7 @@ describe Staff::RoomsController, type: :controller do
       expect {
         delete :destroy, xhr: true, params: {id: room, event_slug: event}
       }.to change(Room, :count).by(-1)
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 

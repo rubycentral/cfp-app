@@ -5,6 +5,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara/rspec'
 require 'pundit/rspec'
+require 'selenium/webdriver'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -20,16 +21,6 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
-  Capybara.javascript_driver = :webkit
-
-  Capybara::Webkit.configure do |config|
-    config.block_unknown_urls
-    config.allow_url("127.0.0.1")
-    config.allow_url("localhost")
-    config.allow_url("example.com")
-  end
-
-
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
   # `post` in specs under `spec/controllers`.
@@ -45,7 +36,7 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_base_class_for_anonymous_controllers = false
 
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
 
   # DB cleaning
   config.before(:suite) do
@@ -63,6 +54,21 @@ RSpec.configure do |config|
   end
 
   config.before(:all) do
-    FactoryGirl.reload
+    FactoryBot.reload
   end
 end
+
+Capybara.register_driver :chrome do |app|
+  browser_options = ::Selenium::WebDriver::Chrome::Options.new
+  browser_options.args << '--window-size=1280,1024'
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
+end
+
+Capybara.register_driver :headless_chrome do |app|
+  browser_options = ::Selenium::WebDriver::Chrome::Options.new
+  browser_options.args << '--headless'
+  browser_options.args << '--window-size=1280,1024'
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
+end
+
+Capybara.javascript_driver = :headless_chrome

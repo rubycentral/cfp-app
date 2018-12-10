@@ -40,7 +40,7 @@ feature "Proposals" do
     end
   end
 
-  context "when submitting" do
+  context "when submitting", js: true do
     context "with invalid proposal" do
       before :each do
         go_to_new_proposal
@@ -52,11 +52,11 @@ feature "Proposals" do
       end
 
       it "shows Title validation if blank on submit" do
-        expect(page).to have_text("Title *can't be blank")
+        expect(page).to have_text("Title * can't be blank")
       end
 
       it "shows Abstract validation if blank on submit" do
-        expect(page).to have_text("Abstract *can't be blank")
+        expect(page).to have_text("Abstract * can't be blank")
       end
     end
 

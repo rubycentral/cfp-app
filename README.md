@@ -18,25 +18,9 @@ The CFP App does not provide a public facing website for your conference, though
 
 ### Prerequisite Requirements
 
-* Rails ~5.1.4
-* Ruby ~2.4.4 or greater
+* Ruby 2.4.4
+* Bundler (was installed with 1.17.1)
 * PostgreSQL
-
-*NOTE:* You may need to install Qt/`qmake` (Version 5.5) to get Capybara to work; with Homebrew you can try to run `brew install qt@5.5`.  Make sure to read the post-install instructions for getting `qt` into your PATH. 
-
-### TEMPORARY Qt5.5 install (chromedriver switch is in progress):
-
-*Note:* When [133](https://github.com/rubycentral/cfp-app/pull/133) is merged, this should be revisited and removed.  The following is a bit of a cluster in trying to get `capybara-webkit` to install.  We are switching, but if you need to get started, this may help:
-
-* `cd $( brew --prefix )/Homebrew/Library/Taps/homebrew/homebrew-core`
-* `git checkout 9ba3d6ef8891e5c15dbdc9333f857b13711d4e97 Formula/qt@5.5.rb`
-* Optional: `git fetch --unshallow` (if there is a ref error)
-* `brew install qt@5.5`
-* Optional Fix: `brew link --force qt@5.5 ` (if capybara-webkit still fails)
-* Optional Fix: `QMAKE="$(brew --prefix qt@5.5)/bin/qmake" gem install capybara-webkit`
-* Optional Fix: `QMAKE="$(brew --prefix qt@5.5)/bin/qmake" bundle update capybara-webkit`
-
-If you run into problems w/ Qt install, read through: [QT 5.5 Install Instructions](https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit#homebrew).  Qt 5.6 removes the required binaries for capybara-webkit to run properly.
 
 Make sure you have Ruby and Postgres installed in your environment.  Double check in the [Gemfile](../blob/master/Gemfile) for the exact supported version.  This is a Rails 5 app and uses bundler to install all required gems.  We are also making the assumption that you're familiar with how Rails apps are setup and deployed.  If this is not the case then you'll want to refer to documentation that will bridge any gaps in the instructions below.
 
@@ -99,7 +83,7 @@ There are five user roles in the CFP App. To log in as a user type in developmen
 
 ## Deployment on Heroku
 
-The app was written with a Heroku deployment stack in mind. You can easily deploy the application using the button below, or you can deploy it anywhere assuming you can run Ruby 2.4.4 and Rails 5.1.4 with a PostgreSQL database and an SMTP listener.
+The app was written with a Heroku deployment stack in mind. You can easily deploy the application using the button below, or you can deploy it anywhere assuming you can run Ruby 2.4.4 and Rails 5.2.2 with a PostgreSQL database and an SMTP listener.
 
 The Heroku stack will use the free SendGrid Starter add-on and Heroku PostgreSQL addons.
 

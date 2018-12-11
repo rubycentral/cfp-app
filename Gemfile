@@ -39,7 +39,7 @@ gem 'bootsnap', require: false
 
 group :production do
   gem 'rails_12factor'
-  gem 'rack-timeout', '~> 0.2.4'
+  gem 'rack-timeout', '~> 0.5'
 end
 
 group :development do

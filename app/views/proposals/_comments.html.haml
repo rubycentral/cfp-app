@@ -3,7 +3,7 @@
     %li.comment.markdown{ class: choose_class_for(comment) }
       .message_wrap
         - if comment.user.present?
-          .info{ title: comment.created_at.to_s }
+          .info
             %p.name
               = commenter_name(comment)
             %span.time #{comment.created_at.to_s(:day_at_time)}

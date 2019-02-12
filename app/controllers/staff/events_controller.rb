@@ -21,8 +21,8 @@ class Staff::EventsController < Staff::ApplicationController
     if @event.update(params.require(:event).permit(:accept, :reject, :waitlist))
       redirect_to event_staff_speaker_email_notifications_path
     else
-      flash[:danger] = "There was a problem saving your email templates; please review the form for issues and try again."
-      render :speaker_email_notifications
+      flash[:danger] = "There was a problem saving your email templates. #{@event.errors.full_messages.to_sentence}"
+      render :speaker_emails
     end
   end
 
@@ -31,8 +31,8 @@ class Staff::EventsController < Staff::ApplicationController
     if @event.remove_speaker_email_template(params[:type].to_sym)
       redirect_to event_staff_speaker_email_notifications_path
     else
-      flash[:danger] = "There was a problem saving your email templates; please review the form for issues and try again."
-      render :speaker_email_notifications
+      flash[:danger] = "There was a problem saving your email templates. #{@event.errors.full_messages.to_sentence}"
+      render :speaker_emails
     end
   end
 

@@ -165,7 +165,7 @@ class Event < ApplicationRecord
     missing_items << "Event must have a start date" unless start_date
     missing_items << "Event must have an end date" unless end_date
     missing_items << "Event must have a contact email" unless contact_email.present?
-    missing_items << "Event must have a CFP closes at date set for a future date" unless closes_at && (closes_at > Time.current)
+    # missing_items << "Event must have a CFP closes at date set for a future date" unless closes_at && (closes_at > Time.current)
     missing_items << "Event must have at least one public session format" unless public_session_formats.present?
     missing_items << "Event must have guidelines" unless guidelines.present?
 

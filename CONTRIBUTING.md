@@ -96,11 +96,11 @@ project:
 
    ```bash
    # Clone your fork of the repo into the current directory
-   git clone https://github.com/ruby-central/cfp-app
+   git clone https://github.com/rubycentral/cfp-app.git
    # Navigate to the newly cloned directory
    cd cfp-app
    # Assign the original repo to a remote called "upstream"
-   git remote add upstream https://github.com/ruby-central/cfp-app
+   git remote add upstream https://github.com/rubycentral/cfp-app.git
    ```
 
 2. If you cloned a while ago, get the latest changes from upstream:

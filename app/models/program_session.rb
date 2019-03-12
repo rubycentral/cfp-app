@@ -40,7 +40,7 @@ class ProgramSession < ApplicationRecord
   belongs_to :track
   belongs_to :session_format
   has_one :time_slot
-  has_many :speakers
+  has_many :speakers, -> { order(:created_at)}
 
   accepts_nested_attributes_for :speakers
   accepts_nested_attributes_for :proposal
@@ -172,8 +172,8 @@ class ProgramSession < ApplicationRecord
       "#{session_format.duration} minutes"
     else
       "N/A"
-    end  
-  end  
+    end
+  end
 
   private
 

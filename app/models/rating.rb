@@ -14,9 +14,9 @@ end
 #
 # Table name: ratings
 #
-#  id          :integer          not null, primary key
-#  proposal_id :integer
-#  user_id     :integer
+#  id          :bigint(8)        not null, primary key
+#  proposal_id :bigint(8)
+#  user_id     :bigint(8)
 #  score       :integer
 #  created_at  :datetime
 #  updated_at  :datetime

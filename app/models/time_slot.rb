@@ -119,10 +119,10 @@ end
 #
 # Table name: time_slots
 #
-#  id                 :integer          not null, primary key
-#  program_session_id :integer
-#  room_id            :integer
-#  event_id           :integer
+#  id                 :bigint(8)        not null, primary key
+#  program_session_id :bigint(8)
+#  room_id            :bigint(8)
+#  event_id           :bigint(8)
 #  conference_day     :integer
 #  start_time         :time
 #  end_time           :time
@@ -131,7 +131,7 @@ end
 #  presenter          :text
 #  created_at         :datetime
 #  updated_at         :datetime
-#  track_id           :integer
+#  track_id           :bigint(8)
 #
 # Indexes
 #

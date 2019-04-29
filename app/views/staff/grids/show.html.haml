@@ -29,3 +29,5 @@
 #bulk-time-slot-create-dialog.modal.fade
 #bulk-time-slot-create-dialog.modal.fade
 #program-session-show-dialog.modal.fade
+
+= react_component("Schedule", { schedule: @schedule, sessions: @sessions, counts: @counts, unscheduledSessions: @unscheduled_sessions })

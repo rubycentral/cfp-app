@@ -37,6 +37,9 @@ gem 'actionview-encoded_mail_to'
 gem 'nokogiri', '~> 1.8.1'
 gem 'bootsnap', require: false
 
+gem 'webpacker'
+gem 'react-rails'
+
 group :production do
   gem 'rails_12factor'
   gem 'rack-timeout', '~> 0.5'

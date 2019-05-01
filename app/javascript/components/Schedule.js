@@ -1,28 +1,36 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+import Nav from './Schedule/Nav';
+
 class Schedule extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dayViewing: 1,
+      startTime: 7,
+      endTime: 19,
+      counts: {}
+    }
+  }
+
+  changeDayView = day => {
+    this.setState({ dayViewing: day })
+  }
+
+  componentDidMount() {
+    this.setState(Object.assign(this.state, this.props), console.log(this.state)) // doing this until I can hit the API here.
+  }
+
   render () {
-    console.log('here!')
+    const { counts, dayViewing } = this.state;
     return (
-      <div>
-        <h1>New Schedule</h1>
-        <section>
-          <h2>Schedule:</h2>
-          <div>{JSON.stringify(this.props.schedule, null, 2)}</div>
-        </section>
-        <section>
-          <h2>Sessions:</h2>
-          <div>{JSON.stringify(this.props.sessions, null, 2)}</div>
-        </section>
-        <section>
-          <h2>Counts:</h2>
-          <div>{JSON.stringify(this.props.counts, null, 2)}</div>
-        </section>
-        <section>
-          <h2>Unscheduled Sessions:</h2>
-          <div>{JSON.stringify(this.props.unscheduledSessions, null, 2)}</div>
-        </section>
+      <div className='schedule_grid'> 
+        <Nav 
+          counts={counts} 
+          changeDayView={this.changeDayView}
+          dayViewing={dayViewing}
+        />
       </div>
     );
   }
@@ -34,4 +42,5 @@ Schedule.propTypes = {
   counts: PropTypes.object,
   unscheduledSessions: PropTypes.array,
 };
+
 export default Schedule

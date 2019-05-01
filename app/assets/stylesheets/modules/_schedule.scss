@@ -383,3 +383,53 @@ input[type=number]::-webkit-outer-spin-button {
   background-color: white;
   z-index: 1000;
 }
+
+.schedule_grid {
+  width: 100%;
+
+  .schedule_nav {
+    margin-left: 2%;
+    border-bottom: 1px solid #efefef;
+    padding-bottom: 5px;
+
+    li {
+      display: inline-block;
+      color: #b2afaa;
+      padding: 5px 10px;
+
+      &:hover {
+        background-color: #ededed;
+        border-radius: 2px 2px 0px 0px;
+        cursor: pointer;
+      }
+      
+      &.active {
+        color: #91181C;
+        border: 1px solid #efefef;
+        border-bottom: none;
+        border-radius: 2px 2px 0px 0px;
+      }
+
+      span {
+        padding: 0px 10px;
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      .badge {
+        display: inline-block;
+        min-width: 10px;
+        padding: 3px 7px;
+        font-size: 12px;
+        font-weight: bold;
+        color: #fff;
+        line-height: 1;
+        vertical-align: middle;
+        white-space: nowrap;
+        text-align: center;
+        background-color: #b2afaa;
+        border-radius: 10px;
+      }
+    }
+  }
+}

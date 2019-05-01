@@ -448,6 +448,7 @@ input[type=number]::-webkit-outer-spin-button {
   background-color: #FFF;
   z-index: 14;
   padding-left: 0px;
+  display: inline-block;
 }
 
 .ruler_tick {

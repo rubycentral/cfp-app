@@ -22,4 +22,10 @@ class Nav extends React.Component {
   };
 }
 
+Nav.propTypes = {
+  changeDayView: PropTypes.func,
+  counts: PropTypes.object,
+  dayViewing: PropTypes.number
+}
+
 export default Nav

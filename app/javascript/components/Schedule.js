@@ -2,13 +2,14 @@ import React from "react"
 import PropTypes from "prop-types"
 
 import Nav from './Schedule/Nav';
+import Ruler from './Schedule/Ruler';
 
 class Schedule extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       dayViewing: 1,
-      startTime: 7,
+      startTime: 9,
       endTime: 19,
       counts: {}
     }
@@ -19,11 +20,15 @@ class Schedule extends React.Component {
   }
 
   componentDidMount() {
-    this.setState(Object.assign(this.state, this.props), console.log(this.state)) // doing this until I can hit the API here.
+    this.setState(Object.assign(this.state, this.props)) // doing this until I can hit the API here.
+  }
+
+  componentDidUpdate() {
+    console.log(this.state)
   }
 
   render () {
-    const { counts, dayViewing } = this.state;
+    const { counts, dayViewing, startTime, endTime } = this.state;
     return (
       <div className='schedule_grid'> 
         <Nav 
@@ -31,6 +36,9 @@ class Schedule extends React.Component {
           changeDayView={this.changeDayView}
           dayViewing={dayViewing}
         />
+        <div className='grid_container'>
+          <Ruler startTime={startTime} endTime={endTime}/>
+        </div>
       </div>
     );
   }

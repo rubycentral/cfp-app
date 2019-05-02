@@ -21,10 +21,11 @@ class Schedule extends React.Component {
   }
 
   ripTime = time => {
+    // currently only returning hour. Need to refactor for minutes.
     return parseInt(time.split("T")[1].split(":")[0]);
   }
 
-  determineStartEndTime = slots => {
+  determineHours = slots => {
     let hours = {
       startTime: this.state.startTime,
       endTime: this.state.endTime
@@ -43,12 +44,11 @@ class Schedule extends React.Component {
         }
       })
     })
-    console.log(hours)
     return hours;
   }
 
   componentDidMount() {
-    let hours = this.determineStartEndTime(this.props.schedule.slots)
+    let hours = this.determineHours(this.props.schedule.slots)
     this.setState(Object.assign(this.state, this.props, hours)) // doing this until I can hit the API here.
   }
 

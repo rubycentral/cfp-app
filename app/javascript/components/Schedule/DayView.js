@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+
 class DayView extends React.Component {
   render() {
     const { schedule, dayViewing, startTime, endTime, ripTime } = this.props;
@@ -47,7 +48,8 @@ DayView.propTypes = {
   schedule: PropTypes.object,
   dayViewing: PropTypes.number,
   startTime: PropTypes.number,
-  endTime: PropTypes.number
+  endTime: PropTypes.number,
+  ripTime: PropTypes.func
 }
 DayView.defaultProps = {schedule: {rooms: []}}
 

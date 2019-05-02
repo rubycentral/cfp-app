@@ -4,6 +4,7 @@ import PropTypes from "prop-types"
 import Nav from './Schedule/Nav';
 import Ruler from './Schedule/Ruler';
 import DayView from './Schedule/DayView';
+import UnschedledArea from './Schedule/UnscheduledArea';
 
 class Schedule extends React.Component {
   constructor(props) {
@@ -57,7 +58,7 @@ class Schedule extends React.Component {
   }
 
   render () {
-    const { counts, dayViewing, startTime, endTime, schedule, sessions } = this.state;
+    const { counts, dayViewing, startTime, endTime, schedule, sessions, unscheduledSessions } = this.state;
     return (
       <div className='schedule_grid'> 
         <Nav 
@@ -73,6 +74,10 @@ class Schedule extends React.Component {
             startTime={startTime}
             endTime={endTime}
             ripTime={this.ripTime}
+          />
+          <UnschedledArea 
+            unscheduledSessions={unscheduledSessions}
+            sessions={sessions}  
           />
         </div>
       </div>

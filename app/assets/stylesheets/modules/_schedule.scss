@@ -442,6 +442,7 @@ input[type=number]::-webkit-outer-spin-button {
   width: 95%;
   margin: auto;
   display: flex;
+  overflow-x: auto;
 }
 
 .schedule_ruler {
@@ -476,7 +477,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 .schedule_column {
   display: inline-block;
-  width: 180px;
+  min-width: 180px;
   background: gainsboro;
 
   .schedule_column_head {
@@ -514,5 +515,51 @@ input[type=number]::-webkit-outer-spin-button {
   }
 }
 
+.unscheduled_area {
+  display: inline-block;
+  width: 250px;
+  margin-left: 20px;
 
+  .header_wrapper {
+    h3 {
+      color: #1A95DD;
+      font-size: 17.5px;
+      display: inline-block;
+      margin-right: 10px;
+    }
 
+    .badge {
+      background-color: #1A95DD;
+    }
+
+    &:hover {
+      h3 {
+        color:#126799;
+      }
+      .badge {
+        background-color: #126799;
+      }
+    }
+  }
+}
+
+.talk_card {
+  width: 95%;
+  margin: 1em auto;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  height: 90px;
+  text-align: center;
+  cursor: move;
+
+  .card_header{
+    width: 100%;
+    color: #fff;
+    padding: .5em;
+  }
+
+  .card_body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

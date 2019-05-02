@@ -39,7 +39,13 @@ class Schedule extends React.Component {
         />
         <div className='grid_container'>
           <Ruler startTime={startTime} endTime={endTime}/>
-          <DayView schedule={schedule} sessions={sessions}/>
+          <DayView 
+            schedule={schedule}
+            sessions={sessions}
+            dayViewing={dayViewing}
+            startTime={startTime}
+            endTime={endTime}
+          />
         </div>
       </div>
     );

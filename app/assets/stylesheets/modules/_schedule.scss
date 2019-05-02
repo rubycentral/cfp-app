@@ -449,7 +449,7 @@ input[type=number]::-webkit-outer-spin-button {
   border-radius: 2px;
   color: #000;
   font-size: $font-size-xs;
-  margin: 37px 5px 0 0;
+  margin: 37px 10px 0 0;
   white-space: nowrap;
   background-color: #FFF;
   z-index: 14;
@@ -463,15 +463,15 @@ input[type=number]::-webkit-outer-spin-button {
   position: relative;
   width: 48px;
 
-  &:after {
-    content: '';
-    position: absolute;
-    border-bottom: 1px solid rgba(204,204,204, .5);
-    width: 10px;
-    top: .6em;
-    left: 60px;
-    z-index: 9;
-  }
+  // &:after {
+  //   content: '';
+  //   position: absolute;
+  //   border-bottom: 1px solid rgba(204,204,204, .5);
+  //   width: 10px;
+  //   top: .6em;
+  //   left: 55px;
+  //   z-index: 9;
+  // }
 }
 
 .schedule_column {
@@ -495,11 +495,22 @@ input[type=number]::-webkit-outer-spin-button {
   }
 
   .schedule_time_slots {
+    display: flex;
+    justify-content: center;
     border-style: solid;
     border-width: 4px 1px 0px 1px;
     border-color: rgba(204, 204, 204, 0.5);
     background: #f0f0f0;
-    height: calc(100% - 40px)
+    height: calc(100% - 40px);
+    position: relative;
+
+    .schedule_slot {
+      background: #fff;
+      border: .5px solid rgba(204, 204, 204, 0.5);
+      position: absolute;
+      width: 98%;
+      margin: auto;
+    }
   }
 }
 

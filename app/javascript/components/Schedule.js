@@ -41,7 +41,6 @@ class Schedule extends React.Component {
           <Ruler startTime={startTime} endTime={endTime}/>
           <DayView 
             schedule={schedule}
-            sessions={sessions}
             dayViewing={dayViewing}
             startTime={startTime}
             endTime={endTime}

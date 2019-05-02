@@ -27,7 +27,10 @@ class UnscheduledArea extends React.Component {
 
     let display = isHidden ? 'none' : '';
 
-    let unscheduledTalks = unscheduledSessions.map(talk => <Talk key={talk.id} talk={talk} />)
+    let filteredSessions = unscheduledSessions.filter(session => {
+      return session.title.toLowerCase().includes(searchInput.toLowerCase()) // also filter by track once that is
+    })
+    let unscheduledTalks = filteredSessions.map(talk => <Talk key={talk.id} talk={talk} />)
 
     return (
       <div className='unscheduled_area'>

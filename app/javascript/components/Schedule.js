@@ -10,8 +10,8 @@ class Schedule extends React.Component {
     super(props);
     this.state = {
       dayViewing: 1,
-      startTime: 9,
-      endTime: 19,
+      startTime: 10,
+      endTime: 17,
       counts: {},
     }
   }
@@ -20,8 +20,36 @@ class Schedule extends React.Component {
     this.setState({ dayViewing: day })
   }
 
+  ripTime = time => {
+    return parseInt(time.split("T")[1].split(":")[0]);
+  }
+
+  determineStartEndTime = slots => {
+    let hours = {
+      startTime: this.state.startTime,
+      endTime: this.state.endTime
+    }
+
+    let flattenedSlots = Object.values(slots).flat()
+    
+    flattenedSlots.forEach(day => {
+      let flattenedDay = Object.values(day).flat() 
+      flattenedDay.forEach(slot => {
+        if (this.ripTime(slot.start_time) < hours.startTime) {
+          hours.startTime = this.ripTime(slot.start_time);
+        }
+        if (this.ripTime(slot.end_time) > hours.endTime) {
+          hours.endTime = this.ripTime(slot.end_time);
+        }
+      })
+    })
+    console.log(hours)
+    return hours;
+  }
+
   componentDidMount() {
-    this.setState(Object.assign(this.state, this.props)) // doing this until I can hit the API here.
+    let hours = this.determineStartEndTime(this.props.schedule.slots)
+    this.setState(Object.assign(this.state, this.props, hours)) // doing this until I can hit the API here.
   }
 
   componentDidUpdate() {
@@ -44,6 +72,7 @@ class Schedule extends React.Component {
             dayViewing={dayViewing}
             startTime={startTime}
             endTime={endTime}
+            ripTime={this.ripTime}
           />
         </div>
       </div>

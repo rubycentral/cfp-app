@@ -389,7 +389,7 @@ input[type=number]::-webkit-outer-spin-button {
 
   .schedule_nav {
     border-bottom: 1px solid #efefef;
-    padding: 0 0 5px 2%;
+    padding: 0 0 0 2%;
 
     li {
       display: inline-block;
@@ -405,7 +405,7 @@ input[type=number]::-webkit-outer-spin-button {
       &.active {
         color: #91181C;
         border: 1px solid #efefef;
-        border-bottom: none;
+        border-bottom: 1px solid #fff;
         border-radius: 2px 2px 0px 0px;
       }
 

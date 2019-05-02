@@ -9,7 +9,8 @@ class UnscheduledArea extends React.Component {
 
     this.state = {
       searchInput: '',
-      isHidden: false
+      isHidden: false,
+      opacity: 1
     }
   }
 
@@ -21,6 +22,10 @@ class UnscheduledArea extends React.Component {
     this.setState({isHidden: !this.state.isHidden})
   }
 
+  onDrag = (talk) => {
+    this.props.changeDragged(talk)
+  }
+
   render() {
     const {sessions, unscheduledSessions} = this.props;
     const {searchInput, isHidden} = this.state;
@@ -30,7 +35,9 @@ class UnscheduledArea extends React.Component {
     let filteredSessions = unscheduledSessions.filter(session => {
       return session.title.toLowerCase().includes(searchInput.toLowerCase()) // also filter by track once that is
     })
-    let unscheduledTalks = filteredSessions.map(talk => <Talk key={talk.id} talk={talk} />)
+    let unscheduledTalks = filteredSessions.map(talk => (
+      <Talk key={talk.id} talk={talk} onDrag={this.onDrag}/>
+    ))
 
     return (
       <div className='unscheduled_area'>
@@ -61,7 +68,8 @@ class UnscheduledArea extends React.Component {
 
 UnscheduledArea.propTypes = {
   unscheduledSessions: PropTypes.array,
-  sessions: PropTypes.array
+  sessions: PropTypes.array,
+  changeDragged: PropTypes.func
 }
 
 UnscheduledArea.defaultProps = {

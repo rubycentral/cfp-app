@@ -2,6 +2,15 @@ import React from "react"
 import PropTypes from "prop-types"
 
 class DayView extends React.Component {
+  onDragOver = e => {
+    e.preventDefault()
+  }
+
+  onDrop = (slot) => {
+    console.log(slot.id)
+    this.props.changeDragged(null)
+  }
+
   render() {
     const { schedule, dayViewing, startTime, endTime, ripTime } = this.props;
     let rows = schedule.rooms.map(room => {
@@ -21,7 +30,13 @@ class DayView extends React.Component {
           }
 
           return (
-            <div className='schedule_slot' style={style} key={slot.id}>
+            <div 
+              className='schedule_slot' 
+              style={style} 
+              key={slot.id}
+              onDragOver={e => this.onDragOver(e)}
+              onDrop={() => this.onDrop(slot)}  
+            >
 
             </div>
           )
@@ -49,7 +64,8 @@ DayView.propTypes = {
   dayViewing: PropTypes.number,
   startTime: PropTypes.number,
   endTime: PropTypes.number,
-  ripTime: PropTypes.func
+  ripTime: PropTypes.func,
+  changeDragged: PropTypes.func
 }
 DayView.defaultProps = {schedule: {rooms: []}}
 

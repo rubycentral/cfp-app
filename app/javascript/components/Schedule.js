@@ -14,6 +14,7 @@ class Schedule extends React.Component {
       startTime: 10,
       endTime: 17,
       counts: {},
+      draggedTalk: null
     }
   }
 
@@ -48,6 +49,10 @@ class Schedule extends React.Component {
     return hours;
   }
 
+  changeDragged = talk => {
+    this.setState({draggedTalk: talk})
+  }
+
   componentDidMount() {
     let hours = this.determineHours(this.props.schedule.slots)
     this.setState(Object.assign(this.state, this.props, hours)) // doing this until I can hit the API here.
@@ -74,10 +79,12 @@ class Schedule extends React.Component {
             startTime={startTime}
             endTime={endTime}
             ripTime={this.ripTime}
+            changeDragged={this.changeDragged}
           />
           <UnschedledArea 
             unscheduledSessions={unscheduledSessions}
             sessions={sessions}  
+            changeDragged={this.changeDragged}
           />
         </div>
       </div>

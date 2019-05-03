@@ -9,7 +9,6 @@ class Staff::Grids::TimeSlotsController < Staff::ApplicationController
   end
 
   def update
-    binding.pry
     respond_to do |format|
       if @time_slot.update_attributes(time_slot_params)
         format.json { render json: {

@@ -1,19 +1,19 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+import {patchTimeSlot} from '../../apiCalls';
+
 class DayView extends React.Component {
   onDragOver = e => {
     e.preventDefault()
   }
 
   onDrop = (slot) => {
-    console.log(slot)
+    const talk = this.props.draggedTalk;
+    
+    patchTimeSlot(slot, talk)
 
-    const talk = this.props.draggedItem;
-
-
-
-    this.props.changeDragged(null)
+    this.props.changeDragged(null) 
   }
 
   render() {

@@ -7,7 +7,12 @@ class DayView extends React.Component {
   }
 
   onDrop = (slot) => {
-    console.log(slot.id)
+    console.log(slot)
+
+    const talk = this.props.draggedItem;
+
+
+
     this.props.changeDragged(null)
   }
 

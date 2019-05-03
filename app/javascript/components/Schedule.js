@@ -54,6 +54,8 @@ class Schedule extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props)
+
     let hours = this.determineHours(this.props.schedule.slots)
     this.setState(Object.assign(this.state, this.props, hours)) // doing this until I can hit the API here.
   }
@@ -63,7 +65,7 @@ class Schedule extends React.Component {
   }
 
   render () {
-    const { counts, dayViewing, startTime, endTime, schedule, sessions, unscheduledSessions } = this.state;
+    const { counts, dayViewing, startTime, endTime, schedule, sessions, unscheduledSessions, draggedItem } = this.state;
     return (
       <div className='schedule_grid'> 
         <Nav 
@@ -80,6 +82,7 @@ class Schedule extends React.Component {
             endTime={endTime}
             ripTime={this.ripTime}
             changeDragged={this.changeDragged}
+            draggedItem={draggedItem}
           />
           <UnschedledArea 
             unscheduledSessions={unscheduledSessions}

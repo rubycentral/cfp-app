@@ -14,7 +14,7 @@ class Schedule extends React.Component {
       startTime: 10,
       endTime: 17,
       counts: {},
-      draggedTalk: null
+      draggedSession: null
     }
   }
 
@@ -49,8 +49,8 @@ class Schedule extends React.Component {
     return hours;
   }
 
-  changeDragged = talk => {
-    this.setState({draggedTalk: talk})
+  changeDragged = session => {
+    this.setState({draggedSession: session})
   }
 
   componentDidMount() {
@@ -65,7 +65,7 @@ class Schedule extends React.Component {
   }
 
   render () {
-    const { counts, dayViewing, startTime, endTime, schedule, sessions, unscheduledSessions, draggedTalk } = this.state;
+    const { counts, dayViewing, startTime, endTime, schedule, sessions, unscheduledSessions, draggedSession } = this.state;
     return (
       <div className='schedule_grid'> 
         <Nav 
@@ -82,7 +82,7 @@ class Schedule extends React.Component {
             endTime={endTime}
             ripTime={this.ripTime}
             changeDragged={this.changeDragged}
-            draggedTalk={draggedTalk}
+            draggedSession={draggedSession}
           />
           <UnschedledArea 
             unscheduledSessions={unscheduledSessions}

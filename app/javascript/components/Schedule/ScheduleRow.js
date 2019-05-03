@@ -3,19 +3,9 @@ import PropTypes from "prop-types"
 
 import { patchTimeSlot } from "../../apiCalls";
 
+import ScheduleSlot from './ScheduleSlot';
+
 class ScheduleRow extends React.Component {
-  onDragOver = e => {
-    e.preventDefault();
-  };
-
-  onDrop = slot => {
-    const talk = this.props.draggedTalk;
-
-    patchTimeSlot(slot, talk);
-
-    this.props.changeDragged(null);
-  };
-
   render() {
     const {
       height,
@@ -23,7 +13,9 @@ class ScheduleRow extends React.Component {
       startTime,
       ripTime,
       schedule,
-      dayViewing
+      dayViewing,
+      draggedSession,
+      changeDragged
     } = this.props;
 
     const roomID = room.id;
@@ -34,21 +26,14 @@ class ScheduleRow extends React.Component {
     let slots = <React.Fragment />;
     if (thisRoomThisDaySlots) {
       slots = thisRoomThisDaySlots.map(slot => {
-        const slotStartTime = ripTime(slot.start_time);
-        const slotEndTime = ripTime(slot.end_time);
-
-        const style = {
-          top: (slotStartTime - startTime) * 90 + "px",
-          height: (slotEndTime - slotStartTime) * 90 + "px"
-        };
-
         return (
-          <div
-            className="schedule_slot"
-            style={style}
+          <ScheduleSlot 
+            draggedSession={draggedSession} 
+            slot={slot} 
+            ripTime={ripTime} 
+            startTime={startTime} 
             key={slot.id}
-            onDragOver={e => this.onDragOver(e)}
-            onDrop={() => this.onDrop(slot)}
+            changeDragged={changeDragged}
           />
         );
       });
@@ -73,7 +58,9 @@ ScheduleRow.propTypes = {
   dayViewing: PropTypes.number,
   startTime: PropTypes.number,
   ripTime: PropTypes.func,
-  room: PropTypes.object
+  room: PropTypes.object,
+  changeDragged: PropTypes.func,
+  draggedSession: PropTypes.object
 };
 
 export default ScheduleRow

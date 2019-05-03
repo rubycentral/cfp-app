@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-class Talk extends React.Component {
+class ProgramSession extends React.Component {
   constructor(props) {
     super(props);
 
@@ -10,8 +10,8 @@ class Talk extends React.Component {
     }
   }
 
-  drag = (talk) => {
-    this.props.onDrag(talk)
+  drag = (session) => {
+    this.props.onDrag(session)
     this.setState({opacity: .5})
   }
 
@@ -21,7 +21,7 @@ class Talk extends React.Component {
   }
   
   render() {
-    const {talk} = this.props;
+    const {session} = this.props;
     const {opacity} = this.state;
 
     // just now realizing this won't work. Must hit API to determine track names and colors based on ID.
@@ -31,22 +31,22 @@ class Talk extends React.Component {
       '3': '#83BA6D'
     }
 
-    const bkgColor = talk.track_id ? tracks[talk.track_id.toString()] : '#ff'
+    const bkgColor = session.track_id ? tracks[session.track_id.toString()] : '#fff'
 
     return(
-      <div className='talk_card' draggable={true} onDragStart={() => this.drag(talk)} onDragEnd={(e) => this.dragEnd(e)}style={{'opacity': opacity}}>
+      <div className='program_session_card' draggable={true} onDragStart={() => this.drag(session)} onDragEnd={(e) => this.dragEnd(e)}style={{'opacity': opacity}}>
         <div className='card_header' style={{'backgroundColor': bkgColor}}>{'track.name'}</div>
         <div className='card_body'>
-          <p>{talk.title}</p>
+          <p>{session.title}</p>
         </div>
       </div>
     )
   }
 }
 
-export default Talk
+export default ProgramSession
 
-Talk.propTypes = {
-  talk: PropTypes.object,
+ProgramSession.propTypes = {
+  session: PropTypes.object,
   onDrag: PropTypes.func
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 
-import Talk from './Talk';
+import ProgramSession from './ProgramSession';
 
 class UnscheduledArea extends React.Component {
   constructor(props) {
@@ -22,8 +22,8 @@ class UnscheduledArea extends React.Component {
     this.setState({isHidden: !this.state.isHidden})
   }
 
-  onDrag = (talk) => {
-    this.props.changeDragged(talk)
+  onDrag = (programSession) => {
+    this.props.changeDragged(programSession);
   }
 
   render() {
@@ -33,11 +33,11 @@ class UnscheduledArea extends React.Component {
     let display = isHidden ? 'none' : '';
 
     let filteredSessions = unscheduledSessions.filter(session => {
-      return session.title.toLowerCase().includes(searchInput.toLowerCase()) // also filter by track once that is
+      return session.title.toLowerCase().includes(searchInput.toLowerCase()) // also filter by track once that is determined by api
     })
-    let unscheduledTalks = filteredSessions.map(talk => (
-      <Talk key={talk.id} talk={talk} onDrag={this.onDrag}/>
-    ))
+    let unscheduledSessionCards = filteredSessions.map(session => (
+      <ProgramSession key={session.id} session={session} onDrag={this.onDrag} />
+    ));
 
     return (
       <div className='unscheduled_area'>
@@ -58,7 +58,7 @@ class UnscheduledArea extends React.Component {
             ></input>
           </div>
           <div>
-            {unscheduledTalks}
+            {unscheduledSessionCards}
           </div>
         </div>
       </div>

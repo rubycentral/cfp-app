@@ -32,4 +32,4 @@
 
 %hr
 
-= react_component("Schedule", { schedule: @schedule, sessions: @sessions, counts: @counts, unscheduledSessions: @unscheduled_sessions})
+= react_component("Schedule", { schedule: @schedule, sessions: @sessions, counts: @counts, unscheduledSessions: @unscheduled_sessions, csrf: session[:_csrf_token]})

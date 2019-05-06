@@ -65,7 +65,7 @@ class Schedule extends React.Component {
   }
 
   render () {
-    const { counts, dayViewing, startTime, endTime, schedule, sessions, unscheduledSessions, draggedSession } = this.state;
+    const { counts, dayViewing, startTime, endTime, schedule, sessions, unscheduledSessions, draggedSession, csrf } = this.state;
     return (
       <div className='schedule_grid'> 
         <Nav 
@@ -83,6 +83,7 @@ class Schedule extends React.Component {
             ripTime={this.ripTime}
             changeDragged={this.changeDragged}
             draggedSession={draggedSession}
+            csrf={csrf}
           />
           <UnschedledArea 
             unscheduledSessions={unscheduledSessions}

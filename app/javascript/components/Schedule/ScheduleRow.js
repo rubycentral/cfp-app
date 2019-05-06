@@ -15,7 +15,8 @@ class ScheduleRow extends React.Component {
       schedule,
       dayViewing,
       draggedSession,
-      changeDragged
+      changeDragged,
+      csrf
     } = this.props;
 
     const roomID = room.id;
@@ -34,6 +35,7 @@ class ScheduleRow extends React.Component {
             startTime={startTime} 
             key={slot.id}
             changeDragged={changeDragged}
+            csrf={csrf}
           />
         );
       });

@@ -26,6 +26,14 @@ class TimeSlot < ApplicationRecord
 
   validates :room_id, :conference_day, presence: true
 
+  def serializable_hash(options)
+    super(methods: :update_path)
+  end
+
+  def update_path
+    Rails.application.routes.url_helpers.event_staff_schedule_grid_time_slot_path(event, self)
+  end
+
   def self.import(file)
     raw_json = file.read # maybe open as well
     parsed_slots = JSON.parse(raw_json)

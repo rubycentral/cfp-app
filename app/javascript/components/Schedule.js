@@ -61,8 +61,8 @@ class Schedule extends React.Component {
     let targetDay = targetSlot.conference_day.toString();
     
     let schedule = Object.assign({}, this.state.schedule);
-    let slot = Object.values(schedule.slots[targetDay]).flat().find(slot => slot.id === targetSlot.id)
-    let previousSessionID = slot.program_session_id
+    let slot = Object.values(schedule.slots[targetDay]).flat().find(slot => slot.id === targetSlot.id);
+    let previousSessionID = slot.program_session_id;
 
     slot.program_session_id = programSession.id;
 
@@ -74,6 +74,7 @@ class Schedule extends React.Component {
       let replacedSession = this.state.sessions.find(session => session.id === previousSessionID)
       unscheduledSessions.push(replacedSession)
     }
+    
     this.setState({unscheduledSessions, schedule})
   }
 

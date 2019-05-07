@@ -15,8 +15,11 @@ class ScheduleSlot extends React.Component {
     const { csrf } = this.props;
 
     patchTimeSlot(slot, session, csrf)
-    this.props.scheduleSession(session, slot)
-    this.props.changeDragged(null);
+      .then(() => {
+        this.props.scheduleSession(session, slot);
+        this.props.changeDragged(null);
+      })
+      .catch(error => console.error("Error:", error));
   };
 
   onDrag = (programSession) => {

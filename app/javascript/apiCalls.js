@@ -8,7 +8,7 @@ export function patchTimeSlot(slot, talk, csrfToken) {
   });
 
   if (slot.update_path) {
-    fetch(slot.update_path, {
+    return fetch(slot.update_path, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -16,8 +16,6 @@ export function patchTimeSlot(slot, talk, csrfToken) {
       },
       credentials: "same-origin",
       body: data
-    }).then(response => {
-      return response.json();
-    });
+    })
   }
 }

@@ -14,8 +14,8 @@ class ScheduleSlot extends React.Component {
     const session = this.props.draggedSession;
     const { csrf } = this.props;
 
-    patchTimeSlot(slot, session, csrf);
-
+    patchTimeSlot(slot, session, csrf)
+    this.props.scheduleSession(session, slot)
     this.props.changeDragged(null);
   };
 
@@ -61,7 +61,8 @@ ScheduleSlot.propTypes = {
   ripTime: PropTypes.func,
   startTime: PropTypes.number,
   changeDragged: PropTypes.func,
-  draggedSession: PropTypes.object
+  draggedSession: PropTypes.object,
+  scheduleSession: PropTypes.func
 }
 
 export default ScheduleSlot

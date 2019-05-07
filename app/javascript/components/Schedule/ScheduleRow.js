@@ -17,7 +17,8 @@ class ScheduleRow extends React.Component {
       draggedSession,
       changeDragged,
       csrf,
-      sessions
+      sessions,
+      scheduleSession
     } = this.props;
 
     const roomID = room.id;
@@ -38,6 +39,7 @@ class ScheduleRow extends React.Component {
             changeDragged={changeDragged}
             csrf={csrf}
             sessions={sessions}
+            scheduleSession={scheduleSession}
           />
         );
       });
@@ -65,7 +67,8 @@ ScheduleRow.propTypes = {
   room: PropTypes.object,
   changeDragged: PropTypes.func,
   draggedSession: PropTypes.object,
-  sessions: PropTypes.array
+  sessions: PropTypes.array,
+  scheduleSession: PropTypes.func
 };
 
 ScheduleRow.defaultProps = {sessions: []}

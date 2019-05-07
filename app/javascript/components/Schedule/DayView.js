@@ -12,7 +12,8 @@ class DayView extends React.Component {
       endTime,
       ripTime,
       changeDragged,
-      draggedSession
+      draggedSession,
+      csrf
     } = this.props;
 
     let rows = schedule.rooms.map(room => {
@@ -29,6 +30,7 @@ class DayView extends React.Component {
           dayViewing={dayViewing}
           changeDragged={changeDragged}
           draggedSession={draggedSession}
+          csrf={csrf}
         />
       );
     })

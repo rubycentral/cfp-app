@@ -1,22 +1,9 @@
-function getMeta(metaName) {
-  const metas = document.getElementsByTagName("meta");
-
-  for (let i = 0; i < metas.length; i++) {
-    if (metas[i].getAttribute("name") === metaName) {
-      return metas[i].getAttribute("content");
-    }
-  }
-
-  return "";
-}
-
-export function patchTimeSlot(slot, talk) {
+export function patchTimeSlot(slot, talk, csrfToken) {
   const data = JSON.stringify({
     time_slot: {
       program_session_id: talk.id.toString()
     }
   });
-  const csrfToken = getMeta("csrf-token");
 
   fetch(slot.update_path, {
     method: 'PATCH',

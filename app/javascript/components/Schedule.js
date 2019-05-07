@@ -65,15 +65,15 @@ class Schedule extends React.Component {
   render () {
     const { counts, dayViewing, startTime, endTime, schedule, sessions, unscheduledSessions, draggedSession, csrf } = this.state;
     return (
-      <div className='schedule_grid'> 
-        <Nav 
-          counts={counts} 
+      <div className="schedule_grid">
+        <Nav
+          counts={counts}
           changeDayView={this.changeDayView}
           dayViewing={dayViewing}
         />
-        <div className='grid_container'>
-          <Ruler startTime={startTime} endTime={endTime}/>
-          <DayView 
+        <div className="grid_container">
+          <Ruler startTime={startTime} endTime={endTime} />
+          <DayView
             schedule={schedule}
             dayViewing={dayViewing}
             startTime={startTime}
@@ -84,10 +84,12 @@ class Schedule extends React.Component {
             csrf={csrf}
             sessions={sessions}
           />
-          <UnschedledArea 
+          <UnschedledArea
             unscheduledSessions={unscheduledSessions}
-            sessions={sessions}  
+            sessions={sessions}
             changeDragged={this.changeDragged}
+            draggedSession={draggedSession}
+            csrf={csrf}
           />
         </div>
       </div>

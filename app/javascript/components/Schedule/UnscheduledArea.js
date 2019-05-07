@@ -1,75 +1,90 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 
-import ProgramSession from './ProgramSession';
+import ProgramSession from './ProgramSession'
+import { patchTimeSlot } from "../../apiCalls";
 
 class UnscheduledArea extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
-      searchInput: '',
+      searchInput: "",
       isHidden: false,
       opacity: 1
-    }
+    };
   }
 
-  handleChange = (e) => {
-    this.setState({searchInput: e.target.value})
-  }
+  handleChange = e => {
+    this.setState({ searchInput: e.target.value });
+  };
 
   changeHiddenState = () => {
-    this.setState({isHidden: !this.state.isHidden})
-  }
+    this.setState({ isHidden: !this.state.isHidden });
+  };
 
-  onDrag = (programSession) => {
+  onDrag = programSession => {
     this.props.changeDragged(programSession);
-  }
+  };
+
+  onDragOver = e => {
+    e.preventDefault();
+  };
+
+  onDrop = () => {
+    const { draggedSession, csrf } = this.props;
+
+    patchTimeSlot(draggedSession.slot, draggedSession, csrf);
+
+    this.props.changeDragged(null);
+  };
 
   render() {
-    const {sessions, unscheduledSessions} = this.props;
-    const {searchInput, isHidden} = this.state;
+    const { sessions, unscheduledSessions } = this.props;
+    const { searchInput, isHidden } = this.state;
 
-    let display = isHidden ? 'none' : '';
+    let display = isHidden ? "none" : "";
 
     let filteredSessions = unscheduledSessions.filter(session => {
-      return session.title.toLowerCase().includes(searchInput.toLowerCase()) // also filter by track once that is determined by api
-    })
+      return session.title.toLowerCase().includes(searchInput.toLowerCase()); // also filter by track once that is determined by api
+    });
     let unscheduledSessionCards = filteredSessions.map(session => (
       <ProgramSession key={session.id} session={session} onDrag={this.onDrag} />
     ));
 
     return (
-      <div className='unscheduled_area'>
-        <div className='header_wrapper' onClick={this.changeHiddenState}>
+      <div
+        className="unscheduled_area"
+        onDrop={this.onDrop}
+        onDragOver={e => this.onDragOver(e)}
+      >
+        <div className="header_wrapper" onClick={this.changeHiddenState}>
           <h3>Unscheduled Sessions</h3>
-          <span className='badge'>{unscheduledSessions.length}/{sessions.length} </span> 
+          <span className="badge">
+            {unscheduledSessions.length}/{sessions.length}{" "}
+          </span>
         </div>
-        <div 
-          className='unscheduled_sessions'
-          style={{'display': display}} 
-        >
-          <div className='search-sessions-wrapper'>
+        <div className="unscheduled_sessions" style={{ display: display }}>
+          <div className="search-sessions-wrapper">
             <label>Search:</label>
-            <input 
-              type='text' 
+            <input
+              type="text"
               value={searchInput}
-              onChange={(e) => this.handleChange(e)}
-            ></input>
+              onChange={e => this.handleChange(e)}
+            />
           </div>
-          <div>
-            {unscheduledSessionCards}
-          </div>
+          <div>{unscheduledSessionCards}</div>
         </div>
       </div>
-    )
+    );
   }
 }
 
 UnscheduledArea.propTypes = {
   unscheduledSessions: PropTypes.array,
   sessions: PropTypes.array,
-  changeDragged: PropTypes.func
+  changeDragged: PropTypes.func,
+  draggedSession: PropTypes.object
 }
 
 UnscheduledArea.defaultProps = {

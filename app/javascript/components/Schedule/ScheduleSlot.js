@@ -19,6 +19,10 @@ class ScheduleSlot extends React.Component {
     this.props.changeDragged(null);
   };
 
+  onDrag = (programSession) => {
+    this.props.changeDragged(Object.assign(programSession, {slot: this.props.slot}))
+  }
+
   render() {
     const { slot, ripTime, startTime, sessions } = this.props;
 
@@ -35,7 +39,7 @@ class ScheduleSlot extends React.Component {
       let matchedSession = sessions.find(
         session => session.id === slot.program_session_id
       )
-      session = <ProgramSession session={matchedSession} />
+      session = <ProgramSession session={matchedSession} onDrag={this.onDrag}/>
     }
 
     return (

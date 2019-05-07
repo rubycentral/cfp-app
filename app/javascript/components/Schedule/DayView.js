@@ -13,7 +13,8 @@ class DayView extends React.Component {
       ripTime,
       changeDragged,
       draggedSession,
-      csrf
+      csrf,
+      sessions
     } = this.props;
 
     let rows = schedule.rooms.map(room => {
@@ -30,6 +31,7 @@ class DayView extends React.Component {
           dayViewing={dayViewing}
           changeDragged={changeDragged}
           draggedSession={draggedSession}
+          sessions={sessions}
           csrf={csrf}
         />
       );
@@ -50,8 +52,9 @@ DayView.propTypes = {
   endTime: PropTypes.number,
   ripTime: PropTypes.func,
   changeDragged: PropTypes.func,
-  draggedSession: PropTypes.object
+  draggedSession: PropTypes.object,
+  sessions: PropTypes.array
 }
-DayView.defaultProps = {schedule: {rooms: []}}
+DayView.defaultProps = {schedule: {rooms: []}, sessions: []}
 
 export default DayView

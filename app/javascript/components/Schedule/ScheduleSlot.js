@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import ProgramSession from './ProgramSession';
 import { patchTimeSlot } from "../../apiCalls";
 
 class ScheduleSlot extends React.Component {
@@ -19,7 +20,7 @@ class ScheduleSlot extends React.Component {
   };
 
   render() {
-    const { slot, ripTime, startTime } = this.props;
+    const { slot, ripTime, startTime, sessions } = this.props;
 
     const slotStartTime = ripTime(slot.start_time);
     const slotEndTime = ripTime(slot.end_time);
@@ -28,7 +29,15 @@ class ScheduleSlot extends React.Component {
       top: (slotStartTime - startTime) * 90 + "px",
       height: (slotEndTime - slotStartTime) * 90 + "px"
     };
-    
+
+    let session = <React.Fragment/>
+    if (slot.program_session_id) {
+      let matchedSession = sessions.find(
+        session => session.id === slot.program_session_id
+      )
+      session = <ProgramSession session={matchedSession} />
+    }
+
     return (
       <div
         className="schedule_slot"
@@ -36,7 +45,9 @@ class ScheduleSlot extends React.Component {
         key={slot.id}
         onDragOver={e => this.onDragOver(e)}
         onDrop={() => this.onDrop(slot)}
-      />
+      >
+        {session}
+      </div>
     );
   }
 }

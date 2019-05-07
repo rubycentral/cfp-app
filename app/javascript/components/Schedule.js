@@ -54,8 +54,6 @@ class Schedule extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props)
-
     let hours = this.determineHours(this.props.schedule.slots)
     this.setState(Object.assign(this.state, this.props, hours)) // doing this until I can hit the API here.
   }
@@ -84,6 +82,7 @@ class Schedule extends React.Component {
             changeDragged={this.changeDragged}
             draggedSession={draggedSession}
             csrf={csrf}
+            sessions={sessions}
           />
           <UnschedledArea 
             unscheduledSessions={unscheduledSessions}
@@ -101,6 +100,7 @@ Schedule.propTypes = {
   sessions: PropTypes.array,
   counts: PropTypes.object,
   unscheduledSessions: PropTypes.array,
+  csrf: PropTypes.string
 };
 
 export default Schedule

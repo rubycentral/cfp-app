@@ -49,8 +49,23 @@ class Schedule extends React.Component {
     return hours;
   }
 
-  changeDragged = session => {
-    this.setState({draggedSession: session})
+  changeDragged = programSession => {
+    this.setState({draggedSession: programSession})
+  }
+
+  unscheduleSession = programSession => {
+    let unscheduledSessions = this.state.unscheduledSessions.slice();
+    let previousSlot = programSession.slot;
+
+    let schedule = Object.assign({}, this.state.schedule)
+    let day = previousSlot.conference_day.toString();
+
+    let slot = Object.values(schedule.slots[day]).flat().find(slot => slot.id === previousSlot.id)
+
+    slot.program_session_id = null;
+    unscheduledSessions.push(Object.assign(programSession, {slot: null}))
+
+    this.setState({unscheduledSessions, schedule})
   }
 
   componentDidMount() {
@@ -90,6 +105,7 @@ class Schedule extends React.Component {
             changeDragged={this.changeDragged}
             draggedSession={draggedSession}
             csrf={csrf}
+            unscheduleSession={this.unscheduleSession}
           />
         </div>
       </div>

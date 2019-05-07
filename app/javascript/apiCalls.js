@@ -7,16 +7,17 @@ export function patchTimeSlot(slot, talk, csrfToken) {
     }
   });
 
-  fetch(slot.update_path, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-CSRF-Token': csrfToken
-    },
-    credentials: 'same-origin',
-    body: data
-  })
-  .then(response => {
-    return response.json()
-  })
+  if (slot.update_path) {
+    fetch(slot.update_path, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": csrfToken
+      },
+      credentials: "same-origin",
+      body: data
+    }).then(response => {
+      return response.json();
+    });
+  }
 }

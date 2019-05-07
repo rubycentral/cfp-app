@@ -36,6 +36,7 @@ class UnscheduledArea extends React.Component {
 
     patchTimeSlot(draggedSession.slot, draggedSession, csrf);
 
+    this.props.unscheduleSession(draggedSession)
     this.props.changeDragged(null);
   };
 
@@ -84,7 +85,8 @@ UnscheduledArea.propTypes = {
   unscheduledSessions: PropTypes.array,
   sessions: PropTypes.array,
   changeDragged: PropTypes.func,
-  draggedSession: PropTypes.object
+  draggedSession: PropTypes.object,
+  unscheduleSession: PropTypes.func
 }
 
 UnscheduledArea.defaultProps = {

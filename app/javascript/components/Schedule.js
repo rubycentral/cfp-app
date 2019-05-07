@@ -53,7 +53,7 @@ class Schedule extends React.Component {
     this.setState({draggedSession: programSession})
   }
 
-  scheduleSession = (programSession, targetSlot, previousSlot ) => {
+  scheduleSession = (programSession, targetSlot ) => {
     let unscheduledSessions = this.state.unscheduledSessions.filter(session => {
       return session.id !== programSession.id
     })
@@ -66,7 +66,11 @@ class Schedule extends React.Component {
 
     slot.program_session_id = programSession.id;
 
-    if (previousSessionID) {
+    if (programSession.slot) {
+      this.unscheduleSession(programSession)
+    }
+
+    if (previousSessionID && previousSessionID !== slot.program_session_id) {
       let replacedSession = this.state.sessions.find(session => session.id === previousSessionID)
       unscheduledSessions.push(replacedSession)
     }

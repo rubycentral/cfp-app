@@ -14,7 +14,10 @@ class Schedule extends React.Component {
       startTime: 10,
       endTime: 17,
       counts: {},
-      draggedSession: null
+      draggedSession: null,
+      schedule: {
+        rooms: []
+      }
     }
   }
 
@@ -32,7 +35,7 @@ class Schedule extends React.Component {
       startTime: this.state.startTime,
       endTime: this.state.endTime
     }
-
+    
     let flattenedSlots = Object.values(slots).flat()
     
     flattenedSlots.forEach(day => {
@@ -94,6 +97,7 @@ class Schedule extends React.Component {
   }
 
   componentDidMount() {
+    
     let hours = this.determineHours(this.props.schedule.slots)
     this.setState(Object.assign(this.state, this.props, hours)) // doing this until I can hit the API here.
   }
@@ -104,6 +108,11 @@ class Schedule extends React.Component {
 
   render () {
     const { counts, dayViewing, startTime, endTime, schedule, sessions, unscheduledSessions, draggedSession, csrf } = this.state;
+
+    const headers = schedule.rooms.map(room => (
+      <div className="schedule_column_head">{room.name}</div>
+    ));
+
     return (
       <div className="schedule_grid">
         <Nav
@@ -111,6 +120,7 @@ class Schedule extends React.Component {
           changeDayView={this.changeDayView}
           dayViewing={dayViewing}
         />
+        <div className="grid_headers_wrapper">{headers}</div>
         <div className="grid_container">
           <Ruler startTime={startTime} endTime={endTime} />
           <DayView
@@ -146,5 +156,7 @@ Schedule.propTypes = {
   unscheduledSessions: PropTypes.array,
   csrf: PropTypes.string
 };
+
+Schedule.defaultProps = {schedule: {rooms: []}}
 
 export default Schedule

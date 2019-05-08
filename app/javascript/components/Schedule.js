@@ -58,6 +58,10 @@ class Schedule extends React.Component {
       return session.id !== programSession.id
     })
 
+    if (programSession.id === targetSlot.program_session_id) {
+      return
+    }
+
     let targetDay = targetSlot.conference_day.toString();
     
     let schedule = Object.assign({}, this.state.schedule);

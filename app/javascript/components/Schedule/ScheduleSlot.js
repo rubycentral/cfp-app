@@ -13,7 +13,7 @@ class ScheduleSlot extends React.Component {
   onDrop = slot => {
     const session = this.props.draggedSession;
     const { csrf } = this.props;
-
+    
     patchTimeSlot(slot, session, csrf)
       .then(() => {
         this.props.scheduleSession(session, slot);

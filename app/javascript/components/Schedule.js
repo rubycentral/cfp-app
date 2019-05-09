@@ -138,6 +138,8 @@ class Schedule extends React.Component {
       <div className="schedule_column_head" key={'column_head_' + room.name}>{room.name}</div>
     ));
 
+    const headersMinWidth = (180 * schedule.rooms.length) + 'px'
+
     return (
       <div className="schedule_grid">
         <Nav
@@ -145,7 +147,7 @@ class Schedule extends React.Component {
           changeDayView={this.changeDayView}
           dayViewing={dayViewing}
         />
-        <div className="grid_headers_wrapper">{headers}</div>
+        <div className="grid_headers_wrapper" style={{'minWidth': headersMinWidth}}>{headers}</div>
         <div className="grid_container">
           <Ruler startTime={startTime} endTime={endTime} />
           <DayView

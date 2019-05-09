@@ -6,7 +6,7 @@ export function patchTimeSlot(slot, talk, csrfToken) {
       program_session_id: talkID
     }
   });
-
+  debugger
   if (slot.update_path) {
     return fetch(slot.update_path, {
       method: "PATCH",

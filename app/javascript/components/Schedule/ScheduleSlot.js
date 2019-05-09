@@ -16,6 +16,9 @@ class ScheduleSlot extends React.Component {
     
     patchTimeSlot(slot, session, csrf)
       .then(() => {
+        if (session.slot) {
+          patchTimeSlot(session.slot, null, csrf)
+        }
         this.props.scheduleSession(session, slot);
         this.props.changeDragged(null);
       })

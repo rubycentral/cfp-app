@@ -34,4 +34,4 @@
 
 - @schedule.each_day { |day| @schedule.each_room(day) { |room, slots| slots.each { |ts| ts = Staff::TimeSlotDecorator.decorate(ts).as_json(methods: :update_path) } } }
 
-= react_component("Schedule", { schedule: @schedule, sessions: @sessions, counts: @counts, unscheduledSessions: @unscheduled_sessions, csrf: session[:_csrf_token]})
+= react_component("Schedule", { schedule: @schedule, tracks: @tracks, sessions: @sessions, counts: @counts, unscheduledSessions: @unscheduled_sessions, csrf: session[:_csrf_token]})

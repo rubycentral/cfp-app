@@ -32,7 +32,7 @@ class UnscheduledArea extends React.Component {
   };
 
   onDrop = () => {
-    const { draggedSession, csrf } = this.props;
+    const { draggedSession, csrf, tracks } = this.props;
 
     patchTimeSlot(draggedSession.slot, draggedSession, csrf)
       .then(() => {
@@ -43,7 +43,7 @@ class UnscheduledArea extends React.Component {
   };
 
   render() {
-    const { sessions, unscheduledSessions } = this.props;
+    const { sessions, unscheduledSessions, tracks } = this.props;
     const { searchInput, isHidden } = this.state;
 
     let display = isHidden ? "none" : "";
@@ -52,7 +52,7 @@ class UnscheduledArea extends React.Component {
       return session.title.toLowerCase().includes(searchInput.toLowerCase()); // also filter by track once that is determined by api
     });
     let unscheduledSessionCards = filteredSessions.map(session => (
-      <ProgramSession key={session.id} session={session} onDrag={this.onDrag} />
+      <ProgramSession key={session.id} session={session} onDrag={this.onDrag} tracks={tracks} />
     ));
 
     return (
@@ -88,7 +88,8 @@ UnscheduledArea.propTypes = {
   sessions: PropTypes.array,
   changeDragged: PropTypes.func,
   draggedSession: PropTypes.object,
-  unscheduleSession: PropTypes.func
+  unscheduleSession: PropTypes.func,
+  tracks: PropTypes.array
 }
 
 UnscheduledArea.defaultProps = {

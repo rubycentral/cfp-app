@@ -484,7 +484,7 @@ input[type=number]::-webkit-outer-spin-button {
   top: 113px;
   background: #fff;
   z-index: 100;
-  margin-left: 89px;
+  margin-left: calc(2.5% + 55px);
 
   .schedule_column_head {
     display: inline-flex;

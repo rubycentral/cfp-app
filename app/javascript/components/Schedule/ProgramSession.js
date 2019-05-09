@@ -21,21 +21,17 @@ class ProgramSession extends React.Component {
   }
   
   render() {
-    const {session} = this.props;
+    const {session, tracks} = this.props;
     const {opacity} = this.state;
 
-    // just now realizing this won't work. Must hit API to determine track names and colors based on ID.
-    const tracks = {
-      '1': '#781C81',
-      '2': '#D92120',
-      '3': '#83BA6D'
-    }
+    const sessionTrack = tracks.find(track => track.id === session.track_id)
 
-    const bkgColor = session.track_id ? tracks[session.track_id.toString()] : '#fff'
+    const bkgColor = sessionTrack ? sessionTrack.color : '#fff'
+    const trackName = sessionTrack ? sessionTrack.name : ''
 
     return(
       <div className='program_session_card' draggable={true} onDragStart={() => this.drag(session)} onDragEnd={(e) => this.dragEnd(e)}style={{'opacity': opacity}}>
-        <div className='card_header' style={{'backgroundColor': bkgColor}}>{'track.name'}</div>
+        <div className='card_header' style={{'backgroundColor': bkgColor}}>{trackName}</div>
         <div className='card_body'>
           <p>{session.title}</p>
         </div>
@@ -48,5 +44,8 @@ export default ProgramSession
 
 ProgramSession.propTypes = {
   session: PropTypes.object,
-  onDrag: PropTypes.func
+  onDrag: PropTypes.func,
+  tracks: PropTypes.array
 }
+
+ProgramSession.defaultProps = {tracks: []}

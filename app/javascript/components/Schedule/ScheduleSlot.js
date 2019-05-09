@@ -27,7 +27,7 @@ class ScheduleSlot extends React.Component {
   }
 
   render() {
-    const { slot, ripTime, startTime, sessions } = this.props;
+    const { slot, ripTime, startTime, sessions, tracks } = this.props;
 
     const slotStartTime = ripTime(slot.start_time);
     const slotEndTime = ripTime(slot.end_time);
@@ -42,7 +42,7 @@ class ScheduleSlot extends React.Component {
       let matchedSession = sessions.find(
         session => session.id === slot.program_session_id
       )
-      session = <ProgramSession session={matchedSession} onDrag={this.onDrag}/>
+      session = <ProgramSession session={matchedSession} onDrag={this.onDrag} tracks={tracks} />
     }
 
     return (
@@ -65,7 +65,8 @@ ScheduleSlot.propTypes = {
   startTime: PropTypes.number,
   changeDragged: PropTypes.func,
   draggedSession: PropTypes.object,
-  scheduleSession: PropTypes.func
+  scheduleSession: PropTypes.func,
+  tracks: PropTypes.array
 }
 
 export default ScheduleSlot

@@ -6,5 +6,6 @@ class Staff::GridsController < Staff::ApplicationController
     @counts = EventStats.new(current_event).schedule_counts
     @sessions = current_event.program_sessions
     @unscheduled_sessions = @sessions.unscheduled
+    @tracks = current_event.tracks.sort_by_name
   end
 end

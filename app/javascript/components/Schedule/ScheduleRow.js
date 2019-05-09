@@ -44,16 +44,17 @@ class ScheduleRow extends React.Component {
         );
       });
     }
-
+    
     return (
-      <div
-        className="schedule_column"
-        key={"column " + room.name}
-        style={{ height }}
-      >
-        <div className="schedule_column_head">{room.name}</div>
-        <div className="schedule_time_slots">{slots}</div>
-      </div>
+      <React.Fragment>
+        <div
+          className="schedule_column"
+          key={"column " + room.name}
+          style={{ height }}
+        >
+          <div className="schedule_time_slots">{slots}</div>
+        </div>
+      </React.Fragment>
     );
   }
 }

@@ -390,6 +390,11 @@ input[type=number]::-webkit-outer-spin-button {
   .schedule_nav {
     border-bottom: 1px solid #efefef;
     padding: 0 0 0 2%;
+    margin-top: 20px;
+    position: sticky;
+    top: 77.6px;
+    background: #fff;
+    z-index: 100000;
 
     li {
       display: inline-block;
@@ -474,18 +479,19 @@ input[type=number]::-webkit-outer-spin-button {
   //   z-index: 9;
   // }
 }
-
-.schedule_column {
-  display: inline-block;
-  min-width: 180px;
-  background: gainsboro;
+.grid_headers_wrapper {
+  position: sticky;
+  top: 113px;
+  background: #fff;
+  z-index: 100;
+  margin-left: 89px;
 
   .schedule_column_head {
     display: inline-flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    width: 180px;
     height: 40px;
     font-size: 14px;
     line-height: 1.42857;
@@ -494,6 +500,12 @@ input[type=number]::-webkit-outer-spin-button {
     background: #6d6b6b;
     border-right: 1px solid #FFF;
   }
+}
+
+.schedule_column {
+  display: inline-block;
+  min-width: 180px;
+  background: gainsboro;
 
   .schedule_time_slots {
     display: flex;
@@ -502,7 +514,7 @@ input[type=number]::-webkit-outer-spin-button {
     border-width: 4px 1px 0px 1px;
     border-color: rgba(204, 204, 204, 0.5);
     background: #f0f0f0;
-    height: calc(100% - 40px);
+    height: 100%;
     position: relative;
 
     .schedule_slot {
@@ -511,6 +523,13 @@ input[type=number]::-webkit-outer-spin-button {
       position: absolute;
       width: 98%;
       margin: auto;
+
+      .program_session_card {
+        height: inherit;
+        box-shadow: none;
+        margin: 2px auto;
+        box-sizing: border-box;
+      }
     }
   }
 }

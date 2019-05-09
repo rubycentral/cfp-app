@@ -135,7 +135,7 @@ class Schedule extends React.Component {
     } = this.state;
 
     const headers = schedule.rooms.map(room => (
-      <div className="schedule_column_head">{room.name}</div>
+      <div className="schedule_column_head" key={'column_head_' + room.name}>{room.name}</div>
     ));
 
     return (

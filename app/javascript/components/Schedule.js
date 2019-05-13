@@ -150,6 +150,7 @@ class Schedule extends React.Component {
           counts={counts}
           changeDayView={this.changeDayView}
           dayViewing={dayViewing}
+          schedule={schedule}
         />
         <div className="grid_headers_wrapper" style={{'minWidth': headersMinWidth}}>{headers}</div>
         <div className="grid_container">

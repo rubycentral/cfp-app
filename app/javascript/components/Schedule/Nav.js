@@ -2,15 +2,20 @@ import React from "react"
 import PropTypes from "prop-types"
 class Nav extends React.Component {
   render() {
-    const { changeDayView, counts, dayViewing } = this.props;
+    const { changeDayView, counts, dayViewing, schedule } = this.props;
+    
     const navTabs = Object.keys(counts).map(dayNumber => {
+      let day = schedule.slots[dayNumber]
+      let allSlots = Object.values(day).flat()
+      let bookedSlots = allSlots.filter(slot => slot.program_session_id)
+
       return <li 
         onClick={() => changeDayView(parseInt(dayNumber))}
         key={'day-tab ' + dayNumber}
         className={dayNumber === dayViewing.toString() ? 'active' : ''}
       > 
         <span>Day {dayNumber}</span> 
-        <span className='badge'>{counts[dayNumber].scheduled}/{counts[dayNumber].total} </span>  
+        <span className='badge'>{bookedSlots.length}/{allSlots.length} </span>  
       </li>
     })
 
@@ -25,7 +30,8 @@ class Nav extends React.Component {
 Nav.propTypes = {
   changeDayView: PropTypes.func,
   counts: PropTypes.object,
-  dayViewing: PropTypes.number
+  dayViewing: PropTypes.number,
+  schedule: PropTypes.object
 }
 
 export default Nav

@@ -455,7 +455,7 @@ input[type=number]::-webkit-outer-spin-button {
   border-radius: 2px;
   color: #000;
   font-size: $font-size-xs;
-  margin: 37px 10px 0 0;
+  margin: -3px 10px 0 0;
   white-space: nowrap;
   background-color: #FFF;
   z-index: 14;
@@ -468,16 +468,6 @@ input[type=number]::-webkit-outer-spin-button {
   text-align: right;
   position: relative;
   width: 48px;
-
-  // &:after {
-  //   content: '';
-  //   position: absolute;
-  //   border-bottom: 1px solid rgba(204,204,204, .5);
-  //   width: 10px;
-  //   top: .6em;
-  //   left: 55px;
-  //   z-index: 9;
-  // }
 }
 .grid_headers_wrapper {
   position: sticky;

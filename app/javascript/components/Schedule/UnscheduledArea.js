@@ -34,7 +34,7 @@ class UnscheduledArea extends React.Component {
   onDrop = () => {
     const { draggedSession, csrf, tracks } = this.props;
 
-    patchTimeSlot(draggedSession.slot, draggedSession, csrf)
+    patchTimeSlot(draggedSession.slot, null, csrf)
       .then(() => {
         this.props.unscheduleSession(draggedSession);
         this.props.changeDragged(null);

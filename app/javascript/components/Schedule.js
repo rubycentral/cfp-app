@@ -27,7 +27,9 @@ class Schedule extends React.Component {
 
   ripTime = time => {
     // currently only returning hour. Need to refactor for minutes.
-    return parseInt(time.split("T")[1].split(":")[0]);
+    const hours =  parseInt(time.split("T")[1].split(":")[0]);
+    const minutes = parseInt(time.split(':')[1]) / 60
+    return hours + minutes
   };
 
   determineHours = slots => {

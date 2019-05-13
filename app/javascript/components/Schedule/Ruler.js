@@ -4,9 +4,8 @@ import PropTypes from "prop-types"
 class Ruler extends React.Component {
   render() {
     const {startTime, endTime} = this.props;
-    
     let hours = [];
-    for (let i = startTime; i <= endTime; i++) {
+    for (let i = Math.floor(startTime); i <= Math.floor(endTime); i++) {
       let time;
       if (i > 12) {
         time = i-12 + ":00 pm";

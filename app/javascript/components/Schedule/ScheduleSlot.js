@@ -35,7 +35,6 @@ class ScheduleSlot extends React.Component {
     const slotStartTime = ripTime(slot.start_time);
     const slotEndTime = ripTime(slot.end_time);
     
-    console.log(slotStartTime, slotEndTime)
     const style = {
       top: (slotStartTime - startTime) * 90 + "px",
       height: (slotEndTime - slotStartTime) * 90 + "px"

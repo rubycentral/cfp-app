@@ -161,6 +161,7 @@ class Schedule extends React.Component {
       closeBulkTimeSlotModal={this.closeBulkTimeSlotModal}
       dayViewing={dayViewing}
       counts={counts}
+      rooms={schedule.rooms}
     />
 
     return (

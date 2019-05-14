@@ -17,7 +17,21 @@ class BulkCreateModal extends React.Component {
   }
 
   changeRooms = (e) => {
-    const rooms = this.state.rooms.slice()
+    let rooms = this.state.rooms.slice()
+    const room = e.target.name
+
+    if (rooms.includes(room)) {
+      rooms = rooms.filter(selectedRoom => selectedRoom !== room)
+    } else {
+      rooms.push(room)
+    }
+
+    this.setState({rooms})
+  }
+
+  changeInput = (e) => {
+    const name = e.target.name
+    this.setState({[name]: e.target.value})
   }
 
   componentDidMount() {
@@ -29,8 +43,23 @@ class BulkCreateModal extends React.Component {
   render() {
     const days = Object.keys(this.props.counts)
     const dayOptions = days.map(day => (
-      <option value={day}>{day}</option>
+      <option key={'day '+day} value={day}>{day}</option>
     ))
+
+    const rooms = this.props.rooms.map(room => {
+      const checked = this.state.rooms.includes(room.id.toString())
+      return (
+        <div key={room.name}>
+          <input 
+            type='checkbox'
+            name={room.id.toString()}
+            checked={checked}
+            onChange={this.changeRooms}
+          />
+          <span>{room.name}</span>
+        </div>
+      )
+    })
 
     return (
       <div className='bulk-modal-container'>
@@ -45,9 +74,34 @@ class BulkCreateModal extends React.Component {
                 {dayOptions}
               </select>
             </label>
-
             <label>
               Rooms
+              {rooms}
+            </label>
+            <label>
+              Start Times
+              <div>
+                <input 
+                  className='start-times'
+                  type='text'
+                  name='startTimes'
+                  value={this.state.startTimes}
+                  onChange={this.changeInput}
+                  placeholder='ex: 10:00, 11:00, 13:00'
+                />
+              </div>
+            </label>
+            <label>
+              Duration
+              <div>
+                <input
+                  className='start-times'
+                  type='number'
+                  name='duration'
+                  value={this.state.duration}
+                  onChange={this.changeInput}
+                />
+              </div>
             </label>
           </div>
         </div>
@@ -59,7 +113,12 @@ class BulkCreateModal extends React.Component {
 BulkCreateModal.propTypes = {
   closeBulkTimeSlotModal: PropTypes.func,
   dayViewing: PropTypes.number,
-  counts: PropTypes.object
+  counts: PropTypes.object,
+  rooms: PropTypes.array
+}
+
+BulkCreateModal.defaultProps = {
+  rooms: []
 }
 
 export default BulkCreateModal;

@@ -5,6 +5,8 @@ import Nav from "./Schedule/Nav";
 import Ruler from "./Schedule/Ruler";
 import DayView from "./Schedule/DayView";
 import UnschedledArea from "./Schedule/UnscheduledArea";
+import GenerateGridButton from "./Schedule/GenerateGridButton";
+import BulkCreateModal from "./Schedule/BulkCreateModal";
 
 class Schedule extends React.Component {
   constructor(props) {
@@ -17,7 +19,8 @@ class Schedule extends React.Component {
       draggedSession: null,
       schedule: {
         rooms: []
-      }
+      },
+      bulkTimeSlotModalOpen: false
     };
   }
 
@@ -108,6 +111,16 @@ class Schedule extends React.Component {
     this.setState({ unscheduledSessions, schedule });
   };
 
+  openBulkTimeSlotModal = () => {
+    this.setState({bulkTimeSlotModalOpen: true})
+  }
+
+  closeBulkTimeSlotModal = (e) => {
+    e.preventDefault()
+    console.log(e.currentTarget)
+    this.setState({bulkTimeSlotModalOpen: false})
+  }
+
   componentDidMount() {
     let hours = this.determineHours(this.props.schedule.slots);
     const trackColors = palette("tol-rainbow", this.props.tracks.length);
@@ -133,7 +146,8 @@ class Schedule extends React.Component {
       unscheduledSessions,
       draggedSession,
       csrf,
-      tracks
+      tracks,
+      bulkTimeSlotModalOpen
     } = this.state;
 
     const headers = schedule.rooms.map(room => (
@@ -142,16 +156,28 @@ class Schedule extends React.Component {
       </div>
     ));
 
-    const headersMinWidth = (180 * schedule.rooms.length) + 'px'
+    const headersMinWidth = (180 * schedule.rooms.length) + 'px';
+
+    const bulkTimeSlotModal = bulkTimeSlotModalOpen && <BulkCreateModal 
+      closeBulkTimeSlotModal={this.closeBulkTimeSlotModal}
+    />
 
     return (
       <div className="schedule_grid">
-        <Nav
-          counts={counts}
-          changeDayView={this.changeDayView}
-          dayViewing={dayViewing}
-          schedule={schedule}
-        />
+        {bulkTimeSlotModal}
+        <div className='nav_wrapper'>
+          <Nav
+            counts={counts}
+            changeDayView={this.changeDayView}
+            dayViewing={dayViewing}
+            schedule={schedule}
+          />
+          <GenerateGridButton
+            dayViewing={dayViewing}
+            generateGridPath={this.props.bulk_path}
+            openBulkTimeSlotModal={this.openBulkTimeSlotModal}
+          />
+        </div>
         <div className="grid_headers_wrapper" style={{'minWidth': headersMinWidth}}>{headers}</div>
         <div className="grid_container">
           <Ruler startTime={startTime} endTime={endTime} />

@@ -387,60 +387,73 @@ input[type=number]::-webkit-outer-spin-button {
 .schedule_grid {
   width: 100%;
 
-  .schedule_nav {
+  .nav_wrapper {
     border-bottom: 1px solid #efefef;
     padding: 0 0 0 2%;
     margin-top: 20px;
+    margin-bottom: 20px;
     position: sticky;
     top: 77.6px;
     background: #fff;
-    z-index: 100000;
+    z-index: 500;
 
-    li {
+    .generate_btn {
+      float: right;
+      margin-right: 20px;
+    }
+
+    .schedule_nav {
       display: inline-block;
-      color: #b2afaa;
-      padding: 5px 10px;
-
-      &:hover {
-        background-color: #ededed;
-        border-radius: 2px 2px 0px 0px;
-        cursor: pointer;
-      }
+      margin-bottom: 0px;
       
-      &.active {
-        color: #91181C;
-        border: 1px solid #efefef;
-        border-bottom: 1px solid #fff;
-        border-radius: 2px 2px 0px 0px;
-      }
-
-      &.active:hover {
-        background-color: #fff;
-        cursor: default;
-      }
-
-      span {
-        padding: 0px 10px;
-        font-size: 16px;
-        font-weight: bold;
-      }
-
-      .badge {
+      li {
         display: inline-block;
-        min-width: 10px;
-        padding: 3px 7px;
-        font-size: 12px;
-        font-weight: bold;
-        color: #fff;
-        line-height: 1;
-        vertical-align: middle;
-        white-space: nowrap;
-        text-align: center;
-        background-color: #b2afaa;
-        border-radius: 10px;
+        color: #b2afaa;
+        padding: 5px 10px;
+
+        &:hover {
+          background-color: #ededed;
+          border-radius: 2px 2px 0px 0px;
+          cursor: pointer;
+        }
+        
+        &.active {
+          color: #91181C;
+          border: 1px solid #efefef;
+          border-bottom: 1px solid #fff;
+          border-radius: 2px 2px 0px 0px;
+        }
+
+        &.active:hover {
+          background-color: #fff;
+          cursor: default;
+        }
+
+        span {
+          padding: 0px 10px;
+          font-size: 16px;
+          font-weight: bold;
+        }
+
+        .badge {
+          display: inline-block;
+          min-width: 10px;
+          padding: 3px 7px;
+          font-size: 12px;
+          font-weight: bold;
+          color: #fff;
+          line-height: 1;
+          vertical-align: middle;
+          white-space: nowrap;
+          text-align: center;
+          background-color: #b2afaa;
+          border-radius: 10px;
+        }
       }
     }
   }
+
+
 }
 
 .grid_container {
@@ -570,5 +583,28 @@ input[type=number]::-webkit-outer-spin-button {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+}
+
+.bulk-modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  background-color: #00000080;
+
+  .bulk-modal {
+    width: 600px;
+    max-width: 100%;
+    height: 400px;
+    max-height: 100%;
+    background-color: #fff;
+    border: 1px solid #6d6b6b;
+    margin: 200px auto;
+    border-radius: 5px;
+    box-shadow: 1px 1px 4px #6d6b6b;
+    padding: 20px;
   }
 }

@@ -1,8 +1,9 @@
 import React from "react"
 import PropTypes from "prop-types"
+
 class Nav extends React.Component {
   render() {
-    const { changeDayView, counts, dayViewing, schedule } = this.props;
+    const { changeDayView, counts, dayViewing, schedule} = this.props;
     
     const navTabs = Object.keys(counts).map(dayNumber => {
       let day = schedule.slots[dayNumber]

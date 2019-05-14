@@ -605,6 +605,20 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 200px auto;
     border-radius: 5px;
     box-shadow: 1px 1px 4px #6d6b6b;
-    padding: 20px;
+
+    .modal-body {
+      padding: 10px;
+      display: inherit;
+      
+      label {
+        width: 90%;
+        margin: auto;
+        select {
+          display: block;
+          width: 100%;
+          margin: 10px auto;
+        }
+      }
+    }
   }
 }

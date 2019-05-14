@@ -117,7 +117,6 @@ class Schedule extends React.Component {
 
   closeBulkTimeSlotModal = (e) => {
     e.preventDefault()
-    console.log(e.currentTarget)
     this.setState({bulkTimeSlotModalOpen: false})
   }
 
@@ -160,6 +159,8 @@ class Schedule extends React.Component {
 
     const bulkTimeSlotModal = bulkTimeSlotModalOpen && <BulkCreateModal 
       closeBulkTimeSlotModal={this.closeBulkTimeSlotModal}
+      dayViewing={dayViewing}
+      counts={counts}
     />
 
     return (

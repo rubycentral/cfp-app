@@ -190,7 +190,6 @@
     if (url == null || url.length==0) {
       return;
     }
-    console.log('url:', url)
     $.ajax({ url: url });
   }
 

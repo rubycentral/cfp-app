@@ -469,6 +469,7 @@ input[type=number]::-webkit-outer-spin-button {
   position: relative;
   width: 48px;
 }
+
 .grid_headers_wrapper {
   position: sticky;
   top: 113px;
@@ -515,7 +516,7 @@ input[type=number]::-webkit-outer-spin-button {
       margin: auto;
 
       .program_session_card {
-        height: inherit;
+        height: 95%;
         box-shadow: none;
         margin: 2px auto;
         box-sizing: border-box;
@@ -559,6 +560,7 @@ input[type=number]::-webkit-outer-spin-button {
   height: 90px;
   text-align: center;
   cursor: move;
+  background: #fff;
 
   .card_header{
     width: 100%;

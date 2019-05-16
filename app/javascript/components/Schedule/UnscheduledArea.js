@@ -10,8 +10,7 @@ class UnscheduledArea extends React.Component {
 
     this.state = {
       searchInput: "",
-      isHidden: false,
-      opacity: 1
+      isHidden: false
     };
   }
 

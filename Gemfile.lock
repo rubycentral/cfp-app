@@ -190,6 +190,8 @@ GEM
       concurrent-ruby (~> 1.0)
     interception (0.5)
     io-like (0.3.0)
+    jbuilder (2.9.1)
+      activesupport (>= 4.2.0)
     jquery-datatables-rails (3.4.0)
       actionpack (>= 3.1)
       jquery-rails
@@ -455,6 +457,7 @@ DEPENDENCIES
   haml (~> 5.0.0)
   haml-rails
   html2haml (~> 2.2.0)
+  jbuilder
   jquery-datatables-rails
   jquery-rails
   jquery-ui-rails

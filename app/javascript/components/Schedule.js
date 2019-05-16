@@ -131,6 +131,7 @@ class Schedule extends React.Component {
   }
 
   componentDidMount() {
+    debugger
     let hours = this.determineHours(this.props.schedule.slots);
     const trackColors = palette("tol-rainbow", this.props.tracks.length);
     this.props.tracks.forEach((track, i) => {

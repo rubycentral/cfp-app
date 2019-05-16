@@ -20,7 +20,9 @@ class Schedule extends React.Component {
       schedule: {
         rooms: []
       },
-      bulkTimeSlotModalOpen: false
+      bulkTimeSlotModalOpen: false,
+      previewSlots: [],
+      bulkTimeSlotModalEditState: null,
     };
   }
 
@@ -120,6 +122,14 @@ class Schedule extends React.Component {
     this.setState({bulkTimeSlotModalOpen: false})
   }
 
+  createTimeSlotPreviews = (previewSlots, bulkTimeSlotModalEditState) => {
+    this.setState({
+      previewSlots, 
+      bulkTimeSlotModalEditState, 
+      bulkTimeSlotModalOpen: false
+    })
+  }
+
   componentDidMount() {
     let hours = this.determineHours(this.props.schedule.slots);
     const trackColors = palette("tol-rainbow", this.props.tracks.length);
@@ -146,7 +156,9 @@ class Schedule extends React.Component {
       draggedSession,
       csrf,
       tracks,
-      bulkTimeSlotModalOpen
+      bulkTimeSlotModalOpen,
+      bulkTimeSlotModalEditState,
+      previewSlots
     } = this.state;
 
     const headers = schedule.rooms.map(room => (
@@ -162,6 +174,8 @@ class Schedule extends React.Component {
       dayViewing={dayViewing}
       counts={counts}
       rooms={schedule.rooms}
+      createTimeSlotPreviews={this.createTimeSlotPreviews}
+      editState={bulkTimeSlotModalEditState}
     />
 
     return (
@@ -195,6 +209,7 @@ class Schedule extends React.Component {
             sessions={sessions}
             scheduleSession={this.scheduleSession}
             tracks={tracks}
+            previewSlots={previewSlots}
           />
           <UnschedledArea
             unscheduledSessions={unscheduledSessions}

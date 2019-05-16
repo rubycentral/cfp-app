@@ -15,7 +15,8 @@ class ScheduleSlot extends React.Component {
     const { csrf } = this.props;
     
     patchTimeSlot(slot, session, csrf)
-      .then(() => {
+      .then((response) => {
+        response.json().then(data => console.log(data))
         if (session.slot) {
           patchTimeSlot(session.slot, null, csrf)
         }

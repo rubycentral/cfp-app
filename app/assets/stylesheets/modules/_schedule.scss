@@ -520,6 +520,14 @@ input[type=number]::-webkit-outer-spin-button {
     height: 100%;
     position: relative;
 
+    .preview_slot {
+      background-color: #1A95DD;
+      border: .5px solid rgba(204, 204, 204, 0.5);
+      position: absolute;
+      width: 98%;
+      margin: auto;
+    }
+
     .schedule_slot {
       background: #fff;
       border: .5px solid rgba(204, 204, 204, 0.5);
@@ -598,7 +606,6 @@ input[type=number]::-webkit-outer-spin-button {
   .bulk-modal {
     width: 600px;
     max-width: 100%;
-    height: 400px;
     max-height: 100%;
     background-color: #fff;
     border: 1px solid #6d6b6b;
@@ -607,12 +614,13 @@ input[type=number]::-webkit-outer-spin-button {
     box-shadow: 1px 1px 4px #6d6b6b;
 
     .modal-body {
-      padding: 10px;
+      width: 95%;
+      margin: auto;
       display: inherit;
       
       label {
         width: 90%;
-        margin: auto;
+        margin: uto;
         select {
           display: block;
           width: 100%;
@@ -621,6 +629,20 @@ input[type=number]::-webkit-outer-spin-button {
         .start-times {
           width: 100%;
         }
+      }
+
+      .full-width-input {
+        display: block;
+        width: 100%;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857;
+        color: #555555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
       }
     }
   }

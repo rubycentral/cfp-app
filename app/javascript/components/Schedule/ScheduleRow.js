@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types"
 
-import { patchTimeSlot } from "../../apiCalls";
-
 import ScheduleSlot from './ScheduleSlot';
+import Preview from './Preview';
 
 class ScheduleRow extends React.Component {
   render() {
@@ -19,10 +18,18 @@ class ScheduleRow extends React.Component {
       csrf,
       sessions,
       scheduleSession,
-      tracks
+      tracks,
+      previewSlots
     } = this.props;
 
     const roomID = room.id;
+
+    const previews = previewSlots.filter(preview => {
+      return parseInt(preview.room) === roomID && preview.day === dayViewing
+    }).map(preview => {
+      return <Preview preview={preview} startTime={startTime} />
+    })
+
     const thisRoomThisDaySlots = Object.values(
       schedule.slots[dayViewing.toString()]
     ).find(room => room.find(slot => slot.room_id === roomID));
@@ -54,7 +61,10 @@ class ScheduleRow extends React.Component {
           key={"column " + room.name}
           style={{ height }}
         >
-          <div className="schedule_time_slots">{slots}</div>
+          <div className="schedule_time_slots">
+            {previews}
+            {slots}
+          </div>
         </div>
       </React.Fragment>
     );
@@ -72,7 +82,8 @@ ScheduleRow.propTypes = {
   draggedSession: PropTypes.object,
   sessions: PropTypes.array,
   scheduleSession: PropTypes.func,
-  tracks: PropTypes.array
+  tracks: PropTypes.array,
+  previewSlots: PropTypes.array
 };
 
 ScheduleRow.defaultProps = {sessions: []}

@@ -19,7 +19,7 @@ class BulkCreateModal extends React.Component {
   changeRooms = (e) => {
     let rooms = this.state.rooms.slice()
     const room = e.target.name
-
+    
     if (rooms.includes(room)) {
       rooms = rooms.filter(selectedRoom => selectedRoom !== room)
     } else {
@@ -34,10 +34,34 @@ class BulkCreateModal extends React.Component {
     this.setState({[name]: e.target.value})
   }
 
-  componentDidMount() {
-    this.setState({
-      day: this.props.dayViewing
+  previewSlots = () => {
+    const { day, rooms, startTimes } = this.state;
+    let duration = parseInt(this.state.duration)
+    let slots = []
+    
+    startTimes.split(',').forEach(time => {
+      rooms.forEach(room => {
+        let slot = {}
+        let startTime = parseInt(time.replace(/\s/g, ''));
+        slot.startTime = startTime;
+        slot.endTime = startTime + (duration / 60);
+        slot.day = day;
+        slot.room = room;
+        slots.push(slot)
+      })
     })
+    
+    this.props.createTimeSlotPreviews(slots, this.state)
+  }
+
+  componentDidMount() {
+    if (this.props.editState) {
+      this.setState(this.props.editState)
+    } else {
+      this.setState({
+        day: this.props.dayViewing
+      })
+    }
   }
 
   render() {
@@ -63,15 +87,18 @@ class BulkCreateModal extends React.Component {
 
     return (
       <div className='bulk-modal-container'>
-        <div className='bulk-modal' onClick={() => {}}>
+        <div className='bulk-modal'>
           <div className='modal-header' >
             <h3>Bulk Generate Time Slots</h3>
           </div>
           <div className='modal-body'>
             <label>
               Day
-              <select value={this.state.day} onChange={this.changeDay} >
-                {dayOptions}
+              <select 
+                className='full-width-input' 
+                value={this.state.day} 
+                onChange={this.changeDay} >
+                  {dayOptions}
               </select>
             </label>
             <label>
@@ -82,7 +109,7 @@ class BulkCreateModal extends React.Component {
               Start Times
               <div>
                 <input 
-                  className='start-times'
+                  className='start-times full-width-input'
                   type='text'
                   name='startTimes'
                   value={this.state.startTimes}
@@ -95,7 +122,7 @@ class BulkCreateModal extends React.Component {
               Duration
               <div>
                 <input
-                  className='start-times'
+                  className='start-times full-width-input'
                   type='number'
                   name='duration'
                   value={this.state.duration}
@@ -103,6 +130,15 @@ class BulkCreateModal extends React.Component {
                 />
               </div>
             </label>
+          </div>
+          <div className='modal-footer'>
+            <button 
+              className='btn btn-default bulk-cancel'
+            onClick={this.props.closeBulkTimeSlotModal}>Cancel</button>
+            <button 
+              className='btn btn-success'
+              onClick={this.previewSlots}
+            >Preview</button>
           </div>
         </div>
       </div>
@@ -114,7 +150,9 @@ BulkCreateModal.propTypes = {
   closeBulkTimeSlotModal: PropTypes.func,
   dayViewing: PropTypes.number,
   counts: PropTypes.object,
-  rooms: PropTypes.array
+  rooms: PropTypes.array,
+  createTimeSlotPreview: PropTypes.func,
+  editState: PropTypes.oneOfType([PropTypes.null, PropTypes.object])
 }
 
 BulkCreateModal.defaultProps = {

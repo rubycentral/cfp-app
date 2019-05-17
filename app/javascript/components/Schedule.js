@@ -119,7 +119,11 @@ class Schedule extends React.Component {
 
   closeBulkTimeSlotModal = (e) => {
     e.preventDefault()
-    this.setState({bulkTimeSlotModalOpen: false})
+    this.setState({
+      previewSlots: [], 
+      bulkTimeSlotModalEditState: null,
+      bulkTimeSlotModalOpen: false
+    })
   }
 
   createTimeSlotPreviews = (previewSlots, bulkTimeSlotModalEditState) => {

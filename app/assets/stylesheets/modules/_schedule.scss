@@ -463,6 +463,10 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .schedule_ruler {
+  position: -webkit-sticky;
+  position: -moz-sticky;
+  position: -ms-sticky;
+  position: -o-sticky;
   border-right: 1px solid rgba(204, 204, 204, 0.5);
   color: #000;
   font-size: 11px;
@@ -472,7 +476,6 @@ input[type=number]::-webkit-outer-spin-button {
   z-index: 14;
   padding: 5px;
   display: inline-block;
-  position: sticky;
   left: 0px;
 }
 
@@ -484,7 +487,10 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .grid_headers_wrapper {
-  position: sticky;
+  position: -webkit-sticky;
+  position: -moz-sticky;
+  position: -ms-sticky;
+  position: -o-sticky;
   top: 163px;
   background: #fff;
   z-index: 100;
@@ -548,11 +554,14 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .unscheduled_area {
+    position: -webkit-sticky;
+    position: -moz-sticky;
+    position: -ms-sticky;
+    position: -o-sticky;
     display: inline-block;
     box-sizing: border-box;
     width: 270px;
     padding: 0px 20px;
-    position: sticky;
     right: 0px;
     margin-top: -40px;
     margin-left: 0px;
@@ -587,7 +596,7 @@ input[type=number]::-webkit-outer-spin-button {
   input {
     padding-right: 20px;
     box-sizing: border-box;
-    width: 55px;
+    max-width: 160px;
   }
 
   .glyphicon {

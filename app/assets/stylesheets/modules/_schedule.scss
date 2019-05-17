@@ -688,3 +688,15 @@ input[type=number]::-webkit-outer-spin-button {
     }
   }
 }
+
+.generate-confirm {
+    position: fixed;
+    padding: 20px;
+    background-color: #1A95DD;
+    top: 300px;
+    left: 200px;
+    width: 400px;
+    justify-content: space-evenly;
+    display: flex;
+    z-index: 50;
+}

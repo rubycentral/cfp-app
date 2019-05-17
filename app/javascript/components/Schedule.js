@@ -7,6 +7,7 @@ import DayView from "./Schedule/DayView";
 import UnscheduledArea from "./Schedule/UnscheduledArea";
 import GenerateGridButton from "./Schedule/GenerateGridButton";
 import BulkCreateModal from "./Schedule/BulkCreateModal";
+import BulkGenerateConfirm from "./Schedule/BulkGenerateConfirm";
 
 class Schedule extends React.Component {
   constructor(props) {
@@ -114,7 +115,10 @@ class Schedule extends React.Component {
   };
 
   openBulkTimeSlotModal = () => {
-    this.setState({bulkTimeSlotModalOpen: true})
+    this.setState({
+      bulkTimeSlotModalOpen: true,
+      previewSlots: []
+    })
   }
 
   closeBulkTimeSlotModal = (e) => {
@@ -126,11 +130,19 @@ class Schedule extends React.Component {
     })
   }
 
+  cancelBulkPreview = () => {
+    this.setState({
+      previewSlots: [],
+      bulkTimeSlotModalEditState: null
+    })
+  }
+
   createTimeSlotPreviews = (previewSlots, bulkTimeSlotModalEditState) => {
     this.setState({
       previewSlots, 
       bulkTimeSlotModalEditState, 
-      bulkTimeSlotModalOpen: false
+      bulkTimeSlotModalOpen: false,
+      dayViewing: parseInt(bulkTimeSlotModalEditState.day)
     })
   }
 
@@ -200,6 +212,11 @@ class Schedule extends React.Component {
         </div>
         <div className="grid_headers_wrapper" style={{'minWidth': headersMinWidth}}>{headers}</div>
         <div className="grid_container">
+          {previewSlots.length > 0 && <BulkGenerateConfirm 
+            cancelBulkPreview={this.cancelBulkPreview}
+            openBulkTimeSlotModal={this.openBulkTimeSlotModal}
+            bulkTimeSlotModalEditState={bulkTimeSlotModalEditState}
+          />}
           <Ruler startTime={startTime} endTime={endTime} />
           <DayView
             schedule={schedule}

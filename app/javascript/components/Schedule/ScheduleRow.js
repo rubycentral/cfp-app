@@ -25,7 +25,7 @@ class ScheduleRow extends React.Component {
     const roomID = room.id;
 
     const previews = previewSlots.filter(preview => {
-      return parseInt(preview.room) === roomID && preview.day === dayViewing
+      return parseInt(preview.room) === roomID && parseInt(preview.day) === dayViewing
     }).map(preview => {
       return <Preview preview={preview} startTime={startTime} />
     })

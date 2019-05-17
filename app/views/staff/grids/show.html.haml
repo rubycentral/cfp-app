@@ -30,11 +30,6 @@
 -# #bulk-time-slot-create-dialog.modal.fade
 -# #program-session-show-dialog.modal.fade
 
-<<<<<<< HEAD
--# %hr
-
-=======
->>>>>>> 286-grid-rewrite
 - @schedule.each_day { |day| @schedule.each_room(day) { |room, slots| slots.each { |ts| ts = Staff::TimeSlotDecorator.decorate(ts).as_json(methods: :update_path) } } }
 
 = react_component("Schedule", { schedule: @schedule, tracks: @tracks, sessions: @sessions, counts: @counts, unscheduledSessions: @unscheduled_sessions, csrf: session[:_csrf_token]})

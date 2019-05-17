@@ -18,6 +18,10 @@ class UnscheduledArea extends React.Component {
     this.setState({ searchInput: e.target.value });
   };
 
+  clearInput = () => {
+    this.setState({ searchInput: '' })
+  }
+
   changeHiddenState = () => {
     this.setState({ isHidden: !this.state.isHidden });
   };
@@ -51,10 +55,11 @@ class UnscheduledArea extends React.Component {
       const titleMatch =  session.title.toLowerCase().includes(searchInput.toLowerCase()) 
       let trackMatch 
       if (session.track_id) {
-        let track = tracks.find(track => track.id === session.track_id)
-        trackMatch = track.name.toLowerCase().includes(searchInput.toLowerCase())
+        let track = tracks.find(track => track.id === session.track_id);
+        trackMatch = track.name.toLowerCase().includes(searchInput.toLowerCase());
       }
-      return trackMatch || titleMatch;
+
+      return titleMatch || trackMatch;
     });
     let unscheduledSessionCards = filteredSessions.map(session => (
       <ProgramSession key={session.id} session={session} onDrag={this.onDrag} tracks={tracks} />
@@ -80,6 +85,10 @@ class UnscheduledArea extends React.Component {
               value={searchInput}
               onChange={e => this.handleChange(e)}
             />
+            <span 
+              onClick={this.clearInput}
+              className="glyphicon glyphicon-remove-circle"
+            ></span>
           </div>
           <div>{unscheduledSessionCards}</div>
         </div>

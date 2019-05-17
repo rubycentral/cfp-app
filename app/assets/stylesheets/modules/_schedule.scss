@@ -446,7 +446,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .grid_container {
-  margin: auto;
+  margin: 85px auto 0;
   display: flex;
 }
 
@@ -534,7 +534,7 @@ input[type=number]::-webkit-outer-spin-button {
     padding: 0px 20px;
     position: sticky;
     right: 0px;
-    margin-top: 46px;
+    margin-top: -40px;
     margin-left: 0px;
     background: #fff;
     border-left: 1px solid rgba(204, 204, 204, 0.5);
@@ -561,6 +561,24 @@ input[type=number]::-webkit-outer-spin-button {
       .badge {
         background-color: #126799;
       }
+    }
+  }
+
+  input {
+    padding-right: 20px;
+    box-sizing: border-box;
+    width: 55px;
+  }
+
+  .glyphicon {
+    position: relative;
+    right: 20px;
+    cursor: pointer;
+    color: darkgray;
+    transition: .1s;
+
+    &:hover {
+      color: #000
     }
   }
 }

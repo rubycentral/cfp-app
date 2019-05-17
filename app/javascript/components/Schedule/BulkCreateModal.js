@@ -40,14 +40,17 @@ class BulkCreateModal extends React.Component {
     let slots = []
     
     startTimes.split(',').forEach(time => {
-      let cleanedTime = time.replace(/\s/g, '').split(':')
-      
+      let cleanedStartTime = time.replace(/\s/g, '').split(':')
+      if (cleanedStartTime.length > 1) {
+        cleanedStartTime = parseInt(cleanedStartTime[0]) + (parseInt(cleanedStartTime[1]) / 60)
+      } else {
+        cleanedStartTime = parseInt(cleanedStartTime[0])
+      }
 
       rooms.forEach(room => {
         let slot = {}
-        let startTime = parseInt(time.replace(/\s/g, ''));
-        slot.startTime = startTime;
-        slot.endTime = startTime + (duration / 60);
+        slot.startTime = cleanedStartTime;
+        slot.endTime = cleanedStartTime + (duration / 60);
         slot.day = day;
         slot.room = room;
         slots.push(slot)
@@ -113,7 +116,7 @@ class BulkCreateModal extends React.Component {
               <div>
                 <input 
                   className='start-times full-width-input'
-                  type='number'
+                  type='text'
                   name='startTimes'
                   value={this.state.startTimes}
                   onChange={this.changeInput}

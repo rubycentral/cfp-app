@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Nav from "./Schedule/Nav";
 import Ruler from "./Schedule/Ruler";
 import DayView from "./Schedule/DayView";
-import UnschedledArea from "./Schedule/UnscheduledArea";
+import UnscheduledArea from "./Schedule/UnscheduledArea";
 import GenerateGridButton from "./Schedule/GenerateGridButton";
 import BulkCreateModal from "./Schedule/BulkCreateModal";
 
@@ -211,7 +211,7 @@ class Schedule extends React.Component {
             tracks={tracks}
             previewSlots={previewSlots}
           />
-          <UnschedledArea
+          <UnscheduledArea
             unscheduledSessions={unscheduledSessions}
             sessions={sessions}
             changeDragged={this.changeDragged}

@@ -385,17 +385,18 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .schedule_grid {
-  width: 100%;
+  width: fit-content;
 
   .nav_wrapper {
     border-bottom: 1px solid #efefef;
-    padding: 0 0 0 2%;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    position: sticky;
-    top: 77.6px;
+    padding: 0 0 0 6%;
+    position: fixed;
+    padding-top: 50px;
+    top: 77.8px;
+    left: 0px;
+    width: 100%;
     background: #fff;
-    z-index: 500;
+    z-index: 1000;
 
     .generate_btn {
       float: right;
@@ -457,23 +458,22 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .grid_container {
-  width: 95%;
-  margin: auto;
+  margin: 67px auto 0;
   display: flex;
-  overflow-x: auto;
 }
 
 .schedule_ruler {
-  width: 45px;
-  border-radius: 2px;
+  border-right: 1px solid rgba(204, 204, 204, 0.5);
   color: #000;
-  font-size: $font-size-xs;
-  margin: -3px 10px 0 0;
+  font-size: 11px;
+  margin: -3px 0 0 -3px;
   white-space: nowrap;
-  background-color: #FFF;
+  background-color: #FFFFFF95;
   z-index: 14;
-  padding-left: 0px;
+  padding: 5px;
   display: inline-block;
+  position: sticky;
+  left: 0px;
 }
 
 .ruler_tick {
@@ -482,12 +482,13 @@ input[type=number]::-webkit-outer-spin-button {
   position: relative;
   width: 48px;
 }
+
 .grid_headers_wrapper {
   position: sticky;
-  top: 113px;
+  top: 163px;
   background: #fff;
   z-index: 100;
-  margin-left: calc(2.5% + 55px);
+  margin-left: 55px;
 
   .schedule_column_head {
     display: inline-flex;
@@ -502,6 +503,7 @@ input[type=number]::-webkit-outer-spin-button {
     color: #FFF;
     background: #6d6b6b;
     border-right: 1px solid #FFF;
+    border-bottom: 4px solid rgba(204, 204, 204, 0.5);
   }
 }
 
@@ -514,7 +516,7 @@ input[type=number]::-webkit-outer-spin-button {
     display: flex;
     justify-content: center;
     border-style: solid;
-    border-width: 4px 1px 0px 1px;
+    border-width: 0 1px 0px 1px;
     border-color: rgba(204, 204, 204, 0.5);
     background: #f0f0f0;
     height: 100%;
@@ -536,7 +538,7 @@ input[type=number]::-webkit-outer-spin-button {
       margin: auto;
 
       .program_session_card {
-        height: inherit;
+        height: 95%;
         box-shadow: none;
         margin: 2px auto;
         box-sizing: border-box;
@@ -546,11 +548,21 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .unscheduled_area {
-  display: inline-block;
-  width: 250px;
-  margin-left: 20px;
+    display: inline-block;
+    box-sizing: border-box;
+    width: 270px;
+    padding: 0px 20px;
+    position: sticky;
+    right: 0px;
+    margin-top: -40px;
+    margin-left: 0px;
+    background: #fff;
+    border-left: 1px solid rgba(204, 204, 204, 0.5);
+    z-index: 500;
 
   .header_wrapper {
+    cursor: pointer;
+
     h3 {
       color: #1A95DD;
       font-size: 17.5px;
@@ -571,6 +583,24 @@ input[type=number]::-webkit-outer-spin-button {
       }
     }
   }
+
+  input {
+    padding-right: 20px;
+    box-sizing: border-box;
+    width: 55px;
+  }
+
+  .glyphicon {
+    position: relative;
+    right: 20px;
+    cursor: pointer;
+    color: darkgray;
+    transition: .1s;
+
+    &:hover {
+      color: #000
+    }
+  }
 }
 
 .program_session_card {
@@ -580,6 +610,7 @@ input[type=number]::-webkit-outer-spin-button {
   height: 90px;
   text-align: center;
   cursor: move;
+  background: #fff;
 
   .card_header{
     width: 100%;

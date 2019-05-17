@@ -6,7 +6,7 @@ class Preview extends React.Component {
     const {preview, startTime} = this.props;
 
     const style = {
-      top: (preview.startTime - startTime) * 90 +"px",
+      top: (preview.startTime - Math.floor(startTime)) * 90 +"px",
       height: (preview.endTime - preview.startTime) * 90 +"px"
     };
 

@@ -240,7 +240,7 @@ end
 #
 # Table name: events
 #
-#  id                          :integer          not null, primary key
+#  id                          :bigint(8)        not null, primary key
 #  name                        :string
 #  slug                        :string
 #  url                         :string

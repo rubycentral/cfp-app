@@ -26,6 +26,14 @@ class TimeSlot < ApplicationRecord
 
   validates :room_id, :conference_day, presence: true
 
+  def serializable_hash(options)
+    super(methods: :update_path)
+  end
+
+  def update_path
+    Rails.application.routes.url_helpers.event_staff_schedule_grid_time_slot_path(event, self)
+  end
+
   def self.import(file)
     raw_json = file.read # maybe open as well
     parsed_slots = JSON.parse(raw_json)
@@ -119,10 +127,10 @@ end
 #
 # Table name: time_slots
 #
-#  id                 :integer          not null, primary key
-#  program_session_id :integer
-#  room_id            :integer
-#  event_id           :integer
+#  id                 :bigint(8)        not null, primary key
+#  program_session_id :bigint(8)
+#  room_id            :bigint(8)
+#  event_id           :bigint(8)
 #  conference_day     :integer
 #  start_time         :time
 #  end_time           :time
@@ -131,7 +139,7 @@ end
 #  presenter          :text
 #  created_at         :datetime
 #  updated_at         :datetime
-#  track_id           :integer
+#  track_id           :bigint(8)
 #
 # Indexes
 #

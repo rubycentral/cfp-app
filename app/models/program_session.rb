@@ -192,13 +192,13 @@ end
 #
 # Table name: program_sessions
 #
-#  id                :integer          not null, primary key
-#  event_id          :integer
-#  proposal_id       :integer
+#  id                :bigint(8)        not null, primary key
+#  event_id          :bigint(8)
+#  proposal_id       :bigint(8)
 #  title             :text
 #  abstract          :text
-#  track_id          :integer
-#  session_format_id :integer
+#  track_id          :bigint(8)
+#  session_format_id :bigint(8)
 #  state             :text             default("draft")
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null

@@ -5,7 +5,7 @@
   if (typeof(window.Schedule.Grid) !== 'undefined') {
     return window.Schedule.Grid;
   }
-
+  
   // Grid properties
   var dayStart = 60*9;  // minutes
   var dayEnd = 60*19;
@@ -190,7 +190,6 @@
     if (url == null || url.length==0) {
       return;
     }
-
     $.ajax({ url: url });
   }
 

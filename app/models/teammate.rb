@@ -88,9 +88,9 @@ end
 #
 # Table name: teammates
 #
-#  id                      :integer          not null, primary key
-#  event_id                :integer
-#  user_id                 :integer
+#  id                      :bigint(8)        not null, primary key
+#  event_id                :bigint(8)
+#  user_id                 :bigint(8)
 #  role                    :string
 #  email                   :string
 #  state                   :string

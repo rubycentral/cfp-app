@@ -25,10 +25,10 @@ class Staff::Grids::BulkTimeSlotsController < Staff::ApplicationController
     @bulk = BulkTimeSlot.new(bulk_time_slot_params)
     @bulk.create_time_slots
     @schedule = Schedule.new(current_event)
-    binding.pry
+    
     respond_to do |format|
       format.json { render json: {
-        schedule: @schedule
+        slots: current_event.time_slots
       }, status: :ok }
     end   
   end

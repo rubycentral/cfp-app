@@ -11,7 +11,6 @@ class ScheduleRow extends React.Component {
       room,
       startTime,
       ripTime,
-      schedule,
       dayViewing,
       draggedSession,
       changeDragged,
@@ -19,7 +18,8 @@ class ScheduleRow extends React.Component {
       sessions,
       scheduleSession,
       tracks,
-      previewSlots
+      previewSlots,
+      slots
     } = this.props;
 
     const roomID = room.id;
@@ -30,13 +30,15 @@ class ScheduleRow extends React.Component {
       return <Preview preview={preview} startTime={startTime} />
     })
 
-    const thisRoomThisDaySlots = Object.values(
-      schedule.slots[dayViewing.toString()]
-    ).find(room => room.find(slot => slot.room_id === roomID));
+    // const thisRoomThisDaySlots = Object.values(
+    //   schedule.slots[dayViewing.toString()]
+    // ).find(room => room.find(slot => slot.room_id === roomID));
 
-    let slots = <React.Fragment />;
+    const thisRoomThisDaySlots = slots.filter(slot => slot.room_id == roomID && slot.conference_day == dayViewing)
+
+    let rowSlots = <React.Fragment />;
     if (thisRoomThisDaySlots) {
-      slots = thisRoomThisDaySlots.map(slot => {
+      rowSlots = thisRoomThisDaySlots.map(slot => {
         return (
           <ScheduleSlot 
             draggedSession={draggedSession} 
@@ -63,7 +65,7 @@ class ScheduleRow extends React.Component {
         >
           <div className="schedule_time_slots">
             {previews}
-            {slots}
+            {rowSlots}
           </div>
         </div>
       </React.Fragment>

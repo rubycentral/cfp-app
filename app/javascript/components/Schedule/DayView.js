@@ -6,7 +6,6 @@ import ScheduleRow from './ScheduleRow';
 class DayView extends React.Component {
   render() {
     const {
-      schedule,
       dayViewing,
       startTime,
       endTime,
@@ -18,7 +17,8 @@ class DayView extends React.Component {
       scheduleSession,
       tracks,
       previewSlots,
-      rooms
+      rooms,
+      slots
     } = this.props;
 
     let rows = rooms.map(room => {
@@ -31,7 +31,6 @@ class DayView extends React.Component {
           startTime={startTime}
           endTime={endTime}
           ripTime={ripTime}
-          schedule={schedule}
           dayViewing={dayViewing}
           changeDragged={changeDragged}
           draggedSession={draggedSession}
@@ -40,6 +39,7 @@ class DayView extends React.Component {
           scheduleSession={scheduleSession}
           tracks={tracks}
           previewSlots={previewSlots}
+          slots={slots}
         />
       );
     })
@@ -65,6 +65,6 @@ DayView.propTypes = {
   tracks: PropTypes.array,
   previewSlots: PropTypes.array
 }
-DayView.defaultProps = {schedule: {rooms: []}, sessions: []}
+DayView.defaultProps = {sessions: []}
 
 export default DayView

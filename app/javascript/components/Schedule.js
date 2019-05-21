@@ -238,7 +238,6 @@ class Schedule extends React.Component {
           />}
           <Ruler startTime={startTime} endTime={endTime} />
           <DayView
-            schedule={schedule}
             dayViewing={dayViewing}
             startTime={startTime}
             endTime={endTime}
@@ -251,6 +250,7 @@ class Schedule extends React.Component {
             tracks={tracks}
             previewSlots={previewSlots}
             rooms={rooms}
+            slots={slots}
           />
           {/* <UnscheduledArea
             unscheduledSessions={unscheduledSessions}

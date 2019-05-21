@@ -12,16 +12,19 @@ class ScheduleSlot extends React.Component {
 
   onDrop = slot => {
     const session = this.props.draggedSession;
-    const { csrf } = this.props;
+    const { csrf, handleMoveSessionResponse, changeDragged } = this.props;
     
     patchTimeSlot(slot, session, csrf)
-      .then((response) => {
-        response.json().then(data => console.log(data))
+      .then((response) => response.json())
+      .then(data => {
+        const { sessions, slots, unscheduled_sessions } = data
         if (session.slot) {
           patchTimeSlot(session.slot, null, csrf)
+          handleMoveSessionResponse(sessions, unscheduled_sessions, slots, session)
+        } else {
+          handleMoveSessionResponse(sessions, unscheduled_sessions, slots)
         }
-        this.props.scheduleSession(session, slot);
-        this.props.changeDragged(null);
+        changeDragged(null);
       })
       .catch(error => console.error("Error:", error));
   };
@@ -69,7 +72,7 @@ ScheduleSlot.propTypes = {
   startTime: PropTypes.number,
   changeDragged: PropTypes.func,
   draggedSession: PropTypes.object,
-  scheduleSession: PropTypes.func,
+  handleMoveSessionResponse: PropTypes.func,
   tracks: PropTypes.array
 }
 

@@ -3,7 +3,6 @@ class Schedule
 
   def initialize(event)
     @event = event
-    @bulk_generate_path = Rails.application.routes.url_helpers.event_staff_schedule_grid_bulk_time_slot_path(event)
   end
 
   def each_day

@@ -38,8 +38,10 @@ class UnscheduledArea extends React.Component {
     const { draggedSession, csrf, tracks } = this.props;
 
     patchTimeSlot(draggedSession.slot, null, csrf)
-      .then(() => {
-        this.props.unscheduleSession(draggedSession);
+      .then(response => response.json())
+      .then(data => {
+        const {sessions, slots, unscheduled_sessions} = data
+        this.props.handleMoveSessionResponse(sessions, unscheduled_sessions, slots)
         this.props.changeDragged(null);
       })
       .catch(error => console.error("Error:", error));
@@ -103,8 +105,8 @@ UnscheduledArea.propTypes = {
   sessions: PropTypes.array,
   changeDragged: PropTypes.func,
   draggedSession: PropTypes.object,
-  unscheduleSession: PropTypes.func,
-  tracks: PropTypes.array
+  tracks: PropTypes.array,
+  handleMoveSessionResponse: PropTypes.func
 }
 
 UnscheduledArea.defaultProps = {

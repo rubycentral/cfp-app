@@ -60,49 +60,17 @@ class Schedule extends React.Component {
     this.setState({ draggedSession: programSession });
   };
 
-  scheduleSession = (programSession, targetSlot) => {
-    let unscheduledSessions = this.state.unscheduledSessions.filter(session => {
-      return session.id !== programSession.id;
-    });
-
-    if (programSession.id === targetSlot.program_session_id) {
-      return;
+  handleMoveSessionResponse = ( sessions, unscheduledSessions, slots, session ) => {
+    if (session) {
+      slots.forEach(slot => {
+        if (slot.id === session.slot.id) {
+          slot.program_session_id = null
+        }
+      })
     }
 
-    let schedule = Object.assign({}, this.state.schedule);
-    let slot = this.state.slots.find(slot => slot.id === targetSlot.id);
-    let previousSessionID = slot.program_session_id;
-
-    slot.program_session_id = programSession.id;
-
-    if (programSession.slot) {
-      this.unscheduleSession(programSession);
-    }
-
-    if (previousSessionID && previousSessionID !== slot.program_session_id) {
-      let replacedSession = this.state.sessions.find(
-        session => session.id === previousSessionID
-      );
-      unscheduledSessions.push(replacedSession);
-    }
-
-    this.setState({ unscheduledSessions, schedule });
-  };
-
-  unscheduleSession = programSession => {
-    let unscheduledSessions = this.state.unscheduledSessions.slice();
-    let previousSlot = programSession.slot;
-
-    let schedule = Object.assign({}, this.state.schedule);
-    let day = previousSlot.conference_day.toString();
-
-    let slot = this.state.slots.find(slot => slot.id === previousSlot.id);
-
-    slot.program_session_id = null;
-    unscheduledSessions.push(Object.assign(programSession, { slot: null }));
-
-    this.setState({ unscheduledSessions, schedule });
-  };
+    this.setState({ sessions, unscheduledSessions, slots })
+  }
 
   openBulkTimeSlotModal = () => {
     this.setState({
@@ -137,8 +105,7 @@ class Schedule extends React.Component {
   }
 
   requestBulkTimeSlotCreate = () => {
-    const {csrf, schedule, bulkTimeSlotModalEditState} = this.state;
-    const path = schedule.bulk_generate_path;
+    const {csrf,  bulkTimeSlotModalEditState, bulkPath} = this.state;
     const {day, duration, rooms, startTimes} = bulkTimeSlotModalEditState;
 
     // the API expects time strings to have a minutes declaration, this following code adds a minute decaration to each time in a string, if needed. 
@@ -150,9 +117,9 @@ class Schedule extends React.Component {
       }
     }).join(', ')
 
-    postBulkTimeSlots(path, day, rooms, duration, formattedTimes, csrf)
+    postBulkTimeSlots(bulkPath, day, rooms, duration, formattedTimes, csrf)
       .then(response => response.json())
-      .then(data => console.log(data))
+      .then(data => this.setState({ slots: data.slots, previewSlots: [] }))
       .catch(err => console.log('Error: ', err))
   }
 
@@ -239,11 +206,11 @@ class Schedule extends React.Component {
             draggedSession={draggedSession}
             csrf={csrf}
             sessions={sessions}
-            scheduleSession={this.scheduleSession}
             tracks={tracks}
             previewSlots={previewSlots}
             rooms={rooms}
             slots={slots}
+            handleMoveSessionResponse={this.handleMoveSessionResponse}
           />
           <UnscheduledArea
             unscheduledSessions={unscheduledSessions}
@@ -251,8 +218,8 @@ class Schedule extends React.Component {
             changeDragged={this.changeDragged}
             draggedSession={draggedSession}
             csrf={csrf}
-            unscheduleSession={this.unscheduleSession}
             tracks={tracks}
+            handleMoveSessionResponse={this.handleMoveSessionResponse}
           />
         </div>
       </div>
@@ -268,7 +235,5 @@ Schedule.propTypes = {
   csrf: PropTypes.string,
   tracks: PropTypes.array
 };
-
-Schedule.defaultProps = { schedule: { rooms: [] }};
 
 export default Schedule;

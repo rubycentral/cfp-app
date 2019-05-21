@@ -458,7 +458,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .grid_container {
-  margin: 67px auto 0;
+  margin: 85px auto 0;
   display: flex;
 }
 
@@ -550,6 +550,10 @@ input[type=number]::-webkit-outer-spin-button {
         box-shadow: none;
         margin: 2px auto;
         box-sizing: border-box;
+
+        .card_header {
+          padding: .15em;
+        }
       }
     }
   }

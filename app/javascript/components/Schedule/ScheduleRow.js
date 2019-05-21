@@ -16,10 +16,10 @@ class ScheduleRow extends React.Component {
       changeDragged,
       csrf,
       sessions,
-      scheduleSession,
       tracks,
       previewSlots,
-      slots
+      slots,
+      handleMoveSessionResponse
     } = this.props;
 
     const roomID = room.id;
@@ -29,10 +29,6 @@ class ScheduleRow extends React.Component {
     }).map(preview => {
       return <Preview preview={preview} startTime={startTime} />
     })
-
-    // const thisRoomThisDaySlots = Object.values(
-    //   schedule.slots[dayViewing.toString()]
-    // ).find(room => room.find(slot => slot.room_id === roomID));
 
     const thisRoomThisDaySlots = slots.filter(slot => slot.room_id == roomID && slot.conference_day == dayViewing)
 
@@ -49,8 +45,8 @@ class ScheduleRow extends React.Component {
             changeDragged={changeDragged}
             csrf={csrf}
             sessions={sessions}
-            scheduleSession={scheduleSession}
             tracks={tracks}
+            handleMoveSessionResponse={handleMoveSessionResponse}
           />
         );
       });
@@ -83,9 +79,9 @@ ScheduleRow.propTypes = {
   changeDragged: PropTypes.func,
   draggedSession: PropTypes.object,
   sessions: PropTypes.array,
-  scheduleSession: PropTypes.func,
   tracks: PropTypes.array,
-  previewSlots: PropTypes.array
+  previewSlots: PropTypes.array,
+  handleMoveSessionResponse: PropTypes.func
 };
 
 ScheduleRow.defaultProps = {sessions: []}

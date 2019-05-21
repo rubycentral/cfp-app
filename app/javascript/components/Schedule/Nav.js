@@ -3,11 +3,10 @@ import PropTypes from "prop-types"
 
 class Nav extends React.Component {
   render() {
-    const { changeDayView, counts, dayViewing, schedule} = this.props;
+    const { changeDayView, counts, dayViewing, slots} = this.props;
     
     const navTabs = Object.keys(counts).map(dayNumber => {
-      let day = schedule.slots[dayNumber]
-      let allSlots = Object.values(day).flat()
+      let allSlots = slots.filter(slot => slot.conference_day == dayViewing)
       let bookedSlots = allSlots.filter(slot => slot.program_session_id)
 
       return <li 

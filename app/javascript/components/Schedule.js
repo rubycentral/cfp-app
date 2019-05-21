@@ -20,9 +20,8 @@ class Schedule extends React.Component {
       endTime: 17,
       counts: {},
       draggedSession: null,
-      schedule: {
-        rooms: []
-      },
+      slots: [],
+      rooms: [],
       bulkTimeSlotModalOpen: false,
       previewSlots: [],
       bulkTimeSlotModalEditState: null,
@@ -46,18 +45,13 @@ class Schedule extends React.Component {
       endTime: this.state.endTime
     };
 
-    let flattenedSlots = Object.values(slots).flat();
-
-    flattenedSlots.forEach(day => {
-      let flattenedDay = Object.values(day).flat();
-      flattenedDay.forEach(slot => {
-        if (this.ripTime(slot.start_time) < hours.startTime) {
-          hours.startTime = this.ripTime(slot.start_time);
-        }
-        if (this.ripTime(slot.end_time) > hours.endTime) {
-          hours.endTime = this.ripTime(slot.end_time);
-        }
-      });
+    slots.forEach(slot => {
+      if (this.ripTime(slot.start_time) < hours.startTime) {
+        hours.startTime = this.ripTime(slot.start_time);
+      }
+      if (this.ripTime(slot.end_time) > hours.endTime) {
+        hours.endTime = this.ripTime(slot.end_time);
+      }
     });
     return hours;
   };
@@ -169,7 +163,8 @@ class Schedule extends React.Component {
   }
 
   componentDidMount() {
-    let hours = this.determineHours(this.props.schedule.slots);
+    console.log(this.props)
+    let hours = this.determineHours(this.props.slots);
     const trackColors = palette("tol-rainbow", this.props.tracks.length);
     this.props.tracks.forEach((track, i) => {
       track.color = "#" + trackColors[i];
@@ -196,22 +191,24 @@ class Schedule extends React.Component {
       tracks,
       bulkTimeSlotModalOpen,
       bulkTimeSlotModalEditState,
-      previewSlots
+      previewSlots,
+      slots,
+      rooms
     } = this.state;
 
-    const headers = schedule.rooms.map(room => (
+    const headers = rooms.map(room => (
       <div className="schedule_column_head" key={'column_head_' + room.name}>
         {room.name}
       </div>
     ));
 
-    const headersMinWidth = (180 * schedule.rooms.length) + 'px';
+    const headersMinWidth = (180 * rooms.length) + 'px';
 
     const bulkTimeSlotModal = bulkTimeSlotModalOpen && <BulkCreateModal 
       closeBulkTimeSlotModal={this.closeBulkTimeSlotModal}
       dayViewing={dayViewing}
       counts={counts}
-      rooms={schedule.rooms}
+      rooms={rooms}
       createTimeSlotPreviews={this.createTimeSlotPreviews}
       editState={bulkTimeSlotModalEditState}
     />
@@ -224,7 +221,7 @@ class Schedule extends React.Component {
             counts={counts}
             changeDayView={this.changeDayView}
             dayViewing={dayViewing}
-            schedule={schedule}
+            slots={slots}
           />
           <GenerateGridButton
             dayViewing={dayViewing}
@@ -233,7 +230,7 @@ class Schedule extends React.Component {
           />
         </div>
         <div className="grid_headers_wrapper" style={{'minWidth': headersMinWidth}}>{headers}</div>
-        <div className="grid_container">
+        {/* <div className="grid_container">
           {previewSlots.length > 0 && <BulkGenerateConfirm 
             cancelBulkPreview={this.cancelBulkPreview}
             openBulkTimeSlotModal={this.openBulkTimeSlotModal}
@@ -263,7 +260,7 @@ class Schedule extends React.Component {
             unscheduleSession={this.unscheduleSession}
             tracks={tracks}
           />
-        </div>
+        </div> */}
       </div>
     );
   }

@@ -16,7 +16,7 @@ class ProgramSession extends React.Component {
   
   render() {
     const {session, tracks} = this.props;
-
+    
     const sessionTrack = tracks.find(track => track.id === session.track_id)
 
     const bkgColor = sessionTrack ? sessionTrack.color : '#fff'

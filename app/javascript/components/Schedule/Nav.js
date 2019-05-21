@@ -6,7 +6,7 @@ class Nav extends React.Component {
     const { changeDayView, counts, dayViewing, slots} = this.props;
     
     const navTabs = Object.keys(counts).map(dayNumber => {
-      let allSlots = slots.filter(slot => slot.conference_day == dayViewing)
+      let allSlots = slots.filter(slot => slot.conference_day == dayNumber)
       let bookedSlots = allSlots.filter(slot => slot.program_session_id)
 
       return <li 

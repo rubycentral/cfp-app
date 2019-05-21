@@ -69,12 +69,8 @@ class Schedule extends React.Component {
       return;
     }
 
-    let targetDay = targetSlot.conference_day.toString();
-
     let schedule = Object.assign({}, this.state.schedule);
-    let slot = Object.values(schedule.slots[targetDay])
-      .flat()
-      .find(slot => slot.id === targetSlot.id);
+    let slot = this.state.slots.find(slot => slot.id === targetSlot.id);
     let previousSessionID = slot.program_session_id;
 
     slot.program_session_id = programSession.id;
@@ -100,9 +96,7 @@ class Schedule extends React.Component {
     let schedule = Object.assign({}, this.state.schedule);
     let day = previousSlot.conference_day.toString();
 
-    let slot = Object.values(schedule.slots[day])
-      .flat()
-      .find(slot => slot.id === previousSlot.id);
+    let slot = this.state.slots.find(slot => slot.id === previousSlot.id);
 
     slot.program_session_id = null;
     unscheduledSessions.push(Object.assign(programSession, { slot: null }));
@@ -169,7 +163,7 @@ class Schedule extends React.Component {
     this.props.tracks.forEach((track, i) => {
       track.color = "#" + trackColors[i];
     });
-
+    
     this.setState(Object.assign(this.state, this.props, hours)); // doing this until I can hit the API here.
   }
 
@@ -183,7 +177,6 @@ class Schedule extends React.Component {
       dayViewing,
       startTime,
       endTime,
-      schedule,
       sessions,
       unscheduledSessions,
       draggedSession,
@@ -252,7 +245,7 @@ class Schedule extends React.Component {
             rooms={rooms}
             slots={slots}
           />
-          {/* <UnscheduledArea
+          <UnscheduledArea
             unscheduledSessions={unscheduledSessions}
             sessions={sessions}
             changeDragged={this.changeDragged}
@@ -260,7 +253,7 @@ class Schedule extends React.Component {
             csrf={csrf}
             unscheduleSession={this.unscheduleSession}
             tracks={tracks}
-          /> */}
+          />
         </div>
       </div>
     );

@@ -48,7 +48,7 @@ class UnscheduledArea extends React.Component {
   render() {
     const { sessions, unscheduledSessions, tracks } = this.props;
     const { searchInput, isHidden } = this.state;
-  
+    console.log(this.props)
     let display = isHidden ? "none" : "";
 
     let filteredSessions = unscheduledSessions.filter(session => {
@@ -61,6 +61,7 @@ class UnscheduledArea extends React.Component {
 
       return titleMatch || trackMatch;
     });
+
     let unscheduledSessionCards = filteredSessions.map(session => (
       <ProgramSession key={session.id} session={session} onDrag={this.onDrag} tracks={tracks} />
     ));

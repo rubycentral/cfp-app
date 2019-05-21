@@ -17,10 +17,11 @@ class DayView extends React.Component {
       sessions,
       scheduleSession,
       tracks,
-      previewSlots
+      previewSlots,
+      rooms
     } = this.props;
 
-    let rows = schedule.rooms.map(room => {
+    let rows = rooms.map(room => {
       const height = (( endTime - startTime + 1) * 90) + 25 + 'px'
       return (
         <ScheduleRow

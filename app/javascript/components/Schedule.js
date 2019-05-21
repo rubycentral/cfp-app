@@ -230,7 +230,7 @@ class Schedule extends React.Component {
           />
         </div>
         <div className="grid_headers_wrapper" style={{'minWidth': headersMinWidth}}>{headers}</div>
-        {/* <div className="grid_container">
+        <div className="grid_container">
           {previewSlots.length > 0 && <BulkGenerateConfirm 
             cancelBulkPreview={this.cancelBulkPreview}
             openBulkTimeSlotModal={this.openBulkTimeSlotModal}
@@ -250,8 +250,9 @@ class Schedule extends React.Component {
             scheduleSession={this.scheduleSession}
             tracks={tracks}
             previewSlots={previewSlots}
+            rooms={rooms}
           />
-          <UnscheduledArea
+          {/* <UnscheduledArea
             unscheduledSessions={unscheduledSessions}
             sessions={sessions}
             changeDragged={this.changeDragged}
@@ -259,8 +260,8 @@ class Schedule extends React.Component {
             csrf={csrf}
             unscheduleSession={this.unscheduleSession}
             tracks={tracks}
-          />
-        </div> */}
+          /> */}
+        </div>
       </div>
     );
   }

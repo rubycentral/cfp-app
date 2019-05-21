@@ -9,6 +9,8 @@ import GenerateGridButton from "./Schedule/GenerateGridButton";
 import BulkCreateModal from "./Schedule/BulkCreateModal";
 import BulkGenerateConfirm from "./Schedule/BulkGenerateConfirm";
 
+import { postBulkTimeSlots } from "../apiCalls";
+
 class Schedule extends React.Component {
   constructor(props) {
     super(props);
@@ -146,6 +148,26 @@ class Schedule extends React.Component {
     })
   }
 
+  requestBulkTimeSlotCreate = () => {
+    const {csrf, schedule, bulkTimeSlotModalEditState} = this.state;
+    const path = schedule.bulk_generate_path;
+    const {day, duration, rooms, startTimes} = bulkTimeSlotModalEditState;
+
+    // the API expects time strings to have a minutes declaration, this following code adds a minute decaration to each time in a string, if needed. 
+    const formattedTimes = startTimes.replace(/\s/g, '').split(',').map(time => {
+      if (time.split(':').length > 1) {
+        return time
+      } else {
+        return time + ':00'
+      }
+    }).join(', ')
+
+    postBulkTimeSlots(path, day, rooms, duration, formattedTimes, csrf)
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(err => console.log('Error: ', err))
+  }
+
   componentDidMount() {
     let hours = this.determineHours(this.props.schedule.slots);
     const trackColors = palette("tol-rainbow", this.props.tracks.length);
@@ -215,7 +237,7 @@ class Schedule extends React.Component {
           {previewSlots.length > 0 && <BulkGenerateConfirm 
             cancelBulkPreview={this.cancelBulkPreview}
             openBulkTimeSlotModal={this.openBulkTimeSlotModal}
-            bulkTimeSlotModalEditState={bulkTimeSlotModalEditState}
+            requestBulkTimeSlotCreate={this.requestBulkTimeSlotCreate}
           />}
           <Ruler startTime={startTime} endTime={endTime} />
           <DayView

@@ -6,14 +6,14 @@ class BulkGenerateConfirm extends React.Component {
     const {
       cancelBulkPreview,
       openBulkTimeSlotModal,
-      bulkTimeSlotModalEditState
+      requestBulkTimeSlotCreate
     } = this.props;
 
     return (
       <div className='generate-confirm'>
         <button onClick={cancelBulkPreview}>Cancel</button>
         <button onClick={openBulkTimeSlotModal}>Edit</button>
-        <button>Confirm</button>
+        <button onClick={requestBulkTimeSlotCreate}>Confirm</button>
       </div>
     )
   }
@@ -22,7 +22,7 @@ class BulkGenerateConfirm extends React.Component {
 BulkGenerateConfirm.propTypes = {
   cancelBulkPreview: PropTypes.func,
   openBulkTimeSlotModal: PropTypes.func,
-  bulkTimeSlotModalEditState: PropTypes.object
+  requestBulkTimeSlotCreate: PropTypes.func
 }
 
 export default BulkGenerateConfirm;

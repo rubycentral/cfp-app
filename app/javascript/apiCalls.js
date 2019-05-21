@@ -20,7 +20,7 @@ export function patchTimeSlot(slot, talk, csrfToken) {
   }
 }
 
-export function bulkTimeSlots(path, day, rooms, duration, startTimes, csrfToken) {
+export function postBulkTimeSlots(path, day, rooms, duration, startTimes, csrfToken) {
   const data = JSON.stringify({
     bulk_time_slot: {
       day,

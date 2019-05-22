@@ -544,6 +544,7 @@ input[type=number]::-webkit-outer-spin-button {
       position: absolute;
       width: 98%;
       margin: auto;
+      overflow: hidden;
 
       .program_session_card {
         height: 95%;
@@ -552,7 +553,15 @@ input[type=number]::-webkit-outer-spin-button {
         box-sizing: border-box;
 
         .card_header {
-          padding: .15em;
+          padding: .10em;
+          min-height: 22px;
+          max-height: 35%;
+          overflow: hidden;
+        }
+
+        .card_body {
+          align-items: unset;
+          max-height: 65%;
         }
       }
     }

@@ -33,7 +33,6 @@ class Schedule extends React.Component {
   };
 
   ripTime = time => {
-    // currently only returning hour. Need to refactor for minutes.
     const hours =  parseInt(time.split("T")[1].split(":")[0]);
     const minutes = parseInt(time.split(':')[1]) / 60
     return hours + minutes
@@ -41,8 +40,8 @@ class Schedule extends React.Component {
 
   determineHours = slots => {
     let hours = {
-      startTime: this.state.startTime,
-      endTime: this.state.endTime
+      startTime: 12,
+      endTime: 12
     };
 
     slots.forEach(slot => {
@@ -89,18 +88,33 @@ class Schedule extends React.Component {
   }
 
   cancelBulkPreview = () => {
+    let hours = this.determineHours(this.state.slots)
     this.setState({
       previewSlots: [],
-      bulkTimeSlotModalEditState: null
+      bulkTimeSlotModalEditState: null,
+      ...hours
     })
   }
 
   createTimeSlotPreviews = (previewSlots, bulkTimeSlotModalEditState) => {
+    let { startTime, endTime } = this.state
+
+    previewSlots.forEach(preview => {
+      if (preview.startTime < startTime) {
+        startTime = preview.startTime
+      }
+      if (preview.endTime > endTime) {
+        endTime = preview.endTime
+      }
+    })
+
     this.setState({
       previewSlots, 
       bulkTimeSlotModalEditState, 
       bulkTimeSlotModalOpen: false,
-      dayViewing: parseInt(bulkTimeSlotModalEditState.day)
+      dayViewing: parseInt(bulkTimeSlotModalEditState.day),
+      startTime,
+      endTime
     })
   }
 
@@ -119,12 +133,16 @@ class Schedule extends React.Component {
 
     postBulkTimeSlots(bulkPath, day, rooms, duration, formattedTimes, csrf)
       .then(response => response.json())
-      .then(data => this.setState({ slots: data.slots, previewSlots: [] }))
+      .then(data => {
+        this.setState({ slots: data.slots, previewSlots: [] }, () => {
+          let hours = this.determineHours(this.state.slots)
+          this.setState({...hours})
+        })
+      })
       .catch(err => console.log('Error: ', err))
   }
 
   componentDidMount() {
-    console.log(this.props)
     let hours = this.determineHours(this.props.slots);
     const trackColors = palette("tol-rainbow", this.props.tracks.length);
     this.props.tracks.forEach((track, i) => {

@@ -14,6 +14,13 @@ class ScheduleSlot extends React.Component {
     const session = this.props.draggedSession;
     const { csrf, handleMoveSessionResponse, changeDragged } = this.props;
     
+    if (session.slot) {
+      if (session.slot.program_session_id === slot.program_session_id) {
+        changeDragged(null)
+        return
+      }
+    }
+    
     patchTimeSlot(slot, session, csrf)
       .then((response) => response.json())
       .then(data => {

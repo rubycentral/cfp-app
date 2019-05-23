@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
 
-class BulkCreateModal extends React.Component {
+class BulkCreateModal extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       day: 1,
       rooms: [],
@@ -35,7 +35,8 @@ class BulkCreateModal extends React.Component {
   }
 
   previewSlots = () => {
-    const { day, rooms, startTimes } = this.state;
+    const { day, rooms, startTimes } = this.state
+    const { createTimeSlotPreviews } = this.props
     let duration = parseInt(this.state.duration)
     let slots = []
     
@@ -49,31 +50,33 @@ class BulkCreateModal extends React.Component {
 
       rooms.forEach(room => {
         let slot = {}
-        slot.startTime = cleanedStartTime;
-        slot.endTime = cleanedStartTime + (duration / 60);
-        slot.day = day;
-        slot.room = room;
+        slot.startTime = cleanedStartTime
+        slot.endTime = cleanedStartTime + (duration / 60)
+        slot.day = day
+        slot.room = room
         slots.push(slot)
       })
     })
     
-    this.props.createTimeSlotPreviews(slots, this.state)
+    createTimeSlotPreviews(slots, this.state)
   }
 
   componentDidMount() {
-    if (this.props.editState) {
-      this.setState(this.props.editState)
+    const { editState, dayViewing } = this.props
+
+    if (editState) {
+      this.setState(editState)
     } else {
       this.setState({
-        day: this.props.dayViewing
+        day: dayViewing
       })
     }
   }
 
   render() {
-    let { sessionFormats } = this.props
+    let { sessionFormats, closeBulkTimeSlotModa, counts } = this.props
 
-    const days = Object.keys(this.props.counts)
+    const days = Object.keys(counts)
     const dayOptions = days.map(day => (
       <option key={'day '+day} value={day}>{day}</option>
     ))
@@ -160,7 +163,7 @@ class BulkCreateModal extends React.Component {
           <div className='modal-footer'>
             <button 
               className='btn btn-default bulk-cancel'
-              onClick={this.props.closeBulkTimeSlotModal}>Cancel</button>
+              onClick={closeBulkTimeSlotModal}>Cancel</button>
             <button 
               className='btn btn-success'
               onClick={this.previewSlots}
@@ -185,4 +188,4 @@ BulkCreateModal.defaultProps = {
   rooms: []
 }
 
-export default BulkCreateModal;
+export default BulkCreateModal

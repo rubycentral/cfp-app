@@ -1,9 +1,9 @@
-import React from "react"
+import React, { Component } from "react"
 import PropTypes from "prop-types"
 
-class Nav extends React.Component {
+class Nav extends Component {
   render() {
-    const { changeDayView, counts, dayViewing, slots} = this.props;
+    const { changeDayView, counts, dayViewing, slots} = this.props
     
     const navTabs = Object.keys(counts).map(dayNumber => {
       let allSlots = slots.filter(slot => slot.conference_day == dayNumber)
@@ -12,7 +12,7 @@ class Nav extends React.Component {
       return <li 
         onClick={() => changeDayView(parseInt(dayNumber))}
         key={'day-tab ' + dayNumber}
-        className={dayNumber === dayViewing.toString() ? 'active' : ''}
+        className={dayNumber == dayViewing ? 'active' : ''}
       > 
         <span>Day {dayNumber}</span> 
         <span className='badge'>{bookedSlots.length}/{allSlots.length} </span>  
@@ -24,7 +24,7 @@ class Nav extends React.Component {
         {navTabs}
       </ul>
     )
-  };
+  }
 }
 
 Nav.propTypes = {

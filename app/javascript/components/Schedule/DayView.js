@@ -1,9 +1,9 @@
-import React from "react"
+import React, { Component } from "react"
 import PropTypes from "prop-types"
 
-import ScheduleRow from './ScheduleRow';
+import ScheduleRow from './ScheduleRow'
 
-class DayView extends React.Component {
+class DayView extends Component {
   render() {
     const {
       dayViewing,
@@ -19,7 +19,7 @@ class DayView extends React.Component {
       rooms,
       slots,
       handleMoveSessionResponse
-    } = this.props;
+    } = this.props
 
     let rows = rooms.map(room => {
       const height = (( endTime - startTime + 1) * 90) + 25 + 'px'
@@ -41,7 +41,7 @@ class DayView extends React.Component {
           slots={slots}
           handleMoveSessionResponse={handleMoveSessionResponse}
         />
-      );
+      )
     })
 
     return (

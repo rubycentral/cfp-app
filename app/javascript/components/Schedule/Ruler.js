@@ -1,16 +1,16 @@
-import React from "react"
+import React, { Component } from "react"
 import PropTypes from "prop-types"
 
-class Ruler extends React.Component {
+class Ruler extends Component {
   render() {
-    const {startTime, endTime} = this.props;
-    let hours = [];
+    const {startTime, endTime} = this.props
+    let hours = []
     for (let i = Math.floor(startTime); i <= Math.floor(endTime); i++) {
-      let time;
+      let time
       if (i > 12) {
-        time = i-12 + ":00 pm";
+        time = i-12 + ":00 pm"
       } else {
-        time = i + ":00 am";
+        time = i + ":00 am"
       }
       hours.push(time)
     }
@@ -29,6 +29,6 @@ class Ruler extends React.Component {
 Ruler.propTypes = {
   startTime: PropTypes.number,
   endTime: PropTypes.number
-};
+}
 
 export default Ruler

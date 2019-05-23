@@ -1,18 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-class Preview extends React.Component {
+class Preview extends Component {
   render() {
-    const {preview, startTime} = this.props;
+    const { preview, startTime } = this.props
 
     const style = {
       top: (preview.startTime - Math.floor(startTime)) * 90 +"px",
       height: (preview.endTime - preview.startTime) * 90 +"px"
-    };
+    }
 
     return (
       <div className='preview_slot' style={style}>
-        
       </div>
     )
   }
@@ -23,4 +22,4 @@ Preview.propTypes = {
   startTime: PropTypes.number
 }
 
-export default Preview;
+export default Preview

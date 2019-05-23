@@ -1,19 +1,19 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
 
-import Nav from "./Schedule/Nav";
-import Ruler from "./Schedule/Ruler";
-import DayView from "./Schedule/DayView";
-import UnscheduledArea from "./Schedule/UnscheduledArea";
-import GenerateGridButton from "./Schedule/GenerateGridButton";
-import BulkCreateModal from "./Schedule/BulkCreateModal";
-import BulkGenerateConfirm from "./Schedule/BulkGenerateConfirm";
+import Nav from "./Schedule/Nav"
+import Ruler from "./Schedule/Ruler"
+import DayView from "./Schedule/DayView"
+import UnscheduledArea from "./Schedule/UnscheduledArea"
+import GenerateGridButton from "./Schedule/GenerateGridButton"
+import BulkCreateModal from "./Schedule/BulkCreateModal"
+import BulkGenerateConfirm from "./Schedule/BulkGenerateConfirm"
 
-import { postBulkTimeSlots } from "../apiCalls";
+import { postBulkTimeSlots } from "../apiCalls"
 
-class Schedule extends React.Component {
+class Schedule extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       dayViewing: 1,
       startTime: 10,
@@ -26,39 +26,39 @@ class Schedule extends React.Component {
       bulkTimeSlotModalOpen: false,
       previewSlots: [],
       bulkTimeSlotModalEditState: null,
-    };
+    }
   }
 
   changeDayView = day => {
-    this.setState({ dayViewing: day });
-  };
+    this.setState({ dayViewing: day })
+  }
 
   ripTime = time => {
-    const hours =  parseInt(time.split("T")[1].split(":")[0]);
+    const hours =  parseInt(time.split("T")[1].split(":")[0])
     const minutes = parseInt(time.split(':')[1]) / 60
     return hours + minutes
-  };
+  }
 
   determineHours = slots => {
     let hours = {
       startTime: 12,
       endTime: 12
-    };
+    }
 
     slots.forEach(slot => {
       if (this.ripTime(slot.start_time) < hours.startTime) {
-        hours.startTime = this.ripTime(slot.start_time);
+        hours.startTime = this.ripTime(slot.start_time)
       }
       if (this.ripTime(slot.end_time) > hours.endTime) {
-        hours.endTime = this.ripTime(slot.end_time);
+        hours.endTime = this.ripTime(slot.end_time)
       }
-    });
-    return hours;
-  };
+    })
+    return hours
+  }
 
   changeDragged = programSession => {
-    this.setState({ draggedSession: programSession });
-  };
+    this.setState({ draggedSession: programSession })
+  }
 
   handleMoveSessionResponse = ( sessions, unscheduledSessions, slots, session ) => {
     if (session) {
@@ -120,8 +120,8 @@ class Schedule extends React.Component {
   }
 
   requestBulkTimeSlotCreate = () => {
-    const {csrf,  bulkTimeSlotModalEditState, bulkPath} = this.state;
-    const {day, duration, rooms, startTimes} = bulkTimeSlotModalEditState;
+    const {csrf,  bulkTimeSlotModalEditState, bulkPath} = this.state
+    const {day, duration, rooms, startTimes} = bulkTimeSlotModalEditState
 
     // the API expects time strings to have a minutes declaration, this following code adds a minute decaration to each time in a string, if needed. 
     const formattedTimes = startTimes.replace(/\s/g, '').split(',').map(time => {
@@ -148,17 +148,17 @@ class Schedule extends React.Component {
   }
 
   componentDidMount() {
-    let hours = this.determineHours(this.props.slots);
-    const trackColors = palette("tol-rainbow", this.props.tracks.length);
+    let hours = this.determineHours(this.props.slots)
+    const trackColors = palette("tol-rainbow", this.props.tracks.length)
     this.props.tracks.forEach((track, i) => {
-      track.color = "#" + trackColors[i];
-    });
+      track.color = "#" + trackColors[i]
+    })
     
-    this.setState(Object.assign(this.state, this.props, hours));
+    this.setState(Object.assign(this.state, this.props, hours))
   }
 
   componentDidUpdate() {
-    console.log(this.state);
+    console.log(this.state)
   }
 
   render() {
@@ -178,15 +178,15 @@ class Schedule extends React.Component {
       slots,
       rooms,
       sessionFormats
-    } = this.state;
+    } = this.state
 
     const headers = rooms.map(room => (
       <div className="schedule_column_head" key={'column_head_' + room.name}>
         {room.name}
       </div>
-    ));
+    ))
 
-    const headersMinWidth = (180 * rooms.length) + 'px';
+    const headersMinWidth = (180 * rooms.length) + 'px'
 
     const bulkTimeSlotModal = bulkTimeSlotModalOpen && <BulkCreateModal 
       closeBulkTimeSlotModal={this.closeBulkTimeSlotModal}
@@ -248,7 +248,7 @@ class Schedule extends React.Component {
           />
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -259,6 +259,6 @@ Schedule.propTypes = {
   unscheduledSessions: PropTypes.array,
   csrf: PropTypes.string,
   tracks: PropTypes.array
-};
+}
 
-export default Schedule;
+export default Schedule

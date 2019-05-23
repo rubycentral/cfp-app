@@ -1,10 +1,10 @@
-import React from "react";
+import React, { Component, Fragment } from "react"
 import PropTypes from "prop-types"
 
-import ScheduleSlot from './ScheduleSlot';
-import Preview from './Preview';
+import ScheduleSlot from './ScheduleSlot'
+import Preview from './Preview'
 
-class ScheduleRow extends React.Component {
+class ScheduleRow extends Component {
   render() {
     const {
       height,
@@ -20,9 +20,9 @@ class ScheduleRow extends React.Component {
       previewSlots,
       slots,
       handleMoveSessionResponse
-    } = this.props;
+    } = this.props
 
-    const roomID = room.id;
+    const roomID = room.id
 
     const previews = previewSlots.filter(preview => {
       return parseInt(preview.room) === roomID && parseInt(preview.day) === dayViewing
@@ -32,7 +32,7 @@ class ScheduleRow extends React.Component {
 
     const thisRoomThisDaySlots = slots.filter(slot => slot.room_id == roomID && slot.conference_day == dayViewing)
 
-    let rowSlots = <React.Fragment />;
+    let rowSlots = <Fragment />
     if (thisRoomThisDaySlots) {
       rowSlots = thisRoomThisDaySlots.map(slot => {
         return (
@@ -48,12 +48,12 @@ class ScheduleRow extends React.Component {
             tracks={tracks}
             handleMoveSessionResponse={handleMoveSessionResponse}
           />
-        );
-      });
+        )
+      })
     }
     
     return (
-      <React.Fragment>
+      <Fragment>
         <div
           className="schedule_column"
           key={"column " + room.name}
@@ -64,8 +64,8 @@ class ScheduleRow extends React.Component {
             {rowSlots}
           </div>
         </div>
-      </React.Fragment>
-    );
+      </Fragment>
+    )
   }
 }
 
@@ -82,7 +82,7 @@ ScheduleRow.propTypes = {
   tracks: PropTypes.array,
   previewSlots: PropTypes.array,
   handleMoveSessionResponse: PropTypes.func
-};
+}
 
 ScheduleRow.defaultProps = {sessions: []}
 

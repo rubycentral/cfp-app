@@ -1,13 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
 
-class BulkGenerateConfirm extends React.Component {
+class BulkGenerateConfirm extends Component {
   render() {
     const {
       cancelBulkPreview,
       openBulkTimeSlotModal,
       requestBulkTimeSlotCreate
-    } = this.props;
+    } = this.props
 
     return (
       <div className='generate-confirm'>
@@ -28,4 +28,4 @@ BulkGenerateConfirm.propTypes = {
   requestBulkTimeSlotCreate: PropTypes.func
 }
 
-export default BulkGenerateConfirm;
+export default BulkGenerateConfirm

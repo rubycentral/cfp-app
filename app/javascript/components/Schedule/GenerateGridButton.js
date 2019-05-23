@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
 
-class GenerateGridButton extends React.Component {
+class GenerateGridButton extends Component {
   render() {
-    const { openBulkTimeSlotModal } = this.props;
+    const { openBulkTimeSlotModal } = this.props
 
     return (
       <button className='generate_btn btn btn-primary'
@@ -18,4 +18,4 @@ GenerateGridButton.propTypes = {
   generateGridPath: PropTypes.string
 }
 
-export default GenerateGridButton;
+export default GenerateGridButton

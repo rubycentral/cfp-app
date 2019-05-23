@@ -135,7 +135,11 @@ class Schedule extends React.Component {
     postBulkTimeSlots(bulkPath, day, rooms, duration, formattedTimes, csrf)
       .then(response => response.json())
       .then(data => {
-        this.setState({ slots: data.slots, previewSlots: [] }, () => {
+        this.setState({ 
+          slots: data.slots, 
+          previewSlots: [], 
+          bulkTimeSlotModalEditState: null 
+        }, () => {
           let hours = this.determineHours(this.state.slots)
           this.setState({...hours})
         })

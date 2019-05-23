@@ -71,6 +71,8 @@ class BulkCreateModal extends React.Component {
   }
 
   render() {
+    let { sessionFormats } = this.props
+
     const days = Object.keys(this.props.counts)
     const dayOptions = days.map(day => (
       <option key={'day '+day} value={day}>{day}</option>
@@ -88,6 +90,19 @@ class BulkCreateModal extends React.Component {
           />
           <span>{room.name}</span>
         </div>
+      )
+    })
+
+    sessionFormats = sessionFormats.slice()
+    sessionFormats.unshift({})
+    const formats = sessionFormats.map(format => {
+      const text = format.name ? format.name + ' (' + format.duration + ' minutes)' : ''
+
+      return (
+        <option 
+          key={'format' + format.id}
+          value={format.duration}
+        >{text}</option>
       )
     })
 
@@ -125,22 +140,27 @@ class BulkCreateModal extends React.Component {
               </div>
             </label>
             <label>
-              Duration
+              Duration (minutes)
               <div>
                 <input
-                  className='start-times full-width-input'
+                  className='start-times minutes-input'
                   type='number'
                   name='duration'
                   value={this.state.duration}
                   onChange={this.changeInput}
                 />
+                <select 
+                  className='session-select' 
+                  name='duration' 
+                  onChange={this.changeInput}
+                >{formats}</select>
               </div>
             </label>
           </div>
           <div className='modal-footer'>
             <button 
               className='btn btn-default bulk-cancel'
-            onClick={this.props.closeBulkTimeSlotModal}>Cancel</button>
+              onClick={this.props.closeBulkTimeSlotModal}>Cancel</button>
             <button 
               className='btn btn-success'
               onClick={this.previewSlots}

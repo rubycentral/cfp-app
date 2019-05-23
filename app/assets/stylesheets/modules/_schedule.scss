@@ -554,7 +554,7 @@ input[type=number]::-webkit-outer-spin-button {
         font-size: .8em;
 
         .card_header {
-          padding: .10em;
+          padding: .3em;
           min-height: 22px;
           max-height: 35%;
           overflow: hidden;
@@ -563,6 +563,7 @@ input[type=number]::-webkit-outer-spin-button {
         .card_body {
           align-items: unset;
           max-height: 65%;
+          padding: 2px;
         }
       }
     }
@@ -669,7 +670,7 @@ input[type=number]::-webkit-outer-spin-button {
     max-height: 100%;
     background-color: #fff;
     border: 1px solid #6d6b6b;
-    margin: 200px auto;
+    margin: 100px auto;
     border-radius: 5px;
     box-shadow: 1px 1px 4px #6d6b6b;
 
@@ -680,21 +681,19 @@ input[type=number]::-webkit-outer-spin-button {
       
       label {
         width: 90%;
-        margin: uto;
+        margin: 10px auto 0px;
         select {
           display: block;
-          width: 100%;
-          margin: 10px auto;
-        }
-        .start-times {
-          width: 100%;
+          width: 50px;
+          height: 30px;
+          margin: 10px 0px;;
         }
       }
-
-      .full-width-input {
-        display: block;
-        width: 100%;
-        height: 34px;
+      
+      .minutes-input {
+        display: inline-block;
+        width: 50px;
+        height: 30px;
         padding: 6px 12px;
         font-size: 14px;
         line-height: 1.42857;
@@ -703,6 +702,13 @@ input[type=number]::-webkit-outer-spin-button {
         background-image: none;
         border: 1px solid #ccc;
         border-radius: 4px;
+      }
+
+      .session-select {
+        display: inline-block;
+        width: 380px;
+        height: 30px;
+        margin: 10px 0px 0px 20px;
       }
     }
   }

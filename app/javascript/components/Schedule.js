@@ -157,10 +157,6 @@ class Schedule extends Component {
     this.setState(Object.assign(this.state, this.props, hours))
   }
 
-  componentDidUpdate() {
-    console.log(this.state)
-  }
-
   render() {
     const {
       counts,

@@ -5,10 +5,23 @@ import ProgramSession from './ProgramSession';
 import { patchTimeSlot } from "../../apiCalls";
 
 class ScheduleSlot extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      hoverDrag: false
+    }
+  }
   
   onDragOver = e => {
-    e.preventDefault();
+    e.preventDefault()
+    this.setState({ hoverDrag: true })
   };
+
+  onDragLeave = e => {
+    console.log('left')
+    e.preventDefault()
+    this.setState({ hoverDrag: false})
+  }
 
   onDrop = slot => {
     const session = this.props.draggedSession;
@@ -32,6 +45,7 @@ class ScheduleSlot extends React.Component {
           handleMoveSessionResponse(sessions, unscheduled_sessions, slots)
         }
         changeDragged(null);
+        this.setState({ hoverDrag: false })
       })
       .catch(error => console.error("Error:", error));
   };
@@ -45,10 +59,12 @@ class ScheduleSlot extends React.Component {
     
     const slotStartTime = ripTime(slot.start_time);
     const slotEndTime = ripTime(slot.end_time);
+    let background = this.state.hoverDrag ? '#f9f6f1' : '#fff'
     
     const style = {
       top: (slotStartTime - startTime) * 90 + "px",
-      height: (slotEndTime - slotStartTime) * 90 + "px"
+      height: (slotEndTime - slotStartTime) * 90 + "px",
+      background
     };
 
     let session = <React.Fragment/>
@@ -59,12 +75,14 @@ class ScheduleSlot extends React.Component {
       session = <ProgramSession session={matchedSession} onDrag={this.onDrag} tracks={tracks} />
     }
 
+
     return (
       <div
         className="schedule_slot"
         style={style}
         key={slot.id}
         onDragOver={e => this.onDragOver(e)}
+        onDragLeave={e => this.onDragLeave(e)}
         onDrop={() => this.onDrop(slot)}
       >
         {session}

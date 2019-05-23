@@ -551,6 +551,7 @@ input[type=number]::-webkit-outer-spin-button {
         box-shadow: none;
         margin: 2px auto;
         box-sizing: border-box;
+        font-size: .8em;
 
         .card_header {
           padding: .10em;
@@ -706,12 +707,31 @@ input[type=number]::-webkit-outer-spin-button {
 
 .generate-confirm {
     position: fixed;
-    padding: 20px;
+    padding: 10px;
     background-color: #1A95DD;
-    top: 300px;
-    left: 200px;
+    top: 110px;
+    right: 160px;
     width: 400px;
     justify-content: space-evenly;
     display: flex;
-    z-index: 50;
+    z-index: 3000;
+    border-radius: 5px;
+
+    span {
+      color: #fff;
+      font-size: .9em;
+      margin-top: 5px;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: space-evenly;
+      width: 200px;
+
+      .btn {
+        height: 20px;
+        padding: 2px 5px;
+        margin-top: 5px;
+      }
+    }
 }

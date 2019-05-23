@@ -11,9 +11,12 @@ class BulkGenerateConfirm extends React.Component {
 
     return (
       <div className='generate-confirm'>
-        <button onClick={cancelBulkPreview}>Cancel</button>
-        <button onClick={openBulkTimeSlotModal}>Edit</button>
-        <button onClick={requestBulkTimeSlotCreate}>Confirm</button>
+        <span>Previewing Grid changes</span>
+        <div className='button-container'>
+          <button className='btn' onClick={cancelBulkPreview}>Cancel</button>
+          <button className='btn' onClick={openBulkTimeSlotModal}>Edit</button>
+          <button className='btn' onClick={requestBulkTimeSlotCreate}>Save</button>
+        </div>
       </div>
     )
   }

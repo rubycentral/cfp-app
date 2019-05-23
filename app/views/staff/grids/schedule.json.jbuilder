@@ -8,3 +8,4 @@ json.counts EventStats.new(current_event).schedule_counts
 json.tracks current_event.tracks.sort_by_name
 json.csrf session[:_csrf_token]
 json.bulkPath Rails.application.routes.url_helpers.event_staff_schedule_grid_bulk_time_slot_path(current_event)
+json.sessionFormats current_event.session_formats

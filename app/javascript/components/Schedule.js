@@ -22,6 +22,7 @@ class Schedule extends React.Component {
       draggedSession: null,
       slots: [],
       rooms: [],
+      sessionFormats: [],
       bulkTimeSlotModalOpen: false,
       previewSlots: [],
       bulkTimeSlotModalEditState: null,
@@ -149,7 +150,7 @@ class Schedule extends React.Component {
       track.color = "#" + trackColors[i];
     });
     
-    this.setState(Object.assign(this.state, this.props, hours)); // doing this until I can hit the API here.
+    this.setState(Object.assign(this.state, this.props, hours));
   }
 
   componentDidUpdate() {
@@ -171,7 +172,8 @@ class Schedule extends React.Component {
       bulkTimeSlotModalEditState,
       previewSlots,
       slots,
-      rooms
+      rooms,
+      sessionFormats
     } = this.state;
 
     const headers = rooms.map(room => (
@@ -189,6 +191,7 @@ class Schedule extends React.Component {
       rooms={rooms}
       createTimeSlotPreviews={this.createTimeSlotPreviews}
       editState={bulkTimeSlotModalEditState}
+      sessionFormats={sessionFormats}
     />
 
     return (

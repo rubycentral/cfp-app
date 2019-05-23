@@ -577,14 +577,17 @@ input[type=number]::-webkit-outer-spin-button {
     position: -o-sticky;
     display: inline-block;
     box-sizing: border-box;
-    width: 280px;
+    width: 285px;
     padding: 0px 20px;
-    right: 0px;
+    top: 150px;
+    right: -2px;
+    height: calc(100vh - 150px);
     margin-top: -40px;
     margin-left: 0px;
     background: #fff;
     border-left: 1px solid rgba(204, 204, 204, 0.5);
     z-index: 500;
+    overflow: auto;
 
   .header_wrapper {
     cursor: pointer;

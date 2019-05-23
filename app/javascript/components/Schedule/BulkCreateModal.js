@@ -74,7 +74,7 @@ class BulkCreateModal extends Component {
   }
 
   render() {
-    let { sessionFormats, closeBulkTimeSlotModa, counts } = this.props
+    let { sessionFormats, closeBulkTimeSlotModal, counts } = this.props
 
     const days = Object.keys(counts)
     const dayOptions = days.map(day => (

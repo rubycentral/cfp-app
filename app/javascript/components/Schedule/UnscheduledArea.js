@@ -50,7 +50,6 @@ class UnscheduledArea extends Component {
   render() {
     const { sessions, unscheduledSessions, tracks } = this.props
     const { searchInput, isHidden } = this.state
-    console.log(this.props)
     let display = isHidden ? "none" : ""
 
     let filteredSessions = unscheduledSessions.filter(session => {

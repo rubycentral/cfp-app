@@ -26,8 +26,8 @@ class ScheduleRow extends Component {
 
     const previews = previewSlots.filter(preview => {
       return parseInt(preview.room) === roomID && parseInt(preview.day) === dayViewing
-    }).map(preview => {
-      return <Preview preview={preview} startTime={startTime} />
+    }).map((preview, index) => {
+      return <Preview key={'preview' + index} preview={preview} startTime={startTime} />
     })
 
     const thisRoomThisDaySlots = slots.filter(slot => slot.room_id == roomID && slot.conference_day == dayViewing)

@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 import ScheduleSlot from './ScheduleSlot'
 import Preview from './Preview'
 
-class ScheduleRow extends Component {
+class ScheduleColumn extends Component {
   render() {
     const {
       height,
@@ -69,7 +69,7 @@ class ScheduleRow extends Component {
   }
 }
 
-ScheduleRow.propTypes = {
+ScheduleColumn.propTypes = {
   height: PropTypes.string,
   schedule: PropTypes.object,
   dayViewing: PropTypes.number,
@@ -84,6 +84,6 @@ ScheduleRow.propTypes = {
   handleMoveSessionResponse: PropTypes.func
 }
 
-ScheduleRow.defaultProps = {sessions: []}
+ScheduleColumn.defaultProps = {sessions: []}
 
-export default ScheduleRow
+export default ScheduleColumn

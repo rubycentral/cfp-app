@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 
-import ScheduleRow from './ScheduleRow'
+import ScheduleColumn from './ScheduleColumn'
 
 class DayView extends Component {
   render() {
@@ -24,7 +24,7 @@ class DayView extends Component {
     let rows = rooms.map(room => {
       const height = (( endTime - startTime + 1) * 90) + 25 + 'px'
       return (
-        <ScheduleRow
+        <ScheduleColumn
           key={"day" + dayViewing + "room" + room.id}
           height={height}
           room={room}

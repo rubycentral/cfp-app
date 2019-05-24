@@ -96,6 +96,12 @@ class BulkCreateModal extends Component {
       )
     })
 
+    const denoteRequired = stateKey => {
+      if (this.state[stateKey].length < 1) {
+        return <span className='required'>*</span>
+      }
+    }
+
     sessionFormats = sessionFormats.slice()
     sessionFormats.unshift({})
     const formats = sessionFormats.map(format => {
@@ -108,6 +114,12 @@ class BulkCreateModal extends Component {
         >{text}</option>
       )
     })
+
+    const previewDisabled = () => {
+      const { rooms, startTimes, duration } = this.state
+
+      return rooms.length < 1 || startTimes.length < 1 || duration.length < 1
+    }
 
     return (
       <div className='bulk-modal-container'>
@@ -127,10 +139,12 @@ class BulkCreateModal extends Component {
             </label>
             <label>
               Rooms
+              {denoteRequired('rooms')}
               {rooms}
             </label>
             <label>
               Start Times
+              {denoteRequired('startTimes')}
               <div>
                 <input 
                   className='start-times full-width-input'
@@ -144,6 +158,7 @@ class BulkCreateModal extends Component {
             </label>
             <label>
               Duration (minutes)
+              {denoteRequired('duration')}
               <div>
                 <input
                   className='start-times minutes-input'
@@ -167,6 +182,7 @@ class BulkCreateModal extends Component {
             <button 
               className='btn btn-success'
               onClick={this.previewSlots}
+              disabled={previewDisabled()}
             >Preview</button>
           </div>
         </div>

@@ -682,12 +682,24 @@ input[type=number]::-webkit-outer-spin-button {
       label {
         width: 90%;
         margin: 10px auto 0px;
+
+        .required {
+          color: #751317
+        }
+
         select {
           display: block;
           width: 50px;
           height: 30px;
           margin: 10px 0px;;
         }
+      }
+
+      .start-times {
+        height: 30px;
+        border-radius: 4px;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
       }
       
       .minutes-input {

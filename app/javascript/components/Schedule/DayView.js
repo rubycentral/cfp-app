@@ -1,12 +1,11 @@
-import React from "react"
+import React, { Component } from "react"
 import PropTypes from "prop-types"
 
-import ScheduleRow from './ScheduleRow';
+import ScheduleColumn from './ScheduleColumn'
 
-class DayView extends React.Component {
+class DayView extends Component {
   render() {
     const {
-      schedule,
       dayViewing,
       startTime,
       endTime,
@@ -15,30 +14,34 @@ class DayView extends React.Component {
       draggedSession,
       csrf,
       sessions,
-      scheduleSession,
-      tracks
-    } = this.props;
+      tracks,
+      previewSlots,
+      rooms,
+      slots,
+      handleMoveSessionResponse
+    } = this.props
 
-    let rows = schedule.rooms.map(room => {
+    let rows = rooms.map(room => {
       const height = (( endTime - startTime + 1) * 90) + 25 + 'px'
       return (
-        <ScheduleRow
+        <ScheduleColumn
           key={"day" + dayViewing + "room" + room.id}
           height={height}
           room={room}
           startTime={startTime}
           endTime={endTime}
           ripTime={ripTime}
-          schedule={schedule}
           dayViewing={dayViewing}
           changeDragged={changeDragged}
           draggedSession={draggedSession}
           sessions={sessions}
           csrf={csrf}
-          scheduleSession={scheduleSession}
           tracks={tracks}
+          previewSlots={previewSlots}
+          slots={slots}
+          handleMoveSessionResponse={handleMoveSessionResponse}
         />
-      );
+      )
     })
 
     return (
@@ -58,9 +61,10 @@ DayView.propTypes = {
   changeDragged: PropTypes.func,
   draggedSession: PropTypes.object,
   sessions: PropTypes.array,
-  scheduleSession: PropTypes.func,
-  tracks: PropTypes.array
+  tracks: PropTypes.array,
+  previewSlots: PropTypes.array,
+  handleMoveSessionResponse: PropTypes.func
 }
-DayView.defaultProps = {schedule: {rooms: []}, sessions: []}
+DayView.defaultProps = {sessions: []}
 
 export default DayView

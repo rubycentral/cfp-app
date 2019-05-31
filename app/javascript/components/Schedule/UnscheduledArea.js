@@ -1,69 +1,71 @@
-import React from 'react'
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 import ProgramSession from './ProgramSession'
-import { patchTimeSlot } from "../../apiCalls";
+import { patchTimeSlot } from "../../apiCalls"
 
-class UnscheduledArea extends React.Component {
+class UnscheduledArea extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       searchInput: "",
       isHidden: false
-    };
+    }
   }
 
   handleChange = e => {
-    this.setState({ searchInput: e.target.value });
-  };
+    this.setState({ searchInput: e.target.value })
+  }
 
   clearInput = () => {
     this.setState({ searchInput: '' })
   }
 
   changeHiddenState = () => {
-    this.setState({ isHidden: !this.state.isHidden });
-  };
+    this.setState({ isHidden: !this.state.isHidden })
+  }
 
   onDrag = programSession => {
-    this.props.changeDragged(programSession);
-  };
+    this.props.changeDragged(programSession)
+  }
 
   onDragOver = e => {
-    e.preventDefault();
-  };
+    e.preventDefault()
+  }
 
   onDrop = () => {
-    const { draggedSession, csrf, tracks } = this.props;
+    const { draggedSession, csrf, tracks } = this.props
 
     patchTimeSlot(draggedSession.slot, null, csrf)
-      .then(() => {
-        this.props.unscheduleSession(draggedSession);
-        this.props.changeDragged(null);
+      .then(response => response.json())
+      .then(data => {
+        const {sessions, slots, unscheduled_sessions} = data
+        this.props.handleMoveSessionResponse(sessions, unscheduled_sessions, slots)
+        this.props.changeDragged(null)
       })
-      .catch(error => console.error("Error:", error));
-  };
+      .catch(error => console.error("Error:", error))
+  }
 
   render() {
-    const { sessions, unscheduledSessions, tracks } = this.props;
-    const { searchInput, isHidden } = this.state;
-  
-    let display = isHidden ? "none" : "";
+    const { sessions, unscheduledSessions, tracks } = this.props
+    const { searchInput, isHidden } = this.state
+    let display = isHidden ? "none" : ""
 
     let filteredSessions = unscheduledSessions.filter(session => {
       const titleMatch =  session.title.toLowerCase().includes(searchInput.toLowerCase()) 
       let trackMatch 
       if (session.track_id) {
-        let track = tracks.find(track => track.id === session.track_id);
-        trackMatch = track.name.toLowerCase().includes(searchInput.toLowerCase());
+        let track = tracks.find(track => track.id === session.track_id)
+        trackMatch = track.name.toLowerCase().includes(searchInput.toLowerCase())
       }
 
-      return titleMatch || trackMatch;
-    });
+      return titleMatch || trackMatch
+    })
+
     let unscheduledSessionCards = filteredSessions.map(session => (
       <ProgramSession key={session.id} session={session} onDrag={this.onDrag} tracks={tracks} />
-    ));
+    ))
 
     return (
       <div
@@ -93,7 +95,7 @@ class UnscheduledArea extends React.Component {
           <div>{unscheduledSessionCards}</div>
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -102,8 +104,8 @@ UnscheduledArea.propTypes = {
   sessions: PropTypes.array,
   changeDragged: PropTypes.func,
   draggedSession: PropTypes.object,
-  unscheduleSession: PropTypes.func,
-  tracks: PropTypes.array
+  tracks: PropTypes.array,
+  handleMoveSessionResponse: PropTypes.func
 }
 
 UnscheduledArea.defaultProps = {

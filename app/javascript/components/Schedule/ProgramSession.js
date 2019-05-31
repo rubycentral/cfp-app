@@ -1,9 +1,9 @@
-import React from "react"
+import React, { Component } from "react"
 import PropTypes from "prop-types"
 
-class ProgramSession extends React.Component {
+class ProgramSession extends Component {
   constructor(props) {
-    super(props);
+    super(props)
   }
 
   drag = (session) => {
@@ -15,7 +15,7 @@ class ProgramSession extends React.Component {
   }
   
   render() {
-    const {session, tracks} = this.props;
+    const {session, tracks} = this.props
 
     const sessionTrack = tracks.find(track => track.id === session.track_id)
 

@@ -15,6 +15,9 @@ class Staff::Grids::TimeSlotsController < Staff::ApplicationController
           unscheduled_count: current_event.program_sessions.unscheduled.count,
           total_count: current_event.program_sessions.count,
           day_counts: EventStats.new(current_event).schedule_counts,
+          slots: current_event.time_slots,
+          sessions: current_event.program_sessions,
+          unscheduled_sessions: current_event.program_sessions.unscheduled
         }, status: :ok }
         format.html { flash.now[:info] = "Time slot updated." }
       else

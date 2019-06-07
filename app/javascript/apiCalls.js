@@ -3,7 +3,7 @@ export function patchTimeSlot(slot, talk, csrfToken) {
 
   const data = JSON.stringify({
     time_slot: {
-      program_session_id: talkID
+      program_session_id: talkID,
     }
   });
   

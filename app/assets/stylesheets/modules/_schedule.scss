@@ -538,6 +538,12 @@ input[type=number]::-webkit-outer-spin-button {
       margin: auto;
     }
 
+    .scheduling-error.alert.alert-danger {
+      position: fixed;
+      margin: 60px auto 0;
+      top: 0;
+    }
+
     .schedule_slot {
       background: #fff;
       border: .5px solid rgba(204, 204, 204, 0.5);

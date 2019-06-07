@@ -3,12 +3,14 @@ import PropTypes from "prop-types"
 
 import ProgramSession from './ProgramSession'
 import { patchTimeSlot } from "../../apiCalls"
+import FlashMessages from './FlashMessages'
 
 class ScheduleSlot extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      hoverDrag: false
+      hoverDrag: false,
+      errors: [],
     }
   }
   
@@ -32,11 +34,17 @@ class ScheduleSlot extends Component {
         return
       }
     }
-    
+
     patchTimeSlot(slot, session, csrf)
       .then((response) => response.json())
       .then(data => {
-        const { sessions, slots, unscheduled_sessions } = data
+        const { sessions, slots, unscheduled_sessions, errors } = data
+
+        if (errors) {
+          this.setState({ errors: errors })
+          return
+        }
+
         if (session.slot) {
           patchTimeSlot(session.slot, null, csrf)
           handleMoveSessionResponse(sessions, unscheduled_sessions, slots, session)
@@ -55,7 +63,7 @@ class ScheduleSlot extends Component {
 
   render() {
     const { slot, ripTime, startTime, sessions, tracks } = this.props
-    
+    const { errors } = this.state
     const slotStartTime = ripTime(slot.start_time)
     const slotEndTime = ripTime(slot.end_time)
     let background = this.state.hoverDrag ? '#f9f6f1' : '#fff'
@@ -67,6 +75,7 @@ class ScheduleSlot extends Component {
     }
 
     let session = <Fragment/>
+
     if (slot.program_session_id) {
       let matchedSession = sessions.find(
         session => session.id === slot.program_session_id
@@ -74,19 +83,27 @@ class ScheduleSlot extends Component {
       session = <ProgramSession session={matchedSession} onDrag={this.onDrag} tracks={tracks} />
     }
 
-
-    return (
-      <div
-        className="schedule_slot"
-        style={style}
-        key={slot.id}
-        onDragOver={e => this.onDragOver(e)}
-        onDragLeave={e => this.onDragLeave(e)}
-        onDrop={() => this.onDrop(slot)}
-      >
-        {session}
-      </div>
-    )
+    if (errors.length !== 0) {
+      return (
+        <FlashMessages
+          messages={errors}
+        />
+      )
+    }
+    else {
+      return (
+        <div
+          className="schedule_slot"
+          style={style}
+          key={slot.id}
+          onDragOver={e => this.onDragOver(e)}
+          onDragLeave={e => this.onDragLeave(e)}
+          onDrop={() => this.onDrop(slot)}
+        >
+          {session}
+        </div>
+      )
+    }
   }
 }
 

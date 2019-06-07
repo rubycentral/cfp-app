@@ -11,20 +11,15 @@ class Staff::Grids::TimeSlotsController < Staff::ApplicationController
   def update
     respond_to do |format|
       if @time_slot.update_attributes(time_slot_params)
-        format.json { render json: {
-          unscheduled_count: current_event.program_sessions.unscheduled.count,
-          total_count: current_event.program_sessions.count,
-          day_counts: EventStats.new(current_event).schedule_counts,
-          slots: current_event.time_slots,
-          sessions: current_event.program_sessions,
-          unscheduled_sessions: current_event.program_sessions.unscheduled
-        }, status: :ok }
+        format.json { render json: update_response.merge(status: :ok) }
         format.html { flash.now[:info] = "Time slot updated." }
       else
-        format.json { render json: @time_slot.error, status: :bad_request }
+        format.json { render json: update_response.merge({ errors: @time_slot.errors.full_messages, status: :bad_request }) }
         format.html { flash.now[:danger] = "There was a problem saving this time slot." }
-      end    
+      end
     end
+  rescue StandardError => e
+    render json: update_response.merge({errors: ["There was a problem updating this time slot."], status: 500})
   end
 
   private
@@ -41,4 +36,14 @@ class Staff::Grids::TimeSlotsController < Staff::ApplicationController
     @time_slot_decorated ||= Staff::TimeSlotDecorator.decorate(@time_slot)
   end
 
+  def update_response
+    {
+      unscheduled_count: current_event.program_sessions.unscheduled.count,
+      total_count: current_event.program_sessions.count,
+      day_counts: EventStats.new(current_event).schedule_counts,
+      slots: current_event.time_slots,
+      sessions: current_event.program_sessions,
+      unscheduled_sessions: current_event.program_sessions.unscheduled,
+    }
+  end
 end

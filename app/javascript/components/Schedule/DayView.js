@@ -18,7 +18,7 @@ class DayView extends Component {
       previewSlots,
       rooms,
       slots,
-      handleMoveSessionResponse
+      handleMoveSessionResponse,
     } = this.props
 
     let rows = rooms.map(room => {

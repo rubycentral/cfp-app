@@ -173,7 +173,7 @@ class Schedule extends Component {
       previewSlots,
       slots,
       rooms,
-      sessionFormats
+      sessionFormats,
     } = this.state
 
     const headers = rooms.map(room => (

@@ -60,7 +60,7 @@ class ScheduleSlot extends Component {
   }
 
   render() {
-    const { slot, ripTime, startTime, sessions, tracks } = this.props
+    const { slot, ripTime, startTime, sessions, tracks, csrf, unscheduledSessions } = this.props
     
     const slotStartTime = ripTime(slot.start_time)
     const slotEndTime = ripTime(slot.end_time)
@@ -72,9 +72,10 @@ class ScheduleSlot extends Component {
       background
     }
 
+    let matchedSession
     let session = <Fragment/>
     if (slot.program_session_id) {
-      let matchedSession = sessions.find(
+      matchedSession = sessions.find(
         session => session.id === slot.program_session_id
       )
       session = <ProgramSession session={matchedSession} onDrag={this.onDrag} tracks={tracks} />
@@ -92,7 +93,7 @@ class ScheduleSlot extends Component {
         onClick={this.showModal}
       >
         {session}
-        {this.state.modalShown && <TimeSlotModal programSession={this.props.slot.program_session_id}/>}
+        {this.state.modalShown && <TimeSlotModal csrf={csrf} slot={this.props.slot} matchedSession={matchedSession} unscheduledSessions={unscheduledSessions} tracks={tracks}/>}
       </div>
     )
   }
@@ -105,7 +106,8 @@ ScheduleSlot.propTypes = {
   changeDragged: PropTypes.func,
   draggedSession: PropTypes.object,
   handleMoveSessionResponse: PropTypes.func,
-  tracks: PropTypes.array
+  tracks: PropTypes.array,
+  unscheduledSessions: PropTypes.array
 }
 
 export default ScheduleSlot

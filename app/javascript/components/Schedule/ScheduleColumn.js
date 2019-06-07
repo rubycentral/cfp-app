@@ -19,7 +19,8 @@ class ScheduleColumn extends Component {
       tracks,
       previewSlots,
       slots,
-      handleMoveSessionResponse
+      handleMoveSessionResponse,
+      unscheduledSessions
     } = this.props
 
     const roomID = room.id
@@ -47,6 +48,7 @@ class ScheduleColumn extends Component {
             sessions={sessions}
             tracks={tracks}
             handleMoveSessionResponse={handleMoveSessionResponse}
+            unscheduledSessions={unscheduledSessions}
           />
         )
       })
@@ -81,7 +83,8 @@ ScheduleColumn.propTypes = {
   sessions: PropTypes.array,
   tracks: PropTypes.array,
   previewSlots: PropTypes.array,
-  handleMoveSessionResponse: PropTypes.func
+  handleMoveSessionResponse: PropTypes.func,
+  unscheduledSessions: PropTypes.array
 }
 
 ScheduleColumn.defaultProps = {sessions: []}

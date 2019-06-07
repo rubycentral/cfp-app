@@ -18,7 +18,8 @@ class DayView extends Component {
       previewSlots,
       rooms,
       slots,
-      handleMoveSessionResponse
+      handleMoveSessionResponse,
+      unscheduledSessions
     } = this.props
 
     let rows = rooms.map(room => {
@@ -40,6 +41,7 @@ class DayView extends Component {
           previewSlots={previewSlots}
           slots={slots}
           handleMoveSessionResponse={handleMoveSessionResponse}
+          unscheduledSessions={unscheduledSessions}
         />
       )
     })
@@ -63,7 +65,8 @@ DayView.propTypes = {
   sessions: PropTypes.array,
   tracks: PropTypes.array,
   previewSlots: PropTypes.array,
-  handleMoveSessionResponse: PropTypes.func
+  handleMoveSessionResponse: PropTypes.func,
+  unscheduledSessions: PropTypes.array
 }
 DayView.defaultProps = {sessions: []}
 

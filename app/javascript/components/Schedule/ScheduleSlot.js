@@ -2,13 +2,15 @@ import React, { Component, Fragment } from "react"
 import PropTypes from "prop-types"
 
 import ProgramSession from './ProgramSession'
+import TimeSlotModal from './TimeSlotModal'
 import { patchTimeSlot } from "../../apiCalls"
 
 class ScheduleSlot extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      hoverDrag: false
+      hoverDrag: false,
+      modalShown: false
     }
   }
   
@@ -53,6 +55,10 @@ class ScheduleSlot extends Component {
     this.props.changeDragged(Object.assign(programSession, {slot: this.props.slot}))
   }
 
+  showModal = () => {
+    this.setState({modalShown: true})
+  }
+
   render() {
     const { slot, ripTime, startTime, sessions, tracks } = this.props
     
@@ -83,8 +89,10 @@ class ScheduleSlot extends Component {
         onDragOver={e => this.onDragOver(e)}
         onDragLeave={e => this.onDragLeave(e)}
         onDrop={() => this.onDrop(slot)}
+        onClick={this.showModal}
       >
         {session}
+        {this.state.modalShown && <TimeSlotModal programSession={this.props.slot.program_session_id}/>}
       </div>
     )
   }

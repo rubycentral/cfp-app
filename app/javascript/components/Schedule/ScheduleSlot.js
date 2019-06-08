@@ -10,7 +10,7 @@ class ScheduleSlot extends Component {
     super(props)
     this.state = {
       hoverDrag: false,
-      modalShown: false
+      modalShowing: false
     }
   }
   
@@ -56,11 +56,17 @@ class ScheduleSlot extends Component {
   }
 
   showModal = () => {
-    this.setState({modalShown: true})
+    if (!this.state.modalShowing) {
+      this.setState({modalShowing: true})
+    }
+  }
+
+  closeModal = () => {
+    this.setState({modalShowing: false})
   }
 
   render() {
-    const { slot, ripTime, startTime, sessions, tracks, csrf, unscheduledSessions } = this.props
+    const { slot, ripTime, startTime, sessions, tracks, csrf, unscheduledSessions, handleMoveSessionResponse } = this.props
     
     const slotStartTime = ripTime(slot.start_time)
     const slotEndTime = ripTime(slot.end_time)
@@ -93,7 +99,16 @@ class ScheduleSlot extends Component {
         onClick={this.showModal}
       >
         {session}
-        {this.state.modalShown && <TimeSlotModal csrf={csrf} slot={this.props.slot} matchedSession={matchedSession} unscheduledSessions={unscheduledSessions} tracks={tracks}/>}
+        {this.state.modalShowing === true && <TimeSlotModal 
+          csrf={csrf} 
+          slot={this.props.slot} 
+          matchedSession={matchedSession} 
+          unscheduledSessions={unscheduledSessions} 
+          tracks={tracks} 
+          closeModal={this.closeModal}
+          sessions={sessions}
+          handleMoveSessionResponse={handleMoveSessionResponse}
+        />}
       </div>
     )
   }

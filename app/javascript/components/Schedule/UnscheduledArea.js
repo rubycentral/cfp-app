@@ -51,7 +51,6 @@ class UnscheduledArea extends Component {
     const { sessions, unscheduledSessions, tracks } = this.props
     const { searchInput, isHidden } = this.state
     let display = isHidden ? "none" : ""
-
     let filteredSessions = unscheduledSessions.filter(session => {
       const titleMatch =  session.title.toLowerCase().includes(searchInput.toLowerCase()) 
       let trackMatch 

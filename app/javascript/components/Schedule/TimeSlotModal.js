@@ -1,36 +1,75 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
+import { patchTimeSlot } from '../../apiCalls';
 
 class TimeSlotModal extends Component {
   constructor(props) {
     super(props)
     this.state = {
       sessionSelected: this.props.matchedSession 
-      ? this.props.matchedSession.title
+      ? this.props.matchedSession
       : ''
     }
   }
 
   componentDidMount() {
     const { csrf, slot, matchedSession } = this.props
-    console.log(slot, matchedSession)
   }
 
-  changeSession(e) {
-    this.setState({ sessionSelected: e.target.value })
+  changeSession = (e) => {
+    let session = this.props.sessions.find(s => s.title === e.target.value )
+    this.setState({ sessionSelected: session })
+  }
+
+  close = () => {
+    this.props.closeModal()
+  }
+
+  saveChanges = () => {
+    const { sessionSelected } = this.state
+    const { csrf, slot, closeModal, handleMoveSessionResponse } = this.props
+    
+    patchTimeSlot(slot, sessionSelected, csrf)
+      .then(response => response.json())
+      .then(data => {
+        const { sessions, slots, unscheduled_sessions } = data
+        handleMoveSessionResponse(sessions, unscheduled_sessions, slots)
+        closeModal()
+      })
   }
 
   render() {
-    const { slot, matchedSession, unscheduledSessions, tracks } = this.props
+    const { slot, matchedSession, unscheduledSessions, tracks} = this.props
+    const { sessionSelected } = this.state
     let sessionOptions
-    if (matchedSession) {
-      sessionOptions = [matchedSession, ...unscheduledSessions]
+    if (sessionSelected) {
+      sessionOptions = matchedSession 
+        ? [matchedSession, ...unscheduledSessions]
+        : [sessionSelected, ...unscheduledSessions.filter(s => s.id !== sessionSelected.id)]
     } else {
-      sessionOptions = [...unscheduledSessions]
+      sessionOptions = [{title: ''}, ...unscheduledSessions]
     }
     sessionOptions = sessionOptions.map(session => (
-      <option key={'session ' + session.title} value={session}>{session.title}</option>
+      <option key={'session ' + session.id} value={session.title}>{session.title}</option>
     ))
+
+    let sessionInfo
+    if (sessionSelected) {
+      sessionInfo = <>
+        <label>
+          Title:
+          <p>{sessionSelected.title}</p>
+        </label>
+        <label>
+          Track:
+          <p>{tracks.find(track => track.id === sessionSelected.track_id || 'No track').name}</p>
+        </label>
+        <label>
+          Abstract:
+          <p>{sessionSelected.abstract}</p>
+        </label>
+      </>
+    }
 
     return (
       <div className='modal-container'>
@@ -39,12 +78,21 @@ class TimeSlotModal extends Component {
             <label>
               Program Session
               <select
-                className='full-width-input'
-                value={this.state.sessionSelected}
+                value={this.state.sessionSelected.title}
                 onChange={this.changeSession} >
                 {sessionOptions}
               </select>
             </label>
+            {sessionSelected ? sessionInfo :<></>}
+          </div>
+          <div className='modal-footer'>
+            <button
+              className='btn btn-default'
+              onClick={() => this.close()}>Cancel</button>
+            <button
+              className='btn btn-success'
+              onClick={this.saveChanges}
+            >Save</button>
           </div>
         </div>
       </div>

@@ -2,20 +2,31 @@ import React, { Component, Fragment } from "react"
 import PropTypes from "prop-types"
 
 class Alert extends Component {
+  formatedMessages = messages => {
+    let message = ''
+
+    messages.forEach(msg => {
+      message += `${msg}. `
+    })
+
+    return message
+  }
+
   render() {
-    const message = this.props.message;
+    const messages = this.props.messages;
 
     return (
       <div className="scheduling-error alert alert-danger">
-        <button className='close' data-dismiss='alert'> &times; </button>
-        { message }
+        <button className='close' onClick={this.props.onClose}> &times; </button>
+        { this.formatedMessages(messages) }
       </div>
     )
   }
 }
 
 Alert.propTypes = {
-  message: PropTypes.string
+  onClose: PropTypes.func,
+  messages: PropTypes.array,
 }
 
 export default Alert

@@ -387,6 +387,12 @@ input[type=number]::-webkit-outer-spin-button {
 .schedule_grid {
   width: fit-content;
 
+  .scheduling-error.alert.alert-danger {
+    position: fixed;
+    margin: 60px auto 0;
+    top: 0;
+  }
+
   .nav_wrapper {
     border-bottom: 1px solid #efefef;
     padding: 0 0 0 6%;
@@ -536,12 +542,6 @@ input[type=number]::-webkit-outer-spin-button {
       position: absolute;
       width: 98%;
       margin: auto;
-    }
-
-    .scheduling-error.alert.alert-danger {
-      position: fixed;
-      margin: 60px auto 0;
-      top: 0;
     }
 
     .schedule_slot {

@@ -8,6 +8,7 @@ import UnscheduledArea from "./Schedule/UnscheduledArea"
 import GenerateGridButton from "./Schedule/GenerateGridButton"
 import BulkCreateModal from "./Schedule/BulkCreateModal"
 import BulkGenerateConfirm from "./Schedule/BulkGenerateConfirm"
+import Alert from './Schedule/Alert'
 
 import { postBulkTimeSlots } from "../apiCalls"
 
@@ -26,6 +27,8 @@ class Schedule extends Component {
       bulkTimeSlotModalOpen: false,
       previewSlots: [],
       bulkTimeSlotModalEditState: null,
+      errorMessages: [],
+      bulkErrorMessages: [],
     }
   }
 
@@ -120,7 +123,7 @@ class Schedule extends Component {
   }
 
   requestBulkTimeSlotCreate = () => {
-    const {csrf,  bulkTimeSlotModalEditState, bulkPath} = this.state
+    const {csrf, bulkTimeSlotModalEditState, bulkPath} = this.state
     const {day, duration, rooms, startTimes} = bulkTimeSlotModalEditState
 
     // the API expects time strings to have a minutes declaration, this following code adds a minute decaration to each time in a string, if needed. 
@@ -135,6 +138,13 @@ class Schedule extends Component {
     postBulkTimeSlots(bulkPath, day, rooms, duration, formattedTimes, csrf)
       .then(response => response.json())
       .then(data => {
+        const { errors } = data
+
+        if (errors) {
+          this.setState({ bulkErrorMessages: errors })
+          return
+        }
+
         this.setState({ 
           slots: data.slots, 
           previewSlots: [], 
@@ -157,6 +167,14 @@ class Schedule extends Component {
     this.setState(Object.assign(this.state, this.props, hours))
   }
 
+  showErrors = messages => {
+    this.setState({ errorMessages: messages })
+  }
+
+  removeErrors = () => {
+    this.setState({ errorMessages: [], bulkErrorMessages: [] })
+  }
+
   render() {
     const {
       counts,
@@ -174,6 +192,8 @@ class Schedule extends Component {
       slots,
       rooms,
       sessionFormats,
+      errorMessages,
+      bulkErrorMessages,
     } = this.state
 
     const headers = rooms.map(room => (
@@ -196,6 +216,18 @@ class Schedule extends Component {
 
     return (
       <div className="schedule_grid">
+        {errorMessages.length > 0 && (
+          <Alert
+            messages={errorMessages}
+            onClose={this.removeErrors}
+          />
+        )}
+        {bulkErrorMessages.length > 0 && (
+          <Alert
+            messages={bulkErrorMessages}
+            onClose={this.removeErrors}
+          />
+        )}
         {bulkTimeSlotModal}
         <div className='nav_wrapper'>
           <Nav
@@ -232,6 +264,7 @@ class Schedule extends Component {
             rooms={rooms}
             slots={slots}
             handleMoveSessionResponse={this.handleMoveSessionResponse}
+            showErrors={this.showErrors}
           />
           <UnscheduledArea
             unscheduledSessions={unscheduledSessions}

@@ -19,7 +19,7 @@ class Staff::Grids::TimeSlotsController < Staff::ApplicationController
       end
     end
   rescue StandardError => e
-    render json: update_response.merge({errors: ["There was a problem updating this time slot."], status: 500})
+    render json: update_response.merge({errors: ["There was a problem updating this time slot."]}), status: 500
   end
 
   private

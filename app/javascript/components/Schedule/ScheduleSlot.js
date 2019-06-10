@@ -3,14 +3,12 @@ import PropTypes from "prop-types"
 
 import ProgramSession from './ProgramSession'
 import { patchTimeSlot } from "../../apiCalls"
-import FlashMessages from './FlashMessages'
 
 class ScheduleSlot extends Component {
   constructor(props) {
     super(props)
     this.state = {
       hoverDrag: false,
-      errors: [],
     }
   }
   
@@ -41,7 +39,7 @@ class ScheduleSlot extends Component {
         const { sessions, slots, unscheduled_sessions, errors } = data
 
         if (errors) {
-          this.setState({ errors: errors })
+          this.props.showErrors(errors)
           return
         }
 
@@ -63,7 +61,6 @@ class ScheduleSlot extends Component {
 
   render() {
     const { slot, ripTime, startTime, sessions, tracks } = this.props
-    const { errors } = this.state
     const slotStartTime = ripTime(slot.start_time)
     const slotEndTime = ripTime(slot.end_time)
     let background = this.state.hoverDrag ? '#f9f6f1' : '#fff'
@@ -83,27 +80,18 @@ class ScheduleSlot extends Component {
       session = <ProgramSession session={matchedSession} onDrag={this.onDrag} tracks={tracks} />
     }
 
-    if (errors.length !== 0) {
-      return (
-        <FlashMessages
-          messages={errors}
-        />
-      )
-    }
-    else {
-      return (
-        <div
-          className="schedule_slot"
-          style={style}
-          key={slot.id}
-          onDragOver={e => this.onDragOver(e)}
-          onDragLeave={e => this.onDragLeave(e)}
-          onDrop={() => this.onDrop(slot)}
-        >
-          {session}
-        </div>
-      )
-    }
+    return (
+      <div
+        className="schedule_slot"
+        style={style}
+        key={slot.id}
+        onDragOver={e => this.onDragOver(e)}
+        onDragLeave={e => this.onDragLeave(e)}
+        onDrop={() => this.onDrop(slot)}
+      >
+        {session}
+      </div>
+    )
   }
 }
 
@@ -114,7 +102,8 @@ ScheduleSlot.propTypes = {
   changeDragged: PropTypes.func,
   draggedSession: PropTypes.object,
   handleMoveSessionResponse: PropTypes.func,
-  tracks: PropTypes.array
+  tracks: PropTypes.array,
+  showErrors: PropTypes.func,
 }
 
 export default ScheduleSlot

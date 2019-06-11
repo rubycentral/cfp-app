@@ -125,7 +125,7 @@ class TimeSlotModal extends Component {
       </label>
       <label>
         Description:
-        <input
+        <textarea
           type='text'
           name='description'
           value={this.props.description}
@@ -137,6 +137,9 @@ class TimeSlotModal extends Component {
     return (
       <div className='modal-container'>
         <div className='bulk-modal'>
+          <div className='modal-header' >
+            <h3>Edit Time Slot</h3>
+          </div>
           <div className='modal-body'>
             <label>
               Program Session

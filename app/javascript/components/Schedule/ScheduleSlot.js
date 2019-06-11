@@ -8,7 +8,7 @@ class ScheduleSlot extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      hoverDrag: false
+      hoverDrag: false,
     }
   }
   
@@ -32,11 +32,17 @@ class ScheduleSlot extends Component {
         return
       }
     }
-    
+
     patchTimeSlot(slot, session, csrf)
       .then((response) => response.json())
       .then(data => {
-        const { sessions, slots, unscheduled_sessions } = data
+        const { sessions, slots, unscheduled_sessions, errors } = data
+
+        if (errors) {
+          this.props.showErrors(errors)
+          return
+        }
+
         if (session.slot) {
           patchTimeSlot(session.slot, null, csrf)
           handleMoveSessionResponse(sessions, unscheduled_sessions, slots, session)
@@ -55,7 +61,6 @@ class ScheduleSlot extends Component {
 
   render() {
     const { slot, ripTime, startTime, sessions, tracks } = this.props
-    
     const slotStartTime = ripTime(slot.start_time)
     const slotEndTime = ripTime(slot.end_time)
     let background = this.state.hoverDrag ? '#f9f6f1' : '#fff'
@@ -67,13 +72,13 @@ class ScheduleSlot extends Component {
     }
 
     let session = <Fragment/>
+
     if (slot.program_session_id) {
       let matchedSession = sessions.find(
         session => session.id === slot.program_session_id
       )
       session = <ProgramSession session={matchedSession} onDrag={this.onDrag} tracks={tracks} />
     }
-
 
     return (
       <div
@@ -97,7 +102,8 @@ ScheduleSlot.propTypes = {
   changeDragged: PropTypes.func,
   draggedSession: PropTypes.object,
   handleMoveSessionResponse: PropTypes.func,
-  tracks: PropTypes.array
+  tracks: PropTypes.array,
+  showErrors: PropTypes.func,
 }
 
 export default ScheduleSlot

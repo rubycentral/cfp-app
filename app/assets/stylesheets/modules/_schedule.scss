@@ -546,12 +546,14 @@ input[type=number]::-webkit-outer-spin-button {
       margin: auto;
       overflow: hidden;
 
-      .program_session_card {
+      .program_session_card, .slot_info_card {
         height: 95%;
+        width: 95%;
         box-shadow: none;
         margin: 2px auto;
         box-sizing: border-box;
         font-size: .8em;
+        text-align: center;
 
         .card_header {
           padding: .3em;

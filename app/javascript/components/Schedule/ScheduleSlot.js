@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react"
 import PropTypes from "prop-types"
 
 import ProgramSession from './ProgramSession'
+import TimeSlotInfo from './TimeSlotInfo'
 import TimeSlotModal from './TimeSlotModal'
 import { patchTimeSlot } from "../../apiCalls"
 
@@ -10,7 +11,11 @@ class ScheduleSlot extends Component {
     super(props)
     this.state = {
       hoverDrag: false,
-      modalShowing: false
+      modalShowing: false,
+      title: this.props.slot.title || '',
+      track: this.props.slot.track_id || '',
+      presenter: this.props.slot.presenter || '',
+      description: this.props.slot.description || ''
     }
   }
   
@@ -34,15 +39,19 @@ class ScheduleSlot extends Component {
         return
       }
     }
-    
+    console.log(slot)
     patchTimeSlot(slot, session, csrf)
       .then((response) => response.json())
       .then(data => {
-        const { sessions, slots, unscheduled_sessions } = data
         if (session.slot) {
           patchTimeSlot(session.slot, null, csrf)
-          handleMoveSessionResponse(sessions, unscheduled_sessions, slots, session)
+            .then((response) => response.json())
+            .then(data => {
+              const { sessions, slots, unscheduled_sessions } = data
+              handleMoveSessionResponse(sessions, unscheduled_sessions, slots, session)
+            })
         } else {
+          const { sessions, slots, unscheduled_sessions } = data
           handleMoveSessionResponse(sessions, unscheduled_sessions, slots)
         }
         changeDragged(null)
@@ -52,7 +61,8 @@ class ScheduleSlot extends Component {
   }
 
   onDrag = (programSession) => {
-    this.props.changeDragged(Object.assign(programSession, {slot: this.props.slot}))
+    const { title, description, track, presenter } = this.state
+    this.props.changeDragged(Object.assign(programSession, {slot: Object.assign(this.props.slot, {title, description, track_id: track, presenter})}))
   }
 
   showModal = () => {
@@ -65,8 +75,16 @@ class ScheduleSlot extends Component {
     this.setState({modalShowing: false})
   }
 
+  updateSlot = (e) => {
+    const { name, value } = e.target
+    this.setState({
+      [name]: value
+    })
+  }
+
   render() {
     const { slot, ripTime, startTime, sessions, tracks, csrf, unscheduledSessions, handleMoveSessionResponse, sessionFormats } = this.props
+    const { title, track, presenter, description } = this.state
     
     const slotStartTime = ripTime(slot.start_time)
     const slotEndTime = ripTime(slot.end_time)
@@ -79,13 +97,14 @@ class ScheduleSlot extends Component {
     }
 
     let matchedSession
-    let session = <Fragment/>
+    let session
     if (slot.program_session_id) {
       matchedSession = sessions.find(
         session => session.id === slot.program_session_id
       )
       session = <ProgramSession session={matchedSession} onDrag={this.onDrag} tracks={tracks} />
     }
+    let timeSlotInfo = <TimeSlotInfo slot={slot} tracks={tracks} />
 
 
     return (
@@ -98,7 +117,7 @@ class ScheduleSlot extends Component {
         onDrop={() => this.onDrop(slot)}
         onClick={this.showModal}
       >
-        {session}
+        {session || timeSlotInfo}
         {this.state.modalShowing === true && <TimeSlotModal 
           csrf={csrf} 
           slot={this.props.slot} 
@@ -109,6 +128,11 @@ class ScheduleSlot extends Component {
           sessions={sessions}
           handleMoveSessionResponse={handleMoveSessionResponse}
           sessionFormats={sessionFormats}
+          title={title}
+          track={track}
+          presenter={presenter}
+          description={description}
+          updateSlot={this.updateSlot}
         />}
       </div>
     )

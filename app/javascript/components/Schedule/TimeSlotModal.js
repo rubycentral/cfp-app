@@ -27,9 +27,16 @@ class TimeSlotModal extends Component {
 
   saveChanges = () => {
     const { sessionSelected } = this.state
-    const { csrf, slot, closeModal, handleMoveSessionResponse } = this.props
+    const { csrf, closeModal, handleMoveSessionResponse, title, track, presenter, description } = this.props
     
-    patchTimeSlot(slot, sessionSelected, csrf)
+    let slot
+    if (!sessionSelected) {
+      slot = Object.assign(this.props.slot, {title, track_id: track, presenter, description})
+    } else {
+      slot = this.props.slot
+    }
+    
+    patchTimeSlot(slot, (sessionSelected || null), csrf)
       .then(response => response.json())
       .then(data => {
         const { sessions, slots, unscheduled_sessions } = data
@@ -39,8 +46,21 @@ class TimeSlotModal extends Component {
   }
 
   render() {
-    const { slot, matchedSession, unscheduledSessions, tracks, sessionFormats} = this.props
+    const { 
+      slot, 
+      matchedSession, 
+      unscheduledSessions, 
+      tracks, 
+      sessionFormats, 
+      title, 
+      track, 
+      presenter, 
+      description, 
+      updateSlot 
+    } = this.props
+
     const { sessionSelected } = this.state
+
     let sessionOptions
     if (sessionSelected) {
       sessionOptions = matchedSession 
@@ -75,6 +95,45 @@ class TimeSlotModal extends Component {
       </>
     }
 
+    let timeSlotForm = <>
+      <label>
+        Title:
+        <input
+          type='text'
+          name='title'
+          value={this.props.title}
+          onChange={this.props.updateSlot}
+        />
+      </label>
+      <label>
+        Track:
+        <select name='track' value={this.props.track} onChange={this.props.updateSlot}>
+          <option value=''></option>
+          {tracks.map(t => (
+            <option value={t.id}>{t.name}</option>
+          ))}
+        </select>
+      </label>
+      <label>
+        Presenter:
+        <input
+          type='text'
+          name='presenter'
+          value={this.props.presenter}
+          onChange={this.props.updateSlot}
+        />
+      </label>
+      <label>
+        Description:
+        <input
+          type='text'
+          name='description'
+          value={this.props.description}
+          onChange={this.props.updateSlot}
+        />
+      </label>
+    </>
+
     return (
       <div className='modal-container'>
         <div className='bulk-modal'>
@@ -87,7 +146,7 @@ class TimeSlotModal extends Component {
                 {sessionOptions}
               </select>
             </label>
-            {sessionSelected ? sessionInfo :<></>}
+            {sessionSelected ? sessionInfo : timeSlotForm}
           </div>
           <div className='modal-footer'>
             <button

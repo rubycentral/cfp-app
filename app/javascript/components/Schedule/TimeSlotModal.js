@@ -110,7 +110,7 @@ class TimeSlotModal extends Component {
         <select name='track' value={this.props.track} onChange={this.props.updateSlot}>
           <option value=''></option>
           {tracks.map(t => (
-            <option value={t.id}>{t.name}</option>
+            <option key={t.id} value={t.id}>{t.name}</option>
           ))}
         </select>
       </label>

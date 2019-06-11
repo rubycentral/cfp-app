@@ -39,10 +39,17 @@ class ScheduleSlot extends Component {
         return
       }
     }
-    console.log(slot)
+
     patchTimeSlot(slot, session, csrf)
       .then((response) => response.json())
       .then(data => {
+        const { errors } = data
+        
+        if (errors) {
+          this.props.showErrors(errors)
+          return
+        }
+
         if (session.slot) {
           patchTimeSlot(session.slot, null, csrf)
             .then((response) => response.json())
@@ -98,6 +105,7 @@ class ScheduleSlot extends Component {
 
     let matchedSession
     let session
+
     if (slot.program_session_id) {
       matchedSession = sessions.find(
         session => session.id === slot.program_session_id
@@ -105,7 +113,6 @@ class ScheduleSlot extends Component {
       session = <ProgramSession session={matchedSession} onDrag={this.onDrag} tracks={tracks} />
     }
     let timeSlotInfo = <TimeSlotInfo slot={slot} tracks={tracks} />
-
 
     return (
       <div
@@ -147,7 +154,8 @@ ScheduleSlot.propTypes = {
   draggedSession: PropTypes.object,
   handleMoveSessionResponse: PropTypes.func,
   tracks: PropTypes.array,
-  unscheduledSessions: PropTypes.array
+  unscheduledSessions: PropTypes.array,
+  showErrors: PropTypes.func,
 }
 
 export default ScheduleSlot

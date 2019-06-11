@@ -21,7 +21,8 @@ class ScheduleColumn extends Component {
       slots,
       handleMoveSessionResponse,
       unscheduledSessions,
-      sessionFormats
+      sessionFormats,
+      showErrors,
     } = this.props
 
     const roomID = room.id
@@ -51,6 +52,7 @@ class ScheduleColumn extends Component {
             handleMoveSessionResponse={handleMoveSessionResponse}
             unscheduledSessions={unscheduledSessions}
             sessionFormats={sessionFormats}
+            showErrors={showErrors}
           />
         )
       })
@@ -86,7 +88,8 @@ ScheduleColumn.propTypes = {
   tracks: PropTypes.array,
   previewSlots: PropTypes.array,
   handleMoveSessionResponse: PropTypes.func,
-  unscheduledSessions: PropTypes.array
+  unscheduledSessions: PropTypes.array,
+  showErrors: PropTypes.func,
 }
 
 ScheduleColumn.defaultProps = {sessions: []}

@@ -39,7 +39,7 @@ class TimeSlotModal extends Component {
   }
 
   render() {
-    const { slot, matchedSession, unscheduledSessions, tracks} = this.props
+    const { slot, matchedSession, unscheduledSessions, tracks, sessionFormats} = this.props
     const { sessionSelected } = this.state
     let sessionOptions
     if (sessionSelected) {
@@ -67,6 +67,10 @@ class TimeSlotModal extends Component {
         <label>
           Abstract:
           <p>{sessionSelected.abstract}</p>
+        </label>
+        <label>
+          Recommended duration:
+          <p>{sessionFormats.find(s => s.id === sessionSelected.session_format_id).duration + ' minutes'}</p>
         </label>
       </>
     }

@@ -66,7 +66,7 @@ class ScheduleSlot extends Component {
   }
 
   render() {
-    const { slot, ripTime, startTime, sessions, tracks, csrf, unscheduledSessions, handleMoveSessionResponse } = this.props
+    const { slot, ripTime, startTime, sessions, tracks, csrf, unscheduledSessions, handleMoveSessionResponse, sessionFormats } = this.props
     
     const slotStartTime = ripTime(slot.start_time)
     const slotEndTime = ripTime(slot.end_time)
@@ -108,6 +108,7 @@ class ScheduleSlot extends Component {
           closeModal={this.closeModal}
           sessions={sessions}
           handleMoveSessionResponse={handleMoveSessionResponse}
+          sessionFormats={sessionFormats}
         />}
       </div>
     )

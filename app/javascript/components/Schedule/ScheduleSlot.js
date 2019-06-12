@@ -29,7 +29,8 @@ class ScheduleSlot extends Component {
     this.setState({ hoverDrag: false})
   }
 
-  onDrop = slot => {
+  onDrop = (slot, e) => {
+    e.preventDefault()
     const session = this.props.draggedSession
     const { csrf, handleMoveSessionResponse, changeDragged } = this.props
     
@@ -44,7 +45,7 @@ class ScheduleSlot extends Component {
       .then((response) => response.json())
       .then(data => {
         const { errors } = data
-        
+
         if (errors) {
           this.props.showErrors(errors)
           return
@@ -121,7 +122,7 @@ class ScheduleSlot extends Component {
         key={slot.id}
         onDragOver={e => this.onDragOver(e)}
         onDragLeave={e => this.onDragLeave(e)}
-        onDrop={() => this.onDrop(slot)}
+        onDrop={(e) => this.onDrop(slot, e)}
         onClick={this.showModal}
       >
         {session || timeSlotInfo}

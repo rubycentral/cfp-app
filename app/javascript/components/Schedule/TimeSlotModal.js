@@ -18,7 +18,11 @@ class TimeSlotModal extends Component {
 
   changeSession = (e) => {
     let session = this.props.sessions.find(s => s.title === e.target.value )
-    this.setState({ sessionSelected: session })
+    if (!session) {
+      this.setState({ sessionSelected: '' })
+    } else {
+      this.setState({ sessionSelected: session })
+    }
   }
 
   close = () => {
@@ -65,7 +69,7 @@ class TimeSlotModal extends Component {
     if (sessionSelected) {
       sessionOptions = matchedSession 
         ? [matchedSession, ...unscheduledSessions]
-        : [sessionSelected, ...unscheduledSessions.filter(s => s.id !== sessionSelected.id)]
+        : [{title: ''}, sessionSelected, ...unscheduledSessions.filter(s => s.id !== sessionSelected.id)]
     } else {
       sessionOptions = [{title: ''}, ...unscheduledSessions]
     }
@@ -145,7 +149,8 @@ class TimeSlotModal extends Component {
               Program Session
               <select
                 value={this.state.sessionSelected.title}
-                onChange={this.changeSession} >
+                onChange={this.changeSession} 
+              >
                 {sessionOptions}
               </select>
             </label>

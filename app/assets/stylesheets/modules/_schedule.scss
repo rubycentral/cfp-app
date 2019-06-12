@@ -587,6 +587,7 @@ input[type=number]::-webkit-outer-spin-button {
     display: inline-block;
     box-sizing: border-box;
     width: 285px;
+    min-width: 285px;
     padding: 0px 20px;
     top: 150px;
     right: -2px;
@@ -665,6 +666,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 .slot_info_card {
   cursor: default;
+  background: transparent;
 }
 
 .modal-container {

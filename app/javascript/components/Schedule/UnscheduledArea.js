@@ -34,7 +34,8 @@ class UnscheduledArea extends Component {
     e.preventDefault()
   }
 
-  onDrop = () => {
+  onDrop = (e) => {
+    e.preventDefault()
     const { draggedSession, csrf, tracks } = this.props
 
     patchTimeSlot(draggedSession.slot, null, csrf)
@@ -69,7 +70,7 @@ class UnscheduledArea extends Component {
     return (
       <div
         className="unscheduled_area"
-        onDrop={this.onDrop}
+        onDrop={(e) => this.onDrop(e)}
         onDragOver={e => this.onDragOver(e)}
       >
         <div className="header_wrapper" onClick={this.changeHiddenState}>

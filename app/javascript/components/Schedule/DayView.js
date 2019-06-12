@@ -19,6 +19,8 @@ class DayView extends Component {
       rooms,
       slots,
       handleMoveSessionResponse,
+      unscheduledSessions,
+      sessionFormats,
       showErrors,
     } = this.props
 
@@ -41,6 +43,8 @@ class DayView extends Component {
           previewSlots={previewSlots}
           slots={slots}
           handleMoveSessionResponse={handleMoveSessionResponse}
+          unscheduledSessions={unscheduledSessions}
+          sessionFormats={sessionFormats}
           showErrors={showErrors}
         />
       )
@@ -66,6 +70,8 @@ DayView.propTypes = {
   tracks: PropTypes.array,
   previewSlots: PropTypes.array,
   handleMoveSessionResponse: PropTypes.func,
+  unscheduledSessions: PropTypes.array,
+  sessionFormats: PropTypes.array,
   showErrors: PropTypes.func,
 }
 DayView.defaultProps = {sessions: []}

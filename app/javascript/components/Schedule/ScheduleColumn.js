@@ -20,6 +20,8 @@ class ScheduleColumn extends Component {
       previewSlots,
       slots,
       handleMoveSessionResponse,
+      unscheduledSessions,
+      sessionFormats,
       showErrors,
     } = this.props
 
@@ -48,6 +50,8 @@ class ScheduleColumn extends Component {
             sessions={sessions}
             tracks={tracks}
             handleMoveSessionResponse={handleMoveSessionResponse}
+            unscheduledSessions={unscheduledSessions}
+            sessionFormats={sessionFormats}
             showErrors={showErrors}
           />
         )
@@ -84,6 +88,7 @@ ScheduleColumn.propTypes = {
   tracks: PropTypes.array,
   previewSlots: PropTypes.array,
   handleMoveSessionResponse: PropTypes.func,
+  unscheduledSessions: PropTypes.array,
   showErrors: PropTypes.func,
 }
 

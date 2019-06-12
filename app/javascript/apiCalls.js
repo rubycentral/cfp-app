@@ -1,9 +1,13 @@
 export function patchTimeSlot(slot, talk, csrfToken) {
   const talkID = talk === null ? '' : talk.id.toString();
-
+  
   const data = JSON.stringify({
     time_slot: {
       program_session_id: talkID,
+      title: slot.title || '',
+      track_id: slot.track_id || '',
+      presenter: slot.presenter || '',
+      description: slot.description || ''
     }
   });
   

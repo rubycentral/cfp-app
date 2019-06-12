@@ -6,8 +6,9 @@ class ProgramSession extends Component {
     super(props)
   }
 
-  drag = (session) => {
+  drag = (session, e) => {
     this.props.onDrag(session)
+    e.dataTransfer.setData('text', 'anything');  
   }
 
   dragEnd = e => {
@@ -23,7 +24,7 @@ class ProgramSession extends Component {
     const trackName = sessionTrack ? sessionTrack.name : ''
 
     return(
-      <div className='program_session_card' draggable={true} onDragStart={() => this.drag(session)} onDragEnd={(e) => this.dragEnd(e)}>
+      <div className='program_session_card' draggable={true} onDragStart={(e) => this.drag(session, e)} onDragEnd={(e) => this.dragEnd(e)}>
         <div className='card_header' style={{'backgroundColor': bkgColor}}>{trackName}</div>
         <div className='card_body'>
           <p>{session.title}</p>

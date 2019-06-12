@@ -90,6 +90,7 @@ class BulkCreateModal extends Component {
             name={room.id.toString()}
             checked={checked}
             onChange={this.changeRooms}
+            className='bulk-checkbox'
           />
           <span>{room.name}</span>
         </div>
@@ -122,7 +123,7 @@ class BulkCreateModal extends Component {
     }
 
     return (
-      <div className='bulk-modal-container'>
+      <div className='modal-container'>
         <div className='bulk-modal'>
           <div className='modal-header' >
             <h3>Bulk Generate Time Slots</h3>

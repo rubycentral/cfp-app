@@ -1,6 +1,6 @@
 class Staff::Grids::TimeSlotsController < Staff::ApplicationController
   include ScheduleSupport
-
+  protect_from_forgery except: :edit
   before_action :set_time_slot, only: [:edit, :update]
 
   helper_method :time_slot_decorated

@@ -264,6 +264,8 @@ class Schedule extends Component {
             rooms={rooms}
             slots={slots}
             handleMoveSessionResponse={this.handleMoveSessionResponse}
+            unscheduledSessions={unscheduledSessions}
+            sessionFormats={sessionFormats}
             showErrors={this.showErrors}
           />
           <UnscheduledArea

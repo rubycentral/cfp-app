@@ -2,6 +2,8 @@ import React, { Component, Fragment } from "react"
 import PropTypes from "prop-types"
 
 import ProgramSession from './ProgramSession'
+import TimeSlotInfo from './TimeSlotInfo'
+import TimeSlotModal from './TimeSlotModal'
 import { patchTimeSlot } from "../../apiCalls"
 
 class ScheduleSlot extends Component {
@@ -9,6 +11,11 @@ class ScheduleSlot extends Component {
     super(props)
     this.state = {
       hoverDrag: false,
+      modalShowing: false,
+      title: this.props.slot.title || '',
+      track: this.props.slot.track_id || '',
+      presenter: this.props.slot.presenter || '',
+      description: this.props.slot.description || ''
     }
   }
   
@@ -22,7 +29,8 @@ class ScheduleSlot extends Component {
     this.setState({ hoverDrag: false})
   }
 
-  onDrop = slot => {
+  onDrop = (slot, e) => {
+    e.preventDefault()
     const session = this.props.draggedSession
     const { csrf, handleMoveSessionResponse, changeDragged } = this.props
     
@@ -36,7 +44,7 @@ class ScheduleSlot extends Component {
     patchTimeSlot(slot, session, csrf)
       .then((response) => response.json())
       .then(data => {
-        const { sessions, slots, unscheduled_sessions, errors } = data
+        const { errors } = data
 
         if (errors) {
           this.props.showErrors(errors)
@@ -45,8 +53,13 @@ class ScheduleSlot extends Component {
 
         if (session.slot) {
           patchTimeSlot(session.slot, null, csrf)
-          handleMoveSessionResponse(sessions, unscheduled_sessions, slots, session)
+            .then((response) => response.json())
+            .then(data => {
+              const { sessions, slots, unscheduled_sessions } = data
+              handleMoveSessionResponse(sessions, unscheduled_sessions, slots, session)
+            })
         } else {
+          const { sessions, slots, unscheduled_sessions } = data
           handleMoveSessionResponse(sessions, unscheduled_sessions, slots)
         }
         changeDragged(null)
@@ -56,11 +69,31 @@ class ScheduleSlot extends Component {
   }
 
   onDrag = (programSession) => {
-    this.props.changeDragged(Object.assign(programSession, {slot: this.props.slot}))
+    const { title, description, track, presenter } = this.state
+    this.props.changeDragged(Object.assign(programSession, {slot: Object.assign(this.props.slot, {title, description, track_id: track, presenter})}))
+  }
+
+  showModal = () => {
+    if (!this.state.modalShowing) {
+      this.setState({modalShowing: true})
+    }
+  }
+
+  closeModal = () => {
+    this.setState({modalShowing: false})
+  }
+
+  updateSlot = (e) => {
+    const { name, value } = e.target
+    this.setState({
+      [name]: value
+    })
   }
 
   render() {
-    const { slot, ripTime, startTime, sessions, tracks } = this.props
+    const { slot, ripTime, startTime, sessions, tracks, csrf, unscheduledSessions, handleMoveSessionResponse, sessionFormats } = this.props
+    const { title, track, presenter, description } = this.state
+    
     const slotStartTime = ripTime(slot.start_time)
     const slotEndTime = ripTime(slot.end_time)
     let background = this.state.hoverDrag ? '#f9f6f1' : '#fff'
@@ -71,14 +104,16 @@ class ScheduleSlot extends Component {
       background
     }
 
-    let session = <Fragment/>
+    let matchedSession
+    let session
 
     if (slot.program_session_id) {
-      let matchedSession = sessions.find(
+      matchedSession = sessions.find(
         session => session.id === slot.program_session_id
       )
       session = <ProgramSession session={matchedSession} onDrag={this.onDrag} tracks={tracks} />
     }
+    let timeSlotInfo = <TimeSlotInfo slot={slot} tracks={tracks} />
 
     return (
       <div
@@ -87,9 +122,26 @@ class ScheduleSlot extends Component {
         key={slot.id}
         onDragOver={e => this.onDragOver(e)}
         onDragLeave={e => this.onDragLeave(e)}
-        onDrop={() => this.onDrop(slot)}
+        onDrop={(e) => this.onDrop(slot, e)}
+        onClick={this.showModal}
       >
-        {session}
+        {session || timeSlotInfo}
+        {this.state.modalShowing === true && <TimeSlotModal 
+          csrf={csrf} 
+          slot={this.props.slot} 
+          matchedSession={matchedSession} 
+          unscheduledSessions={unscheduledSessions} 
+          tracks={tracks} 
+          closeModal={this.closeModal}
+          sessions={sessions}
+          handleMoveSessionResponse={handleMoveSessionResponse}
+          sessionFormats={sessionFormats}
+          title={title}
+          track={track}
+          presenter={presenter}
+          description={description}
+          updateSlot={this.updateSlot}
+        />}
       </div>
     )
   }
@@ -103,6 +155,7 @@ ScheduleSlot.propTypes = {
   draggedSession: PropTypes.object,
   handleMoveSessionResponse: PropTypes.func,
   tracks: PropTypes.array,
+  unscheduledSessions: PropTypes.array,
   showErrors: PropTypes.func,
 }
 

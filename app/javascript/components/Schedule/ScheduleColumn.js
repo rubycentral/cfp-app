@@ -53,6 +53,7 @@ class ScheduleColumn extends Component {
             unscheduledSessions={unscheduledSessions}
             sessionFormats={sessionFormats}
             showErrors={showErrors}
+            roomName={room.name}
           />
         )
       })

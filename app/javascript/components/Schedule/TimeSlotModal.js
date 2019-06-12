@@ -49,6 +49,19 @@ class TimeSlotModal extends Component {
       })
   }
 
+  formatTime = (time) => {
+    let hours = time.split("T")[1].split(":")[0]
+    let amPm = hours < 12 ? ' am' : ' pm'
+    if (parseInt(hours) > 12) {
+      hours = (parseInt(hours) - 12).toString()
+    }
+    if (hours.charAt(0) === '0') {
+      hours = hours.substr(1)
+    }
+    const minutes = time.split(":")[1]
+    return hours + ':' + minutes + amPm
+  }
+
   render() {
     const { 
       slot, 
@@ -60,7 +73,8 @@ class TimeSlotModal extends Component {
       track, 
       presenter, 
       description, 
-      updateSlot 
+      updateSlot,
+      roomName 
     } = this.props
 
     const { sessionSelected } = this.state
@@ -139,35 +153,48 @@ class TimeSlotModal extends Component {
     </>
 
     return (
-      <div className='modal-container'>
-        <div className='bulk-modal'>
-          <div className='modal-header' >
+      <div className="modal-container">
+        <div className="bulk-modal">
+          <div className="modal-header">
             <h3>Edit Time Slot</h3>
+            <span
+              onClick={this.close}
+              className="glyphicon glyphicon-remove"
+            />
+            <div className="room-data">
+              <p>
+                Day {slot.conference_day},{" "}
+                {this.formatTime(slot.start_time)} -{" "}
+                {this.formatTime(slot.end_time)}, {roomName}
+              </p>
+            </div>
           </div>
-          <div className='modal-body'>
+          <div className="modal-body">
             <label>
               Program Session
               <select
                 value={this.state.sessionSelected.title}
-                onChange={this.changeSession} 
+                onChange={this.changeSession}
               >
                 {sessionOptions}
               </select>
             </label>
             {sessionSelected ? sessionInfo : timeSlotForm}
           </div>
-          <div className='modal-footer'>
+          <div className="modal-footer">
             <button
-              className='btn btn-default'
-              onClick={() => this.close()}>Cancel</button>
-            <button
-              className='btn btn-success'
-              onClick={this.saveChanges}
-            >Save</button>
+              className="btn btn-default"
+              onClick={() => this.close()}
+            >
+              Cancel
+            </button>
+            <button className="btn btn-success" onClick={this.saveChanges}>
+              Save
+            </button>
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 

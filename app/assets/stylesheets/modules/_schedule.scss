@@ -717,6 +717,11 @@ input[type=number]::-webkit-outer-spin-button {
           border: 1px solid #A6A6A6;
           padding: 5px;
         }
+
+        .bulk-checkbox {
+          display: inline-block;
+          width: unset;
+        }
       }
 
       .start-times {

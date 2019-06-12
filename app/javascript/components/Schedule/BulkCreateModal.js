@@ -90,6 +90,7 @@ class BulkCreateModal extends Component {
             name={room.id.toString()}
             checked={checked}
             onChange={this.changeRooms}
+            className='bulk-checkbox'
           />
           <span>{room.name}</span>
         </div>

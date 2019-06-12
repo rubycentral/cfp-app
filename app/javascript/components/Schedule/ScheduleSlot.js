@@ -91,7 +91,7 @@ class ScheduleSlot extends Component {
   }
 
   render() {
-    const { slot, ripTime, startTime, sessions, tracks, csrf, unscheduledSessions, handleMoveSessionResponse, sessionFormats } = this.props
+    const { slot, ripTime, startTime, sessions, tracks, csrf, unscheduledSessions, handleMoveSessionResponse, sessionFormats, roomName } = this.props
     const { title, track, presenter, description } = this.state
     
     const slotStartTime = ripTime(slot.start_time)
@@ -141,6 +141,7 @@ class ScheduleSlot extends Component {
           presenter={presenter}
           description={description}
           updateSlot={this.updateSlot}
+          roomName={roomName}
         />}
       </div>
     )
@@ -157,6 +158,7 @@ ScheduleSlot.propTypes = {
   tracks: PropTypes.array,
   unscheduledSessions: PropTypes.array,
   showErrors: PropTypes.func,
+  roomName: PropTypes.string
 }
 
 export default ScheduleSlot

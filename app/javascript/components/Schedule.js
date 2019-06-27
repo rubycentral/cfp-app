@@ -100,6 +100,46 @@ class Schedule extends Component {
     })
   }
 
+  findTimeSlotConflicts = (previewSlots) => {
+    const { slots } = this.state
+    let conflicts = []
+
+    previewSlots.forEach(ps => {
+      slots.forEach(s => {
+        let sameDaySameRoom = s.room_id === parseInt(ps.room) && s.conference_day === ps.day
+
+        if (sameDaySameRoom) {
+          let timeConflict = ps.startTime > this.ripTime(s.start_time) && ps.startTime < this.ripTime(s.end_time) || ps.endTime > this.ripTime(s.start_time) && ps.startTime < this.ripTime(s.end_time)
+          
+          if (timeConflict) {
+            conflicts.push(s)
+          }
+        }
+      })
+      
+    })
+
+    return conflicts
+  }
+
+  handleConflicts = (conflicts, bulkTimeSlotModalEditState) => {
+    const { rooms } = this.state
+
+    let errorMessages = []
+
+    conflicts.forEach(c => {
+      let message = `You attempted to preview a slot which overlaps an existing slot. The overlap involves a previously existing slot on Day ${c.conference_day} at the ${rooms.find(r => r.id == c.room_id).name} location, between  ${c.start_time.split('T')[1].split('.')[0]} and ${c.end_time.split('T')[1].split('.')[0]}`
+
+      errorMessages.push(message)
+    })
+
+    this.setState({
+      errorMessages,
+      bulkTimeSlotModalEditState,
+      bulkTimeSlotModalOpen: false,
+    })
+  }
+
   createTimeSlotPreviews = (previewSlots, bulkTimeSlotModalEditState) => {
     let { startTime, endTime } = this.state
 
@@ -112,14 +152,21 @@ class Schedule extends Component {
       }
     })
 
-    this.setState({
-      previewSlots, 
-      bulkTimeSlotModalEditState, 
-      bulkTimeSlotModalOpen: false,
-      dayViewing: parseInt(bulkTimeSlotModalEditState.day),
-      startTime,
-      endTime
-    })
+    let conflicts = this.findTimeSlotConflicts(previewSlots)
+
+    if (conflicts) {
+      this.handleConflicts(conflicts, bulkTimeSlotModalEditState)
+    } else {
+      this.setState({
+        previewSlots, 
+        bulkTimeSlotModalEditState, 
+        bulkTimeSlotModalOpen: false,
+        dayViewing: parseInt(bulkTimeSlotModalEditState.day),
+        startTime,
+        endTime
+      })
+    }
+
   }
 
   requestBulkTimeSlotCreate = () => {

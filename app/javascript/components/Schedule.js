@@ -154,7 +154,7 @@ class Schedule extends Component {
 
     let conflicts = this.findTimeSlotConflicts(previewSlots)
 
-    if (conflicts) {
+    if (conflicts.length > 0) {
       this.handleConflicts(conflicts, bulkTimeSlotModalEditState)
     } else {
       this.setState({

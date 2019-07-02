@@ -27,7 +27,7 @@ class Staff::Grids::BulkTimeSlotsController < Staff::ApplicationController
     @schedule = Schedule.new(current_event)
 
     respond_to do |format|
-      format.json { render json: { slots: current_event.time_slots }, status: :ok }
+      fuormat.json { render json: { slots: current_event.time_slots }, status: :ok }
     end
   rescue StandardError => e
     render json: { slots: current_event.time_slots, errors: ["An error occured when attempting to bulk create"] }, status: 500

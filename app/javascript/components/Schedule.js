@@ -144,7 +144,7 @@ class Schedule extends Component {
       let message
 
       if (c.previewConflict) {
-        message = `You attempted to make two new time slots that overlap. The overlap occurs on Day ${c.conference_day} at the ${rooms.find(r => r.id == parseInt(c.room)).name} location.`
+        message = `You attempted to make two new time slots that overlap. The overlap occurs on Day ${c.day} at the ${rooms.find(r => r.id == parseInt(c.room)).name} location.`
       } else {
         message = `You attempted to preview a slot which overlaps an existing slot. The overlap involves a previously existing slot on Day ${c.conference_day} at the ${rooms.find(r => r.id == c.room_id).name} location, between  ${c.start_time.split('T')[1].split('.')[0]} and ${c.end_time.split('T')[1].split('.')[0]}`
       }

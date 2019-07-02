@@ -11,6 +11,7 @@ import BulkGenerateConfirm from "./Schedule/BulkGenerateConfirm"
 import Alert from './Schedule/Alert'
 
 import { postBulkTimeSlots } from "../apiCalls"
+import { getMeta } from "../helpers"
 
 class Schedule extends Component {
   constructor(props) {
@@ -163,8 +164,10 @@ class Schedule extends Component {
     this.props.tracks.forEach((track, i) => {
       track.color = "#" + trackColors[i]
     })
+
+    const csrf = getMeta("csrf-token")
     
-    this.setState(Object.assign(this.state, this.props, hours))
+    this.setState(Object.assign(this.state, this.props, hours, {csrf}))
   }
 
   showErrors = messages => {

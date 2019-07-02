@@ -1,4 +1,7 @@
-export function patchTimeSlot(slot, talk, csrfToken) {
+import { getMeta } from "./helpers"
+const csrfToken = getMeta("csrf-token")
+
+export function patchTimeSlot(slot, talk) {
   const talkID = talk === null ? '' : talk.id.toString();
   
   const data = JSON.stringify({
@@ -24,7 +27,7 @@ export function patchTimeSlot(slot, talk, csrfToken) {
   }
 }
 
-export function postBulkTimeSlots(path, day, rooms, duration, startTimes, csrfToken) {
+export function postBulkTimeSlots(path, day, rooms, duration, startTimes) {
   const data = JSON.stringify({
     bulk_time_slot: {
       day,

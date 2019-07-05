@@ -109,8 +109,7 @@ class Schedule extends Component {
         let sameDaySameRoom = s.room_id === parseInt(ps.room) && s.conference_day === ps.day
 
         if (sameDaySameRoom) {
-          let timeConflict = this.determineTimeConflict(ps, s)
-          
+          let timeConflict = this.determineTimeConflict(ps, this.ripTime(s.start_time), this.ripTime(s.end_time))
           if (timeConflict) {
             conflicts.push(s)
           }
@@ -122,7 +121,7 @@ class Schedule extends Component {
         let sameDaySameRoom = parseInt(preview.room) === parseInt(ps.room) && preview.day === ps.day
 
         if (sameDaySameRoom) {
-          let timeConflict = this.determineTimeConflict(ps, preview)
+          let timeConflict = this.determineTimeConflict(ps, preview.startTime, preview.endTime)
           
           if (timeConflict) {
             conflicts.push(Object.assign(preview, { previewConflict: true }))
@@ -135,12 +134,8 @@ class Schedule extends Component {
     return conflicts
   }
 
-  determineTimeConflict = (previewSlot, compareSlot) => {
-    if (compareSlot.endTime) {
-      return previewSlot.startTime > compareSlot.startTime && previewSlot.startTime < compareSlot.endTime || previewSlot.endTime > compareSlot.startTime && previewSlot.startTime < compareSlot.endTime
-    } else {
-      return previewSlot.startTime > this.ripTime(compareSlot.start_time) && previewSlot.startTime < this.ripTime(compareSlot.end_time) || previewSlot.endTime > this.ripTime(compareSlot.start_time) && previewSlot.startTime < this.ripTime(compareSlot.end_time)
-    }
+  determineTimeConflict = (previewSlot, compareStartTime, compareEndTime) => {
+    return previewSlot.startTime > compareStartTime && previewSlot.startTime < compareEndTime || previewSlot.endTime > compareStartTime && previewSlot.startTime < compareEndTime
   }
 
   handleConflicts = (conflicts, bulkTimeSlotModalEditState) => {

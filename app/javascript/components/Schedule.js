@@ -193,7 +193,7 @@ class Schedule extends Component {
   }
 
   requestBulkTimeSlotCreate = () => {
-    const {csrf, bulkTimeSlotModalEditState, bulkPath} = this.state
+    const {bulkTimeSlotModalEditState, bulkPath} = this.state
     const {day, duration, rooms, startTimes} = bulkTimeSlotModalEditState
 
     // the API expects time strings to have a minutes declaration, this following code adds a minute decaration to each time in a string, if needed. 
@@ -205,7 +205,7 @@ class Schedule extends Component {
       }
     }).join(', ')
 
-    postBulkTimeSlots(bulkPath, day, rooms, duration, formattedTimes, csrf)
+    postBulkTimeSlots(bulkPath, day, rooms, duration, formattedTimes)
       .then(response => response.json())
       .then(data => {
         const { errors } = data
@@ -254,7 +254,6 @@ class Schedule extends Component {
       sessions,
       unscheduledSessions,
       draggedSession,
-      csrf,
       tracks,
       bulkTimeSlotModalOpen,
       bulkTimeSlotModalEditState,
@@ -327,7 +326,6 @@ class Schedule extends Component {
             ripTime={this.ripTime}
             changeDragged={this.changeDragged}
             draggedSession={draggedSession}
-            csrf={csrf}
             sessions={sessions}
             tracks={tracks}
             previewSlots={previewSlots}
@@ -343,7 +341,6 @@ class Schedule extends Component {
             sessions={sessions}
             changeDragged={this.changeDragged}
             draggedSession={draggedSession}
-            csrf={csrf}
             tracks={tracks}
             handleMoveSessionResponse={this.handleMoveSessionResponse}
           />
@@ -358,7 +355,6 @@ Schedule.propTypes = {
   sessions: PropTypes.array,
   counts: PropTypes.object,
   unscheduledSessions: PropTypes.array,
-  csrf: PropTypes.string,
   tracks: PropTypes.array
 }
 

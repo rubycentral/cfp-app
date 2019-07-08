@@ -8,7 +8,8 @@ class BulkCreateModal extends Component {
       day: 1,
       rooms: [],
       startTimes: '',
-      duration: ''
+      duration: '',
+      timeError: false
     }
   }
 
@@ -31,7 +32,34 @@ class BulkCreateModal extends Component {
 
   changeInput = (e) => {
     const name = e.target.name
-    this.setState({[name]: e.target.value})
+    this.setState({[name]: e.target.value}, () => {
+      name === 'startTimes' && this.validateTimes()
+    })
+  }
+
+  validateTimes = () => {
+    const { startTimes } = this.state
+    let valid = true
+    startTimes.split(',').forEach(time => {
+      const cleanedTime = time.replace(/\s/g, '')
+      if (time.includes(':')) {
+        const validTime = /^([0-1]?[0-9]|2[0-3]):([0-5][0-9])(:[0-5][0-9])?$/.test(cleanedTime)
+  
+        if (!validTime) {
+          valid = false
+        } 
+      } else {
+        if ( parseInt(cleanedTime) > 24 || parseInt(cleanedTime) < 0 ) {
+          valid = false
+        }
+      }
+    })
+
+    if (!valid) {
+      this.setState({timeError: true})
+    } else {
+      this.setState({timeError: false})
+    }
   }
 
   previewSlots = () => {
@@ -75,6 +103,7 @@ class BulkCreateModal extends Component {
 
   render() {
     let { sessionFormats, closeBulkTimeSlotModal, counts } = this.props
+    let { timeError, day, startTimes, duration } = this.state
 
     const days = Object.keys(counts)
     const dayOptions = days.map(day => (
@@ -117,9 +146,9 @@ class BulkCreateModal extends Component {
     })
 
     const previewDisabled = () => {
-      const { rooms, startTimes, duration } = this.state
+      const { rooms, startTimes, duration, timeError } = this.state
 
-      return rooms.length < 1 || startTimes.length < 1 || duration.length < 1
+      return rooms.length < 1 || startTimes.length < 1 || duration.length < 1 || timeError
     }
 
     return (
@@ -133,7 +162,7 @@ class BulkCreateModal extends Component {
               Day
               <select 
                 className='full-width-input' 
-                value={this.state.day} 
+                value={day} 
                 onChange={this.changeDay} >
                   {dayOptions}
               </select>
@@ -146,12 +175,13 @@ class BulkCreateModal extends Component {
             <label>
               Start Times
               {denoteRequired('startTimes')}
+              {timeError && <p className='error'>Please only enter times between 0:00 and 23:59</p>}
               <div>
                 <input 
                   className='start-times full-width-input'
                   type='text'
                   name='startTimes'
-                  value={this.state.startTimes}
+                  value={startTimes}
                   onChange={this.changeInput}
                   placeholder='ex: 10:00, 11:00, 13:00'
                 />
@@ -165,7 +195,7 @@ class BulkCreateModal extends Component {
                   className='start-times minutes-input'
                   type='number'
                   name='duration'
-                  value={this.state.duration}
+                  value={duration}
                   onChange={this.changeInput}
                 />
                 <select 

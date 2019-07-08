@@ -3,8 +3,8 @@
 FactoryBot.define do
   factory :time_slot do
     conference_day { 1 }
-    start_time { "2014-01-31 10:41:58" }
-    end_time { "2014-01-31 11:41:58" }
+    start_time { "10:41 am" }
+    end_time { "11:41 am" }
     title { "MyText" }
     description { "MyText" }
     presenter { "MyText" }

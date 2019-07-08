@@ -100,6 +100,69 @@ class Schedule extends Component {
     })
   }
 
+  findTimeSlotConflicts = (previewSlots) => {
+    const { slots } = this.state
+    let conflicts = []
+
+    previewSlots.forEach(ps => {
+      slots.forEach(s => {
+        let sameDaySameRoom = s.room_id === parseInt(ps.room) && s.conference_day === ps.day
+
+        if (sameDaySameRoom) {
+          let timeConflict = this.determineTimeConflict(ps, this.ripTime(s.start_time), this.ripTime(s.end_time))
+          if (timeConflict) {
+            conflicts.push(s)
+          }
+        }
+      })
+
+      previewSlots.forEach(preview => {
+        if (Object.is(ps, preview)) { return }
+        let sameDaySameRoom = parseInt(preview.room) === parseInt(ps.room) && preview.day === ps.day
+
+        if (sameDaySameRoom) {
+          let timeConflict = this.determineTimeConflict(ps, preview.startTime, preview.endTime)
+          
+          if (timeConflict) {
+            conflicts.push(Object.assign(preview, { previewConflict: true }))
+          }
+        }
+      })
+      
+    })
+
+    return conflicts
+  }
+
+  determineTimeConflict = (previewSlot, compareStartTime, compareEndTime) => {
+    return previewSlot.startTime > compareStartTime && previewSlot.startTime < compareEndTime || previewSlot.endTime > compareStartTime && previewSlot.startTime < compareEndTime
+  }
+
+  handleConflicts = (conflicts, bulkTimeSlotModalEditState) => {
+    const { rooms } = this.state
+
+    let errorMessages = []
+
+    conflicts.forEach(c => {
+      let message
+
+      if (c.previewConflict) {
+        message = `You attempted to make two new time slots that overlap. The overlap occurs on Day ${c.day} at the ${rooms.find(r => r.id == parseInt(c.room)).name} location.`
+      } else {
+        message = `You attempted to preview a slot which overlaps an existing slot. The overlap involves a previously existing slot on Day ${c.conference_day} at the ${rooms.find(r => r.id == c.room_id).name} location, between  ${c.start_time.split('T')[1].split('.')[0]} and ${c.end_time.split('T')[1].split('.')[0]}`
+      }
+       
+      errorMessages.push(message)
+    })
+
+    errorMessages =  [...new Set(errorMessages)];
+    this.setState({
+      errorMessages,
+      bulkTimeSlotModalEditState,
+      bulkTimeSlotModalOpen: false,
+    })
+  }
+
   createTimeSlotPreviews = (previewSlots, bulkTimeSlotModalEditState) => {
     let { startTime, endTime } = this.state
 
@@ -112,14 +175,21 @@ class Schedule extends Component {
       }
     })
 
-    this.setState({
-      previewSlots, 
-      bulkTimeSlotModalEditState, 
-      bulkTimeSlotModalOpen: false,
-      dayViewing: parseInt(bulkTimeSlotModalEditState.day),
-      startTime,
-      endTime
-    })
+    let conflicts = this.findTimeSlotConflicts(previewSlots)
+
+    if (conflicts.length > 0) {
+      this.handleConflicts(conflicts, bulkTimeSlotModalEditState)
+    } else {
+      this.setState({
+        previewSlots, 
+        bulkTimeSlotModalEditState, 
+        bulkTimeSlotModalOpen: false,
+        dayViewing: parseInt(bulkTimeSlotModalEditState.day),
+        startTime,
+        endTime
+      })
+    }
+
   }
 
   requestBulkTimeSlotCreate = () => {

@@ -26,6 +26,11 @@ class TimeSlot < ApplicationRecord
 
   validates :room_id, :conference_day, presence: true
 
+  validates :start_time, {uniqueness: {
+    scope: [:room, :conference_day],
+    message: "is already taken for that room and day combination."
+  }}
+
   def serializable_hash(options)
     super(methods: :update_path)
   end

@@ -110,7 +110,6 @@
       table = opt_table;
     }
     
-    console.log(JSON.stringify(row_obj), '=============', table)
     table.api().row.add($(row_obj)).draw()
     // var index = table.fnAddData(row_obj.values);
     // var row = $(table.fnGetNodes(index));

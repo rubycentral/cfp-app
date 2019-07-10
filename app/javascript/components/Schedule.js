@@ -42,11 +42,6 @@ class Schedule extends Component {
     return hours + minutes
   }
 
-  formatRailsTimeString = time => {
-    let timeWIP = time.split('T')[1].split('.')[0].split(":")
-    return timeWIP[0] + ":" + timeWIP[1]
-  }
-
   determineHours = slots => {
     let hours = {
       startTime: 12,
@@ -154,7 +149,7 @@ class Schedule extends Component {
       if (c.previewConflict) {
         message = `You attempted to make two new time slots that overlap. The overlap occurs on Day ${c.day} at the ${rooms.find(r => r.id == parseInt(c.room)).name} location.`
       } else {
-        message = `You attempted to preview a slot which overlaps an existing slot. The overlap involves a previously existing slot on Day ${c.conference_day} at the ${rooms.find(r => r.id == c.room_id).name} location, between  ${this.formatRailsTimeString(c.start_time)} and ${this.formatRailsTimeString(c.end_time)}.`
+        message = `You attempted to preview a slot which overlaps an existing slot. The overlap involves a previously existing slot on Day ${c.conference_day} at the ${rooms.find(r => r.id == c.room_id).name} location, between  ${c.start_time.split('T')[1].split('.')[0]} and ${c.end_time.split('T')[1].split('.')[0]}`
       }
        
       errorMessages.push(message)

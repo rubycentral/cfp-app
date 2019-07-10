@@ -46,8 +46,6 @@ class Staff::TimeSlotsController < Staff::ApplicationController
       flash.now[:danger] = "There was a problem creating this time slot."
     end
 
-    @time_slot.reload
-    
     respond_to do |format|
       format.js do
         render locals: { save_and_add: save_and_add }

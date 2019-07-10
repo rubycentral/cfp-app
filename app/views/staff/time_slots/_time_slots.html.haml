@@ -46,4 +46,13 @@
             %th Track
             %th.actions Actions
         %tbody
-          = render time_slots
+          - time_slots.each do |slot|
+            %tr{ id: "time_slot_#{slot.id}" }
+              - slot.row_data_time_sortable.each do |cell|
+                - if cell.is_a?(Time)
+                  %td{ data: { order: cell } }
+                    = cell.try(:to_s, :time_p)
+                - else
+                  %td= cell
+              %td.actions
+                = slot.action_links

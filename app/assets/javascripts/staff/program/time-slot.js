@@ -85,9 +85,8 @@
 
 
   function initTable() {
-    cfpDataTable('#organizer-time-slots.datatable', [ 'number', 'text',
-          'text', 'text', 'text', 'text', 'text' ],
-        { "aaSorting": [ [0,'asc'], [1,'asc'] ] });
+    cfpDataTable('#organizer-time-slots.datatable', [ 'number', 'date',
+          'date', 'text', 'text', 'text', 'text' ]);
   }
 
   function getDataTable() {
@@ -105,17 +104,16 @@
 
   function addRow(row_obj, opt_table) {
     var table;
-
     if (opt_table === undefined) {
       table = getDataTable();
     } else {
       table = opt_table;
     }
-
-    var index = table.fnAddData(row_obj.values);
-
-    var row = $(table.fnGetNodes(index));
-    row.attr('id', 'time_slot_' + row_obj.id);
+    
+    table.api().row.add($(row_obj)).draw()
+    // var index = table.fnAddData(row_obj.values);
+    // var row = $(table.fnGetNodes(index));
+    // row.attr('id', 'time_slot_' + row_obj.id);
   }
 
 

@@ -12,7 +12,6 @@ class DayView extends Component {
       ripTime,
       changeDragged,
       draggedSession,
-      csrf,
       sessions,
       tracks,
       previewSlots,
@@ -38,7 +37,6 @@ class DayView extends Component {
           changeDragged={changeDragged}
           draggedSession={draggedSession}
           sessions={sessions}
-          csrf={csrf}
           tracks={tracks}
           previewSlots={previewSlots}
           slots={slots}

@@ -32,7 +32,7 @@ class ScheduleSlot extends Component {
   onDrop = (slot, e) => {
     e.preventDefault()
     const session = this.props.draggedSession
-    const { csrf, handleMoveSessionResponse, changeDragged } = this.props
+    const { handleMoveSessionResponse, changeDragged } = this.props
     
     if (session.slot) {
       if (session.slot.program_session_id === slot.program_session_id) {
@@ -41,7 +41,7 @@ class ScheduleSlot extends Component {
       }
     }
 
-    patchTimeSlot(slot, session, csrf)
+    patchTimeSlot(slot, session)
       .then((response) => response.json())
       .then(data => {
         const { errors } = data
@@ -52,7 +52,7 @@ class ScheduleSlot extends Component {
         }
 
         if (session.slot) {
-          patchTimeSlot(session.slot, null, csrf)
+          patchTimeSlot(session.slot, null)
             .then((response) => response.json())
             .then(data => {
               const { sessions, slots, unscheduled_sessions } = data
@@ -91,7 +91,7 @@ class ScheduleSlot extends Component {
   }
 
   render() {
-    const { slot, ripTime, startTime, sessions, tracks, csrf, unscheduledSessions, handleMoveSessionResponse, sessionFormats, roomName } = this.props
+    const { slot, ripTime, startTime, sessions, tracks, unscheduledSessions, handleMoveSessionResponse, sessionFormats, roomName } = this.props
     const { title, track, presenter, description } = this.state
     
     const slotStartTime = ripTime(slot.start_time)
@@ -126,8 +126,7 @@ class ScheduleSlot extends Component {
         onClick={this.showModal}
       >
         {session || timeSlotInfo}
-        {this.state.modalShowing === true && <TimeSlotModal 
-          csrf={csrf} 
+        {this.state.modalShowing === true && <TimeSlotModal
           slot={this.props.slot} 
           matchedSession={matchedSession} 
           unscheduledSessions={unscheduledSessions} 

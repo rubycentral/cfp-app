@@ -14,7 +14,6 @@ class ScheduleColumn extends Component {
       dayViewing,
       draggedSession,
       changeDragged,
-      csrf,
       sessions,
       tracks,
       previewSlots,
@@ -46,7 +45,6 @@ class ScheduleColumn extends Component {
             startTime={startTime} 
             key={slot.id}
             changeDragged={changeDragged}
-            csrf={csrf}
             sessions={sessions}
             tracks={tracks}
             handleMoveSessionResponse={handleMoveSessionResponse}

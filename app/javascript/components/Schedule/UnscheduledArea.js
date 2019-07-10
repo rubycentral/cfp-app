@@ -36,9 +36,9 @@ class UnscheduledArea extends Component {
 
   onDrop = (e) => {
     e.preventDefault()
-    const { draggedSession, csrf, tracks } = this.props
+    const { draggedSession, tracks } = this.props
 
-    patchTimeSlot(draggedSession.slot, null, csrf)
+    patchTimeSlot(draggedSession.slot, null)
       .then(response => response.json())
       .then(data => {
         const {sessions, slots, unscheduled_sessions} = data

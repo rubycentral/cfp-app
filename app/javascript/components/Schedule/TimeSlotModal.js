@@ -13,7 +13,7 @@ class TimeSlotModal extends Component {
   }
 
   componentDidMount() {
-    const { csrf, slot, matchedSession } = this.props
+    const { slot, matchedSession } = this.props
   }
 
   changeSession = (e) => {
@@ -31,7 +31,7 @@ class TimeSlotModal extends Component {
 
   saveChanges = () => {
     const { sessionSelected } = this.state
-    const { csrf, closeModal, handleMoveSessionResponse, title, track, presenter, description } = this.props
+    const { closeModal, handleMoveSessionResponse, title, track, presenter, description } = this.props
     
     let slot
     if (!sessionSelected) {
@@ -40,7 +40,7 @@ class TimeSlotModal extends Component {
       slot = this.props.slot
     }
     
-    patchTimeSlot(slot, (sessionSelected || null), csrf)
+    patchTimeSlot(slot, (sessionSelected || null))
       .then(response => response.json())
       .then(data => {
         const { sessions, slots, unscheduled_sessions } = data

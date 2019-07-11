@@ -42,12 +42,11 @@ class Staff::TimeSlotsController < Staff::ApplicationController
         end_time: @time_slot.end_time,
         room_id: @time_slot.room ? @time_slot.room.id : nil
       }
+      @time_slot.reload
     else
       flash.now[:danger] = "There was a problem creating this time slot."
     end
 
-    @time_slot.reload
-    
     respond_to do |format|
       format.js do
         render locals: { save_and_add: save_and_add }

@@ -104,6 +104,7 @@
 
   function addRow(row_obj, opt_table) {
     var table;
+
     if (opt_table === undefined) {
       table = getDataTable();
     } else {

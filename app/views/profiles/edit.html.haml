@@ -49,6 +49,16 @@
             = f.label :password_confirmation
             = f.password_field :password_confirmation, class: 'form-control', placeholder: 'Confirm password'
 
+    %fieldset.col-md-6
+      .widget
+        .widget-header
+          %i.fa.fa-lock
+          %h3 Profile Icon Image
+        .widget-content
+          %p
+            Add or change your profile icon image by visiting
+            = link_to('Gravatar', 'https://en.gravatar.com/connect/', target: "_blank")
+
           - if current_user.provider.present?
             .service
               %button.btn.btn-default.disabled{class: "btn-#{current_user.provider.downcase}-alt"}

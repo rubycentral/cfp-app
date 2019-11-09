@@ -19,8 +19,8 @@ end
 #
 # Table name: tracks
 #
-#  id          :integer          not null, primary key
-#  event_id    :integer
+#  id          :bigint(8)        not null, primary key
+#  event_id    :bigint(8)
 #  name        :string
 #  description :string(250)
 #  guidelines  :text

@@ -14,8 +14,8 @@ end
 #
 # Table name: session_formats
 #
-#  id          :integer          not null, primary key
-#  event_id    :integer
+#  id          :bigint(8)        not null, primary key
+#  event_id    :bigint(8)
 #  name        :string
 #  description :string
 #  duration    :integer
@@ -29,5 +29,5 @@ end
 #
 # Foreign Keys
 #
-#  fk_rails_9632792490  (event_id => events.id)
+#  fk_rails_...  (event_id => events.id)
 #

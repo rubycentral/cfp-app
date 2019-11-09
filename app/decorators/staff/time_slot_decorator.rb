@@ -18,6 +18,13 @@ class Staff::TimeSlotDecorator < Draper::Decorator
     object.id
   end
 
+ def row_data_time_sortable(buttons: false)
+   row = [object.conference_day, object.start_time, object.end_time, linked_title,
+     display_presenter, object.room_name, display_track_name]
+     row << action_links if buttons
+     row
+ end
+
   def row_data(buttons: false)
     row = [object.conference_day, start_time, end_time, linked_title,
            display_presenter, object.room_name, display_track_name]
@@ -27,7 +34,7 @@ class Staff::TimeSlotDecorator < Draper::Decorator
   end
 
   def row
-    {id: object.id, values: row_data(buttons: true)}
+    {id: object.id, values: row_data_time_sortable(buttons: true)}
   end
 
   def action_links

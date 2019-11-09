@@ -16,6 +16,7 @@ gem 'haml', '~> 5.0.0'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'rails-assets-momentjs', source: 'https://rails-assets.org'
 gem 'selectize-rails'
+gem 'jbuilder'
 
 gem 'devise', '~> 4.4.3'
 gem 'omniauth-github'
@@ -36,6 +37,9 @@ gem 'faker'
 gem 'actionview-encoded_mail_to'
 gem 'nokogiri', '~> 1.8.1'
 gem 'bootsnap', require: false
+
+gem 'webpacker'
+gem 'react-rails'
 
 group :production do
   gem 'rails_12factor'

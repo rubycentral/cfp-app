@@ -20,9 +20,9 @@ end
 #
 # Table name: invitations
 #
-#  id          :integer          not null, primary key
-#  proposal_id :integer
-#  user_id     :integer
+#  id          :bigint(8)        not null, primary key
+#  proposal_id :bigint(8)
+#  user_id     :bigint(8)
 #  email       :string
 #  state       :string           default("pending")
 #  slug        :string

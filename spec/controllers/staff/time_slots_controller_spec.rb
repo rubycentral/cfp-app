@@ -30,5 +30,4 @@ describe Staff::TimeSlotsController, type: :controller do
       expect(assigns(:time_slot).program_session).to eq(program_session)
     end
   end
-
 end

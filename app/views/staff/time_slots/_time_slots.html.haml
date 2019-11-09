@@ -46,10 +46,4 @@
             %th Track
             %th.actions Actions
         %tbody
-          - time_slots.each do |slot|
-            %tr{ id: "time_slot_#{slot.id}" }
-              - slot.row_data.each do |cell|
-                %td= cell
-              %td.actions
-                = slot.action_links
-
+          = render time_slots

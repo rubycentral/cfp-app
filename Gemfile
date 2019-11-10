@@ -18,7 +18,7 @@ gem 'rails-assets-momentjs', source: 'https://rails-assets.org'
 gem 'selectize-rails'
 gem 'jbuilder'
 
-gem 'devise', '~> 4.4.3'
+gem 'devise', '~> 4.7.1'
 gem 'omniauth-github'
 gem 'omniauth-twitter'
 

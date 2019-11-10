@@ -222,7 +222,7 @@ GEM
     method_source (0.9.2)
     mimemagic (0.3.2)
     mini_mime (1.0.1)
-    mini_portile2 (2.3.0)
+    mini_portile2 (2.4.0)
     minitest (5.13.0)
     msgpack (1.2.4)
     multi_json (1.13.1)
@@ -230,8 +230,8 @@ GEM
     multipart-post (2.0.0)
     nenv (0.3.0)
     nio4r (2.3.1)
-    nokogiri (1.8.5)
-      mini_portile2 (~> 2.3.0)
+    nokogiri (1.10.4)
+      mini_portile2 (~> 2.4.0)
     notiffany (0.1.1)
       nenv (~> 0.1)
       shellany (~> 0.0)
@@ -462,7 +462,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   launchy
-  nokogiri (~> 1.8.1)
+  nokogiri (~> 1.10.4)
   omniauth-github
   omniauth-twitter
   pg

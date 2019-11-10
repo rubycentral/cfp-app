@@ -35,7 +35,7 @@ gem 'responders', '~> 2.4.0'
 gem 'pundit'
 gem 'faker'
 gem 'actionview-encoded_mail_to'
-gem 'nokogiri', '~> 1.8.1'
+gem 'nokogiri', '~> 1.10.4'
 gem 'bootsnap', require: false
 
 gem 'webpacker'

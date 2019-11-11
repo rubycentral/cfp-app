@@ -32,14 +32,15 @@ feature "Staff Organizers can manage teammates" do
   context "adding a new teammate" do
     it "invites a new teammate", js: true do
       visit event_staff_teammates_path(invitation.event)
+      new_email = Faker::Internet.email
 
       click_link "Invite New Teammate"
-      fill_in "Email", with: "harrypotter@hogwarts.edu"
+      fill_in "Email", with: new_email
       select("reviewer", from: "Role")
       fill_in "Mention Name", with: "wizard"
       click_button "Invite"
 
-      expect(page).to have_text("harrypotter@hogwarts.edu")
+      expect(page).to have_text(new_email)
       expect(page).to have_text("pending")
       expect(Teammate.last.mention_name).to eq("wizard")
     end

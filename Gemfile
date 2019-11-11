@@ -62,7 +62,7 @@ end
 group :development, :test do
   gem 'capybara', '~> 2.18.0'
   gem "selenium-webdriver"
-  gem "chromedriver-helper"
+  gem 'webdrivers', '~> 4.0'
   gem 'database_cleaner', '~> 1.6.0'
   gem 'dotenv-rails'
   gem "factory_bot_rails"

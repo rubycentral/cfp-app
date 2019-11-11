@@ -4,6 +4,7 @@ class SessionFormat < ApplicationRecord
   has_many :proposals
 
   validates_presence_of :event
+  validates :description, length: { maximum: 250 }
   validates :name, uniqueness: {scope: :event}, presence: true
 
   scope :sort_by_name, ->{ order(:name) }

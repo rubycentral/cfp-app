@@ -38,11 +38,11 @@ feature "Event Config" do
         click_on "Edit"
       end
 
-      fill_in "Description", with: "The most exciting session."
+      fill_in "Description", with: "Yo."
       click_button "Save"
 
       within("#session_format_#{session_format.id}") do
-        expect(page).to have_content("The most exciting session.")
+        expect(page).to have_content("Yo.")
       end
     end
 
@@ -110,11 +110,11 @@ feature "Event Config" do
         find_link("Edit").click
       end
 
-      fill_in "Description", with: "The best track ever."
+      fill_in "Description", with: "Yo."
       find_button("Save").click
 
       within("#track_#{track.id}") do
-        expect(page).to have_content("The best track ever.")
+        expect(page).to have_content("Yo.")
       end
     end
 

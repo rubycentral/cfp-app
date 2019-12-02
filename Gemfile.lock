@@ -91,7 +91,7 @@ GEM
       xpath (>= 2.0, < 4.0)
     case_transform (0.2)
       activesupport
-    chartkick (3.2.0)
+    chartkick (3.3.0)
     childprocess (0.9.0)
       ffi (~> 1.0, >= 1.0.11)
     coderay (1.1.2)

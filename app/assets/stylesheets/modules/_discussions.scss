@@ -18,6 +18,13 @@
       clear: both;
     }
   }
+
+  .text li {
+    list-style: disc outside;
+    &:before, &:after {
+      content: none;
+    }
+  }
 }
 
 textarea.mention {

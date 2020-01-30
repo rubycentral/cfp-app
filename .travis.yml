@@ -15,5 +15,7 @@ addons:
   chrome: stable
 bundler_args: --jobs=3 --retry=3 --without development
 script: xvfb-run bundle exec rake
+services:
+  - postgresql
 before_script:
   - psql -c 'create database cfp_app_test;' -U postgres

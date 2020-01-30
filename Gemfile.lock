@@ -321,7 +321,7 @@ GEM
       execjs
       railties (>= 3.2)
       tilt
-    redcarpet (3.4.0)
+    redcarpet (3.5.0)
     request_store (1.4.1)
       rack (>= 1.4)
     responders (2.4.1)
@@ -476,7 +476,7 @@ DEPENDENCIES
   rails-controller-testing
   rails_12factor
   react-rails
-  redcarpet (~> 3.4.0)
+  redcarpet (~> 3.4)
   responders (~> 2.4.0)
   rspec
   rspec-rails

@@ -19,11 +19,7 @@ class Proposal < ApplicationRecord
   belongs_to :track
 
   validates :title, :abstract, :session_format, presence: true
-
-  # This used to be 600, but it's so confusing for users that the browser
-  # uses \r\n for newlines and they're over the 600 limit because of
-  # bytes they can't see. So we give them a bit of tolerance.
-  validates :abstract, length: {maximum: 1000}
+  validate :abstract_length
   validates :title, length: {maximum: 60}
   validates_inclusion_of :state, in: valid_states, allow_nil: true, message: "'%{value}' not a valid state."
   validates_inclusion_of :state, in: FINAL_STATES, allow_nil: false, message: "'%{value}' not a confirmable state.",
@@ -254,6 +250,11 @@ class Proposal < ApplicationRecord
   end
 
   private
+
+  def abstract_length
+    return unless abstract.gsub(/\r/, '').gsub(/\n/, '').length > 600
+    errors.add(:abstract, "is too long (maximum is 600 characters)")
+  end
 
   def save_tags
     if @tags

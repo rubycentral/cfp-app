@@ -24,31 +24,6 @@ describe Proposal do
     end
   end
 
-  # describe "scope :available" do
-  #   it "shows a previously assigned but removed proposal as available" do
-  #     proposal = create(:proposal, state: ACCEPTED)
-  #     conf_session = create(:time_slot, proposal: proposal, event: proposal.event)
-  #
-  #     expect {
-  #       conf_session.destroy
-  #     }.to change{Proposal.available.count}.by(1)
-  #   end
-  #
-  #   it "only shows accepted proposals" do
-  #     create(:proposal, state: WAITLISTED)
-  #     proposal = create(:proposal, state: ACCEPTED)
-  #
-  #     expect(Proposal.available).to match_array([ proposal ])
-  #   end
-  #
-  #   it "sorts proposals by talk title" do
-  #     zebra = create(:proposal, title: 'Zebra', state: ACCEPTED)
-  #     theta = create(:proposal, title: 'Theta', state: ACCEPTED)
-  #     alpha = create(:proposal, title: 'Alpha', state: ACCEPTED)
-  #     expect(Proposal.available).to eq([ alpha, theta, zebra ])
-  #   end
-  # end
-
   describe 'scope :in_track' do
     let(:track1) { create :track, name: 'Track 1' }
     let(:track1_proposals) { create_list :proposal, 3, track: track1 }
@@ -84,9 +59,9 @@ describe Proposal do
       expect{proposal.save}.to change{proposal.uuid}.from(nil).to('greendalec')
     end
 
-    it "limits abstracts to 1000 characters or less" do
-      expect(build(:proposal, abstract: "S" * 999)).to be_valid
-      expect(build(:proposal, abstract: "S" * 1006)).not_to be_valid
+    it "limits abstracts to 600 characters or less" do
+      expect(build(:proposal, abstract: "S" * 600)).to be_valid
+      expect(build(:proposal, abstract: "S" * 601)).not_to be_valid
     end
   end
 

@@ -16,6 +16,7 @@ module StaffHelper
     (proposal.finalized? && (!proposal.ratings.any? || !rating.persisted?)) || proposal.has_speaker?(current_user)
   end
 
+  # Deprecated - was used to disallow modifying speaker tags once a talk was finalized
   def allow_review?(proposal)
     (program_mode? || !proposal.has_speaker?(current_user)) && !proposal.finalized?
   end

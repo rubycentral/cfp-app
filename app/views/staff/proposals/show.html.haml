@@ -76,10 +76,9 @@
                   #{proposal.review_tags_labels}
                 -else
                   %em None
-              - if allow_review?(proposal)
-                #edit-tags-icon.fa.fa-pencil
-            #review-tags-form-wrapper
-              = render 'shared/proposals/tags_form', locals: { event: event, proposal: proposal }
+              #edit-tags-icon.fa.fa-pencil
+              #review-tags-form-wrapper
+                = render 'shared/proposals/tags_form', locals: { event: event, proposal: proposal }
 
   .row
     .col-md-4

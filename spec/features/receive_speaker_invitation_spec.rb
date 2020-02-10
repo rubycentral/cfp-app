@@ -70,7 +70,7 @@ feature 'Speaker Invitation received' do
           known_user.uid = OmniAuth.config.mock_auth[:github][:uid]
           known_user.save
 
-          click_link "Sign in with Github"
+          click_link "Sign in with GitHub"
           expect(page).to have_content("You have accepted your invitation!")
         end
 
@@ -101,7 +101,7 @@ feature 'Speaker Invitation received' do
 
         it "can use a github oauth account" do
           click_link "Sign up"
-          click_link "Sign in with Github"
+          click_link "Sign in with GitHub"
           expect(page).to have_content("You have accepted your invitation!")
         end
 

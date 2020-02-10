@@ -41,7 +41,7 @@ feature "Teammate Invitation received" do
           known_user.uid = OmniAuth.config.mock_auth[:github][:uid]
           known_user.save
 
-          click_link "Sign in with Github"
+          click_link "Sign in with GitHub"
           expect(page).to have_content("Congrats! You are now an official team member of My Event!")
         end
 
@@ -71,7 +71,7 @@ feature "Teammate Invitation received" do
 
         it "can use a github oauth account" do
           click_link "Sign up"
-          click_link "Sign in with Github"
+          click_link "Sign in with GitHub"
           expect(page).to have_content("Congrats! You are now an official team member of My Event!")
         end
 

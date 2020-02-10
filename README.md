@@ -50,7 +50,7 @@ This will boot up using Foreman and allow the .env file to be read / set for use
 
 ### Environment variables
 
-[Omniauth](https://github.com/omniauth/omniauth) is set up to use Twitter and Github for logins in production. You'll want to put your own key and secret in for both. Other environment variables will include your postgres user and Rails' secret\_token.
+[Omniauth](https://github.com/omniauth/omniauth) is set up to use Twitter and GitHub for logins in production. You'll want to put your own key and secret in for both. Other environment variables will include your postgres user and Rails' secret\_token.
 
     TIMEZONE (defaults to Pacific if not set)
     POSTGRES_USER (dev/test only)
@@ -143,7 +143,7 @@ If you have Organizer access you will see an 'Organize' dropdown will give you t
 
 The 'Notifications' dropdown will display a count of any in app notifications you haven't read.  Clicking the dropdown will show you a list of these notifications such as 'Marty Haught has commented on <talk title>'.  You have a 'Mark all as read' and 'View all notifications' options as well.
 
-We briefly touched on the user dropdown on the far right. This is visible to all users.  From there they can sign out or visit their profile.  Their profile is how they edit their name, email or bio, allow them to connect to various services such as Github or Twitter.  If you are an admin, you will also have a Users link.  This is where you manage all User records.
+We briefly touched on the user dropdown on the far right. This is visible to all users.  From there they can sign out or visit their profile.  Their profile is how they edit their name, email or bio, allow them to connect to various services such as GitHub or Twitter.  If you are an admin, you will also have a Users link.  This is where you manage all User records.
 
 ### Submitting a Proposal
 

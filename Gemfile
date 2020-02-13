@@ -41,6 +41,8 @@ gem 'bootsnap', require: false
 gem 'webpacker'
 gem 'react-rails'
 
+gem 'sidekiq'
+
 group :production do
   gem 'rails_12factor'
   gem 'rack-timeout', '~> 0.5'

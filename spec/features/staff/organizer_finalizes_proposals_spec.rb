@@ -34,16 +34,16 @@ feature "Organizers can manage proposals" do
     expect(page).to have_content("1 soft accepted proposal")
   end
 
-  scenario "organizer can bulk finalize proposals by state" do
-    proposal_two = create(:proposal, event: event)
-    visit bulk_finalize_event_staff_program_proposals_path(event)
-
-    expect(Proposal.soft_states.count).to eq(2)
-
-    click_on("Finalize")
-
-    expect(page).to have_content("Successfully finalized remaining submitted proposals.")
-    expect(Proposal.soft_states.count).to eq(0)
-  end
+  # scenario "organizer can bulk finalize proposals by state" do
+  #   proposal_two = create(:proposal, event: event)
+  #   visit bulk_finalize_event_staff_program_proposals_path(event)
+  #
+  #   expect(Proposal.soft_states.count).to eq(2)
+  #
+  #   click_on("Finalize")
+  #
+  #   expect(page).to have_content("Successfully finalized remaining submitted proposals.")
+  #   expect(Proposal.soft_states.count).to eq(0)
+  # end
 
 end

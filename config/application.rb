@@ -23,5 +23,7 @@ module CFPApp
     end
 
     config.active_record.time_zone_aware_types = [:datetime]
+
+    config.active_job.queue_adapter = :sidekiq
   end
 end

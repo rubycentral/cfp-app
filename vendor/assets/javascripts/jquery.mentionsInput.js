@@ -224,7 +224,7 @@
     }
 
 	// This is taken straight from live (as of Sep 2012) GitHub code. The
-    // technique is known around the web. Just google it. Github's is quite
+    // technique is known around the web. Just google it. GitHub's is quite
     // succint though. NOTE: relies on selectionEnd, which as far as IE is concerned,
     // it'll only work on 9+. Good news is nothing will happen if the browser
     // doesn't support it.

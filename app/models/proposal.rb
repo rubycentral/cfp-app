@@ -44,7 +44,7 @@ class Proposal < ApplicationRecord
   scope :accepted, -> { where(state: ACCEPTED) }
   scope :waitlisted, -> { where(state: WAITLISTED) }
   scope :submitted, -> { where(state: SUBMITTED) }
-  scope :confirmed, -> { where('confirmed_at IS NOT NULL') }
+  scope :confirmed, -> { where.not(confirmed_at: nil) }
 
   scope :soft_accepted, -> { where(state: SOFT_ACCEPTED) }
   scope :soft_waitlisted, -> { where(state: SOFT_WAITLISTED) }

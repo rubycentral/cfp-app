@@ -19,10 +19,12 @@
 
 .icon-twitter {
   background-image: asset-url("twitter_32.png");
+  margin-right: 2px;
   @include icon-generic;
 }
 
 .icon-github {
   background-image: asset-url("github_32.png");
+  margin-right: 2px;
   @include icon-generic;
 }

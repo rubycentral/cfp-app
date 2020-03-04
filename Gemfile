@@ -43,6 +43,7 @@ gem 'react-rails'
 
 gem 'sidekiq'
 
+gem 'diffy'
 gem 'paper_trail'
 
 group :production do

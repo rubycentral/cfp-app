@@ -99,7 +99,7 @@ describe Staff::ProposalsController, type: :controller do
   describe "POST 'finalize_by_state'" do
     it "returns http redirect" do
       post :finalize_by_state, params: {event_slug: event, proposals_state: proposal.state}
-      expect(response).to redirect_to(bulk_finalize_event_staff_program_proposals_path(event))
+      expect(response.status).to eq(204)
     end
   end
 

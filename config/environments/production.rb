@@ -105,4 +105,10 @@ Rails.application.configure do
   config.exceptions_app = self.routes
 
   config.time_zone = ENV.fetch('TIMEZONE') {'Pacific Time (US & Canada)'}
+
+  config.action_cable.url = "wss://#{ENV['HEROKU_APP_NAME']}.herokuapp.com/cable"
+  config.action_cable.allowed_request_origins = [
+    "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com",
+    "http://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
+  ]
 end

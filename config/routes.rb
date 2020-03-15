@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-
   root 'home#show'
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  mount ActionCable.server => '/cable'
 
   get '/profile' => 'profiles#edit', as: :edit_profile
   patch '/profile' => 'profiles#update'
@@ -140,5 +140,4 @@ Rails.application.routes.draw do
   get '/404', :to => 'errors#not_found'
   get '/422', :to => 'errors#unacceptable'
   get '/500', :to => 'errors#internal_error'
-
 end

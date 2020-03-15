@@ -96,12 +96,15 @@ class Staff::ProposalsController < Staff::ApplicationController
   end
 
   def finalize_by_state
-    remaining = Proposal.where(state: params[:proposals_state])
+    state = params[:proposals_state]
+    remaining = Proposal.where(state: state)
     authorize remaining, :finalize?
 
-    BulkFinalizeJob.perform_later(params[:proposals_state])
+    BulkFinalizeJob.perform_later(state)
 
-    flash[:success] = "Finalizing #{params[:proposals_state]} proposals."
-    redirect_to bulk_finalize_event_staff_program_proposals_path
+    ActionCable.server.broadcast "notifications", {
+      message: "#{state} queued for finalization"
+    }
+    head :no_content
   end
 end

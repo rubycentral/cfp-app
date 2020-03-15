@@ -1,10 +1,10 @@
 development:
-  adapter: async
+  adapter: redis
+  url: redis://localhost:6379/1
 
 test:
   adapter: async
 
 production:
   adapter: redis
-  url: redis://localhost:6379/1
-  channel_prefix: cfp_app_production
+  url: <%= ENV.fetch("REDIS_URL", "redis://localhost:6379/1") %>

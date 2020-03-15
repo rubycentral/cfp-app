@@ -7,8 +7,11 @@
     "conference"
   ],
   "addons": [
-    "sendgrid:starter",
-    "heroku-postgresql"
+    "heroku-postgresql",
+    "heroku-redis",
+    "newrelic:wayne",
+    "papertrail:choklad",
+    "sendgrid:starter"
   ],
   "scripts": {
     "postdeploy": "bundle exec rake db:schema:load db:seed"

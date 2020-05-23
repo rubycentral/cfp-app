@@ -48,12 +48,12 @@ in sunny Phoenix, Arizona on December 1st, 2016!
 
 If your talk is about seed data in Rails apps, we want to hear about it!
 
-## #{Faker::Hipster.sentence(4)}
-#{Faker::Hipster.paragraph(8)}
+## #{Faker::Hipster.sentence(word_count: 4)}
+#{Faker::Hipster.paragraph(sentence_count: 8)}
 
-#{Faker::Hipster.paragraph(13)}
+#{Faker::Hipster.paragraph(sentence_count: 13)}
 
-#{Faker::Hipster.paragraph(6)}
+#{Faker::Hipster.paragraph(sentence_count: 6)}
 ]
 
   seed_event = Event.create(name: "SeedConf",
@@ -338,8 +338,8 @@ is happening in moody Reykjavík, Iceland on February 1st, 2017!
 
 If you are on the cutting edge with savvy Sapphire skills, we want you!
 
-## #{Faker::Hipster.sentence(4)}
-#{Faker::Hipster.paragraph(20)}
+## #{Faker::Hipster.sentence(word_count: 4)}
+#{Faker::Hipster.paragraph(sentence_count: 20)}
 ]
 
   sapphire_event = Event.create(name: "SapphireConf",
@@ -369,8 +369,8 @@ is happening in lovely Dayton, Ohio on March 1st, 2017!
 
 If you are on the cutting edge with savvy scheduling skills, we want you!
 
-## #{Faker::Hipster.sentence(4)}
-#{Faker::Hipster.paragraph(20)}
+## #{Faker::Hipster.sentence(word_count: 4)}
+#{Faker::Hipster.paragraph(sentence_count: 20)}
 ]
 
   schedule_event = Event.create(name: "ScheduleConf",
@@ -405,7 +405,7 @@ If you are on the cutting edge with savvy scheduling skills, we want you!
   # Rooms
   conference_address = Faker::Address.street_address
   4.times do |i|
-    schedule_event.rooms.create(name: "#{Faker::Name.last_name} Room", room_number: Faker::Number.number(3), level: 1, address: conference_address, capacity: 150)
+    schedule_event.rooms.create(name: "#{Faker::Name.last_name} Room", room_number: Faker::Number.number(digits: 3), level: 1, address: conference_address, capacity: 150)
   end
 
   # Program Sessions

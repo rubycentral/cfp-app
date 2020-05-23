@@ -32,6 +32,12 @@ bin/setup
 
 This will create `.env` and a development database with seed data. Seeds will make an admin user with an email of `an@admin.com` and password of `userpass` to get you started.
 
+You will also need to install the JavaScript packages. To do that run:
+
+```bash
+yarn install --check-files
+```
+
 Start the server:
 
 ```bash

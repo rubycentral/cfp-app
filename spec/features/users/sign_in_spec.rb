@@ -44,7 +44,7 @@ feature 'Sign In', :devise do
   scenario 'user cannot sign in with wrong password' do
     user = FactoryBot.create(:user)
     signin(user.email, 'invalidpass')
-    expect(page).to have_content I18n.t 'devise.failure.invalid', authentication_keys: 'Email'
+    expect(page).to have_content I18n.t 'devise.failure.invalid', authentication_keys: 'Email', normalize_ws: true
   end
 
   # Scenario: Organizer User gets redirected to the events_path
@@ -117,6 +117,4 @@ feature 'Sign In', :devise do
     signin(user.email, user.password)
     expect(current_path).to eq(edit_profile_path)
   end
-
-
 end

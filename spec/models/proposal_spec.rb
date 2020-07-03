@@ -16,11 +16,9 @@ describe Proposal do
   describe "scope :rated" do
     it "returns all rated proposals" do
       rated = create_list(:proposal, 3)
-      unrated = create_list(:proposal, 5)
       rated.each { |proposal| create(:rating, proposal: proposal) }
 
       expect(Proposal.rated).to match_array(rated)
-
     end
   end
 
@@ -118,11 +116,10 @@ describe Proposal do
     end
 
     it "updates the state of it's program session" do
-      confirmed_waitlisted_proposal = create(:proposal, state: Proposal::WAITLISTED, confirmed_at: DateTime.now)
-      unconfirmed_waitlisted_proposal = create(:proposal, state: Proposal::WAITLISTED)
-      unconfirmed_accepted_proposal = create(:proposal, state: Proposal::ACCEPTED)
-      confirmed_accepted_proposal = create(:proposal, state: Proposal::ACCEPTED, confirmed_at: DateTime.now)
-
+      create(:proposal, state: Proposal::WAITLISTED, confirmed_at: DateTime.now)
+      create(:proposal, state: Proposal::WAITLISTED)
+      create(:proposal, state: Proposal::ACCEPTED)
+      create(:proposal, state: Proposal::ACCEPTED, confirmed_at: DateTime.now)
 
       Proposal.all.each do |prop|
         create(:program_session, proposal: prop)
@@ -557,7 +554,7 @@ describe Proposal do
   context "When proposal has multiple speakers" do
     it "displays the oldest speaker first" do
       proposal = create(:proposal)
-      secondary_speaker = create(:speaker, created_at: 2.weeks.ago, proposal: proposal)
+      create(:speaker, created_at: 2.weeks.ago, proposal: proposal)
       primary_speaker = create(:speaker, created_at: 3.weeks.ago, proposal: proposal)
 
       expect(proposal.speakers.first).to eq(primary_speaker)

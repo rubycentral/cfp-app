@@ -28,6 +28,8 @@ class Proposal < ApplicationRecord
   serialize :last_change
   serialize :proposal_data, Hash
 
+  has_paper_trail only: [:title, :abstract, :details, :pitch]
+
   attr_accessor :tags, :review_tags, :updating_user
 
   accepts_nested_attributes_for :public_comments, reject_if: Proc.new { |comment_attributes| comment_attributes[:body].blank? }
@@ -247,6 +249,10 @@ class Proposal < ApplicationRecord
 
   def has_reviewer_activity?
     ratings.present? || has_reviewer_comments?
+  end
+
+  def changeset_fields
+    versions[1..]&.map(&:changeset)&.flat_map(&:keys)&.uniq
   end
 
   private

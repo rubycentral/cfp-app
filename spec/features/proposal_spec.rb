@@ -52,11 +52,11 @@ feature "Proposals" do
       end
 
       it "shows Title validation if blank on submit" do
-        expect(page).to have_text("Title * can't be blank")
+        expect(page).to have_text("Title *\ncan't be blank")
       end
 
       it "shows Abstract validation if blank on submit" do
-        expect(page).to have_text("Abstract * can't be blank")
+        expect(page).to have_text("Abstract *\ncan't be blank")
       end
     end
 

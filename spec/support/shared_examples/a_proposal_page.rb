@@ -19,7 +19,7 @@ shared_examples "a proposal page" do |path_method|
         form.fill_in 'public_comment_body', with: 'A new comment'
         form.click_button 'Comment'
 
-        expect(page).to have_css('.comment', 'A new comment')
+        expect(page).to have_css('.comment', text: 'A new comment')
       end
 
       it "can leave an internal comment" do
@@ -28,7 +28,7 @@ shared_examples "a proposal page" do |path_method|
         form.fill_in 'internal_comment_body', with: 'A new comment'
         form.click_button 'Comment'
 
-        expect(page).to have_css('.internal-comments .comment', 'A new comment')
+        expect(page).to have_css('.internal-comments .comment', text: 'A new comment')
       end
     end
 

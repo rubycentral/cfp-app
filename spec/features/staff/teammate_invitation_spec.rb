@@ -155,9 +155,8 @@ feature "Teammate Invitation received" do
   context "Token is invalid or invitation can't be found" do
     it "shows a custom 404 error" do
       visit accept_teammate_path(newguy_invitation.token + "bananas")
-      expect(page).to have_text("Oh My. A 404 error. Your confirmation invite link is missing or wrong.")
+      expect(page).to have_text("Oh My. A 404 error.\nYour confirmation invite link is missing or wrong.")
       expect(page).to have_text("Events")
     end
   end
-
 end

@@ -2,8 +2,6 @@ class ApplicationController < ActionController::Base
   include Pundit
   include ActivateNavigation
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
-  #after_action :verify_authorized, except: :index
-  #after_action :verify_policy_scoped, only: :index
 
   require "csv"
   # Prevent CSRF attacks by raising an exception.
@@ -18,6 +16,7 @@ class ApplicationController < ActionController::Base
   helper_method :schedule_mode?
   helper_method :program_tracks
 
+  before_action :set_paper_trail_whodunnit
   before_action :current_event
   before_action :configure_permitted_parameters, if: :devise_controller?
 

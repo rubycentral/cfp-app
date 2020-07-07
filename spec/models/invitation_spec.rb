@@ -9,7 +9,7 @@ describe Invitation do
     it "sets the slug" do
       invitation = build(:invitation, slug: nil)
       digest = 'deadbeef2014'
-      expect(Digest::SHA1).to receive(:hexdigest).and_return(digest)
+      expect(Digest::SHA1).to receive(:hexdigest).twice.and_return(digest)
       invitation.save
       expect(invitation.slug).to eq('deadbeef20')
     end

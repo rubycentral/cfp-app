@@ -22,3 +22,14 @@
       %div
       = value.capitalize
       %div
+
+- unless proposal.changeset_fields.blank?
+  %h2.fieldset-legend Proposal Diff...
+  - proposal.versions.each do |version|
+    #diff-view
+      - version.changeset.each do |k, (old, new)|
+        %h3.control-label= k.titleize
+        %div= diff old, new
+
+:css
+  = #{Diffy::CSS}

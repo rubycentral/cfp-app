@@ -15,7 +15,7 @@ module ProposalHelper
       concat(content_tag(:p) do
         content_tag(:strong, "Session Format Guide")
       end)
-      event.session_formats.each do |format|
+      event.session_formats.publicly_viewable.each do |format|
         concat(content_tag(:p, "#{format.name} - #{format.description}"))
       end
     end

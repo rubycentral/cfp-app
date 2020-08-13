@@ -5,7 +5,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :confirmable, #:validatable,
-         :omniauthable, omniauth_providers: [:twitter, :github]
+         :omniauthable, omniauth_providers: [:twitter, :github, :google_oauth2]
 
   has_many :invitations,  dependent: :destroy
   has_many :teammates, dependent: :destroy

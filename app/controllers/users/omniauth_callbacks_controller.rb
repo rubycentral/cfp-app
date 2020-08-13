@@ -9,6 +9,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     authenticate_with_hash
   end
 
+  def google_oauth2
+    authenticate_with_hash
+  end
+
   def failure
     redirect_to new_user_session_url, danger: "There was an error authenticating you. Please try again."
   end

@@ -21,6 +21,7 @@ The CFP App does not provide a public facing website for your conference, though
 * Ruby 2.6.5
 * Bundler (was installed with 1.17.3)
 * PostgreSQL
+* Yarn installed via NPM
 
 Make sure you have Ruby and Postgres installed in your environment.  Double check in the [Gemfile](../blob/master/Gemfile) for the exact supported version.  This is a Rails 5 app and uses bundler to install all required gems.  We are also making the assumption that you're familiar with how Rails apps are setup and deployed.  If this is not the case then you'll want to refer to documentation that will bridge any gaps in the instructions below.
 
@@ -56,15 +57,22 @@ This will boot up using Foreman and allow the .env file to be read / set for use
 
 ### Environment variables
 
-[Omniauth](https://github.com/omniauth/omniauth) is set up to use Twitter and GitHub for logins in production. You'll want to put your own key and secret in for both. Other environment variables will include your postgres user and Rails' secret\_token.
+The app uses the following environment variables by default.  Some of these may be populated by your service provider in the case of Heroku.  
 
     TIMEZONE (defaults to Pacific if not set)
     POSTGRES_USER (dev/test only)
     MAIL_HOST (production only - from host)
     MAIL_FROM (production only - from address)
     SECRET_TOKEN (production only)
+
+### Oauth Configuration
+
+[Omniauth](https://github.com/omniauth/omniauth) is set up to use GitHub, Google, or Twitter for login in production.  You'll want to read up how to configure Omniauth elsewhere but here are the following key pairs the app will be looking for in your environment variables.
+
     GITHUB_KEY
     GITHUB_SECRET
+    GOOGLE_OAUTH_CLIENT_ID
+    GOOGLE_OAUTH_CLIENT_SECRET
     TWITTER_KEY
     TWITTER_SECRET
 

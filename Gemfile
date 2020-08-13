@@ -21,6 +21,7 @@ gem 'jbuilder'
 gem 'devise', '~> 4.7'
 gem 'omniauth-github'
 gem 'omniauth-twitter'
+gem 'omniauth-google-oauth2'
 
 gem 'chartkick'
 gem 'groupdate'

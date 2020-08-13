@@ -121,4 +121,16 @@ module ApplicationHelper
   def admin_nav?
     current_user.admin?
   end
+
+  def twitter_oauth?
+    ENV['TWITTER_KEY'].present?
+  end
+
+  def github_oauth?
+    ENV['GITHUB_KEY'].present?
+  end
+
+  def google_oauth?
+    ENV['GOOGLE_OAUTH_CLIENT_ID'].present?
+  end  
 end

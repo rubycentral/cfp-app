@@ -12,7 +12,9 @@ class Staff::RatingsController < Staff::ApplicationController
     @rating = Rating.find_or_create_by(proposal: @proposal, user: current_user)
     @rating.update_attributes(rating_params)
     if @rating.save
-      respond_with @rating, locals: {rating: @rating}
+      respond_to do |format|
+        format.js
+      end
     else
       logger.warn("Error creating rating for proposal [#{@proposal.id}] for user [#{current_user.id}]: #{@rating.errors.full_messages}")
       render json: @rating.to_json, status: :bad_request
@@ -26,11 +28,15 @@ class Staff::RatingsController < Staff::ApplicationController
     if rating_params[:score].blank?
       @rating.destroy
       @rating = current_user.ratings.build(proposal: @proposal)
-      respond_with :reviewer, locals: {rating: @rating}
+      respond_to do |format|
+        format.js
+      end
       return
     end
     if @rating.update_attributes(rating_params)
-      respond_with :reviewer, locals: {rating: @rating}
+      respond_to do |format|
+        format.js
+      end
     else
       logger.warn("Error updating rating for proposal [#{@proposal.id}] for user [#{current_user.id}]: #{@rating.errors.full_messages}")
       render json: @rating.to_json, status: :bad_request

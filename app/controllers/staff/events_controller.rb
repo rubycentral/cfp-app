@@ -71,7 +71,7 @@ class Staff::EventsController < Staff::ApplicationController
 
   def update_custom_fields
     authorize_update
-    @event.update_attributes(event_params)
+    @event.update(event_params)
     respond_to do |format|
       format.js do
         render locals: { event: @event }
@@ -101,7 +101,7 @@ class Staff::EventsController < Staff::ApplicationController
 
   def update
     authorize_update
-    if @event.update_attributes(event_params)
+    if @event.update(event_params)
       if session[:target]
         redirect_to session[:target]
         session[:target].clear
@@ -116,7 +116,7 @@ class Staff::EventsController < Staff::ApplicationController
 
   def open_cfp
     authorize_update
-    if @event.update_attributes(state: Event::STATUSES[:open])
+    if @event.update(state: Event::STATUSES[:open])
       flash[:info] = "Your CFP was successfully opened."
     else
       flash['danger alert-confirm'] = "There was a problem opening your CFP: #{@event.errors.full_messages.to_sentence}"

@@ -39,7 +39,7 @@ Rails.application.configure do
   config.active_storage.service = :test
 
   config.action_mailer.perform_caching = false
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.default_url_options = { host: 'test.host' }
   config.action_mailer.default_options = { from: 'cfp@example.org' }
 
   # Tell Action Mailer not to deliver emails to the real world.

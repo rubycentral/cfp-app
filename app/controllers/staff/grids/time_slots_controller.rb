@@ -10,7 +10,7 @@ class Staff::Grids::TimeSlotsController < Staff::ApplicationController
 
   def update
     respond_to do |format|
-      if @time_slot.update_attributes(time_slot_params)
+      if @time_slot.update(time_slot_params)
         format.json { render json: update_response.merge(status: :ok) }
         format.html { flash.now[:info] = "Time slot updated." }
       else

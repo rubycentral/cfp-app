@@ -372,14 +372,14 @@ describe Proposal do
     describe ".last_change" do
       describe "when role organizer" do
         it "is cleared" do
-          proposal.update_attributes(title: 'Organizer Edited Title', updating_user: organizer)
+          proposal.update(title: 'Organizer Edited Title', updating_user: organizer)
           expect(proposal.last_change).to be_nil
         end
       end
 
       describe "when not role organizer" do
         it "is set to the attributes that were just updated" do
-          proposal.update_attributes(title: 'Edited Title')
+          proposal.update(title: 'Edited Title')
           expect(proposal.last_change).to eq(["title"])
         end
       end

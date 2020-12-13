@@ -12,7 +12,7 @@
                   %i.fa.fa-fw.fa-envelope
                   = mail_to(current_event.contact_email, current_event.contact_email, encode: "javascript")
           - else
-            = link_to "#{Rails.application.class.parent_name}", events_path
+            = link_to "#{Rails.application.class.module_parent_name}", events_path
         .col-md-4.text-right
           Powered by
           = link_to 'CFP App', 'https://github.com/rubycentral/cfp-app', target: '_blank'

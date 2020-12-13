@@ -10,7 +10,7 @@ class Staff::RatingsController < Staff::ApplicationController
   def create
     authorize @proposal, :rate?
     @rating = Rating.find_or_create_by(proposal: @proposal, user: current_user)
-    @rating.update_attributes(rating_params)
+    @rating.update(rating_params)
     if @rating.save
       respond_to do |format|
         format.js
@@ -33,7 +33,7 @@ class Staff::RatingsController < Staff::ApplicationController
       end
       return
     end
-    if @rating.update_attributes(rating_params)
+    if @rating.update(rating_params)
       respond_to do |format|
         format.js
       end

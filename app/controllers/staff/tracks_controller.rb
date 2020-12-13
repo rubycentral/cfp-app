@@ -31,7 +31,7 @@ class Staff::TracksController < Staff::ApplicationController
   end
 
   def update
-    if @track.update_attributes(track_params)
+    if @track.update(track_params)
       flash.now[:success] = "#{@track.name} has been updated." # changes to guildlines are invisible
     else
       flash.now[:danger] = "There was a problem updating your track, #{@track.errors.full_messages.join(", ")}."

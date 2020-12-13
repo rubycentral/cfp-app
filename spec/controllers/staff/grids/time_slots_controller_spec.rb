@@ -25,7 +25,7 @@ describe Staff::Grids::TimeSlotsController, type: :controller do
       program_session = create(:program_session, event: event)
       conf_time_slot = create(:time_slot, event: program_session.event)
 
-      allow_any_instance_of(TimeSlot).to receive(:update_attributes) { raise ArgumentError, "BOOM!" }
+      allow_any_instance_of(TimeSlot).to receive(:update) { raise ArgumentError, "BOOM!" }
 
       put :update, xhr: true, params: {id: conf_time_slot, event_slug: conf_time_slot.event, time_slot: { program_session_id: "A" }}, format: :json
 

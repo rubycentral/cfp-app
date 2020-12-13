@@ -20,7 +20,7 @@ class Staff::RoomsController < Staff::ApplicationController
   end
 
   def update
-    unless @room.update_attributes(room_params)
+    unless @room.update(room_params)
       flash.now[:danger] = "There was a problem updating your room, #{@room.errors.full_messages.join(", ")}."
     end
     respond_to do |format|

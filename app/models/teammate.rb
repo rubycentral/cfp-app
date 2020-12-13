@@ -27,7 +27,7 @@ class Teammate < ApplicationRecord
   validates_format_of :mention_name, with: /\A\w+\z/, message: "cannot include punctuation or spaces", allow_blank: true
 
   scope :for_event, -> (event) { where(event: event) }
-  scope :alphabetize, -> { Teammate.joins(:user).merge(User.order(name: :asc)) }
+  scope :alphabetize, -> { joins(:user).merge(User.order(name: :asc)) }
   scope :notify, -> { where(notifications: true) }
 
   scope :organizer, -> { where(role: "organizer") }

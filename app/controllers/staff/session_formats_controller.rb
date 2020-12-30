@@ -30,7 +30,7 @@ class Staff::SessionFormatsController < Staff::ApplicationController
   end
 
   def update
-    unless @session_format.update_attributes(session_format_params)
+    unless @session_format.update(session_format_params)
       flash.now[:danger] = "There was a problem updating your session format, #{@session_format.errors.full_messages.join(", ")}."
     end
     respond_to do |format|

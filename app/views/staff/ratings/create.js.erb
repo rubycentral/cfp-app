@@ -1,5 +1,5 @@
 $('#rating-form').html('<%=j render partial: "shared/proposals/rating_form",
-                       locals: { event: event, proposal: proposal, rating: rating } %>');
+                       locals: { event: @proposal.event, proposal: @proposal, rating: @rating } %>');
 $('.internal-comments').fadeIn();
 $('.avg-rating').fadeIn();
 $('.rating-list').fadeIn();

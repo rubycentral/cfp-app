@@ -16,7 +16,7 @@ class Speaker < ApplicationRecord
 
   attr_accessor :skip_name_email_validation
 
-  scope :in_program, -> { Speaker.where("program_session_id IS NOT NULL") }
+  scope :in_program, -> { where("program_session_id IS NOT NULL") }
 
   def name
     speaker_name.present? ? speaker_name : user.try(:name)

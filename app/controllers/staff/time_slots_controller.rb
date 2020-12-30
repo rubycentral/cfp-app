@@ -58,7 +58,7 @@ class Staff::TimeSlotsController < Staff::ApplicationController
   end
 
   def update
-    if @time_slot.update_attributes(time_slot_params)
+    if @time_slot.update(time_slot_params)
       flash.now[:info] = "Time slot updated."
     else
       flash.now[:danger] = "There was a problem saving this time slot."

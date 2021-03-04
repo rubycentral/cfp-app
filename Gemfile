@@ -23,6 +23,7 @@ gem 'underscore-rails'
 gem 'devise', '~> 4.7'
 gem 'omniauth-github'
 gem 'omniauth-twitter'
+gem 'omniauth-google-oauth2'
 
 gem 'actionview-encoded_mail_to'
 gem 'active_model_serializers', '~> 0.10.0'

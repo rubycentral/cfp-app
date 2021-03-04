@@ -23,14 +23,23 @@
 
   <%- if devise_mapping.omniauthable? %>
 
-    <%= link_to user_twitter_omniauth_authorize_path, class: "btn btn-twitter" do %>
-      <i class="icon-twitter"></i>
-      <span class="btn-text-middle">Sign in with Twitter</span>
+    <% if twitter_oauth? %>
+      <%= link_to user_twitter_omniauth_authorize_path, class: "btn btn-twitter" do %>
+        <i class="icon-twitter"></i>
+        <span class="btn-text-middle">Sign in with Twitter</span>
+      <% end %>
     <% end %>
-    <%= link_to user_github_omniauth_authorize_path, class: "btn btn-github" do %>
-      <i class="icon-github"></i>
-      <span class="btn-text-middle">Sign in with GitHub</span>
+    <% if github_oauth? %>
+      <%= link_to user_github_omniauth_authorize_path, class: "btn btn-github" do %>
+        <i class="icon-github"></i>
+        <span class="btn-text-middle">Sign in with GitHub</span>
+      <% end %>
     <% end %>
-
+      <% if google_oauth? %>    
+      <%= link_to user_google_oauth2_omniauth_authorize_path, class: "btn btn-default" do %>
+        <i class="icon-google"></i>
+        <span class="btn-text-middle">Sign in with Google</span>
+      <% end %>
+    <% end %>
   <% end %>
 </div>

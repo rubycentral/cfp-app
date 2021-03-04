@@ -48,7 +48,6 @@ gem 'paper_trail'
 
 group :production do
   gem 'rack-timeout', '~> 0.5'
-  gem 'rails_12factor'
 end
 
 group :development do

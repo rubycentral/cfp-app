@@ -18,9 +18,11 @@ The CFP App does not provide a public facing website for your conference, though
 
 ### Prerequisite Requirements
 
-* Ruby 2.6.5
-* Bundler (was installed with 1.17.3)
+* Ruby 2.7.2
+* Bundler (was installed with 2.2.13)
 * PostgreSQL
+* Node.js 10.22.1+
+* Yarn 1.x+
 
 Make sure you have Ruby and Postgres installed in your environment.  Double check in the [Gemfile](../blob/master/Gemfile) for the exact supported version.  This is a Rails 5 app and uses bundler to install all required gems.  We are also making the assumption that you're familiar with how Rails apps are setup and deployed.  If this is not the case then you'll want to refer to documentation that will bridge any gaps in the instructions below.
 

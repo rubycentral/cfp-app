@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '2.6.5'
+ruby '2.7.2'
 
 gem 'puma'
 gem 'rails', '~> 6.0.0'
@@ -48,7 +48,6 @@ gem 'paper_trail'
 
 group :production do
   gem 'rack-timeout', '~> 0.5'
-  gem 'rails_12factor'
 end
 
 group :development do

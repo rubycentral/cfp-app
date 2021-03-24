@@ -6,7 +6,7 @@
       = f.association :track, as: :select, collection: current_event.tracks, label: "Track", include_blank: true
       - unless @program_session.new_record?
         = f.input :state, as: :select, collection: session_states_collection, label: "State", required: true
-      = f.input :abstract, maxlength: 605, input_html: { class: 'watched js-maxlength-alert', rows: 5 }
+      = f.input :abstract, maxlength: 1205, input_html: { class: 'watched js-maxlength-alert', rows: 5 }
       = f.label :video_url
       = f.text_field :video_url, class: "form-control"
       = f.label :slides_url

@@ -102,7 +102,7 @@ Rails.application.configure do
     port: ENV.fetch('SMTP_PORT', '587'),
     authentication: :plain,
     user_name: "apikey",
-    password: ENV.fetch('SENDGRID_API_KEY'),
+    password: ENV.fetch('SENDGRID_API_KEY', ""),
     domain: 'heroku.com',
     enable_starttls_auto: true
   }

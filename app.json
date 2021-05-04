@@ -8,10 +8,7 @@
   ],
   "addons": [
     "heroku-postgresql",
-    "heroku-redis",
-    "newrelic:wayne",
-    "papertrail:choklad",
-    "sendgrid:starter"
+    "heroku-redis"
   ],
   "scripts": {
     "postdeploy": "bundle exec rake db:schema:load db:seed"

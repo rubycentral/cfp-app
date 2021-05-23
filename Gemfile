@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 ruby '2.7.2'
 
 gem 'puma'
-gem 'rails', '~> 6.0.0'
+gem 'rails', '~> 6.1.0'
 
 gem 'pg'
 
@@ -23,6 +23,7 @@ gem 'underscore-rails'
 gem 'devise', '~> 4.7'
 gem 'omniauth-github'
 gem 'omniauth-twitter'
+gem "omniauth-rails_csrf_protection", "~> 1.0"
 
 gem 'actionview-encoded_mail_to'
 gem 'active_model_serializers', '~> 0.10.0'

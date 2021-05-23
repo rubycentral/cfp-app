@@ -19,12 +19,10 @@ The CFP App does not provide a public facing website for your conference, though
 ### Prerequisite Requirements
 
 * Ruby 2.7.2
-* Bundler (was installed with 2.2.13)
+* Bundler (was installed with 2.1.4)
 * PostgreSQL
-* Node.js 10.22.1+
-* Yarn 1.x+
 
-Make sure you have Ruby and Postgres installed in your environment.  Double check in the [Gemfile](../blob/master/Gemfile) for the exact supported version.  This is a Rails 5 app and uses bundler to install all required gems.  We are also making the assumption that you're familiar with how Rails apps are setup and deployed.  If this is not the case then you'll want to refer to documentation that will bridge any gaps in the instructions below.
+Make sure you have Ruby and Postgres installed in your environment.  Double check in the [Gemfile](../blob/master/Gemfile) for the exact supported version.  This is a Rails 6 app and uses bundler to install all required gems.  We are also making the assumption that you're familiar with how Rails apps are setup and deployed.  If this is not the case then you'll want to refer to documentation that will bridge any gaps in the instructions below.
 
 Run [bin/setup](bin/setup) script to install gem dependencies and setup database for development.
 
@@ -91,7 +89,7 @@ There are five user roles in the CFP App. To log in as a user type in developmen
 
 ## Deployment on Heroku
 
-The app was written with a Heroku deployment stack in mind. You can easily deploy the application using the button below, or you can deploy it anywhere assuming you can run Ruby 2.6.5 and Rails 5.2.2 with a PostgreSQL database and an SMTP listener.
+The app was written with a Heroku deployment stack in mind. You can easily deploy the application using the button below, or you can deploy it anywhere assuming you can run Ruby 2.7.2 and Rails 6.1.x with a PostgreSQL database and an SMTP listener.
 
 The Heroku stack will use the following free addons:
 

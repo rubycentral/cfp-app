@@ -8,6 +8,10 @@ module ApplicationHelper
     end
   end
 
+  def age_ranges_for_select
+    User::AGE_RANGES
+  end
+
   def demographic_label(demographic)
     case demographic
       when :gender then

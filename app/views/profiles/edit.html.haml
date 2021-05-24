@@ -26,14 +26,6 @@
             = f.label :bio
             = f.text_area :bio, class: 'form-control', placeholder: 'Enter your bio', rows: 7, maxlength: 500
             %p.help-block Bio is limited to 500 characters.
-          %p
-            = f.label :age_range, 'How old are you?'
-            = f.select :age_range, age_ranges_for_select, { include_blank: '' }
-          %p
-            = f.label :gender, 'What are your pronouns?'
-            = f.select :gender, gender_pronouns_for_select, { include_blank: '' }
-          %p
-            = f.association :ethnicity
 
     %fieldset.col-md-6
       .widget

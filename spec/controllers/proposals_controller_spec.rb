@@ -46,7 +46,11 @@ describe ProposalsController, type: :controller do
           session_format_id: proposal.session_format.id,
           speakers_attributes: {
             '0' => {
-              bio: 'my bio'
+              bio: 'my bio',
+              age_range: Speaker::AGE_RANGES.first,
+              gender: Speaker::GENDER_PRONOUNS.first,
+              ethnicity_id: '',
+              first_time_speaker: false
             }
           }
         }

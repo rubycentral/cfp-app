@@ -9,11 +9,11 @@ module ApplicationHelper
   end
 
   def age_ranges_for_select
-    User::AGE_RANGES
+    Speaker::AGE_RANGES
   end
 
   def gender_pronouns_for_select
-    User::GENDER_PRONOUNS
+    Speaker::GENDER_PRONOUNS
   end
 
   def demographic_label(demographic)

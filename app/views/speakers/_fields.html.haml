@@ -8,3 +8,18 @@
     = speaker_fields.input :name, disabled: true, tooltip: ["right", "Edit your profile to update"]
 
     = speaker_fields.input :bio, disabled: speaker.user!=current_user, maxlength: :lookup, input_html: { value: speaker.bio, rows: 4 }, hint: "Your bio should be short, no longer than 500 characters. It's related to why you're speaking about this topic."#, popover_icon: { content: bio_tooltip }
+
+    %p
+    = speaker_fields.check_box :first_time_speaker
+    = speaker_fields.label :first_time_speaker
+
+    %p
+    = speaker_fields.label :age_range, 'How old are you?'
+    = speaker_fields.select :age_range, age_ranges_for_select, { include_blank: '' }
+
+    %p
+    = speaker_fields.label :gender, 'What are your pronouns?'
+    = speaker_fields.select :gender, gender_pronouns_for_select, { include_blank: '' }
+
+    %p
+    = speaker_fields.association :ethnicity

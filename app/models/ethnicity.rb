@@ -1,8 +1,8 @@
 class Ethnicity < ApplicationRecord
   validates :name, presence: true, uniqueness: true
-  has_many :users
+  has_many :speakers
 
-  def label
+  def to_label
     "#{name}: #{description}"
   end
 end

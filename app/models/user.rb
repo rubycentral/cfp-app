@@ -7,25 +7,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :confirmable, #:validatable,
          :omniauthable, omniauth_providers: [:twitter, :github]
 
-  AGE_RANGES = [
-    "Under 18 years old",
-    "18-24 years old",
-    "25-34 years old",
-    "35-44 years old",
-    "45-54 years old",
-    "55-64 years old",
-    "65-74 years old",
-    "75 years or older",
-  ].freeze
-
-  GENDER_PRONOUNS = [
-    'he/him/his',
-    'she/her/hers',
-    'they/them/theirs',
-    'Decline to say'
-  ].freeze
-
-  belongs_to :ethnicity
   has_many :invitations,  dependent: :destroy
   has_many :teammates, dependent: :destroy
   has_many :reviewer_teammates, -> { where(role: ['reviewer', 'program team', 'organizer']) }, class_name: 'Teammate'

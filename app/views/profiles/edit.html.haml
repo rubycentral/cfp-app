@@ -33,10 +33,7 @@
             = f.label :gender, 'What are your pronouns?'
             = f.select :gender, gender_pronouns_for_select, { include_blank: '' }
           %p
-            = f.collection_check_boxes :ethnicity_id, Ethnicity.all, :id, :label, include_hidden: false do |b|
-              = b.label do
-                = b.check_box 
-                = b.text
+            = f.association :ethnicity
 
     %fieldset.col-md-6
       .widget

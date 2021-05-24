@@ -25,6 +25,7 @@ class User < ApplicationRecord
     'Decline to say'
   ].freeze
 
+  belongs_to :ethnicity
   has_many :invitations,  dependent: :destroy
   has_many :teammates, dependent: :destroy
   has_many :reviewer_teammates, -> { where(role: ['reviewer', 'program team', 'organizer']) }, class_name: 'Teammate'

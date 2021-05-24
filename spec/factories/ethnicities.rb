@@ -3,7 +3,7 @@ FactoryBot.define do
     name { 'Other' }
 
     trait :white do
-      name { "White" }
+      name { 'Non-Hispanic White' }
       description { "A person having origins in any of the original peoples of Europe, the Middle East, or North Africa." }
     end
 

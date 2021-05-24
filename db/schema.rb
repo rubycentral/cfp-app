@@ -256,8 +256,6 @@ ActiveRecord::Schema.define(version: 2021_05_24_020710) do
     t.datetime "remember_created_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string "gender"
-    t.string "age_range"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token"
     t.index ["email"], name: "index_users_on_email"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token"

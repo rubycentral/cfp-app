@@ -12,6 +12,10 @@ module ApplicationHelper
     User::AGE_RANGES
   end
 
+  def gender_pronouns_for_select
+    User::GENDER_PRONOUNS
+  end
+
   def demographic_label(demographic)
     case demographic
       when :gender then

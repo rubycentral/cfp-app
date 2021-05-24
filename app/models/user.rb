@@ -18,6 +18,13 @@ class User < ApplicationRecord
     "75 years or older",
   ].freeze
 
+  GENDER_PRONOUNS = [
+    'he/him/his',
+    'she/her/hers',
+    'they/them/theirs',
+    'Decline to say'
+  ].freeze
+
   has_many :invitations,  dependent: :destroy
   has_many :teammates, dependent: :destroy
   has_many :reviewer_teammates, -> { where(role: ['reviewer', 'program team', 'organizer']) }, class_name: 'Teammate'

@@ -599,6 +599,14 @@ If you are on the cutting edge with savvy scheduling skills, we want you!
     }).first_or_initialize
     empty_slot.save(validate: false)
   end
+
+  Ethnicity.create(name: 'American Indian or Alaska Native', description: 'A person having origins in any of the original peoples of North and South America (including Central America), and who maintains tribal affiliation or community attachment')
+  Ethnicity.create(name: 'Asian', description: ' A person having origins in any of the original peoples of the Far East, Southeast Asia, or the Indian subcontinent including, for example, Cambodia, China, India, Japan, Korea, Malaysia, Pakistan, the Philippine Islands, Thailand, and Vietnam')
+  Ethnicity.create(name: 'Black or African American', description: 'A person having origins in any of the black racial groups of Africa. Terms such as "Haitian" or "Negro" can be used in addition to "Black or African American"')
+  Ethnicity.create(name: 'Hispanic or Latino', description: 'A person of Cuban, Mexican, Puerto Rican, South or Central American, or other Spanish culture or origin, regardless of race. The term, "Spanish origin," can be used in addition to "Hispanic or Latino"')
+  Ethnicity.create(name: 'Native Hawaiian or Other Pacific Islander', description: 'A person having origins in any of the original peoples of Hawaii, Guam, Samoa, or other Pacific Islands')
+  Ethnicity.create(name: 'White', description: 'A person having origins in any of the original peoples of Europe, the Middle East, or North Africa')
+  Ethnicity.create(name: 'Other', description: '')
 end
 
 run

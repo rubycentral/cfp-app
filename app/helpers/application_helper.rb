@@ -8,21 +8,8 @@ module ApplicationHelper
     end
   end
 
-  def age_ranges_for_select
-    Speaker::AGE_RANGES
-  end
-
-  def gender_pronouns_for_select
-    Speaker::GENDER_PRONOUNS
-  end
-
-  def demographic_label(demographic)
-    case demographic
-      when :gender then
-        "Gender Identity"
-      else
-        demographic.to_s.titleize
-    end
+  def boolean_to_words(value)
+    value ? "Yes" : "No"
   end
 
   class MarkdownRenderer < Redcarpet::Render::HTML

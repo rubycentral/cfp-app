@@ -27,13 +27,6 @@ ActiveRecord::Schema.define(version: 2021_05_24_020710) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "ethnicities", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "events", force: :cascade do |t|
     t.string "name"
     t.string "slug"
@@ -166,11 +159,10 @@ ActiveRecord::Schema.define(version: 2021_05_24_020710) do
     t.text "info"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string "gender"
     t.string "age_range"
+    t.string "ethnicity"
     t.boolean "first_time_speaker"
-    t.bigint "ethnicity_id"
-    t.index ["ethnicity_id"], name: "index_speakers_on_ethnicity_id"
+    t.string "pronouns"
     t.index ["event_id"], name: "index_speakers_on_event_id"
     t.index ["program_session_id"], name: "index_speakers_on_program_session_id"
     t.index ["proposal_id"], name: "index_speakers_on_proposal_id"
@@ -274,5 +266,4 @@ ActiveRecord::Schema.define(version: 2021_05_24_020710) do
   end
 
   add_foreign_key "session_formats", "events"
-  add_foreign_key "speakers", "ethnicities"
 end

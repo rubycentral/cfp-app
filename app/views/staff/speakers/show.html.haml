@@ -38,6 +38,18 @@
       .program-session-item
         %h3.control-label Bio
         %p= @speaker.bio
+      .program-session-item
+        %h3.control-label First time speaker?
+        %p= boolean_to_words(@speaker.first_time_speaker)
+      .program-session-item
+        %h3.control-label Age Range
+        %p= @speaker.age_range
+      .program-session-item
+        %h3.control-label Pronouns
+        %p= @speaker.pronouns
+      .program-session-item
+        %h3.control-label Ethnicity
+        %p= @speaker.ethnicity
       - if @speaker.program_session
         .program-session-item
           %h3.control-label Program Session

@@ -8,16 +8,25 @@ class Speaker < ApplicationRecord
     "55-64 years old",
     "65-74 years old",
     "75 years or older",
+    "Decline to say"
   ].freeze
 
   GENDER_PRONOUNS = [
-    'he/him/his',
-    'she/her/hers',
-    'they/them/theirs',
-    'Decline to say'
+    "he/him/his",
+    "she/her/hers",
+    "they/them/theirs",
+    "something not listed",
+    "Decline to say"
   ].freeze
 
-  belongs_to :ethnicity
+  # Racial categories according to the Census
+  RACIAL_CATEGORIES = [
+    "American Indian or Alaska Native", "Asian", "Black or African American",
+    "Hispanic or Latino", "Native Hawaiian or Other Pacific Islander",
+    "Native American or Alaskan Natives", "Non-Hispanic White",
+    "Two or more races", "Other", "Decline to say"
+  ].freeze
+
   belongs_to :user
   belongs_to :event
   belongs_to :proposal

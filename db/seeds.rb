@@ -599,10 +599,6 @@ If you are on the cutting edge with savvy scheduling skills, we want you!
     }).first_or_initialize
     empty_slot.save(validate: false)
   end
-
-  Ethnicity::RACIAL_CATEGORIES.each do |name|
-    Ethnicity.create(name: name)
-  end
 end
 
 run

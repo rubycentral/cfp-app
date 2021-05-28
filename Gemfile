@@ -47,6 +47,8 @@ gem 'sidekiq'
 
 gem 'paper_trail'
 
+gem 'sendgrid-ruby'
+
 group :production do
   gem 'rack-timeout', '~> 0.5'
 end

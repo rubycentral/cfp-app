@@ -31,7 +31,7 @@ feature "Organizers can manage proposals" do
 
         expect(proposal.reload.state).to eql(Proposal::State::SOFT_ACCEPTED)
         expect(ActionMailer::Base.deliveries).to be_empty
-        expect(proposal.reload.updated_by_speaker_at).to eql(updated_by_speaker_at)
+        expect(proposal.reload.updated_by_speaker_at).to be_within(1.second).of(updated_by_speaker_at)
       end
     end
 
@@ -42,7 +42,7 @@ feature "Organizers can manage proposals" do
 
         expect(proposal.reload.state).to eql(Proposal::State::SOFT_REJECTED)
         expect(ActionMailer::Base.deliveries).to be_empty
-        expect(proposal.reload.updated_by_speaker_at).to eql(updated_by_speaker_at)
+        expect(proposal.reload.updated_by_speaker_at).to be_within(1.second).of(updated_by_speaker_at)
       end
     end
 
@@ -53,7 +53,7 @@ feature "Organizers can manage proposals" do
 
         expect(proposal.reload.state).to eql(Proposal::State::SOFT_WAITLISTED)
         expect(ActionMailer::Base.deliveries).to be_empty
-        expect(proposal.reload.updated_by_speaker_at).to eql(updated_by_speaker_at)
+        expect(proposal.reload.updated_by_speaker_at).to be_within(1.second).of(updated_by_speaker_at)
       end
     end
   end

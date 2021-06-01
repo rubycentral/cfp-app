@@ -5,6 +5,8 @@ env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
     - QMAKE=/usr/lib/x86_64-linux-gnu/qt4/bin/qmake
+install:
+  - nvm install
 addons:
   apt:
     sources:
@@ -14,7 +16,7 @@ addons:
       - qtdeclarative5-dev
   chrome: stable
 bundler_args: --jobs=3 --retry=3 --without development
-script: xvfb-run bundle exec rake webpacker:compile
+script: xvfb-run bundle exec rake
 services:
   - postgresql
 before_script:

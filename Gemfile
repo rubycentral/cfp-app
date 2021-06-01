@@ -68,6 +68,7 @@ end
 
 group :development, :test do
   gem 'capybara', '~> 3.33'
+  gem 'capybara-screenshot', '~> 1.0'
   gem 'database_cleaner', '~> 1.6'
   gem 'dotenv-rails'
   gem 'factory_bot_rails'

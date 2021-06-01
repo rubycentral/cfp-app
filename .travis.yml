@@ -6,6 +6,7 @@ env:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
     - QMAKE=/usr/lib/x86_64-linux-gnu/qt4/bin/qmake
 install:
+  - bundle install
   - nvm install
   - yarn install
 addons:

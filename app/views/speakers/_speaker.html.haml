@@ -9,4 +9,16 @@
         data: { confirm: "This will remove #{speaker.name} from this proposal. Are you sure you want to do this?" }
 
   = simple_format speaker.bio
+
+  %strong First time speaker:
+  = simple_format boolean_to_words(speaker.first_time_speaker)
+
+  %strong Age:
+  = simple_format speaker.age_range
+
+  %strong Pronouns:
+  = simple_format speaker.pronouns
+
+  %strong Ethnicity:
+  = simple_format speaker.ethnicity
 %hr

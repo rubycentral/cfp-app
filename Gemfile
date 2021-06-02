@@ -5,6 +5,9 @@ ruby '2.7.2'
 
 gem 'puma'
 gem 'rails', '~> 6.1.0'
+gem 'mimemagic', github: 'mimemagicrb/mimemagic', ref: '01f92d86d15d85cfd0f20dabd025dcbd36a8a60f'
+gem 'mime-types-data'
+gem 'mime-types'
 
 gem 'pg'
 

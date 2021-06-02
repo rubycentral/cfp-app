@@ -9,6 +9,7 @@ scratch.md
 .ruby-version
 .ruby-gemset
 .rvmrc
+.nvmrc
 
 /public/packs
 /public/packs-test

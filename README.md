@@ -62,6 +62,10 @@ This will boot up using Foreman and allow the .env file to be read / set for use
     POSTGRES_USER (dev/test only)
     MAIL_HOST (production only - from host)
     MAIL_FROM (production only - from address)
+    SMTP_ADDRESS (production only - address of SMTP server, defaults to 'smtp.sendgrid.net')
+    SMTP_PORT (production only - port of SMTP server, defaults to 587)
+    SMTP_USERNAME (production only - SMTP account username, defaults to 'apikey' for use with SendGrid)
+    SMTP_PASSWORD (production only - SMTP account password, defaults to feching environment variable 'SENDGRID_API_KEY')
     SECRET_TOKEN (production only)
     GITHUB_KEY
     GITHUB_SECRET

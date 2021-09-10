@@ -1,4 +1,4 @@
-export function getMeta(metaName) {
+export var getMeta = function(metaName) {
   const metas = document.getElementsByTagName("meta");
 
   for (let i = 0; i < metas.length; i++) {

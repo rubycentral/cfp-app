@@ -1,7 +1,7 @@
-import React, { Component } from "react"
-import PropTypes from "prop-types"
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import ScheduleColumn from './ScheduleColumn'
+import { ScheduleColumn } from './ScheduleColumn';
 
 class DayView extends Component {
   render() {
@@ -21,13 +21,13 @@ class DayView extends Component {
       unscheduledSessions,
       sessionFormats,
       showErrors,
-    } = this.props
+    } = this.props;
 
-    let rows = rooms.map(room => {
-      const height = (( endTime - startTime + 1) * 90) + 25 + 'px'
+    let rows = rooms.map((room) => {
+      const height = (endTime - startTime + 1) * 90 + 25 + 'px';
       return (
         <ScheduleColumn
-          key={"day" + dayViewing + "room" + room.id}
+          key={'day' + dayViewing + 'room' + room.id}
           height={height}
           room={room}
           startTime={startTime}
@@ -45,14 +45,10 @@ class DayView extends Component {
           sessionFormats={sessionFormats}
           showErrors={showErrors}
         />
-      )
-    })
+      );
+    });
 
-    return (
-      <React.Fragment>
-        {rows}
-      </React.Fragment>
-    )
+    return <React.Fragment>{rows}</React.Fragment>;
   }
 }
 
@@ -71,7 +67,7 @@ DayView.propTypes = {
   unscheduledSessions: PropTypes.array,
   sessionFormats: PropTypes.array,
   showErrors: PropTypes.func,
-}
-DayView.defaultProps = {sessions: []}
+};
+DayView.defaultProps = { sessions: [] };
 
-export default DayView
+export { DayView };

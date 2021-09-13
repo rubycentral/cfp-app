@@ -1,9 +1,11 @@
 {
   "dependencies": {
-    "@babel/preset-react": "^7.0.0",
-    "@rails/webpacker": "^4.0.2",
+    "@babel/core": "^7",
+    "@babel/preset-react": "^7.14.5",
+    "@rails/webpacker": "^5.4.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "core-js": "^3.12.1",
+    "glob-parent": "^5.1.2",
     "node-forge": "^0.10.0",
     "postcss": "^8.2.10",
     "prop-types": "^15.7.2",

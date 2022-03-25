@@ -18,7 +18,7 @@ The CFP App does not provide a public facing website for your conference, though
 
 ### Prerequisite Requirements
 
-* Ruby 2.7.2
+* Ruby 2.7.5
 * Bundler (was installed with 2.1.4)
 * PostgreSQL
 
@@ -93,7 +93,7 @@ There are five user roles in the CFP App. To log in as a user type in developmen
 
 ## Deployment on Heroku
 
-The app was written with a Heroku deployment stack in mind. You can easily deploy the application using the button below, or you can deploy it anywhere assuming you can run Ruby 2.7.2 and Rails 6.1.x with a PostgreSQL database and an SMTP listener.
+The app was written with a Heroku deployment stack in mind. You can easily deploy the application using the button below, or you can deploy it anywhere assuming you can run Ruby 2.7.5 and Rails 6.1.x with a PostgreSQL database and an SMTP listener.
 
 The Heroku stack will use the following free addons:
 

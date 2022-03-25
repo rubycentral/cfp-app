@@ -1,7 +1,7 @@
 language: ruby
 cache: bundler
 rvm:
-  - 2.7.2
+  - 2.7.5
 env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true

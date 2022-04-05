@@ -599,6 +599,9 @@ If you are on the cutting edge with savvy scheduling skills, we want you!
     }).first_or_initialize
     empty_slot.save(validate: false)
   end
+
+  seed_website = Website.find_or_create_by(event: seed_event)
+  seed_website.pages.find_or_create_by(name: 'Home', slug: 'home')
 end
 
 run

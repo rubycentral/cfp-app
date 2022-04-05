@@ -56,6 +56,7 @@ module ActivateNavigation
             starts_with_path(:proposals),
             starts_with_path(:event_event_proposals, current_event)
         ],
+        'event-pages-link' => starts_with_path(:event_staff_pages, current_event),
         'event-review-proposals-link' => starts_with_path(:event_staff_proposals, current_event),
         'event-selection-link' => selection_subnav_item_map,
         'event-program-link' => program_subnav_item_map,

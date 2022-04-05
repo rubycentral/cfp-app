@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 64 (93537) - https://sketch.com -->
+    <title>Group 10</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-HD" transform="translate(-206.000000, -1995.000000)">
+            <g id="Group-10" transform="translate(206.000000, 1995.000000)">
+                <rect id="Rectangle" fill="#FFFFFF" x="5" y="3" width="10" height="14"></rect>
+                <path d="M10,0 C15.5228475,0 20,4.4771525 20,10 C20,15.5228475 15.5228475,20 10,20 C4.4771525,20 0,15.5228475 0,10 C0,4.4771525 4.4771525,0 10,0 Z M9,6.8316655 C8.44771525,6.8316655 8,7.27938075 8,7.8316655 L8,7.8316655 L8,13.1683345 C8,13.3600861 8.05513038,13.5477948 8.15882152,13.7090921 C8.4574737,14.1736621 9.07618755,14.3081651 9.54075759,14.009513 L9.54075759,14.009513 L13.6915001,11.3411785 C13.8120028,11.2637125 13.914455,11.1612602 13.991921,11.0407576 C14.2905732,10.5761875 14.1560702,9.9574737 13.6915001,9.65882152 L13.6915001,9.65882152 L9.54075759,6.99048702 C9.37946026,6.88679588 9.19175162,6.8316655 9,6.8316655 Z" id="Combined-Shape" fill="#3287C5"></path>
+            </g>
+        </g>
+    </g>
+</svg>

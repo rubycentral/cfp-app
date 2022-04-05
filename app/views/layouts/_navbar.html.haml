@@ -18,6 +18,11 @@
               = link_to proposals_path do
                 %span My Proposals
 
+          - if policy(Page).index?
+            %li{class: nav_item_class("event-pages-link")}
+              = link_to event_staff_pages_path(current_event) do
+                %span Website
+
           - if review_nav?
             %li{class: nav_item_class("event-review-proposals-link")}
               = link_to event_staff_proposals_path(current_event) do

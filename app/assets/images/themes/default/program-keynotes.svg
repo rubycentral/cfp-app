@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="32px" viewBox="0 0 24 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 62 (91390) - https://sketch.com -->
+    <title>program-keynotes</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard-Copy-43" transform="translate(-546.000000, -805.000000)">
+            <g id="program-keynotes" transform="translate(548.000000, 805.000000)">
+                <path d="M16,13 L4,13 C3.72385763,13 3.47385763,12.8880712 3.29289322,12.7071068 C3.11192881,12.5261424 3,12.2761424 3,12 C3,11.0848639 3.45736152,10.2302761 4.21880078,9.7226499 L7.54700196,7.50384912 C8.03980451,7.17531408 8.61882759,7 9.21110255,7 L10.7888974,7 C11.3811724,7 11.9601955,7.17531408 12.452998,7.50384912 L15.7811992,9.7226499 C16.5426385,10.2302761 17,11.0848639 17,12 C17,12.2761424 16.8880712,12.5261424 16.7071068,12.7071068 C16.5261424,12.8880712 16.2761424,13 16,13 Z" id="Rectangle" stroke="#494644" stroke-width="2" fill="#FEFCF8"></path>
+                <ellipse id="Oval" stroke="#494644" stroke-width="2" fill="#FEFCF8" cx="10" cy="4.5" rx="3" ry="3.5"></ellipse>
+                <path d="M18.1528729,21 L1.84712709,21 C1.35828794,21 0.905273304,20.8232935 0.554377296,20.52604 C0.203481288,20.2287865 -0.0452960976,19.8109859 -0.125660759,19.328798 L-0.792327426,15.328798 C-0.88312248,14.7840277 -0.744510172,14.2540287 -0.447006521,13.8375236 C-0.132374123,13.3970383 0.359972633,13.0834917 0.946623157,13.0136589 L18.8195396,13 C19.3718243,13 19.8718243,13.2238576 20.2337531,13.5857864 C20.6162094,13.9682427 20.8444884,14.5048763 20.8173636,15.0944605 L20.1256608,19.328798 C20.0452961,19.8109859 19.7965187,20.2287865 19.4456227,20.52604 C19.0947267,20.8232935 18.6417121,21 18.1528729,21 Z" id="Rectangle" stroke="#494644" stroke-width="2" fill="#FEFCF8"></path>
+                <rect id="Rectangle" stroke="#494644" stroke-width="2" fill="#FEFCF8" x="3" y="16" width="14" height="15" rx="1"></rect>
+                <rect id="Rectangle" fill="#494644" x="4" y="18" width="12" height="2"></rect>
+                <rect id="Rectangle-Copy-88" fill="#E0B952" x="4" y="21" width="12" height="2"></rect>
+                <rect id="Rectangle-Copy-89" fill="#6F8A47" x="4" y="24" width="12" height="2"></rect>
+                <rect id="Rectangle-Copy-90" fill="#C04F45" x="4" y="27" width="12" height="2"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

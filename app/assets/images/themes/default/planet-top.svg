@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200px" height="200px" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 64 (93537) - https://sketch.com -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-620.000000, -349.000000)">
+            <g id="Group" transform="translate(620.000000, 349.000000)">
+                <path d="M100,4.26325641e-14 C155.228475,4.26325641e-14 200,44.771525 200,100 C200,102.523323 199.906541,105.024818 199.722895,107.501211 C195.887613,55.7743945 152.705492,15 100,15 C47.2945085,15 4.11238709,55.7743945 0.277030384,107.499789 C0.0934590844,105.024818 0,102.523323 0,100 C0,44.771525 44.771525,4.26325641e-14 100,4.26325641e-14 Z" id="highlight" fill="#FFFFFF" opacity="0.200000003" style="mix-blend-mode: overlay;"></path>
+                <circle id="topborder" stroke="#1A2C3D" stroke-width="5" cx="100" cy="100" r="97.5"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

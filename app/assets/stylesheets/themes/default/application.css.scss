@@ -1,0 +1,559 @@
+@import 'themes/default/reset';
+@import 'themes/default/colors';
+@import 'themes/default/nav';
+@import 'themes/default/footer';
+@import 'themes/default/mixins';
+@import 'themes/default/home';
+@import 'themes/default/imagebox';
+@import 'themes/default/static';
+@import 'themes/default/sponsors';
+@import 'themes/default/about';
+@import 'themes/default/location';
+@import 'themes/default/slider';
+@import 'themes/default/program';
+@import 'themes/default/schedule';
+@import 'themes/default/bangerads';
+@import 'themes/default/register';
+
+@import url('https://rsms.me/inter/inter-ui.css');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');
+
+html {
+  font-family: 'Inter UI', sans-serif;
+}
+
+@supports (font-variation-settings: normal) {
+  html {
+    font-family: 'Inter UI var alt', sans-serif;
+  }
+}
+
+body {
+  color: $text;
+  font-size: 16px;
+  line-height: 27px;
+  font-weight: 400;
+  padding: 0 0 0 265px;
+  background-color: $white;
+  background-image: image-url('themes/default/bg-layer1.png'), image-url('themes/default/bg-layer2.png');
+  background-position: 0 0, 0 0;
+  background-size: 2192px 1460px, 1482px 2578px;
+  background-repeat: repeat, repeat;
+}
+
+a {
+  display: inline-block;
+  transition: all 0.2s ease-in-out;
+}
+
+p,
+ul {
+  line-height: 25px;
+  margin-bottom: 20px;
+
+  em {
+    font-style: italic;
+  }
+
+  strong {
+    display: inline;
+    font-size: inherit;
+    font-weight: 700;
+    padding: 0;
+  }
+
+  u {
+    text-decoration: underline;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  a {
+    @extend %defaultlink;
+
+    display: inline;
+    padding: 0 0 1px;
+  }
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+#hero {
+  z-index: 10;
+  position: relative;
+  padding-bottom: 400px;
+  background-color: $white;
+  background-image:
+    image-url('themes/default/bg-layer1.png'),
+    image-url('themes/default/bg-layer2.png'),
+    image-url('themes/default/stripe.svg'),
+    image-url('themes/default/mountain-bg-top.png'),
+    image-url('themes/default/topo.png'),
+    image-url('themes/default/mountain-bg-bottom.jpg');
+  background-position:
+    -265px 0,
+    -265px 0,
+    0 bottom,
+    right calc(100% - 300px),
+    -265px 0,
+    right calc(100% - 300px);
+  background-size:
+    2192px 1460px,
+    1482px 2578px,
+    10px 300px,
+    783px 430px,
+    1041px 1032px,
+    829px 521px;
+  background-repeat:
+    repeat,
+    repeat,
+    repeat-x,
+    no-repeat,
+    repeat,
+    no-repeat;
+  &.small-hero {
+    padding-bottom: 110px;
+    background-image:
+    image-url('themes/default/bg-layer1.png'),
+    image-url('themes/default/bg-layer2.png'),
+    image-url('themes/default/small-stripe.svg'),
+    image-url('themes/default/mountain-bg-top.png'),
+    image-url('themes/default/topo.png'),
+    image-url('themes/default/mountain-bg-bottom.jpg');
+    background-position:
+      -265px 0,
+      -265px 0,
+      left bottom,
+      right calc(100% - 10px),
+      -265px 0,
+      right calc(100% - 10px);
+    background-size:
+      2192px 1460px,
+      1482px 2578px,
+      100% 10px,
+      783px 430px,
+      1041px 1032px,
+      829px 521px;
+    background-repeat:
+      repeat,
+      repeat,
+      no-repeat,
+      no-repeat,
+      repeat,
+      no-repeat;
+    }
+  h2 {
+    font-size: 40px;
+    font-weight: 700;
+    color: $brown;
+    margin: 0 0 20px 0;
+  }
+  &.home {
+    min-height: 1200px;
+    display: block;
+    background-image:
+    image-url('themes/default/bg-layer1.png'),
+    image-url('themes/default/bg-layer2.png'),
+    image-url('themes/default/RailsConf2022-logo.svg'),
+    image-url('themes/default/stripe.svg'),
+    image-url('themes/default/mountain-bg-top.png'),
+    image-url('themes/default/topo.png'),
+    image-url('themes/default/mountain-bg-bottom.jpg');
+  background-position:
+    -265px 0,
+    -265px 0,
+    100px 100px,
+    0 bottom,
+    right calc(100% - 300px),
+    -265px 0,
+    right calc(100% - 300px);
+  background-size:
+    2192px 1460px,
+    1482px 2578px,
+    auto,
+    10px 300px,
+    783px 430px,
+    1041px 1032px,
+    829px 521px;
+  background-repeat:
+    repeat,
+    repeat,
+    no-repeat,
+    repeat-x,
+    no-repeat,
+    repeat,
+    no-repeat;
+    div {
+      float: left;
+      margin: 395px 0 0 580px;
+    }
+    #covid-notice-home {
+      padding: 15px;
+      border-radius: 5px;
+      background: $dividerlight;
+      border: 1px solid $divider;
+      margin-right: 50px;
+      max-width: 600px;
+    }
+  }
+  h3 {
+    color: $green;
+    font-size: 36px;
+    font-weight: 700;
+    padding: 0 0 15px 0;
+    line-height: 48px;
+  }
+}
+
+#hero-top {
+  padding: 50px 100px 0;
+  position: relative;
+  min-height: 190px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 100px;
+  img {
+    position: absolute;
+    top: 50px;
+    right: 100px;
+  }
+}
+
+#content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 100px;
+  padding: 50px 100px 100px;
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 17px 24px rgba(52,44,34,.12);
+    margin: 0 0 25px 0;
+  }
+  h4 {
+    font-weight: 700;
+    font-size: 18px;
+    position: relative;
+    padding: 0 20px 10px 0;
+    display: inline-block;
+    img {
+      width: auto;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+      border-radius: 0;
+      box-shadow: none;
+    }
+  }
+  &.small-type {
+    font-size: 14px;
+    line-height: 23px;
+    .bold-link {
+      @extend %defaultlink;
+      display: block;
+      font-weight: 600;
+      font-size: 16px;
+    }
+    strong {
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 20px;
+    }
+    p strong {
+      font-size: 14px;
+    }
+    div {
+      margin: 0 0 25px 0;
+    }
+    h4 {
+      font-size: 16px;
+      height: 20px;
+      line-height: 20px;
+      display: block;
+      color: $red;
+      margin: 0 0 10px 0;
+      img {
+
+      }
+    }
+    h6 {
+      font-weight: 700;
+    }
+    ul {
+      li {
+        padding: 0 0 0 15px;
+        margin: 0 0 10px;
+        background: image-url('themes/default/bullet.svg') 0 9px no-repeat;
+        line-height: 23px;
+      }
+    }
+  }
+}
+
+.cta {
+  background: $white;
+  border-image: linear-gradient(to right, $brown 25%, $gold 25%, $gold 50%, $red 50%, $red 75%, $green 75%) 5;
+  border-bottom: 5px solid;
+  height: 60px;
+  line-height: 57px;
+  display: inline-block;
+  @extend %mono;
+  color: $brown;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 0 50px;
+  box-shadow: 0 17px 24px rgba(92,79,62,.2);
+  text-decoration: none;
+  margin: 0 0 25px 0;
+}
+
+#reg-faq {
+  padding: 50px 100px 25px;
+  font-size: 14px;
+  line-height: 23px;
+  h5 {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .bold-link {
+    @extend %defaultlink;
+    display: block;
+    font-weight: 600;
+    font-size: 16px;
+  }
+  strong {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+  }
+  p strong {
+    font-size: 14px;
+  }
+}
+
+#reg-faq-comparison {
+  margin: 25px -15px 0 -15px;
+  list-style-type: none;
+  .reg-faq-column {
+    width: 50%;
+  }
+  li {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 100px;
+    background: $white;
+    border-radius: 3px;
+    margin: 5px 0 0 0;
+    padding: 15px;
+    strong {
+      display: block;
+    }
+    em {
+      font-size: 14px;
+      margin: -2px 0 10px 0;
+      display: block;
+    }
+    small {
+      font-size: 12px;
+      padding: 7px;
+      border-radius: 3px;
+      background: $dividerlight;
+    }
+    &.top {
+      strong {
+        color: $white;
+        border-radius: 3px;
+        background: $green;
+        font-size: 16px;
+        padding: 7px;
+        display: inline-block;
+        margin: 0 0 5px 0;
+      }
+      h6 {
+        font-weight: 600;
+      }
+      div:first-child strong {
+        background: $red;
+      }
+    }
+  }
+}
+
+#reg-faq-comparison-1,
+#reg-faq-comparison-2 {
+  display: none;
+  li {
+    border-bottom: 1px solid $brown;
+    margin: 0;
+    padding: 10px 0;
+    strong {
+      display: block;
+    }
+    em {
+      font-size: 14px;
+      margin: -2px 0 10px 0;
+      display: block;
+    }
+    &.top {
+      strong {
+        color: $white;
+        border-radius: 3px;
+        background: $green;
+        font-size: 16px;
+        padding: 7px;
+        display: inline-block;
+        margin: 0 0 5px 0;
+      }
+      h6 {
+        font-weight: 600;
+        line-height: 20px;
+      }
+    }
+  }
+}
+
+#reg-faq-comparison-2 {
+  margin: 25px 0 0 0;
+  li {
+    &.top {
+      strong {
+        background: $red;
+      }
+    }
+  }
+}
+
+
+@media screen and (max-width: 900px) and (orientation: portrait),
+  (max-width: 823px) and (orientation: landscape) {
+  body {
+    padding: 78px 0 0 0;
+    background-image: image-url('themes/default/bg-layer1.png'), image-url('themes/default/bg-layer2.png');
+    background-position: 0 0, 0 0;
+    background-size: 2192px 1460px, 1482px 2578px;
+    background-repeat: repeat, repeat;
+  }
+  #reg-faq-comparison {
+    display: none;
+    .reg-faq-column {
+      width: auto;
+    }
+  }
+  #reg-faq-comparison-1,
+  #reg-faq-comparison-2 {
+    display: block;
+  }
+  #reg-faq {
+    display: block;
+    padding: 50px 15px 25px
+  }
+  #hero {
+    padding: 30px 0 150px 0;
+    min-height: 500px;
+    background-image:
+      image-url('themes/default/bg-layer1.png'),
+      image-url('themes/default/bg-layer2.png'),
+      image-url('themes/default/stripe-mobile.svg'),
+      image-url('themes/default/mountain-bg-top.png'),
+      image-url('themes/default/topo.png'),
+      image-url('themes/default/mountain-bg-bottom.jpg');
+    background-position:
+      965px 0,
+      965px 0,
+      0 bottom,
+      right calc(100% - 150px),
+      0 0,
+      right calc(100% - 150px);
+    background-size:
+      2192px 1460px,
+      1482px 2578px,
+      10px 150px,
+      auto 215px,
+      1041px 1032px,
+      auto 260.5px;
+    background-repeat:
+      repeat,
+      repeat,
+      repeat-x,
+      no-repeat,
+      repeat,
+      no-repeat;
+    &.home {
+      padding: 50px 0 150px 0;
+      min-height: 0;
+      text-align: center;
+      background-image:
+        image-url('themes/default/bg-layer1.png'),
+        image-url('themes/default/bg-layer2.png'),
+        image-url('themes/default/RailsConf2022-logo.svg'),
+        image-url('themes/default/stripe-mobile.svg'),
+        image-url('themes/default/mountain-bg-top.png'),
+        image-url('themes/default/topo.png'),
+        image-url('themes/default/mountain-bg-bottom.jpg');
+      background-position:
+        965px 0,
+        965px 0,
+        center 25px,
+        0 bottom,
+        right calc(100% - 150px),
+        0 0,
+        right calc(100% - 150px);
+      background-size:
+        2192px 1460px,
+        1482px 2578px,
+        190px auto,
+        10px 150px,
+        auto 215px,
+        1041px 1032px,
+        auto 260.5px;
+      background-repeat:
+        repeat,
+        repeat,
+        no-repeat,
+        repeat-x,
+        no-repeat,
+        repeat,
+        no-repeat;
+      div {
+        float: none;
+        margin: 310px 0 100px 0;
+      }
+      #covid-notice-home {
+        margin: 0 20px;
+        padding: 10px;
+        text-align: center;
+      }
+    }
+  }
+  #hero-top {
+    padding: 150px 15px 0;
+    position: relative;
+    min-height: auto;
+    display: block;
+    img {
+      position: absolute;
+      top: 0;
+      left: 15px;
+    }
+    h3 {
+      display: none;
+    }
+  }
+
+  #content {
+    display: block;
+    padding: 0 15px 100px;
+    &>div {
+      margin: 20px 0 0 0;
+    }
+  }
+}

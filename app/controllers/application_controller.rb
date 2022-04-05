@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   helper_method :current_event
+  helper_method :current_website
   helper_method :display_staff_event_subnav?
   helper_method :display_staff_selection_subnav?
   helper_method :display_staff_program_subnav?
@@ -55,6 +56,10 @@ class ApplicationController < ActionController::Base
     @current_event = Event.find_by(id: event_id).try(:decorate)
     session[:current_event_id] = @current_event.try(:id)
     @current_event
+  end
+
+  def current_website
+    @current_event.website
   end
 
   def pundit_user

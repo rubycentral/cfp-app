@@ -1,0 +1,13 @@
+= content_for(:head) do
+  = tinymce_assets
+= simple_form_for [current_event, :staff, page] do |f|
+  .row
+    %fieldset.col-md-6
+      = f.input :name
+      = f.input :slug
+      = f.input :body, as: :text, input_html: { class: 'tinymce' }
+      = tinymce
+  .row
+    .col-sm-12
+      = submit_tag("Save", class: "pull-right btn btn-success", type: "submit")
+      = link_to "Cancel", event_staff_pages_path(current_event), {:class=>"cancel-form pull-right btn btn-danger"}

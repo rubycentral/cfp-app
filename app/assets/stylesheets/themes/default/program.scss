@@ -1,0 +1,371 @@
+@import 'mixins';
+
+#tracks-nav {
+  width: 190px;
+  right: 25px;
+  top: 175px;
+  position: fixed;
+  z-index: 3;
+  transition: all 0.25s ease-in-out;
+
+
+  strong {
+    color: $grey;
+    font-weight: 700;
+    display: block;
+    @extend %mono;
+  }
+
+  ul {
+    margin: 5px 0 0 0;
+
+    li {
+      background: none;
+      margin: 0 0 4px 0;
+      padding: 0;
+
+      a {
+        font-size: 14px;
+        box-shadow: none;
+        text-shadow: none;
+        border-left: 3px solid $brown;
+        padding: 0 0 0 6px;
+        text-decoration: none;
+        color: $text;
+        &.track-rails-at-scale {
+          border-color: $rails_at_scale;
+        }
+        &.track-identity-permissions {
+          border-color: $identity_permissions;
+        }
+        &.track-creative-communications {
+          border-color: $creative_communications;
+        }
+        &.track-everything-activesupport {
+          border-color: $everything_activesupport;
+        }
+        &.track-soft-skills-are-hard {
+          border-color: $soft_skills_are_hard;
+        }
+        &.track-memorable-post-mortems {
+          border-color: $memorable_post_mortems;
+        }
+        &.track-exported-expertise {
+          border-color: $exported_expertise;
+        }
+        &:hover {
+          padding: 0 0 0 8px;
+        }
+      }
+      &.back-to-top a {
+        border: 0;
+        text-decoration: none;
+        padding: 0;
+      }
+    }
+  }
+}
+
+
+
+.program-nav {
+  margin: 0;
+  padding: 0;
+  li {
+    padding: 0 10px;;
+    margin: 0 0 2px 0;
+    width: auto;
+    border-radius: 2px;
+    &:last-child {
+      margin: 0;
+    }
+    &.active {
+      a {
+        padding: 0 24px 0 14px;
+        background: image-url('themes/default/bullet.svg') left center no-repeat;
+      }
+    }
+    &.program-keynotes {
+      background: rgba(58,35,23, .35) image-url('themes/default/program-keynotes.svg') calc(100% - 14px) center no-repeat;
+    }
+    &.program-sessions {
+      background: rgba(58,35,23, .35) image-url('themes/default/program-sessions.svg') calc(100% - 10px) center no-repeat;
+    }
+    &.program-workshops {
+      background: rgba(58,35,23, .35) image-url('themes/default/program-workshops.svg') calc(100% - 10px) center no-repeat;
+    }
+    a {
+      padding: 0;
+      height: 50px;
+      line-height: 50px;
+      @extend %mono;
+      font-size: 14px;
+      font-weight: 600;
+      display: block;
+      color: $white;
+      text-decoration: none;    
+      &:hover {
+        color: $gold;
+      }
+    }
+  }
+}
+
+#keynote-speakers {
+  padding: 100px;
+  width: auto;
+  h2 {
+    font-size: 36px;
+    font-weight: 700;
+  }
+  ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin: 40px 0 0 0;
+    li {
+      position: relative;
+      box-shadow: 0 17px 24px rgba(52,44,34,.12);
+      border-radius: 5px;
+      background: $white image-url('themes/default/topo.png');
+      background-size: 1041px 1032px;
+      margin: 40px 0 0 0;
+      div {
+        outline: 3px solid rgba(76,44,23,.1);
+        outline-offset: -15px;
+        padding: 0 35px 50px 35px;
+        position: relative;
+        height: 100%;
+        a.keynoter-org-link {
+          padding: 0 0 10px 0;
+          display: block;
+          font-size: 18px;
+        }
+        img {
+          position: absolute;
+          top: -40px;
+          left: 35px;
+          border-radius: 10px;
+          width: 150px;
+          height: auto;
+          box-shadow: 0 7px 18px rgba(0,0,0,.15);
+        }
+        h3 {
+          color: $red;
+          @extend %mono;
+          font-weight: 600;
+          font-size: 20px;
+          line-height: 28px;
+          padding: 160px 0 0 0;
+        }
+      }
+    }
+  }
+}
+
+#workshops {
+  padding: 100px;
+  width: auto;
+  h2 {
+    font-size: 36px;
+    font-weight: 700;
+    margin: 0 0 50px 0;
+  }
+}
+
+#sessions {
+  padding: 100px 250px 100px 100px;
+  width: auto;
+  h2 {
+    font-size: 36px;
+    font-weight: 700;
+    margin: 0 0 50px 0;
+  }
+}
+
+.session-anchor {
+  display: block;
+}
+
+.session-title {
+  a {
+    font-size: 18px;
+    @extend %mono;
+    color: $red;
+    font-weight: 600;
+    display: block;
+    padding: 5px 0 15px;
+  }
+}
+
+.session-author-details {
+  padding: 25px;
+  font-size: 14px;
+  background-color: $white;
+  background-image: image-url('themes/default/topo.png'),  image-url('themes/default/small-stripe.svg');
+  background-size: 1041px 1032px, 100% 3px;
+  background-position: 0 0, 0 top;
+  background-repeat: repeat, no-repeat;
+  margin: 0 -25px -25px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  .session-author {
+    @extend %mono;
+    font-weight: 600;
+  }
+}
+
+.session,
+.workshop {
+  margin: 0 0 25px 0;
+  position: relative;
+  box-shadow: 0 17px 24px rgba(52,44,34,.12);
+  border-radius: 5px;
+  background: $white;
+  background-size: 1041px 1032px;
+  padding: 25px;
+  font-size: 14px;
+  p {
+    line-height: 22px;
+  }
+}
+
+.track-name {
+  background: $general;
+  border-radius: 2px;
+  padding: 5px;
+  color: $white;
+  @extend %mono;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  &.rails_at_scale {
+    background: $rails_at_scale;
+  }
+  &.identity_permissions {
+    background: $identity_permissions;
+  }
+  &.creative_communications {
+    background: $creative_communications;
+  }
+  &.everything_activesupport {
+    background: $everything_activesupport;
+  }
+  &.soft_skills_are_hard {
+    background: $soft_skills_are_hard;
+  }
+  &.memorable_post_mortems {
+    background: $memorable_post_mortems;
+  }
+  &.exported_expertise {
+    background: $exported_expertise;
+  }
+}
+
+@media screen and (max-width: 900px) and (orientation: portrait),
+  (max-width: 823px) and (orientation: landscape) {
+    #keynote-speakers {
+      padding: 25px 5px;
+      width: auto;
+      h2 {
+        padding: 25px 10px;
+      }
+      ul {
+        display: block;
+        li {
+          margin: 65px 0 0 0;
+        }
+        p {
+          font-size: 14px;
+          line-height: 22px;
+        }
+      }
+    }
+    #sessions,
+    #workshops {
+      z-index: 2;
+      padding: 25px 5px;
+      h2 {
+        margin: 25px 15px;
+      }
+      .session,
+      .workshop {
+        font-size: 12px;
+        padding: 15px;
+        p {
+          line-height: 18px;
+          margin-bottom: 15px;
+        }
+      }
+    }
+    .session-title a {
+      padding: 0 0 5px 0;
+      font-size: 14px;
+      line-height: 18px;
+    }
+    .session-author-details {
+      font-size: 12px;
+      padding: 15px 15px 0 15px;
+      margin: 0 -15px -15px;
+    }
+    #tracks-nav {
+      background: $white;
+      border-bottom: 1px solid $divider;
+      border-radius: 0;
+      color: $darkest;
+      font-size: 16px;
+      left: 0;
+      opacity: 1;
+      padding: 15px 0;
+      text-align: center;
+      text-decoration: underline;
+      top: 78px;
+      width: 100%;
+      position: sticky;
+      strong {
+        display: none;
+      }
+
+      &:before {
+        content: 'Select a Track';
+      }
+
+      ul {
+        margin: 15px 0 -15px 0;
+        padding: 0;
+        display: none;
+        height: 100vh;
+        background: $white image-url('themes/default/topo.png');
+        background-size: 1041px 1032px;
+        li {
+          border-top: 1px solid $divider;
+          margin: 0;
+          a {
+            background: $white;
+            border-left: 5px solid $brown;
+            border-right: 5px solid $brown;
+            display: block;
+            font-size: 16px;
+            height: 48px;
+            line-height: 48px;
+            margin: 0;
+            padding: 0;
+          }
+          &.back-to-top {
+            border-bottom: 1px solid $divider;
+          }
+        }
+      }
+
+      &.--tracks-nav-active {
+        &:before {
+          content: 'Close';
+        }
+
+        ul {
+          display: block;
+        }
+      }
+    }
+  }
+

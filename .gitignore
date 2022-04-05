@@ -18,3 +18,4 @@ scratch.md
 yarn-debug.log*
 .yarn-integrity
 .vscode
+latest.dump*

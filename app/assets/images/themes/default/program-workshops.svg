@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="23px" viewBox="0 0 32 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 62 (91390) - https://sketch.com -->
+    <title>program-workshops</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard-Copy-43" transform="translate(-413.000000, -812.000000)">
+            <g id="program-workshops" transform="translate(415.000000, 814.000000)">
+                <path d="M27,20 L1,20 C0.44771525,20 -0.0522847498,19.7761424 -0.414213562,19.4142136 C-0.776142375,19.0522847 -1,18.5522847 -1,18 C-1,17.4477153 -0.776142375,16.9477153 -0.414213562,16.5857864 C-0.0522847498,16.2238576 0.44771525,16 1,16 L27,16 C27.5522847,16 28.0522847,16.2238576 28.4142136,16.5857864 C28.7761424,16.9477153 29,17.4477153 29,18 C29,18.5522847 28.7761424,19.0522847 28.4142136,19.4142136 C28.0522847,19.7761424 27.5522847,20 27,20 Z" id="Rectangle" stroke="#494644" stroke-width="2" fill="#FEFCF8"></path>
+                <path d="M26,16 L2,16 L2,1 C2,0.44771525 2.22385763,-0.0522847498 2.58578644,-0.414213562 C2.94771525,-0.776142375 3.44771525,-1 4,-1 L24,-1 C24.5522847,-1 25.0522847,-0.776142375 25.4142136,-0.414213562 C25.7761424,-0.0522847498 26,0.44771525 26,1 L26,16 Z" id="Rectangle" stroke="#494644" stroke-width="2" fill="#FEFCF8"></path>
+                <path d="M5,1 L14,1 L14,1 L14,14 L5,14 C4.44771525,14 4,13.5522847 4,13 L4,2 C4,1.44771525 4.44771525,1 5,1 Z" id="Rectangle" fill="#494644"></path>
+                <rect id="Rectangle" fill="#C04F45" x="6" y="3" width="3" height="1"></rect>
+                <rect id="Rectangle-Copy-101" fill="#FEFCF8" x="10" y="3" width="2" height="1"></rect>
+                <rect id="Rectangle-Copy-93" fill="#E0B952" x="7" y="5" width="3" height="1"></rect>
+                <rect id="Rectangle-Copy-100" fill="#FEFCF8" x="11" y="5" width="1" height="1"></rect>
+                <rect id="Rectangle-Copy-94" fill="#FEFCF8" x="6" y="7" width="2" height="1"></rect>
+                <rect id="Rectangle-Copy-99" fill="#FEFCF8" x="9" y="7" width="2" height="1"></rect>
+                <rect id="Rectangle-Copy-95" fill="#6F8A47" x="6" y="9" width="3" height="1"></rect>
+                <rect id="Rectangle-Copy-98" fill="#C04F45" x="10" y="9" width="2" height="1"></rect>
+                <rect id="Rectangle-Copy-96" fill="#E0B952" x="6" y="11" width="2" height="1"></rect>
+                <rect id="Rectangle-Copy-97" fill="#FEFCF8" x="9" y="11" width="3" height="1"></rect>
+                <path d="M23.5,13 L13.5,13.5 L13.5,1.5 L23,1.5 L23.5,13 Z" id="Rectangle-Copy-91" stroke="#494644" fill="#D4CDC4"></path>
+                <rect id="Rectangle" fill="#FEFCF8" x="16" y="3" width="6" height="2" rx="0.5"></rect>
+                <rect id="Rectangle" fill="#FEFCF8" x="16" y="6" width="2" height="3" rx="0.5"></rect>
+                <rect id="Rectangle" fill="#FEFCF8" x="19" y="6" width="3" height="1" rx="0.5"></rect>
+                <rect id="Rectangle-Copy-92" fill="#FEFCF8" x="19" y="8" width="3" height="1" rx="0.5"></rect>
+                <rect id="Rectangle" fill="#FEFCF8" x="16" y="10" width="6" height="2" rx="0.5"></rect>
+                <rect id="Rectangle" fill="#494644" x="10" y="17" width="8" height="1"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

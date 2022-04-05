@@ -1,0 +1,24 @@
+!!!5
+%html(lang="en")
+  %head
+    %title= title
+    %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+
+    = stylesheet_link_tag 'default', media: 'all'
+
+  %body.body
+    %header#header
+      #nav.full-nav
+        = link_to root_path(current_event), id: "logo-area" do
+          %h1
+            = current_event.name
+          %small
+            = current_event.date_range
+        %nav#main-nav
+          %div#center-nav
+            - if current_website.live_program?
+              = link_to "Program", programs_path(current_event)
+            - current_website.pages.each do |page|
+              = link_to page.name, root_path(current_event, page.slug)
+    %main.main
+      =yield

@@ -108,6 +108,7 @@ Rails.application.routes.draw do
 
       resources :session_formats, except: :show
       resources :tracks, except: [:show]
+      resources :pages
     end
   end
 
@@ -141,4 +142,7 @@ Rails.application.routes.draw do
   get '/404', :to => 'errors#not_found'
   get '/422', :to => 'errors#unacceptable'
   get '/500', :to => 'errors#internal_error'
+
+  get '/:slug', :to => 'pages#show'
+  get '/:slug/:page', :to => 'pages#show'
 end

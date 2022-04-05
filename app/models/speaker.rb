@@ -75,6 +75,10 @@ end
 #  info               :text
 #  created_at         :datetime
 #  updated_at         :datetime
+#  age_range          :string
+#  ethnicity          :string
+#  first_time_speaker :boolean
+#  pronouns           :string
 #
 # Indexes
 #

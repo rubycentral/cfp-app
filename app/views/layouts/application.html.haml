@@ -13,6 +13,7 @@
     = javascript_include_tag 'https://www.gstatic.com/charts/loader.js'
     = javascript_include_tag 'application'
     = javascript_tag { yield :custom_js }
+    = yield(:head)
 
     = csrf_meta_tags
 

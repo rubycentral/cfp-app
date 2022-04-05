@@ -1,0 +1,143 @@
+@import 'colors';
+
+#team {
+  padding: 50px 100px 0;
+  h4 {
+    font-weight: 700;
+    font-size: 18px;
+  }
+  ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    text-align: center;
+    img {
+      width: 156px;
+      height: auto;
+    }
+    strong {
+      display: block;
+      @extend %mono;
+      color: $red;
+      margin: -20px 0 0 0;
+    }
+    small {
+      display: block;
+      font-size: 14px;
+      line-height: 20px;
+    }
+    a {
+      display: block;
+      width: 17px;
+      height: 13px;
+      margin: 7px auto 0;
+      background: image-url('themes/default/twitter-icon.svg');
+    }
+  }
+}
+
+#track-directors {
+  ul {
+    li {
+      position: relative;
+      padding: 0 0 0 58px;
+      height: 48px;
+      line-height: 48px;
+      &:first-child img {
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+      }
+      &:last-child img {
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+      }
+    }
+    strong {
+      position: absolute;
+      padding: 0 25px 0 0;
+      height: 48px;
+      display: inline-block;
+      @extend %mono;
+      font-size: 14px;
+      a {
+        display: block;
+        position: absolute;
+        right: 0;
+        top: 18px;
+        width: 17px;
+        height: 13px;
+        background: image-url('themes/default/twitter-icon.svg');
+      }
+    }
+    small {
+      font-size: 14px;
+      line-height: 20px;
+      float: right;
+      height: 48px;
+      line-height: 48px;
+    }
+    img {
+      width: 48px;
+      height: 48px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-radius: 0;
+    }
+  }
+}
+
+@media screen and (max-width: 900px) and (orientation: portrait),
+  (max-width: 823px) and (orientation: landscape) {
+    #team {
+      padding: 25px 15px 0;
+      ul {
+        display: block;
+        text-align: left;
+        li {
+          position: relative;
+          padding: 0 0 0 125px;
+          height: 140px;
+          margin: 10px 0 0 0;
+          img {
+            position: absolute;
+            left: -22px;
+            top: -13px;
+          }
+        }
+        strong {
+          margin: 0;
+          padding: 10px 0 0 0;
+        }
+        small {
+
+        }
+        a {
+          margin: 5px 0 0 0;
+        }
+      }
+    }
+
+    #track-directors {
+      ul {
+        li {
+          width: auto;
+          margin: 0 0 5px 0;
+          padding: 7px 0 0 58px;
+        }
+        strong {
+          height: auto;
+          line-height: 18px;
+          display: block;
+          a {
+            top: 4px;
+          }
+        }
+        small {
+          float: none;
+          line-height: 14px;
+          height: auto;
+        }
+      }
+    }
+}
+

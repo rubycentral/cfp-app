@@ -1,0 +1,22 @@
+.row
+  .col-md-8
+    %h3
+      Website Page
+      %span.badge= @pages.count
+  .col-md-4.text-right
+    = link_to "+ New Page", new_event_staff_page_path(current_event), class: "btn btn-success btn-sm"
+.row
+  .col-md-12
+    %table.datatable.table.table-striped
+      %thead
+        %tr
+          %th
+          %th.hidden
+        %tr
+          %th Name
+          %th Slug
+          %th.hidden
+
+      %tbody
+        = render @pages
+%hr

@@ -1,0 +1,12 @@
+.row
+  .col-md-12
+    .page-header.clearfix
+      .btn-navbar.pull-right
+        = link_to event_staff_page_path(current_event, @page),
+          method: :delete, data: { confirm: 'This will delete this page. Are you sure you want to do this? ' + 'It can not be undone.' },
+          class: 'btn btn-danger navbar-btn', id: 'delete' do
+          %span.glyphicon.glyphicon-exclamation-sign
+          Delete Page
+      %h1 Edit Website Page
+
+= render 'form', page: @page

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 62 (91390) - https://sketch.com -->
+    <title>program-sessions</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="14" height="4" rx="1"></rect>
+    </defs>
+    <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard-Copy-43" transform="translate(-497.000000, -806.000000)">
+            <g id="program-sessions" transform="translate(497.000000, 806.000000)">
+                <rect id="Rectangle-Copy-87" fill="#494644" x="0" y="0" width="32" height="4" rx="1"></rect>
+                <path d="M27,25 L5,25 C4.72385763,25 4.47385763,24.8880712 4.29289322,24.7071068 C4.11192881,24.5261424 4,24.2761424 4,24 L4,3 L28,3 L28,24 C28,24.2761424 27.8880712,24.5261424 27.7071068,24.7071068 C27.5261424,24.8880712 27.2761424,25 27,25 Z" id="Rectangle-Copy-86" stroke="#494644" stroke-width="2" fill="#FEFCF8"></path>
+                <circle id="Oval-Copy-2" fill="#494644" cx="16" cy="30" r="2"></circle>
+                <rect id="Rectangle-Copy-85" fill="#494644" x="15" y="24" width="2" height="5"></rect>
+                <g id="Rectangle-+-Rectangle-Copy-79-+-Rectangle-Copy-80-+-Rectangle-Copy-81-Mask-Copy" transform="translate(9.000000, 7.000000)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="Mask" fill="#C04F45" xlink:href="#path-1"></use>
+                </g>
+                <rect id="Rectangle-Copy-84" fill="#D4CDC4" x="9" y="12" width="14" height="2" rx="1"></rect>
+                <rect id="Rectangle-Copy-83" fill="#D4CDC4" x="9" y="15" width="14" height="2" rx="1"></rect>
+                <rect id="Rectangle-Copy-82" fill="#D4CDC4" x="9" y="18" width="14" height="2" rx="1"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

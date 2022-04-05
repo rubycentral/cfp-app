@@ -1,0 +1,154 @@
+@import 'mixins';
+
+#logo-area {
+  display: block;
+  padding: 175px 0 40px 40px;
+  background: image-url('themes/default/RailsConf2020-mini-logo.svg') 40px 20px no-repeat;
+  h1 {
+    font-size: 22px;
+    font-weight: 800;
+    display: block;
+    padding: 10px 0 0 0;
+    color: $brown;
+    letter-spacing: -0.025em;
+  }
+  small {
+    font-size: 14px;
+    font-weight: 800;
+    margin: -5px 0 0 0;
+    display: block;
+    color: $brown;
+  }
+}
+
+#header {
+  width: 265px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  z-index: 5;
+  border-right: 1px solid $divider;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none
+}
+
+#header::-webkit-scrollbar {
+  display: none;
+}
+
+#main-nav {
+  border-top: 1px solid $divider;
+  a {
+    height: 50px;
+    padding: 0 0 0 40px;
+    line-height: 50px;
+    @extend %mono;
+    font-size: 14px;
+    font-weight: 600;
+    display: block;
+    color: $brown;
+    border-bottom: 1px solid $divider;
+    &:hover {
+      color: $red;
+      transform: translateX(2px);
+    }
+    &.register-link {
+      color: $red;
+      &:hover {
+        color: $gold;
+      }
+    }
+  }
+}
+
+.social-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  a {
+    text-indent: -99999px;
+  }
+  a.twitter {
+    border-right: 1px solid $divider;
+    background: image-url('themes/default/twitter-icon.svg') center center no-repeat;
+  }
+  a.facebook {
+    background: image-url('themes/default/fb-icon.svg') center center no-repeat;
+  }
+  a.linkedin {
+    background: image-url('themes/default/linkedin.svg') center center no-repeat;
+  }
+}
+
+#menu-toggle {
+  display: none;
+}
+
+@media screen and (max-width: 900px) and (orientation: portrait),
+  (max-width: 823px) and (orientation: landscape) {
+    #header {
+      width: 100%;
+      border-right: 0;
+      z-index: 20;
+      height: 80px;
+      overflow-y: visible;
+    }
+    #nav {
+      height: 80px;
+    }
+    #logo-area {
+      padding: 17px 0 0 58px;
+      min-height: 78px;
+      border-bottom: 1px solid $divider;
+      background-color: $white;
+      background-image: image-url('themes/default/RailsConf2020-logo-mobile.svg'), image-url('themes/default/bg-layer1.png'), image-url('themes/default/bg-layer2.png');
+      background-position: 10px 5px, 0 0, 0 0;
+      background-size: auto, 2192px 1460px, 1482px 2578px;
+      background-repeat: no-repeat, repeat, repeat;
+      h1 {
+        padding: 0;
+        font-size: 18px;
+      }
+      small {
+        margin: -10px 0 0 0;
+      }
+    }
+    #menu-toggle {
+      display: block;
+      background-color: red;
+      width: 78px;
+      height: 78px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      border-left: 1px solid $divider;
+      background: image-url('themes/default/menu.svg') center center no-repeat;
+      transition: none;
+      &.menu-toggle--opened {
+        background: image-url('themes/default/menu-close.svg') center center no-repeat;
+      }
+    }
+    #main-nav {
+      width: 100%;
+      height: 100vh;
+      left: 0;
+      top: 0;
+      transform: translateX(100vw);
+      transition: transform .35s ease-in-out;
+      border: 0;
+      background-color: $white;
+      background-image: image-url('themes/default/bg-layer1.png'), image-url('themes/default/bg-layer2.png');
+      background-position: 0 0, 0 0;
+      background-size: 2192px 1460px, 1482px 2578px;
+      a {
+        padding: 0 0 0 60px;
+        height: 56px;
+        line-height: 56px;
+      }
+      &.menu-mobile--opened {
+        transform: translateX(0);
+      }
+    }
+  }
+

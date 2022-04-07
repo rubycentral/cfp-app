@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   helper_method :display_staff_event_subnav?
   helper_method :display_staff_selection_subnav?
   helper_method :display_staff_program_subnav?
+  helper_method :display_website_subnav?
   helper_method :program_mode?
   helper_method :schedule_mode?
   helper_method :program_tracks
@@ -59,7 +60,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_website
-    @current_event.website
+    @current_event&.website || Website.domain_match(request.domain).first
   end
 
   def pundit_user
@@ -141,6 +142,14 @@ class ApplicationController < ActionController::Base
 
   def display_staff_program_subnav?
     @display_program_subnav
+  end
+
+  def enable_website_subnav
+    @display_website_subnav = true
+  end
+
+  def display_website_subnav?
+    @display_website_subnav
   end
 
   def enable_staff_schedule_subnav

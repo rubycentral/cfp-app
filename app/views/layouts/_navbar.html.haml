@@ -19,8 +19,8 @@
                 %span My Proposals
 
           - if policy(Page).index?
-            %li{class: nav_item_class("event-pages-link")}
-              = link_to event_staff_pages_path(current_event) do
+            %li{class: nav_item_class("event-website-link")}
+              = link_to edit_event_staff_website_path(current_event) do
                 %span Website
 
           - if review_nav?
@@ -68,3 +68,6 @@
 
 - elsif schedule_mode?
   = render partial: "layouts/nav/staff/schedule_subnav"
+
+- elsif display_website_subnav?
+  = render "layouts/nav/staff/website_subnav"

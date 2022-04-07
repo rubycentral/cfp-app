@@ -19,3 +19,5 @@ yarn-debug.log*
 .yarn-integrity
 .vscode
 latest.dump*
+dump.rdb
+/storage

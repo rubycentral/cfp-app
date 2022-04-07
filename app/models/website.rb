@@ -1,6 +1,11 @@
 class Website < ApplicationRecord
   belongs_to :event
   has_many :pages
+  has_one_attached :logo
+
+  def self.domain_match(domain)
+    where(arel_table[:domains].matches("%#{(domain)}"))
+  end
 end
 
 # == Schema Information

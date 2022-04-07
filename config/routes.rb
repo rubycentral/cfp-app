@@ -1,5 +1,16 @@
+class DomainConstraint
+  def matches?(request)
+    Website.domain_match(request.domain).exists?
+  end
+end
+
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  constraints DomainConstraint.new do
+    get '/',  :to => 'pages#show'
+    get '/program', :to => 'programs#index'
+    get ':page', :to => 'pages#show'
+  end
   root 'home#show'
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   mount ActionCable.server => '/cable'
@@ -109,9 +120,11 @@ Rails.application.routes.draw do
       resources :session_formats, except: :show
       resources :tracks, except: [:show]
       resources :pages
+      resource :website
     end
   end
 
+  resources :image_uploads, only: :create
   resource :public_comments, only: [:create], controller: :comments, type: 'PublicComment'
   resource :internal_comments, only: [:create], controller: :comments, type: 'InternalComment'
 
@@ -143,7 +156,7 @@ Rails.application.routes.draw do
   get '/422', :to => 'errors#unacceptable'
   get '/500', :to => 'errors#internal_error'
 
-  get '/:slug', :to => 'pages#show', :as => 'page'
-  get '/:slug/program', :to => 'programs#index', :as => 'program_page'
-  get '/:slug/:page', :to => 'pages#show', :as => 'event_page'
+  get '/(:slug)', :to => 'pages#show', as: :landing
+  get '/(:slug)/program', :to => 'programs#index', :as => 'program_page'
+  get '/(:slug)/:page', :to => 'pages#show', as: :page
 end

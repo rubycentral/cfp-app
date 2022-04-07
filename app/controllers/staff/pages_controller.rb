@@ -1,4 +1,6 @@
 class Staff::PagesController < Staff::ApplicationController
+  before_action :enable_website_subnav
+
   def index
     @pages = current_website.pages
   end

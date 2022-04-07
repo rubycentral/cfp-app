@@ -10,15 +10,15 @@
     %header#header
       #nav.full-nav
         %a#menu-toggle{ href: "#"}
-        = link_to root_path(current_event), id: "logo-area" do
+        = link_to landing_path(current_event), id: "logo-area" do
           %h1
-            = current_event.name
+            = current_website.event.name
           %small
-            = current_event.date_range
+            = current_website.event.decorate.date_range
         %nav#main-nav
           %div#center-nav
             - current_website.pages.each do |page|
-              = link_to page.name, root_path(current_event, page.slug)
+              = link_to page.name, page_path(current_event, page)
     %main.main
       =yield
     :javascript

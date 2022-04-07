@@ -1,0 +1,67 @@
+@import 'mixins';
+
+.register {
+    border: 1px solid $divider;
+    border-radius: 12px;
+    display: grid;
+    overflow: hidden;
+    padding-top: 75.25%;
+    position: relative;
+  }
+
+  .register iframe {
+      border: 0;
+      height: 100%;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+  }
+
+  .register,
+  #blurb {
+    margin: 50px 100px 0;
+
+    @media screen and (max-width: 900px) and (orientation: portrait),
+    (max-width: 823px) and (orientation: landscape) {
+      margin: 50px 15px;
+    }
+  }
+
+#blurb {
+  @extend %mono;
+  align-items: center;
+  background-color: #272523;
+  color: #FEFCF8;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: end;
+  padding: 50px;
+  border-radius: 5px;
+  background-image: image-url('themes/railsconf22/topo-dark.png');
+  background-repeat: repeat;
+  background-size: 1182px 1000px;
+  background-position: center center;
+
+  @media screen and (max-width: 900px) and (orientation: portrait),
+  (max-width: 823px) and (orientation: landscape) {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+  .cta, h4 {
+    width: fit-content;
+    margin: 0;
+  }
+
+  h4 {
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .cta {
+    @media screen and (max-width: 900px) and (orientation: portrait),
+    (max-width: 823px) and (orientation: landscape) {
+      margin-top: 20px;
+    }
+  }
+}

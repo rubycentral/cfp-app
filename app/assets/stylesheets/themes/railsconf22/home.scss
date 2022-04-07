@@ -1,0 +1,354 @@
+@import 'mixins';
+
+#home-content {
+  background: image-url('themes/railsconf22/what-is.svg') calc( 50% - 40px ) 150px no-repeat;
+}
+
+#what-is {
+  width: 700px;
+  padding: 200px 0;
+  margin: 0 auto;
+  h3 {
+    font-size: 36px;
+    font-weight: 700;
+  }
+  #blurb {
+    @extend %shadowbox;
+    @extend %mono;
+    color: $red;
+    padding: 50px 220px 50px 50px !important;
+    font-weight: 600;
+    margin: 25px 0;
+    position: relative;
+    overflow: hidden;
+    img {
+      height: 100%;
+      position: absolute;
+      left: 500px;
+      top: 0;
+    }
+  }
+  p {
+    padding-right: 200px;
+  }
+}
+
+#news {
+  padding: 100px 0 200px 0;
+  margin: 0 auto;
+  width: 700px;
+  h3 {
+    font-size: 36px;
+    font-weight: 700;
+  }
+  ul {
+    margin: 40px 0 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    li {
+      @extend %shadowbox;
+      span {
+        @extend %mono;
+        color: $red;
+        display: block;
+        font-weight: 800;
+        font-size: 14px;
+        text-transform: uppercase;
+      }
+      strong {
+        color: $gold;
+        display: block;
+        font-size: 24px;
+        font-weight: 700;
+        padding: 0 0 15px 0;
+      }
+      p {
+        position: relative;
+      }
+      &:first-child {
+        flex-basis: 100%;
+        margin: 0 0 40px 0;
+        padding-bottom: 80px;
+        background-color: $white;
+        background-image: image-url('themes/railsconf22/news1.png'), image-url('themes/railsconf22/topo.png');
+        background-position: calc( 100% - 40px ) bottom, 0 0 ;
+        background-repeat: no-repeat, repeat;
+        background-size: 176px 200px, 1041px 1032px;
+        p {
+          width: 360px;
+        }
+      }
+      &:nth-of-type(2) {
+        flex-basis: calc( 50% - 20px );
+        margin: 0 20px 0 0;
+        padding-bottom: 180px;
+        background-color: $white;
+        background-image: image-url('themes/railsconf22/news2.png'), image-url('themes/railsconf22/topo.png');
+        background-position: calc( 100% - 10px ) bottom, 50% 20%;
+        background-repeat: no-repeat, repeat;
+        background-size: 234px 149px, 1041px 1032px;
+      }
+      &:nth-of-type(3) {
+        flex-basis: calc( 50% - 20px );
+        margin: 0 0 0 20px;
+        padding-bottom: 180px;
+        background-color: $white;
+        background-image: image-url('themes/railsconf22/news3.png'), image-url('themes/railsconf22/topo.png');
+        background-position: right bottom, 75% 60%;
+        background-repeat: no-repeat, repeat;
+        background-size: 160px 146px, 1041px 1032px;
+      }
+    }
+  }
+}
+
+#homepage-keynoters {
+  padding: 0 100px 200px;
+  width: auto;
+  h3 {
+    font-size: 36px;
+    font-weight: 700;
+  }
+  ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin: 40px 0 0 0;
+    li {
+      position: relative;
+      border-radius: 5px;
+      background: $white image-url('themes/railsconf22/topo.png');
+      background-size: 1041px 1032px;
+      overflow: hidden;
+      padding: 0 0 0 160px;
+      &:nth-of-type(2) {
+        background-position: 20% 20%;
+      }
+      &:nth-of-type(3) {
+        background-position: 50% 40%;
+      }
+      &:nth-of-type(4) {
+        background-position: 20% 70%;
+      }
+      &:nth-of-type(5) {
+        background-position: 90% 50%;
+      }
+      div {
+        height: 180px;
+        outline: 3px solid rgba(76,44,23,.1);
+        outline-offset: -15px;
+        text-align: center;
+        padding: 25px;
+        border-left: 1px solid $dividerlight;
+        h4 {
+          @extend %mono;
+          color: $red;
+          font-size: 18px;
+          font-weight: 700;
+          padding: 45px 0 0 0;
+          line-height: 22px;
+        }
+        a {
+          display: block;
+          color: $brown;
+          font-size: 16px;
+          font-weight: 500;
+        }
+      }
+      img {
+        width: 160px;
+        height: auto;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+      }
+    }
+  }
+}
+#homepage-location {
+  background-color: #272523;
+  color: $white;
+  margin: 0 100px 200px;
+  padding: 50px 50px 50px 336px;
+  min-height: 570px;
+  border-radius: 5px;
+  background-image: image-url('themes/railsconf22/homepage-location.png'), image-url('themes/railsconf22/topo-dark.png');
+  background-repeat: no-repeat, repeat;
+  background-size: 286px 570px, 1182px 1000px;
+  h3 {
+    color: $gold;
+    font-weight: 700;
+    font-size: 36px;
+    position: relative;
+    width: 100%;
+    padding: 0 0 20px 0;
+    img {
+      position: absolute;
+      right: 0;
+      top: -5px;
+    }
+  }
+  footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
+    h4 {
+      @extend %mono;
+      color: $red;
+      font-weight: 700;
+      padding: 0;
+    }
+    a {
+      color: $white;
+      text-decoration: none;
+    }
+    strong a {
+      font-weight: 700;
+      color: $green;
+      line-height: 24px;
+    }
+    .cta {
+      padding: 0 10px;
+      font-size: 14px;
+      height: 50px;
+      line-height: 47px;
+      color: $brown;
+    }
+    address {
+      padding: 0 0 10px 0;
+      a {
+        font-size: 14px;
+        line-height: 16px;
+        margin: 0 0 4px 0;
+        display: block;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 900px) and (orientation: portrait),
+  (max-width: 823px) and (orientation: landscape) {
+    #home-content {
+      background: none;
+      p {
+        font-size: 14px;
+        line-height: 23px;
+      }
+    }
+    .ad {
+      width: auto;
+    }
+    #what-is {
+      width: auto;
+      margin: 50px 15px;
+      padding: 0;
+      h3 {
+        font-size: 24px;
+        line-height: 36px;
+      }
+      p {
+        padding: 0;
+      }
+      #blurb {
+        width: auto;
+        padding: 25px !important;
+        margin: 10px 0;
+        font-size: 14px;
+        line-height: 22px;
+        img {
+          display: none;
+        }
+      }
+    }
+    #news {
+      width: auto;
+      margin: 50px 15px;
+      padding: 0;
+      h3 {
+        font-size: 24px;
+        line-height: 36px;
+      }
+      ul {
+        display: block;
+        margin: 10px 0 0 0;
+        li {
+          strong {
+            font-size: 18px;
+            padding: 0 0 5px 0;
+          }
+          padding: 20px !important;
+          p {
+            width: auto !important;
+            font-size: 14px;
+            line-height: 22px;
+          }
+          margin: 0 0 20px 0 !important;
+          background-color: $white !important;
+          background-image: image-url('themes/railsconf22/topo.png') !important;
+          background-position: 0 0 !important;
+          background-repeat: repeat !important;
+          background-size: 1041px 1032px !important;
+        }
+      }
+    }
+    #homepage-keynoters {
+      padding: 0 15px 50px 15px;
+      h3 {
+        font-size: 24px;
+        line-height: 36px;
+      }
+      ul {
+        margin: 10px 0 0 0;
+        display: block;
+        li {
+          margin: 0 0 10px 0;
+          padding: 0 0 0 120px;
+          &:last-child {
+            margin: 0;
+          }
+          div {
+            height: 120px;
+            padding: 20px;
+            text-align: left;
+            outline-offset: -10px;
+            h4 {
+              padding: 20px 0 0 0;
+              font-size: 14px;
+              line-height: 20px;
+            }
+            a {
+              margin: -4px 0 0 0;
+              font-size: 14px;
+            }
+          }
+          img {
+            width: 120px;
+          }
+        }
+      }
+    }
+    #homepage-location {
+      background-color: #272523;
+      color: $white;
+      margin: 0 15px 50px 15px;
+      padding: 25px;
+      min-height: 0;
+      border-radius: 5px;
+      background-image: image-url('themes/railsconf22/topo-dark.png');
+      background-repeat: repeat;
+      background-size:  1182px 1000px;
+      h3 {
+        font-size: 24px;
+        padding: 0 0 10px 0;
+      }
+      footer {
+        display: block;
+        .cta {
+          margin-bottom: 20px;
+        }
+      }
+    }
+}

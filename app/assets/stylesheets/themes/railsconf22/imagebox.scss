@@ -1,0 +1,144 @@
+#image-box {
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+
+  div {
+    animation-duration: 30s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100%;
+    min-width: 100%;
+    position: absolute;
+
+    &.image-box-1 {
+      animation-name: imagebox1;
+      background-image: image-url('themes/railsconf22/minni1.jpg');
+    }
+
+    &.image-box-2 {
+      animation-name: imagebox2;
+      background-image: image-url('themes/railsconf22/minni2.jpg');
+    }
+
+    &.image-box-3 {
+      animation-name: imagebox3;
+      background-image: image-url('themes/railsconf22/minni3.jpg');
+    }
+
+    &.image-box-4 {
+      animation-name: imagebox4;
+      background-image: image-url('themes/railsconf22/minni4.jpg');
+    }
+
+    &.image-box-5 {
+      animation-name: imagebox5;
+      background-image: image-url('themes/railsconf22/minni5.jpg');
+    }
+  }
+}
+
+@keyframes imagebox1 {
+  0% {
+    opacity: 1;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  20% {
+    opacity: 0;
+  }
+
+  95% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes imagebox2 {
+  0% {
+    opacity: 1;
+  }
+
+  35% {
+    opacity: 1;
+  }
+
+  40% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes imagebox3 {
+  0% {
+    opacity: 1;
+  }
+
+  55% {
+    opacity: 1;
+  }
+
+  60% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes imagebox4 {
+  0% {
+    opacity: 1;
+  }
+
+  75% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes imagebox5 {
+  0% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  95% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@media screen and (max-width: 900px) and (orientation: portrait),
+  (max-width: 823px) and (orientation: landscape) {
+  #image-box {
+    height: 250px;
+    width: auto;
+  }
+}

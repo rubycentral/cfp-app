@@ -1,0 +1,40 @@
+!!!5
+%html(lang="en")
+  %head
+    %title= title
+    %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+
+    = stylesheet_link_tag current_website.theme, media: 'all'
+
+  %body.body
+    %header#header
+      #nav.full-nav
+        %a#menu-toggle{ href: "#"}
+        = link_to root_path(current_event), id: "logo-area" do
+          %h1
+            = current_event.name
+          %small
+            = current_event.date_range
+        %nav#main-nav
+          %div#center-nav
+            - current_website.pages.each do |page|
+              = link_to page.name, root_path(current_event, page.slug)
+    %main.main
+      =yield
+    :javascript
+      var openEl = document.getElementById('menu-toggle');
+      var mobileNavEl = document.getElementById('main-nav');
+
+      function toggleNav() {
+        mobileNavEl.classList.toggle('menu-mobile--opened')
+        openEl.classList.toggle('menu-toggle--opened')
+      }
+
+      openEl.addEventListener('click', function (e) {
+        e.preventDefault()
+        toggleNav()
+      })
+
+      document.getElementById("main-nav").addEventListener('click', function(e) {
+        toggleNav()
+      })

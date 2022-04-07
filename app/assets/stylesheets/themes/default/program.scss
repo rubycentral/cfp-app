@@ -1,4 +1,3 @@
-@import 'mixins';
 
 #tracks-nav {
   width: 190px;
@@ -13,7 +12,7 @@
     color: $grey;
     font-weight: 700;
     display: block;
-    @extend %mono;
+    // @extend %mono;
   }
 
   ul {
@@ -82,23 +81,23 @@
     &.active {
       a {
         padding: 0 24px 0 14px;
-        background: image-url('themes/default/bullet.svg') left center no-repeat;
+        background: image-url('themes/railsconf22/bullet.svg') left center no-repeat;
       }
     }
     &.program-keynotes {
-      background: rgba(58,35,23, .35) image-url('themes/default/program-keynotes.svg') calc(100% - 14px) center no-repeat;
+      background: rgba(58,35,23, .35) image-url('themes/railsconf22/program-keynotes.svg') calc(100% - 14px) center no-repeat;
     }
     &.program-sessions {
-      background: rgba(58,35,23, .35) image-url('themes/default/program-sessions.svg') calc(100% - 10px) center no-repeat;
+      background: rgba(58,35,23, .35) image-url('themes/railsconf22/program-sessions.svg') calc(100% - 10px) center no-repeat;
     }
     &.program-workshops {
-      background: rgba(58,35,23, .35) image-url('themes/default/program-workshops.svg') calc(100% - 10px) center no-repeat;
+      background: rgba(58,35,23, .35) image-url('themes/railsconf22/program-workshops.svg') calc(100% - 10px) center no-repeat;
     }
     a {
       padding: 0;
       height: 50px;
       line-height: 50px;
-      @extend %mono;
+      // @extend %mono;
       font-size: 14px;
       font-weight: 600;
       display: block;
@@ -127,7 +126,7 @@
       position: relative;
       box-shadow: 0 17px 24px rgba(52,44,34,.12);
       border-radius: 5px;
-      background: $white image-url('themes/default/topo.png');
+      background: $white image-url('themes/railsconf22/topo.png');
       background-size: 1041px 1032px;
       margin: 40px 0 0 0;
       div {
@@ -152,7 +151,7 @@
         }
         h3 {
           color: $red;
-          @extend %mono;
+          // @extend %mono;
           font-weight: 600;
           font-size: 20px;
           line-height: 28px;
@@ -190,7 +189,7 @@
 .session-title {
   a {
     font-size: 18px;
-    @extend %mono;
+    // @extend %mono;
     color: $red;
     font-weight: 600;
     display: block;
@@ -202,7 +201,7 @@
   padding: 25px;
   font-size: 14px;
   background-color: $white;
-  background-image: image-url('themes/default/topo.png'),  image-url('themes/default/small-stripe.svg');
+  background-image: image-url('themes/railsconf22/topo.png'),  image-url('themes/railsconf22/small-stripe.svg');
   background-size: 1041px 1032px, 100% 3px;
   background-position: 0 0, 0 top;
   background-repeat: repeat, no-repeat;
@@ -210,7 +209,7 @@
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   .session-author {
-    @extend %mono;
+    // @extend %mono;
     font-weight: 600;
   }
 }
@@ -235,7 +234,7 @@
   border-radius: 2px;
   padding: 5px;
   color: $white;
-  @extend %mono;
+  // @extend %mono;
   font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;
@@ -335,7 +334,7 @@
         padding: 0;
         display: none;
         height: 100vh;
-        background: $white image-url('themes/default/topo.png');
+        background: $white image-url('themes/railsconf22/topo.png');
         background-size: 1041px 1032px;
         li {
           border-top: 1px solid $divider;
@@ -368,4 +367,3 @@
       }
     }
   }
-

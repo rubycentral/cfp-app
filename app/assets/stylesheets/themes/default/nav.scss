@@ -1,154 +1,166 @@
-@import 'mixins';
-
-#logo-area {
-  display: block;
-  padding: 175px 0 40px 40px;
-  background: image-url('themes/default/RailsConf2020-mini-logo.svg') 40px 20px no-repeat;
-  h1 {
-    font-size: 22px;
-    font-weight: 800;
-    display: block;
-    padding: 10px 0 0 0;
-    color: $brown;
-    letter-spacing: -0.025em;
-  }
-  small {
-    font-size: 14px;
-    font-weight: 800;
-    margin: -5px 0 0 0;
-    display: block;
-    color: $brown;
-  }
-}
-
-#header {
-  width: 265px;
+#main-header {
   position: fixed;
-  left: 0;
-  top: 0;
-  height: 100%;
-  z-index: 5;
-  border-right: 1px solid $divider;
-  overflow-y: scroll;
-  -ms-overflow-style: none;
-  scrollbar-width: none
-}
+  height: calc(100vh - 100px);
+  width: 176px;
+  border-right: 1px solid $black;
+  background: #FFFFFF;
 
-#header::-webkit-scrollbar {
-  display: none;
-}
-
-#main-nav {
-  border-top: 1px solid $divider;
-  a {
-    height: 50px;
-    padding: 0 0 0 40px;
-    line-height: 50px;
-    @extend %mono;
-    font-size: 14px;
-    font-weight: 600;
-    display: block;
-    color: $brown;
-    border-bottom: 1px solid $divider;
-    &:hover {
-      color: $red;
-      transform: translateX(2px);
+  #header-logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    div {
+      text-align: center;
     }
-    &.register-link {
-      color: $red;
+  }
+
+  #main-nav {
+    a {
+      height: 50px;
+      padding: 0 0 0 40px;
+      line-height: 50px;
+      font-size: 14px;
+      display: block;
+      border-bottom: 1px solid $divider;
       &:hover {
-        color: $gold;
+        color: $red;
+        transform: translateX(2px);
+      }
+      &.register-link {
+        color: $red;
+        &:hover {
+          color: $gold;
+        }
       }
     }
   }
-}
 
-.social-links {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
   a {
-    text-indent: -99999px;
+    text-decoration: none;
+    width: auto;
+    &#menu-toggle {
+      display: none;
+    }
+    &#header-logo-area {
+      border: 1px solid $black;
+      padding: 0;
+      width: 170px;
+      height: 170px;
+      position: relative;
+    }
   }
-  a.twitter {
-    border-right: 1px solid $divider;
-    background: image-url('themes/default/twitter-icon.svg') center center no-repeat;
-  }
-  a.facebook {
-    background: image-url('themes/default/fb-icon.svg') center center no-repeat;
-  }
-  a.linkedin {
-    background: image-url('themes/default/linkedin.svg') center center no-repeat;
-  }
-}
 
-#menu-toggle {
-  display: none;
+  .social-links {
+    display: flex; 
+    flex-direction: row;
+    align-items: center;
+    border-bottom: 1px solid $divider;
+    a {
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      margin: 0 5px 0 0;
+      border-bottom: none!important;
+      &:hover {
+        transform: translateX(2px);
+      }
+    }
+    .twitter-link {
+      background: image-url('themes/default/twitter-icon.svg') center center no-repeat;
+    }
+    .facebook-link {
+      background: image-url('themes/default/fb-icon.svg') center center no-repeat;
+    }
+    .instagram-link {
+      background: image-url('themes/default/instagram-icon.svg') center center no-repeat;
+    }
+  }
 }
 
 @media screen and (max-width: 900px) and (orientation: portrait),
   (max-width: 823px) and (orientation: landscape) {
-    #header {
-      width: 100%;
-      border-right: 0;
+    #main-header{
+      width: calc(100% - 32px);
+      border-top: none;
+      border-left: none;
+      border-bottom: 1px solid black;
+      height: 72px;
       z-index: 20;
-      height: 80px;
-      overflow-y: visible;
-    }
-    #nav {
-      height: 80px;
-    }
-    #logo-area {
-      padding: 17px 0 0 58px;
-      min-height: 78px;
-      border-bottom: 1px solid $divider;
-      background-color: $white;
-      background-image: image-url('themes/default/RailsConf2020-logo-mobile.svg'), image-url('themes/default/bg-layer1.png'), image-url('themes/default/bg-layer2.png');
-      background-position: 10px 5px, 0 0, 0 0;
-      background-size: auto, 2192px 1460px, 1482px 2578px;
-      background-repeat: no-repeat, repeat, repeat;
-      h1 {
+
+      #header-logo-container {
+        flex-direction: row;
+        align-items: center;
+        height: 72px;
+        div {
+          padding: 0 0 0 10px;
+          text-align: left;
+        }
+        h1, h4 {
+          margin: 0px 0px 0px 0px;
+        }
+      }
+
+      #header-logo-area {
+        height: 72px!important;
+        width: 72px!important;
+      }
+
+      a {
+        &#menu-toggle {
+          display: block; 
+          width: 64px;
+          height: 64px;
+          position: absolute;
+          right: 0;
+          top: 8px;
+          background: image-url('themes/default/menu.svg') center center no-repeat;
+          transition: none;
+          &.menu-toggle--opened {
+            background: image-url('themes/default/menu-close.svg') center center no-repeat;
+          }
+        }
+      }
+
+      .social-links {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
         padding: 0;
-        font-size: 18px;
-      }
-      small {
-        margin: -10px 0 0 0;
-      }
-    }
-    #menu-toggle {
-      display: block;
-      background-color: red;
-      width: 78px;
-      height: 78px;
-      position: absolute;
-      right: 0;
-      top: 0;
-      border-left: 1px solid $divider;
-      background: image-url('themes/default/menu.svg') center center no-repeat;
-      transition: none;
-      &.menu-toggle--opened {
-        background: image-url('themes/default/menu-close.svg') center center no-repeat;
+        
+        a {
+          height: 56px;
+          display: block;
+          width: auto;
+          margin: 0;
+          border-right: 1px solid $divider;
+          &:last-child {
+            border-right: none;
+          }
+        }
       }
     }
     #main-nav {
+      z-index: 9;
+      border-right: 1px solid $black;
+      border-left: 1px solid $black;
       width: 100%;
-      height: 100vh;
-      left: 0;
-      top: 0;
-      transform: translateX(100vw);
+      display: block;
+      background: #FFFFFF;
+      border-top: 1px solid $divider; 
+      height: calc(100vh - 104px);
+      transform: translate(0, calc(-100vh - 70px));
       transition: transform .35s ease-in-out;
-      border: 0;
-      background-color: $white;
-      background-image: image-url('themes/default/bg-layer1.png'), image-url('themes/default/bg-layer2.png');
-      background-position: 0 0, 0 0;
-      background-size: 2192px 1460px, 1482px 2578px;
       a {
-        padding: 0 0 0 60px;
-        height: 56px;
-        line-height: 56px;
+        padding: 0;
+        height: 36px;
+        line-height: 36px;
+        display: block;
+        text-indent: 8px;
+        border-bottom: 1px solid $divider;
       }
       &.menu-mobile--opened {
-        transform: translateX(0);
+        transform: translate(0, 0)!important;
       }
     }
-  }
 
+  }

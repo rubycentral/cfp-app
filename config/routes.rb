@@ -143,6 +143,7 @@ Rails.application.routes.draw do
   get '/422', :to => 'errors#unacceptable'
   get '/500', :to => 'errors#internal_error'
 
-  get '/:slug', :to => 'pages#show'
-  get '/:slug/:page', :to => 'pages#show'
+  get '/:slug', :to => 'pages#show', :as => 'page'
+  get '/:slug/program', :to => 'programs#index', :as => 'program_page'
+  get '/:slug/:page', :to => 'pages#show', :as => 'event_page'
 end

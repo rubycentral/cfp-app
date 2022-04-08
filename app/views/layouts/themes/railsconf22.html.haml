@@ -17,7 +17,7 @@
             = current_website.event.decorate.date_range
         %nav#main-nav
           %div#center-nav
-            - current_website.pages.each do |page|
+            - current_website.pages.published.each do |page|
               = link_to page.name, page_path(current_event, page)
     %main.main
       =yield

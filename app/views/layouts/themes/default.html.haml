@@ -5,7 +5,7 @@
     %meta(name="viewport" content="width=device-width, initial-scale=1.0")
 
     = stylesheet_link_tag current_website.theme, media: 'all'
-  
+
   %body
     %main#main-default
       %header#main-header
@@ -14,13 +14,13 @@
           %a#header-logo-area{ href: "/"}
           %div
             %h1
-              = current_event.name
+              = current_website.event.name
             %h4
-              = current_event.date_range
+              = current_website.event.decorate.date_range
         %nav#main-nav
-          - current_website.pages.each do |page|
-            = link_to page.name, event_page_path(current_event.slug, page.slug)
-          %a{ href: program_page_path(current_event.slug) }
+          - current_website.pages.published.each do |page|
+            = link_to page.name, page_path(current_event, page)
+          %a{ href: program_page_path(current_event) }
             Program
           .social-links
             %a.twitter-link{ href: 'https://twitter.com/rubyconf', target: '_blank' }
@@ -46,4 +46,4 @@
       document.getElementById("main-nav").addEventListener('click', function(e) {
         toggleNav()
       })
-    
+

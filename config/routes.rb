@@ -119,7 +119,11 @@ Rails.application.routes.draw do
 
       resources :session_formats, except: :show
       resources :tracks, except: [:show]
-      resources :pages
+      resources :pages do
+        member do
+          get :preview
+        end
+      end
       resource :website
     end
   end

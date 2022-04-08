@@ -28,7 +28,8 @@ class Staff::WebsitesController < Staff::ApplicationController
         :nav_background_color,
         :nav_text_color,
         :nav_link_hover,
-        :main_content_background
+        :main_content_background,
+        :sans_serif_font,
     )
   end
 end

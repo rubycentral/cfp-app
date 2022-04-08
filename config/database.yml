@@ -6,6 +6,7 @@ default: &default
 development:
   <<: *default
   database: cfp_app_development
+  database: cfp_app_production
 
 test:
   <<: *default

@@ -6,6 +6,7 @@
         %div
           = image_tag(website.logo)
       = f.input :theme, collection: Website::THEMES
+      = f.input :sans_serif_font, collection: GOOGLE_FONTS
       = f.input :logo, label: website.logo.attached? ? "Replace Logo" : "Logo"
       = f.input :body_background_color, input_html: { type: 'color' }
       = f.input :nav_background_color, input_html: { type: 'color' }

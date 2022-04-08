@@ -1,24 +1,25 @@
 @import 'colors';
 @import 'nav';
-@import 'program'; 
+@import 'program';
 @import 'fonts';
 
- 
+
 :root {
   --body_background_color: white;
   --nav_background_color: white;
-  --nav_text_color: black; 
+  --nav_text_color: black;
   --nav_link_hover: black;
   --main_content_background: white;
+  --sans-serif-font: 'Inter';
 }
 
 html {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--sans-serif-font), sans-serif;
 }
 
 @supports (font-variation-settings: normal) {
   html {
-    font-family: 'Inter', sans-serif;
+    font-family: var(--sans-serif-font), sans-serif;
   }
 }
 
@@ -55,7 +56,7 @@ body {
   position: relative;
   height: calc(100vh - 100px);
 }
- 
+
 p {
   font-size: 14px;
   line-height: 21px;

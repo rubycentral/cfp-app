@@ -3,6 +3,7 @@
   %head
     %title= title
     %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    %link{rel: "stylesheet", href: "https://fonts.googleapis.com/css?family=#{current_website.sans_serif_font}"}
     = stylesheet_link_tag current_website.theme, media: 'all'
     :css
       :root {
@@ -11,6 +12,7 @@
         --nav_text_color:#{ current_website.nav_text_color }!important;
         --nav_link_hover:#{ current_website.nav_link_hover }!important;
         --main_content_background:#{ current_website.main_content_background }!important;
+        --sans-serif-font: "#{ current_website.sans_serif_font }" !important;
       }
 
   %body

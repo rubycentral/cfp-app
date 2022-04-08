@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_07_181902) do
+ActiveRecord::Schema.define(version: 2022_04_08_063047) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -310,6 +310,11 @@ ActiveRecord::Schema.define(version: 2022_04_07_181902) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "domains"
+    t.string "body_background_color", default: "#FFFFFF"
+    t.string "nav_background_color", default: "#FFFFFF"
+    t.string "nav_text_color", default: "#000000"
+    t.string "nav_link_hover", default: "#000000"
+    t.string "main_content_background", default: "#FFFFFF"
     t.index ["event_id"], name: "index_websites_on_event_id"
   end
 

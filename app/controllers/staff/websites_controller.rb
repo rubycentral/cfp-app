@@ -19,6 +19,7 @@ class Staff::WebsitesController < Staff::ApplicationController
   end
 
   def website_params
-    params.require(:website).permit(:logo, :domains)
+    params.require(:website).permit(:logo, :domains, :body_background_color, :nav_background_color, :nav_text_color,
+                                    :nav_link_hover, :main_content_background)
   end
 end

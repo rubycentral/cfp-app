@@ -4,7 +4,18 @@
     %title= title
     %meta(name="viewport" content="width=device-width, initial-scale=1.0")
 
+
+
     = stylesheet_link_tag current_website.theme, media: 'all'
+    :css
+      :root {
+        --body_background_color:#{ current_website.body_background_color }!important;
+        --nav_background_color:#{ current_website.nav_background_color }!important;
+        --nav_text_color:#{ current_website.nav_text_color }!important;
+        --nav_link_hover:#{ current_website.nav_link_hover }!important;
+        --main_content_background:#{ current_website.main_content_background }!important;
+      }
+
 
   %body
     %main#main-default

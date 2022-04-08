@@ -9,6 +9,11 @@
           = image_tag(website.logo)
       = f.input :logo, label: website.logo.attached? ? "Replace Logo" : "Logo"
       = f.input :domains
+      = f.input :body_background_color, input_html: { type: 'color' }
+      = f.input :nav_background_color, input_html: { type: 'color' }
+      = f.input :nav_text_color, input_html: { type: 'color' }
+      = f.input :nav_link_hover, input_html: { type: 'color' }
+      = f.input :main_content_background, input_html: { type: 'color' }
   .row
     .col-sm-12
       = submit_tag("Save", class: "pull-right btn btn-success", type: "submit")

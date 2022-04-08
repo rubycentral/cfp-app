@@ -3,7 +3,8 @@
   height: calc(100vh - 100px);
   width: 176px;
   border-right: 1px solid $black;
-  background: #FFFFFF;
+  background: var(--nav_background_color);
+  color: var(--nav_text_color);
 
   #header-logo-container {
     display: flex;
@@ -23,8 +24,10 @@
       font-size: 14px;
       display: block;
       border-bottom: 1px solid $divider;
+      background-color: var(--nav_background_color);
+      color: var(--nav_text_color);
       &:hover {
-        color: $red;
+        color: var(--nav_link_hover);
         transform: translateX(2px);
       }
       &.register-link {
@@ -145,7 +148,6 @@
       border-left: 1px solid $black;
       width: 100%;
       display: block;
-      background: #FFFFFF;
       border-top: 1px solid $divider; 
       height: calc(100vh - 104px);
       transform: translate(0, calc(-100vh - 70px));

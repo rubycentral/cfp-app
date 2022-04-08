@@ -3,6 +3,15 @@
 @import 'program'; 
 @import 'fonts';
 
+ 
+:root {
+  --body_background_color: white;
+  --nav_background_color: white;
+  --nav_text_color: black; 
+  --nav_link_hover: black;
+  --main_content_background: white;
+}
+
 html {
   font-family: 'Inter', sans-serif;
 }
@@ -15,6 +24,7 @@ html {
 
 body {
   color: $text;
+  background: var(--body_background_color);
   overflow: hidden;
   font-size: 14px;
   line-height: 150%;
@@ -34,16 +44,16 @@ body {
   margin: 0 auto;
   border: 1px solid $black;
   overflow: scroll;
-  // box-shadow: inset 0 0 0 1px $black; /** covers the weird border-radius 1px gap **/
+  box-shadow: inset 0 0 0 1px $black; /** covers the weird border-radius 1px gap **/
   position: relative;
 }
 
 #content {
+  background-color: var(--main_content_background);
   margin-left: 178px;
   padding: 50px 20px 20px 50px;
   position: relative;
   height: calc(100vh - 100px);
-  overflow-y: scroll
 }
  
 p {

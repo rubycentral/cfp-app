@@ -35,7 +35,7 @@ body {
   font-weight: 400;
   padding: 0 0 0 265px;
   background-color: $white;
-  background-image: image-url('themes/default/bg-layer1.png'), image-url('themes/default/bg-layer2.png');
+  background-image: image-url('themes/railsconf22/bg-layer1.png'), image-url('themes/railsconf22/bg-layer2.png');
   background-position: 0 0, 0 0;
   background-size: 2192px 1460px, 1482px 2578px;
   background-repeat: repeat, repeat;
@@ -89,12 +89,12 @@ ul {
   padding-bottom: 400px;
   background-color: $white;
   background-image:
-    image-url('themes/default/bg-layer1.png'),
-    image-url('themes/default/bg-layer2.png'),
-    image-url('themes/default/stripe.svg'),
-    image-url('themes/default/mountain-bg-top.png'),
-    image-url('themes/default/topo.png'),
-    image-url('themes/default/mountain-bg-bottom.jpg');
+    image-url('themes/railsconf22/bg-layer1.png'),
+    image-url('themes/railsconf22/bg-layer2.png'),
+    image-url('themes/railsconf22/stripe.svg'),
+    image-url('themes/railsconf22/mountain-bg-top.png'),
+    image-url('themes/railsconf22/topo.png'),
+    image-url('themes/railsconf22/mountain-bg-bottom.jpg');
   background-position:
     -265px 0,
     -265px 0,
@@ -119,12 +119,12 @@ ul {
   &.small-hero {
     padding-bottom: 110px;
     background-image:
-    image-url('themes/default/bg-layer1.png'),
-    image-url('themes/default/bg-layer2.png'),
-    image-url('themes/default/small-stripe.svg'),
-    image-url('themes/default/mountain-bg-top.png'),
-    image-url('themes/default/topo.png'),
-    image-url('themes/default/mountain-bg-bottom.jpg');
+    image-url('themes/railsconf22/bg-layer1.png'),
+    image-url('themes/railsconf22/bg-layer2.png'),
+    image-url('themes/railsconf22/small-stripe.svg'),
+    image-url('themes/railsconf22/mountain-bg-top.png'),
+    image-url('themes/railsconf22/topo.png'),
+    image-url('themes/railsconf22/mountain-bg-bottom.jpg');
     background-position:
       -265px 0,
       -265px 0,
@@ -157,13 +157,13 @@ ul {
     min-height: 1200px;
     display: block;
     background-image:
-    image-url('themes/default/bg-layer1.png'),
-    image-url('themes/default/bg-layer2.png'),
-    image-url('themes/default/RailsConf2022-logo.svg'),
-    image-url('themes/default/stripe.svg'),
-    image-url('themes/default/mountain-bg-top.png'),
-    image-url('themes/default/topo.png'),
-    image-url('themes/default/mountain-bg-bottom.jpg');
+    image-url('themes/railsconf22/bg-layer1.png'),
+    image-url('themes/railsconf22/bg-layer2.png'),
+    image-url('themes/railsconf22/RailsConf2022-logo.svg'),
+    image-url('themes/railsconf22/stripe.svg'),
+    image-url('themes/railsconf22/mountain-bg-top.png'),
+    image-url('themes/railsconf22/topo.png'),
+    image-url('themes/railsconf22/mountain-bg-bottom.jpg');
   background-position:
     -265px 0,
     -265px 0,
@@ -291,7 +291,7 @@ ul {
       li {
         padding: 0 0 0 15px;
         margin: 0 0 10px;
-        background: image-url('themes/default/bullet.svg') 0 9px no-repeat;
+        background: image-url('themes/railsconf22/bullet.svg') 0 9px no-repeat;
         line-height: 23px;
       }
     }
@@ -437,7 +437,7 @@ ul {
   (max-width: 823px) and (orientation: landscape) {
   body {
     padding: 78px 0 0 0;
-    background-image: image-url('themes/default/bg-layer1.png'), image-url('themes/default/bg-layer2.png');
+    background-image: image-url('themes/railsconf22/bg-layer1.png'), image-url('themes/railsconf22/bg-layer2.png');
     background-position: 0 0, 0 0;
     background-size: 2192px 1460px, 1482px 2578px;
     background-repeat: repeat, repeat;
@@ -460,12 +460,12 @@ ul {
     padding: 30px 0 150px 0;
     min-height: 500px;
     background-image:
-      image-url('themes/default/bg-layer1.png'),
-      image-url('themes/default/bg-layer2.png'),
-      image-url('themes/default/stripe-mobile.svg'),
-      image-url('themes/default/mountain-bg-top.png'),
-      image-url('themes/default/topo.png'),
-      image-url('themes/default/mountain-bg-bottom.jpg');
+      image-url('themes/railsconf22/bg-layer1.png'),
+      image-url('themes/railsconf22/bg-layer2.png'),
+      image-url('themes/railsconf22/stripe-mobile.svg'),
+      image-url('themes/railsconf22/mountain-bg-top.png'),
+      image-url('themes/railsconf22/topo.png'),
+      image-url('themes/railsconf22/mountain-bg-bottom.jpg');
     background-position:
       965px 0,
       965px 0,
@@ -492,13 +492,13 @@ ul {
       min-height: 0;
       text-align: center;
       background-image:
-        image-url('themes/default/bg-layer1.png'),
-        image-url('themes/default/bg-layer2.png'),
-        image-url('themes/default/RailsConf2022-logo.svg'),
-        image-url('themes/default/stripe-mobile.svg'),
-        image-url('themes/default/mountain-bg-top.png'),
-        image-url('themes/default/topo.png'),
-        image-url('themes/default/mountain-bg-bottom.jpg');
+        image-url('themes/railsconf22/bg-layer1.png'),
+        image-url('themes/railsconf22/bg-layer2.png'),
+        image-url('themes/railsconf22/RailsConf2022-logo.svg'),
+        image-url('themes/railsconf22/stripe-mobile.svg'),
+        image-url('themes/railsconf22/mountain-bg-top.png'),
+        image-url('themes/railsconf22/topo.png'),
+        image-url('themes/railsconf22/mountain-bg-bottom.jpg');
       background-position:
         965px 0,
         965px 0,

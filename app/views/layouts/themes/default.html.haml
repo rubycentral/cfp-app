@@ -3,9 +3,6 @@
   %head
     %title= title
     %meta(name="viewport" content="width=device-width, initial-scale=1.0")
-
-
-
     = stylesheet_link_tag current_website.theme, media: 'all'
     :css
       :root {
@@ -16,13 +13,13 @@
         --main_content_background:#{ current_website.main_content_background }!important;
       }
 
-
   %body
     %main#main-default
       %header#main-header
         %div#header-logo-container
           %a#menu-toggle{ href: "#"}
-          %a#header-logo-area{ href: "/"}
+          = link_to(landing_path(current_event), id: "header-logo-area") do
+            = image_tag(current_website.logo)
           %div
             %h1
               = current_website.event.name

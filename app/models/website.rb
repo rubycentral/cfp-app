@@ -1,7 +1,12 @@
 class Website < ApplicationRecord
   belongs_to :event
-  has_many :pages
+  has_many :pages, dependent: :destroy
   has_one_attached :logo
+
+  THEMES = {
+    'Default' => :default,
+    'Railsconf22' => 'railsconf22',
+  }.freeze
 
   def self.domain_match(domain)
     where(arel_table[:domains].matches("%#{(domain)}"))

@@ -1,19 +1,18 @@
-= simple_form_for [current_event, :staff, website], method: :patch  do |f|
+= simple_form_for website, url: :event_staff_website, method: :patch  do |f|
   .row
-
-
     %fieldset.col-md-6
       - if website.logo.attached?
         = f.label :logo, "Current Logo", class: "control-label"
         %div
           = image_tag(website.logo)
+      = f.input :theme, collection: Website::THEMES
       = f.input :logo, label: website.logo.attached? ? "Replace Logo" : "Logo"
-      = f.input :domains
       = f.input :body_background_color, input_html: { type: 'color' }
       = f.input :nav_background_color, input_html: { type: 'color' }
       = f.input :nav_text_color, input_html: { type: 'color' }
       = f.input :nav_link_hover, input_html: { type: 'color' }
       = f.input :main_content_background, input_html: { type: 'color' }
+      = f.input :domains
   .row
     .col-sm-12
       = submit_tag("Save", class: "pull-right btn btn-success", type: "submit")

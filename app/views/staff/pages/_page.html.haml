@@ -1,3 +1,4 @@
 %tr
   %td= link_to(page.name, edit_event_staff_page_path(current_event, page))
   %td= link_to(page.slug, edit_event_staff_page_path(current_event, page))
+  %td= link_to("Preview", preview_event_staff_page_path(current_event, page), class: 'btn btn-primary')

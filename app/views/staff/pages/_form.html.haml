@@ -6,6 +6,7 @@
       = f.input :name
       = f.input :slug
       = f.input :body, as: :text, input_html: { class: 'tinymce' }
+      = f.input :published, as: :boolean, wrapper: :vertical_radio_and_checkboxes
       = tinymce
   .row
     .col-sm-12

@@ -5,6 +5,15 @@ class Staff::PagesController < Staff::ApplicationController
     @pages = current_website.pages
   end
 
+  def show
+    @page = current_website.pages.find_by(slug: params[:id])
+    render template: 'pages/show', layout: "themes/#{current_website.theme}"
+  end
+
+  def preview
+    @page = current_website.pages.find_by(slug: params[:id])
+  end
+
   def new
     @page = current_website.pages.build
   end
@@ -29,6 +38,6 @@ class Staff::PagesController < Staff::ApplicationController
   private
 
   def page_params
-    params.require(:page).permit(:name, :slug, :body)
+    params.require(:page).permit(:name, :slug, :body, :published)
   end
 end

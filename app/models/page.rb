@@ -1,5 +1,8 @@
 class Page < ApplicationRecord
   belongs_to :website
+  has_paper_trail only: %i[body published]
+
+  scope :published, -> { where(published: true) }
 
   def to_param
     slug

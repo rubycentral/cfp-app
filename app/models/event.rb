@@ -228,6 +228,10 @@ class Event < ApplicationRecord
     teammates.pluck(:mention_name)
   end
 
+  def number_of_workshops
+    program_sessions.filter {|session| session.session_format.name == 'Workshop' }.count
+  end
+
   private
 
   def update_closes_at_if_manually_closed

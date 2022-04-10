@@ -2,7 +2,6 @@
   position: fixed;
   height: calc(100vh - 100px);
   width: 176px;
-  border-right: 1px solid $black;
   background: var(--nav_background_color);
   color: var(--nav_text_color);
 
@@ -23,7 +22,7 @@
       line-height: 50px;
       font-size: 14px;
       display: block;
-      border-bottom: 1px solid $divider;
+      border-top: 1px solid $black;
       background-color: var(--nav_background_color);
       color: var(--nav_text_color);
       &:hover {

@@ -2,7 +2,7 @@
 @import 'nav';
 @import 'program';
 @import 'fonts';
-
+@import 'program';
 
 :root {
   --body_background_color: white;
@@ -43,9 +43,7 @@ body {
   max-width: 1070px;
   height: calc(100vh - 100px);
   margin: 0 auto;
-  border: 1px solid $black;
   overflow: scroll;
-  box-shadow: inset 0 0 0 1px $black; /** covers the weird border-radius 1px gap **/
   position: relative;
 }
 

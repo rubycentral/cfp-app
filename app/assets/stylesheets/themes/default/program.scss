@@ -1,72 +1,3 @@
-
-#tracks-nav {
-  width: 190px;
-  right: 25px;
-  top: 175px;
-  position: fixed;
-  z-index: 3;
-  transition: all 0.25s ease-in-out;
-
-
-  strong {
-    color: $grey;
-    font-weight: 700;
-    display: block;
-    // @extend %mono;
-  }
-
-  ul {
-    margin: 5px 0 0 0;
-
-    li {
-      background: none;
-      margin: 0 0 4px 0;
-      padding: 0;
-
-      a {
-        font-size: 14px;
-        box-shadow: none;
-        text-shadow: none;
-        border-left: 3px solid $brown;
-        padding: 0 0 0 6px;
-        text-decoration: none;
-        color: $text;
-        &.track-rails-at-scale {
-          border-color: $rails_at_scale;
-        }
-        &.track-identity-permissions {
-          border-color: $identity_permissions;
-        }
-        &.track-creative-communications {
-          border-color: $creative_communications;
-        }
-        &.track-everything-activesupport {
-          border-color: $everything_activesupport;
-        }
-        &.track-soft-skills-are-hard {
-          border-color: $soft_skills_are_hard;
-        }
-        &.track-memorable-post-mortems {
-          border-color: $memorable_post_mortems;
-        }
-        &.track-exported-expertise {
-          border-color: $exported_expertise;
-        }
-        &:hover {
-          padding: 0 0 0 8px;
-        }
-      }
-      &.back-to-top a {
-        border: 0;
-        text-decoration: none;
-        padding: 0;
-      }
-    }
-  }
-}
-
-
-
 .program-nav {
   margin: 0;
   padding: 0;
@@ -172,20 +103,6 @@
   }
 }
 
-#sessions {
-  padding: 100px 250px 100px 100px;
-  width: auto;
-  h2 {
-    font-size: 36px;
-    font-weight: 700;
-    margin: 0 0 50px 0;
-  }
-}
-
-.session-anchor {
-  display: block;
-}
-
 .session-title {
   a {
     font-size: 18px;
@@ -197,69 +114,89 @@
   }
 }
 
-.session-author-details {
-  padding: 25px;
-  font-size: 14px;
-  background-color: $white;
-  background-image: image-url('themes/railsconf22/topo.png'),  image-url('themes/railsconf22/small-stripe.svg');
-  background-size: 1041px 1032px, 100% 3px;
-  background-position: 0 0, 0 top;
-  background-repeat: repeat, no-repeat;
-  margin: 0 -25px -25px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  .session-author {
-    // @extend %mono;
-    font-weight: 600;
-  }
-}
-
-.session,
-.workshop {
+.workshop{
   margin: 0 0 25px 0;
-  position: relative;
-  box-shadow: 0 17px 24px rgba(52,44,34,.12);
-  border-radius: 5px;
-  background: $white;
-  background-size: 1041px 1032px;
+  border: 1px solid $black;
   padding: 25px;
-  font-size: 14px;
-  p {
-    line-height: 22px;
+} 
+
+
+#sessions {
+  padding: 50px 200px 50px 0px;
+  width: auto;
+  position: relative;
+
+  h2 {
+    font-size: 36px;
+    font-weight: 700;
+    margin: 0 0 50px 0;
   }
 }
 
-.track-name {
-  background: $general;
-  border-radius: 2px;
-  padding: 5px;
-  color: $white;
-  // @extend %mono;
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  &.rails_at_scale {
-    background: $rails_at_scale;
+.session {
+  margin: 0 0 25px 0;
+  padding: 25px;
+
+  .session-anchor {
+    display: block;
   }
-  &.identity_permissions {
-    background: $identity_permissions;
+  
+  .session_abstract {
+    padding-bottom: 20px;
+    border-bottom: 1px solid black;
   }
-  &.creative_communications {
-    background: $creative_communications;
+
+  .track-name {
+    background: $general;
+    border-radius: 2px;
+    padding: 5px;
+    color: $white; 
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
   }
-  &.everything_activesupport {
-    background: $everything_activesupport;
+
+  .session-author-details {
+    padding-bottom: 20px;
   }
-  &.soft_skills_are_hard {
-    background: $soft_skills_are_hard;
-  }
-  &.memorable_post_mortems {
-    background: $memorable_post_mortems;
-  }
-  &.exported_expertise {
-    background: $exported_expertise;
+} 
+
+
+#tracks-nav {
+  width: 190px;
+  position: sticky;
+  float: right;
+  top: 50px;
+  margin-right: -200px;
+  transition: all 0.25s ease-in-out;
+  strong { display: block; }
+
+  ul {
+    margin: 10px 0 0 0;
+    padding: 0 0 0 0;
+
+    li {
+      background: none;
+      margin: 0 0 4px 0;
+      padding: 0;
+
+      a {
+        border-left: 3px solid $brown;
+        padding: 0 0 0 6px;
+        text-decoration: none;
+        &:hover {
+          padding: 0 0 0 8px;
+        }
+      }
+      &.back-to-top a {
+        border: 0;
+        text-decoration: none;
+        padding: 0;
+      }
+    }
   }
 }
+
 
 @media screen and (max-width: 900px) and (orientation: portrait),
   (max-width: 823px) and (orientation: landscape) {

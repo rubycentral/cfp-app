@@ -31,8 +31,7 @@
         %nav#main-nav
           - current_website.pages.published.each do |page|
             = link_to page.name, page_path(current_event, page)
-          %a{ href: program_page_path(current_event) }
-            Program
+          = link_to "Program", program_page_path(current_event)
           .social-links
             %a.twitter-link{ href: 'https://twitter.com/rubyconf', target: '_blank' }
             %a.facebook-link{ href: 'https://facebook.com/rubyconf2021', target: '_blank' }

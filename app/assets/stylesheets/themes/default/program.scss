@@ -33,7 +33,7 @@
       font-weight: 600;
       display: block;
       color: $white;
-      text-decoration: none;    
+      text-decoration: none;
       &:hover {
         color: $gold;
       }
@@ -118,13 +118,14 @@
   margin: 0 0 25px 0;
   border: 1px solid $black;
   padding: 25px;
-} 
+}
 
 
 #sessions {
   padding: 50px 200px 50px 0px;
   width: auto;
   position: relative;
+  background-color: var(--main_content_background);
 
   h2 {
     font-size: 36px;
@@ -140,7 +141,7 @@
   .session-anchor {
     display: block;
   }
-  
+
   .session_abstract {
     padding-bottom: 20px;
     border-bottom: 1px solid black;
@@ -150,7 +151,7 @@
     background: $general;
     border-radius: 2px;
     padding: 5px;
-    color: $white; 
+    color: $white;
     font-size: 10px;
     font-weight: 600;
     text-transform: uppercase;
@@ -159,7 +160,7 @@
   .session-author-details {
     padding-bottom: 20px;
   }
-} 
+}
 
 
 #tracks-nav {

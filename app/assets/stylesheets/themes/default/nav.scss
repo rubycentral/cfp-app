@@ -54,7 +54,7 @@
   }
 
   .social-links {
-    display: flex; 
+    display: flex;
     flex-direction: row;
     align-items: center;
     border-bottom: 1px solid $divider;
@@ -110,7 +110,7 @@
 
       a {
         &#menu-toggle {
-          display: block; 
+          display: block;
           width: 64px;
           height: 64px;
           position: absolute;
@@ -128,7 +128,7 @@
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         padding: 0;
-        
+
         a {
           height: 56px;
           display: block;
@@ -147,7 +147,7 @@
       border-left: 1px solid $black;
       width: 100%;
       display: block;
-      border-top: 1px solid $divider; 
+      border-top: 1px solid $divider;
       height: calc(100vh - 104px);
       transform: translate(0, calc(-100vh - 70px));
       transition: transform .35s ease-in-out;

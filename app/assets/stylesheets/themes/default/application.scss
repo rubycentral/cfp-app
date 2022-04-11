@@ -42,13 +42,13 @@ body {
   width: 95%;
   max-width: 1070px;
   height: calc(100vh - 100px);
+  background-color: var(--main_content_background);
   margin: 0 auto;
   overflow: scroll;
   position: relative;
 }
 
 #content {
-  background-color: var(--main_content_background);
   margin-left: 178px;
   padding: 50px 20px 20px 50px;
   position: relative;

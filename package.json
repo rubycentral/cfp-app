@@ -2,8 +2,10 @@
   "dependencies": {
     "@babel/core": "^7",
     "@babel/preset-react": "^7.14.5",
+    "@rails/actiontext": "^6.1.4-1",
     "@rails/webpacker": "^5.4.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
+    "codemirror": "^5.65.2",
     "core-js": "^3.12.1",
     "glob-parent": "^5.1.2",
     "node-forge": "^0.10.0",
@@ -12,7 +14,9 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react_ujs": "^2.5.0",
-    "regenerator-runtime": "^0.13.7"
+    "regenerator-runtime": "^0.13.7",
+    "stimulus": "^3.0.1",
+    "trix": "^1.2.0"
   },
   "devDependencies": {
     "webpack-dev-server": "^3.3.1"

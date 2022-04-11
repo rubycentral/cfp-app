@@ -6,7 +6,7 @@ class Staff::PagesController < Staff::ApplicationController
   end
 
   def show
-    @page = current_website.pages.find_by(slug: params[:id])
+    @body = current_website.pages.find_by(slug: params[:id]).unpublished_body
     render template: 'pages/show', layout: "themes/#{current_website.theme}"
   end
 
@@ -35,9 +35,16 @@ class Staff::PagesController < Staff::ApplicationController
     redirect_to event_staff_pages_path(current_event, @page)
   end
 
+  def publish
+    @page = current_website.pages.find_by(slug: params[:id])
+    @page.update(published_body: @page.unpublished_body)
+    flash[:success] = "#{@page.name} was successfully published."
+    redirect_to event_staff_pages_path(current_event, @page)
+  end
+
   private
 
   def page_params
-    params.require(:page).permit(:name, :slug, :body, :published)
+    params.require(:page).permit(:name, :slug, :unpublished_body)
   end
 end

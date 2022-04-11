@@ -1,6 +1,7 @@
+%h1 #{@page.name} Page
+
 %iframe(src="#{event_staff_page_path(current_event, @page)}" width="100%" style="height:90vh;")
 
-= simple_form_for [current_event, :staff, @page] do |f|
-  = f.hidden_field :published, value: true
+= simple_form_for [:publish, current_event, :staff, @page] do |f|
   = submit_tag("Publish", class: "btn btn-success", type: "submit")
 

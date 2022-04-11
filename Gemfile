@@ -38,12 +38,11 @@ gem 'country_select', '~> 1.3'
 gem 'draper', '~> 4.0'
 gem 'faker'
 gem 'groupdate'
+gem 'image_processing', '~> 1.2'
 gem 'nokogiri'
 gem 'pundit'
 gem 'redcarpet', '~> 3.5'
 gem 'simple_form'
-gem 'tinymce-rails'
-
 gem 'react-rails'
 gem 'webpacker'
 

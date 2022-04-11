@@ -161,6 +161,7 @@ Rails.application.routes.draw do
   get '/500', :to => 'errors#internal_error'
 
   get '/(:slug)', :to => 'pages#show', as: :landing
-  get '/(:slug)/program', :to => 'programs#index', :as => 'program_page'
+  get '/(:slug)/program', :to => 'programs#index', as: 'program_page'
+  get '/(:slug)/schedule', :to => 'schedule#index', as: 'schedule_page'
   get '/(:slug)/:page', :to => 'pages#show', as: :page
 end

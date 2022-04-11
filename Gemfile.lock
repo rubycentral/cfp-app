@@ -6,8 +6,12 @@ GIT
     mimemagic (0.3.5)
 
 GEM
-  remote: https://rubygems.org/
   remote: https://rails-assets.org/
+  specs:
+    rails-assets-momentjs (2.22.2)
+
+GEM
+  remote: https://rubygems.org/
   specs:
     actioncable (6.1.4.1)
       actionpack (= 6.1.4.1)
@@ -345,7 +349,6 @@ GEM
       bundler (>= 1.15.0)
       railties (= 6.1.4.1)
       sprockets-rails (>= 2.0.0)
-    rails-assets-momentjs (2.22.2)
     rails-controller-testing (1.0.5)
       actionpack (>= 5.0.1.rc1)
       actionview (>= 5.0.1.rc1)

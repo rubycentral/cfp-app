@@ -245,51 +245,22 @@
       padding: 15px 15px 0 15px;
       margin: 0 -15px -15px;
     }
+
     #tracks-nav {
-      background: $white;
-      border-bottom: 1px solid $divider;
-      border-radius: 0;
-      color: $darkest;
-      font-size: 16px;
-      left: 0;
-      opacity: 1;
-      padding: 15px 0;
-      text-align: center;
-      text-decoration: underline;
-      top: 78px;
-      width: 100%;
+      text-align: left;
+      right: 0;
+      top: 0;
+      background-color: var(--main_content_background);
       position: sticky;
-      strong {
-        display: none;
-      }
-
-      &:before {
-        content: 'Select a Track';
-      }
-
       ul {
-        margin: 15px 0 -15px 0;
         padding: 0;
         display: none;
-        height: 100vh;
-        background: $white image-url('themes/railsconf22/topo.png');
-        background-size: 1041px 1032px;
         li {
-          border-top: 1px solid $divider;
-          margin: 0;
+          margin-bottom: 3px;
           a {
-            background: $white;
-            border-left: 5px solid $brown;
-            border-right: 5px solid $brown;
+            border-left: 2px solid $brown;
             display: block;
-            font-size: 16px;
-            height: 48px;
-            line-height: 48px;
-            margin: 0;
-            padding: 0;
-          }
-          &.back-to-top {
-            border-bottom: 1px solid $divider;
+            padding: 2px 10px;
           }
         }
       }
@@ -302,6 +273,12 @@
         ul {
           display: block;
         }
+      }
+    }
+
+    #tracks-nav:hover {
+      ul {
+        display: block;
       }
     }
   }

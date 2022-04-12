@@ -20,6 +20,7 @@ RSpec.configure do |config|
   config.raise_errors_for_deprecations!
   config.filter_run :focus
   config.run_all_when_everything_filtered = true
+  config.example_status_persistence_file_path = "tmp/examples.txt"
 =begin
   # These two settings work together to allow you to limit a spec run
   # to individual examples or groups you care about by tagging them with

@@ -18,9 +18,10 @@ The CFP App does not provide a public facing website for your conference, though
 
 ### Prerequisite Requirements
 
-* Ruby 2.7.2
-* Bundler (was installed with 2.1.4)
-* PostgreSQL
+* Ruby 2.7.4 (set in `.ruby-version`)
+* Bundler (was installed with 2.2.15)
+* PostgreSQL 14.1
+* Google Chrome browser must be installed to run tests
 
 Make sure you have Ruby and Postgres installed in your environment.  Double check in the [Gemfile](../blob/master/Gemfile) for the exact supported version.  This is a Rails 6 app and uses bundler to install all required gems.  We are also making the assumption that you're familiar with how Rails apps are setup and deployed.  If this is not the case then you'll want to refer to documentation that will bridge any gaps in the instructions below.
 
@@ -30,21 +31,20 @@ Run [bin/setup](bin/setup) script to install gem dependencies and setup database
 bin/setup
 ```
 
-This will create `.env` and a development database with seed data. Seeds will make an admin user with an email of `an@admin.com` and password of `userpass` to get you started.
+This script will:
 
-You will also need to install the JavaScript packages. To do that run:
+- Install Ruby dependencies
+- Install Javascript dependencies
+- Setup the database
+- Clear old logs and tempfiles
+- Create `.env` and a development database with seed data. Seeds will make an admin user with an email of `an@admin.com` and password of `userpass` to get you started
+- Run the test suite
 
-```bash
-yarn install --check-files
-```
-
-Start the server:
+To start the server on port 3000:
 
 ```bash
 bin/rails server
 ```
-
-Runs on port 3000.
 
 If you have the heroku toolbelt installed you can also use:
 
@@ -52,7 +52,7 @@ If you have the heroku toolbelt installed you can also use:
 heroku local
 ```
 
-This will boot up using Foreman and allow the .env file to be read / set for use locally. Runs on port 5000.
+This will boot up using Foreman and allow the `.env` file to be read / set for use locally. Runs on port 5000.
 
 ### Environment variables
 

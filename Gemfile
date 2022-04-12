@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '2.7.4'
+
+# https://andycroll.com/ruby/read-ruby-version-in-your-gemfile/
+ruby File.read(".ruby-version").strip
 
 gem 'puma'
 gem 'rails', '~> 6.1.0'

@@ -1,0 +1,6 @@
+.navbar.navbar-fixed-top.schedule-subnav
+  .container-fluid
+    %ul.nav.navbar-nav.navbar-right
+      %li{class: subnav_item_class('event-website-configuration-link')}
+        = link_to edit_event_staff_website_path(current_event) do
+          %span Configuration

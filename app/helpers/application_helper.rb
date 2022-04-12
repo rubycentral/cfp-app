@@ -113,7 +113,19 @@ module ApplicationHelper
     current_user.staff_for?(current_event)
   end
 
+  def website_nav?
+    policy(Website).show?
+  end
+
   def admin_nav?
     current_user.admin?
+  end
+
+  def new_or_edit_website_path
+    if current_website
+      edit_event_staff_website_path(current_event)
+    else
+      new_event_staff_website_path(current_event)
+    end
   end
 end

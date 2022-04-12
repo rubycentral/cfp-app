@@ -11,6 +11,7 @@ class Event < ApplicationRecord
   has_many :session_formats, dependent: :destroy
   has_many :taggings, through: :proposals
   has_many :ratings, through: :proposals
+  has_one :website
 
   has_many :public_session_formats, ->{ where(public: true) }, class_name: 'SessionFormat'
 

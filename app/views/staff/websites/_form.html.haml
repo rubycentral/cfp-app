@@ -1,0 +1,5 @@
+= simple_form_for website, url: :event_staff_website do |f|
+  .row
+    .col-sm-12
+      = submit_tag("Save", class: "pull-right btn btn-success", type: "submit")
+      = link_to "Cancel", event_staff_path(current_event), {:class=>"cancel-form pull-right btn btn-danger"}

@@ -18,4 +18,8 @@ class PagePolicy < ApplicationPolicy
   def update?
     new?
   end
+
+  def publish?
+    new?
+  end
 end

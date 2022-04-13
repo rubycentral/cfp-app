@@ -109,7 +109,11 @@ Rails.application.routes.draw do
       resources :session_formats, except: :show
       resources :tracks, except: [:show]
       resource :website, only: [:new, :create, :edit, :update]
-      resources :pages, only: [:index, :new, :create, :edit, :update]
+      resources :pages, only: [:index, :new, :create, :edit, :update] do
+        member do
+          post :publish
+        end
+      end
     end
   end
 
@@ -143,4 +147,6 @@ Rails.application.routes.draw do
   get '/404', :to => 'errors#not_found'
   get '/422', :to => 'errors#unacceptable'
   get '/500', :to => 'errors#internal_error'
+
+  get '/:slug/:page', :to => 'pages#show', as: :page
 end

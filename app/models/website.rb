@@ -1,6 +1,8 @@
 class Website < ApplicationRecord
   belongs_to :event
   has_many :pages
+
+  DEFAULT = 'default'.freeze
 end
 
 # == Schema Information

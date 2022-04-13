@@ -1,0 +1,43 @@
+!!!5
+%html(lang="en")
+  %head
+    %title= title
+    %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    = stylesheet_link_tag current_website.theme, media: 'all'
+  %body
+    %main#main-default
+      %header#main-header
+        %div#header-logo-container
+          %a#menu-toggle{ href: "#"}
+          %div
+            %h1
+              = current_website.event.name
+            %h4
+              = current_website.event.decorate.date_range
+        %nav#main-nav
+          - current_website.pages.published.each do |page|
+            = link_to page.name, page_path(current_website.event, page)
+          .social-links
+            %a.twitter-link{ href: 'https://twitter.com/rubyconf', target: '_blank' }
+            %a.facebook-link{ href: 'https://facebook.com/rubyconf2021', target: '_blank' }
+            %a.instagram-link{ href: 'https://instagram.com/rubyconf', target: '_blank' }
+      #content
+        =yield
+
+    :javascript
+      var openEl = document.getElementById('menu-toggle');
+      var mobileNavEl = document.getElementById('main-nav');
+
+      function toggleNav() {
+        mobileNavEl.classList.toggle('menu-mobile--opened')
+        openEl.classList.toggle('menu-toggle--opened')
+      }
+
+      openEl.addEventListener('click', function (e) {
+        e.preventDefault()
+        toggleNav()
+      })
+
+      document.getElementById("main-nav").addEventListener('click', function(e) {
+        toggleNav()
+      })

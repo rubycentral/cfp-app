@@ -30,6 +30,12 @@ class Staff::PagesController < Staff::ApplicationController
     end
   end
 
+  def publish
+    @page.update(published_body: @page.unpublished_body)
+    flash[:success] = "#{@page.name} Page was successfully published."
+    redirect_to event_staff_pages_path(current_event, @page)
+  end
+
   private
 
   def set_page

@@ -54,7 +54,10 @@ class ApplicationController < ActionController::Base
   end
 
   def current_website
-    current_event.website
+    @current_website ||= begin
+      event = current_event || Event.find_by(slug: params[:slug])
+      event.website
+    end
   end
 
   def set_current_event(event_id)

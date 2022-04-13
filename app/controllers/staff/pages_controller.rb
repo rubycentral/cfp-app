@@ -11,19 +11,24 @@ class Staff::PagesController < Staff::ApplicationController
   def new; end
 
   def create
-    @page.update(page_params)
-    flash[:success] = "#{@page.name} Page was successfully created."
-    redirect_to event_staff_pages_path(current_event, @page)
+    if @page.update(page_params)
+      flash[:success] = "#{@page.name} Page was successfully created."
+      redirect_to event_staff_pages_path(current_event, @page)
+    else
+      render :new
+    end
   end
 
   def edit; end
 
   def update
-    @page.update(page_params)
-    flash[:success] = "#{@page.name} Page was successfully updated."
-    redirect_to event_staff_pages_path(current_event, @page)
+    if @page.update(page_params)
+      flash[:success] = "#{@page.name} Page was successfully updated."
+      redirect_to event_staff_pages_path(current_event, @page)
+    else
+      render :edit
+    end
   end
-
 
   private
 
@@ -33,7 +38,6 @@ class Staff::PagesController < Staff::ApplicationController
             else
               current_website.pages.build
             end
-
   end
 
   def authorize_page

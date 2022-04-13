@@ -1,6 +1,8 @@
 class Page < ApplicationRecord
   belongs_to :website
 
+  validates :name, :slug, presence: true
+
   def to_param
     slug
   end

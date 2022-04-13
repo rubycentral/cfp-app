@@ -13,6 +13,10 @@ feature "Website Page Management" do
     within('.website-subnav') { click_on("Pages") }
     click_on "New Page"
 
+    click_on('Save')
+    within('.page_name') { expect(page).to have_content("can't be blank") }
+    within('.page_slug') { expect(page).to have_content("can't be blank") }
+
     fill_in('Name', with: 'Home')
     fill_in('Slug', with: 'home')
     fill_in_tinymce(:page, :unpublished_body, 'Come Code With Us')

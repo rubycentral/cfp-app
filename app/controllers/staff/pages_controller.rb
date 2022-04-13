@@ -8,6 +8,11 @@ class Staff::PagesController < Staff::ApplicationController
     authorize(@pages)
   end
 
+  def show
+    @body = @page.unpublished_body
+    render template: 'pages/show', layout: "themes/#{current_website.theme}"
+  end
+
   def new; end
 
   def create
@@ -29,6 +34,8 @@ class Staff::PagesController < Staff::ApplicationController
       render :edit
     end
   end
+
+  def preview; end
 
   def publish
     @page.update(published_body: @page.unpublished_body)

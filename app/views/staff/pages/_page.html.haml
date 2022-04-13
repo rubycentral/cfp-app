@@ -1,7 +1,12 @@
 %tr
   %td= link_to(page.name, edit_event_staff_page_path(current_event, page))
   %td= link_to(page.slug, edit_event_staff_page_path(current_event, page))
-  %td= button_to("Publish",
-    publish_event_staff_page_path(current_event, page),
-    data: { confirm: "Are you sure you want to publish?" },
-    class: 'btn btn-primary btn-sm')
+  %td
+    = link_to("Preview",
+      preview_event_staff_page_path(current_event, page),
+      class: 'btn btn-primary')
+    = link_to("Publish",
+      publish_event_staff_page_path(current_event, page),
+      method: :patch,
+      data: { confirm: "Are you sure you want to publish?" },
+      class: 'btn btn-primary')

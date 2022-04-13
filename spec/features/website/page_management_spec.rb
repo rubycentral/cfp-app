@@ -33,6 +33,18 @@ feature "Website Page Management" do
     expect(page).to have_content('Home Page was successfully updated')
   end
 
+  scenario "Organizer previews a website page", :js do
+    create(:page, unpublished_body: 'Home Content', published_body: nil)
+    login_as(organizer)
+
+    visit event_staff_pages_path(event)
+    click_on('Preview')
+
+    within_frame('page-preview') do
+      expect(page).to have_content('Home Content')
+    end
+  end
+
   scenario "Organizer publishes a website page", :js do
     home_page = create(:page, unpublished_body: 'Home Content', published_body: nil)
     login_as(organizer)

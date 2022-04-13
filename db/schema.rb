@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_12_153740) do
+ActiveRecord::Schema.define(version: 2022_04_13_201907) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -180,6 +180,18 @@ ActiveRecord::Schema.define(version: 2022_04_12_153740) do
     t.index ["user_id"], name: "index_speakers_on_user_id"
   end
 
+  create_table "sponsors", force: :cascade do |t|
+    t.bigint "event_id"
+    t.string "name"
+    t.string "tier"
+    t.boolean "published"
+    t.string "url"
+    t.string "other_title"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["event_id"], name: "index_sponsors_on_event_id"
+  end
+
   create_table "taggings", force: :cascade do |t|
     t.bigint "proposal_id"
     t.string "tag"
@@ -285,5 +297,6 @@ ActiveRecord::Schema.define(version: 2022_04_12_153740) do
 
   add_foreign_key "pages", "websites"
   add_foreign_key "session_formats", "events"
+  add_foreign_key "sponsors", "events"
   add_foreign_key "websites", "events"
 end

@@ -1,0 +1,14 @@
+= simple_form_for @sponsor, url: [ event, :staff, @sponsor ] do |f|
+  .row
+    %fieldset.col-md-6
+      = f.input :name, maxlength: 60, input_html: { class: 'watched js-maxlength-alert', rows: 1 }
+      = f.input :other_title
+      = f.input :tier, collection: Sponsor::TIERS
+      = f.input :url
+      = f.input :published, as: :boolean, wrapper: :vertical_radio_and_checkboxes
+
+    .col-sm-12
+      = link_to "Cancel", event_staff_sponsors_path, class: "pull-right btn btn-danger"
+      =submit_tag("Save", class: "pull-right btn btn-success", type: "submit")
+
+

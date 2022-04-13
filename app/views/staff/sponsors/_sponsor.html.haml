@@ -1,0 +1,10 @@
+
+%tr
+  %td= sponsor.name
+  %td= sponsor.tier
+  %td= sponsor.published
+  %td
+    %a{ href: sponsor.url, target: "_blank" }
+      = sponsor.url
+  %td= sponsor.other_title
+  %td= link_to "Edit Sponsor", edit_event_staff_sponsor_path(current_event, sponsor)

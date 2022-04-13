@@ -42,6 +42,7 @@ gem 'nokogiri'
 gem 'pundit'
 gem 'redcarpet', '~> 3.5'
 gem 'simple_form'
+gem 'tinymce-rails'
 
 gem 'react-rails'
 gem 'webpacker'

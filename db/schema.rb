@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_12_104802) do
+ActiveRecord::Schema.define(version: 2022_04_12_153740) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,17 @@ ActiveRecord::Schema.define(version: 2022_04_12_104802) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
+  create_table "pages", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "slug", null: false
+    t.bigint "website_id"
+    t.text "published_body"
+    t.text "unpublished_body"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["website_id"], name: "index_pages_on_website_id"
   end
 
   create_table "program_sessions", force: :cascade do |t|
@@ -272,6 +283,7 @@ ActiveRecord::Schema.define(version: 2022_04_12_104802) do
     t.index ["event_id"], name: "index_websites_on_event_id"
   end
 
+  add_foreign_key "pages", "websites"
   add_foreign_key "session_formats", "events"
   add_foreign_key "websites", "events"
 end

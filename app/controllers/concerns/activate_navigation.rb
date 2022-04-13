@@ -82,6 +82,7 @@ module ActivateNavigation
   def website_subnav_item_map
     @website_subnav_item_map ||= {
       'event-website-configuration-link' => starts_with_path(:event_staff_website, current_event),
+      'event-pages-link' => exact_path(:event_staff_pages, current_event)
     }
   end
 

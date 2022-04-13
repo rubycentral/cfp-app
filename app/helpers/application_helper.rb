@@ -117,6 +117,10 @@ module ApplicationHelper
     policy(Website).show?
   end
 
+  def sponsor_nav?
+    policy(Sponsor).show?
+  end
+
   def admin_nav?
     current_user.admin?
   end

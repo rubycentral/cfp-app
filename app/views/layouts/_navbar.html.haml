@@ -47,6 +47,11 @@
                 %span Website
                 %sup Beta
 
+          - if sponsor_nav?
+            %li{class: nav_item_class("event-sponsors-link")}
+              = link_to event_staff_sponsors_path do
+                %span Sponsors
+                %sup Beta
 
           - if admin_nav?
             = render partial: "layouts/nav/admin_nav"

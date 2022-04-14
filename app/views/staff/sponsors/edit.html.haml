@@ -1,6 +1,12 @@
 .row
   .col-md-12
     .page-header.clearfix
+      .btn-navbar.pull-right
+        = link_to event_staff_sponsor_path(current_event, @sponsor),
+          method: :delete, data: { confirm: 'Are you sure? Confirming this action will remove the sponsor from the event website. Are you sure you want to do this? ' + 'It can not be undone.' },
+          class: 'btn btn-danger navbar-btn', id: 'delete' do
+          %span.glyphicon.glyphicon-exclamation-sign
+          Delete Sponsor
       %h1 Edit #{@sponsor.name}
 
 = render 'form', sponsor: @sponsor

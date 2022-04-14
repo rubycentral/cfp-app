@@ -27,6 +27,13 @@ class Staff::SponsorsController < Staff::ApplicationController
     redirect_to event_staff_sponsors_path
   end
 
+  def destroy
+    @sponsor = current_event.sponsors.find(params[:id])
+    @sponsor.destroy
+    redirect_to event_staff_sponsors_path
+    flash[:info] = "Sponsor was successfully removed."
+  end
+
   private
   def sponsors_params
     params.require(:sponsor).permit(:name, :tier, :published, :url, :other_title)

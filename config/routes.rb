@@ -110,7 +110,7 @@ Rails.application.routes.draw do
       resources :tracks, except: [:show]
       resource :website, only: [:new, :create, :edit, :update]
       resources :pages, only: [:index, :new, :create, :edit, :update]
-      resources :sponsors, only: [:index, :new, :create, :edit, :update]
+      resources :sponsors, only: [:index, :new, :create, :edit, :update, :destroy]
     end
   end
 

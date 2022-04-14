@@ -10,7 +10,7 @@ class Staff::SponsorsController < Staff::ApplicationController
   end
 
   def create
-    @sponsor = current_event.sponsors.build(sponsors_params)
+    @sponsor = current_event.sponsors.build(sponsor_params)
 
     flash[:success] = "Sponsor was successfully created."
     redirect_to event_staff_sponsors_path if @sponsor.save
@@ -22,7 +22,7 @@ class Staff::SponsorsController < Staff::ApplicationController
 
   def update
     @sponsor = current_event.sponsors.find_by(id: params[:id])
-    @sponsor.update(sponsors_params)
+    @sponsor.update(sponsor_params)
     flash[:success] = "#{@sponsor.name} was successfully updated."
     redirect_to event_staff_sponsors_path
   end
@@ -35,7 +35,7 @@ class Staff::SponsorsController < Staff::ApplicationController
   end
 
   private
-  def sponsors_params
+  def sponsor_params
     params.require(:sponsor).permit(:name, :tier, :published, :url, :other_title)
   end
 end

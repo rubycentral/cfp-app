@@ -6,8 +6,8 @@
     %h3
       Sponsors
       %span.badge= @sponsors.count
-  .col-md-4.text-right
-    = link_to "+ New Sponsor", new_event_staff_sponsor_path(current_event), class: "btn btn-success btn-sm"
+  .col-md-12.text-right
+    = link_to "New Sponsor", new_event_staff_sponsor_path(current_event), class: "btn btn-success btn-sm"
 .row
   .col-md-12
     %table#program-sessions.datatable.table.table-striped

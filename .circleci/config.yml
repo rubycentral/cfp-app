@@ -1,56 +1,76 @@
 version: 2.1
 
-orbs:
-  ruby: circleci/ruby@1.1.0
-  node: circleci/node@2
+workflows:
+  version: 2.1
+  build:
+    jobs:
+      - build_and_test
 
 jobs:
-  build:
-    docker:
-      - image: cimg/ruby:2.7.5
-    steps:
-      - checkout
-      - ruby/install-deps
-      - node/install-packages:
-          pkg-manager: yarn
-          cache-key: "yarn.lock"
-  test:
-    # parallelism: 3
-    docker:
-      - image: cimg/ruby:2.7.5
-      - image: circleci/postgres:9.5-alpine
-        environment:
-          POSTGRES_USER: circleci-demo-ruby
-          POSTGRES_DB: rails_blog_test
-          POSTGRES_PASSWORD: ""
-    environment:
-      BUNDLE_JOBS: "3"
-      BUNDLE_RETRY: "3"
-      PGHOST: 127.0.0.1
-      PGUSER: circleci-demo-ruby
-      PGPASSWORD: ""
-      RAILS_ENV: test
-    steps:
-      - checkout
-      - ruby/install-deps
-      - node/install-packages:
-          pkg-manager: yarn
-          cache-key: "yarn.lock"
-      - run:
-          name: Wait for DB
-          command: dockerize -wait tcp://localhost:5432 -timeout 1m
-      - run:
-          name: Database setup
-          command: bundle exec rails db:schema:load --trace
-      # Run rspec in parallel
-      - ruby/rspec-test
-      - ruby/rubocop-check
-
-workflows:
-  version: 2
   build_and_test:
-    jobs:
-      - build
-      - test:
-          requires:
-            - build
+    working_directory: ~/cfp_app
+    docker:
+      - image: circleci/ruby:2.7.5-node-browsers
+        environment:
+          PGHOST: localhost
+          PGUSER: cfp_app
+          RAILS_ENV: test
+      - image: postgres:12.5
+        environment:
+          POSTGRES_USER: cfp_app
+          POSTGRES_DB: cfp_app_test
+          POSTGRES_PASSWORD: ""
+          POSTGRES_HOST_AUTH_METHOD: trust
+    steps:
+      - checkout
+
+      - run: gem install bundler
+      - run: yarn install
+
+      # Restore Cached gem Dependencies
+      - restore_cache:
+          keys:
+              - cfp_app-gems-{{ checksum "Gemfile.lock" }}
+              - cfp_app-gems-
+      # Restore Cached node module Dependencies
+      - restore_cache:
+          keys:
+              - cfp_app-packages-{{ checksum "yarn.lock" }}
+              - cfp_app-packages-
+
+      # Bundle install dependencies
+      - run: bundle config set path 'vendor/bundle'
+      - run: bundle install
+
+      ## Cache Dependencies
+
+      # Generate this fallback cache first because the most recent match
+      # will be used even if there is a more precise match
+      - save_cache:
+          key: cfp_app-gems-
+          paths:
+              - vendor/bundle
+      # Generate a cache for this exact Gemfile.lock
+      - save_cache:
+          key: cfp_app-gems-{{ checksum "Gemfile.lock" }}
+          paths:
+              - vendor/bundle
+      # Generate a fallback cache of node packages
+      - save_cache:
+          key: cfp_app-packages-
+          paths:
+              - node_modules
+      # Generate a cache for this exact yarn.lock
+      - save_cache:
+          key: cfp_app-packages-{{ checksum "yarn.lock" }}
+          paths:
+              - node_modules
+
+      # Wait for DB
+      - run: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+      # Setup the database
+      - run: bundle exec rake db:setup
+
+      # Run the tests
+      - run: bin/rake

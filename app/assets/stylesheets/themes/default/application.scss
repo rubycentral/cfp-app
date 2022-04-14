@@ -1,0 +1,114 @@
+@import url('https://rsms.me/inter/inter-ui.css');
+@import 'colors';
+@import 'nav';
+
+:root {
+  --body_background_color: white;
+  --nav_background_color: white;
+  --nav_text_color: black;
+  --nav_link_hover: black;
+  --main_content_background: white;
+  --sans-serif-font: 'Inter';
+}
+
+html {
+  font-family: var(--sans-serif-font), sans-serif;
+}
+
+@supports (font-variation-settings: normal) {
+  html {
+    font-family: var(--sans-serif-font), sans-serif;
+  }
+}
+
+body {
+  color: $text;
+  background: var(--body_background_color);
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 150%;
+  padding: 50px 0;
+  height: 100vh;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+  display: none;
+}
+
+#main-default {
+  width: 95%;
+  max-width: 1070px;
+  height: calc(100vh - 100px);
+  margin: 0 auto;
+  border: 1px solid $black;
+  overflow: scroll;
+  box-shadow: inset 0 0 0 1px $black; /** covers the weird border-radius 1px gap **/
+  position: relative;
+}
+
+#content {
+  background-color: var(--main_content_background);
+  margin-left: 178px;
+  padding: 50px 20px 20px 50px;
+  position: relative;
+  height: calc(100vh - 100px);
+}
+
+p {
+  font-size: 14px;
+  line-height: 21px;
+  margin-bottom: 20px;
+  &:last-child {
+    margin: 0;
+  }
+}
+
+a {
+  display: inline-block;
+  transition: all 0.25s ease-in-out;
+  text-decoration: underline;
+  color: $text;
+}
+
+em {
+  font-style: italic;
+}
+
+ul li {
+  list-style-type: none;
+  padding: 0 0 12px 12px;
+}
+
+#main-notice {
+  padding: 15px 10px;
+  position: relative;
+  margin-bottom: 20px;
+  text-align: center;
+  border: 1px solid $black;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin: 0 0 12px 0;
+}
+
+@media screen and (max-width: 900px) and (orientation: portrait),
+  (max-width: 823px) and (orientation: landscape) {
+    body {
+      padding: 8px;
+    }
+    #main-default {
+      width: auto;
+      height: 97%;
+      display: block;
+    }
+    #content {
+      padding: 76px 10px 10px 10px;
+      margin: 0 0 0 0;
+      height: calc(100vh - 32px);
+    }
+}

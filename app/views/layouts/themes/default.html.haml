@@ -16,7 +16,7 @@
               = current_website.event.decorate.date_range
         %nav#main-nav
           - current_website.pages.published.each do |page|
-            = link_to page.name, page_path(current_website.event, page)
+            = link_to page.name, page_path(params[:slug], page)
           .social-links
             %a.twitter-link{ href: 'https://twitter.com/rubyconf', target: '_blank' }
             %a.facebook-link{ href: 'https://facebook.com/rubyconf2021', target: '_blank' }

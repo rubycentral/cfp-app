@@ -145,9 +145,12 @@ Rails.application.routes.draw do
   end
 
   get '/current-styleguide', :to => 'pages#current_styleguide'
-  get '/404', :to => 'errors#not_found'
+  get '/404', :to => 'errors#not_found', as: :not_found
   get '/422', :to => 'errors#unacceptable'
   get '/500', :to => 'errors#internal_error'
 
-  get '/:slug/:page', :to => 'pages#show', as: :page
+  constraints DomainConstraint.new do
+    get ':page', :to => 'pages#show'
+  end
+  get '/(:slug)/:page', :to => 'pages#show', as: :page
 end

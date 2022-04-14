@@ -55,8 +55,13 @@ class ApplicationController < ActionController::Base
 
   def current_website
     @current_website ||= begin
-      event = current_event || Event.find_by(slug: params[:slug])
-      event.website
+      if current_event
+        current_event.website
+      elsif params[:slug]
+        Website.joins(:event).find_by(events: { slug: params[:slug] })
+      else
+        Website.domain_match(request.domain).order(created_at: :desc).first
+      end
     end
   end
 

@@ -18,7 +18,7 @@ class Staff::PagesController < Staff::ApplicationController
   def create
     if @page.update(page_params)
       flash[:success] = "#{@page.name} Page was successfully created."
-      redirect_to event_staff_pages_path(current_event, @page)
+      redirect_to event_staff_pages_path(current_event)
     else
       render :new
     end
@@ -29,7 +29,7 @@ class Staff::PagesController < Staff::ApplicationController
   def update
     if @page.update(page_params)
       flash[:success] = "#{@page.name} Page was successfully updated."
-      redirect_to event_staff_pages_path(current_event, @page)
+      redirect_to event_staff_pages_path(current_event)
     else
       render :edit
     end
@@ -40,7 +40,13 @@ class Staff::PagesController < Staff::ApplicationController
   def publish
     @page.update(published_body: @page.unpublished_body)
     flash[:success] = "#{@page.name} Page was successfully published."
-    redirect_to event_staff_pages_path(current_event, @page)
+    redirect_to event_staff_pages_path(current_event)
+  end
+
+  def promote
+    Page.promote(@page)
+    flash[:success] = "#{@page.name} Page was successfully promoted."
+    redirect_to event_staff_pages_path(current_event)
   end
 
   private

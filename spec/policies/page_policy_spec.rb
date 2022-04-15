@@ -12,7 +12,17 @@ RSpec.describe PagePolicy do
     CurrentEventContext.new(user, event)
   end
 
-  permissions :index?, :new?, :create?, :edit?, :update?, :show?, :preview?, :publish? do
+  permissions(
+    :index?,
+    :new?,
+    :create?,
+    :edit?,
+    :update?,
+    :show?,
+    :preview?,
+    :publish?,
+    :promote?
+  )  do
     it 'allows organizers for event' do
       expect(subject).to permit(pundit_user(organizer))
     end

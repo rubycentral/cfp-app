@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
-  before_action :require_website_page, only: :show
+  before_action :require_website, only: :show
+  before_action :require_page, only: :show
 
   def current_styleguide
   end
@@ -11,8 +12,27 @@ class PagesController < ApplicationController
 
   private
 
-  def require_website_page
-    @page = current_website && current_website.pages.published.find_by(slug: params[:page])
-    redirect_to not_found_path and return unless @page
+  def require_website
+    redirect_to not_found_path and return unless current_website
+  end
+
+  def require_page
+    @page = current_website.pages.published.find_by(page_conditions)
+    unless @page
+      @body = "Page Not Found"
+      render layout: "themes/#{current_website.theme}" and return
+    end
+  end
+
+  def page_conditions
+    landing_page_request? ? { landing: true } : { slug: page_param }
+  end
+
+  def page_param
+    params[:domain_page_or_slug] || params[:page]
+  end
+
+  def landing_page_request?
+    page_param.nil? || @older_domain_website
   end
 end

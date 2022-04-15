@@ -11,12 +11,12 @@
           %a#menu-toggle{ href: "#"}
           %div
             %h1
-              = current_website.event.name
+              = link_to(current_website.event.name, landing_path(website_event_slug))
             %h4
               = current_website.event.decorate.date_range
         %nav#main-nav
           - current_website.pages.published.each do |page|
-            = link_to page.name, page_path(params[:slug], page)
+            = link_to page.name, page_path(website_event_slug, page)
           .social-links
             %a.twitter-link{ href: 'https://twitter.com/rubyconf', target: '_blank' }
             %a.facebook-link{ href: 'https://facebook.com/rubyconf2021', target: '_blank' }

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Event do
+describe Website do
   describe '.domain_match' do
     it 'returns website that match a domain' do
       rubyconf = create(:website, domains: 'www.rubyconf.org')

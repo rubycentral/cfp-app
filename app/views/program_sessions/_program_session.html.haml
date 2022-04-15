@@ -1,0 +1,17 @@
+.session
+  %div
+    %a.session-anchor{ name: "session-#{program_session.id}" }
+    -if program_session.track
+      %span.track-name
+        = program_session.track_name
+    %h3.session-title
+      = program_session.title
+
+  .session_abstract
+    = program_session.abstract.html_safe
+  .session-author-details
+    -program_session.speakers.each do |speaker|
+      %h4.session-author
+        = speaker.speaker_name
+      .session-bio
+        = speaker.bio.html_safe

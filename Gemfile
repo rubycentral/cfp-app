@@ -20,6 +20,7 @@ gem 'jquery-datatables-rails'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'rails-assets-momentjs', source: 'https://rails-assets.org'
+gem 'rexml'
 gem 'sassc-rails'
 gem 'selectize-rails'
 gem 'uglifier', '>= 1.3.0'
@@ -32,7 +33,7 @@ gem "omniauth-rails_csrf_protection", "~> 1.0"
 
 gem 'actionview-encoded_mail_to'
 gem 'active_model_serializers', '~> 0.10.0'
-gem 'bootsnap', require: false
+gem 'bootsnap', '~> 1.12', require: false
 gem 'bootstrap-multiselect-rails', '~> 0.9.9'
 gem 'chartkick'
 gem 'coderay', '~> 1.0'

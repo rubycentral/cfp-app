@@ -8,6 +8,13 @@ class Page < ApplicationRecord
   def to_param
     slug
   end
+
+  def self.promote(page)
+    transaction do
+      page.website.pages.update(landing: false)
+      page.update(landing: true)
+    end
+  end
 end
 
 # == Schema Information

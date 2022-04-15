@@ -149,5 +149,6 @@ Rails.application.routes.draw do
   get '/422', :to => 'errors#unacceptable'
   get '/500', :to => 'errors#internal_error'
 
+  get '/:slug/schedule', :to => 'schedule#show'
   get '/:slug/:page', :to => 'pages#show', as: :page
 end

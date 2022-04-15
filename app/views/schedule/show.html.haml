@@ -1,0 +1,27 @@
+%div
+  %section#hero.schedule-hero
+    %nav
+      %ul
+        %li
+          %a#schedule-day-link{ href: "#" }
+            %strong
+              = current_event.conference_day_in_words(1)
+        %li
+          %a#schedule-day-link{ href: "#" }
+            %strong
+              = current_event.conference_day_in_words(2)
+        %li
+          %a#schedule-day-link{ href: "#" }
+            %strong
+              = current_event.conference_day_in_words(3)
+
+  #schedule-container
+    #schedule-day-one
+      - schedule_for_day(@schedule, 1).each do |sessions|
+        = render partial: "sessions", locals: { sessions: sessions }
+    #schedule-day-two
+      - schedule_for_day(@schedule, 2).each do |sessions|
+        = render partial: "sessions", locals: { sessions: sessions }
+    #schedule-day-three
+      - schedule_for_day(@schedule, 3).each do |sessions|
+        = render partial: "sessions", locals: { sessions: sessions }

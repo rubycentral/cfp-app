@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   constraints DomainConstraint.new do
     get '/', to: 'pages#show'
+    get '/(:slug)/program', to: 'programs#show'
     get '/:domain_page_or_slug', to: 'pages#show'
     get '/:slug/:page', to: 'pages#show'
   end
@@ -156,13 +157,8 @@ Rails.application.routes.draw do
   get '/404', :to => 'errors#not_found', as: :not_found
   get '/422', :to => 'errors#unacceptable'
   get '/500', :to => 'errors#internal_error'
-<<<<<<< HEAD
 
   get '/(:slug)', to: 'pages#show', as: :landing
-  get '/(:slug)/program', :to => 'programs#show'
+  get '/(:slug)/program', to: 'programs#show', as: :program
   get '/(:slug)/:page', to: 'pages#show', as: :page
-=======
-
-
->>>>>>> 9b40284 (Inital pass at a dynamic Programs page)
 end

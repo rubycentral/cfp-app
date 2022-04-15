@@ -120,6 +120,10 @@ class ApplicationController < ActionController::Base
     @proposal = @event.proposals.find_by!(uuid: params[:proposal_uuid] || params[:uuid])
   end
 
+  def require_website
+    redirect_to not_found_path and return unless current_website
+  end
+
   def user_not_authorized
     flash[:alert] = "You are not authorized to perform this action."
     redirect_to(request.referrer || root_path)

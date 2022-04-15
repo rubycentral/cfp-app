@@ -5,7 +5,7 @@
       %span.track-name
         = session.track_name
     %h3.session-title
-      = link_to session.title, "#session-#{ session.id }"
+      = session.title
 
   .session_abstract
     = session.abstract.html_safe

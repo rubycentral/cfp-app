@@ -10,7 +10,7 @@ jobs:
   build_and_test:
     working_directory: ~/cfp_app
     docker:
-      - image: circleci/ruby:2.7-node-browsers
+      - image: circleci/ruby:2.7-browsers
         environment:
           PGHOST: localhost
           PGUSER: cfp_app

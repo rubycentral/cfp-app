@@ -1,0 +1,13 @@
+.schedule-block-container
+  .schedule-duration
+    %span.session-start-time
+      = program_sessions.first[:start_time]
+    %span.session-end-time
+      = program_sessions.first[:end_time]
+  - if program_sessions.size == 1
+    = render partial: 'program_session', locals: { program_session: program_sessions.first }
+  - else
+    .schedule-grid
+      - program_sessions.each do |program_session|
+        - next if program_session[:title].blank?
+        = render partial: 'program_session', locals: { program_session: program_session }

@@ -17,11 +17,11 @@
 
   #schedule-container
     #schedule-day-one
-      - schedule_for_day(@schedule, 1).each do |sessions|
-        = render partial: "sessions", locals: { sessions: sessions }
+      - schedule_for_day(@schedule, 1).each do |program_sessions|
+        = render partial: "schedule_block", locals: { program_sessions: program_sessions }
     #schedule-day-two
-      - schedule_for_day(@schedule, 2).each do |sessions|
-        = render partial: "sessions", locals: { sessions: sessions }
+      - schedule_for_day(@schedule, 2).each do |program_sessions|
+        = render partial: "schedule_block", locals: { program_sessions: program_sessions }
     #schedule-day-three
-      - schedule_for_day(@schedule, 3).each do |sessions|
-        = render partial: "sessions", locals: { sessions: sessions }
+      - schedule_for_day(@schedule, 3).each do |program_sessions|
+        = render partial: "schedule_block", locals: { program_sessions: program_sessions }

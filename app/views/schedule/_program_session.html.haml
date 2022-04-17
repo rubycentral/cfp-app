@@ -1,0 +1,15 @@
+.schedule-grid-cell
+  - if !program_session[:track].blank?
+    .session-track
+      = program_session[:track]
+  .schedule-session-title
+    = program_session[:title]
+  .schedule-session-detail
+    %span.schedule-presenter
+      =  program_session[:presenter]
+    %span.schedule-room
+      = image_tag('themes/default/pin-icon.svg')
+      = program_session[:room]
+  - if !program_session[:description].blank?
+    .schedule-session-description
+      = truncate(program_session[:description], length: 100)

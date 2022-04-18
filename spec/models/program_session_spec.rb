@@ -280,5 +280,14 @@ describe ProgramSession do
       expect(Speaker.all).to include(proposal.speakers.first)
       expect(proposal.speakers.first.program_session_id).to eq(nil)
     end
+
+    it "removes program_session_id from time_slot if session was scheduled" do
+      proposal = create(:proposal, :with_speaker)
+      ps = create(:program_session, proposal_id: proposal.id)
+      ts = create(:time_slot_with_program_session, program_session: ps)
+      ps.destroy
+
+      expect(ts.reload.program_session_id).to be_nil
+    end
   end
 end

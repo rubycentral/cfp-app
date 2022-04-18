@@ -9,6 +9,26 @@
       = f.input :directions
       = f.input :prospectus_link
       %fieldset
+    .col-md-6
+      %fieldset
+        %legend.fieldset-legend General Content
+        - if website.logo.attached?
+          = f.label :logo, "Current Logo", class: "control-label"
+          %div
+            = resize_image_tag(website.logo, width: 100)
+        = f.input :logo, label: website.logo.attached? ? "Replace Logo" : "Logo"
+        - if website.background.attached?
+          = f.label :background, "Current Background", class: "control-label"
+          %div
+            = resize_image_tag(website.background, width: 200)
+        = f.input :background,
+          label: website.background.attached? ? "Replace Background" : "Background"
+        = f.input :city
+        = f.input :location, as: :text
+        = f.input :directions
+        = f.input :prospectus_link
+      %fieldset
+        %legend.fieldset-legend Navigation and Footer
         = f.label :navigation_links
         = f.select :navigation_links,
           website.link_options,
@@ -26,8 +46,9 @@
         = f.input :instagram_url
 
       = f.input :domains
-    %fieldset.col-md-6
-      %h4 Configure Website Session Formats
+    .col-md-6
+      %fieldset
+      %legend.fieldset-legend Configure Website Session Formats
       = f.simple_fields_for :session_format_configs do |ff|
         .session-format-name
           = "Configure #{ff.object.session_format.name}"
@@ -38,7 +59,7 @@
           = ff.hidden_field :session_format_id
 
       %div{"data-controller": "nested-form"}
-        %h4 Fonts
+        %legend.fieldset-legend Fonts
         %template{"data-nested-form-target": "template"}
           = f.simple_fields_for :fonts,
             Website::Font.new,
@@ -51,7 +72,7 @@
             data: { action: "click->nested-form#add_association" }
 
       %div{"data-controller": "nested-form"}
-        %h4 Head and Footer Content
+        %legend.fieldset-legend Head and Footer Content
         %template{"data-nested-form-target": "template"}
           = f.simple_fields_for :contents,
             Website::Content.new,

@@ -8,6 +8,9 @@
     - if page.landing?
       %span.glyphicon.glyphicon-ok
   %td
+    = link_to("Edit",
+      edit_event_staff_page_path(current_event, page),
+      class: 'btn btn-primary')
     = link_to("Preview",
       preview_event_staff_page_path(current_event, page),
       class: 'btn btn-primary')
@@ -16,11 +19,11 @@
       method: :patch,
       data: { confirm: "Are you sure you want to publish?" },
       class: 'btn btn-primary')
-    - unless page.landing?
-      = link_to("Promote",
-        promote_event_staff_page_path(current_event, page),
-        method: :patch,
-        data: { confirm: "Are you sure you want to promote #{page.name} to be the landing page?" },
+    - promote_action = page.landing? ? "Unpromote" : "Promote"
+    = link_to(promote_action,
+      promote_event_staff_page_path(current_event, page),
+      method: :patch,
+      data: { confirm: "Are you sure you want to #{promote_action} #{page.name} to be the landing page?" },
         class: 'btn btn-primary')
     - if page.published_body.present?
       = link_to("View", page_path(current_event, page), class: 'btn btn-primary')

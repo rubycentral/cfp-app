@@ -7,6 +7,21 @@
       = f.input :url
       = f.input :published, as: :boolean, wrapper: :vertical_radio_and_checkboxes
 
+      = f.label :primary_logo
+      - if f.object.primary_logo.attached?
+        = image_tag f.object.primary_logo.variant(resize: "100 X 100")
+      = f.file_field :primary_logo, class: "form-contorl-file"
+
+      = f.label :footer_logo
+      - if f.object.footer_logo.attached?
+        = image_tag f.object.footer_logo.variant(resize: "25 X 25")
+      = f.file_field :footer_logo, class: "form-control-file"
+
+      = f.label :banner_ad
+      - if f.object.banner_ad.attached?
+        = image_tag f.object.banner_ad.variant(resize: "100 X 25")
+      = f.file_field :banner_ad, class: "form-control-file"
+
     .col-sm-12
       = submit_tag("Save", class: "btn btn-success", type: "submit")
       = link_to "Cancel", event_staff_sponsors_path, class: "btn btn-default"

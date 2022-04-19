@@ -32,7 +32,7 @@ Guidelines for bug reports:
    reported.
 
 2. **Check if the issue has been fixed** &mdash; try to reproduce it using the
-   latest `master` or development branch in the repository.
+   latest `main` or development branch in the repository.
 
 3. **Isolate the problem** &mdash; create a [reduced test
    case](http://css-tricks.com/6263-reduced-test-cases/) and a live example.
@@ -136,7 +136,7 @@ project:
    ```
 
 7. [Open a Pull Request](https://help.github.com/articles/using-pull-requests/)
-    with a clear title and description.
+    with a clear title and description. NOTE: please avoid opening Pull Requests for Work-in-Progress or draft code. Opening a PR sends many notifications to followers and we want to conserve their attention span.
 
 **IMPORTANT**: By submitting a patch, you agree to allow the project owner to
 license your work under the same license as that used by the project.

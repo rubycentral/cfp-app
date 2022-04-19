@@ -1,6 +1,12 @@
 class Website < ApplicationRecord
   belongs_to :event
   has_many :pages
+
+  DEFAULT = 'default'.freeze
+
+  def self.domain_match(domain)
+    where(arel_table[:domains].matches("%#{(domain)}"))
+  end
 end
 
 # == Schema Information

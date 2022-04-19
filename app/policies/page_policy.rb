@@ -18,4 +18,20 @@ class PagePolicy < ApplicationPolicy
   def update?
     new?
   end
+
+  def show?
+    new?
+  end
+
+  def preview?
+    new?
+  end
+
+  def publish?
+    new?
+  end
+
+  def promote?
+    new?
+  end
 end

@@ -1,10 +1,19 @@
 class Page < ApplicationRecord
   belongs_to :website
 
+  scope :published, -> { where.not(published_body: nil) }
+
   validates :name, :slug, presence: true
 
   def to_param
     slug
+  end
+
+  def self.promote(page)
+    transaction do
+      page.website.pages.update(landing: false)
+      page.update(landing: true)
+    end
   end
 end
 

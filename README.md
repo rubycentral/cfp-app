@@ -18,12 +18,12 @@ The CFP App does not provide a public facing website for your conference, though
 
 ### Prerequisite Requirements
 
-* Ruby 2.7.5 (set in `.ruby-version`)
+* Ruby 2.7.6 (set in `.ruby-version`)
 * Bundler (was installed with 2.3.11)
 * PostgreSQL 14.1
 * Google Chrome browser must be installed to run tests
 
-Make sure you have Ruby and Postgres installed in your environment.  Double check in the [Gemfile](../blob/master/Gemfile) for the exact supported version.  This is a Rails 6 app and uses bundler to install all required gems.  We are also making the assumption that you're familiar with how Rails apps are setup and deployed.  If this is not the case then you'll want to refer to documentation that will bridge any gaps in the instructions below.
+Make sure you have Ruby and Postgres installed in your environment.  Double check in the [Gemfile](../blob/main/Gemfile) for the exact supported version.  This is a Rails 6 app and uses bundler to install all required gems.  We are also making the assumption that you're familiar with how Rails apps are setup and deployed.  If this is not the case then you'll want to refer to documentation that will bridge any gaps in the instructions below.
 
 Run [bin/setup](bin/setup) script to install gem dependencies and setup database for development.
 

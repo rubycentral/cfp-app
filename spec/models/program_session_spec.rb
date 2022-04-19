@@ -3,66 +3,48 @@ require 'rails_helper'
 describe ProgramSession do
 
   let(:proposal) { create(:proposal_with_track, :with_two_speakers) }
-
   let(:waitlisted_proposal) { create(:proposal_with_track, :with_two_speakers, state: 'waitlisted') }
+  let(:session) { ProgramSession.create_from_proposal(proposal) }
 
   it "responds to .create_from_proposal" do
     expect(ProgramSession).to respond_to(:create_from_proposal)
   end
 
   describe "#create_from_proposal" do
-
     it "creates a new program session with the same title as the given proposal" do
-      session = ProgramSession.create_from_proposal(proposal)
-
       expect(session.title).to eq(proposal.title)
     end
 
     it "creates a new program session with the same abstract as the given proposal" do
-      session = ProgramSession.create_from_proposal(proposal)
-
       expect(session.abstract).to eq(proposal.abstract)
     end
 
     it "creates a new program session with the same event as the given proposal" do
-      session = ProgramSession.create_from_proposal(proposal)
-
       expect(session.event_id).to eq(proposal.event_id)
     end
 
     it "creates a new program session with the same session format as the given proposal" do
-      session = ProgramSession.create_from_proposal(proposal)
-
       expect(session.session_format_id).to eq(proposal.session_format_id)
     end
 
     it "creates a new program session with the same track as the given proposal" do
-      session = ProgramSession.create_from_proposal(proposal)
-
       expect(session.track_id).to eq(proposal.track_id)
     end
 
     it "creates a program session that has the proposal id" do
-      session = ProgramSession.create_from_proposal(proposal)
-
       expect(session.proposal_id).to eq(proposal.id)
     end
 
     it "creates a program session that is a draft" do
-      session = ProgramSession.create_from_proposal(proposal)
-
       expect(session.state).to eq("unconfirmed accepted")
     end
 
     it "creates a program session that is waitlisted" do
-      session = ProgramSession.create_from_proposal(waitlisted_proposal)
-
-      expect(session.state).to eq("unconfirmed waitlisted")
+      waitlisted_session = ProgramSession.create_from_proposal(waitlisted_proposal)
+      expect(waitlisted_session.state).to eq("unconfirmed waitlisted")
     end
 
     it "sets program session id for all speakers" do
-      session = ProgramSession.create_from_proposal(proposal)
-
       expect(session.speakers).to match_array(proposal.speakers)
     end
 
@@ -70,8 +52,6 @@ describe ProgramSession do
       proposal.speakers.each do |speaker|
         expect(speaker.speaker_name).to eq(nil)
       end
-
-      session = ProgramSession.create_from_proposal(proposal)
 
       session.speakers.each do |speaker|
         expect(speaker.speaker_name).to eq(speaker.user.name)
@@ -84,8 +64,6 @@ describe ProgramSession do
         expect(speaker.speaker_email).to eq(nil)
       end
 
-      session = ProgramSession.create_from_proposal(proposal)
-
       session.speakers.each do |speaker|
         expect(speaker.speaker_email).to eq(speaker.user.email)
         expect(speaker.changed?).to be(false)
@@ -96,8 +74,6 @@ describe ProgramSession do
       proposal.speakers.each do |speaker|
         expect(speaker.bio).to eq(nil)
       end
-
-      session = ProgramSession.create_from_proposal(proposal)
 
       session.speakers.each do |speaker|
         expect(speaker.bio.present?).to eq(true)
@@ -262,32 +238,29 @@ describe ProgramSession do
   end
 
   describe "#destroy" do
+    let(:proposal) { create(:proposal, :with_speaker) }
+    let(:ps) { create(:program_session, proposal: proposal) }
+    subject { ps.destroy }
 
     it "destroys speakers if speaker has no proposal_id" do
-      ps = create(:program_session)
       speaker = create(:speaker, event_id: ps.event_id, program_session_id: ps.id)
-      ps.destroy
-
+      subject
       expect(Speaker.all).not_to include(speaker)
     end
 
     it "removes program_session_id from speaker if speaker has proposal_id" do
-      proposal = create(:proposal, :with_speaker)
-      ps = create(:program_session, proposal_id: proposal.id)
       ps.speakers << proposal.speakers
-      ps.destroy
+      subject
 
       expect(Speaker.all).to include(proposal.speakers.first)
       expect(proposal.speakers.first.program_session_id).to eq(nil)
     end
 
     it "removes program_session_id from time_slot if session was scheduled" do
-      proposal = create(:proposal, :with_speaker)
-      ps = create(:program_session, proposal_id: proposal.id)
-      ts = create(:time_slot_with_program_session, program_session: ps)
-      ps.destroy
+      time_slot = create(:time_slot_with_program_session, program_session: ps)
+      subject
 
-      expect(ts.reload.program_session_id).to be_nil
+      expect(time_slot.reload.program_session_id).to be_nil
     end
   end
 end

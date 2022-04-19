@@ -1,6 +1,6 @@
 = simple_form_for @program_session, url: [ event, :staff, @program_session ] do |f|
   .row
-    %fieldset.col-md-6
+    %fieldset.form-group.col-md-6
       = f.input :title, maxlength: 60, input_html: { class: 'watched js-maxlength-alert', rows: 1 }
       = f.association :session_format, as: :select, collection: current_event.session_formats, label: "Format", required: true
       = f.association :track, as: :select, collection: current_event.tracks, label: "Track", include_blank: true

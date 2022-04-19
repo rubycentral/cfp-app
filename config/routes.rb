@@ -123,6 +123,7 @@ Rails.application.routes.draw do
           patch :promote
         end
       end
+      resources :sponsors, only: [:index, :new, :create, :edit, :update, :destroy]
     end
   end
 

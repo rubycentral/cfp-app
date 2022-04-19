@@ -1,28 +1,28 @@
 
-%div{ :data => { 'controller': 'sub-nav', 'sub-nav-displayed-id-value': 'schedule-day-one' } }
+%div{ data: { 'controller': 'sub-nav', 'sub-nav-displayed-id-value': 'schedule-day-one' } }
   %section#hero.schedule-hero
     %nav
       %ul
         %li
-          %a#schedule-day-link{ href: "#", displayedId: 'schedule-day-one', :data => { action: 'click->sub-nav#updateDisplay' } }
+          %a#schedule-day-link{ href: "#", displayedId: 'schedule-day-one', data: { action: 'click->sub-nav#updateDisplay' } }
             %strong
               = current_event.conference_day_in_words(1)
         %li
-          %a#schedule-day-link{ href: "#", displayedId: 'schedule-day-two', :data => { action: 'click->sub-nav#updateDisplay' } }
+          %a#schedule-day-link{ href: "#", displayedId: 'schedule-day-two', data: { action: 'click->sub-nav#updateDisplay' } }
             %strong
               = current_event.conference_day_in_words(2)
         %li
-          %a#schedule-day-link{ href: "#", displayedId: 'schedule-day-three', :data => { action: 'click->sub-nav#updateDisplay' } }
+          %a#schedule-day-link{ href: "#", displayedId: 'schedule-day-three', data: { action: 'click->sub-nav#updateDisplay' } }
             %strong
               = current_event.conference_day_in_words(3)
 
   #schedule-container
-    #schedule-day-one{ :data => { 'sub-nav-target': 'hideable' }}
+    #schedule-day-one{ data: { 'sub-nav-target': 'hideable' }}
       - schedule_for_day(schedule, 1).each do |program_sessions|
-        = render partial: "schedule_block", locals: { program_sessions: program_sessions }
-    #schedule-day-two{ :data => { 'sub-nav-target': 'hideable' }}
+        = render "schedule_block", program_sessions: program_sessions
+    #schedule-day-two{ data: { 'sub-nav-target': 'hideable' }}
       - schedule_for_day(schedule, 2).each do |program_sessions|
-        = render partial: "schedule_block", locals: { program_sessions: program_sessions }
-    #schedule-day-three{ :data => { 'sub-nav-target': 'hideable' }}
+        = render "schedule_block", program_sessions: program_sessions
+    #schedule-day-three{ data: { 'sub-nav-target': 'hideable' }}
       - schedule_for_day(schedule, 3).each do |program_sessions|
-        = render partial: "schedule_block", locals: { program_sessions: program_sessions }
+        = render "schedule_block", program_sessions: program_sessions

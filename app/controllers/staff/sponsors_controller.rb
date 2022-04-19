@@ -11,9 +11,12 @@ class Staff::SponsorsController < Staff::ApplicationController
 
   def create
     @sponsor = current_event.sponsors.build(sponsor_params)
-
-    flash[:success] = "Sponsor was successfully created."
-    redirect_to event_staff_sponsors_path if @sponsor.save
+    if @sponsor.save
+      redirect_to event_staff_sponsors_path
+      flash[:success] = "Sponsor was successfully created."
+    else
+      render :new
+    end
   end
 
   def edit

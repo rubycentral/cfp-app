@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :sponsor do
     event
-    name { "Fake Sponsor" }
+    name { Faker::Company.name }
   end
 end

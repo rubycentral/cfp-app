@@ -39,7 +39,7 @@ class ProgramSession < ApplicationRecord
   belongs_to :proposal
   belongs_to :track
   belongs_to :session_format
-  has_one :time_slot
+  has_one :time_slot, dependent: :nullify
   has_many :speakers, -> { order(:created_at)}
 
   accepts_nested_attributes_for :speakers

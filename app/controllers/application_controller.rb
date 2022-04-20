@@ -116,6 +116,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def require_website
+    redirect_to not_found_path and return unless current_website
+  end
+
   def require_proposal
     @proposal = @event.proposals.find_by!(uuid: params[:proposal_uuid] || params[:uuid])
   end
@@ -191,5 +195,16 @@ class ApplicationController < ActionController::Base
 
   def program_tracks
     @program_tracks ||= current_event && current_event.tracks.any? ? current_event.tracks : []
+  end
+
+  def load_sponsors
+    @sponsors = Sponsor.published
+    @sponsors_by_tier = Sponsor::TIERS.map { |tier| [tier, []] }.to_h
+
+    @sponsors.each do |sponsor|
+      @sponsors_by_tier[sponsor.tier] << sponsor
+    end
+
+    @sponsors_by_tier.filter! { |tier, sponsors| sponsors.count > 0 }
   end
 end

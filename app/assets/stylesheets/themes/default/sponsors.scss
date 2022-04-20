@@ -1,0 +1,52 @@
+.sponsor-tier-wrapper {
+  display: block;
+  border-bottom: 1px solid $black;
+  padding: 20px 0 20px 30px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.sponsors-wrapper {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 30px;
+  gap: 6px;
+
+  .sponsor-wrapper {
+    padding: 25px 30px;
+    border: 1px solid $black;
+    position: relative;
+
+    .sponsor-primary-logo {
+      max-height: 50px;
+      max-width: 250px;
+      display: block;
+    }
+
+    .sponsor-tier-label {
+      position: absolute;
+      top: 0;
+      right: 20px;
+    }
+  }
+}
+
+@media screen and (max-width: 900px) and (orientation: portrait),
+  (max-width: 823px) and (orientation: landscape) {
+    .sponsors-wrapper {
+      flex-direction: column;
+
+      .sponsor-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .sponsor-primary-logo {
+          max-height: 40px;
+          max-width: 250px;
+          display: block;
+        }
+      }
+    }
+}

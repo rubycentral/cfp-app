@@ -6,4 +6,6 @@ class Sponsor < ApplicationRecord
   has_one_attached :banner_ad
 
   TIERS = ['platinum', 'gold', 'silver', 'bronze', 'other', 'supporter']
+
+  scope :published, -> { where(published: true) }
 end

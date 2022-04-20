@@ -1,0 +1,8 @@
+.sponsor-wrapper
+  = image_tag sponsor.primary_logo, alt: sponsor.name, class: 'sponsor-primary-logo'
+  = link_to sponsor.url, target: "_blank"
+  %h5.sponsor-tier-label
+    = sponsor.tier
+  .sponsors-description
+    %p
+      = sponsor.description.html_safe

@@ -6,11 +6,12 @@
       = f.input :tier, collection: Sponsor::TIERS
       = f.input :url
       = f.input :published, as: :boolean, wrapper: :vertical_radio_and_checkboxes
+      = f.input :description
       %fieldset
         .form-group
           = f.label :primary_logo
           - if f.object.primary_logo.attached?
-            = image_tag f.object.primary_logo.variant(resize: "100 X 100")
+            = image_tag f.object.primary_logo
           = f.file_field :primary_logo, class: "form-contorl-file"
         .form-group
           = f.label :footer_logo

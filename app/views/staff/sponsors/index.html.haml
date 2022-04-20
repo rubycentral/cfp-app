@@ -1,0 +1,26 @@
+.row
+  &nbsp;
+
+.row
+  .col-md-8
+    %h3
+      Sponsors
+      %span.badge= @sponsors.count
+  .col-md-12.text-right
+    = link_to "New Sponsor", new_event_staff_sponsor_path(current_event), class: "btn btn-success btn-sm"
+.row
+  .col-md-12
+    %table#program-sessions.datatable.table.table-striped
+      %tr
+        %th Name
+        %th Tier
+        %th Published
+        %th Url
+        %th Alt Title
+        %th Edit
+        %th.hidden
+
+      %tbody
+        = render @sponsors
+
+%hr

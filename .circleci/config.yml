@@ -5,12 +5,13 @@ workflows:
   build:
     jobs:
       - build_and_test
-
+orbs:
+  browser-tools: circleci/browser-tools@1.1
 jobs:
   build_and_test:
     working_directory: ~/cfp_app
     docker:
-      - image: circleci/ruby:2.7.5-node-browsers
+      - image: cimg/ruby:2.7.6-browsers
         environment:
           PGHOST: localhost
           PGUSER: cfp_app
@@ -22,7 +23,13 @@ jobs:
           POSTGRES_PASSWORD: ""
           POSTGRES_HOST_AUTH_METHOD: trust
     steps:
+      - browser-tools/install-browser-tools
       - checkout
+      - run: |
+          ruby --version
+          node --version
+          java --version
+          google-chrome --version
 
       - run: gem install bundler
       - run: yarn install

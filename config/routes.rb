@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+  constraints DomainConstraint.new do
+    get '/', to: 'pages#show'
+    get '/(:slug)/schedule', to: 'schedule#show'
+    get '/:domain_page_or_slug', to: 'pages#show'
+    get '/:slug/:page', to: 'pages#show'
+  end
+
   root 'home#show'
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   mount ActionCable.server => '/cable'
@@ -113,8 +121,10 @@ Rails.application.routes.draw do
         member do
           get :preview
           patch :publish
+          patch :promote
         end
       end
+      resources :sponsors, only: [:index, :new, :create, :edit, :update, :destroy]
     end
   end
 
@@ -145,10 +155,12 @@ Rails.application.routes.draw do
   end
 
   get '/current-styleguide', :to => 'pages#current_styleguide'
-  get '/404', :to => 'errors#not_found'
+  get '/404', :to => 'errors#not_found', as: :not_found
   get '/422', :to => 'errors#unacceptable'
   get '/500', :to => 'errors#internal_error'
 
-  get '/:slug/schedule', :to => 'schedule#show', as: :schedule
-  get '/:slug/:page', :to => 'pages#show', as: :page
+  get '/(:slug)', to: 'pages#show', as: :landing
+  get '/(:slug)/schedule', to: 'schedule#show', as: :schedule
+  get '/(:slug)/:page', to: 'pages#show', as: :page
+
 end

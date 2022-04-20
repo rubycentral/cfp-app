@@ -1,10 +1,11 @@
 .row
-  .col-md-8
-    %h3
-      Website Page
-      %span.badge= @pages.count
-  .col-md-4.text-right
-    = link_to "+ New Page", new_event_staff_page_path(current_event), class: "btn btn-success btn-sm"
+  .col-md-12
+    %header
+      %h3
+        Website Pages
+        = link_to "New Page",
+          new_event_staff_page_path(current_event),
+          class: "btn btn-primary btn-sm pull-right"
 .row
   .col-md-12
     %table.datatable.table.table-striped
@@ -12,6 +13,8 @@
         %tr
           %th Name
           %th Slug
+          %th Landing Page
+          %th Actions
       %tbody
         = render @pages
 %hr

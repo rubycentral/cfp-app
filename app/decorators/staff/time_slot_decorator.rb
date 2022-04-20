@@ -130,10 +130,6 @@ class Staff::TimeSlotDecorator < Draper::Decorator
     object.session_description || object.description
   end
 
-  def shortened_display_description(char_length = 100)
-    display_description.truncate(char_length)
-  end
-
   def room
     object.room_name
   end

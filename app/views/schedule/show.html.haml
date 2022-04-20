@@ -1,20 +1,16 @@
 
-%div{ data: { 'controller': 'sub-nav', 'sub-nav-displayed-id-value': 'schedule-day-one' } }
-  %section#hero.schedule-hero
-    %nav
-      %ul
-        %li
-          %a#schedule-day-link{ href: "#", displayedId: 'schedule-day-one', data: { action: 'click->sub-nav#updateDisplay' } }
-            %strong
-              = current_event.conference_day_in_words(1)
-        %li
-          %a#schedule-day-link{ href: "#", displayedId: 'schedule-day-two', data: { action: 'click->sub-nav#updateDisplay' } }
-            %strong
-              = current_event.conference_day_in_words(2)
-        %li
-          %a#schedule-day-link{ href: "#", displayedId: 'schedule-day-three', data: { action: 'click->sub-nav#updateDisplay' } }
-            %strong
-              = current_event.conference_day_in_words(3)
+.schedule-page-wrapper{ data: { 'controller': 'sub-nav', 'sub-nav-displayed-id-value': 'schedule-day-one' } }
+  %nav.sub-nav
+    %ul
+      %li
+        %a#schedule-day-link{ href: "#", displayedId: 'schedule-day-one', data: { action: 'click->sub-nav#updateDisplay' } }
+          = current_event.conference_date(1).strftime("%B %e")
+      %li
+        %a#schedule-day-link{ href: "#", displayedId: 'schedule-day-two', data: { action: 'click->sub-nav#updateDisplay' } }
+          = current_event.conference_date(2).strftime("%B %e")
+      %li
+        %a#schedule-day-link.selected{ href: "#", displayedId: 'schedule-day-three', data: { action: 'click->sub-nav#updateDisplay' } }
+          = current_event.conference_date(3).strftime("%B %e")
 
   #schedule-container
     #schedule-day-one{ data: { 'sub-nav-target': 'hideable' }}

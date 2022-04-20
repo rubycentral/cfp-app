@@ -22,7 +22,7 @@ export default class extends Controller {
 
   updateDisplay(e) {
     e.preventDefault()
-    this.displayedIdValue = e.target.parentNode.getAttribute('displayedId')
+    this.displayedIdValue = e.target.getAttribute('displayedId')
   }
 
   displayedIdValueChanged() {

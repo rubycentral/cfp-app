@@ -10,6 +10,3 @@
     %span.schedule-room
       = image_tag('themes/default/pin-icon.svg')
       = program_session.room
-  - if !program_session.shortened_display_description.blank?
-    .schedule-session-description
-      = program_session.shortened_display_description

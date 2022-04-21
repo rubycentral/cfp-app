@@ -18,6 +18,22 @@
         = link_to "Schedule", schedule_path(current_website.event)
     #content
       =yield
+    %footer
+      .footer-event-details
+        .logo-container
+          .website-event-logo
+          = link_to(current_website.event.name, landing_path(website_event_slug))
+        .footer-social-links
+          %a.twitter-link{ href: 'https://twitter.com/rubyconf', target: '_blank' }
+          %a.facebook-link{ href: 'https://facebook.com/rubyconf2021', target: '_blank' }
+          %a.instagram-link{ href: 'https://instagram.com/rubyconf', target: '_blank' }
+
+
+      .footer-event-links
+        - current_website.pages.published.each do |page|
+          = link_to page.name, page_path(website_event_slug, page)
+        = link_to "Schedule", schedule_path(current_website.event)
+
 
     :javascript
       var openEl = document.getElementById('menu-toggle');

@@ -1,0 +1,100 @@
+.schedule-block-container {
+  display: grid;
+  grid-template-columns: 14% 1fr;
+  gap: 10px;
+  border-bottom: 5px solid black;
+  padding: 5px 5px;
+
+  .schedule-duration {
+    width: 100%;
+    padding: 0 5px 0 0;
+    border-right: 1px solid black;
+    margin: 0 5px 0 0;
+    span {
+      display: block;
+      text-align: right;
+    }
+    .session-start-time {
+      font-size: 1.1em;
+    }
+    .session-end-time::before {
+      content: "-";
+    }
+  }
+
+  .schedule-grid-cell {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid black;
+    width: 98%;
+    padding: 5px;
+
+    .schedule-session-detail {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .schedule-session-title {
+      font-size: 1.2em;
+      font-weight: 600;
+    }
+
+    .schedule-session-description {
+      font-size: .9em;
+    }
+
+    .session-track {
+      border: 1px solid $black;
+      font-size: .9em;
+      padding: 2px 5px;
+      width: fit-content;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+  }
+  .schedule-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px
+  }
+}
+
+
+
+@media screen and (max-width: 900px) and (orientation: portrait),
+  (max-width: 823px) and (orientation: landscape) {
+    .schedule-block-container {
+      grid-template-columns: 1fr;
+
+      .schedule-duration {
+        width: auto;
+        border-right: none;
+        margin: 0 5px 5px ;
+        span {
+          display: inline;
+          text-align: right;
+        }
+        .session-end-time::before {
+          content: "-";
+        }
+      }
+
+      .schedule-grid-cell {
+        border: 1px solid black;
+        padding: 5px 5px;
+        margin: 0 5px;
+        width: auto;
+        .schedule-session-detail {
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+
+      .schedule-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px
+      }
+    }
+  }

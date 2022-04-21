@@ -12,10 +12,6 @@ class PagesController < ApplicationController
 
   private
 
-  def require_website
-    redirect_to not_found_path and return unless current_website
-  end
-
   def require_page
     @page = current_website.pages.published.find_by(page_conditions)
     unless @page

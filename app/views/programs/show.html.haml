@@ -1,0 +1,45 @@
+%div
+  %h3
+    Program
+  %p
+    The largest official gathering of the year, #{current_website.event.name} brings together top talent, companies, and project representatives from around the world. Learn and build with the best in sessions, workshops, keynotes and parties.
+  %ul.program_nav
+    %li.program-keynotes
+      Keynotes
+      %small
+        5
+    %li.program_sessions
+      %a{:href=>'#'}
+        Talks
+        %small
+          = @program_sessions.regular_sessions.count
+    %li.program-workshops
+      %a{:href=>'#'}
+        Workshops  Talks
+        %small
+          = @program_sessions.workshops.count
+
+#sessions
+  #regular_sessions
+    %nav#tracks-nav
+      %strong
+        Tracks
+      %ul
+        - current_website.event.tracks.each do |track|
+          %li
+            %a.track{ href: "#" }
+              = track.name
+        %li.back-to-top
+          %a{ href: "#" }
+            &uparrow; Back To Top
+    %h2
+      Talks
+    - @program_sessions.regular_sessions.each do |program_session|
+      %div
+        = render program_session
+#workshops
+  %h2
+    Workshops
+  - @program_sessions.workshops.each do |program_session|
+    %div
+      = render program_session

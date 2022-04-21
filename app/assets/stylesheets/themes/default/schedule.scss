@@ -21,15 +21,15 @@
           font-size: 24px;
           font-weight: 700;
           display: block;
-          opacity: .15;
+          color: $grey-light;
           width: 100%;
           margin: auto;
           text-align: center;
           text-decoration: none;
           &:hover {
-            opacity: 1;
-            box-shadow: 0 3px white,
-                        0 6px black;
+            color: $black;
+            box-shadow: 0 7px var(--main_content_background),
+                        0 10px $black;
             transition: all 300ms;
           }
         }
@@ -47,12 +47,16 @@
   grid-template-columns: 160px 1fr;
   grid-template-areas: "time-duration program-sessions";
   gap: 10px;
-  padding: 10px 0;
-  border-top: .5px solid $divider-light;
+  border-top: 1px solid $divider-light;
 
+  &:last-child {
+    border-bottom: 1px solid $divider-light;
+    margin-bottom: 50px;
+  }
   .schedule-duration {
     grid-area: time-duration;
     text-align: right;
+    padding-top: 20px;
     width: 100%;
 
     .session-end-time::before {
@@ -63,40 +67,70 @@
   .schedule-grid {
     display: grid;
     grid-area: program-sessions;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px
+    grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 
-
   .schedule-grid-cell {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border: 1px solid black;
-    width: 98%;
-    padding: 5px;
-
-    .schedule-session-detail {
-      display: flex;
-      justify-content: space-between;
+    border-right: 1px solid $divider-light;
+    padding: 10px 15px;
+    display: grid;
+    align-items: center;
+    gap: 5px;
+    grid-template-rows: 30px auto 15px 30px;
+    grid-template-areas: "track"
+                         "title"
+                         "room"
+                         "speaker";
+    &:only-child {
+      border-right: none;
     }
 
-    .schedule-session-title {
-      font-size: 1.2em;
-      font-weight: 600;
+    &:nth-child(4n+4) {
+      border-right: none;
     }
 
-    .schedule-session-description {
-      font-size: .9em;
+    &:nth-child(n+5) {
+      border-top: 1px solid $divider-light!important;
     }
 
     .session-track {
-      border: 1px solid $black;
-      font-size: .9em;
-      padding: 2px 5px;
+      grid-area: track;
+      display: flex;
+      justify-content: center;
+      border-radius: 3px;
+      align-items: center;
+      font-size: 12px;
+      background-color: $grey-lightest;
+      padding: 5px 7px;
       width: fit-content;
-      display: inline-block;
-      margin-bottom: 10px;
+    }
+
+    .schedule-session-title {
+      grid-area: title;
+      font-size: 21px;
+      font-weight: 500;
+      text-decoration: underline;
+    }
+
+    .schedule-room {
+      display: flex;
+      align-items: center;
+      grid-area: room;
+
+      .room-icon {
+        margin-right: 4px;
+        display: inline-block;
+        height: 15px;
+        aspect-ratio: 1 / 1;
+        border-radius: 100%;
+        background-color: $grey-light;
+      }
+    }
+
+    .schedule-presenter {
+      font-size: 16px;
+      font-weight: 500;
+      grid-area: speaker;
     }
   }
 }
@@ -105,30 +139,44 @@
 
 @media screen and (max-width: 900px) and (orientation: portrait),
   (max-width: 823px) and (orientation: landscape) {
-    .schedule-block-container {
+
+    .schedule-page-wrapper {
       grid-template-columns: 1fr;
+      grid-template-areas: "sub-nav"
+                           "schedule";
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sub-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .schedule-block-container {
+      grid-template-rows: 30px 1fr;
+      grid-template-columns: 1fr;
+      grid-template-areas: "time-duration"
+                           "program-sessions";
+      border-top: none;
 
       .schedule-duration {
-        width: auto;
-        border-right: none;
-        margin: 0 5px 5px ;
-        span {
-          display: inline;
-          text-align: right;
-        }
+        grid-area: time-duration;
+        text-align: left;
+
         .session-end-time::before {
           content: "-";
         }
       }
 
       .schedule-grid-cell {
-        border: 1px solid black;
         padding: 5px 5px;
         margin: 0 5px;
         width: auto;
-        .schedule-session-detail {
-          display: flex;
-          justify-content: space-between;
+
+        &:nth-child(n) {
+          border: 1px solid $divider-light;
         }
       }
 

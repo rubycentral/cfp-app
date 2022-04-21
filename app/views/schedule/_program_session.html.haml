@@ -4,9 +4,8 @@
       = program_session.display_track_name
   .schedule-session-title
     = program_session.display_title
-  .schedule-session-detail
-    %span.schedule-presenter
-      =  program_session.display_presenter
-    %span.schedule-room
-      = image_tag('themes/default/pin-icon.svg')
-      = program_session.room
+  .schedule-room
+    %span.room-icon
+    = program_session.room
+  .schedule-presenter
+    =  program_session.display_presenter

@@ -1,4 +1,4 @@
-%div
+%div{ data: { 'controller': 'sub-nav', 'sub-nav-displayed-id-value': 'sessions' } }
   %h3
     Program
   %p
@@ -9,37 +9,33 @@
       %small
         5
     %li.program_sessions
-      %a{:href=>'#'}
-        Talks
-        %small
-          = @program_sessions.regular_sessions.count
+      %a{ href: "#", displayedId: 'sessions', data: { action: 'click->sub-nav#updateDisplay' } }
+        = "Talks #{@program_sessions.regular_sessions.count}"
     %li.program-workshops
-      %a{:href=>'#'}
-        Workshops  Talks
-        %small
-          = @program_sessions.workshops.count
+      %a{ href: "#", displayedId: 'workshops', data: { action: 'click->sub-nav#updateDisplay' } }
+        = "Workshops #{@program_sessions.workshops.count}"
 
-#sessions
-  #regular_sessions
-    %nav#tracks-nav
-      %strong
-        Tracks
-      %ul
-        - current_website.event.tracks.each do |track|
-          %li
-            %a.track{ href: "#" }
-              = track.name
-        %li.back-to-top
-          %a{ href: "#" }
-            &uparrow; Back To Top
+  #sessions{ data: { 'sub-nav-target': 'hideable' } }
+    #regular_sessions
+      %nav#tracks-nav
+        %strong
+          Tracks
+        %ul
+          - current_website.event.tracks.each do |track|
+            %li
+              %a.track{ href: "#" }
+                = track.name
+          %li.back-to-top
+            %a{ href: "#" }
+              &uparrow; Back To Top
+      %h2
+        Talks
+      - @program_sessions.regular_sessions.each do |program_session|
+        %div
+          = render program_session
+  #workshops{ data: { 'sub-nav-target': 'hideable' } }
     %h2
-      Talks
-    - @program_sessions.regular_sessions.each do |program_session|
+      Workshops
+    - @program_sessions.workshops.each do |program_session|
       %div
         = render program_session
-#workshops
-  %h2
-    Workshops
-  - @program_sessions.workshops.each do |program_session|
-    %div
-      = render program_session

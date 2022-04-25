@@ -1,7 +1,7 @@
 import { Controller } from 'stimulus'
 
 export default class extends Controller {
-  static targets = ['input']
+  static targets = ['input', 'preview']
 
   initialize () {
     this.defaults = {
@@ -16,6 +16,13 @@ export default class extends Controller {
         ' bold italic backcolor | alignleft aligncenter ' +
         ' alignright alignjustify | bullist numlist outdent indent | ' +
         ' removeformat | code | help'
+        ,
+        init_instance_callback: function(editor) {
+          editor.on('input', function(e) {
+            var preview = document.getElementById('page-preview');
+            preview.contentWindow.location.reload(true);
+          });
+        }
     }
   }
 

@@ -1,0 +1,14 @@
+#page-preview-wrapper {
+  height: 700px;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#live-preview-page {
+  border: 1px solid black;
+  width: 99%;
+  height: 620px;
+  overflow: scroll;
+}

@@ -1,13 +1,20 @@
 = simple_form_for [current_event, :staff, page] do |f|
-  .row
+  .row{ data: { controller: :editor } }
     %fieldset.col-md-6
       = f.input :name
       = f.input :slug
       = f.input :unpublished_body,
         as: :text,
-        wrapper_html: { data: { controller: :editor } },
-        input_html: { data: { "editor-target": 'input' } }
+        wrapper_html: { data: { "controller": "page-preview", "page-preview-count-value": "0" } },
+        input_html: { data: { "editor-target": "input" } }
+    %fieldset#page-preview-wrapper.col-md-6
+      %h4 Preview Page
+      #live-preview-page.col-lg-6
+        %iframe{  src: "#{event_staff_page_path(current_event, @page)}",
+                  width: "100%",
+                  style: "height:1000vh;",
+                  id: "page-preview" }
   .row
     .col-sm-12
-      = submit_tag("Save", class: "pull-right btn btn-success", type: "submit")
-      = link_to "Cancel", event_staff_pages_path(current_event), {:class=>"cancel-form pull-right btn btn-danger"}
+      = submit_tag("Save", class: "btn btn-success", type: "submit")
+      = link_to "Cancel", event_staff_pages_path(current_event), {:class=>"cancel-form btn btn-danger"}

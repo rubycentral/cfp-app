@@ -29,7 +29,7 @@ class Staff::PagesController < Staff::ApplicationController
   def update
     if @page.update(page_params)
       flash[:success] = "#{@page.name} Page was successfully updated."
-      redirect_to event_staff_pages_path(current_event)
+      redirect_to edit_event_staff_page_path(current_event, @page)
     else
       render :edit
     end

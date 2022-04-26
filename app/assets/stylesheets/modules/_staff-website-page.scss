@@ -1,14 +1,28 @@
 #page-preview-wrapper {
-  height: 700px;
-  width: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-#live-preview-page {
-  border: 1px solid black;
-  width: 99%;
-  height: 620px;
-  overflow: scroll;
+.preview-flex {
+  display: flex;
+  width: 100%;
+
+  .resize {
+    flex-grow: 1;
+    display: flex;
+    margin: 10px;
+    padding: 10px;
+    overflow: scroll;
+    resize: both;
+    border: 1px solid black;
+    height: 70vh;
+    .inner {
+      flex-grow: 1;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      display: block;
+    }
+  }
 }

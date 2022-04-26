@@ -43,14 +43,16 @@ feature "dynamic website schedule page" do
     visit schedule_path(event)
 
     expect(page).to have_content(time_slot.title)
-    click_on(event.conference_date(2).strftime("%A, %B %d - Day 2"))
+    click_on(event.conference_date(2).strftime("%B %e"))
 
+    expect(page)
+      .to have_link(event.conference_date(2).strftime("%B %e"), class: "selected")
     expect(page).to_not have_content(time_slot.title)
     time_slot.update(conference_day: 2)
 
     visit schedule_path(event)
     expect(page).to_not have_content(time_slot.title)
-    click_on(event.conference_date(2).strftime("%A, %B %d - Day 2"))
+    click_on(event.conference_date(2).strftime("%B %e"))
 
     expect(page).to have_content(time_slot.title)
   end

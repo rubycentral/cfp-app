@@ -26,7 +26,7 @@
           margin: auto;
           text-align: center;
           text-decoration: none;
-          &:hover {
+          &:hover, &.selected {
             color: $black;
             box-shadow: 0 7px var(--main_content_background),
                         0 10px $black;

@@ -1,12 +1,16 @@
 
-$black: #000000;
+$black: #000000 !default;
+$bronze: #B77D39 !default;
 $divider: #E0D2C7 !default;
-$divider-light: rgba(0, 0, 0, .1);
-$gold: #ecd192 !default;
+$divider-light: rgba(0, 0, 0, .1) !default;
+$gold: #FFB62C !default;
 $grey: #494644 !default;
 $grey-light: #C4C4C4 !default;
+$grey-lighter: #E7E7E7 !default;
 $grey-lightest: #F5F5F5 !default;
 $grey-logo: #E6E6E6 !default;
+$platinum: #C7D7D7 !default;
 $red: #C04F45 !default;
+$silver:#E0E0E0 !default;
 $text: $grey !default;
 $white: #FFFFFF !default;

@@ -1,15 +1,12 @@
-%div
+%div.sponsors-page-wrapper
   %h3
-    Thank you to our Sponsors
-    .sponsors-temp
-      If you’re interested in sponsoring, check out our
-      = link_to "Sponsorship Prospectus", "#"
-      or email us at
-      = mail_to "sponsors@rubycentral.org", "sponsors@rubycentral.org"
-#sponsors
-  - @sponsors_by_tier.each do |tier, sponsors|
-    .sponsor-tier-wrapper
-      = tier
-    .sponsors-wrapper
-      - sponsors.each do |sponsor|
-        = render 'sponsor', sponsor: sponsor
+    Sponsors
+
+  #sponsors
+    - @sponsors_by_tier.each do |tier, sponsors|
+      .sponsor-tier-wrapper
+        .tier-title
+          = tier
+        .sponsors-wrapper
+          - sponsors.each do |sponsor|
+            = render 'sponsor', sponsor: sponsor

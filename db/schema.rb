@@ -219,6 +219,9 @@ ActiveRecord::Schema.define(version: 2022_04_20_063357) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "description"
+    t.string "offer_headline"
+    t.text "offer_text"
+    t.string "offer_url"
     t.index ["event_id"], name: "index_sponsors_on_event_id"
   end
 

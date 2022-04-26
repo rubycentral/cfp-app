@@ -1,8 +1,8 @@
 .sponsor-wrapper
-  = image_tag sponsor.primary_logo, alt: sponsor.name, class: 'sponsor-primary-logo'
-  = link_to sponsor.url, target: "_blank"
-  %h5.sponsor-tier-label
+  .sponsor-tier-badge{:class => "#{sponsor.tier}" }
+    = image_tag("themes/default/sponsor-star.png")
     = sponsor.tier
+  = image_tag sponsor.primary_logo, alt: sponsor.name, class: 'sponsor-primary-logo'
   .sponsors-description
     %p
       = sponsor.description.html_safe

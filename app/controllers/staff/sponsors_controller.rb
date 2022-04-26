@@ -47,7 +47,10 @@ class Staff::SponsorsController < Staff::ApplicationController
                                     :primary_logo,
                                     :footer_logo,
                                     :banner_ad,
-                                    :description
+                                    :description,
+                                    :offer_headline,
+                                    :offer_text,
+                                    :offer_url
                                   )
   end
 end

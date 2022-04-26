@@ -1,52 +1,86 @@
-.sponsor-tier-wrapper {
-  display: block;
-  border-bottom: 1px solid $black;
-  padding: 20px 0 20px 30px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 20px;
+.sponsors-page-wrapper {
+  h3 {
+    font-weight: 700;
+    font-size: 24px;
+    text-align: center;
+  }
 }
 
-.sponsors-wrapper {
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 30px;
-  gap: 6px;
+.sponsor-tier-wrapper {
+  margin-bottom: 20px;
 
-  .sponsor-wrapper {
-    padding: 25px 30px;
-    border: 1px solid $black;
-    position: relative;
-
-    .sponsor-primary-logo {
-      max-height: 50px;
-      max-width: 250px;
-      display: block;
+  .tier-title {
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: capitalize;
+    text-align: center;
+    &::after {
+      content: "Sponsors";
     }
+  }
 
-    .sponsor-tier-label {
-      position: absolute;
-      top: 0;
-      right: 20px;
+  .sponsors-wrapper {
+    column-count: 3;
+
+    .sponsor-wrapper {
+      position: relative;
+      margin-bottom: 10px;
+      -webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
+      page-break-inside: avoid; /* Firefox */
+      break-inside: avoid; /* IE 10+ */
+      border: 1px solid $grey-light;
+      padding: 22px 15px 15px 15px;
+      border-radius: 10px;
+
+      .sponsor-primary-logo {
+        max-height: 50px;
+        max-width: 170px;
+        display: block;
+        margin-bottom: 15px;
+      }
     }
   }
 }
 
+.sponsor-tier-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 3px 9px;
+  border-radius: 0 10px 0 10px;
+  font-weight: 700;
+  text-transform: capitalize;
+
+  &::before {
+    height: 15px;
+    width: 15px;
+    background-image: url('images/themes/default/sponsor-star.png');
+  }
+
+  img {
+    margin-right: 2px;
+  }
+
+  &.platinum { background-color: $platinum; }
+  &.gold { background-color: $gold; }
+  &.silver { background-color: $silver };
+  &.bronze { background-color: $bronze };
+  &.other { background-color: $grey-light };
+  &.supporter { background-color: $grey-light };
+}
+
+@media screen and (max-width: 1200px) and (orientation: portrait),
+  (max-width: 1123px) and (orientation: landscape) {
+    .sponsors-wrapper {
+      column-count: 2 !important;
+    }
+  }
+
+
 @media screen and (max-width: 900px) and (orientation: portrait),
   (max-width: 823px) and (orientation: landscape) {
     .sponsors-wrapper {
-      flex-direction: column;
-
-      .sponsor-wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        .sponsor-primary-logo {
-          max-height: 40px;
-          max-width: 250px;
-          display: block;
-        }
-      }
+      column-count: 1 !important;
     }
-}
+  }

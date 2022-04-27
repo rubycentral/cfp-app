@@ -68,13 +68,18 @@ ul li {
   padding: 0 0 12px 12px;
 }
 
-
 .btn {
   display: inline-block;
   padding: 10px 15px;
   border-radius: 5px;
   text-decoration: none;
   margin: 0 0 12px 0;
+}
+
+h3.section-title {
+  font-weight: 700;
+  font-size: 24px;
+  text-align: center;
 }
 
 @media screen and (max-width: 900px) and (orientation: portrait),

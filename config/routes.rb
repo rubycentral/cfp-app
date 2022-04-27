@@ -165,6 +165,7 @@ Rails.application.routes.draw do
   get '/(:slug)', to: 'pages#show', as: :landing
   get '/(:slug)/program', to: 'programs#show', as: :program
   get '/(:slug)/schedule', to: 'schedule#show', as: :schedule
+  get '/(:slug)/sponsors_footer', to: 'sponsors#sponsors_footer'
   get '/(:slug)/sponsors', to: 'sponsors#show', as: :sponsors
   get '/(:slug)/:page', to: 'pages#show', as: :page
 

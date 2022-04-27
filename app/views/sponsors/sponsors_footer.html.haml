@@ -1,0 +1,5 @@
+%h3.section-title
+  Sponsors
+.sponsors-footer-wrapper
+  - @sponsors_in_footer.each do |sponsor|
+    = render "sponsor_footer", sponsor: sponsor

@@ -6,22 +6,26 @@
       = f.input :tier, collection: Sponsor::TIERS
       = f.input :url
       = f.input :published, as: :boolean, wrapper: :vertical_radio_and_checkboxes
-      %fieldset
-        .form-group
-          = f.label :primary_logo
-          - if f.object.primary_logo.attached?
-            = image_tag f.object.primary_logo.variant(resize: "100 X 100")
-          = f.file_field :primary_logo, class: "form-contorl-file"
-        .form-group
-          = f.label :footer_logo
-          - if f.object.footer_logo.attached?
-            = image_tag f.object.footer_logo.variant(resize: "100 X 100")
-          = f.file_field :footer_logo, class: "form-control-file"
-        .form-group
-          = f.label :banner_ad
-          - if f.object.banner_ad.attached?
-            = image_tag f.object.banner_ad.variant(resize: "100 X 100")
-          = f.file_field :banner_ad
+      = f.input :description
+
+      - if f.object.primary_logo.attached?
+        = image_tag f.object.primary_logo
+      = f.input :primary_logo, class: "form-contorl-file"
+
+      - if f.object.footer_logo.attached?
+        = image_tag f.object.footer_logo.variant(resize: "100 X 100")
+      = f.input :footer_logo, class: "form-control-file"
+
+      - if f.object.banner_ad.attached?
+        = image_tag f.object.banner_ad.variant(resize: "100 X 100")
+      = f.input :banner_ad
+
+
+    %fieldset.col-md-6
+      %h4 Sponsor Offer
+      = f.input :offer_headline
+      = f.input :offer_url
+      = f.input :offer_text
 
     .col-sm-12
       = submit_tag("Save", class: "btn btn-success", type: "submit")

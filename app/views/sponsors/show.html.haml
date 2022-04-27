@@ -1,0 +1,11 @@
+%div.sponsors-page-wrapper
+  %h3
+    Sponsors
+
+  #sponsors
+    - @sponsors_by_tier.each do |tier, sponsors|
+      .sponsor-tier-wrapper
+        .tier-title
+          = tier
+        .sponsors-wrapper
+          = render sponsors

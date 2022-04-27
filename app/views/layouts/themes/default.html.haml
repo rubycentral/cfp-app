@@ -18,6 +18,7 @@
           = link_to page.name, page_path(website_event_slug, page)
         = link_to "Schedule", schedule_path(current_website.event)
         = link_to "Program", program_path(website_event_slug)
+        = link_to "Sponsors", sponsors_path(website_event_slug)
     #content
       =yield
     %footer
@@ -33,6 +34,9 @@
         - current_website.pages.published.each do |page|
           = link_to page.name, page_path(website_event_slug, page)
         = link_to "Schedule", schedule_path(current_website.event)
+        = link_to "Schedule", schedule_path(current_website.event)
+        = link_to "Program", program_path(website_event_slug)
+        = link_to "Sponsors", sponsors_path(website_event_slug)
 
     :javascript
       var openEl = document.getElementById('menu-toggle');

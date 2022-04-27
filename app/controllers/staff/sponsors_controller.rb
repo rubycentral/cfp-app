@@ -39,7 +39,18 @@ class Staff::SponsorsController < Staff::ApplicationController
 
   private
   def sponsor_params
-    params.require(:sponsor).permit(:name, :tier, :published, :url, :other_title,
-                                    :primary_logo, :footer_logo, :banner_ad)
+    params.require(:sponsor).permit(:name,
+                                    :tier,
+                                    :published,
+                                    :url,
+                                    :other_title,
+                                    :primary_logo,
+                                    :footer_logo,
+                                    :banner_ad,
+                                    :description,
+                                    :offer_headline,
+                                    :offer_text,
+                                    :offer_url
+                                  )
   end
 end

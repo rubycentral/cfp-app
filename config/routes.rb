@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     get '/', to: 'pages#show'
     get '/(:slug)/program', to: 'programs#show'
     get '/(:slug)/schedule', to: 'schedule#show'
+    get '/(:slug)/sponsors', to: 'sponsors#show'
     get '/:domain_page_or_slug', to: 'pages#show'
     get '/:slug/:page', to: 'pages#show'
   end
@@ -164,6 +165,8 @@ Rails.application.routes.draw do
   get '/(:slug)', to: 'pages#show', as: :landing
   get '/(:slug)/program', to: 'programs#show', as: :program
   get '/(:slug)/schedule', to: 'schedule#show', as: :schedule
+  get '/(:slug)/sponsors_footer', to: 'sponsors#sponsors_footer'
+  get '/(:slug)/sponsors', to: 'sponsors#show', as: :sponsors
   get '/(:slug)/:page', to: 'pages#show', as: :page
 
 end

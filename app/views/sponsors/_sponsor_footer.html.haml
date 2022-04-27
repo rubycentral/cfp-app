@@ -1,0 +1,17 @@
+.sponsor-footer-card
+  .sponsor-tier-badge{:class => "#{sponsor.tier}" }
+    = image_tag "themes/default/sponsor-star.png"
+    = sponsor.tier
+  .sponsor-footer-logo-wrapper
+    = image_tag sponsor.footer_logo, alt: sponsor.name, class: 'sponsor-footer-logo'
+  - if sponsor.has_offer?
+    %div{ data: { 'controller': 'toggle-visibility'} }
+      .sponsor-offer-wrapper.hidden{ data: { 'toggle-visibility-target': 'hidden' } }
+        .flex-row-container
+          %span.offer-headline
+            = sponsor.offer_headline
+          = link_to "Redeem Now", sponsor.offer_url, class: "offer-url", target: "_blank"
+        %p.offer-text
+          = sponsor.offer_text
+      .sponsor-offer-reveal-button{ data: { 'action': 'click->toggle-visibility#toggleHidden' } }
+        = image_tag "themes/default/caret.png"

@@ -1,0 +1,181 @@
+.sponsors-page-wrapper {
+  h3 {
+    font-weight: 700;
+    font-size: 24px;
+    text-align: center;
+  }
+}
+
+.sponsor-tier-wrapper {
+  margin-bottom: 20px;
+
+  .tier-title {
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: capitalize;
+    text-align: center;
+    &::after {
+      content: "Sponsors";
+    }
+  }
+
+  .sponsors-wrapper {
+    column-count: 3;
+
+    .sponsor-wrapper {
+      position: relative;
+      margin-bottom: 10px;
+      -webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
+      page-break-inside: avoid; /* Firefox */
+      break-inside: avoid; /* IE 10+ */
+      border: 1px solid $grey-light;
+      padding: 22px 15px 15px 15px;
+      border-radius: 10px;
+
+      .sponsor-primary-logo {
+        max-height: 50px;
+        max-width: 170px;
+        display: block;
+        margin-bottom: 15px;
+      }
+    }
+  }
+}
+
+.sponsor-tier-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 3px 9px;
+  display: flex;
+  align-items: center;
+  border-radius: 0 10px 0 10px;
+  font-weight: 700;
+  text-transform: capitalize;
+
+  &::before {
+    height: 15px;
+    width: 15px;
+    background-image: url('images/themes/default/sponsor-star.png');
+  }
+
+  img {
+    margin-right: 4px;
+  }
+
+  &.platinum { background-color: $platinum; }
+  &.gold { background-color: $gold; }
+  &.silver { background-color: $silver };
+  &.bronze { background-color: $bronze };
+  &.other { background-color: $grey-light };
+  &.supporter { background-color: $grey-light };
+}
+
+.sponsors-footer-wrapper {
+  width: 100%;
+  max-width: 1600px;
+  margin: auto;
+  column-count: 3;
+  margin-bottom: 30px;
+
+
+  .sponsor-footer-card {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    border: 1px solid $grey-lightest;
+    border-radius: 10px;
+    box-shadow: 2px 4px 16px 4px rgba(0, 0, 0, 0.05);
+    -webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
+    page-break-inside: avoid; /* Firefox */
+    break-inside: avoid; /* IE 10+ */
+
+    .sponsor-footer-logo-wrapper {
+      height: 85px;
+      display: flex;
+      align-items: center;
+
+      .sponsor-footer-logo {
+        max-height: 70px;
+        max-width: 130px;
+        display: block;
+      }
+    }
+
+    .sponsor-offer-wrapper {
+      background-color: $grey-lighter;
+      padding: 20px;
+      overflow: hidden;
+      transition: all 1s linear;
+
+      .flex-row-container {
+        display: flex;
+        margin: 6px 0 8px 0;
+        justify-content: space-between;
+
+        .offer-headline {
+          display: block;
+          font-weight: 600;
+          font-size: 14px;
+          margin-right: 4px;
+        }
+
+        .offer-url {
+          display: block;
+          align-self: flex-start;
+          padding: 10px 11px;
+          background-color: $black;
+          color: $white;
+          border-radius: 10px;
+          white-space: nowrap;
+          text-decoration: none;
+        }
+      }
+
+      &.hidden {
+        height: 0px
+      }
+    }
+    .sponsor-offer-reveal-button {
+      height: 25px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        display: block;
+        pointer-events: none;
+      }
+
+      &:hover {
+        img {
+          transform: scale(1.2)
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) and (orientation: portrait),
+  (max-width: 1123px) and (orientation: landscape) {
+    .sponsors-wrapper {
+      column-count: 2 !important;
+    }
+  }
+
+
+@media screen and (max-width: 900px) and (orientation: portrait),
+  (max-width: 823px) and (orientation: landscape) {
+    .sponsors-wrapper {
+      column-count: 1 !important;
+    }
+    .sponsors-footer-wrapper {
+      column-count: 2 !important;
+    }
+  }

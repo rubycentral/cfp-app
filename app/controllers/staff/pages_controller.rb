@@ -64,6 +64,14 @@ class Staff::PagesController < Staff::ApplicationController
   end
 
   def page_params
-    params.require(:page).permit(:name, :slug, :unpublished_body)
+    params
+      .require(:page)
+      .permit(
+        :name,
+        :slug,
+        :hide_header,
+        :hide_footer,
+        :unpublished_body
+      )
   end
 end

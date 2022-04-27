@@ -80,4 +80,22 @@ feature "Website Page Management" do
     expect(home_page.reload).to be_landing
   end
 
+  scenario "Organizer creates and publishes a splash page", :js do
+    login_as(organizer)
+    visit new_event_staff_page_path(event)
+
+    fill_in('Name', with: 'Splash')
+    fill_in('Slug', with: 'splash')
+    check('Hide header')
+    check('Hide footer')
+    fill_in_tinymce(:page, :unpublished_body, 'Coming Soon')
+    click_on('Save')
+
+    accept_confirm { click_on('Publish') }
+    click_on('View')
+
+    expect(page).not_to have_css('header')
+    expect(page).not_to have_css('footer')
+  end
+
 end

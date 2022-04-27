@@ -56,6 +56,12 @@ RSpec.configure do |config|
   config.before(:all) do
     FactoryBot.reload
   end
+
+  config.after(:each, js: true) do |example|
+    if example.exception
+      save_timestamped_screenshot(Capybara.page)
+    end
+  end
 end
 
 Capybara.register_driver :chrome do |app|
@@ -72,3 +78,11 @@ Capybara.register_driver :headless_chrome do |app|
 end
 
 Capybara.javascript_driver = ENV['CHROME'] ? :chrome : :headless_chrome
+
+def save_timestamped_screenshot(page)
+  timestamp = Time.zone.now.strftime("%Y_%m_%d-%H_%M_%S")
+  filename = "#{method_name}-#{timestamp}.png"
+  screenshot_path = Rails.root.join("tmp", "screenshots", filename)
+
+  page.save_screenshot(screenshot_path)
+end

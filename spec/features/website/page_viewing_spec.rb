@@ -40,13 +40,13 @@ feature 'Public Page Viewing' do
     visit root_path
     expect(page).to have_content('New Website')
 
-    click_on(new_home_page.name)
+    click_on(new_home_page.name, match: :first)
     expect(page).to have_content('New Website')
 
     visit landing_path(slug: website.event.slug)
     expect(page).to have_content('Old Website')
 
-    click_on(old_home_page.name)
+    click_on(old_home_page.name, match: :first)
     expect(page).to have_content('Old Website')
   end
 

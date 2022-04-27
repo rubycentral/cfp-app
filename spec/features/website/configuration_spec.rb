@@ -41,7 +41,7 @@ feature "Website Configuration" do
 
     expect(page).to have_content(strip_tags(home_page.published_body))
 
-    click_on(home_page.name)
+    click_on(home_page.name, match: :first)
 
     expect(current_path).to eq('/home')
   end

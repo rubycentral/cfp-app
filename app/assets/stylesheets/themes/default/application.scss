@@ -1,7 +1,8 @@
 @import url('https://rsms.me/inter/inter-ui.css');
 @import 'colors';
 @import 'nav';
-@import 'programs';
+@import 'footer';
+@import 'program';
 @import 'schedule';
 
 
@@ -26,40 +27,20 @@ html {
 
 body {
   color: $text;
+  padding: 0;
+  margin: 0;
   background: var(--body_background_color);
-  overflow: hidden;
-  font-size: 14px;
-  line-height: 150%;
-  padding: 50px 0;
-  height: 100vh;
-}
-
-/* Hide scrollbar for Chrome, Safari and Opera */
-::-webkit-scrollbar {
-  display: none;
+  overflow: scroll;
 }
 
 .hidden {
   display: none;
 }
 
-#main-default {
-  width: 95%;
-  max-width: 1070px;
-  height: calc(100vh - 100px);
-  margin: 0 auto;
-  border: 1px solid $black;
-  overflow: scroll;
-  box-shadow: inset 0 0 0 1px $black; /** covers the weird border-radius 1px gap **/
-  position: relative;
-}
-
 #content {
   background-color: var(--main_content_background);
-  margin-left: 178px;
-  padding: 50px 20px 20px 50px;
-  position: relative;
-  height: calc(100vh - 100px);
+  padding: 0 20px 0 20px;
+  margin-top: 100px;
 }
 
 p {
@@ -87,13 +68,6 @@ ul li {
   padding: 0 0 12px 12px;
 }
 
-#main-notice {
-  padding: 15px 10px;
-  position: relative;
-  margin-bottom: 20px;
-  text-align: center;
-  border: 1px solid $black;
-}
 
 .btn {
   display: inline-block;
@@ -105,17 +79,4 @@ ul li {
 
 @media screen and (max-width: 900px) and (orientation: portrait),
   (max-width: 823px) and (orientation: landscape) {
-    body {
-      padding: 8px;
-    }
-    #main-default {
-      width: auto;
-      height: 97%;
-      display: block;
-    }
-    #content {
-      padding: 76px 10px 10px 10px;
-      margin: 0 0 0 0;
-      height: calc(100vh - 32px);
-    }
 }

@@ -9,7 +9,7 @@ class Staff::PagesController < Staff::ApplicationController
   end
 
   def show
-    @body = @page.unpublished_body
+    @body = @page.unpublished_body || ""
     render template: 'pages/show', layout: "themes/#{current_website.theme}"
   end
 
@@ -52,7 +52,7 @@ class Staff::PagesController < Staff::ApplicationController
   private
 
   def set_page
-    @page = if params[:id]
+    @page = if params[:id] && (params[:id] != Page::BLANK_SLUG)
               current_website.pages.find_by(slug: params[:id])
             else
               current_website.pages.build

@@ -18,10 +18,8 @@
     .resize
       #page-preview-wrapper
         %h4 Preview Page
-        %iframe{  src: "#{event_staff_page_path(current_event, @page)}",
-                  width: "100%",
-                  style: "height:1000vh;",
-                  id: "page-preview" }
+        %iframe{ src: "#{event_staff_page_path(current_event, @page)}",
+                 id: "page-preview" }
   .row
     .col-sm-12
       = submit_tag("Save", class: "btn btn-success", type: "submit")

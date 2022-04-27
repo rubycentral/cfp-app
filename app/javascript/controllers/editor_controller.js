@@ -1,6 +1,5 @@
 import { Controller } from 'stimulus'
 import CodeMirror from 'codemirror/lib/codemirror.js'
-import 'codemirror/lib/codemirror.css'
 import 'codemirror/mode/htmlmixed/htmlmixed.js'
 
 export default class extends Controller {
@@ -18,13 +17,20 @@ export default class extends Controller {
       toolbar: 'undo redo | formatselect | ' +
       ' bold italic backcolor | alignleft aligncenter ' +
       ' alignright alignjustify | bullist numlist outdent indent | ' +
-      ' removeformat | code | help',
+      ' removeformat | image code | help',
       valid_elements: '*[*]',
       forced_root_block : '',
+      images_upload_url: '/image_uploads',
+      images_file_types: 'jpeg,jpg,jpe,jfi,jif,jfif,png,gif,bmp,webp,svg',
+      relative_urls: false,
       init_instance_callback: function(editor) {
         editor.on('input', function(e) {
           var preview = document.getElementById('page-preview');
           preview.contentWindow.document.getElementById("content").innerHTML = e.target.innerHTML;
+        });
+        editor.on('change', function(e) {
+          var preview = document.getElementById('page-preview');
+          preview.contentWindow.document.getElementById("content").innerHTML = e.target.getContent();
         });
       }
     }

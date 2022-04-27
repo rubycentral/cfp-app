@@ -90,6 +90,22 @@ GEM
       rake (>= 10.4, < 14.0)
     autoprefixer-rails (10.3.3.0)
       execjs (~> 2)
+    aws-eventstream (1.2.0)
+    aws-partitions (1.580.0)
+    aws-sdk-core (3.130.2)
+      aws-eventstream (~> 1, >= 1.0.2)
+      aws-partitions (~> 1, >= 1.525.0)
+      aws-sigv4 (~> 1.1)
+      jmespath (~> 1.0)
+    aws-sdk-kms (1.56.0)
+      aws-sdk-core (~> 3, >= 3.127.0)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-s3 (1.113.2)
+      aws-sdk-core (~> 3, >= 3.127.0)
+      aws-sdk-kms (~> 1)
+      aws-sigv4 (~> 1.4)
+    aws-sigv4 (1.5.0)
+      aws-eventstream (~> 1, >= 1.0.2)
     babel-source (5.8.35)
     babel-transpiler (0.7.0)
       babel-source (>= 4.0, < 6)
@@ -235,6 +251,7 @@ GEM
     interception (0.5)
     jbuilder (2.11.2)
       activesupport (>= 5.0.0)
+    jmespath (1.6.1)
     jquery-datatables-rails (3.4.0)
       actionpack (>= 3.1)
       jquery-rails
@@ -492,6 +509,7 @@ DEPENDENCIES
   actionview-encoded_mail_to
   active_model_serializers (~> 0.10.0)
   annotate
+  aws-sdk-s3
   better_errors
   binding_of_caller
   bootsnap

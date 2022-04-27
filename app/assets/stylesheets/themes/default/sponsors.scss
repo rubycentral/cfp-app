@@ -48,6 +48,8 @@
   top: 0;
   right: 0;
   padding: 3px 9px;
+  display: flex;
+  align-items: center;
   border-radius: 0 10px 0 10px;
   font-weight: 700;
   text-transform: capitalize;
@@ -59,7 +61,7 @@
   }
 
   img {
-    margin-right: 2px;
+    margin-right: 4px;
   }
 
   &.platinum { background-color: $platinum; }
@@ -72,7 +74,11 @@
 
 .sponsors-footer-wrapper {
   width: 100%;
+  max-width: 1600px;
+  margin: auto;
   column-count: 3;
+  margin-bottom: 30px;
+
 
   .sponsor-footer-card {
     width: 100%;
@@ -109,13 +115,13 @@
 
       .flex-row-container {
         display: flex;
-        margin: 4px 0;
-
+        margin: 6px 0 8px 0;
+        justify-content: space-between;
 
         .offer-headline {
           display: block;
           font-weight: 600;
-          font-size: 12px;
+          font-size: 14px;
           margin-right: 4px;
         }
 
@@ -168,5 +174,8 @@
   (max-width: 823px) and (orientation: landscape) {
     .sponsors-wrapper {
       column-count: 1 !important;
+    }
+    .sponsors-footer-wrapper {
+      column-count: 2 !important;
     }
   }

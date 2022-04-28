@@ -162,6 +162,25 @@
   }
 }
 
+.banner-ad-wrapper {
+  position: relative;
+  padding-bottom: 15%;
+  max-height: 170px;
+
+  .banner-ad-item {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    transition: all 200ms ease-in-out;
+
+    img {
+      margin: auto;
+      max-height: 130px;
+    }
+  }
+}
+
 @media screen and (max-width: 1200px) and (orientation: portrait),
   (max-width: 1123px) and (orientation: landscape) {
     .sponsors-wrapper {

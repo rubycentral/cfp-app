@@ -1,0 +1,3 @@
+.banner-ad-wrapper
+  - @sponsors_in_banner.each do |sponsor|
+    = link_to image_tag( sponsor.banner_ad, alt: sponsor.name), sponsor.url, target: "_blank", data: { 'banner-ads-target': 'ad' }

@@ -10,4 +10,9 @@ class SponsorsController < ApplicationController
     @sponsors_in_footer = Sponsor.published.with_footer_image.order_by_tier
     render layout: false
   end
+
+  def banner_ads
+    @sponsors_in_banner = Sponsor.published.with_banner_ad
+    render layout: false
+  end
 end

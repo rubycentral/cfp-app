@@ -12,11 +12,11 @@
   --nav_text_color: black;
   --nav_link_hover: black;
   --main_content_background: white;
-  --sans-serif-font: 'Inter';
+  --sans-serif-font: 'Rubik';
 }
 
 html {
-  font-family: var(--sans-serif-font), sans-serif;
+  font-family: var(--sans-serif-font), sans-serif !important;
 }
 
 @supports (font-variation-settings: normal) {
@@ -37,7 +37,7 @@ body {
   display: none;
 }
 
-#content {
+header + #content {
   background-color: var(--main_content_background);
   padding: 0 20px 0 20px;
   margin-top: 100px;

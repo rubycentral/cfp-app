@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_27_194236) do
+ActiveRecord::Schema.define(version: 2022_04_28_160329) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,9 +43,9 @@ ActiveRecord::Schema.define(version: 2022_04_27_194236) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "comments", force: :cascade do |t|
-    t.bigint "proposal_id"
-    t.bigint "user_id"
+  create_table "comments", id: :serial, force: :cascade do |t|
+    t.integer "proposal_id"
+    t.integer "user_id"
     t.integer "parent_id"
     t.text "body"
     t.string "type"
@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(version: 2022_04_27_194236) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "events", force: :cascade do |t|
+  create_table "events", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "slug"
     t.string "url"
@@ -72,15 +72,15 @@ ActiveRecord::Schema.define(version: 2022_04_27_194236) do
     t.text "proposal_tags"
     t.text "review_tags"
     t.text "custom_fields"
-    t.text "speaker_notification_emails"
+    t.text "speaker_notification_emails", default: "---\n:accept: ''\n:reject: ''\n:waitlist: ''\n"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["slug"], name: "index_events_on_slug"
   end
 
-  create_table "invitations", force: :cascade do |t|
-    t.bigint "proposal_id"
-    t.bigint "user_id"
+  create_table "invitations", id: :serial, force: :cascade do |t|
+    t.integer "proposal_id"
+    t.integer "user_id"
     t.string "email"
     t.string "state", default: "pending"
     t.string "slug"
@@ -92,8 +92,8 @@ ActiveRecord::Schema.define(version: 2022_04_27_194236) do
     t.index ["user_id"], name: "index_invitations_on_user_id"
   end
 
-  create_table "notifications", force: :cascade do |t|
-    t.bigint "user_id"
+  create_table "notifications", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
     t.string "message"
     t.string "target_path"
     t.datetime "read_at"
@@ -103,8 +103,8 @@ ActiveRecord::Schema.define(version: 2022_04_27_194236) do
   end
 
   create_table "pages", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "slug", null: false
+    t.string "name"
+    t.string "slug"
     t.bigint "website_id"
     t.text "published_body"
     t.text "unpublished_body"
@@ -116,14 +116,14 @@ ActiveRecord::Schema.define(version: 2022_04_27_194236) do
     t.index ["website_id"], name: "index_pages_on_website_id"
   end
 
-  create_table "program_sessions", force: :cascade do |t|
-    t.bigint "event_id"
-    t.bigint "proposal_id"
+  create_table "program_sessions", id: :serial, force: :cascade do |t|
+    t.integer "event_id"
+    t.integer "proposal_id"
     t.text "title"
     t.text "abstract"
-    t.bigint "track_id"
-    t.bigint "session_format_id"
-    t.text "state", default: "draft"
+    t.integer "track_id"
+    t.integer "session_format_id"
+    t.text "state", default: "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "info"
@@ -133,13 +133,13 @@ ActiveRecord::Schema.define(version: 2022_04_27_194236) do
     t.index ["track_id"], name: "index_program_sessions_on_track_id"
   end
 
-  create_table "proposals", force: :cascade do |t|
-    t.bigint "event_id"
+  create_table "proposals", id: :serial, force: :cascade do |t|
+    t.integer "event_id"
     t.string "state", default: "submitted"
     t.string "uuid"
     t.string "title"
-    t.bigint "session_format_id"
-    t.bigint "track_id"
+    t.integer "session_format_id"
+    t.integer "track_id"
     t.text "abstract"
     t.text "details"
     t.text "pitch"
@@ -156,9 +156,9 @@ ActiveRecord::Schema.define(version: 2022_04_27_194236) do
     t.index ["uuid"], name: "index_proposals_on_uuid", unique: true
   end
 
-  create_table "ratings", force: :cascade do |t|
-    t.bigint "proposal_id"
-    t.bigint "user_id"
+  create_table "ratings", id: :serial, force: :cascade do |t|
+    t.integer "proposal_id"
+    t.integer "user_id"
     t.integer "score"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -166,8 +166,8 @@ ActiveRecord::Schema.define(version: 2022_04_27_194236) do
     t.index ["user_id"], name: "index_ratings_on_user_id"
   end
 
-  create_table "rooms", force: :cascade do |t|
-    t.bigint "event_id"
+  create_table "rooms", id: :serial, force: :cascade do |t|
+    t.integer "event_id"
     t.string "name"
     t.string "room_number"
     t.string "level"
@@ -179,8 +179,8 @@ ActiveRecord::Schema.define(version: 2022_04_27_194236) do
     t.index ["event_id"], name: "index_rooms_on_event_id"
   end
 
-  create_table "session_formats", force: :cascade do |t|
-    t.bigint "event_id"
+  create_table "session_formats", id: :serial, force: :cascade do |t|
+    t.integer "event_id"
     t.string "name"
     t.string "description"
     t.integer "duration"
@@ -190,11 +190,11 @@ ActiveRecord::Schema.define(version: 2022_04_27_194236) do
     t.index ["event_id"], name: "index_session_formats_on_event_id"
   end
 
-  create_table "speakers", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "event_id"
-    t.bigint "proposal_id"
-    t.bigint "program_session_id"
+  create_table "speakers", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "event_id"
+    t.integer "proposal_id"
+    t.integer "program_session_id"
     t.string "speaker_name"
     t.string "speaker_email"
     t.text "bio"
@@ -227,8 +227,8 @@ ActiveRecord::Schema.define(version: 2022_04_27_194236) do
     t.index ["event_id"], name: "index_sponsors_on_event_id"
   end
 
-  create_table "taggings", force: :cascade do |t|
-    t.bigint "proposal_id"
+  create_table "taggings", id: :serial, force: :cascade do |t|
+    t.integer "proposal_id"
     t.string "tag"
     t.boolean "internal", default: false
     t.datetime "created_at"
@@ -236,9 +236,9 @@ ActiveRecord::Schema.define(version: 2022_04_27_194236) do
     t.index ["proposal_id"], name: "index_taggings_on_proposal_id"
   end
 
-  create_table "teammates", force: :cascade do |t|
-    t.bigint "event_id"
-    t.bigint "user_id"
+  create_table "teammates", id: :serial, force: :cascade do |t|
+    t.integer "event_id"
+    t.integer "user_id"
     t.string "role"
     t.string "email"
     t.string "state"
@@ -254,10 +254,10 @@ ActiveRecord::Schema.define(version: 2022_04_27_194236) do
     t.index ["user_id"], name: "index_teammates_on_user_id"
   end
 
-  create_table "time_slots", force: :cascade do |t|
-    t.bigint "program_session_id"
-    t.bigint "room_id"
-    t.bigint "event_id"
+  create_table "time_slots", id: :serial, force: :cascade do |t|
+    t.integer "program_session_id"
+    t.integer "room_id"
+    t.integer "event_id"
     t.integer "conference_day"
     t.time "start_time"
     t.time "end_time"
@@ -266,16 +266,15 @@ ActiveRecord::Schema.define(version: 2022_04_27_194236) do
     t.text "presenter"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.bigint "track_id"
+    t.integer "track_id"
     t.index ["conference_day"], name: "index_time_slots_on_conference_day"
     t.index ["event_id"], name: "index_time_slots_on_event_id"
     t.index ["program_session_id"], name: "index_time_slots_on_program_session_id"
     t.index ["room_id"], name: "index_time_slots_on_room_id"
-    t.index ["track_id"], name: "index_time_slots_on_track_id"
   end
 
-  create_table "tracks", force: :cascade do |t|
-    t.bigint "event_id"
+  create_table "tracks", id: :serial, force: :cascade do |t|
+    t.integer "event_id"
     t.string "name"
     t.string "description", limit: 250
     t.text "guidelines"
@@ -284,7 +283,7 @@ ActiveRecord::Schema.define(version: 2022_04_27_194236) do
     t.index ["event_id"], name: "index_tracks_on_event_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "email", default: "", null: false
     t.text "bio"
@@ -327,8 +326,13 @@ ActiveRecord::Schema.define(version: 2022_04_27_194236) do
     t.bigint "event_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "theme", default: "default", null: false
+    t.string "theme", default: "default"
     t.string "domains"
+    t.string "city"
+    t.text "location"
+    t.string "prospectus_link"
+    t.string "twitter_handle"
+    t.string "directions"
     t.index ["event_id"], name: "index_websites_on_event_id"
   end
 

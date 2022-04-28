@@ -23,7 +23,10 @@ export default class extends Controller {
       images_upload_url: '/image_uploads',
       images_file_types: 'jpeg,jpg,jpe,jfi,jif,jfif,png,gif,bmp,webp,svg',
       relative_urls: false,
+      convert_urls: false,
       init_instance_callback: function(editor) {
+        var preview = document.getElementById('page-preview');
+        preview.contentWindow.document.getElementById("content").innerHTML = editor.getContent();
         editor.on('input', function(e) {
           var preview = document.getElementById('page-preview');
           preview.contentWindow.document.getElementById("content").innerHTML = e.target.innerHTML;

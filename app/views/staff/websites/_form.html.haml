@@ -1,6 +1,22 @@
 = simple_form_for website, url: :event_staff_website do |f|
   .row
     %fieldset.col-md-6
+      - if website.logo.attached?
+        = f.label :logo, "Current Logo", class: "control-label"
+        %div
+          = image_tag(website.logo)
+      = f.input :logo, label: website.logo.attached? ? "Replace Logo" : "Logo"
+      - if website.background.attached?
+        = f.label :background, "Current Background", class: "control-label"
+        %div
+          = image_tag(website.background)
+      = f.input :background,
+        label: website.background.attached? ? "Replace Background" : "Background"
+      = f.input :city
+      = f.input :location, as: :text
+      = f.input :directions
+      = f.input :twitter_handle
+      = f.input :prospectus_link
       = f.input :domains
   .row
     .col-sm-12

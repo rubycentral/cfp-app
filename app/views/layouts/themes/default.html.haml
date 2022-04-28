@@ -5,53 +5,58 @@
     %meta(name="viewport" content="width=device-width, initial-scale=1.0")
     = stylesheet_link_tag current_website.theme, media: 'all'
     = javascript_pack_tag "application"
+    %link{rel: "stylesheet", href: "https://fonts.googleapis.com/css?family=Rubik"}
     %script{src: "https://cdn.tailwindcss.com" }
   %body
-    %header#main-header
-      %div#header-logo-container
-        %a#menu-toggle{ href: "#"}
-        .website-event-logo
-        %h1
-          = link_to(current_website.event.name, landing_path(website_event_slug))
-      %nav#main-nav
-        - current_website.pages.published.each do |page|
-          = link_to page.name, page_path(website_event_slug, page)
-        = link_to "Schedule", schedule_path(current_website.event)
-        = link_to "Program", program_path(website_event_slug)
-        = link_to "Sponsors", sponsors_path(website_event_slug)
+    - unless @page&.hide_header?
+      %header#main-header
+        %div#header-logo-container
+          %a#menu-toggle{ href: "#"}
+          .website-event-logo
+          %h1
+            = link_to(current_website.name, landing_path(website_event_slug))
+        %nav#main-nav
+          - current_website.pages.published.each do |page|
+            = link_to page.name, page_path(website_event_slug, page)
+          = link_to "Schedule", schedule_path(current_website.event)
+          = link_to "Program", program_path(website_event_slug)
+          = link_to "Sponsors", sponsors_path(website_event_slug)
     #content
       =yield
-    %footer
-      .footer-event-details
-        .logo-container
-          .website-event-logo
-          = link_to(current_website.event.name, landing_path(website_event_slug))
-        .footer-social-links
-          %a.twitter-link{ href: 'https://twitter.com/rubyconf', target: '_blank' }
-          %a.facebook-link{ href: 'https://facebook.com/rubyconf2021', target: '_blank' }
-          %a.instagram-link{ href: 'https://instagram.com/rubyconf', target: '_blank' }
-      .footer-event-links
-        - current_website.pages.published.each do |page|
-          = link_to page.name, page_path(website_event_slug, page)
-        = link_to "Schedule", schedule_path(current_website.event)
-        = link_to "Schedule", schedule_path(current_website.event)
-        = link_to "Program", program_path(website_event_slug)
-        = link_to "Sponsors", sponsors_path(website_event_slug)
 
-    :javascript
-      var openEl = document.getElementById('menu-toggle');
-      var mobileNavEl = document.getElementById('main-nav');
+    - unless @page&.hide_footer?
+      %footer
+        .footer-event-details
+          .logo-container
+            .website-event-logo
+            = link_to(current_website.event.name, landing_path(website_event_slug))
+          .footer-social-links
+            %a.twitter-link{ href: 'https://twitter.com/rubyconf', target: '_blank' }
+            %a.facebook-link{ href: 'https://facebook.com/rubyconf2021', target: '_blank' }
+            %a.instagram-link{ href: 'https://instagram.com/rubyconf', target: '_blank' }
+        .footer-event-links
+          - current_website.pages.published.each do |page|
+            = link_to page.name, page_path(website_event_slug, page)
+          = link_to "Schedule", schedule_path(current_website.event)
+          = link_to "Schedule", schedule_path(current_website.event)
+          = link_to "Program", program_path(website_event_slug)
+          = link_to "Sponsors", sponsors_path(website_event_slug)
 
-      function toggleNav() {
-        mobileNavEl.classList.toggle('menu-mobile--opened')
-        openEl.classList.toggle('menu-toggle--opened')
-      }
+    - unless @page&.hide_header?
+      :javascript
+        var openEl = document.getElementById('menu-toggle');
+        var mobileNavEl = document.getElementById('main-nav');
 
-      openEl.addEventListener('click', function (e) {
-        e.preventDefault()
-        toggleNav()
-      })
+        function toggleNav() {
+          mobileNavEl.classList.toggle('menu-mobile--opened')
+          openEl.classList.toggle('menu-toggle--opened')
+        }
 
-      document.getElementById("main-nav").addEventListener('click', function(e) {
-        toggleNav()
-      })
+        openEl.addEventListener('click', function (e) {
+          e.preventDefault()
+          toggleNav()
+        })
+
+        document.getElementById("main-nav").addEventListener('click', function(e) {
+          toggleNav()
+        })

@@ -62,7 +62,7 @@ class ApplicationController < ActionController::Base
       else
         older_domain_website || latest_domain_website
       end
-    end
+    end&.decorate
   end
 
   def older_domain_website

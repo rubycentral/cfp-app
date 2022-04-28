@@ -1,14 +1,20 @@
 class Page < ApplicationRecord
+  TEMPLATES = {
+    'splash' => { hide_header: true, hide_footer: true },
+  }
+
   belongs_to :website
 
   scope :published, -> { where.not(published_body: nil) }
 
   validates :name, :slug, presence: true
+  validates :slug, uniqueness: { scope: :website_id }
+  attr_accessor :template
 
   BLANK_SLUG = "0"
 
   def to_param
-    slug.presence || BLANK_SLUG
+    persisted? ? slug : BLANK_SLUG
   end
 
   def self.promote(page)
@@ -16,6 +22,10 @@ class Page < ApplicationRecord
       page.website.pages.update(landing: false)
       page.update(landing: true)
     end
+  end
+
+  def self.from_template(key, attrs)
+    new(TEMPLATES[key].merge(template: key, name: key.titleize, slug: key, **attrs))
   end
 end
 

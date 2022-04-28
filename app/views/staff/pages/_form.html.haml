@@ -20,7 +20,7 @@
     .resize
       #page-preview-wrapper
         %h4 Preview Page
-        %iframe{ src: "#{event_staff_page_path(current_event, @page)}",
+        %iframe{ src: "#{event_staff_page_path(current_event, @page, params.to_unsafe_hash)}",
                  id: "page-preview" }
   .row
     .col-sm-12

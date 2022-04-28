@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "dynamic website schedule page" do
+feature "website program page" do
   let(:event) { create(:event) }
   let(:organizer) { create(:organizer, event: event) }
   let!(:website) { create(:website, event: event) }
@@ -15,7 +15,7 @@ feature "dynamic website schedule page" do
     regular_session = create(:program_session, event: event, session_format: regular_session_format)
     visit program_path(event)
 
-    within('#regular_sessions') { expect(page).to have_content(regular_session.title) }
+    within('#sessions') { expect(page).to have_content(regular_session.title) }
   end
 
   scenario "the event website program page displays live workshops" do
@@ -30,7 +30,7 @@ feature "dynamic website schedule page" do
     regular_session = create(:program_session, event: event, session_format: regular_session_format)
     visit program_path(event)
 
-    within('#regular_sessions') { expect(page).to have_content(regular_session.title) }
+    within('#sessions') { expect(page).to have_content(regular_session.title) }
 
     visit edit_event_staff_program_session_path(event, regular_session)
     fill_in('Title', with: 'Updated Title')
@@ -38,7 +38,7 @@ feature "dynamic website schedule page" do
 
     expect(page).to have_content('Updated Title was successfully updated')
     visit program_path(event)
-    within('#regular_sessions') { expect(page).to have_content('Updated Title') }
+    within('#sessions') { expect(page).to have_content('Updated Title') }
   end
 
   scenario "the event website page stops displaying deleted program sessions", js: true do
@@ -46,13 +46,13 @@ feature "dynamic website schedule page" do
     regular_session = create(:program_session, event: event, session_format: regular_session_format)
 
     visit program_path(event)
-    within('#regular_sessions') { expect(page).to have_content(regular_session.title) }
+    within('#sessions') { expect(page).to have_content(regular_session.title) }
 
     visit edit_event_staff_program_session_path(event, regular_session)
     accept_confirm { click_on('Delete Program Session') }
     expect(page).to have_content('Program session was successfully deleted')
 
     visit program_path(event)
-    within('#regular_sessions') { expect(page).to_not have_content(regular_session.title) }
+    within('#sessions') { expect(page).to_not have_content(regular_session.title) }
   end
 end

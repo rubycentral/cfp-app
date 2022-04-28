@@ -1,269 +1,120 @@
-.program-nav {
-  margin: 0;
-  padding: 0;
-  li {
-    padding: 0 10px;;
-    margin: 0 0 2px 0;
-    width: auto;
-    border-radius: 2px;
-    &:last-child {
-      margin: 0;
-    }
-    &.active {
-      a {
-        padding: 0 24px 0 14px;
-        background: image-url('themes/railsconf22/bullet.svg') left center no-repeat;
-      }
-    }
-    &.program-keynotes {
-      background: rgba(58,35,23, .35) image-url('themes/railsconf22/program-keynotes.svg') calc(100% - 14px) center no-repeat;
-    }
-    &.program-sessions {
-      background: rgba(58,35,23, .35) image-url('themes/railsconf22/program-sessions.svg') calc(100% - 10px) center no-repeat;
-    }
-    &.program-workshops {
-      background: rgba(58,35,23, .35) image-url('themes/railsconf22/program-workshops.svg') calc(100% - 10px) center no-repeat;
-    }
-    a {
-      padding: 0;
-      height: 50px;
-      line-height: 50px;
-      font-size: 14px;
-      font-weight: 600;
-      display: block;
-      color: $white;
-      text-decoration: none;
-      &:hover {
-        color: $gold;
-      }
-    }
-  }
+.page-title {
+  text-align: center;
+  font-size: 1.7em;
+  font-weight: 600;
 }
 
-#keynote-speakers {
-  padding: 100px;
-  width: auto;
-  h2 {
-    font-size: 36px;
-    font-weight: 700;
-  }
+.sub-nav {
+  display: flex;
+  align-items: center;
+  margin: 0 0 10px 60px;
   ul {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    margin: 40px 0 0 0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 30px;
     li {
-      position: relative;
-      box-shadow: 0 17px 24px rgba(52,44,34,.12);
-      border-radius: 5px;
-      background: $white image-url('themes/railsconf22/topo.png');
-      background-size: 1041px 1032px;
-      margin: 40px 0 0 0;
-      div {
-        outline: 3px solid rgba(76,44,23,.1);
-        outline-offset: -15px;
-        padding: 0 35px 50px 35px;
-        position: relative;
-        height: 100%;
-        a.keynoter-org-link {
-          padding: 0 0 10px 0;
-          display: block;
-          font-size: 18px;
-        }
-        img {
-          position: absolute;
-          top: -40px;
-          left: 35px;
-          border-radius: 10px;
-          width: 150px;
-          height: auto;
-          box-shadow: 0 7px 18px rgba(0,0,0,.15);
-        }
-        h3 {
-          color: $red;
-          font-weight: 600;
-          font-size: 20px;
-          line-height: 28px;
-          padding: 160px 0 0 0;
+      margin: 0;
+      padding: 0;
+      a {
+        font-size: 24px;
+        font-weight: 700;
+        display: block;
+        color: $grey-light;
+        width: 100%;
+        margin: auto;
+        text-align: center;
+        text-decoration: none;
+        &:hover, &.selected {
+          color: $black;
+          box-shadow: 0 7px var(--main_content_background),
+                      0 10px $black;
+          transition: all 300ms;
         }
       }
     }
   }
 }
 
-.session-title {
-  a {
-    font-size: 18px;
-    color: $red;
-    font-weight: 600;
-    display: block;
-    padding: 5px 0 15px;
-  }
-}
-
-.workshop{
-  margin: 0 0 25px 0;
-  border: 1px solid $black;
-  padding: 25px;
-}
-
-
-#sessions {
-  padding: 50px 200px 50px 0px;
-  width: auto;
-  position: relative;
+#sessions,
+#workshops {
+  display: flex;
+  margin: auto;
+  max-width: 1800px;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 12px;
   background-color: var(--main_content_background);
-
-  h2 {
-    font-size: 36px;
-    font-weight: 700;
-    margin: 0 0 50px 0;
-  }
+  margin-bottom: 40px;
 }
 
 .session {
-  margin: 0 0 25px 0;
-  padding: 25px;
+  display: grid;
+  width: 30%;
+  grid-template-rows: 45px auto 100px 60px;
+  grid-template-areas: "track"
+                       "title"
+                       "description"
+                       "speakers";
+  border-radius: 10px;
+  border: 1px solid $grey-light;
 
-  .session-anchor {
+  .track-name {
+    grid-area: track;
     display: block;
+    width: min-content;
+    white-space: nowrap;
+    margin: 15px 20px 5px 20px;
+    border: 1px solid black;
+    padding: 5px;
+    background-color: $grey-lightest;
+    font-size: 12px;
+  }
+
+  .session-title {
+    grid-area: title;
+    text-decoration: underline;
+    font-size: 21px;
+    margin: 0 20px 5px 20px;
   }
 
   .session_abstract {
-    padding-bottom: 20px;
-    border-bottom: 1px solid black;
-  }
-
-  .track-name {
-    border-radius: 2px;
-    padding: 5px;
-    color: $white;
-    font-size: 10px;
-    font-weight: 600;
-    text-transform: uppercase;
+    grid-area: description;
+    margin: 0 20px 30px 20px;
+    white-space: no-wrap;
+    overflow: hidden;
   }
 
   .session-author-details {
-    padding-bottom: 20px;
+    grid-area: speakers;
+    display: flex;
+    padding: 20px;
+    align-items: center;
+    border-radius: 0 0 10px 10px;
+    background-color: $black;
+    color: $white;
   }
 }
 
-
-#tracks-nav {
-  width: 190px;
-  position: sticky;
-  float: right;
-  top: 50px;
-  margin-right: -200px;
-  transition: all 0.25s ease-in-out;
-  strong { display: block; }
-
-  ul {
-    margin: 10px 0 0 0;
-    padding: 0 0 0 0;
-
-    li {
-      background: none;
-      margin: 0 0 4px 0;
-      padding: 0;
-
-      a {
-        border-left: 3px solid $black;
-        padding: 0 0 0 6px;
-        text-decoration: none;
-        &:hover {
-          padding: 0 0 0 8px;
-        }
-      }
-      &.back-to-top a {
-        border: 0;
-        text-decoration: none;
-        padding: 0;
-      }
+@media screen and (max-width: 1200px) and (orientation: portrait),
+  (max-width: 1123px) and (orientation: landscape) {
+    #sessions {
+      padding: 15px 5px;
+    }
+    .session {
+      width: 40%;
     }
   }
-}
 
 
 @media screen and (max-width: 900px) and (orientation: portrait),
   (max-width: 823px) and (orientation: landscape) {
-    #keynote-speakers {
-      padding: 25px 5px;
-      width: auto;
-      h2 {
-        padding: 25px 10px;
-      }
-      ul {
-        display: block;
-        li {
-          margin: 65px 0 0 0;
-        }
-        p {
-          font-size: 14px;
-          line-height: 22px;
-        }
-      }
-    }
     #sessions {
-      z-index: 2;
       padding: 25px 5px;
-      h2 {
-        margin: 25px 15px;
-      }
-      .session,
-      .workshop {
-        font-size: 12px;
-        padding: 15px;
-        p {
-          line-height: 18px;
-          margin-bottom: 15px;
-        }
-      }
-    }
-    .session-title a {
-      padding: 0 0 5px 0;
-      font-size: 14px;
-      line-height: 18px;
-    }
-    .session-author-details {
-      font-size: 12px;
-      padding: 15px 15px 0 15px;
-      margin: 0 -15px -15px;
     }
 
-    #tracks-nav {
-      text-align: left;
-      right: 0;
-      top: 0;
-      background-color: var(--main_content_background);
-      position: sticky;
-      ul {
-        padding: 0;
-        display: none;
-        li {
-          margin-bottom: 3px;
-          a {
-            border-left: 2px solid $black;
-            display: block;
-            padding: 2px 10px;
-          }
-        }
-      }
-
-      &.--tracks-nav-active {
-        &:before {
-          content: 'Close';
-        }
-
-        ul {
-          display: block;
-        }
-      }
-    }
-
-    #tracks-nav:hover {
-      ul {
-        display: block;
-      }
+    .session {
+      width: 100%;
     }
   }

@@ -1,6 +1,7 @@
 %div{ data: { 'controller': 'sub-nav', 'sub-nav-displayed-id-value': 'sessions' } }
-  %h3
+  %h3.page-title
     Program
+<<<<<<< HEAD
   %p
     The largest official gathering of the year, #{current_website.name} brings together top talent, companies, and project representatives from around the world. Learn and build with the best in sessions, workshops, keynotes and parties.
   %ul.program_nav
@@ -14,28 +15,23 @@
     %li.program-workshops
       %a{ href: "#", displayedId: 'workshops', data: { action: 'click->sub-nav#updateDisplay' } }
         = "Workshops #{@program_sessions.workshops.count}"
+=======
+  %nav.sub-nav
+    %ul
+      %li
+        %a{ href: "#"}
+          = "Keynotes (00)"
+      %li
+        %a.selected{ href: "#", 'data-displayedId': 'sessions', data: { action: 'click->sub-nav#updateDisplay' } }
+          = "Talks (#{@program_sessions.regular_sessions.count})"
+      %li
+        %a{ href: "#", 'data-displayedId': 'workshops', data: { action: 'click->sub-nav#updateDisplay' } }
+          = "Workshops (#{@program_sessions.workshops.count})"
+>>>>>>> f6f33b6 (Redesign website program page)
 
   #sessions{ data: { 'sub-nav-target': 'hideable' } }
-    #regular_sessions
-      %nav#tracks-nav
-        %strong
-          Tracks
-        %ul
-          - current_website.event.tracks.each do |track|
-            %li
-              %a.track{ href: "#" }
-                = track.name
-          %li.back-to-top
-            %a{ href: "#" }
-              &uparrow; Back To Top
-      %h2
-        Talks
-      - @program_sessions.regular_sessions.each do |program_session|
-        %div
-          = render program_session
+    - @program_sessions.regular_sessions.each do |program_session|
+      = render program_session
   #workshops{ data: { 'sub-nav-target': 'hideable' } }
-    %h2
-      Workshops
     - @program_sessions.workshops.each do |program_session|
-      %div
-        = render program_session
+      = render program_session

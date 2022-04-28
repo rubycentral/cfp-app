@@ -24,7 +24,7 @@ export default class extends Controller {
     e.preventDefault()
     document.querySelector('.selected')?.classList.remove('selected')
     e.target.classList.add('selected')
-    this.displayedIdValue = e.target.getAttribute('displayedId')
+    this.displayedIdValue = e.target.getAttribute('data-displayedId')
   }
 
   displayedIdValueChanged() {

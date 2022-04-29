@@ -119,7 +119,7 @@ Rails.application.routes.draw do
       resources :session_formats, except: :show
       resources :tracks, except: [:show]
       resource :website, only: [:new, :create, :edit, :update]
-      resources :pages, except: :destroy do
+      resources :pages do
         member do
           get :preview
           patch :publish

@@ -21,3 +21,4 @@
         class: 'btn btn-primary')
     - if page.published_body.present?
       = link_to("View", page_path(current_event, page), class: 'btn btn-primary')
+    = link_to 'Destroy', event_staff_page_path(@event, page), method: :delete, data: { confirm: 'Are you sure you want to delete this page?' }, class: "btn btn-danger"

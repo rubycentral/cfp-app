@@ -49,6 +49,12 @@ class Staff::PagesController < Staff::ApplicationController
     redirect_to event_staff_pages_path(current_event)
   end
 
+  def destroy
+    @page.destroy
+    flash[:success] = "#{@page.name} Page was successfully destroyed."
+    redirect_to event_staff_pages_path(current_event)
+  end
+
   private
 
   def set_page

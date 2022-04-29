@@ -9,6 +9,7 @@
   width: 100%;
   background: var(--nav_background_color);
   color: var(--nav_text_color);
+  z-index: 11;
 
   #header-logo-container {
     display: flex;

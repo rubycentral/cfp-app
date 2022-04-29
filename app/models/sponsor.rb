@@ -11,6 +11,7 @@ class Sponsor < ApplicationRecord
 
   scope :published, -> { where(published: true) }
   scope :with_footer_image, -> { joins(:footer_logo_attachment) }
+  scope :with_banner_ad, -> { joins(:banner_ad_attachment) }
   scope :order_by_tier, -> {
     order_case = "CASE tier"
     TIERS.each_with_index do |tier, index|

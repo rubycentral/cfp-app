@@ -32,6 +32,17 @@ class Staff::WebsitesController < Staff::ApplicationController
   end
 
   def website_params
-    params.require(:website).permit(:domains)
+    params
+      .require(:website)
+      .permit(
+        :logo,
+        :background,
+        :city,
+        :location,
+        :directions,
+        :twitter_handle,
+        :prospectus_link,
+        :domains,
+      )
   end
 end

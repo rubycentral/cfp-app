@@ -4,6 +4,8 @@
       .inner
         = f.input :name
         = f.input :slug
+        = f.input :hide_header, as: :boolean, wrapper: :vertical_radio_and_checkboxes
+        = f.input :hide_footer, as: :boolean, wrapper: :vertical_radio_and_checkboxes
         %div{ data: { controller: :editor } }
           %div{ data: { "editor-target": :wysiwyg } }
             = f.input :unpublished_body,
@@ -18,7 +20,7 @@
     .resize
       #page-preview-wrapper
         %h4 Preview Page
-        %iframe{ src: "#{event_staff_page_path(current_event, @page)}",
+        %iframe{ src: "#{event_staff_page_path(current_event, @page, params.to_unsafe_hash)}",
                  id: "page-preview" }
   .row
     .col-sm-12

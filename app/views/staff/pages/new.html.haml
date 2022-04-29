@@ -2,5 +2,12 @@
   .col-md-12
     .page-header.clearfix
       %h1 New Website Page
+      = simple_form_for(:page, url: new_event_staff_page_path, method: :get) do |f|
+        = f.input(:template,
+          label: "Start from scratch or choose a template below",
+          required: false,
+          collection: Page::TEMPLATES.keys,
+          include_blank: true,
+          input_html: { onchange: "this.form.submit()" })
 
 = render 'form', page: @page

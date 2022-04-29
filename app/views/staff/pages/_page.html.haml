@@ -19,3 +19,5 @@
         method: :patch,
         data: { confirm: "Are you sure you want to promote #{page.name} to be the landing page?" },
         class: 'btn btn-primary')
+    - if page.published_body.present?
+      = link_to("View", page_path(current_event, page), class: 'btn btn-primary')

@@ -1,6 +1,6 @@
 class Website < ApplicationRecord
   belongs_to :event
-  has_many :pages
+  has_many :pages, dependent: :destroy
 
   has_one_attached :logo
   has_one_attached :background

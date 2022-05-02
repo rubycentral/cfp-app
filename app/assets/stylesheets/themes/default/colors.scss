@@ -1,8 +1,9 @@
-
 $black: #000000 !default;
-$bronze: #B77D39 !default;
+$blue: #5cabe7 !default;
 $divider: #E0D2C7 !default;
 $divider-light: rgba(0, 0, 0, .1) !default;
+$bronze: #B77D39 !default;
+$brown: #5A5655 !default;
 $gold: #FFB62C !default;
 $grey: #494644 !default;
 $grey-light: #C4C4C4 !default;
@@ -11,6 +12,18 @@ $grey-lightest: #E7E7E7 !default;
 $grey-logo: #E6E6E6 !default;
 $platinum: #C7D7D7 !default;
 $red: #C04F45 !default;
+$red-light: #E14943 !default;
 $silver:#E0E0E0 !default;
 $text: $grey !default;
 $white: #FFFFFF !default;
+
+// Session Formats
+$regular-session: #C2CBB0 !default;
+$workshop: #FFBC80 !default;
+
+// Track Tags
+$make-a-switch: #417D7A !default;
+$open-source-maintenance: $red;
+$explain-it-like-im-five: $blue;
+$community-content: #ff8b4e;
+$general: $brown;

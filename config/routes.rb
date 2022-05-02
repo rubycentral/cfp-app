@@ -122,6 +122,7 @@ Rails.application.routes.draw do
       resources :pages do
         member do
           get :preview
+          post :show
           patch :publish
           patch :promote
         end

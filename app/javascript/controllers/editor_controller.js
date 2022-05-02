@@ -53,7 +53,6 @@ export default class extends Controller {
     });
     for (var i=0;i<editor.lineCount();i++) { editor.indentLine(i); }
     editor.on('change', (e) => {
-      console.log(this.changedValue);
       this.changedValue = true;
       this.preview(e.getValue());
     })

@@ -32,7 +32,6 @@
         data: { action: "editor#allowFormSubmission" })
       = link_to "Cancel", event_staff_pages_path(current_event), {:class=>"cancel-form btn btn-danger"}
 = form_with url: event_staff_page_path(current_event, @page),
-  method: :get,
   html: { target: "page-preview", id: "preview-form" } do |f|
   = f.hidden_field :preview, id: "hidden-preview"
 

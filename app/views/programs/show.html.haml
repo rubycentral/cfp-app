@@ -1,6 +1,9 @@
-%div{ data: { 'controller': 'sub-nav', 'sub-nav-displayed-id-value': 'sessions' } }
+.program-page-wrapper{ data: { 'controller': 'sub-nav', 'sub-nav-displayed-id-value': 'sessions' } }
   %h3.page-title
     Program
+  .program-filter-pane
+    = image_tag 'themes/default/open-filter.png', class: 'open-filter-icon'
+    = image_tag 'themes/default/closed-filter.png', class: 'close-filter-icon hidden '
   %nav.sub-nav
     %ul
       %li

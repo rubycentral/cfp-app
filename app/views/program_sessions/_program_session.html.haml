@@ -1,15 +1,22 @@
 .session
-  -if program_session.track
-    %span.track-name
-      = program_session.track_name
+  %div.seesion-title-abstract-container
+    %h3.session-title
+      = program_session.title
 
-  %h3.session-title
-    = program_session.title
+    .session-abstract
+      = program_session.abstract.html_safe
 
-  .session_abstract
-    = program_session.abstract.html_safe
+  %div.session-speaker-track-container
+    .session-speaker-details
+      = program_session.speaker_names
 
-  .session-author-details
-    -program_session.speakers.each do |speaker|
-      %h4.session-author
-        = speaker.speaker_name
+    %span.session-format-name{ class: "#{program_session.session_format.name.downcase.split.join('-')}" }
+      = program_session.session_format.name
+
+    -if program_session.track
+      %span.track-tag
+        %span.track-dot{ class: "#{program_session.track_name.downcase.split.map {|t| t.gsub(/\W/, "") }.join('-')}" }
+        = program_session.track_name
+
+  .session-show-detail-container{ class: program_session.track ? "#{program_session.track_name.downcase.split.map {|t| t.gsub(/\W/, "") }.join('-')}" : "#{program_session.session_format.name.downcase.split.join('-')}" }
+    =image_tag 'themes/default/arrow.svg'

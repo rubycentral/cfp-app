@@ -9,7 +9,7 @@ class Staff::PagesController < Staff::ApplicationController
   end
 
   def show
-    @body = @page.unpublished_body || ""
+    @body = params[:preview] || @page.unpublished_body || ""
     render template: 'pages/show', layout: "themes/#{current_website.theme}"
   end
 

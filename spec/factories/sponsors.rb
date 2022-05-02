@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :sponsor do
-    event
+    event { Event.first || create(:event) }
     name { Faker::Company.name }
     published { true }
     tier { 'platinum' }

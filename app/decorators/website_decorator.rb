@@ -32,4 +32,8 @@ class WebsiteDecorator < ApplicationDecorator
   def sponsors_in_footer
     event.sponsors.published.with_footer_image.order_by_tier
   end
+
+  def navigation_page_names_and_slugs
+    pages.navigatable.pluck(:name, :slug)
+  end
 end

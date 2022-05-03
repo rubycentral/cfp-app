@@ -7,6 +7,8 @@
       .inner
         = f.input :name
         = f.input :slug
+        = f.input :hide_navigation, as: :boolean, wrapper: :vertical_radio_and_checkboxes
+        = f.input :hide_page, as: :boolean, wrapper: :vertical_radio_and_checkboxes
         = f.input :hide_header, as: :boolean, wrapper: :vertical_radio_and_checkboxes
         = f.input :hide_footer, as: :boolean, wrapper: :vertical_radio_and_checkboxes
         %div{ data: { "editor-target": :wysiwyg }, class: 'hidden', disabled: true }

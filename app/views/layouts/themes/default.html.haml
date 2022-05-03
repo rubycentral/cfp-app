@@ -16,8 +16,8 @@
           %h1
             = link_to(current_website.name, landing_path(website_event_slug))
         %nav#main-nav
-          - current_website.pages.published.each do |page|
-            = link_to page.name, page_path(website_event_slug, page)
+          - current_website.navigation_page_names_and_slugs.each do |page_name, page_slug|
+            = link_to page_name, page_path(website_event_slug, page_slug)
           = link_to "Schedule", schedule_path(current_website.event)
           = link_to "Program", program_path(website_event_slug)
           = link_to "Sponsors", sponsors_path(website_event_slug)
@@ -37,7 +37,6 @@
         .footer-event-links
           - current_website.pages.published.each do |page|
             = link_to page.name, page_path(website_event_slug, page)
-          = link_to "Schedule", schedule_path(current_website.event)
           = link_to "Schedule", schedule_path(current_website.event)
           = link_to "Program", program_path(website_event_slug)
           = link_to "Sponsors", sponsors_path(website_event_slug)

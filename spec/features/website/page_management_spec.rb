@@ -96,4 +96,26 @@ feature "Website Page Management" do
     expect(page).not_to have_css('footer')
   end
 
+  scenario "Organizer hides navigation to a page and hides a page entirely", :js do
+    home_page = create(:page, published_body: 'Home Content')
+    visit page_path(slug: event.slug, page: home_page.slug)
+    expect(page).to have_content('Home Content')
+    within('#main-nav') { expect(page).to have_content(home_page.name) }
+
+    login_as(organizer)
+    visit edit_event_staff_page_path(event, home_page)
+    check("Hide navigation")
+    click_on("Save")
+
+    visit page_path(slug: event.slug, page: home_page.slug)
+    within('#main-nav') { expect(page).not_to have_content(home_page.name) }
+
+    visit edit_event_staff_page_path(event, home_page)
+    check("Hide page")
+    click_on("Save")
+
+    visit page_path(slug: event.slug, page: home_page.slug)
+    expect(page).to have_content("Page Not Found")
+  end
+
 end

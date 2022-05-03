@@ -24,4 +24,12 @@ class WebsiteDecorator < ApplicationDecorator
   def closes_at
     event.closes_at(:month_day_year)
   end
+
+  def banner_sponsors
+    event.sponsors.published.with_banner_ad
+  end
+
+  def sponsors_in_footer
+    event.sponsors.published.with_footer_image.order_by_tier
+  end
 end

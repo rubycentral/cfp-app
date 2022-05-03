@@ -7,17 +7,7 @@ export default class extends Controller {
   }
 
   connect() {
-    const path = `/${this.eventSlugValue}/banner_ads`
-    fetch(path)
-      .then((res) => res.text())
-      .then((html) => {
-        const fragment = document
-          .createRange()
-          .createContextualFragment(html);
-        this.element.appendChild(fragment);
-
-        this.config()
-      })
+    this.config()
   }
 
   config() {

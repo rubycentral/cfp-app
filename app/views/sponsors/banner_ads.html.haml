@@ -1,3 +1,8 @@
-.banner-ad-wrapper
-  - @sponsors_in_banner.each do |sponsor|
-    = link_to image_tag( sponsor.banner_ad, alt: sponsor.name), sponsor.url, target: "_blank", class: "banner-ad-item", data: { 'banner-ads-target': 'ad' }
+%div{ "data-controller" => "banner-ads" }
+  .banner-ad-wrapper
+    - current_website.banner_sponsors.each do |sponsor|
+      = link_to image_tag(sponsor.banner_ad, alt: sponsor.name),
+        sponsor.url,
+        target: "_blank",
+        class: "banner-ad-item",
+        data: { 'banner-ads-target': 'ad' }

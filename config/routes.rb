@@ -124,6 +124,7 @@ Rails.application.routes.draw do
       resources :pages do
         member do
           get :preview
+          post :show
           patch :publish
           patch :promote
         end
@@ -167,8 +168,6 @@ Rails.application.routes.draw do
   get '/(:slug)', to: 'pages#show', as: :landing
   get '/(:slug)/program', to: 'programs#show', as: :program
   get '/(:slug)/schedule', to: 'schedule#show', as: :schedule
-  get '/(:slug)/sponsors_footer', to: 'sponsors#sponsors_footer'
-  get '/(:slug)/banner_ads', to: 'sponsors#banner_ads'
   get '/(:slug)/sponsors', to: 'sponsors#show', as: :sponsors
   get '/(:slug)/:page', to: 'pages#show', as: :page
 

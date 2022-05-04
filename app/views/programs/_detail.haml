@@ -1,0 +1,23 @@
+.program-session-detail{ id: "program-session-detail-#{program_session.id}",  data: { 'fly-out-target': 'programSession' } }
+  .program-session-title
+    = program_session.title
+
+  .program-session-tags
+    %span.session-format-tag{ class: "#{current_website.session_format_tag_class(program_session.session_format)}" }
+      = current_website.session_format_name(program_session.session_format)
+
+    -if program_session.track
+      %span.track-tag
+        %span.track-dot{ class: "#{current_website.track_background(program_session.track)}" }
+        = program_session.track_name
+
+  .program-session-about
+    %span About
+    = program_session.abstract.html_safe
+
+  .program-session-authors
+    - program_session.speakers.each do |s|
+      .speaker-name
+        = s.speaker_name
+      .speaker-bio
+        = s.bio

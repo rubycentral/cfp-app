@@ -1,7 +1,7 @@
 .session
   %div.seesion-title-abstract-container
-    %h3.session-title
-      = program_session.title
+    %a.session-title{ href: "#", data: { action: 'click->fly-out#updateSidePanel', 'session-id': program_session.id } }
+      =program_session.title
 
     .session-abstract
       = program_session.abstract.html_safe
@@ -18,4 +18,4 @@
         %span.track-dot{ class: "#{current_website.track_background(program_session.track)}" }
         = program_session.track_name
 
-  .session-accent{ class: program_session.track ? "#{current_website.track_background(program_session.track)}" : "default-accent" }
+  .session-accent{ class: program_session.track ? current_website.track_background(program_session.track) : current_website.session_format_background_class(program_session.session_format) }

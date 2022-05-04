@@ -6,7 +6,7 @@
     = image_tag 'themes/default/closed-filter.png', class: 'close-filter-icon hidden '
   %nav.sub-nav
     %ul
-      - current_website.displayed_session_formats.each do |session_format_config|
+      - current_website.displayed_session_formats.in_order.each do |session_format_config|
         %li
           %a{ href: "#", data: { action: 'click->sub-nav#updateDisplay', displayedId: "#{session_format_config.slug}"} }
             = "#{session_format_config.name} (#{@program_sessions.in_session_format(session_format_config.session_format).count})"

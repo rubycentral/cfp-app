@@ -6,10 +6,23 @@
     line-height: 38px;
     margin-bottom: 15px
   }
+
+.bg-track-1 { background-color: $bg-track-1 ; }
+.bg-track-2 { background-color: $bg-track-2 ; }
+.bg-track-3 { background-color: $bg-track-3 ; }
+.bg-track-4 { background-color: $bg-track-4 ; }
+.bg-track-5 { background-color: $bg-track-5 ; }
+.bg-track-6 { background-color: $bg-track-6 ; }
+.bg-track-7 { background-color: $bg-track-7 ; }
+.bg-track-8 { background-color: $bg-track-8 ; }
+.bg-track-9 { background-color: $bg-track-9 ; }
+.bg-track-10 { background-color: $bg-track-10 ; }
+.bg-track-11 { background-color: $bg-track-11 ; }
+.bg-track-12 { background-color: $bg-track-12 ; }
+.default-accent { background-color: $grey-light; }
 }
 
-.program-filter-pane{
-
+.program-filter-pane {
   img {
     margin: 0 auto 15px;
     display: block;
@@ -78,51 +91,72 @@
   justify-content: space-between;
   flex-direction: column;
   width: 30%;
-  padding: 30px 20px 10px 20px;
+  padding: 1.875rem 1.25rem .625rem 1.25rem;
   border-radius: 10px;
   border: 1px solid $grey-light;
   box-shadow: 2px 4px 16px 4px rgba(0, 0, 0, 0.1);
 
   .seesion-title-abstract-container {
-    height: 220px;
+    height: 13.75rem;
   }
   .session-speaker-track-container {
-    height: 80px;
+    height: 5rem;
   }
 
+  // UNDERLINE COLOR, FONT FAMILY
   .session-title {
     font-size: 21px;
-    margin-bottom: 8px;
+    font-weight: 700;
+    margin-bottom: .6rem;
+    text-decoration: #F8B400 underline solid 2px;
+    text-underline-offset: 0.1em;
   }
 
   .session-abstract {
-    height: 100px;
+    height: 6.25rem;
+    font-size: 16px;
+    font-weight: 400;
+    color: $text-secondary;
     white-space: no-wrap;
     overflow: hidden;
   }
 
   .session-speaker-details {
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 700;
     margin-bottom: 12px;
   }
 
-
-  .session-format-name {
-    padding: 7px 10px;
-    border-radius: 20px;
+  .session-format-tag {
+    padding: 8px 10px 8px 50px;
+    border: 1px solid $divider-light;
+    border-radius: 100px;
     font-size: 12px;
     margin-right: 8px;
+    position: relative;
 
-    &.regular-session { background-color: $regular-session;}
-    &.workshop { background-color: $workshop; }
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 26px;
+      transform: translate(-50%, -50%);
+      height: 12px;
+      width: 24px;
+      border-radius: 150px 150px 0 0;
+    }
+    &.session-format-tag-1::before { background-color: $session-format-tag-1;}
+    &.session-format-tag-2::before { background-color: $session-format-tag-2;}
+    &.session-format-tag-3::before { background-color: $session-format-tag-3;}
+    &.session-format-tag-4::before { background-color: $session-format-tag-4;}
+    &.session-format-tag-5::before { background-color: $session-format-tag-5;}
   }
 
   .track-tag {
     font-size: 12px;
     padding: 7px 10px;
     border-radius: 20px;
-    border: 1px solid #EBEBEB;
+    border: 1px solid $divider-light;
 
     .track-dot{
       height: 16px;
@@ -132,37 +166,16 @@
       top: 3px;
       border-radius: 50%;
       margin-right: 4px;
-
-      &.make-a-switch { background-color: $make-a-switch; }
-      &.open-source-maintenance { background-color: $open-source-maintenance; }
-      &.explain-it-like-im-five { background-color: $explain-it-like-im-five; }
-      &.community-content { background-color: $community-content; }
-      &.general { background-color: $general; }
     }
   }
 
-  .session-show-detail-container {
+  .session-accent {
+    width: 100%;
+    height: .5rem;
     position: absolute;
-    top: 0;
-    right: 0;
-    width: 50px;
-    height: 50px;
-    border-radius: 0 10px 0 0;
-
-    img {
-      display: block;
-      position: absolute;
-      top: 8px;
-      right: 8px;
-    }
-
-    &.make-a-switch { background-image: linear-gradient(45deg, transparent 50%, $make-a-switch 50%); }
-    &.open-source-maintenance { background-image: linear-gradient(45deg, transparent 50%, $open-source-maintenance 50%); }
-    &.explain-it-like-im-five { background-image: linear-gradient(45deg, transparent 50%, $explain-it-like-im-five 50%); }
-    &.community-content { background-image: linear-gradient(45deg, transparent 50%, $community-content 50%); }
-    &.general { background-image: linear-gradient(45deg, transparent 50%, $general 50%); }
-    &.regular-session { background-image: linear-gradient(45deg, transparent 50%, $regular-session 50%);}
-    &.workshop { background-image: linear-gradient(45deg, transparent 50%, $workshop 50%); }
+    bottom: 0;
+    left: 0;
+    border-radius: 0 0 100px 100px;
   }
 }
 

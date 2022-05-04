@@ -58,6 +58,8 @@ class WebsiteDecorator < ApplicationDecorator
     return {} unless background.attached?
 
     { style: "background-image: url('#{h.url_for(background)}');" }
+  end
+
   def session_format_configs
     event.session_formats.map.with_index do |session_format, index|
       SessionFormatConfig.find_or_initialize_by(session_format: session_format) do |config|
@@ -80,5 +82,29 @@ class WebsiteDecorator < ApplicationDecorator
       .each_with_object(DEFAULT_LINKS.dup) do |(name, slug), memo|
       memo[name] = slug
     end
+  end
+
+  def tracks
+    event.tracks
+  end
+
+  def track_num(track)
+    tracks.index(track) + 1
+  end
+
+  def track_background(track)
+    "bg-track-#{track_num(track)}"
+  end
+
+  def session_format_num(session_format)
+    session_formats.index(session_format) + 1
+  end
+
+  def session_format_tag_class(session_format)
+    "session-format-tag-#{session_format_num(session_format)}"
+  end
+
+  def session_format_name(session_format)
+    object.session_format_configs.find_by(session_format: session_format).name
   end
 end

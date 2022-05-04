@@ -13,11 +13,11 @@
       = f.input :primary_logo, class: "form-contorl-file"
 
       - if f.object.footer_logo.attached?
-        = image_tag f.object.footer_logo.variant(resize: "100 X 100")
+        = resize_image_tag(f.object.footer_logo, width: 100)
       = f.input :footer_logo, class: "form-control-file"
 
       - if f.object.banner_ad.attached?
-        = image_tag f.object.banner_ad.variant(resize: "100 X 100")
+        = resize_image_tag(f.object.banner_ad, width: 100)
       = f.input :banner_ad
 
 

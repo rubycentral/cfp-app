@@ -36,4 +36,25 @@ class WebsiteDecorator < ApplicationDecorator
   def navigation_page_names_and_slugs
     pages.navigatable.pluck(:name, :slug)
   end
+
+  def categorized_footer_pages
+    pages.in_footer
+      .select(:footer_category, :name, :slug)
+      .group_by(&:footer_category)
+      .sort_by { |category, _| footer_categories.index(category) }
+  end
+
+  def twitter_url
+    "https://twitter.com/#{object.twitter_handle}"
+  end
+
+  def register_page
+    pages.published.find_by(slug: 'register')
+  end
+
+  def background_style
+    return {} unless background.attached?
+
+    { style: "background-image: url('#{h.url_for(background)}');" }
+  end
 end

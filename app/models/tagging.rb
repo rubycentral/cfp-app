@@ -19,8 +19,8 @@ end
 #
 # Table name: taggings
 #
-#  id          :bigint(8)        not null, primary key
-#  proposal_id :bigint(8)
+#  id          :integer          not null, primary key
+#  proposal_id :integer
 #  tag         :string
 #  internal    :boolean          default(FALSE)
 #  created_at  :datetime

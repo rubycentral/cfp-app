@@ -195,14 +195,14 @@ end
 #
 # Table name: program_sessions
 #
-#  id                :bigint(8)        not null, primary key
-#  event_id          :bigint(8)
-#  proposal_id       :bigint(8)
+#  id                :integer          not null, primary key
+#  event_id          :integer
+#  proposal_id       :integer
 #  title             :text
 #  abstract          :text
-#  track_id          :bigint(8)
-#  session_format_id :bigint(8)
-#  state             :text             default("draft")
+#  track_id          :integer
+#  session_format_id :integer
+#  state             :text             default("active")
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  info              :text

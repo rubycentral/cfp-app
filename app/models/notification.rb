@@ -46,8 +46,8 @@ end
 #
 # Table name: notifications
 #
-#  id          :bigint(8)        not null, primary key
-#  user_id     :bigint(8)
+#  id          :integer          not null, primary key
+#  user_id     :integer
 #  message     :string
 #  target_path :string
 #  read_at     :datetime

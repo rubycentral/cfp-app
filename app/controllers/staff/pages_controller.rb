@@ -95,6 +95,7 @@ class Staff::PagesController < Staff::ApplicationController
         :hide_page,
         :hide_header,
         :hide_footer,
+        :footer_category,
         :unpublished_body
       )
   end

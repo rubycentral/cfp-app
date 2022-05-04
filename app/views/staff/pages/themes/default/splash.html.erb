@@ -1,4 +1,6 @@
-<div class="flex relative h-screen" style="background-image: url('<%= url_for(current_website.background) %>');">
+<%= content_tag(:div,
+                **current_website.background_style,
+                class: "flex relative h-screen") do %>
   <div class="flex flex-col justify-between z-10 bg-black bg-opacity-80 text-white p-8 w-full h-full">
     <div class="flex justify-between flex-col sm:flex-row">
       <div class="flex flex-col mb-2">
@@ -25,7 +27,7 @@
       </div>
     </div>
     <div class="flex flex-col items-start w-full my-4 sm:items-center">
-      <%= image_tag(current_website.logo.variant(resize: '175 X 175')) %>
+      <%= resize_image_tag(current_website.logo, width: 175) %>
       <div class="text-2xl font-semibold mt-4"><%= current_website.name %></div>
       <div class="text-xl font-semibold"><%= current_website.city %></div>
       <div class="text-2xl font-semibold mt-4 mb-2"><%= current_website.date_range %></div>
@@ -47,4 +49,4 @@
       ) %>
     </div>
   </div>
-</div>
+<% end %>

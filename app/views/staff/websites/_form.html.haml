@@ -34,6 +34,16 @@
         = f.input :instagram_url
 
       = f.input :domains
+    %fieldset.col-md-6
+      %h4 Configure Website Session Formats
+      = f.simple_fields_for :session_format_configs do |ff|
+        .session-format-name
+          = "Configure #{ff.object.session_format.name}"
+        = ff.input :display, wrapper_html: { class: 'col-md-3' }
+        = ff.input :position, wrapper_html: { class: 'col-md-3' }
+        = ff.input :name
+        = ff.hidden_field :session_format_id
+
   .row
     .col-sm-12
       = submit_tag("Save", class: "pull-right btn btn-success", type: "submit")

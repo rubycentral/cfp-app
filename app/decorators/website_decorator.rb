@@ -58,6 +58,21 @@ class WebsiteDecorator < ApplicationDecorator
     return {} unless background.attached?
 
     { style: "background-image: url('#{h.url_for(background)}');" }
+  def session_format_configs
+    event.session_formats.map.with_index do |session_format, index|
+      SessionFormatConfig.find_or_initialize_by(session_format: session_format) do |config|
+        config.name = session_format.name
+        config.position = index + 1
+      end
+    end
+  end
+
+  def displayed_session_formats
+    object.session_format_configs.displayed
+  end
+
+  def default_session_slug
+    object.session_format_configs.displayed.in_order.first.slug
   end
 
   def link_options

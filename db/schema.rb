@@ -181,6 +181,18 @@ ActiveRecord::Schema.define(version: 2022_05_04_213512) do
     t.index ["event_id"], name: "index_rooms_on_event_id"
   end
 
+  create_table "session_format_configs", force: :cascade do |t|
+    t.bigint "website_id"
+    t.bigint "session_format_id"
+    t.integer "position"
+    t.string "name"
+    t.boolean "display"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["session_format_id"], name: "index_session_format_configs_on_session_format_id"
+    t.index ["website_id"], name: "index_session_format_configs_on_website_id"
+  end
+
   create_table "session_formats", force: :cascade do |t|
     t.bigint "event_id"
     t.string "name"
@@ -348,6 +360,8 @@ ActiveRecord::Schema.define(version: 2022_05_04_213512) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "pages", "websites"
+  add_foreign_key "session_format_configs", "session_formats"
+  add_foreign_key "session_format_configs", "websites"
   add_foreign_key "session_formats", "events"
   add_foreign_key "sponsors", "events"
   add_foreign_key "websites", "events"

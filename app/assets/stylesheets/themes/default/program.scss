@@ -58,8 +58,7 @@
   }
 }
 
-#sessions,
-#workshops {
+.program_sessions-wrapper {
   display: flex;
   margin: auto;
   max-width: 1600px;
@@ -164,10 +163,6 @@
     &.general { background-image: linear-gradient(45deg, transparent 50%, $general 50%); }
     &.regular-session { background-image: linear-gradient(45deg, transparent 50%, $regular-session 50%);}
     &.workshop { background-image: linear-gradient(45deg, transparent 50%, $workshop 50%); }
-  }
-
-  &.hover {
-
   }
 }
 

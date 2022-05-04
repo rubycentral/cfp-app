@@ -1,4 +1,4 @@
-.program-page-wrapper{ data: { 'controller': 'sub-nav', 'sub-nav-displayed-id-value': 'sessions' } }
+.program-page-wrapper{ data: { 'controller': 'sub-nav', 'sub-nav-displayed-id-value': "#{current_website.default_session_slug}" } }
   %h3.page-title
     Program
   .program-filter-pane
@@ -6,19 +6,12 @@
     = image_tag 'themes/default/closed-filter.png', class: 'close-filter-icon hidden '
   %nav.sub-nav
     %ul
-      %li
-        %a{ href: "#"}
-          = "Keynotes (00)"
-      %li
-        %a.selected{ href: "#", 'data-displayedId': 'sessions', data: { action: 'click->sub-nav#updateDisplay' } }
-          = "Talks (#{@program_sessions.regular_sessions.count})"
-      %li
-        %a{ href: "#", 'data-displayedId': 'workshops', data: { action: 'click->sub-nav#updateDisplay' } }
-          = "Workshops (#{@program_sessions.workshops.count})"
+      - current_website.displayed_session_formats.each do |session_format_config|
+        %li
+          %a{ href: "#", data: { action: 'click->sub-nav#updateDisplay', displayedId: "#{session_format_config.slug}"} }
+            = "#{session_format_config.name} (#{@program_sessions.in_session_format(session_format_config.session_format).count})"
 
-  #sessions{ data: { 'sub-nav-target': 'hideable' } }
-    - @program_sessions.regular_sessions.each do |program_session|
-      = render program_session
-  #workshops{ data: { 'sub-nav-target': 'hideable' } }
-    - @program_sessions.workshops.each do |program_session|
-      = render program_session
+  - current_website.displayed_session_formats.each do |session_format_config|
+    .program_sessions-wrapper{ id: "#{session_format_config.slug}", data: { 'sub-nav-target': 'hideable' } }
+      - @program_sessions.in_session_format(session_format_config.session_format).each do |program_session|
+        = render program_session

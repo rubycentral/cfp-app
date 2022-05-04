@@ -15,5 +15,13 @@ FactoryBot.define do
         end
       end
     end
+
+    factory :workshop_session do
+      session_format { SessionFormat.find_by(name: 'Workshop') || create(:session_format_workshop) }
+    end
+
+    factory :regular_session do
+      session_format { SessionFormat.find_by(name: 'Regular Session') || create(:session_format_regular_session) }
+    end
   end
 end

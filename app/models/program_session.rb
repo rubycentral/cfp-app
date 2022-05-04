@@ -70,7 +70,7 @@ class ProgramSession < ApplicationRecord
   scope :emails, -> { joins(:speakers).pluck(:speaker_email).uniq }
 
   scope :in_session_format, ->(session_format) do
-    joins(:session_format).where(session_format: session_format)
+    where(session_format_id: session_format.id)
   end
 
   def self.create_from_proposal(proposal)

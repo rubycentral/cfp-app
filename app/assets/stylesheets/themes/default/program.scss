@@ -71,7 +71,7 @@
   }
 }
 
-.program_sessions-wrapper {
+.program-sessions-wrapper {
   display: flex;
   margin: auto;
   max-width: 1600px;
@@ -181,8 +181,8 @@
 
 @media screen and (max-width: 1200px) and (orientation: portrait),
   (max-width: 1123px) and (orientation: landscape) {
-    #sessions {
-      padding: 15px 5px;
+    .program-sessions-wrapper {
+      padding: 15px 10px;
     }
     .session {
       width: 40%;
@@ -192,8 +192,8 @@
 
 @media screen and (max-width: 900px) and (orientation: portrait),
   (max-width: 823px) and (orientation: landscape) {
-    #sessions {
-      padding: 25px 5px;
+    .program-sessions-wrapper {
+      padding: 25px;
     }
 
     .session {

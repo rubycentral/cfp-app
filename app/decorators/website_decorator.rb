@@ -66,7 +66,7 @@ class WebsiteDecorator < ApplicationDecorator
         config.name = session_format.name
         config.position = index + 1
       end
-    end
+    end.sort_by(&:position)
   end
 
   def displayed_session_formats

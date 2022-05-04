@@ -12,6 +12,6 @@
             = "#{session_format_config.name} (#{@program_sessions.in_session_format(session_format_config.session_format).count})"
 
   - current_website.displayed_session_formats.each do |session_format_config|
-    .program_sessions-wrapper{ id: "#{session_format_config.slug}", data: { 'sub-nav-target': 'hideable' } }
+    .program-sessions-wrapper{ id: "#{session_format_config.slug}", data: { 'sub-nav-target': 'hideable' } }
       - @program_sessions.in_session_format(session_format_config.session_format).each do |program_session|
         = render program_session

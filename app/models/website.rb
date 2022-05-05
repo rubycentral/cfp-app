@@ -7,6 +7,11 @@ class Website < ApplicationRecord
 
   DEFAULT = 'default'.freeze
 
+  def footer_categories=(values)
+    categories = values.is_a?(String) ? values.split(',') : values
+    self[:footer_categories] = categories
+  end
+
   def self.domain_match(domain)
     where(arel_table[:domains].matches("%#{(domain)}"))
   end
@@ -16,10 +21,18 @@ end
 #
 # Table name: websites
 #
-#  id         :bigint(8)        not null, primary key
-#  event_id   :bigint(8)
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id                :bigint(8)        not null, primary key
+#  event_id          :bigint(8)
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  theme             :string           default("default")
+#  domains           :string
+#  city              :string
+#  location          :text
+#  prospectus_link   :string
+#  twitter_handle    :string
+#  directions        :string
+#  footer_categories :string           is an Array
 #
 # Indexes
 #

@@ -8,8 +8,8 @@
 
 :root {
   --body_background_color: white;
-  --nav_background_color: white;
-  --nav_text_color: black;
+  --nav_background_color: black;
+  --nav_text_color: white;
   --nav_link_hover: black;
   --main_content_background: white;
   --sans-serif-font: 'Rubik';
@@ -39,7 +39,7 @@ body {
 
 header + #content {
   background-color: var(--main_content_background);
-  margin-top: 50px;
+  margin-top: 110px;
 }
 
 p {
@@ -83,4 +83,7 @@ h3.section-title {
 
 @media screen and (max-width: 900px) and (orientation: portrait),
   (max-width: 823px) and (orientation: landscape) {
+  header + #content {
+    margin-top: 90px;
+  }
 }

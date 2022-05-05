@@ -4,19 +4,29 @@
       - if website.logo.attached?
         = f.label :logo, "Current Logo", class: "control-label"
         %div
-          = image_tag(website.logo)
+          = resize_image_tag(website.logo, width: 100)
       = f.input :logo, label: website.logo.attached? ? "Replace Logo" : "Logo"
       - if website.background.attached?
         = f.label :background, "Current Background", class: "control-label"
         %div
-          = image_tag(website.background, width: "200px")
+          = resize_image_tag(website.background, width: 200)
       = f.input :background,
         label: website.background.attached? ? "Replace Background" : "Background"
       = f.input :city
       = f.input :location, as: :text
       = f.input :directions
-      = f.input :twitter_handle
       = f.input :prospectus_link
+      %fieldset
+        = f.label :footer_categories
+        = f.text_field :footer_categories,
+          value: website.footer_categories&.join(','),
+          class: 'selectize-tags'
+        = f.input :footer_about_content
+        = f.input :footer_copyright
+        = f.input :twitter_handle
+        = f.input :facebook_url
+        = f.input :instagram_url
+
       = f.input :domains
   .row
     .col-sm-12

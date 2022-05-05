@@ -25,3 +25,30 @@ class Sponsor < ApplicationRecord
     offer_headline && offer_text && offer_url
   end
 end
+
+# == Schema Information
+#
+# Table name: sponsors
+#
+#  id             :bigint(8)        not null, primary key
+#  event_id       :bigint(8)
+#  name           :string
+#  tier           :string
+#  published      :boolean
+#  url            :string
+#  other_title    :string
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  description    :text
+#  offer_headline :string
+#  offer_text     :text
+#  offer_url      :string
+#
+# Indexes
+#
+#  index_sponsors_on_event_id  (event_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (event_id => events.id)
+#

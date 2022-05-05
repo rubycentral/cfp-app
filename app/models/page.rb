@@ -7,7 +7,8 @@ class Page < ApplicationRecord
   belongs_to :website
 
   scope :published, -> { where.not(published_body: nil).where(hide_page: false) }
-  scope :navigatable, -> { published.where.not(hide_navigation: true) }
+  scope :navigatable, -> { published.where(hide_navigation: false) }
+  scope :in_footer, -> { published.where.not(footer_category: [nil, ""]) }
 
   validates :name, :slug, presence: true
   validates :slug, uniqueness: { scope: :website_id }
@@ -43,6 +44,11 @@ end
 #  unpublished_body :text
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
+#  landing          :boolean          default(FALSE), not null
+#  hide_header      :boolean          default(FALSE), not null
+#  hide_footer      :boolean          default(FALSE), not null
+#  hide_page        :boolean          default(FALSE), not null
+#  hide_navigation  :boolean          default(FALSE), not null
 #
 # Indexes
 #

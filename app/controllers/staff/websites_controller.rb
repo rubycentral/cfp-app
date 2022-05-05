@@ -9,7 +9,7 @@ class Staff::WebsitesController < Staff::ApplicationController
     @website.update(website_params)
 
     flash[:success] = "Website was successfully created."
-    redirect_to event_staff_path(current_event)
+    redirect_to edit_event_staff_website_path(current_event)
   end
 
   def edit; end
@@ -18,7 +18,7 @@ class Staff::WebsitesController < Staff::ApplicationController
     @website.update(website_params)
 
     flash[:success] = "Website was successfully updated."
-    redirect_to event_staff_path(current_event)
+    redirect_to edit_event_staff_website_path(current_event)
   end
 
   private
@@ -40,9 +40,14 @@ class Staff::WebsitesController < Staff::ApplicationController
         :city,
         :location,
         :directions,
-        :twitter_handle,
         :prospectus_link,
         :domains,
+        :footer_about_content,
+        :footer_copyright,
+        :twitter_handle,
+        :facebook_url,
+        :instagram_url,
+        :footer_categories,
       )
   end
 end

@@ -118,4 +118,38 @@ feature "Website Page Management" do
     expect(page).to have_content("Page Not Found")
   end
 
+  scenario "Organizer adds page to a footer category", :js do
+    sponsor_page = create(:page, published_body: 'Sponsor', name: 'Sponsor')
+    faqs_page = create(:page, published_body: 'Frequently Asked', name: 'FAQs')
+    login_as(organizer)
+
+    visit page_path(slug: event.slug, page: sponsor_page.slug)
+    within('footer') do
+      expect(page).not_to have_content("SOLUTIONS")
+      expect(page).not_to have_content("SUPPORT")
+      expect(page).not_to have_content('Sponsor')
+      expect(page).not_to have_content('FAQs')
+    end
+
+    visit edit_event_staff_website_path(event)
+    fill_in("Footer categories", with: "Solutions,Support,")
+    click_on("Save")
+    visit edit_event_staff_page_path(event, sponsor_page)
+    select('Solutions', from: 'Footer category')
+    click_on("Save")
+    visit edit_event_staff_page_path(event, faqs_page)
+    select('Support', from: 'Footer category')
+    click_on("Save")
+
+    visit page_path(slug: event.slug, page: sponsor_page.slug)
+    within('footer') do
+      expect(page).to have_content("SOLUTIONS")
+      expect(page).to have_content("SUPPORT")
+      expect(page).to have_content('Sponsor')
+      expect(page).to have_content('FAQs')
+    end
+
+
+
+  end
 end

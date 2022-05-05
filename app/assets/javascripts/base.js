@@ -5,6 +5,17 @@ $(document).ready(function() {
   setTimeout(function() {
     $(".alert").not('.alert-confirm, .scheduling-error').alert('close');
   }, 5000);
+
+  $(".selectize-tags").selectize({
+    delimiter: ",",
+    persist: false,
+    create: function (input) {
+      return {
+        value: input,
+        text: input,
+      };
+    },
+  });
 });
 
 // Datatable extension for reseting sort order

@@ -5,41 +5,17 @@
     %meta(name="viewport" content="width=device-width, initial-scale=1.0")
     = stylesheet_link_tag current_website.theme, media: 'all'
     = javascript_pack_tag "application"
-    %link{rel: "stylesheet", href: "https://fonts.googleapis.com/css?family=Rubik"}
+    %link{rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Rubik:wght@400;700"}
     %script{src: "https://cdn.tailwindcss.com" }
   %body
     - unless @page&.hide_header?
-      %header#main-header
-        %div#header-logo-container
-          %a#menu-toggle{ href: "#"}
-          .website-event-logo
-          %h1
-            = link_to(current_website.name, landing_path(website_event_slug))
-        %nav#main-nav
-          - current_website.navigation_page_names_and_slugs.each do |page_name, page_slug|
-            = link_to page_name, page_path(website_event_slug, page_slug)
-          = link_to "Schedule", schedule_path(current_website.event)
-          = link_to "Program", program_path(website_event_slug)
-          = link_to "Sponsors", sponsors_path(website_event_slug)
+      = render 'layouts/themes/default/header'
+
     #content
-      =yield
+      = yield
 
     - unless @page&.hide_footer?
-      %footer
-        .footer-event-details
-          .logo-container
-            .website-event-logo
-            = link_to(current_website.event.name, landing_path(website_event_slug))
-          .footer-social-links
-            %a.twitter-link{ href: 'https://twitter.com/rubyconf', target: '_blank' }
-            %a.facebook-link{ href: 'https://facebook.com/rubyconf2021', target: '_blank' }
-            %a.instagram-link{ href: 'https://instagram.com/rubyconf', target: '_blank' }
-        .footer-event-links
-          - current_website.pages.published.each do |page|
-            = link_to page.name, page_path(website_event_slug, page)
-          = link_to "Schedule", schedule_path(current_website.event)
-          = link_to "Program", program_path(website_event_slug)
-          = link_to "Sponsors", sponsors_path(website_event_slug)
+      = render 'layouts/themes/default/footer'
 
     - unless @page&.hide_header?
       :javascript

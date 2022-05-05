@@ -1,0 +1,35 @@
+%footer{ **current_website.background_style }
+  .overlay
+    .footer-header
+      .logo-container
+        = resize_image_tag(current_website.logo, width: 36)
+        .website-info
+          = link_to(current_website.event.name, landing_path(website_event_slug))
+          .city
+            = current_website.city
+    .footer-content
+      .footer-event-details
+        .location-section
+          .location-details
+            .date #{current_website.date_range}
+            .location #{simple_format(current_website.location)}
+          .register
+            - if current_website.register_page
+              = link_to 'Register',
+                page_path(website_event_slug, current_website.register_page),
+                class: 'register-button'
+        .footer-about
+          = simple_format(current_website.footer_about_content)
+        .footer-social-links
+          %a.twitter-link{ href: current_website.twitter_url, target: '_blank' }
+          %a.facebook-link{ href: current_website.facebook_url, target: '_blank' }
+          %a.instagram-link{ href: current_website.instagram_url, target: '_blank' }
+      .footer-event-links
+        - current_website.categorized_footer_pages.each do |category, pages|
+          .footer-category-links
+            .footer-category-name #{category.upcase}
+            - pages.each do |page|
+              .footer-page
+                = link_to(page.name, page_path(website_event_slug, page.slug))
+    .footer-copyright
+      = current_website.footer_copyright

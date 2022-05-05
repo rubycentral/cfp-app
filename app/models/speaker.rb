@@ -64,11 +64,11 @@ end
 #
 # Table name: speakers
 #
-#  id                 :bigint(8)        not null, primary key
-#  user_id            :bigint(8)
-#  event_id           :bigint(8)
-#  proposal_id        :bigint(8)
-#  program_session_id :bigint(8)
+#  id                 :integer          not null, primary key
+#  user_id            :integer
+#  event_id           :integer
+#  proposal_id        :integer
+#  program_session_id :integer
 #  speaker_name       :string
 #  speaker_email      :string
 #  bio                :text

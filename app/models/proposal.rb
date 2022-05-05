@@ -310,13 +310,13 @@ end
 #
 # Table name: proposals
 #
-#  id                    :bigint(8)        not null, primary key
-#  event_id              :bigint(8)
+#  id                    :integer          not null, primary key
+#  event_id              :integer
 #  state                 :string           default("submitted")
 #  uuid                  :string
 #  title                 :string
-#  session_format_id     :bigint(8)
-#  track_id              :bigint(8)
+#  session_format_id     :integer
+#  track_id              :integer
 #  abstract              :text
 #  details               :text
 #  pitch                 :text

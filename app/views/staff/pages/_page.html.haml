@@ -2,6 +2,9 @@
   %td= link_to(page.name, edit_event_staff_page_path(current_event, page))
   %td= link_to(page.slug, edit_event_staff_page_path(current_event, page))
   %td
+    - if page.published?
+      %span.glyphicon.glyphicon-ok
+  %td
     - if page.landing?
       %span.glyphicon.glyphicon-ok
   %td

@@ -7,7 +7,6 @@ class Page < ApplicationRecord
   belongs_to :website
 
   scope :published, -> { where.not(published_body: nil).where(hide_page: false) }
-  scope :navigatable, -> { published.where(hide_navigation: false) }
   scope :in_footer, -> { published.where.not(footer_category: [nil, ""]) }
 
   validates :name, :slug, presence: true
@@ -15,6 +14,10 @@ class Page < ApplicationRecord
   attr_accessor :template
 
   BLANK_SLUG = "0"
+
+  def published?
+    published_body.present? && !hide_page
+  end
 
   def to_param
     persisted? ? slug : BLANK_SLUG
@@ -48,7 +51,7 @@ end
 #  hide_header      :boolean          default(FALSE), not null
 #  hide_footer      :boolean          default(FALSE), not null
 #  hide_page        :boolean          default(FALSE), not null
-#  hide_navigation  :boolean          default(FALSE), not null
+#  footer_category  :string
 #
 # Indexes
 #

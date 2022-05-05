@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_04_045808) do
+ActiveRecord::Schema.define(version: 2022_05_04_213512) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,7 +114,6 @@ ActiveRecord::Schema.define(version: 2022_05_04_045808) do
     t.boolean "hide_header", default: false, null: false
     t.boolean "hide_footer", default: false, null: false
     t.boolean "hide_page", default: false, null: false
-    t.boolean "hide_navigation", default: false, null: false
     t.string "footer_category"
     t.index ["website_id"], name: "index_pages_on_website_id"
   end
@@ -337,11 +336,12 @@ ActiveRecord::Schema.define(version: 2022_05_04_045808) do
     t.string "prospectus_link"
     t.string "twitter_handle"
     t.string "directions"
-    t.string "footer_categories", array: true
+    t.string "footer_categories", default: [], array: true
     t.text "footer_about_content"
     t.string "footer_copyright"
     t.string "facebook_url"
     t.string "instagram_url"
+    t.string "navigation_links", default: [], array: true
     t.index ["event_id"], name: "index_websites_on_event_id"
   end
 

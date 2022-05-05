@@ -17,10 +17,16 @@
       = f.input :directions
       = f.input :prospectus_link
       %fieldset
+        = f.label :navigation_links
+        = f.select :navigation_links,
+          website.link_options,
+          { include_hidden: false },
+          { class: 'selectize-sortable', multiple: true }
         = f.label :footer_categories
-        = f.text_field :footer_categories,
-          value: website.footer_categories&.join(','),
-          class: 'selectize-tags'
+        = f.select :footer_categories,
+          website.footer_categories,
+          { include_hidden: false },
+          { class: 'selectize-create', multiple: true }
         = f.input :footer_about_content
         = f.input :footer_copyright
         = f.input :twitter_handle

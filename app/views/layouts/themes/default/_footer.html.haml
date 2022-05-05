@@ -12,7 +12,7 @@
         .location-section
           .location-details
             .date #{current_website.date_range}
-            .location #{simple_format(current_website.location)}
+            .location #{current_website.formatted_location}
           .register
             - if current_website.register_page
               = link_to 'Register',

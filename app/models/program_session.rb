@@ -69,8 +69,9 @@ class ProgramSession < ApplicationRecord
   end
   scope :emails, -> { joins(:speakers).pluck(:speaker_email).uniq }
 
-  scope :workshops, -> { joins(:session_format).where(session_format: { name: 'Workshop' }) }
-  scope :regular_sessions, -> { joins(:session_format).where(session_format: { name: 'Regular Session' } ) }
+  scope :in_session_format, ->(session_format) do
+    where(session_format_id: session_format.id)
+  end
 
   def self.create_from_proposal(proposal)
     self.transaction do

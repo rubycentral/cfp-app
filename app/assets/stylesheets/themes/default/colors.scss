@@ -1,16 +1,56 @@
-
 $black: #000000 !default;
-$bronze: #B77D39 !default;
+$blue: #3444DA !default;
+$blue-dark: #417D7A !default;
+$blue-light: #A1E3D8 !default;
 $divider: #E0D2C7 !default;
-$divider-light: rgba(0, 0, 0, .1) !default;
+$divider-light: #EBEBEB !default;
+$bronze: #B77D39 !default;
+$brown: #5A5655 !default;
 $gold: #FFB62C !default;
+$green: #829757 !default;
+$green-dark: #417D7A !default;
 $grey: #494644 !default;
 $grey-light: #C4C4C4 !default;
 $grey-lighter: #F5F5F5 !default;
 $grey-lightest: #E7E7E7 !default;
 $grey-logo: #E6E6E6 !default;
+$orange: #FFBC90 !default;
+$orange-burnt: #EA652C !default;
+$pastel-pink: #F94975 !default;
+$pastel-purple: #CD8DF4 !default;
+$pastel-peach: #FFBC80 !default;
+$pastel-blue-light: #A1E3D8 !default;
+$pastel-blue:  #3444DA !default;
+$pink: #FF88ab !default;
 $platinum: #C7D7D7 !default;
+$purple: #7445C0 !default;
 $red: #C04F45 !default;
+$red-dark: #E14943 !default;
+$red-light: #E14943 !default;
 $silver:#E0E0E0 !default;
+$teal: #48c892 !default;
 $text: $grey !default;
+$text-secondary: #515151 !default;
+$yellow: #FFD801 !default;
 $white: #FFFFFF !default;
+
+// Session Formats
+$session-format-tag-1: $pastel-pink !default;
+$session-format-tag-2: $pastel-purple !default;
+$session-format-tag-3: $pastel-peach !default;
+$session-format-tag-4: $pastel-blue-light !default;
+$session-format-tag-5: $pastel-blue !default;
+
+// Track Tags
+$bg-track-1: $yellow!default;
+$bg-track-2: $orange-burnt !default;
+$bg-track-3: $pink !default;
+$bg-track-4: $purple !default;
+$bg-track-5: $blue-dark !default;
+$bg-track-6: $teal !default;
+$bg-track-7: $red-dark !default;
+$bg-track-8: $brown !default;
+$bg-track-9: $silver !default;
+$bg-track-10: $blue-light !default;
+$bg-track-11: $bronze !default;
+$bg-track-12: $orange !default;

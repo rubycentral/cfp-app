@@ -1,17 +1,21 @@
 .session
-  %div
-    %a.session-anchor{ name: "session-#{program_session.id}" }
-    -if program_session.track
-      %span.track-name
-        = program_session.track_name
+  %div.seesion-title-abstract-container
     %h3.session-title
       = program_session.title
 
-  .session_abstract
-    = program_session.abstract.html_safe
-  .session-author-details
-    -program_session.speakers.each do |speaker|
-      %h4.session-author
-        = speaker.speaker_name
-      .session-bio
-        = speaker.bio.html_safe
+    .session-abstract
+      = program_session.abstract.html_safe
+
+  %div.session-speaker-track-container
+    .session-speaker-details
+      = program_session.speaker_names
+
+    %span.session-format-tag{ class: "#{current_website.session_format_tag_class(program_session.session_format)}" }
+      = current_website.session_format_name(program_session.session_format)
+
+    -if program_session.track
+      %span.track-tag
+        %span.track-dot{ class: "#{current_website.track_background(program_session.track)}" }
+        = program_session.track_name
+
+  .session-accent{ class: program_session.track ? "#{current_website.track_background(program_session.track)}" : "default-accent" }

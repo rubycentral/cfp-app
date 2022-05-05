@@ -49,6 +49,8 @@ class Staff::WebsitesController < Staff::ApplicationController
         :instagram_url,
         footer_categories: [],
         navigation_links: [],
-      )
+        session_format_configs_attributes: [
+          :id, :name, :display, :position, :session_format_id
+        ])
   end
 end

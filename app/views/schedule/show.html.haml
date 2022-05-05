@@ -3,13 +3,13 @@
   %nav.sub-nav
     %ul
       %li
-        %a#schedule-day-link.selected{ href: "#", displayedId: 'schedule-day-one', data: { action: 'click->sub-nav#updateDisplay' } }
+        %a#schedule-day-link.selected{ href: "#", 'data-displayedId': 'schedule-day-one', data: { action: 'click->sub-nav#updateDisplay' } }
           = current_event.conference_date(1).strftime("%B %e")
       %li
-        %a#schedule-day-link{ href: "#", displayedId: 'schedule-day-two', data: { action: 'click->sub-nav#updateDisplay' } }
+        %a#schedule-day-link{ href: "#", 'data-displayedId': 'schedule-day-two', data: { action: 'click->sub-nav#updateDisplay' } }
           = current_event.conference_date(2).strftime("%B %e")
       %li
-        %a#schedule-day-link{ href: "#", displayedId: 'schedule-day-three', data: { action: 'click->sub-nav#updateDisplay' } }
+        %a#schedule-day-link{ href: "#", 'data-displayedId': 'schedule-day-three', data: { action: 'click->sub-nav#updateDisplay' } }
           = current_event.conference_date(3).strftime("%B %e")
 
   #schedule-container

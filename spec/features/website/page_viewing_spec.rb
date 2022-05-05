@@ -6,6 +6,7 @@ feature 'Public Page Viewing' do
 
   scenario 'Public views a published website page' do
     home_page = create(:page, published_body: 'Home Content')
+    website.update(navigation_links: [home_page.slug])
     visit page_path(slug: event.slug, page: home_page.slug)
 
     expect(page).to have_content('Home Content')
@@ -30,6 +31,7 @@ feature 'Public Page Viewing' do
   scenario 'Public views the landing page for an older website on custom domain' do
     website.update(domains: 'www.example.com')
     old_home_page = create(:page, published_body: 'Old Website', landing: true)
+    website.update(navigation_links: [old_home_page.slug])
 
     new_website = create(:website, domains: 'www.example.com')
     new_home_page = create(:page,
@@ -37,6 +39,7 @@ feature 'Public Page Viewing' do
                            published_body: 'New Website',
                            landing: true)
 
+    new_website.update(navigation_links: [new_home_page.slug])
     visit root_path
     expect(page).to have_content('New Website')
 

@@ -1,6 +1,12 @@
 class WebsiteDecorator < ApplicationDecorator
   delegate_all
 
+  DEFAULT_LINKS = {
+    'Schedule' => 'schedule',
+    'Program' => 'program',
+    'Sponsors' => 'sponsors',
+  }.freeze
+
   def name
     event.name
   end
@@ -13,7 +19,7 @@ class WebsiteDecorator < ApplicationDecorator
     @event ||= object.event.decorate
   end
 
-  def location
+  def formatted_location
     h.simple_format(object.location)
   end
 
@@ -33,15 +39,11 @@ class WebsiteDecorator < ApplicationDecorator
     event.sponsors.published.with_footer_image.order_by_tier
   end
 
-  def navigation_page_names_and_slugs
-    pages.navigatable.pluck(:name, :slug)
-  end
-
   def categorized_footer_pages
     pages.in_footer
       .select(:footer_category, :name, :slug)
       .group_by(&:footer_category)
-      .sort_by { |category, _| footer_categories.index(category) }
+      .sort_by { |category, _| footer_categories.index(category) || 1_000 }
   end
 
   def twitter_url
@@ -56,5 +58,12 @@ class WebsiteDecorator < ApplicationDecorator
     return {} unless background.attached?
 
     { style: "background-image: url('#{h.url_for(background)}');" }
+  end
+
+  def link_options
+    @link_options ||= pages.published.pluck(:name, :slug)
+      .each_with_object(DEFAULT_LINKS.dup) do |(name, slug), memo|
+      memo[name] = slug
+    end
   end
 end

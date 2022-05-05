@@ -24,7 +24,7 @@ class Staff::WebsitesController < Staff::ApplicationController
   private
 
   def set_website
-    @website = current_event.website || current_event.build_website
+    @website = (current_event.website || current_event.build_website).decorate
   end
 
   def authorize_website
@@ -47,7 +47,8 @@ class Staff::WebsitesController < Staff::ApplicationController
         :twitter_handle,
         :facebook_url,
         :instagram_url,
-        :footer_categories,
+        footer_categories: [],
+        navigation_links: [],
       )
   end
 end

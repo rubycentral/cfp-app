@@ -16,7 +16,7 @@ feature "Website Configuration" do
     expect(event.website).to be_present
   end
 
-  scenario "Organizer configures domain for an existing website for event" do
+  scenario "Organizer configures domain for an existing website for event", :js do
     website = create(:website, event: event)
     home_page = create(:page, website: website)
 
@@ -31,6 +31,7 @@ feature "Website Configuration" do
     expect(page).to have_content("Edit Website")
 
     fill_in('Domains', with: 'www.example.com')
+    fill_in('Navigation links', with: "Home\n")
     click_on("Save")
 
     expect(page).to have_content("Website was successfully updated")

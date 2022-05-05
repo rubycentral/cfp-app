@@ -32,7 +32,7 @@
       <div class="text-xl font-semibold"><%= current_website.city %></div>
       <div class="text-2xl font-semibold mt-4 mb-2"><%= current_website.date_range %></div>
       <div class="text-left">
-        <%= current_website.location %>
+        <%= current_website.formatted_location %>
         <%= link_to("directions", current_website.directions, class: "mt-2 underline") %>
       </div>
     </div>

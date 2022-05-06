@@ -4,6 +4,7 @@ class Website::Font < ApplicationRecord
   has_one_attached :file
 
   scope :primary, -> { where(primary: true) }
+  scope :secondary, -> { where(secondary: true) }
 end
 
 # == Schema Information

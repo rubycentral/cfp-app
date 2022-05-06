@@ -5,7 +5,9 @@
     %meta(name="viewport" content="width=device-width, initial-scale=1.0")
     = stylesheet_link_tag current_website.theme, media: 'all'
     = javascript_pack_tag "application"
-    %link{rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Rubik:wght@400;700"}
+    :css
+      #{current_website.font_faces_css}
+      #{current_website.font_root_css}
     %script{src: "https://cdn.tailwindcss.com" }
   %body
     - unless @page&.hide_header?

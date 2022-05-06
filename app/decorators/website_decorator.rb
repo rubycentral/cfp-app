@@ -107,4 +107,25 @@ class WebsiteDecorator < ApplicationDecorator
   def session_format_name(session_format)
     object.session_format_configs.find_by(session_format: session_format).name
   end
+
+  def font_faces_css
+    fonts.map do |font|
+      <<~CSS
+        @font-face {
+          font-family: "#{font.name}";
+          src: url('#{h.url_for(font.file)}');
+        }
+      CSS
+    end.join("\n").html_safe
+  end
+
+  def font_root_css
+    font = fonts.primary.first
+    return "" unless font
+    <<~CSS.html_safe
+      :root {
+        --sans-serif-font: '#{font.name}' !important;
+      }
+    CSS
+  end
 end

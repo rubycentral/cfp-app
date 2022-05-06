@@ -1,0 +1,19 @@
+= content_tag :div,
+  class: 'inline-form nested-fields',
+  data: { new_record: form.object.new_record? } do
+  = form.input :name
+  = form.input :file, label: font_file_label(form.object)
+  .form-group
+    = form.label 'Primary'
+    %div
+      = form.check_box :primary,
+        class: 'primary-font',
+        data: { action: "click->nested-form#radio_chosen" }
+  .form-group
+    = form.label 'Secondary'
+    %div
+      = form.check_box :secondary,
+        class: 'secondary-font',
+        data: { action: "click->nested-form#radio_chosen" }
+  = link_to "Remove", "#", data: { action: "click->nested-form#remove_association" }
+  = form.hidden_field :_destroy

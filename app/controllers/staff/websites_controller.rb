@@ -51,6 +51,10 @@ class Staff::WebsitesController < Staff::ApplicationController
         navigation_links: [],
         session_format_configs_attributes: [
           :id, :name, :display, :position, :session_format_id
-        ])
+        ],
+        fonts_attributes: [
+          :id, :name, :file, :_destroy, :primary, :secondary
+        ],
+    )
   end
 end

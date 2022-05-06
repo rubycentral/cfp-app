@@ -104,6 +104,10 @@ class WebsiteDecorator < ApplicationDecorator
     "session-format-tag-#{session_format_num(session_format)}"
   end
 
+  def session_format_background_class(session_format)
+    "session-format-bg-#{session_format_num(session_format)}"
+  end
+
   def session_format_name(session_format)
     object.session_format_configs.find_by(session_format: session_format).name
   end

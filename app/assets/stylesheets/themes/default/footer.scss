@@ -1,5 +1,9 @@
 footer {
   color: white;
+  position: relative;
+  z-index: 11;
+  background-color: black;
+
   .overlay {
     background-color: black;
     opacity: 0.9;

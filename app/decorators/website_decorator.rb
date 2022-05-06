@@ -117,7 +117,7 @@ class WebsiteDecorator < ApplicationDecorator
       <<~CSS
         @font-face {
           font-family: "#{font.name}";
-          src: url('#{h.url_for(font.file)}');
+          src: url('#{h.rails_storage_proxy_path(font.file)}');
         }
       CSS
     end.join("\n").html_safe

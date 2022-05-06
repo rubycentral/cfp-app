@@ -39,10 +39,24 @@
       = f.simple_fields_for :session_format_configs do |ff|
         .session-format-name
           = "Configure #{ff.object.session_format.name}"
-        = ff.input :display, wrapper_html: { class: 'col-md-3' }
-        = ff.input :position, wrapper_html: { class: 'col-md-3' }
-        = ff.input :name
-        = ff.hidden_field :session_format_id
+        .inline-form
+          = ff.input :display, wrapper_html: { class: 'col-md-3' }
+          = ff.input :position, wrapper_html: { class: 'col-md-3' }
+          = ff.input :name
+          = ff.hidden_field :session_format_id
+
+      %div{"data-controller": "nested-form"}
+        %h4 Fonts
+        %template{"data-nested-form-target": "template"}
+          = f.simple_fields_for :fonts,
+            Website::Font.new,
+            child_index: 'NEW_RECORD' do |font|
+            = render 'font_fields', form: font
+        = f.simple_fields_for :fonts do |font|
+          = render 'font_fields', form: font
+        %div{"data-nested-form-target": "links"}
+          = link_to "Add Font", "#", class: 'btn btn-success',
+            data: { action: "click->nested-form#add_association" }
 
   .row
     .col-sm-12

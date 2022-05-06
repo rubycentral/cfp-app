@@ -233,6 +233,7 @@
 
     .program-session-about {
       border-top: 1px solid #D1D1D1;
+      font-family: var(--secondary-body-font);
       padding-top: 25px;
       width: 100%;
       font-weight: 400;
@@ -242,6 +243,7 @@
 
 
       span {
+        font-family: var(--sans-serif-font);
         font-weight: 700;
         font-size: 16px;
         margin-bottom: 6px;
@@ -257,6 +259,8 @@
       }
 
       .speaker-bio {
+        font-family: var(--secondary-body-font);
+        margin-bottom: 15px;
         font-weight: 400;
         font-size: 16px;
         line-height: 25px;

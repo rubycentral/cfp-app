@@ -47,13 +47,17 @@ class Staff::WebsitesController < Staff::ApplicationController
         :twitter_handle,
         :facebook_url,
         :instagram_url,
+        :head_content,
         footer_categories: [],
         navigation_links: [],
         session_format_configs_attributes: [
           :id, :name, :display, :position, :session_format_id
         ],
         fonts_attributes: [
-          :id, :name, :file, :_destroy, :primary, :secondary
+          :id, :name, :file, :primary, :secondary, :_destroy
+        ],
+        contents_attributes: [
+          :id, :name, :html, :placement, :_destroy
         ],
     )
   end

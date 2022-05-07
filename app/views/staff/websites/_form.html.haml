@@ -58,6 +58,19 @@
           = link_to "Add Font", "#", class: 'btn btn-success',
             data: { action: "click->nested-form#add_association" }
 
+      %div{"data-controller": "nested-form"}
+        %h4 Head and Footer Content
+        %template{"data-nested-form-target": "template"}
+          = f.simple_fields_for :contents,
+            Website::Content.new,
+            child_index: 'NEW_RECORD' do |content|
+            = render 'content_fields', form: content
+        = f.simple_fields_for :contents do |content|
+          = render 'content_fields', form: content
+        %div{"data-nested-form-target": "links"}
+          = link_to "Add Content", "#", class: 'btn btn-success',
+            data: { action: "click->nested-form#add_association" }
+
   .row
     .col-sm-12
       = submit_tag("Save", class: "pull-right btn btn-success", type: "submit")

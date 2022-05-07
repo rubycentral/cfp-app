@@ -1,0 +1,13 @@
+= content_tag :div,
+  class: 'nested-fields',
+  data: { new_record: form.object.new_record? } do
+  .inline-form
+    = form.input :name
+    = form.input :placement, collection: Website::Content::PLACEMENTS
+  = form.input :html,
+    as: :text,
+    input_html: { data: { "content-target": :textArea } },
+    wrapper_html: { data: { "controller": "content" } }
+
+  = link_to "Remove", "#", data: { action: "click->nested-form#remove_association" }
+  = form.hidden_field :_destroy

@@ -3,6 +3,7 @@ class TimeSlot < ApplicationRecord
   belongs_to :room
   belongs_to :track
   belongs_to :event
+  belongs_to :sponsor
 
   attr_reader :session_duration
 

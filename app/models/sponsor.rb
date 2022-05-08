@@ -1,6 +1,8 @@
 class Sponsor < ApplicationRecord
   belongs_to :event
 
+  has_many :time_slots
+
   has_one_attached :primary_logo
   has_one_attached :footer_logo
   has_one_attached :banner_ad

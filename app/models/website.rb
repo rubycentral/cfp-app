@@ -3,16 +3,20 @@ class Website < ApplicationRecord
   has_many :pages, dependent: :destroy
   has_many :fonts, class_name: 'Website::Font', dependent: :destroy
   has_many :contents, class_name: 'Website::Content', dependent: :destroy
+  has_one :meta_data, class_name: 'Website::MetaData', dependent: :destroy
 
   has_many :session_formats, through: :event
   has_many :session_format_configs
 
+
   accepts_nested_attributes_for :fonts, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :contents, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :meta_data
   accepts_nested_attributes_for :session_format_configs
 
   has_one_attached :logo
   has_one_attached :background
+  has_one_attached :favicon
 
   DEFAULT = 'default'.freeze
 

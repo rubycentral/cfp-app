@@ -1,3 +1,4 @@
+- content_for(:title) { "Sponsors" }
 %div.sponsors-page-wrapper
   %h3
     Sponsors
@@ -10,4 +11,4 @@
         .sponsors-wrapper
           = render sponsors
 
-  %div{ data: { 'controller': 'banner-ads', 'banner-ads-event-slug-value': 'railsconf-2022', 'banner-ads-index-value': '0' } }
+  = embed(content_tag("sponsors-banner-adds"))

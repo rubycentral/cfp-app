@@ -2,11 +2,13 @@ class Website < ApplicationRecord
   belongs_to :event
   has_many :pages, dependent: :destroy
   has_many :fonts, class_name: 'Website::Font', dependent: :destroy
+  has_many :contents, class_name: 'Website::Content', dependent: :destroy
 
   has_many :session_formats, through: :event
   has_many :session_format_configs
 
   accepts_nested_attributes_for :fonts, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :contents, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :session_format_configs
 
   has_one_attached :logo

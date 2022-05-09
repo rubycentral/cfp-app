@@ -33,3 +33,14 @@
   box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25); /* Bootstrap 4 */
   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
+
+#staff_websites_edit, #staff_websites_new {
+  .CodeMirror {
+    height: 15vh;
+    min-height: 15vh;
+  }
+  .CodeMirror-focused {
+    height: 60vh;
+    min-height: 60vh;
+  }
+}

@@ -46,4 +46,38 @@ feature "Website Configuration" do
 
     expect(current_path).to eq('/home')
   end
+
+  scenario "Organizer configures tailwind with head content", :js do
+    website = create(:website, event: event)
+    home_page = create(:page, website: website)
+
+    login_as(organizer)
+    visit edit_event_staff_website_path(event)
+    click_on("Add Content")
+    fill_in_codemirror(<<~HTML
+      <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                clifford: '#da373d',
+              }
+            }
+          }
+        }
+      </script>
+      HTML
+    )
+    click_on("Save")
+
+    visit edit_event_staff_page_path(event, home_page)
+    fill_in_codemirror(
+      '<div class="text-clifford" id="red-dog">Clifford The Big Red Dog</div>'
+    )
+    click_on("Save")
+    accept_confirm { click_on("Publish") }
+    click_on("View")
+
+    expect(computed_style("#red-dog", "color")).to eq("rgb(218, 55, 61)")
+  end
 end

@@ -1,11 +1,23 @@
 .schedule-grid-cell
-  - if !program_session.display_track_name.blank?
-    .session-track
-      = program_session.display_track_name
-  .schedule-session-title
-    = program_session.display_title
-  .schedule-room
-    %span.room-icon
-    = program_session.room
-  .schedule-presenter
-    =  program_session.display_presenter
+  .schedule-title-room-wrapper
+    .schedule-session-title
+      = program_session.display_title
+    .schedule-room
+      = image_tag 'themes/default/room-icon.png', class: 'room-icon'
+      = program_session.room
+  .schedule-speaker-tag-wrapper
+    .schedule-presenter
+      =  program_session.display_presenter
+
+    .schedule-tags
+      - if program_session.sponsored?
+        %span.sponsored-tag Sponsored
+
+      - if program_session.filled_with_session?
+        %span.session-format-tag{ class: "#{current_website.session_format_tag_class(program_session.session_format)}" }
+          = current_website.session_format_name(program_session.session_format)
+
+      -if !program_session.display_track_name.blank?
+        %span.track-tag
+          %span.track-dot{ class: "#{current_website.track_background(program_session.track)}" }
+          = program_session.display_track_name

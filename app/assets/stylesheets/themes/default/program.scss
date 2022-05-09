@@ -70,6 +70,41 @@
   }
 }
 
+.sub-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 6px 60px;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 30px;
+
+    li {
+      margin: 0;
+      padding: 0;
+      a {
+        font-size: 24px;
+        font-weight: 700;
+        display: block;
+        color: var(--grey-light);
+        width: 100%;
+        margin: auto;
+        text-align: center;
+        text-decoration: none;
+        &:hover, &.selected {
+          color: $red-light;
+          box-shadow: 0 4px var(--main_content_background),
+                      0 7px var(--red-light);
+          transition: all 300ms;
+        }
+      }
+    }
+  }
+}
+
 .program-filter-pane {
   img {
     margin: 0 auto 15px;
@@ -151,7 +186,6 @@
     height: 5rem;
   }
 
-  // UNDERLINE COLOR, FONT FAMILY
   .session-title {
     font-size: 21px;
     font-weight: 700;

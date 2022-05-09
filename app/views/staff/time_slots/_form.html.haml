@@ -7,7 +7,6 @@
 .length-label
   %span.bold Length:
   %span.length="#{time_slot.session_duration}"
-= f.association :sponsor, as: :select, collection: current_event.sponsors, include_blank: true
 = f.input :program_session_id, collection: time_slot.unscheduled_program_sessions,
   input_html: { class: 'available-proposals' }
 .selected-session-info
@@ -33,3 +32,4 @@
   = f.input :presenter, as: :string
   = f.input :description, as: :text
 
+= f.association :sponsor, as: :select, collection: current_event.sponsors, include_blank: true,

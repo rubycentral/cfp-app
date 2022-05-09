@@ -1,24 +1,19 @@
+
 - content_for(:title) { "Schedule" }
-.schedule-page-wrapper{ data: { 'controller': 'sub-nav', 'sub-nav-displayed-id-value': 'schedule-day-one' } }
+.schedule-page-wrapper{ data: { 'controller': 'sub-nav', 'sub-nav-displayed-id-value': 'schedule-day-1' } }
+  %h3.page-title Schedule
+  .schedule-filter-pane
+    = image_tag 'themes/default/open-filter.png', class: 'open-filter-icon'
+    = image_tag 'themes/default/closed-filter.png', class: 'close-filter-icon hidden'
+    %span Filters
   %nav.sub-nav
     %ul
-      %li
-        %a#schedule-day-link.selected{ href: "#", 'data-displayedId': 'schedule-day-one', data: { action: 'click->sub-nav#updateDisplay' } }
-          = current_event.conference_date(1).strftime("%B %-e")
-      %li
-        %a#schedule-day-link{ href: "#", 'data-displayedId': 'schedule-day-two', data: { action: 'click->sub-nav#updateDisplay' } }
-          = current_event.conference_date(2).strftime("%B %-e")
-      %li
-        %a#schedule-day-link{ href: "#", 'data-displayedId': 'schedule-day-three', data: { action: 'click->sub-nav#updateDisplay' } }
-          = current_event.conference_date(3).strftime("%B %-e")
+      - current_website.event.days.times do |i|
+        %li
+          %a#schedule-day-link{ href: "#", class: i == 0 ? "selected" : '', 'data-displayedId': "schedule-day-#{i + 1}", data: { action: 'click->sub-nav#updateDisplay' } }
+            = current_event.conference_date(i + 1).strftime("%B %-e")
 
   #schedule-container
-    #schedule-day-one{ data: { 'sub-nav-target': 'hideable' }}
-      - schedule_for_day(schedule, 1).each do |program_sessions|
-        = render "schedule_block", program_sessions: program_sessions
-    #schedule-day-two{ data: { 'sub-nav-target': 'hideable' }}
-      - schedule_for_day(schedule, 2).each do |program_sessions|
-        = render "schedule_block", program_sessions: program_sessions
-    #schedule-day-three{ data: { 'sub-nav-target': 'hideable' }}
-      - schedule_for_day(schedule, 3).each do |program_sessions|
-        = render "schedule_block", program_sessions: program_sessions
+    - current_website.event.days.times do |i|
+      %div{ id: "schedule-day-#{i + 1}", data: { 'sub-nav-target': 'hideable' } }
+        = render partial: 'schedule_block', collection: schedule_for_day(schedule, i + 1), as: :program_sessions

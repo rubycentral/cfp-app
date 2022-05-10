@@ -145,6 +145,61 @@ needed. We are currently not including [the official
 plugins](https://tailwindcss.com/docs/typography-plugin) but we could if
 desired!
 
+Using these blocks is currently the best way to [Customize
+Colors](#customizing-colors)...
+
+### Customizing Colors
+
+Colors in the app are currently set with css variables which can be easily
+overridden in a style tag in a head content block. The css variables in the
+default theme can be viewed in the [colors.scss
+file](../app/assets/stylesheets/themes/default/colors.scss)
+
+As an example, if you wanted to change the colors for the main content
+background and navigation you could add the following content block:
+
+```html
+<style>
+  :root {
+    --body_background_color: var(--yellow);
+    --nav_background_color: #ff0000;
+    --nav_text_color: var(--yellow);
+    --nav_link_hover: var(--yellow);
+    --main_content_background: var(--yellow);
+  }
+</style>
+```
+
+Note that a combination of other variables and actual color values were used in
+the example.
+
+You can also create some convenience custom classes using these variables with
+[Tailwind](https://tailwindcss.com/docs/customizing-colors#using-css-variables).
+Try something like this:
+
+```html
+  <script>
+    function withOpacityValue(variable) {
+      return ({ opacityValue }) => {
+        if (opacityValue === undefined) {
+          return `rgb(var(${variable}))`
+        }
+        return `rgba(var(${variable}), ${opacityValue})`
+      }
+    }
+
+    tailwind.config = {
+      theme: {
+        colors: {
+          primary: withOpacityValue('--red'),
+          secondary: withOpacityValue('--yellow'),
+        }
+      }
+    }
+  </script>
+```
+and then you use a css class like `bg-primary/75` in your static pages.
+
 ## Page Content Management
 
 You can add static pages to your website by navigating to the `Pages` section in

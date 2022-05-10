@@ -1,6 +1,6 @@
-
 - content_for(:title) { "Schedule" }
-.schedule-page-wrapper{ data: { 'controller': 'sub-nav', 'sub-nav-displayed-id-value': 'schedule-day-1' } }
+.schedule-page-wrapper{ data: { 'controller': 'sub-nav fly-out', 'sub-nav-displayed-id-value': 'schedule-day-1' } }
+  = render 'fly_out', collection: schedule
   %h3.page-title Schedule
   .schedule-filter-pane
     = image_tag 'themes/default/open-filter.png', class: 'open-filter-icon'
@@ -11,7 +11,7 @@
       - current_website.event.days.times do |i|
         %li
           %a#schedule-day-link{ href: "#", class: i == 0 ? "selected" : '', 'data-displayedId': "schedule-day-#{i + 1}", data: { action: 'click->sub-nav#updateDisplay' } }
-            = current_event.conference_date(i + 1).strftime("%B %-e")
+            = current_website.event.conference_date(i + 1).strftime("%B %-e")
 
   #schedule-container
     - current_website.event.days.times do |i|

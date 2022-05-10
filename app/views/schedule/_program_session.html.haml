@@ -1,6 +1,6 @@
 .schedule-grid-cell
   .schedule-title-room-wrapper
-    .schedule-session-title
+    %a.schedule-session-title{ href: "#", data: { action: 'click->fly-out#updateSidePanel', 'session-id': program_session.id } }
       = program_session.display_title
     .schedule-room
       = image_tag 'themes/default/room-icon.png', class: 'room-icon'

@@ -122,6 +122,10 @@ class Staff::TimeSlotDecorator < Draper::Decorator
     object.session_presenter || object.presenter
   end
 
+  def presenters_with_bios
+    object.program_session.speakers.map { |speaker| [speaker.name, speaker.bio] }
+  end
+
   def display_track_name
     object.session_track_name || object.track_name
   end

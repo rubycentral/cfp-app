@@ -24,7 +24,9 @@ class Sponsor < ApplicationRecord
   }
 
   def has_offer?
-    offer_headline && offer_text && offer_url
+    (offer_headline.present? &&
+     offer_text.present? &&
+     offer_url.present? )
   end
 end
 

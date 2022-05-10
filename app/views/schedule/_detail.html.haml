@@ -1,0 +1,63 @@
+.schedule-detail-wrapper{ id: "program-session-detail-#{time_slot.id}",  data: { 'fly-out-target': 'programSession' } }
+  %h4.schedule-date
+    = current_website.event.conference_date(time_slot.conference_day).strftime("%B %-e")
+
+  %p.schedule-time
+    %span.start-time
+      = time_slot.start_time
+    %span.end-time
+      = time_slot.end_time
+
+  .schedule-session-title
+    = time_slot.display_title
+
+  .schedule-room
+    = image_tag 'themes/default/room-icon.png', class: 'room-icon'
+    = time_slot.room
+
+  - if time_slot.sponsored?
+    %span.sponsored-by
+      = time_slot.sponsor.name
+
+  .schedule-tags
+    - if time_slot.sponsored?
+      %span.sponsored-tag Sponsored
+
+    - if time_slot.filled_with_session?
+      %span.session-format-tag{ class: "#{current_website.session_format_tag_class(time_slot.session_format)}" }
+        = current_website.session_format_name(time_slot.session_format)
+
+    - unless time_slot.display_track_name.blank?
+      %span.track-tag
+        %span.track-dot{ class: "#{current_website.track_background(time_slot.track)}" }
+        = time_slot.display_track_name
+
+  .schedule-time-slot-details
+    - unless time_slot.display_description.blank?
+      .schedule-description
+        %span About
+        = time_slot.display_description
+
+    - if time_slot.filled_with_session?
+      - time_slot.presenters_with_bios.each do |name, bio|
+        .speaker-description
+          %span.speaker-name
+            = name
+          = bio.html_safe
+
+  - if time_slot.sponsored?
+    .schedule-sponsor-content
+      = image_tag time_slot.sponsor.primary_logo, class: "sponsor-logo"
+      .sponsor-tier-tag
+        .sponsor-tier-star{ class: time_slot.sponsor.tier }
+        = time_slot.sponsor.tier
+      %p
+        = time_slot.sponsor.description
+
+      - if time_slot.sponsor.has_offer?
+        .sponsor-offer-wrapper
+          %span.offer-headline
+            = time_slot.sponsor.offer_headline
+          %span.offer_text
+            = time_slot.sponsor.offer_text
+          = link_to "Redeem", time_slot.sponsor.offer_url, class: "offer-url"

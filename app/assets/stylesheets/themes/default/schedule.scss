@@ -59,6 +59,30 @@
     }
   }
 
+  .schedule-session-title {
+    font-size: 21px;
+    font-weight: 700;
+    margin-bottom: .3rem;
+    text-decoration: #F8B400 underline solid 2px;
+    text-underline-offset: 0.1em;
+  }
+
+  .schedule-room {
+    display: flex;
+    align-items: center;
+
+    .room-icon {
+      margin-right: 7px;
+    }
+  }
+
+  .schedule-tags {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
   .schedule-block-container {
     display: grid;
     grid-template-columns: 250px 1fr;
@@ -115,34 +139,165 @@
         border-right: none;
       }
 
-      .schedule-session-title {
-        font-size: 21px;
-        font-weight: 700;
-        margin-bottom: .3rem;
-        text-decoration: #F8B400 underline solid 2px;
-        text-underline-offset: 0.1em;
-      }
-
-      .schedule-room {
-        display: flex;
-        align-items: center;
-
-        .room-icon {
-          margin-right: 7px;
-        }
-      }
-
       .schedule-presenter {
         font-size: 16px;
         font-weight: 700;
         margin-bottom: 15px;
       }
+    }
+  }
+
+  .fly-out-wrapper {
+    .schedule-detail-wrapper {
+      margin: 0 40px 50px 50px;
+      padding-left: 5px;
+      overflow: scroll;
+
+      .schedule-date {
+        display: block;
+        color: $red-light;
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+
+      .schedule-time {
+        display: flex;
+        font-size: 16px;
+        padding-bottom: 25px;
+        margin-bottom: 30px;
+        border-bottom: 1px solid $divider-light;
+
+        span { display: inline-block; }
+        .start-time {
+          &::after {
+            content: " - ";
+            margin-right: 1px
+          }
+        }
+      }
+
+      .schedule-session-title {
+        text-decoration: none;
+      }
+
+      .schedule-room {
+        margin-bottom: 35px;
+      }
+
+      .sponsored-by {
+        font-weight: 700;
+        margin-bottom: 10px;
+        display: block;
+
+        &::before {
+          content: "Sponsored by "
+        }
+      }
 
       .schedule-tags {
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 6px;
+        padding-bottom: 25px;
+        margin-bottom: 30px;
+        border-bottom: 1px solid $divider-light;
+      }
+
+      .schedule-time-slot-details {
+        border-bottom: 1px solid $divider-light;
+        margin-bottom: 30px;
+      }
+
+      .speaker-description,
+      .schedule-description {
+        margin-bottom: 20px;
+        line-height: 150%;
+
+        span {
+          display: block;
+          font-weight: 800;
+          font-size: 20;
+          margin-bottom: 6px;
+        }
+      }
+
+      .schedule-sponsor-content {
+        .sponsor-logo {
+          max-width: 300px;
+          margin-bottom: 5px;
+        }
+
+        .sponsor-tier-tag {
+          padding: 5px 4px;
+          border: 1px solid $silver-border;
+          font-size: 12px;
+          font-weight: 600;
+          border-radius: 4px;
+          display: flex;
+          align-items: center;
+          width: min-content;
+          text-transform: capitalize;
+          margin-bottom: 15px;
+
+          .sponsor-tier-star {
+            margin-right: 3px;
+            display: inline-block;
+            -webkit-mask-image: asset_url('themes/default/sponsor-tier.svg');
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-size: 15px 15px;
+            mask-image: asset_url('themes/default/sponsor-tier.svg');
+            mask-repeat: no-repeat;
+            mask-size: 15px 15px;
+            height: 15px;
+            width: 15px;
+
+            &.platinum { background-color: $platinum; }
+            &.gold { background-color: $gold; }
+            &.silver { background-color: $silver; }
+            &.bronze { background-color: $bronze; }
+            &.other { background-color: $grey-light };
+            &.supporter { background-color: $grey-light };
+          }
+        }
+
+        p {
+          line-height: 160%;
+          margin-bottom: 30px;
+        }
+
+        .sponsor-offer-wrapper {
+          background-color: $beige;
+          border-radius: 10px;
+          padding: 35px;
+
+          span {
+            display: block;
+
+            &.offer-headline {
+              font-weight: 700;
+              font-size: 16px;
+              margin-bottom: 3px;
+            }
+
+            &.offer_text {
+              margin-bottom: 40px;
+            }
+          }
+
+          .offer-url {
+            color: $white;
+            background-color: $red-light;
+            padding: 14px 24px;
+            border-radius: 4px;
+
+            &::after {
+              content: "";
+              margin-left: 9px;
+              background-image: asset_url('themes/default/arrow-white.png');
+              display: inline-block;
+              height: 15px;
+              width: 15px;
+            }
+          }
+        }
       }
     }
   }
@@ -161,12 +316,6 @@
           border-right: none;
         }
       }
-
-      .fly-out-wrapper {
-        width: 70%;
-        &.open { right: 0 }
-        &.closed { right: -70%; }
-      }
     }
   }
 
@@ -174,7 +323,6 @@
 @media screen and (max-width: 900px) and (orientation: portrait),
   (max-width: 823px) and (orientation: landscape) {
     .schedule-page-wrapper {
-
       .sub-nav {
         margin-bottom: 30px;
       }

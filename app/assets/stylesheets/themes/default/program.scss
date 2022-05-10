@@ -221,34 +221,6 @@
 }
 
 .fly-out-wrapper {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  padding-top: 160px;
-  width: 40%;
-  height: 100%;
-  z-index: 10;
-  background-color: var(--white);
-  border: 1px solid black;
-  transition: all 1s;
-  overflow: scroll;
-
-
-  &.open {
-    right: 0;
-
-  }
-
-  &.closed {
-    right: -40%;
-  }
-
-  .close-icon {
-    position: absolute;
-    right: 40px;
-    top: 140px;
-  }
-
   .program-session-detail {
     margin: 0 40px 50px 30px;
     overflow: scroll;
@@ -311,12 +283,6 @@
     .session {
       width: 40%;
     }
-
-    .fly-out-wrapper {
-      width: 70%;
-      &.open { right: 0 }
-      &.closed { right: -70%; }
-    }
   }
 
 
@@ -330,11 +296,5 @@
 
     .session {
       width: 100%;
-    }
-
-    .fly-out-wrapper {
-      width: 100%;
-      &.open { right: 0; }
-      &.closed { right: -100%; }
     }
   }

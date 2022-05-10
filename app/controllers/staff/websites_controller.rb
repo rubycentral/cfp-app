@@ -6,19 +6,25 @@ class Staff::WebsitesController < Staff::ApplicationController
   def new; end
 
   def create
-    @website.update(website_params)
-
-    flash[:success] = "Website was successfully created."
-    redirect_to edit_event_staff_website_path(current_event)
+    if @website.update(website_params)
+      flash[:success] = "Website was successfully created."
+      redirect_to edit_event_staff_website_path(current_event)
+    else
+      flash[:warning] = "There were errors creating your website configuration"
+      render :new
+    end
   end
 
   def edit; end
 
   def update
-    @website.update(website_params)
-
-    flash[:success] = "Website was successfully updated."
-    redirect_to edit_event_staff_website_path(current_event)
+    if @website.update(website_params)
+      flash[:success] = "Website was successfully updated."
+      redirect_to edit_event_staff_website_path(current_event)
+    else
+      flash[:warning] = "There were errors updating your website configuration"
+      render :edit
+    end
   end
 
   private

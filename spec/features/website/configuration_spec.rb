@@ -47,6 +47,26 @@ feature "Website Configuration" do
     expect(current_path).to eq('/home')
   end
 
+  scenario "Organizer fails to add font file correctly", :js do
+    website = create(:website, event: event)
+
+    login_as(organizer)
+    visit edit_event_staff_website_path(event)
+
+    click_on("Add Font")
+    click_on("Save")
+    expect(page).to have_content("Website was successfully updated")
+
+    expect(website.fonts.count).to eq(0)
+
+    click_on("Add Font")
+    within(".nested-fonts") { fill_in("Name", with: "Times") }
+    click_on("Save")
+
+    expect(page).to have_content("There were errors updating your website configuration")
+    within(".nested-fonts") { expect(page).to have_content("can't be blank") }
+  end
+
   scenario "Organizer configures tailwind with head content", :js do
     website = create(:website, event: event)
     home_page = create(:page, website: website)

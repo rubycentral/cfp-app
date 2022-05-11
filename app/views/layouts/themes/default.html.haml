@@ -4,6 +4,7 @@
     %title= current_website.website_title(yield(:title))
     %link{rel: "icon", type: "image/png", href: current_website.favicon_url}
     %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    %meta{name: "description", content: current_website.description}
 
     %meta{property: "og:title", content: current_website.website_title(yield(:title))}
     %meta{property: "og:author", content: current_website.author}

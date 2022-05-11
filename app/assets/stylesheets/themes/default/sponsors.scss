@@ -29,7 +29,7 @@
       -webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
       page-break-inside: avoid; /* Firefox */
       break-inside: avoid; /* IE 10+ */
-      border: 1px solid $grey-light;
+      border: 1px solid var(--grey-light);
       padding: 22px 15px 15px 15px;
       border-radius: 10px;
 
@@ -64,12 +64,12 @@
     margin-right: 4px;
   }
 
-  &.platinum { background-color: $platinum; }
-  &.gold { background-color: $gold; }
-  &.silver { background-color: $silver };
-  &.bronze { background-color: $bronze };
-  &.other { background-color: $grey-light };
-  &.supporter { background-color: $grey-light };
+  &.platinum { background-color: var(--platinum); }
+  &.gold { background-color: var(--gold); }
+  &.silver { background-color: var(--silver); }
+  &.bronze { background-color: var(--bronze); }
+  &.other { background-color: var(--grey-light); }
+  &.supporter { background-color: var(--grey-light); }
 }
 
 .sponsors-footer-wrapper {
@@ -88,7 +88,7 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 10px;
-    border: 1px solid $grey-lightest;
+    border: 1px solid var(--grey-lightest);
     border-radius: 10px;
     box-shadow: 2px 4px 16px 4px rgba(0, 0, 0, 0.05);
     -webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
@@ -108,7 +108,7 @@
     }
 
     .sponsor-offer-wrapper {
-      background-color: $grey-lighter;
+      background-color: var(--grey-lighter);
       padding: 20px;
       overflow: hidden;
       transition: all 1s linear;
@@ -129,8 +129,8 @@
           display: block;
           align-self: flex-start;
           padding: 10px 11px;
-          background-color: $black;
-          color: $white;
+          background-color: var(--black);
+          color: var(--white);
           border-radius: 10px;
           white-space: nowrap;
           text-decoration: none;

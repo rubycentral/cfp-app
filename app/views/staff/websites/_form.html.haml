@@ -1,14 +1,17 @@
 = simple_form_for website, url: :event_staff_website do |f|
   .row
-    %fieldset.col-md-6
-      = image_input(f, :logo)
-      = image_input(f, :background)
-      = image_input(f, :favicon)
-      = f.input :city
-      = f.input :location, as: :text
-      = f.input :directions
-      = f.input :prospectus_link
+    .col-md-6
       %fieldset
+        %legend.fieldset-legend General Content
+        = image_input(f, :logo)
+        = image_input(f, :background)
+        = image_input(f, :favicon)
+        = f.input :city
+        = f.input :location, as: :text
+        = f.input :directions
+        = f.input :prospectus_link
+      %fieldset
+        %legend.fieldset-legend Navigation and Footer
         = f.label :navigation_links
         = f.select :navigation_links,
           website.link_options,
@@ -24,10 +27,10 @@
         = f.input :twitter_handle
         = f.input :facebook_url
         = f.input :instagram_url
-
-      = f.input :domains
-    %fieldset.col-md-6
-      %h4 Configure Website Session Formats
+        = f.input :domains
+    .col-md-6
+      %fieldset
+      %legend.fieldset-legend Configure Website Session Formats
       = f.simple_fields_for :session_format_configs do |ff|
         .session-format-name
           = "Configure #{ff.object.session_format.name}"
@@ -38,7 +41,7 @@
           = ff.hidden_field :session_format_id
 
       %div{"data-controller": "nested-form"}
-        %h4 Fonts
+        %legend.fieldset-legend Fonts
         %template{"data-nested-form-target": "template"}
           = f.simple_fields_for :fonts,
             Website::Font.new,
@@ -51,7 +54,7 @@
             data: { action: "click->nested-form#add_association" }
 
       %div{"data-controller": "nested-form"}
-        %h4 Head and Footer Content
+        %legend.fieldset-legend Head and Footer Content
         %template{"data-nested-form-target": "template"}
           = f.simple_fields_for :contents,
             Website::Content.new,
@@ -63,11 +66,12 @@
           = link_to "Add Content", "#", class: 'btn btn-success',
             data: { action: "click->nested-form#add_association" }
 
-      %h4 Meta Data
+      %legend.fieldset-legend Meta Data
       = f.simple_fields_for :meta_data, website.meta_data do |ff|
         = ff.input :title
         = ff.input :author
         = ff.input :description
+        = image_input(ff, :image)
   .row
     .col-sm-12
       = submit_tag("Save", class: "pull-right btn btn-success", type: "submit")

@@ -1,0 +1,5 @@
+.filter-wrapper.hidden{ data: { 'fly-out-target': 'filterWrapper' } }
+  %h3 Filters
+  %button{ data: { action: 'filter#clearFilter' } } Reset
+  = form_tag({}, data: { 'filter-target': 'form' }) do
+    future filter

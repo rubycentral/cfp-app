@@ -1,4 +1,5 @@
 :root {
+  --beige: #F4EEE6;
   --black: #000000;
   --blue: #3444DA;
   --blue-dark: #417D7A;
@@ -14,7 +15,7 @@
   --grey-light: #C4C4C4;
   --grey-lighter: #F5F5F5;
   --grey-lightest: #E7E7E7;
-  --grey-logo: #E6E6E6;
+  --grey-secondary: #E6E6E6;
   --orange: #FFBC90;
   --orange-burnt: #EA652C;
   --pastel-pink: #F94975;
@@ -29,9 +30,11 @@
   --red-dark: #E14943;
   --red-light: #E14943;
   --silver: #E0E0E0;
+  --silver-border: #EBEBEB;
+  --sponsor-tag: #F8B400;
   --teal: #48c892;
   --text: var(--grey);
-  --text-secondary: #515151;
+  --text-secondary: #5E5E5E;
   --yellow: #FFD801;
   --white: #FFFFFF;
 

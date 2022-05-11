@@ -97,6 +97,26 @@ class WebsiteDecorator < ApplicationDecorator
     "bg-track-#{track_num(track)}"
   end
 
+  def track_class_data(program_session)
+    program_session.track ? h.dom_id(program_session.track) : ""
+  end
+
+  def tracks_in_use
+    event.tracks.distinct.joins(:program_sessions)
+  end
+
+  def speakers_in_order
+    event.speakers.in_program.a_to_z
+  end
+
+  def speaker_class_data(program_session)
+    program_session.speakers.map { |speaker| h.dom_id(speaker) }.join(" ")
+  end
+
+  def filter_classes(program_session)
+    [track_class_data(program_session), speaker_class_data(program_session)].join(' ')
+  end
+
   def session_format_num(session_format)
     session_formats.index(session_format) + 1
   end

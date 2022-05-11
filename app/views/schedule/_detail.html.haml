@@ -1,4 +1,4 @@
-.schedule-detail-wrapper{ id: "program-session-detail-#{time_slot.id}",  data: { 'fly-out-target': 'programSession' } }
+.schedule-detail-wrapper{ id: dom_id(time_slot),  data: { 'fly-out-target': 'programSession' } }
   %h4.schedule-date
     = current_website.event.conference_date(time_slot.conference_day).strftime("%B %-e")
 

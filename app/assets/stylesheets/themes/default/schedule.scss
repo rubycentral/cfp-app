@@ -155,7 +155,7 @@
 
       .schedule-date {
         display: block;
-        color: $red-light;
+        color: var(--red-light);
         font-size: 22px;
         font-weight: 600;
         margin-bottom: 10px;
@@ -163,16 +163,16 @@
 
       .schedule-time {
         display: flex;
-        font-size: 16px;
+        font-size: 18px;
         padding-bottom: 25px;
         margin-bottom: 30px;
-        border-bottom: 1px solid $divider-light;
+        border-bottom: 1px solid var(--divider-light);
 
         span { display: inline-block; }
         .start-time {
           &::after {
-            content: " - ";
-            margin-right: 1px
+            content: " – ";
+            margin-right: 4px;
           }
         }
       }
@@ -198,11 +198,11 @@
       .schedule-tags {
         padding-bottom: 25px;
         margin-bottom: 30px;
-        border-bottom: 1px solid $divider-light;
+        border-bottom: 1px solid var(--divider-light);
       }
 
       .schedule-time-slot-details {
-        border-bottom: 1px solid $divider-light;
+        border-bottom: 1px solid var(--divider-light);
         margin-bottom: 30px;
       }
 
@@ -227,7 +227,7 @@
 
         .sponsor-tier-tag {
           padding: 5px 4px;
-          border: 1px solid $silver-border;
+          border: 1px solid var(--silver-border);
           font-size: 12px;
           font-weight: 600;
           border-radius: 4px;
@@ -249,12 +249,12 @@
             height: 15px;
             width: 15px;
 
-            &.platinum { background-color: $platinum; }
-            &.gold { background-color: $gold; }
-            &.silver { background-color: $silver; }
-            &.bronze { background-color: $bronze; }
-            &.other { background-color: $grey-light };
-            &.supporter { background-color: $grey-light };
+            &.platinum { background-color: var(--platinum); }
+            &.gold { background-color: var(--gold); }
+            &.silver { background-color: var(--silver); }
+            &.bronze { background-color: var(--bronze); }
+            &.other { background-color: var(--grey-light) };
+            &.supporter { background-color: var(--grey-light) };
           }
         }
 
@@ -264,7 +264,7 @@
         }
 
         .sponsor-offer-wrapper {
-          background-color: $beige;
+          background-color: var(--beige);
           border-radius: 10px;
           padding: 35px;
 
@@ -283,8 +283,8 @@
           }
 
           .offer-url {
-            color: $white;
-            background-color: $red-light;
+            color: var(--white);
+            background-color: var(--red-light);
             padding: 14px 24px;
             border-radius: 4px;
 

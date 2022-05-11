@@ -95,7 +95,7 @@
         text-align: center;
         text-decoration: none;
         &:hover, &.selected {
-          color: $red-light;
+          color: var(--red-light);
           box-shadow: 0 4px var(--main_content_background),
                       0 7px var(--red-light);
           transition: all 300ms;
@@ -112,7 +112,7 @@
     padding: 6px 6px;
     border-radius: 50%;
     border: 2px solid var(--red-light);
-
+    pointer-events: none;
 
     &.close-filter-icon {
       background-color: var(--red-light);
@@ -148,6 +148,10 @@
           box-shadow: 0 4px var(--main_content_background),
                       0 7px var(--red-light);
           transition: all 300ms;
+        }
+
+        .visible-count {
+          pointer-events: none;
         }
       }
     }

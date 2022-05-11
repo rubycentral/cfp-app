@@ -1,28 +1,11 @@
 = simple_form_for website, url: :event_staff_website do |f|
   .row
-    %fieldset.col-md-6
-      = image_input(f, :logo)
-      = image_input(f, :background)
-      = image_input(f, :favicon)
-      = f.input :city
-      = f.input :location, as: :text
-      = f.input :directions
-      = f.input :prospectus_link
-      %fieldset
     .col-md-6
       %fieldset
         %legend.fieldset-legend General Content
-        - if website.logo.attached?
-          = f.label :logo, "Current Logo", class: "control-label"
-          %div
-            = resize_image_tag(website.logo, width: 100)
-        = f.input :logo, label: website.logo.attached? ? "Replace Logo" : "Logo"
-        - if website.background.attached?
-          = f.label :background, "Current Background", class: "control-label"
-          %div
-            = resize_image_tag(website.background, width: 200)
-        = f.input :background,
-          label: website.background.attached? ? "Replace Background" : "Background"
+        = image_input(f, :logo)
+        = image_input(f, :background)
+        = image_input(f, :favicon)
         = f.input :city
         = f.input :location, as: :text
         = f.input :directions
@@ -44,8 +27,7 @@
         = f.input :twitter_handle
         = f.input :facebook_url
         = f.input :instagram_url
-
-      = f.input :domains
+        = f.input :domains
     .col-md-6
       %fieldset
       %legend.fieldset-legend Configure Website Session Formats
@@ -84,11 +66,12 @@
           = link_to "Add Content", "#", class: 'btn btn-success',
             data: { action: "click->nested-form#add_association" }
 
-      %h4 Meta Data
+      %legend.fieldset-legend Meta Data
       = f.simple_fields_for :meta_data, website.meta_data do |ff|
         = ff.input :title
         = ff.input :author
         = ff.input :description
+        = image_input(ff, :image)
   .row
     .col-sm-12
       = submit_tag("Save", class: "pull-right btn btn-success", type: "submit")

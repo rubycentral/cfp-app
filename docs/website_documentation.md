@@ -65,7 +65,8 @@ The remaining fields in this section are as follows:
 event. Note that the first line will automatically be styled as a bold title
 for the content.
 - Footer copyright: appears at the very bottom of the footer
-- Twitter handle: just the handle for the event without the '@' sign.
+- Twitter handle: just the handle for the event without the '@' sign. Note that
+  this will also populate the `tiwtter:site` meta tag in the head.
 - Facebook url: full url to the facebook page for the event.
 - Instagram url: full url to the instagram page for the event.
 - Domains: a special field that deserves its own treatment [as follows](#domain-configuration).
@@ -199,6 +200,19 @@ Try something like this:
   </script>
 ```
 and then you use a css class like `bg-primary/75` in your static pages.
+
+### Meta Data
+
+These fields are used to populate the SEO and social media meta tags for your
+website including title, description, open graph and twitter tags. Fields include:
+
+- title: populates the `title` tag (prefixed with the page name), and `og:title` and
+  `twitter:title` tags. It defaults to the event name.
+- author: populates the `og:author` tag.
+- description: populates the `description` tag and the `og:description` and
+  `twitter:description` tags
+- image: a file field for uploading an image that will populate the url for
+  `og:image` and `twitter:image`
 
 ## Page Content Management
 

@@ -40,8 +40,8 @@
           = ff.input :name
           = ff.hidden_field :session_format_id
 
-      %div{"data-controller": "nested-form"}
-        %legend.fieldset-legend Fonts
+      %div{"data-controller": "nested-form", class: "nested-fonts"}
+        %h4 Fonts
         %template{"data-nested-form-target": "template"}
           = f.simple_fields_for :fonts,
             Website::Font.new,

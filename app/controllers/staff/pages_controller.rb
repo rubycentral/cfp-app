@@ -1,4 +1,5 @@
 class Staff::PagesController < Staff::ApplicationController
+  before_action :require_website
   before_action :enable_website_subnav
   before_action :set_page, except: :index
   before_action :authorize_page, except: :index
@@ -97,5 +98,12 @@ class Staff::PagesController < Staff::ApplicationController
         :footer_category,
         :unpublished_body
       )
+  end
+
+  def require_website
+    return if current_website
+
+    redirect_to new_event_staff_website_path(current_event),
+      alert: "Please configure your website before attempting to create pages"
   end
 end

@@ -5,6 +5,19 @@ feature "Website Page Management" do
   let(:organizer) { create(:organizer, event: event) }
   let!(:website) { create(:website, :with_details, event: event) }
 
+  scenario "Organizer cannot access pages until website is created" do
+    website.destroy
+    login_as(organizer)
+
+    visit event_path(event)
+    within('.navbar') { click_on("Website") }
+    within('.website-subnav') { click_on("Pages") }
+
+    expect(page).to have_content(
+      "Please configure your website before attempting to create pages"
+    )
+  end
+
   scenario "Organizer creates and edits a website page", :js do
     login_as(organizer)
 

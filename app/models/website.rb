@@ -8,8 +8,9 @@ class Website < ApplicationRecord
   has_many :session_formats, through: :event
   has_many :session_format_configs
 
-
-  accepts_nested_attributes_for :fonts, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :fonts,
+    reject_if: ->(font) { font['name'].blank? && font['file'].blank? },
+    allow_destroy: true
   accepts_nested_attributes_for :contents, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :meta_data
   accepts_nested_attributes_for :session_format_configs

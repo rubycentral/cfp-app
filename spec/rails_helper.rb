@@ -62,6 +62,12 @@ RSpec.configure do |config|
       save_timestamped_screenshot(Capybara.page)
     end
   end
+
+  config.around(:each, caching: true) do |example|
+    Rails.configuration.action_controller.perform_caching = true
+    example.run
+    Rails.configuration.action_controller.perform_caching = false
+  end
 end
 
 Capybara.register_driver :chrome do |app|

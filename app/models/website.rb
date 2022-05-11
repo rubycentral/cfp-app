@@ -1,4 +1,6 @@
 class Website < ApplicationRecord
+  enum caching: { off: 'off', automatic: 'automatic', manual: 'manual' }, _prefix: true
+
   belongs_to :event
   has_many :pages, dependent: :destroy
   has_many :fonts, class_name: 'Website::Font', dependent: :destroy
@@ -19,10 +21,25 @@ class Website < ApplicationRecord
   has_one_attached :background
   has_one_attached :favicon
 
+  after_touch :purge_cache, if: :caching_automatic?
+  around_update :purge_cache, if: :caching_automatic?
+
   DEFAULT = 'default'.freeze
 
   def self.domain_match(domain)
     where(arel_table[:domains].matches("%#{(domain)}"))
+  end
+
+  def manual_purge
+    purge_cache { save }
+  end
+
+  private
+
+  def purge_cache
+    self.purged_at = Time.current
+    yield if block_given?
+    FastlyService.service&.purge_by_key(event.slug)
   end
 end
 

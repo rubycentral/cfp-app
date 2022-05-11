@@ -200,6 +200,7 @@ GEM
     faraday-net_http_persistent (1.2.0)
     faraday-patron (1.0.0)
     faraday-rack (1.0.0)
+    fastly (3.0.2)
     ffi (1.15.4)
     foreman (0.87.2)
     formatador (0.3.0)
@@ -525,6 +526,7 @@ DEPENDENCIES
   draper (~> 4.0)
   factory_bot_rails
   faker
+  fastly
   foreman
   groupdate
   growl

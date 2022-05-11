@@ -101,4 +101,62 @@ feature "Website Configuration" do
 
     expect(computed_style("#red-dog", "color")).to eq("rgb(218, 55, 61)")
   end
+
+  scenario "Organizer adjusts website caching", :caching do
+    fastly_service = spy("fastly_service")
+    allow(FastlyService).to receive(:service).and_return fastly_service
+    website = create(:website, event: event)
+    home_page = create(:page, website: website, published_body: 'Home Content')
+
+    visit page_path(event, home_page)
+    expect(response_headers["Cache-Control"]).to eq("max-age=0, private, s-maxage=0")
+
+    login_as(organizer)
+    visit edit_event_staff_website_path(event)
+
+    select("automatic", from: "Caching")
+    click_on("Save")
+
+    visit page_path(event, home_page)
+    expect(response_headers["Cache-Control"]).to eq("max-age=0, public, s-maxage=604800")
+    expect(response_headers["Surrogate-Key"]).to eq(event.slug)
+    last_modified = response_headers["Last-Modified"]
+
+    visit page_path(event, home_page)
+    expect(response_headers["Last-Modified"]).to eq(last_modified)
+
+    RSpec::Mocks.space.proxy_for(fastly_service).reset
+    sleep 1
+    visit event_staff_pages_path(event)
+    click_on("Publish")
+    expect(fastly_service).to have_received(:purge_by_key).with(event.slug)
+
+    visit page_path(event, home_page)
+    expect(response_headers["Last-Modified"]).not_to eq(last_modified)
+
+    visit edit_event_staff_website_path(event)
+
+    select("manual", from: "Caching")
+    click_on("Save")
+
+    visit page_path(event, home_page)
+    expect(response_headers["Cache-Control"]).to eq("max-age=0, public, s-maxage=604800")
+    expect(response_headers["Surrogate-Key"]).to eq(event.slug)
+    last_modified = response_headers["Last-Modified"]
+
+    RSpec::Mocks.space.proxy_for(fastly_service).reset
+    sleep 1
+    visit event_staff_pages_path(event)
+    click_on("Publish")
+    expect(fastly_service).not_to have_received(:purge_by_key).with(event.slug)
+
+    visit page_path(event, home_page)
+    expect(response_headers["Last-Modified"]).to eq(last_modified)
+
+    visit edit_event_staff_website_path(event)
+    click_on("Purge")
+
+    visit page_path(event, home_page)
+    expect(response_headers["Last-Modified"]).not_to eq(last_modified)
+  end
 end

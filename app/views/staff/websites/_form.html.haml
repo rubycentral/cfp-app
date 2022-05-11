@@ -72,6 +72,9 @@
         = ff.input :author
         = ff.input :description
         = image_input(ff, :image)
+
+      %legend.fieldset-legent Caching
+      = f.input :caching, collection: Website.cachings, include_blank: false
   .row
     .col-sm-12
       = submit_tag("Save", class: "pull-right btn btn-success", type: "submit")

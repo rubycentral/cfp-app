@@ -1,5 +1,6 @@
 class Sponsor < ApplicationRecord
   belongs_to :event
+  has_one :website, through: :event, touch: :purged_at
 
   has_one_attached :primary_logo
   has_one_attached :footer_logo

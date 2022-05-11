@@ -18,4 +18,8 @@ class WebsitePolicy < ApplicationPolicy
   def update?
     show?
   end
+
+  def purge?
+    show?
+  end
 end

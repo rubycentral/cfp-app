@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_07_081350) do
+ActiveRecord::Schema.define(version: 2022_05_08_071747) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -357,6 +357,16 @@ ActiveRecord::Schema.define(version: 2022_05_07_081350) do
     t.index ["website_id"], name: "index_website_fonts_on_website_id"
   end
 
+  create_table "website_meta_data", force: :cascade do |t|
+    t.string "title"
+    t.string "author"
+    t.text "description"
+    t.bigint "website_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["website_id"], name: "index_website_meta_data_on_website_id"
+  end
+
   create_table "websites", force: :cascade do |t|
     t.bigint "event_id"
     t.datetime "created_at", precision: 6, null: false
@@ -384,5 +394,6 @@ ActiveRecord::Schema.define(version: 2022_05_07_081350) do
   add_foreign_key "session_format_configs", "websites"
   add_foreign_key "session_formats", "events"
   add_foreign_key "sponsors", "events"
+  add_foreign_key "website_meta_data", "websites"
   add_foreign_key "websites", "events"
 end

@@ -197,4 +197,7 @@ class ApplicationController < ActionController::Base
     @program_tracks ||= current_event && current_event.tracks.any? ? current_event.tracks : []
   end
 
+  def set_cache_headers
+    expires_in 1.hour, public: true
+  end
 end

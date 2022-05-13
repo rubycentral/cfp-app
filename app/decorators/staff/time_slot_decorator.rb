@@ -123,7 +123,7 @@ class Staff::TimeSlotDecorator < Draper::Decorator
   end
 
   def presenters_with_bios
-    object.program_session.speakers.map { |speaker| [speaker.name, speaker.bio] }
+    object.program_session.speakers.pluck(:speaker_name, :bio)
   end
 
   def display_track_name

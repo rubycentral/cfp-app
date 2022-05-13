@@ -17,7 +17,7 @@
         %span.session-format-tag{ class: "#{current_website.session_format_tag_class(time_slot.session_format)}" }
           = current_website.session_format_name(time_slot.session_format)
 
-      -if !time_slot.display_track_name.blank?
+      -if time_slot.display_track_name.present?
         %span.track-tag
           %span.track-dot{ class: "#{current_website.track_background(time_slot.track)}" }
           = time_slot.display_track_name

@@ -1,7 +1,7 @@
 import { Controller } from 'stimulus'
 
 export default class extends Controller {
-  static targets = [ 'sidePanel', 'programSession', 'filterWrapper' ]
+  static targets = [ 'sidePanel', 'listItem', 'filterWrapper' ]
 
   toggleFilter(e) {
     e.preventDefault()
@@ -41,7 +41,7 @@ export default class extends Controller {
   }
 
   hideAll() {
-    this.programSessionTargets.forEach(element => {
+    this.listItemTargets.forEach(element => {
       element.classList.add('hidden');
     })
   }

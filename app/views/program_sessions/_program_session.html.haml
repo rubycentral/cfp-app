@@ -1,7 +1,7 @@
-.session{ class: current_website.filter_classes(program_session), data: { 'filter-target': 'content' } }
+.session-card{ class: current_website.program_filter_classes(program_session), data: { 'filter-target': 'content' } }
   %div.seesion-title-abstract-container
     %a.session-title{ href: "#", data: { action: 'click->fly-out#updateSidePanel', 'session-id': dom_id(program_session) } }
-      =program_session.title
+      = program_session.title
 
     .session-abstract
       = program_session.abstract.html_safe

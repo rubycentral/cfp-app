@@ -1,5 +1,7 @@
 - content_for(:title) { "Schedule" }
-.schedule-page-wrapper{ data: { 'controller': 'sub-nav fly-out', 'sub-nav-displayed-id-value': 'schedule-day-1' } }
+.schedule-page-wrapper{ data: { 'controller': 'sub-nav fly-out filter',
+                                'sub-nav-displayed-id-value': 'schedule-day-1',
+                                'filter-element-slug': '.time-slot-card' } }
   = render 'fly_out', collection: schedule
   %h3.page-title Schedule
   .schedule-filter-pane{ data: { action: 'click->fly-out#toggleFilter' } }
@@ -12,8 +14,9 @@
         %li
           %a#schedule-day-link{ href: "#", class: i == 0 ? "selected" : '', 'data-displayedId': "schedule-day-#{i + 1}", data: { action: 'click->sub-nav#updateDisplay' } }
             = current_website.event.conference_date(i + 1).strftime("%B %-e")
+            %span.visible-count{ data: { 'filter-target': 'visibleCount' } }
 
   #schedule-container
     - current_website.event.days.times do |i|
-      %div{ id: "schedule-day-#{i + 1}", data: { 'sub-nav-target': 'hideable' } }
-        = render partial: 'schedule_block', collection: schedule_for_day(schedule, i + 1), as: :program_sessions
+      %div{ id: "schedule-day-#{i + 1}", data: { 'sub-nav-target': 'hideable', 'filter-target': 'container' } }
+        = render partial: 'schedule_block', collection: schedule_for_day(schedule, i + 1), as: :time_slots

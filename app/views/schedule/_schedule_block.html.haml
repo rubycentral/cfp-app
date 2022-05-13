@@ -1,9 +1,9 @@
 .schedule-block-container
   .schedule-duration
     %span.session-start-time
-      = program_sessions.first.start_time
+      = time_slots.first.start_time
     %span.session-end-time
-      = program_sessions.first.end_time
+      = time_slots.first.end_time
   .schedule-grid
-    - program_sessions.each do |program_session|
-      = render partial: 'program_session', locals: { program_session: program_session }
+    - time_slots.each do |time_slot|
+      = render partial: 'time_slot', locals: { time_slot: time_slot }

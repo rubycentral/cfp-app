@@ -113,7 +113,7 @@
       flex-wrap: wrap;
     }
 
-    .schedule-grid-cell {
+    .time-slot-card {
       border-right: 1px solid var(--divider-light);
       border-bottom: 1px solid var(--divider-light);
       width: 25%;
@@ -306,7 +306,7 @@
 @media screen and (max-width: 1200px) and (orientation: portrait),
   (max-width: 1123px) and (orientation: landscape) {
     .schedule-page-wrapper {
-      .schedule-grid-cell {
+      .time-slot-card {
         width: 50% !important;
 
         &:nth-child(4n+4) {
@@ -348,7 +348,7 @@
         width: 100%
       }
 
-      .schedule-grid-cell {
+      .time-slot-card {
         border-right: none !important;
         border-bottom: 1px solid var(--divider-light);
         width: 100% !important;

@@ -3,18 +3,19 @@ import { Controller } from 'stimulus'
 export default class extends Controller {
   static targets = [ 'content', 'form', 'container', 'visibleCount' ]
 
-  connect() {
+  initialize() {
     this.filters = []
-    this.initializeVisibleCounts()
+    this.filterClass = this.element.dataset.filterElementSlug
+    this.updateVisibleCounts()
   }
 
   inputChange(e) {
     const filterValue = e.target.value
 
     if (e.target.checked) {
-      this.removeFilterOn(filterValue)
-    } else {
       this.addNewFliter(filterValue)
+    } else {
+      this.removeFilterOn(filterValue)
     }
 
     this.applyFilter()
@@ -28,41 +29,57 @@ export default class extends Controller {
     this.filters = this.filters.filter((value) => value != filterValue )
   }
 
-  applyFilter() {
+  async applyFilter() {
     this.showAllContent()
-    this.containerTargets.forEach((container) => this.filterContainer(container));
+    await this.containerTargets.forEach((container) => this.filterContainer(container));
+    this.updateVisibleCounts()
   }
 
   filterContainer(container) {
-    this.filters.forEach((value) => {
-      const toHide = container.querySelectorAll(`.${value}`)
-      toHide.forEach(ele => ele.hidden = true )
-      this.updateVisibleCount(container)
-    })
-  }
+    if (this.filters.length === 0) {
+      this.showAllContent()
+      return
+    }
 
-  showAllContent() {
-    this.contentTargets.forEach((element) => element.hidden = false)
+    let content = container.querySelectorAll(`${this.filterClass}`)
+
+    content.forEach((ele) => {
+      const hasClass = this.filters.filter((incClass) => ele.classList.contains(incClass))
+      if (hasClass.length > 0) {
+        this.revealElement(ele)
+      } else {
+        this.hideElement(ele)
+      }
+    })
   }
 
   clearFilter(e) {
     this.formTarget.reset();
     this.filters = [];
     this.showAllContent();
-    this.initializeVisibleCounts()
+    this.updateVisibleCounts()
   }
 
-  updateVisibleCount(container) {
-    const index = this.containerTargets.indexOf(container)
-    const total = container.children.length
-    const visible = total - container.querySelectorAll("[hidden]").length
-    this.visibleCountTargets[index].innerHTML = `(${visible}/${total})`
-  }
-
-  initializeVisibleCounts() {
+  updateVisibleCounts() {
     this.visibleCountTargets.forEach((countDisplay, index) => {
-      const childCount = this.containerTargets[index].children.length
-      countDisplay.innerHTML = `(${childCount})`
+
+      const parent = this.containerTargets[index]
+      const total = parent.querySelectorAll(this.filterClass).length
+      const visible = total - parent.querySelectorAll(`${this.filterClass}.hidden`).length
+
+      countDisplay.innerHTML = total != visible ? `(${visible}/${total})` : `(${total})`
     })
+  }
+
+  hideElement(element) {
+    element.classList.add('hidden')
+  }
+
+  revealElement(element) {
+    element.classList.remove('hidden')
+  }
+
+  showAllContent() {
+    this.contentTargets.forEach((ele) => this.revealElement(ele) )
   }
 }

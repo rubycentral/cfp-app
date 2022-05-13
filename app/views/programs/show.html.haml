@@ -1,5 +1,7 @@
 - content_for(:title) { "Program" }
-.program-page-wrapper{ data: { 'controller': 'sub-nav fly-out filter', 'sub-nav-displayed-id-value': "#{current_website.default_session_slug}" } }
+.program-page-wrapper{ data: { 'controller': 'sub-nav fly-out filter',
+                               'sub-nav-displayed-id-value': current_website.default_session_slug,
+                               'filter-element-slug': '.session-card'  } }
   = render 'fly_out', collection: @program_sessions
   %h3.page-title
     Program
@@ -8,13 +10,13 @@
     = image_tag 'themes/default/closed-filter.png', class: 'close-filter-icon hidden '
   %nav.sub-nav
     %ul
-      - current_website.displayed_session_formats.in_order.each.with_index do |session_format_config, index|
+      - current_website.displayed_session_format_configs.in_order.each.with_index do |session_format_config, index|
         %li
           %a{ href: "#", class: "#{index == 0 ? 'selected' : ''}", data: { action: 'click->sub-nav#updateDisplay', displayedId: session_format_config.slug } }
             = session_format_config.name
             %span.visible-count{ data: { 'filter-target': 'visibleCount' } }
 
-  - current_website.displayed_session_formats.in_order.each do |session_format_config|
+  - current_website.displayed_session_format_configs.in_order.each do |session_format_config|
     .program-sessions-wrapper{ id: "#{session_format_config.slug}", data: { 'sub-nav-target': 'hideable', 'filter-target': 'container' } }
       - @program_sessions.in_session_format(session_format_config.session_format).each do |program_session|
         = render program_session

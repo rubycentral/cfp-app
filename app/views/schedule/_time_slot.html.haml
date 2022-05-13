@@ -1,0 +1,23 @@
+.time-slot-card{ class: current_website.schedule_filter_classes(time_slot), data: { 'filter-target': 'content' } }
+  .schedule-title-room-wrapper
+    %a.schedule-session-title{ href: "#", data: { action: 'click->fly-out#updateSidePanel', 'session-id': dom_id(time_slot) } }
+      = time_slot.display_title
+    .schedule-room
+      = image_tag 'themes/default/room-icon.png', class: 'room-icon'
+      = time_slot.room
+  .schedule-speaker-tag-wrapper
+    .schedule-presenter
+      =  time_slot.display_presenter
+
+    .schedule-tags
+      - if time_slot.sponsored?
+        %span.sponsored-tag Sponsored
+
+      - if time_slot.filled_with_session?
+        %span.session-format-tag{ class: "#{current_website.session_format_tag_class(time_slot.session_format)}" }
+          = current_website.session_format_name(time_slot.session_format)
+
+      -if !time_slot.display_track_name.blank?
+        %span.track-tag
+          %span.track-dot{ class: "#{current_website.track_background(time_slot.track)}" }
+          = time_slot.display_track_name

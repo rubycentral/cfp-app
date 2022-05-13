@@ -82,7 +82,7 @@ class WebsiteDecorator < ApplicationDecorator
     @link_options ||= pages.published.pluck(:name, :slug)
       .each_with_object(DEFAULT_LINKS.dup) do |(name, slug), memo|
       memo[name] = slug
-    end
+    end.sort_by { |_key, value| navigation_links.index(value) || 0 }.to_h
   end
 
   def tracks

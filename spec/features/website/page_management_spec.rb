@@ -108,14 +108,14 @@ feature "Website Page Management" do
 
   scenario "Organizer hides navigation to a page and hides a page entirely", :js do
     home_page = create(:page, published_body: 'Home Content')
-    website.update(navigation_links: [home_page.slug])
+    website.update(navigation_links: [home_page.slug, "schedule"])
     visit page_path(slug: event.slug, page: home_page.slug)
-    expect(page).to have_content('Home Content')
-    within('#main-nav') { expect(page).to have_link(home_page.name) }
+    within('#main-nav') { expect(page).to have_content(home_page.name) }
 
     login_as(organizer)
     visit edit_event_staff_website_path(event)
-    find_field('Navigation links').send_keys(:backspace)
+    expect(page).to have_content("Navigation links\nHomeSchedule")
+    find_field('Navigation links').send_keys(:backspace).send_keys(:backspace)
     fill_in('Navigation links', with: "Schedule\n")
     click_on("Save")
 

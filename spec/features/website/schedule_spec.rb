@@ -4,27 +4,40 @@ feature "dynamic website schedule page" do
   let(:event) { create(:event) }
   let!(:website) { create(:website, event: event) }
 
-  scenario "the event website schedule page updates when a time slot is updated" do
+  scenario "the event website schedule page displays time slots that don't have program sessions" do
     time_slot = create(:time_slot, event: event)
     visit schedule_path(event)
 
+    expect(page).to have_content(time_slot.title)
     within('.schedule-block-container') { expect(page).to have_content('10:41') }
-    time_slot.update(start_time: (time_slot.start_time - 1.hour))
+  end
+
+  scenario "the event website schedule page displays updates to time slots that don't have program sessions" do
+    time_slot = create(:time_slot, event: event)
+
+    time_slot.update(start_time: (time_slot.start_time - 1.hour), title: 'Updated Title')
 
     visit schedule_path(event)
     within('.schedule-block-container') { expect(page).to have_content('9:41') }
+    expect(page).to have_content('Updated Title')
   end
 
-  scenario "when a program session is edited that change is reflected on the schedule" do
-    time_slot = create(:time_slot_with_program_session, event: event)
-    program_session = time_slot.program_session
+  scenario "the event website schedule page displays time slots that have program sessions", js: true do
+    time_slot = create(:with_workshop_session, event: event)
 
     visit schedule_path(event)
     expect(page).to have_content(time_slot.title)
+  end
 
-    program_session.update(title: "New Title")
+  scenario "the event website schedule page displays updates to time slots that have program sessions", js: true do
+    time_slot = create(:with_workshop_session, event: event)
+
+    time_slot.update(start_time: (time_slot.start_time - 1.hour))
+    time_slot.program_session.update(title: "Updated Title")
+
     visit schedule_path(event)
-    expect(page).to have_content("New Title")
+    expect(page).to have_content("Updated Title")
+    expect(page).to have_content('9:41')
   end
 
   scenario "the event website schedule stops displaying time slots when they are deleted" do

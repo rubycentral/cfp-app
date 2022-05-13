@@ -1,6 +1,6 @@
 - content_for(:title) { "Schedule" }
 .schedule-page-wrapper{ data: { 'controller': 'sub-nav fly-out filter',
-                                'sub-nav-displayed-id-value': 'schedule-day-1',
+                                'sub-nav-displayed-id-value': current_website.schedule_id_for_event_day,
                                 'filter-element-slug': '.time-slot-card' } }
   = render 'fly_out', collection: schedule
   %h3.page-title Schedule
@@ -12,7 +12,10 @@
     %ul
       - current_website.event.days.times do |i|
         %li
-          %a#schedule-day-link{ href: "#", class: i == 0 ? "selected" : '', 'data-displayedId': "schedule-day-#{i + 1}", data: { action: 'click->sub-nav#updateDisplay' } }
+          %a#schedule-day-link{ href: "#",
+                                class: i + 1 == current_website.event_day ? "selected" : '',
+                                data: { action: 'click->sub-nav#updateDisplay',
+                                        displayedId: "schedule-day-#{i + 1}" } }
             = current_website.event.conference_date(i + 1).strftime("%B %-e")
             %span.visible-count{ data: { 'filter-target': 'visibleCount' } }
 

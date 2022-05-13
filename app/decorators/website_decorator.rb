@@ -202,4 +202,14 @@ class WebsiteDecorator < ApplicationDecorator
   def favicon_url
     h.polymorphic_url(favicon) if favicon.attached?
   end
+
+  def event_day
+    today = Time.new
+    event_day = ((today - event.start_date) / 1.day.seconds).ceil
+    event_day >= 1 && event_day <= event.days ? event_day : 1
+  end
+
+  def schedule_id_for_event_day
+    "schedule-day-#{event_day}"
+  end
 end

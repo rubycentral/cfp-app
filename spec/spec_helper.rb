@@ -21,6 +21,7 @@ RSpec.configure do |config|
   config.filter_run :focus
   config.run_all_when_everything_filtered = true
   config.example_status_persistence_file_path = "tmp/examples.txt"
+  config.include ActiveSupport::Testing::TimeHelpers
 =begin
   # These two settings work together to allow you to limit a spec run
   # to individual examples or groups you care about by tagging them with

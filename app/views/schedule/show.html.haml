@@ -20,5 +20,6 @@
 
   #schedule-container
     - current_website.event.days.times do |i|
-      %div{ id: "schedule-day-#{i + 1}", data: { 'sub-nav-target': 'hideable', 'filter-target': 'container' } }
+      .schedule-day-wrapper{ id: "schedule-day-#{i + 1}", data: { 'sub-nav-target': 'hideable', 'filter-target': 'container' } }
+        = render 'layouts/themes/default/empty_placeholder'
         = render partial: 'schedule_block', collection: schedule_for_day(schedule, i + 1), as: :time_slots

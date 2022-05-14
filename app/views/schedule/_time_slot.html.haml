@@ -5,8 +5,12 @@
     .schedule-room
       = image_tag 'themes/default/room-icon.png', class: 'room-icon'
       = time_slot.room
+
   .schedule-speaker-tag-wrapper
     .schedule-presenter
+      - if time_slot.sponsored?
+        %span.sponsor-presents
+          = time_slot.sponsor.name
       =  time_slot.display_presenter
 
     .schedule-tags

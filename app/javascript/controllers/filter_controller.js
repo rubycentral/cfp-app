@@ -73,6 +73,7 @@ export default class extends Controller {
     this.filters = [];
     this.showAllContent();
     this.updateVisibleCounts()
+    this.updateContainerEmptyClass()
   }
 
   updateVisibleCounts() {

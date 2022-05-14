@@ -3,10 +3,12 @@ import { Controller } from 'stimulus'
 export default class extends Controller {
   static targets = [ 'content', 'form', 'container', 'visibleCount' ]
 
+
   initialize() {
     this.filters = []
     this.filterClass = this.element.dataset.filterElementSlug
     this.updateVisibleCounts()
+    this.updateContainerEmptyClass()
   }
 
   inputChange(e) {
@@ -32,7 +34,20 @@ export default class extends Controller {
   async applyFilter() {
     this.showAllContent()
     await this.containerTargets.forEach((container) => this.filterContainer(container));
+
     this.updateVisibleCounts()
+    this.updateContainerEmptyClass()
+  }
+
+  updateContainerEmptyClass() {
+    this.containerTargets.forEach(container => {
+      const visibleContent = container.querySelectorAll(`${this.filterClass}:not(.hidden)`)
+      if(visibleContent.length > 0){
+        container.classList.remove('empty')
+      } else {
+        container.classList.add('empty')
+      }
+    })
   }
 
   filterContainer(container) {

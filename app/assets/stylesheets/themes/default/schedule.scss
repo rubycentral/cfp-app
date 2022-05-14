@@ -8,22 +8,6 @@
     margin-bottom: 15px;
   }
 
-  .schedule-filter-pane {
-    text-align: center;
-    margin-bottom: 35px;
-    img {
-      margin: 0 auto 5px;
-      display: block;
-      padding: 6px 6px;
-      border-radius: 50%;
-      border: 2px solid var(--red-light);
-
-      &.close-filter-icon {
-        background-color: var(--red-light);
-      }
-    }
-  }
-
   .sub-nav {
     display: flex;
     align-items: center;

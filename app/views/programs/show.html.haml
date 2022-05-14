@@ -5,9 +5,9 @@
   = render 'fly_out', collection: @program_sessions
   %h3.page-title
     Program
-  .program-filter-pane{ data: { action: 'click->fly-out#toggleFilter' } }
+  %button.filter-toggle-button{ data: { action: 'click->fly-out#toggleFilter' } }
     = image_tag 'themes/default/open-filter.png', class: 'open-filter-icon'
-    = image_tag 'themes/default/closed-filter.png', class: 'close-filter-icon hidden '
+    %span Filters
   %nav.sub-nav
     %ul
       - current_website.displayed_session_format_configs.in_order.each.with_index do |session_format_config, index|
@@ -20,3 +20,4 @@
     .program-sessions-wrapper{ id: "#{session_format_config.slug}", data: { 'sub-nav-target': 'hideable', 'filter-target': 'container' } }
       - @program_sessions.in_session_format(session_format_config.session_format).each do |program_session|
         = render program_session
+      = render 'layouts/themes/default/empty_placeholder'

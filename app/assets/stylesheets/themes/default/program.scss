@@ -105,21 +105,6 @@
   }
 }
 
-.program-filter-pane {
-  img {
-    margin: 0 auto 15px;
-    display: block;
-    padding: 6px 6px;
-    border-radius: 50%;
-    border: 2px solid var(--red-light);
-    pointer-events: none;
-
-    &.close-filter-icon {
-      background-color: var(--red-light);
-    }
-  }
-}
-
 .sub-nav {
   display: flex;
   align-items: center;
@@ -170,7 +155,26 @@
   padding: 20px 0 0 0;
   margin-bottom: 40px;
   border-top: 0.5px solid rgba(0, 0, 0, 0.1);
+
+  &.empty .empty-placeholder  {
+    display: block !important;
+    text-align: center;
+    margin-top: 30px;
+
+    h3 {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    p {
+      font-family: var(--secondary-body-font);
+      line-height: 130%;
+    }
+  }
 }
+
+
 
 .session-card {
   display: flex;

@@ -4,9 +4,8 @@
                                 'filter-element-slug': '.time-slot-card' } }
   = render 'fly_out', collection: schedule
   %h3.page-title Schedule
-  .schedule-filter-pane{ data: { action: 'click->fly-out#toggleFilter' } }
+  %button.filter-toggle-button{ data: { action: 'click->fly-out#toggleFilter' } }
     = image_tag 'themes/default/open-filter.png', class: 'open-filter-icon'
-    = image_tag 'themes/default/closed-filter.png', class: 'close-filter-icon hidden'
     %span Filters
   %nav.sub-nav
     %ul

@@ -117,6 +117,26 @@
   }
 }
 
+.filter-toggle-button {
+  text-align: center;
+  margin: 0 auto 15px;
+  display: block;
+
+  span { pointer-events: none; }
+  img {
+    margin: 0 auto 1px;
+    display: block;
+    padding: 6px 6px;
+    border-radius: 50%;
+    border: 2px solid var(--red-light);
+    pointer-events: none;
+  }
+
+  &:hover img {
+    box-shadow: 0 2px 9px rgba(239, 70, 70, .5);
+  }
+}
+
 .filter-wrapper {
   margin: 0 40px 50px 30px;
 

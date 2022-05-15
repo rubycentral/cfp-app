@@ -1,3 +1,4 @@
+.schedule-block-container.empty { display: none !important;  }
 .schedule-page-wrapper {
   .page-title {
     padding-top: 100px;
@@ -104,6 +105,34 @@
       }
     }
   }
+
+  .schedule-day-wrapper {
+    margin-bottom: 50px;
+
+    &.empty {
+      .empty-placeholder  {
+        display: block !important;
+        text-align: center;
+        margin-top: 30px;
+
+        h3 {
+          font-size: 18px;
+          font-weight: 800;
+          margin-bottom: 8px;
+        }
+
+        p {
+          font-family: var(--secondary-body-font);
+          line-height: 130%;
+        }
+      }
+    }
+  }
+
+  .schedule-block-container.empty {
+    display: none !important;
+  }
+
 
   .fly-out-wrapper {
     .schedule-detail-wrapper {

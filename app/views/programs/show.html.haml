@@ -1,7 +1,7 @@
 - content_for(:title) { "Program" }
 .program-page-wrapper{ data: { 'controller': 'sub-nav fly-out filter',
                                'sub-nav-displayed-id-value': current_website.default_session_slug,
-                               'filter-element-slug': '.session-card'  } }
+                               'filter-element-slug': '.session-card' } }
   = render 'fly_out', collection: @program_sessions
   %h3.page-title
     Program

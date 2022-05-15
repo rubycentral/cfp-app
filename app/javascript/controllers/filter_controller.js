@@ -1,12 +1,18 @@
 import { Controller } from 'stimulus'
+import FilterContainer from '../packs/filter_container'
 
 export default class extends Controller {
+  static values = { type: String }
   static targets = [ 'content', 'form', 'container', 'visibleCount' ]
 
 
   initialize() {
     this.filters = []
     this.filterClass = this.element.dataset.filterElementSlug
+    this.filterContainers = this.containerTargets.map((container) => {
+      return new FilterContainer(container, this.element.dataset.filterElementSlug)
+    })
+
     this.updateVisibleCounts()
     this.updateContainerEmptyClass()
   }
@@ -40,13 +46,8 @@ export default class extends Controller {
   }
 
   updateContainerEmptyClass() {
-    this.containerTargets.forEach(container => {
-      const visibleContent = container.querySelectorAll(`${this.filterClass}:not(.hidden)`)
-      if(visibleContent.length > 0){
-        container.classList.remove('empty')
-      } else {
-        container.classList.add('empty')
-      }
+    this.filterContainers.forEach((container) => {
+      container.updateApperance()
     })
   }
 

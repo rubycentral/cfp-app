@@ -84,7 +84,6 @@ feature "dynamic website schedule page" do
     it "displays the first event day on the first event day" do
       travel_to(event.start_date) do
         visit schedule_path(event)
-        binding.pry
         expect(page).to have_selector('#schedule-day-1', visible: true)
         expect(page).to have_selector('#schedule-day-2', visible: false)
         selected_day = find('a.selected')
@@ -95,7 +94,6 @@ feature "dynamic website schedule page" do
     it "displays the second event day on the second event day" do
       travel_to(event.start_date + 1.day) do
         visit schedule_path(event)
-        binding.pry
         expect(page).to have_selector('#schedule-day-1', visible: false)
         expect(page).to have_selector('#schedule-day-2', visible: true)
         selected_day = find('a.selected')

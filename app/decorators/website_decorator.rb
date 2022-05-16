@@ -205,7 +205,7 @@ class WebsiteDecorator < ApplicationDecorator
 
   def event_day
     today = Time.new
-    event_day = ((today - event.start_date) / 1.day.seconds).ceil
+    event_day = ((today - event.start_date) / 1.day.seconds).ceil + 1
     event_day >= 1 && event_day <= event.days ? event_day : 1
   end
 

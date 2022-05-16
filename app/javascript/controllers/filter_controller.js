@@ -37,10 +37,9 @@ export default class extends Controller {
     this.filters = this.filters.filter((value) => value != filterValue )
   }
 
-  async applyFilter() {
+  applyFilter() {
     this.showAllContent()
-    await this.containerTargets.forEach((container) => this.filterContainer(container));
-
+    this.containerTargets.forEach((container) => this.filterContainer(container));
     this.updateVisibleCounts()
     this.updateContainerEmptyClass()
   }

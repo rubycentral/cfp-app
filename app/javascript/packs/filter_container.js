@@ -2,19 +2,10 @@ class FilterContainer {
   constructor(element, type) {
     this.type = type;
     this.element = element;
-
-    this.subContainers()
   }
 
   subContainers() {
-    let children;
-    switch(this.type) {
-      case '.time-slot-card':
-        children = this.element.querySelectorAll('.schedule-block-container')
-        break;
-      default:
-        children = [];
-    }
+    let children = this.element.querySelectorAll(`.${this.element.dataset.subcontainerClass}`)
     return [...children];
   }
 

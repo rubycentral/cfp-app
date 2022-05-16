@@ -92,7 +92,7 @@ feature "dynamic website schedule page" do
     end
 
     it "displays the second event day on the second event day" do
-      travel_to(event.start_date + 1.day) do
+      travel_to(event.start_date + 1.day + 1.seconds) do
         visit schedule_path(event)
         expect(page).to have_selector('#schedule-day-1', visible: false)
         expect(page).to have_selector('#schedule-day-2', visible: true)
@@ -102,12 +102,12 @@ feature "dynamic website schedule page" do
     end
 
     it "displays the start of the event after the event" do
-      travel_to(event.start_date + event.days ) do
+      travel_to(event.start_date + event.days.days + 1.seconds ) do
         visit schedule_path(event)
         expect(page).to have_selector('#schedule-day-1', visible: false)
         expect(page).to have_selector('#schedule-day-2', visible: true)
         selected_day = find('a.selected')
-        expect(selected_day).to have_content(event.conference_date(2).strftime("%B %-e"))
+        expect(selected_day).to have_content(event.conference_date(1).strftime("%B %-e"))
       end
     end
   end

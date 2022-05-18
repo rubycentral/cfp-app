@@ -72,7 +72,7 @@
         = ff.input :description
         = image_input(ff, :image)
 
-      %legend.fieldset-legent Domains/Caching
+      %legend.fieldset-legend Domains/Caching
       = f.input :domains
       = f.input :caching, collection: Website.cachings, include_blank: false
   .row

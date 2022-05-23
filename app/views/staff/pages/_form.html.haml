@@ -19,6 +19,7 @@
         %div{ data: { "editor-target": :html } }
           = f.input :unpublished_body,
             as: :text,
+            label: "Unpublished Body #{link_to_docs("codemirror")}".html_safe,
             input_html: { data: { "editor-target": :htmlContent } }
           = link_to("WYSIWYG", '#', { data: { action: "click->editor#wysiwyg" } })
     .resize

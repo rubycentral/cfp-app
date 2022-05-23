@@ -185,7 +185,7 @@ website including title, description, open graph and twitter tags. Fields includ
 - image: a file field for uploading an image that will populate the url for
   `og:image` and `twitter:image`
 
-### Domains/Caching
+### Domains and Caching
 
 #### Domain Configuration
 
@@ -376,8 +376,6 @@ One page at a time can be promoted to be the landing page accessed by the root
 url for the website. Clicking on the `Promote` button on the Pages index page
 will promote the selected page. You can see which page is currently promoted in
 the `Landing Page` column of the Page index page.
-
-### Hiding the Header or Footer
 
 ### Other Buttons
 

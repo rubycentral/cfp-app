@@ -5,6 +5,14 @@
     - if page.published?
       %span.glyphicon.glyphicon-ok
   %td
+    - if page.published?
+      = time_ago_in_words(page.body_published_at)
+    - else
+      Not Published
+  %td
+    - if page.unpublished_changes?
+      %span.glyphicon.glyphicon-bell
+  %td
     - if page.landing?
       %span.glyphicon.glyphicon-ok
   %td

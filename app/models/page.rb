@@ -33,6 +33,10 @@ class Page < ApplicationRecord
   def self.from_template(key, attrs)
     new(TEMPLATES[key].merge(template: key, name: key.titleize, slug: key, **attrs))
   end
+
+  def unpublished_changes?
+    published_body != unpublished_body
+  end
 end
 
 # == Schema Information

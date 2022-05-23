@@ -8,7 +8,7 @@
     - if page.published?
       = time_ago_in_words(page.body_published_at)
     - else
-      Not Published
+      %span.label-warning Not Published
   %td
     - if page.unpublished_changes?
       %span.glyphicon.glyphicon-bell

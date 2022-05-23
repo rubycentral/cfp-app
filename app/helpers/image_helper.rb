@@ -1,5 +1,6 @@
 module ImageHelper
   def resize_image_tag(image, width:, height: width)
+    width ||= 100
     return unless image.attached?
     if image.content_type.match('svg')
       image_tag(image, width: width)

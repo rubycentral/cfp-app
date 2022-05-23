@@ -61,6 +61,10 @@ class WebsiteDecorator < ApplicationDecorator
     { style: "background-image: url('#{h.url_for(background)}');" }
   end
 
+  def background_style_html
+    background_style.map {|key, value| "#{key} = \"#{value}\""}.join(' ').html_safe
+  end
+
   def session_format_configs
     event.session_formats.map.with_index do |session_format, index|
       SessionFormatConfig.find_or_initialize_by(session_format: session_format) do |config|
@@ -82,7 +86,7 @@ class WebsiteDecorator < ApplicationDecorator
     @link_options ||= pages.published.pluck(:name, :slug)
       .each_with_object(DEFAULT_LINKS.dup) do |(name, slug), memo|
       memo[name] = slug
-    end
+    end.sort_by { |_key, value| navigation_links.index(value) || 0 }.to_h
   end
 
   def tracks

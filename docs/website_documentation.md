@@ -29,8 +29,11 @@ show up in static page content that is generated from [Page Templates](#page-tem
 Logo, background and favicon images can be uploaded and will be stored in s3 and
 resized as needed using Rails' builtin
 [ActiveStorage](https://edgeguides.rubyonrails.org/active_storage_overview.html)).
-The background image can be used by setting a url for a `background-image` style
-in appropriate html tags in static page content. Other general content fields
+The logo and background images are used in the header and footer and some page
+templates but can also be applied dynamically in any page using the [logo and
+background custom tags](#logo-and-background).
+
+Other general content fields
 include:
 
 - City: the city for the event (can include the state if desired).
@@ -182,7 +185,7 @@ website including title, description, open graph and twitter tags. Fields includ
 - image: a file field for uploading an image that will populate the url for
   `og:image` and `twitter:image`
 
-### Domains/Caching
+### Domains and Caching
 
 #### Domain Configuration
 
@@ -316,14 +319,27 @@ the link below the editor block. Note that this editor has its own opionionated
 way of adding and editing the html and it is likely that someone more familiar
 with html will need to refine the content that has been added.
 
-### Custom Sponsor Tags
+### Custom Tags
 
+#### Sponsors
 Sponsor information can be embedded into any static page by adding some custom
 sponsor tags. Adding a `<sponsors-banner-ads></sponsors-banner-ads>` will add a
 rotating banner of the uploaded sponsors ads. Adding
 `<sponsors-footer></sponsors-footer>` will provide a complete list of the
 sponsors with their logos and description grouped by tiers typically added to
 the bottom of a page.
+
+#### Logo and Background
+You can also embed the current logo image into the page by adding the
+`<logo-image width="150"></logo-image>` tag into the page with whatever width
+you want for the logo in pixels.
+
+If you want to add the website background image as a background image style then
+add the `background-image-style-url` as an attribute to your tag like `<div
+background-image-style-url></div>`. If you need to further customize that tag
+you will not be able to add inline styles so we recommend using tailwind
+classes. For example to make the background image repeating this should work:
+`<div class="bg-repeat" background-image-style-url></div>`.
 
 ### Saving
 
@@ -360,8 +376,6 @@ One page at a time can be promoted to be the landing page accessed by the root
 url for the website. Clicking on the `Promote` button on the Pages index page
 will promote the selected page. You can see which page is currently promoted in
 the `Landing Page` column of the Page index page.
-
-### Hiding the Header or Footer
 
 ### Other Buttons
 

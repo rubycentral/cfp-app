@@ -1,0 +1,28 @@
+.filter-wrapper.hidden{ data: { 'fly-out-target': 'filterWrapper' } }
+  %h3 Filters
+  %button{ data: { action: 'filter#clearFilter' } } Reset
+  = form_tag({}, data: { 'filter-target': 'form' }) do
+
+    .form-group
+      %h5 Tracks
+      - current_website.tracks_in_use.each do |track|
+        .input-group
+          = check_box_tag "track-checkbox", dom_id(track), false, id: nil, data: { action: 'filter#inputChange'}
+          = label_tag dom_id(track), track.name
+
+    .form-group
+      %h5 Speakers
+      - current_website.speakers_in_order.in_groups_of(12, false) do |speaker_group|
+        .speaker-group{ data: { 'controller': 'toggle-visibility' } }
+          .speaker-group-label{ data: { 'action': 'click->toggle-visibility#toggleHidden' } }
+            = image_tag("themes/default/caret-2.png", )
+            %span.group-start
+              = speaker_group.first.speaker_name.first
+            %span -
+            %span.group-end
+              = speaker_group.last.speaker_name.first
+          .speaker-group-inputs.hidden{ data: { 'toggle-visibility-target': 'hidden' } }
+            - speaker_group.each do |speaker|
+              .input-group
+                = check_box_tag "speaker-checkbox", dom_id(speaker), false, id: nil, data: { action: 'filter#inputChange'}
+                = label_tag dom_id(speaker), speaker.name

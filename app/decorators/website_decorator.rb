@@ -74,7 +74,7 @@ class WebsiteDecorator < ApplicationDecorator
     end.sort_by(&:position)
   end
 
-  def displayed_session_formats
+  def displayed_session_format_configs
     object.session_format_configs.displayed
   end
 
@@ -99,6 +99,47 @@ class WebsiteDecorator < ApplicationDecorator
 
   def track_background(track)
     "bg-track-#{track_num(track)}"
+  end
+
+  def track_class_data(program_session)
+    program_session.track ? h.dom_id(program_session.track) : ""
+  end
+
+  def time_slot_track_class_data(time_slot)
+    time_slot.program_session&.track ? h.dom_id(time_slot.program_session.track) : ""
+  end
+
+  def time_slot_speaker_class_data(time_slot)
+    return '' unless time_slot.program_session&.speakers
+
+    time_slot.program_session&.speakers.map { |speaker| h.dom_id(speaker) }.join(" ")
+  end
+
+  def tracks_in_use
+    event.tracks.distinct.joins(:program_sessions)
+  end
+
+  def speakers_in_order
+    event.speakers.in_program.a_to_z
+  end
+
+  def speaker_class_data(program_session)
+    program_session.speakers.map { |speaker| h.dom_id(speaker) }.join(" ")
+  end
+
+  def program_filter_classes(program_session)
+    [track_class_data(program_session), speaker_class_data(program_session)].join(' ')
+  end
+
+  def session_format_class_data(time_slot)
+    time_slot.program_session ? h.dom_id(time_slot.program_session.session_format) : ""
+  end
+
+  def schedule_filter_classes(time_slot)
+    [session_format_class_data(time_slot),
+     time_slot_track_class_data(time_slot),
+     time_slot_speaker_class_data(time_slot)
+    ].join(' ')
   end
 
   def session_format_num(session_format)
@@ -164,5 +205,15 @@ class WebsiteDecorator < ApplicationDecorator
 
   def favicon_url
     h.polymorphic_url(favicon) if favicon.attached?
+  end
+
+  def event_day
+    today = Time.current
+    event_day = ((today - event.start_date) / 1.day.seconds).ceil
+    event_day >= 1 && event_day <= event.days ? event_day : 1
+  end
+
+  def schedule_id_for_event_day
+    "schedule-day-#{event_day}"
   end
 end

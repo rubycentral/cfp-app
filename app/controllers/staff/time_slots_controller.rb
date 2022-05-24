@@ -82,7 +82,7 @@ class Staff::TimeSlotsController < Staff::ApplicationController
   private
 
   def time_slot_params
-    params.require(:time_slot).permit(:conference_day, :room_id, :start_time, :end_time, :program_session_id, :title, :track_id, :presenter, :description)
+    params.require(:time_slot).permit(:conference_day, :room_id, :start_time, :end_time, :program_session_id, :sponsor_id, :title, :track_id, :presenter, :description)
   end
 
   def set_time_slot

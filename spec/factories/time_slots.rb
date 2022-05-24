@@ -26,5 +26,9 @@ FactoryBot.define do
       event
       program_session
     end
+
+    factory :with_workshop_session do
+      program_session { FactoryBot.create(:workshop_session) }
+    end
   end
 end

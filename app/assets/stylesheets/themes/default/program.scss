@@ -70,55 +70,6 @@
   }
 }
 
-.program-filter-pane {
-  img {
-    margin: 0 auto 15px;
-    display: block;
-    padding: 6px 6px;
-    border-radius: 50%;
-    border: 2px solid var(--red-light);
-
-
-    &.close-filter-icon {
-      background-color: var(--red-light);
-    }
-  }
-}
-
-.sub-nav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 0 6px 60px;
-
-  ul {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    gap: 30px;
-    li {
-      margin: 0;
-      padding: 0;
-      a {
-        font-size: 24px;
-        font-weight: 700;
-        display: block;
-        color: var(--grey-light);
-        width: 100%;
-        margin: auto;
-        text-align: center;
-        text-decoration: none;
-        &:hover, &.selected {
-          color: var(--red-light);
-          box-shadow: 0 4px var(--main_content_background),
-                      0 7px var(--red-light);
-          transition: all 300ms;
-        }
-      }
-    }
-  }
-}
-
 .program-sessions-wrapper {
   display: flex;
   margin: auto;
@@ -130,10 +81,28 @@
   background-color: var(--main_content_background);
   padding: 20px 0 0 0;
   margin-bottom: 40px;
-  border-top: 0.5px solid rgba(0, 0, 0, 0.1);
+
+  &.empty .empty-placeholder  {
+    display: block !important;
+    text-align: center;
+    margin-top: 30px;
+
+    h3 {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    p {
+      font-family: var(--secondary-body-font);
+      line-height: 130%;
+    }
+  }
 }
 
-.session {
+
+
+.session-card {
   display: flex;
   position: relative;
   justify-content: space-between;
@@ -151,7 +120,6 @@
     height: 5rem;
   }
 
-  // UNDERLINE COLOR, FONT FAMILY
   .session-title {
     font-size: 21px;
     font-weight: 700;
@@ -187,34 +155,6 @@
 }
 
 .fly-out-wrapper {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  padding-top: 160px;
-  width: 40%;
-  height: 100%;
-  z-index: 10;
-  background-color: var(--white);
-  border: 1px solid black;
-  transition: all 1s;
-  overflow: scroll;
-
-
-  &.open {
-    right: 0;
-
-  }
-
-  &.closed {
-    right: -40%;
-  }
-
-  .close-icon {
-    position: absolute;
-    right: 40px;
-    top: 140px;
-  }
-
   .program-session-detail {
     margin: 0 40px 50px 30px;
     overflow: scroll;
@@ -274,14 +214,8 @@
     .program-sessions-wrapper {
       padding: 15px 10px;
     }
-    .session {
+    .session-card {
       width: 40%;
-    }
-
-    .fly-out-wrapper {
-      width: 70%;
-      &.open { right: 0 }
-      &.closed { right: -70%; }
     }
   }
 
@@ -294,13 +228,7 @@
       padding: 25px;
     }
 
-    .session {
+    .session-card {
       width: 100%;
-    }
-
-    .fly-out-wrapper {
-      width: 100%;
-      &.open { right: 0; }
-      &.closed { right: -100%; }
     }
   }

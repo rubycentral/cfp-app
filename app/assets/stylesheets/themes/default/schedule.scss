@@ -1,36 +1,288 @@
+.schedule-block-container.empty { display: none !important;  }
 .schedule-page-wrapper {
-  display: grid;
-  grid-template-columns: 160px 1fr;
-  grid-template-rows: 45px 1fr;
-  grid-template-areas: ". sub-nav"
-                       "schedule schedule";
+  .page-title {
+    padding-top: 100px;
+    text-align: center;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 38px;
+    margin-bottom: 15px;
+  }
 
-  .sub-nav {
-    grid-area: sub-nav;
+  .schedule-session-title {
+    font-size: 21px;
+    font-weight: 700;
+    margin-bottom: .3rem;
+    text-decoration: #F8B400 underline solid 2px;
+    text-underline-offset: 0.1em;
+  }
+
+  .schedule-room {
     display: flex;
     align-items: center;
-    ul {
-      margin: 0;
-      padding: 0;
+
+    .room-icon {
+      margin-right: 7px;
+    }
+  }
+
+  .schedule-tags {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .schedule-block-container {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    grid-template-areas: "time-duration program-sessions";
+    border-bottom: 3px solid var(--black);
+
+    &:last-child {
+      border-bottom: 1px solid var(--divider-light);
+      margin-bottom: 50px;
+    }
+
+    .schedule-duration {
+      grid-area: time-duration;
+      border-right: 1px solid var(--grey-light);
+      text-align: center;
+      padding-top: 40px;
+      font-weight: 700;
+      font-size: 16px;
+
+      .session-end-time::before {
+        content: "-";
+      }
+    }
+
+    .schedule-grid {
       display: flex;
-      gap: 30px;
-      li {
-        margin: 0;
-        padding: 0;
-        a {
-          font-size: 24px;
-          font-weight: 700;
+      grid-area: program-sessions;
+      flex-wrap: wrap;
+    }
+
+    .time-slot-card {
+      border-right: 1px solid var(--divider-light);
+      border-bottom: 1px solid var(--divider-light);
+      width: 25%;
+      padding: 40px 25px 0 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .schedule-title-room-wrapper {
+        margin-bottom: 35px;
+      }
+
+      .schedule-speaker-tag-wrapper {
+        margin-bottom: 30px;
+      }
+
+      &:only-child,
+      &:last-child {
+        border-right: none !important;
+      }
+
+      &:nth-child(4n+4) {
+        border-right: none;
+      }
+
+      .schedule-presenter {
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 15px;
+
+        .sponsor-presents {
+          margin-right: 7px;
+
+          &::after {
+            padding-left: 5px;
+            content: "presents"
+          }
+        }
+      }
+    }
+  }
+
+  .schedule-day-wrapper {
+    margin-bottom: 50px;
+
+    &.empty {
+      .empty-placeholder  {
+        display: block !important;
+        text-align: center;
+        margin-top: 30px;
+
+        h3 {
+          font-size: 18px;
+          font-weight: 800;
+          margin-bottom: 8px;
+        }
+
+        p {
+          font-family: var(--secondary-body-font);
+          line-height: 130%;
+        }
+      }
+    }
+  }
+
+  .schedule-block-container.empty {
+    display: none !important;
+  }
+
+
+  .fly-out-wrapper {
+    .schedule-detail-wrapper {
+      margin: 0 40px 50px 50px;
+      padding-left: 5px;
+      overflow: scroll;
+
+      .schedule-date {
+        display: block;
+        color: var(--red-light);
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+
+      .schedule-time {
+        display: flex;
+        font-size: 18px;
+        padding-bottom: 25px;
+        margin-bottom: 30px;
+        border-bottom: 1px solid var(--divider-light);
+
+        span { display: inline-block; }
+        .start-time {
+          &::after {
+            content: " – ";
+            margin-right: 4px;
+          }
+        }
+      }
+
+      .schedule-session-title {
+        text-decoration: none;
+      }
+
+      .schedule-room {
+        margin-bottom: 35px;
+      }
+
+      .sponsored-by {
+        font-weight: 700;
+        margin-bottom: 10px;
+        display: block;
+
+        &::before {
+          content: "Sponsored by "
+        }
+      }
+
+      .schedule-tags {
+        padding-bottom: 25px;
+        margin-bottom: 30px;
+        border-bottom: 1px solid var(--divider-light);
+      }
+
+      .schedule-time-slot-details {
+        border-bottom: 1px solid var(--divider-light);
+        margin-bottom: 30px;
+      }
+
+      .speaker-description,
+      .schedule-description {
+        margin-bottom: 20px;
+        line-height: 150%;
+
+        span {
           display: block;
-          color: var(--grey-light);
-          width: 100%;
-          margin: auto;
-          text-align: center;
-          text-decoration: none;
-          &:hover, &.selected {
-            color: var(--black);
-            box-shadow: 0 7px var(--main_content_background),
-                        0 10px var(--black);
-            transition: all 300ms;
+          font-weight: 800;
+          font-size: 20;
+          margin-bottom: 6px;
+        }
+      }
+
+      .schedule-sponsor-content {
+        .sponsor-logo {
+          max-width: 300px;
+          margin-bottom: 5px;
+        }
+
+        .sponsor-tier-tag {
+          padding: 5px 4px;
+          border: 1px solid var(--silver-border);
+          font-size: 12px;
+          font-weight: 600;
+          border-radius: 4px;
+          display: flex;
+          align-items: center;
+          width: min-content;
+          text-transform: capitalize;
+          margin-bottom: 15px;
+
+          .sponsor-tier-star {
+            margin-right: 3px;
+            display: inline-block;
+            -webkit-mask-image: asset_url('themes/default/sponsor-tier.svg');
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-size: 15px 15px;
+            mask-image: asset_url('themes/default/sponsor-tier.svg');
+            mask-repeat: no-repeat;
+            mask-size: 15px 15px;
+            height: 15px;
+            width: 15px;
+
+            &.platinum { background-color: var(--platinum); }
+            &.gold { background-color: var(--gold); }
+            &.silver { background-color: var(--silver); }
+            &.bronze { background-color: var(--bronze); }
+            &.other { background-color: var(--grey-light) };
+            &.supporter { background-color: var(--grey-light) };
+          }
+        }
+
+        p {
+          line-height: 160%;
+          margin-bottom: 30px;
+        }
+
+        .sponsor-offer-wrapper {
+          background-color: var(--beige);
+          border-radius: 10px;
+          padding: 35px;
+
+          span {
+            display: block;
+
+            &.offer-headline {
+              font-weight: 700;
+              font-size: 16px;
+              margin-bottom: 3px;
+            }
+
+            &.offer_text {
+              margin-bottom: 40px;
+            }
+          }
+
+          .offer-url {
+            color: var(--white);
+            background-color: var(--red-light);
+            padding: 14px 24px;
+            border-radius: 4px;
+
+            &::after {
+              content: "";
+              margin-left: 9px;
+              background-image: asset_url('themes/default/arrow-white.png');
+              display: inline-block;
+              height: 15px;
+              width: 15px;
+            }
           }
         }
       }
@@ -38,152 +290,58 @@
   }
 }
 
-#schedule-container {
-  grid-area: schedule;
-}
+@media screen and (max-width: 1200px) and (orientation: portrait),
+  (max-width: 1123px) and (orientation: landscape) {
+    .schedule-page-wrapper {
+      .time-slot-card {
+        width: 50% !important;
 
-.schedule-block-container {
-  display: grid;
-  grid-template-columns: 160px 1fr;
-  grid-template-areas: "time-duration program-sessions";
-  gap: 10px;
-  border-top: 1px solid var(--divider-light);
-
-  &:last-child {
-    border-bottom: 1px solid var(--divider-light);
-    margin-bottom: 50px;
-  }
-  .schedule-duration {
-    grid-area: time-duration;
-    text-align: right;
-    padding-top: 20px;
-    width: 100%;
-
-    .session-end-time::before {
-      content: "-";
-    }
-  }
-
-  .schedule-grid {
-    display: grid;
-    grid-area: program-sessions;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-  }
-
-  .schedule-grid-cell {
-    border-right: 1px solid var(--divider-light);
-    padding: 10px 15px;
-    display: grid;
-    align-items: center;
-    gap: 5px;
-    grid-template-rows: 30px auto 15px 30px;
-    grid-template-areas: "track"
-                         "title"
-                         "room"
-                         "speaker";
-    &:only-child {
-      border-right: none;
-    }
-
-    &:nth-child(4n+4) {
-      border-right: none;
-    }
-
-    &:nth-child(n+5) {
-      border-top: 1px solid var(--divider-light!important);
-    }
-
-    .session-track {
-      grid-area: track;
-      display: flex;
-      justify-content: center;
-      border-radius: 3px;
-      align-items: center;
-      font-size: 12px;
-      background-color: var(--grey-lightest);
-      padding: 5px 7px;
-      width: fit-content;
-    }
-
-    .schedule-session-title {
-      grid-area: title;
-      font-size: 21px;
-      font-weight: 500;
-      text-decoration: underline;
-    }
-
-    .schedule-room {
-      display: flex;
-      align-items: center;
-      grid-area: room;
-
-      .room-icon {
-        margin-right: 4px;
-        display: inline-block;
-        height: 15px;
-        aspect-ratio: 1 / 1;
-        border-radius: 100%;
-        background-color: var(--grey-light);
+        &:nth-child(4n+4) {
+          border-right: 1px solid var(--divider-light);
+        }
+        &:nth-child(2n+2) {
+          border-right: none;
+        }
       }
     }
-
-    .schedule-presenter {
-      font-size: 16px;
-      font-weight: 500;
-      grid-area: speaker;
-    }
   }
-}
-
 
 
 @media screen and (max-width: 900px) and (orientation: portrait),
   (max-width: 823px) and (orientation: landscape) {
-
     .schedule-page-wrapper {
-      grid-template-columns: 1fr;
-      grid-template-areas: "sub-nav"
-                           "schedule";
-      align-items: center;
-      justify-content: center;
-    }
-
-    .sub-nav {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .schedule-block-container {
-      grid-template-rows: 30px 1fr;
-      grid-template-columns: 1fr;
-      grid-template-areas: "time-duration"
-                           "program-sessions";
-      border-top: none;
-
-      .schedule-duration {
-        grid-area: time-duration;
-        text-align: left;
-
-        .session-end-time::before {
-          content: "-";
-        }
+      .sub-nav {
+        margin-bottom: 30px;
       }
 
-      .schedule-grid-cell {
-        padding: 5px 5px;
-        margin: 0 5px;
-        width: auto;
+      .schedule-block-container {
+        display: block;
 
-        &:nth-child(n) {
-          border: 1px solid var(--divider-light);
+        border-top: 3px solid var(--black);
+
+        .schedule-duration {
+          float: right;
+          position: relative;
+          background-color: var(--body_background_color);
+          top: -13px;
+          white-space: nowrap;
+          flex-direction: row;
+          padding: 0 20px 0 15px;
         }
       }
 
       .schedule-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 10px
+        flex-direction: column;
+        width: 100%
+      }
+
+      .time-slot-card {
+        border-right: none !important;
+        border-bottom: 1px solid var(--divider-light);
+        width: 100% !important;
+        display: flex;
+        flex-direction: column;
+        padding: 0 20px;
       }
     }
   }

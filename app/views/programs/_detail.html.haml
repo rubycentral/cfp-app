@@ -1,4 +1,4 @@
-.program-session-detail{ id: "program-session-detail-#{program_session.id}",  data: { 'fly-out-target': 'programSession' } }
+.program-session-detail.hidden{ id: dom_id(program_session),  data: { 'fly-out-target': 'listItem' } }
   .program-session-title
     = program_session.title
 

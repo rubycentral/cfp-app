@@ -4,27 +4,40 @@ feature "dynamic website schedule page" do
   let(:event) { create(:event) }
   let!(:website) { create(:website, event: event) }
 
-  scenario "the event website schedule page updates when a time slot is updated" do
+  scenario "the event website schedule page displays time slots that don't have program sessions" do
     time_slot = create(:time_slot, event: event)
     visit schedule_path(event)
 
+    expect(page).to have_content(time_slot.title)
     within('.schedule-block-container') { expect(page).to have_content('10:41') }
-    time_slot.update(start_time: (time_slot.start_time - 1.hour))
+  end
+
+  scenario "the event website schedule page displays updates to time slots that don't have program sessions" do
+    time_slot = create(:time_slot, event: event)
+
+    time_slot.update(start_time: (time_slot.start_time - 1.hour), title: 'Updated Title')
 
     visit schedule_path(event)
     within('.schedule-block-container') { expect(page).to have_content('9:41') }
+    expect(page).to have_content('Updated Title')
   end
 
-  scenario "when a program session is edited that change is reflected on the schedule" do
-    time_slot = create(:time_slot_with_program_session, event: event)
-    program_session = time_slot.program_session
+  scenario "the event website schedule page displays time slots that have program sessions", js: true do
+    time_slot = create(:with_workshop_session, event: event)
 
     visit schedule_path(event)
     expect(page).to have_content(time_slot.title)
+  end
 
-    program_session.update(title: "New Title")
+  scenario "the event website schedule page displays updates to time slots that have program sessions", js: true do
+    time_slot = create(:with_workshop_session, event: event)
+
+    time_slot.update(start_time: (time_slot.start_time - 1.hour))
+    time_slot.program_session.update(title: "Updated Title")
+
     visit schedule_path(event)
-    expect(page).to have_content("New Title")
+    expect(page).to have_content("Updated Title")
+    expect(page).to have_content('9:41')
   end
 
   scenario "the event website schedule stops displaying time slots when they are deleted" do
@@ -55,5 +68,47 @@ feature "dynamic website schedule page" do
     click_on(event.conference_date(2).strftime("%B %-e"))
 
     expect(page).to have_content(time_slot.title)
+  end
+
+  context "schedule page loads on the correct conference day" do
+    it "displays the first event day before the conference start" do
+      travel_to(event.start_date - 1.day) do
+        visit schedule_path(event)
+        expect(page).to have_selector('#schedule-day-1', visible: true)
+        expect(page).to have_selector('#schedule-day-2', visible: false)
+        selected_day = find('a.selected')
+        expect(selected_day).to have_content(event.conference_date(1).strftime("%B %-e"))
+      end
+    end
+
+    it "displays the first event day on the first event day" do
+      travel_to(event.start_date) do
+        visit schedule_path(event)
+        expect(page).to have_selector('#schedule-day-1', visible: true)
+        expect(page).to have_selector('#schedule-day-2', visible: false)
+        selected_day = find('a.selected')
+        expect(selected_day).to have_content(event.conference_date(1).strftime("%B %-e"))
+      end
+    end
+
+    it "displays the second event day on the second event day" do
+      travel_to(event.start_date + 1.day + 1.seconds) do
+        visit schedule_path(event)
+        expect(page).to have_selector('#schedule-day-1', visible: false)
+        expect(page).to have_selector('#schedule-day-2', visible: true)
+        selected_day = find('a.selected')
+        expect(selected_day).to have_content(event.conference_date(2).strftime("%B %-e"))
+      end
+    end
+
+    it "displays the start of the event after the event" do
+      travel_to(event.start_date + event.days.days + 1.seconds ) do
+        visit schedule_path(event)
+        expect(page).to have_selector('#schedule-day-1', visible: false)
+        expect(page).to have_selector('#schedule-day-2', visible: true)
+        selected_day = find('a.selected')
+        expect(selected_day).to have_content(event.conference_date(1).strftime("%B %-e"))
+      end
+    end
   end
 end

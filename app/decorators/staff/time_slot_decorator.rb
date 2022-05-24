@@ -20,7 +20,7 @@ class Staff::TimeSlotDecorator < Draper::Decorator
 
  def row_data_time_sortable(buttons: false)
    row = [object.conference_day, object.start_time, object.end_time, linked_title,
-     display_presenter, object.room_name, display_track_name]
+     display_presenter, object.room_name, display_sponsor_star, display_track_name]
      row << action_links if buttons
      row
  end
@@ -140,6 +140,10 @@ class Staff::TimeSlotDecorator < Draper::Decorator
 
   def sponsored?
     object.sponsor.present?
+  end
+
+  def display_sponsor_star
+    h.content_tag(:span, "", class: "glyphicon glyphicon-star") if sponsored?
   end
 
   def preview_css

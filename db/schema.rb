@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_12_134224) do
+ActiveRecord::Schema.define(version: 2022_05_23_185412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,6 +115,7 @@ ActiveRecord::Schema.define(version: 2022_05_12_134224) do
     t.boolean "hide_footer", default: false, null: false
     t.boolean "hide_page", default: false, null: false
     t.string "footer_category"
+    t.datetime "body_published_at"
     t.index ["website_id"], name: "index_pages_on_website_id"
   end
 

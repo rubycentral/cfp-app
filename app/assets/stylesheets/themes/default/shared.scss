@@ -18,6 +18,9 @@
 .session-format-bg-5 { background-color: var(--session-format-tag-5); }
 
 .session-format-tag {
+  display: inline-block;
+  width: min-content;
+  white-space: nowrap;
   padding: 8px 10px 8px 50px;
   border: 1px solid var(--divider-light);
   border-radius: 100px;

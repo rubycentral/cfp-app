@@ -79,6 +79,15 @@ h3.section-title {
   text-align: center;
 }
 
+.page-title {
+  padding-top: 100px;
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 38px;
+  margin-bottom: 35px
+}
+
 @media screen and (max-width: 900px) and (orientation: portrait),
   (max-width: 823px) and (orientation: landscape) {
   header + #content {

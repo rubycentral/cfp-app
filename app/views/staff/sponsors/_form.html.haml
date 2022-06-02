@@ -2,14 +2,13 @@
   .row
     %fieldset.col-md-6
       = f.input :name, maxlength: 60, input_html: { class: 'watched js-maxlength-alert', rows: 1 }
-      = f.input :other_title
       = f.input :tier, collection: Sponsor::TIERS
       = f.input :url
       = f.input :published, as: :boolean, wrapper: :vertical_radio_and_checkboxes
       = f.input :description
 
       - if f.object.primary_logo.attached?
-        = image_tag f.object.primary_logo
+        = resize_image_tag(f.object.primary_logo, width: 100)
       = f.input :primary_logo, class: "form-contorl-file"
 
       - if f.object.footer_logo.attached?

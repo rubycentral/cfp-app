@@ -22,6 +22,24 @@ feature "dynamic website schedule page" do
     expect(page).to have_content('Updated Title')
   end
 
+  scenario "the schedule page display sponsor information for time slots with sponsors", js: true do
+    sponsor = create(:sponsor)
+    time_slot = create(:time_slot, event: event)
+
+    visit schedule_path(event)
+
+    expect(page).to_not have_content('Sponsored')
+    click_on(time_slot.title)
+    expect(page).to_not have_content(sponsor.description)
+
+    time_slot.update(sponsor: sponsor)
+
+    visit schedule_path(event)
+    expect(page).to have_content('Sponsored')
+    click_on(time_slot.title)
+    expect(page).to have_content(sponsor.description)
+  end
+
   scenario "the event website schedule page displays time slots that have program sessions", js: true do
     time_slot = create(:with_workshop_session, event: event)
 

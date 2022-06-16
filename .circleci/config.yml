@@ -16,6 +16,7 @@ jobs:
           PGHOST: localhost
           PGUSER: cfp_app
           RAILS_ENV: test
+          CC_TEST_REPORTER_ID: fb19c4a63a7870bfbc633e23e491b7578b1dff19e2085abbc57ef2dd140d704f
       - image: postgres:12.5
         environment:
           POSTGRES_USER: cfp_app

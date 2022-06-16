@@ -156,6 +156,7 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.4.4)
+    docile (1.4.0)
     dotenv (2.7.6)
     dotenv-rails (2.7.6)
       dotenv (= 2.7.6)
@@ -458,6 +459,12 @@ GEM
     simple_form (5.1.0)
       actionpack (>= 5.2)
       activemodel (>= 5.2)
+    simplecov (0.21.2)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.12.3)
+    simplecov_json_formatter (0.1.4)
     slop (3.6.0)
     spring (3.0.0)
     spring-commands-rspec (1.0.4)
@@ -571,6 +578,7 @@ DEPENDENCIES
   sendgrid-ruby
   sidekiq
   simple_form
+  simplecov
   spring
   spring-commands-rspec
   timecop

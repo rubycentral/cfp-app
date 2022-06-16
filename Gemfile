@@ -94,3 +94,7 @@ group :development, :test do
   gem 'timecop'
   gem 'webdrivers', '~> 4.0'
 end
+
+group :test do
+  gem 'simplecov', require: false
+end

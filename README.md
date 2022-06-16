@@ -1,3 +1,6 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/d047ba27db91ff8bdfc7/maintainability)](https://codeclimate.com/github/rubycentral/cfp-app/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/d047ba27db91ff8bdfc7/test_coverage)](https://codeclimate.com/github/rubycentral/cfp-app/test_coverage)
+
 # Call for Proposals (CFP) App 2.0
 
 ## WARNING

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_23_185412) do
+ActiveRecord::Schema.define(version: 2022_06_09_140626) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -344,10 +344,11 @@ ActiveRecord::Schema.define(version: 2022_05_23_185412) do
     t.text "html"
     t.string "placement", default: "head", null: false
     t.string "name"
-    t.bigint "website_id"
+    t.bigint "contentable_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["website_id"], name: "index_website_contents_on_website_id"
+    t.string "contentable_type", default: "Website", null: false
+    t.index ["contentable_id", "contentable_type"], name: "index_website_contents_on_contentable_id_and_contentable_type"
   end
 
   create_table "website_fonts", force: :cascade do |t|

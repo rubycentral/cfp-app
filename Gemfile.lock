@@ -362,6 +362,10 @@ GEM
       nio4r (~> 2.0)
     pundit (2.1.1)
       activesupport (>= 3.0.0)
+    puppeteer-ruby (0.40.7)
+      concurrent-ruby (~> 1.1.0)
+      mime-types (>= 3.0)
+      websocket-driver (>= 0.6.0)
     racc (1.6.0)
     rack (2.2.3.1)
     rack-mini-profiler (2.3.3)
@@ -579,6 +583,7 @@ DEPENDENCIES
   pry-rescue
   puma
   pundit
+  puppeteer-ruby
   rack-mini-profiler
   rack-timeout (~> 0.5)
   rails (~> 6.1.4)

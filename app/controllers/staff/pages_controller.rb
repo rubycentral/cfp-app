@@ -11,6 +11,7 @@ class Staff::PagesController < Staff::ApplicationController
 
   def show
     @body = params[:preview] || @page.unpublished_body || ""
+    @include_tailwind = true
     render template: 'pages/show', layout: "themes/#{current_website.theme}"
   end
 
@@ -39,6 +40,8 @@ class Staff::PagesController < Staff::ApplicationController
   def preview; end
 
   def publish
+    save_tailwind_page_content
+
     @page.update(published_body: @page.unpublished_body,
                  body_published_at: Time.current)
     flash[:success] = "#{@page.name} Page was successfully published."
@@ -65,6 +68,27 @@ class Staff::PagesController < Staff::ApplicationController
             else
               build_page
             end
+  end
+
+  def save_tailwind_page_content
+    Puppeteer.launch(
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    ) do |browser|
+      page = browser.pages.first || browser.new_page
+      page.goto(root_url)
+      cookies.each do |name, value|
+        page.set_cookie(name: name, value: value)
+      end
+      page.goto(event_staff_page_url(current_event, @page), wait_until: 'domcontentloaded')
+      css = page.query_selector_all('style').map do |style|
+        style.evaluate('(el) => el.textContent')
+      end.detect { |text| text.match("tailwindcss") }
+      html = "<style>#{css}</style>"
+
+      content = @page.contents.find_or_initialize_by(name: Page::TAILWIND)
+      content.update!(placement: Website::Content::HEAD, html: html)
+    end
   end
 
   def build_page

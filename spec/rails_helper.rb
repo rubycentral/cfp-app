@@ -93,3 +93,4 @@ def save_timestamped_screenshot(page)
 
   page.save_screenshot(screenshot_path)
 end
+Capybara.default_max_wait_time = 3.seconds

@@ -4,7 +4,7 @@ class Website < ApplicationRecord
   belongs_to :event
   has_many :pages, dependent: :destroy
   has_many :fonts, class_name: 'Website::Font', dependent: :destroy
-  has_many :contents, class_name: 'Website::Content', dependent: :destroy
+  has_many :contents, class_name: 'Website::Content', as: :contentable, dependent: :destroy
   has_one :meta_data, class_name: 'Website::MetaData', dependent: :destroy
 
   has_many :session_formats, through: :event

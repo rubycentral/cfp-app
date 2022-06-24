@@ -22,5 +22,8 @@ module Features
       click_button 'Send me reset password instructions'
     end
 
+    def signin_as(user)
+      signin(user.email, user.password)
+    end
   end
 end

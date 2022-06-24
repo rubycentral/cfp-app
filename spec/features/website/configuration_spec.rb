@@ -71,7 +71,7 @@ feature "Website Configuration" do
     website = create(:website, event: event)
     home_page = create(:page, website: website)
 
-    login_as(organizer)
+    signin_as(organizer)
     visit edit_event_staff_website_path(event)
     click_on("Add Content")
     fill_in_codemirror(<<~HTML
@@ -111,7 +111,7 @@ feature "Website Configuration" do
     visit page_path(event, home_page)
     expect(response_headers["Cache-Control"]).to eq("max-age=0, private, s-maxage=0")
 
-    login_as(organizer)
+    signin_as(organizer)
     visit edit_event_staff_website_path(event)
 
     select("automatic", from: "Caching")
@@ -126,7 +126,6 @@ feature "Website Configuration" do
     expect(response_headers["Last-Modified"]).to eq(last_modified)
 
     RSpec::Mocks.space.proxy_for(fastly_service).reset
-    sleep 1
     visit event_staff_pages_path(event)
     click_on("Publish")
     expect(fastly_service).to have_received(:purge_by_key).with(event.slug)
@@ -145,7 +144,6 @@ feature "Website Configuration" do
     last_modified = response_headers["Last-Modified"]
 
     RSpec::Mocks.space.proxy_for(fastly_service).reset
-    sleep 1
     visit event_staff_pages_path(event)
     click_on("Publish")
     expect(fastly_service).not_to have_received(:purge_by_key).with(event.slug)

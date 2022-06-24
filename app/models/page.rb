@@ -4,8 +4,12 @@ class Page < ApplicationRecord
     'home' => { },
   }
 
+  TAILWIND = 'tailwind'.freeze
+
   belongs_to :website
   after_save_commit :purge_website_cache
+
+  has_many :contents, class_name: 'Website::Content', as: :contentable, dependent: :destroy
 
   scope :published, -> { where.not(published_body: nil).where(hide_page: false) }
   scope :in_footer, -> { published.where.not(footer_category: [nil, ""]) }
@@ -37,6 +41,10 @@ class Page < ApplicationRecord
 
   def unpublished_changes?
     published_body != unpublished_body
+  end
+
+  def tailwind_css
+    contents.where(name: TAILWIND).pluck(:html).first
   end
 
   private

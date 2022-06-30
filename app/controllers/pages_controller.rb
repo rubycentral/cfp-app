@@ -1,8 +1,7 @@
 class PagesController < ApplicationController
   before_action :require_website, only: :show
   before_action :require_page, only: :show
-
-  after_action :set_cache_headers, only: :show
+  before_action :set_cache_headers, only: :show
 
   def current_styleguide
   end

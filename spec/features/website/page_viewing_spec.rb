@@ -59,4 +59,13 @@ feature 'Public Page Viewing' do
     visit landing_path(slug: website.event.slug)
     expect(page).to have_content("Page Not Found")
   end
+
+  scenario 'Public views a cached page twice and gets 304 without rendering', :caching, :js do
+    website.update(caching: :automatic)
+    create(:page, published_body: 'Home Content', landing: true)
+
+    expect_any_instance_of(PagesController).to receive(:show).once.and_call_original
+    visit landing_path(slug: website.event.slug)
+    visit landing_path(slug: website.event.slug)
+  end
 end

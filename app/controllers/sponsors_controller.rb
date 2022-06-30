@@ -1,7 +1,6 @@
 class SponsorsController < ApplicationController
   before_action :require_website
-
-  after_action :set_cache_headers, only: :show
+  before_action :set_cache_headers, only: :show
 
   def show
     @sponsors_by_tier = Sponsor.published.order_by_tier.group_by(&:tier)

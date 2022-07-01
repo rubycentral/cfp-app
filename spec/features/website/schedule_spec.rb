@@ -111,4 +111,10 @@ feature "dynamic website schedule page" do
       end
     end
   end
+
+  scenario 'Public views schedule page on custom domain' do
+    website.update(domains: 'www.example.com')
+    visit schedule_path
+    expect(current_path).to eq('/schedule')
+  end
 end

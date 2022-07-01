@@ -4,7 +4,7 @@ class SponsorsController < ApplicationController
   after_action :set_cache_headers, only: :show
 
   def show
-    @sponsors_by_tier = Sponsor.published.order_by_tier.group_by(&:tier)
+    @sponsors_by_tier = current_website.sponsors.published.order_by_tier.group_by(&:tier)
     render layout: "themes/#{current_website.theme}"
   end
 end

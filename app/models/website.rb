@@ -2,6 +2,9 @@ class Website < ApplicationRecord
   enum caching: { off: 'off', automatic: 'automatic', manual: 'manual' }, _prefix: true
 
   belongs_to :event
+  has_many :sponsors, through: :event
+  has_many :time_slots, through: :event
+  has_many :program_sessions, through: :event
   has_many :pages, dependent: :destroy
   has_many :fonts, class_name: 'Website::Font', dependent: :destroy
   has_many :contents, class_name: 'Website::Content', dependent: :destroy

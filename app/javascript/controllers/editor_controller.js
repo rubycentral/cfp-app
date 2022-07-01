@@ -51,7 +51,7 @@ export default class extends Controller {
       mode: "htmlmixed",
       lineWrapping: true,
     });
-    for (var i=0;i<editor.lineCount();i++) { editor.indentLine(i); }
+    indentCodeMirror(editor);
     editor.on('change', (e) => {
       this.changedValue = true;
       this.preview(e.getValue());
@@ -61,6 +61,10 @@ export default class extends Controller {
       this.uploadFile(event.dataTransfer.files[0], event, e)
     })
     return editor;
+  }
+
+  indentCodeMirror(editor) {
+    for (var i=0;i<editor.lineCount();i++) { editor.indentLine(i); }
   }
 
   preview(content) {

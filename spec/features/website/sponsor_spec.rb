@@ -60,5 +60,11 @@ feature 'Wesite displays an events sponsors' do
       expect(page).to_not have_content(sponsor.offer_text)
       expect(page).to_not have_content(sponsor.offer_headline)
     end
+
+    it "Only displays sponsors for the website event" do
+      sponsor = create(:sponsor, event: create(:event))
+      visit sponsors_path(event)
+      expect(page).not_to have_content(sponsor.description)
+    end
   end
 end

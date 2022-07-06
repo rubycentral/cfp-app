@@ -1,4 +1,5 @@
 {
+  "stack": "heroku-20",
   "name": "CFP-App",
   "description": "Conference call for proposal management application by Ruby Central",
   "keywords": [

@@ -26,7 +26,7 @@ class Website < ApplicationRecord
   DEFAULT = 'default'.freeze
 
   def self.domain_match(domain)
-    where(arel_table[:domains].matches("%#{(domain)}"))
+    where(arel_table[:domains].matches("%#{domain}%"))
   end
 
   def manual_purge

@@ -11,6 +11,7 @@ describe Website do
       rubyconf = create(:website, domains: 'www.rubyconf.org,www.rubyconf.com')
       _otherconf = create(:website)
       expect(Website.domain_match('rubyconf.com')).to contain_exactly(rubyconf)
+      expect(Website.domain_match('rubyconf.org')).to contain_exactly(rubyconf)
     end
   end
 end

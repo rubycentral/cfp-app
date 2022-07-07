@@ -15,8 +15,6 @@ gem 'matrix'
 
 # Required until Rails 7 - https://github.com/mikel/mail/pull/1472#issuecomment-1165161541
 gem 'net-smtp', require: false
-# gem 'net-imap', require: false
-# gem 'net-pop', require: false
 
 gem 'pg'
 

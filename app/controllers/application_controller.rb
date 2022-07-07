@@ -116,10 +116,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def require_website
-    redirect_to not_found_path and return unless current_website
-  end
-
   def require_proposal
     @proposal = @event.proposals.find_by!(uuid: params[:proposal_uuid] || params[:uuid])
   end

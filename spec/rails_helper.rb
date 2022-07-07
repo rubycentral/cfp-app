@@ -93,3 +93,5 @@ def save_timestamped_screenshot(page)
 
   page.save_screenshot(screenshot_path)
 end
+
+Capybara.always_include_port = true

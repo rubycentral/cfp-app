@@ -20,9 +20,11 @@ feature "Website Configuration" do
     website = create(:website, event: event)
     home_page = create(:page, website: website)
 
-    visit("/#{home_page.slug}")
+    with_domain('lvh.me') do
+      visit("/#{home_page.slug}")
 
-    expect(current_path).to eq(not_found_path)
+      expect(current_path).to eq(not_found_path)
+    end
 
     login_as(organizer)
     visit event_path(website.event)
@@ -30,7 +32,7 @@ feature "Website Configuration" do
 
     expect(page).to have_content("Edit Website")
 
-    fill_in('Domains', with: 'www.example.com')
+    fill_in('Domains', with: 'lvh.me')
     fill_in('Navigation links', with: "Home\n")
     click_on("Save")
 
@@ -38,13 +40,15 @@ feature "Website Configuration" do
 
     logout
 
-    visit("/#{home_page.slug}")
+    with_domain('lvh.me') do
+      visit("/#{home_page.slug}")
 
-    expect(page).to have_content(strip_tags(home_page.published_body))
+      expect(page).to have_content(strip_tags(home_page.published_body))
 
-    click_on(home_page.name, match: :first)
+      click_on(home_page.name, match: :first)
 
-    expect(current_path).to eq("/#{home_page.slug}")
+      expect(current_path).to eq("/#{home_page.slug}")
+    end
   end
 
   scenario "Organizer fails to add font file correctly", :js do

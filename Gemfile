@@ -10,6 +10,13 @@ gem 'rails', '~> 6.1.4'
 gem 'mimemagic', github: 'mimemagicrb/mimemagic', ref: '01f92d86d15d85cfd0f20dabd025dcbd36a8a60f'
 gem 'mime-types-data'
 gem 'mime-types'
+gem 'rexml'
+gem 'matrix'
+
+# Required until Rails 7 - https://github.com/mikel/mail/pull/1472#issuecomment-1165161541
+gem 'net-smtp', require: false
+# gem 'net-imap', require: false
+# gem 'net-pop', require: false
 
 gem 'pg'
 
@@ -20,7 +27,6 @@ gem 'jquery-datatables-rails'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'rails-assets-momentjs', source: 'https://rails-assets.org'
-gem 'rexml'
 gem 'sassc-rails'
 gem 'selectize-rails'
 gem 'uglifier', '>= 1.3.0'

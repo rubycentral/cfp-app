@@ -29,6 +29,16 @@ class Website < ApplicationRecord
     where(arel_table[:domains].matches("%#{domain}%"))
   end
 
+  def tailwind_config
+    config = contents
+      .where(Content.arel_table[:html]
+      .matches("%tailwind.config%"))
+      .first
+    if config
+      config.html.gsub(%r{<script>|</script>}, "").gsub("tailwind.config", "module.exports")
+    end
+  end
+
   def manual_purge
     purge_cache { save }
   end

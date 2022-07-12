@@ -71,24 +71,28 @@ class Staff::PagesController < Staff::ApplicationController
   end
 
   def save_tailwind_page_content
-    Puppeteer.launch(
-      headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
-    ) do |browser|
-      page = browser.pages.first || browser.new_page
-      page.goto(root_url)
-      cookies.each do |name, value|
-        page.set_cookie(name: name, value: value)
-      end
-      page.goto(event_staff_page_url(current_event, @page), wait_until: 'domcontentloaded')
-      css = page.query_selector_all('style').map do |style|
-        style.evaluate('(el) => el.textContent')
-      end.detect { |text| text.match("tailwindcss") }
-      html = "<style>#{css}</style>"
-
-      content = @page.contents.find_or_initialize_by(name: Page::TAILWIND)
-      content.update!(placement: Website::Content::HEAD, html: html)
+    @body = @page.unpublished_body
+    content = render_to_string(template: 'pages/show', layout: "themes/#{current_website.theme}")
+    command = ["yarn run tailwindcss --minify"]
+    page_file = Tempfile.new(['page_content', '.html'], 'tmp')
+    page_file.write(content)
+    page_file.close
+    command.push("--content", page_file.path)
+    if tailwind_config = current_website.tailwind_config
+      config_file = Tempfile.new(['config_file', '.js'], 'tmp')
+      config_file.write(tailwind_config)
+      config_file.close
+      command.push("--config", config_file.path)
     end
+    output = `#{command.join(' ')}`
+    css = output.match(/(\/\*! tailwindcss .*)/m)
+    html = "<style>#{css}</style>"
+
+    content = @page.contents.find_or_initialize_by(name: Page::TAILWIND)
+    content.update!(placement: Website::Content::HEAD, html: html)
+  ensure
+    page_file&.unlink
+    config_file&.unlink
   end
 
   def build_page

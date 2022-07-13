@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :sponsor do
     event { Event.first || create(:event) }
+    url { "https://www.fakeurl.com/" }
     name { Faker::Company.name }
     published { true }
     tier { 'platinum' }
@@ -16,7 +17,7 @@ FactoryBot.define do
 
     trait :with_offer do
       offer_headline { "A really great offer" }
-      offer_url { "http://fakeoffer.com/" }
+      offer_url { "https://www.fakeoffer.com/" }
       offer_text { Faker::Hipster.paragraph }
     end
   end

@@ -27,7 +27,7 @@ class Staff::TimeSlotDecorator < Draper::Decorator
 
   def row_data(buttons: false)
     row = [object.conference_day, start_time, end_time, linked_title,
-           display_presenter, object.room_name, display_track_name]
+           display_presenter, object.room_name, display_sponsor_star, display_track_name]
 
     row << action_links if buttons
     row

@@ -8,7 +8,7 @@ class Sponsor < ApplicationRecord
   has_one_attached :footer_logo
   has_one_attached :banner_ad
 
-  validates :primary_logo, presence: true
+  validates_presence_of :primary_logo, :name, :tier, :url, :description
 
   TIERS = ['platinum', 'gold', 'silver', 'bronze', 'other', 'supporter']
 

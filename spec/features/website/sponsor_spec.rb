@@ -60,5 +60,16 @@ feature 'Wesite displays an events sponsors' do
       expect(page).to_not have_content(sponsor.offer_text)
       expect(page).to_not have_content(sponsor.offer_headline)
     end
+
+    it "Sponsor page doesn't display sponsors from a different event", js: true do
+      previous_event = create(:event, name: 'My Older Event')
+      previous_sponsor = create(:sponsor, event: previous_event, name: "Previous Sponsor", tier: "Gold")
+
+      sponsor = create(:sponsor)
+      visit sponsors_path(event)
+
+      expect(page).to have_content(sponsor.description)
+      expect(page).to_not have_content(previous_sponsor.description)
+    end
   end
 end

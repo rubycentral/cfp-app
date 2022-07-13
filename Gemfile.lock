@@ -86,6 +86,7 @@ GEM
       zeitwerk (~> 2.3)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
+    amazing_print (1.4.0)
     annotate (3.1.1)
       activerecord (>= 3.2, < 7.0)
       rake (>= 10.4, < 14.0)
@@ -240,6 +241,7 @@ GEM
       html2haml (>= 1.0.1)
       railties (>= 5.1)
     hashie (5.0.0)
+    honeybadger (4.12.1)
     html2haml (2.2.0)
       erubis (~> 2.7.0)
       haml (>= 4.0, < 6)
@@ -528,6 +530,7 @@ PLATFORMS
 DEPENDENCIES
   actionview-encoded_mail_to
   active_model_serializers (~> 0.10.0)
+  amazing_print
   annotate
   aws-sdk-s3
   better_errors
@@ -554,6 +557,7 @@ DEPENDENCIES
   guard-rspec
   haml (~> 5.0)
   haml-rails
+  honeybadger (~> 4.0)
   html2haml (~> 2.2)
   image_processing (~> 1.2)
   jbuilder

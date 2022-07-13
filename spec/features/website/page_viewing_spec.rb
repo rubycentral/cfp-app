@@ -20,43 +20,45 @@ feature 'Public Page Viewing' do
     expect(page).to have_content('Home Content')
   end
 
-  scenario 'Public views the landing page from custom domain' do
-    website.update(domains: 'www.example.com')
-    create(:page, published_body: 'Home Content', landing: true)
-    visit root_path
+  context 'when using a custom domain' do
+    scenario 'Public views the landing page from custom domain' do
+      website.update(domains: 'www.example.com')
+      create(:page, published_body: 'Home Content', landing: true)
+      visit root_path
 
-    expect(page).to have_content('Home Content')
-  end
+      expect(page).to have_content('Home Content')
+    end
 
-  scenario 'Public views the landing page for an older website on custom domain' do
-    website.update(domains: 'www.example.com')
-    old_home_page = create(:page, published_body: 'Old Website', landing: true)
-    website.update(navigation_links: [old_home_page.slug])
+    scenario 'Public views the landing page for an older website on custom domain' do
+      website.update(domains: 'www.example.com')
+      old_home_page = create(:page, published_body: 'Old Website', landing: true)
+      website.update(navigation_links: [old_home_page.slug])
 
-    new_website = create(:website, domains: 'www.example.com')
-    new_home_page = create(:page,
-                           website: new_website,
-                           published_body: 'New Website',
-                           landing: true)
+      new_website = create(:website, domains: 'www.example.com')
+      new_home_page = create(:page,
+                             website: new_website,
+                             published_body: 'New Website',
+                             landing: true)
 
-    new_website.update(navigation_links: [new_home_page.slug])
-    visit root_path
-    expect(page).to have_content('New Website')
+      new_website.update(navigation_links: [new_home_page.slug])
+      visit root_path
+      expect(page).to have_content('New Website')
 
-    click_on(new_home_page.name, match: :first)
-    expect(page).to have_content('New Website')
+      click_on(new_home_page.name, match: :first)
+      expect(page).to have_content('New Website')
 
-    visit landing_path(slug: website.event.slug)
-    expect(page).to have_content('Old Website')
+      visit landing_path(slug: website.event.slug)
+      expect(page).to have_content('Old Website')
 
-    click_on(old_home_page.name, match: :first)
-    expect(page).to have_content('Old Website')
-  end
+      click_on(old_home_page.name, match: :first)
+      expect(page).to have_content('Old Website')
+    end
 
-  scenario 'Public gets not found message for wrong path on subdomain' do
-    website.update(domains: 'www.example.com')
+    scenario 'Public gets not found message for wrong path on subdomain' do
+      website.update(domains: 'www.example.com')
 
-    visit landing_path(slug: website.event.slug)
-    expect(page).to have_content("Page Not Found")
+      visit landing_path(slug: website.event.slug)
+      expect(page).to have_content("Page Not Found")
+    end
   end
 end

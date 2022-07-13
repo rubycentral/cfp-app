@@ -12,6 +12,7 @@ gem 'mime-types-data'
 gem 'mime-types'
 gem 'rexml'
 gem 'matrix'
+gem 'honeybadger', '~> 4.0'
 
 # Required until Rails 7 - https://github.com/mikel/mail/pull/1472#issuecomment-1165161541
 gem 'net-smtp', require: false
@@ -82,6 +83,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'amazing_print', require: false
   gem 'capybara', '~> 3.33'
   gem 'database_cleaner', '~> 1.6'
   gem 'dotenv-rails'

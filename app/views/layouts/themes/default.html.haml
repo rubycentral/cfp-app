@@ -21,11 +21,11 @@
     %meta{property: "twitter:image", content: current_website.meta_image_url}
 
     = stylesheet_link_tag current_website.theme, media: 'all'
-    = javascript_pack_tag "application"
+    = javascript_pack_tag "default_theme"
     :css
       #{current_website.font_faces_css}
       #{current_website.font_root_css}
-    = javascript_pack_tag "tailwind"
+    = tailwind_content || javascript_pack_tag("tailwind")
     = current_website.head_content
 
   %body

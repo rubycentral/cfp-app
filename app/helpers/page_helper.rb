@@ -36,4 +36,10 @@ module PageHelper
   def logo_image(args)
     resize_image_tag(current_website.logo, **args)
   end
+
+  def tailwind_content
+    return false if @include_tailwind
+
+    @page&.tailwind_css&.html_safe
+  end
 end

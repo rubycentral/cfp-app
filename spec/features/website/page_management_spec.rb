@@ -60,7 +60,7 @@ feature "Website Page Management" do
 
   scenario "Organizer publishes a website page", :js do
     home_page = create(:page, unpublished_body: 'Home Content', published_body: nil)
-    login_as(organizer)
+    signin_as(organizer)
 
     visit page_path(slug: event.slug, page: home_page.slug)
     expect(page).to have_content("Page Not Found")
@@ -91,7 +91,7 @@ feature "Website Page Management" do
   end
 
   scenario "Organizer creates and publishes a splash page from a template", :js do
-    login_as(organizer)
+    signin_as(organizer)
     visit new_event_staff_page_path(event)
     select("splash", from: "template")
 

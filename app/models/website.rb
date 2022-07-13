@@ -4,7 +4,7 @@ class Website < ApplicationRecord
   belongs_to :event
   has_many :pages, dependent: :destroy
   has_many :fonts, class_name: 'Website::Font', dependent: :destroy
-  has_many :contents, class_name: 'Website::Content', dependent: :destroy
+  has_many :contents, class_name: 'Website::Content', as: :contentable, dependent: :destroy
   has_one :meta_data, class_name: 'Website::MetaData', dependent: :destroy
 
   has_many :session_formats, through: :event
@@ -27,6 +27,16 @@ class Website < ApplicationRecord
 
   def self.domain_match(domain)
     where(arel_table[:domains].matches("%#{domain}%"))
+  end
+
+  def tailwind_config
+    config = contents
+      .where(Content.arel_table[:html]
+      .matches("%tailwind.config%"))
+      .first
+    if config
+      config.html.gsub(%r{<script>|</script>}, "").gsub("tailwind.config", "module.exports")
+    end
   end
 
   def manual_purge

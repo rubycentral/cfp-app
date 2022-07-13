@@ -4,9 +4,10 @@ class Website::Content < ApplicationRecord
     FOOTER = "footer",
   ].freeze
 
-  belongs_to :website
+  belongs_to :contentable, polymorphic: true
 
   scope :for, -> (placement) { where(placement: placement) }
+  scope :for_page, -> (slug) { where(name: slug) }
 end
 
 # == Schema Information

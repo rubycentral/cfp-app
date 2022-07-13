@@ -11,6 +11,7 @@ class Staff::PagesController < Staff::ApplicationController
 
   def show
     @body = params[:preview] || @page.unpublished_body || ""
+    @include_tailwind = true
     render template: 'pages/show', layout: "themes/#{current_website.theme}"
   end
 
@@ -39,6 +40,8 @@ class Staff::PagesController < Staff::ApplicationController
   def preview; end
 
   def publish
+    save_tailwind_page_content
+
     @page.update(published_body: @page.unpublished_body,
                  body_published_at: Time.current)
     flash[:success] = "#{@page.name} Page was successfully published."
@@ -65,6 +68,31 @@ class Staff::PagesController < Staff::ApplicationController
             else
               build_page
             end
+  end
+
+  def save_tailwind_page_content
+    @body = @page.unpublished_body
+    content = render_to_string(template: 'pages/show', layout: "themes/#{current_website.theme}")
+    command = ["yarn run tailwindcss --minify"]
+    page_file = Tempfile.new(['page_content', '.html'], 'tmp')
+    page_file.write(content)
+    page_file.close
+    command.push("--content", page_file.path)
+    if tailwind_config = current_website.tailwind_config
+      config_file = Tempfile.new(['config_file', '.js'], 'tmp')
+      config_file.write(tailwind_config)
+      config_file.close
+      command.push("--config", config_file.path)
+    end
+    output = `#{command.join(' ')}`
+    css = output.match(/(\/\*! tailwindcss .*)/m)
+    html = "<style>#{css}</style>"
+
+    content = @page.contents.find_or_initialize_by(name: Page::TAILWIND)
+    content.update!(placement: Website::Content::HEAD, html: html)
+  ensure
+    page_file&.unlink
+    config_file&.unlink
   end
 
   def build_page

@@ -82,6 +82,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'amazing_print', require: false
   gem 'capybara', '~> 3.33'
   gem 'database_cleaner', '~> 1.6'
   gem 'dotenv-rails'

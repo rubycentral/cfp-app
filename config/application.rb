@@ -26,5 +26,9 @@ module CFPApp
     config.active_record.time_zone_aware_types = [:datetime]
 
     config.active_job.queue_adapter = :sidekiq
+
+    config.events_hosts = ENV.fetch('EVENTS_HOSTS') do
+      'localhost,example.com,herokuapp.com'
+    end
   end
 end

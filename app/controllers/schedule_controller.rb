@@ -1,8 +1,7 @@
 class ScheduleController < ApplicationController
   include WebsiteScheduleHelper
   before_action :require_event
-
-  after_action :set_cache_headers, only: :show
+  before_action :set_cache_headers, only: :show
 
   decorates_assigned :schedule, with: Staff::TimeSlotDecorator
 

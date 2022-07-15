@@ -26,5 +26,7 @@ module CFPApp
     config.active_record.time_zone_aware_types = [:datetime]
 
     config.active_job.queue_adapter = :sidekiq
+    config.active_record.yaml_column_permitted_classes =
+      [Symbol, Hash, Array, ActiveSupport::HashWithIndifferentAccess]
   end
 end

@@ -8,7 +8,7 @@ GIT
 GEM
   remote: https://rails-assets.org/
   specs:
-    rails-assets-momentjs (2.22.2)
+    rails-assets-momentjs (2.29.4)
     strscan (3.0.1)
 
 GEM

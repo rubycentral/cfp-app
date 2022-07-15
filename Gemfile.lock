@@ -416,7 +416,7 @@ GEM
       railties (>= 3.2)
       tilt
     redcarpet (3.5.1)
-    redis (4.6.0)
+    redis (4.7.1)
     regexp_parser (2.1.1)
     request_store (1.5.0)
       rack (>= 1.4)
@@ -471,7 +471,7 @@ GEM
       ruby_http_client (~> 3.4)
     sexp_processor (4.15.3)
     shellany (0.0.1)
-    sidekiq (6.4.0)
+    sidekiq (6.5.1)
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)

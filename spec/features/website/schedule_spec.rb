@@ -88,6 +88,12 @@ feature "dynamic website schedule page" do
     expect(page).to have_content(time_slot.title)
   end
 
+  scenario 'Public views schedule page on custom domain' do
+    website.update(domains: 'www.example.com')
+    visit schedule_path
+    expect(current_path).to eq('/schedule')
+  end
+
   context "schedule page loads on the correct conference day" do
     it "displays the first event day before the conference start" do
       travel_to(event.start_date - 1.day) do

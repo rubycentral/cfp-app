@@ -192,4 +192,26 @@ feature "Website Page Management" do
     expected_content = indented_html.gsub(initial_text, "#{initial_text}#{added_text}")
     expect(Page.last.unpublished_body).to eq(expected_content)
   end
+
+  scenario "Organizer can add a hyperlink from WYSIWYG editor", js: true do
+    login_as(organizer)
+    home_page = create(:page)
+    url = "http://example.com/resource/1"
+
+    visit edit_event_staff_page_path(event, home_page)
+    click_on('WYSIWYG')
+    click_on('More...')
+    click_on('Insert/edit link')
+
+    fill_in("URL", with: url)
+    within('.tox-dialog__footer') { click_on("Save") }
+    click_on("Save")
+
+    accept_confirm { click_on('Publish') }
+    click_on("View")
+
+    expect(page).to have_content(url)
+    click_on(url)
+    expect(page).to have_current_path(url, url: true)
+  end
 end

@@ -43,7 +43,7 @@ class ProposalsController < ApplicationController
       return
     end
     @proposal = @event.proposals.new
-    @proposal.speakers.build(user: current_user)
+    @proposal.speakers.build(user: current_user, houston_or_providence: Speaker::HOUSTON_OR_PROVIDENCE.first)
     flash.now[:warning] = incomplete_profile_msg unless current_user.complete?
   end
 
@@ -143,7 +143,7 @@ class ProposalsController < ApplicationController
   def proposal_params
     params.require(:proposal).permit(:title, {tags: []}, :session_format_id, :track_id, :abstract, :details, :pitch, custom_fields: @event.custom_fields,
                                      comments_attributes: [:body, :proposal_id, :user_id],
-                                     speakers_attributes: [:bio, :id, :age_range, :pronouns, :ethnicity, :first_time_speaker])
+                                     speakers_attributes: [:bio, :id, :age_range, :pronouns, :ethnicity, :first_time_speaker, :houston_or_providence])
   end
 
   def notes_params

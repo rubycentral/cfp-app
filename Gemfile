@@ -33,7 +33,7 @@ gem 'selectize-rails'
 gem 'uglifier', '>= 1.3.0'
 gem 'underscore-rails'
 
-gem 'devise', '~> 4.7'
+gem 'devise', '~> 4.8'
 gem 'omniauth-github'
 gem 'omniauth-twitter'
 gem "omniauth-rails_csrf_protection", "~> 1.0"

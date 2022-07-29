@@ -84,7 +84,7 @@ end
 
 group :development, :test do
   gem 'amazing_print', require: false
-  gem 'capybara', '~> 3.33'
+  gem 'capybara', '~> 3.37'
   gem 'database_cleaner', '~> 1.6'
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
@@ -101,5 +101,5 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'spring'
   gem 'timecop'
-  gem 'webdrivers', '~> 4.0'
+  gem 'webdrivers', '~> 4.7'
 end

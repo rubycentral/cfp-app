@@ -44,7 +44,7 @@ gem 'bootsnap', '~> 1.12', require: false
 gem 'bootstrap-multiselect-rails', '~> 0.9.9'
 gem 'chartkick'
 gem 'coderay', '~> 1.0'
-gem 'country_select', '~> 1.3'
+gem 'country_select', '~> 8.0'
 gem 'draper', '~> 4.0'
 gem 'faker'
 gem 'fastly'

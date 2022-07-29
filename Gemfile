@@ -101,5 +101,5 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'spring'
   gem 'timecop'
-  gem 'webdrivers', '~> 4.0'
+  gem 'webdrivers', '~> 4.7'
 end

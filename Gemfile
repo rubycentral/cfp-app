@@ -40,7 +40,7 @@ gem "omniauth-rails_csrf_protection", "~> 1.0"
 
 gem 'actionview-encoded_mail_to'
 gem 'active_model_serializers', '~> 0.10.0'
-gem 'bootsnap', '~> 1.12', require: false
+gem 'bootsnap', '~> 1.13', require: false
 gem 'bootstrap-multiselect-rails', '~> 0.9.9'
 gem 'chartkick'
 gem 'coderay', '~> 1.0'

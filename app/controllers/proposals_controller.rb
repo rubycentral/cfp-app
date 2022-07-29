@@ -93,6 +93,8 @@ class ProposalsController < ApplicationController
     speaker.event_id = @event.id
 
     if @proposal.save
+      # NOTE: more houstong or providence hackery
+      hack_location_taggings
       current_user.update_bio
       flash[:confirm] = setup_flash_message
       redirect_to event_proposal_url(event_slug: @event.slug, uuid: @proposal)
@@ -119,6 +121,8 @@ class ProposalsController < ApplicationController
       @proposal.update(confirmed_at: DateTime.current)
       redirect_to event_event_proposals_url(slug: @event.slug, uuid: @proposal), flash: { success: "Thank you for confirming your participation" }
     elsif @proposal.speaker_update_and_notify(proposal_params)
+      # NOTE: more houstong or providence hackery
+      hack_location_taggings
       redirect_to event_proposal_url(event_slug: @event.slug, uuid: @proposal)
     else
       flash[:danger] = "There was a problem saving your proposal."
@@ -139,6 +143,18 @@ class ProposalsController < ApplicationController
   end
 
   private
+
+  def hack_location_taggings
+    speaker = @proposal.speakers.first
+    speaker.proposals.where(event: @proposal.event).each do |p|
+      p.taggings.where(internal: true, tag: %w(providence houston)).destroy_all
+      if speaker.houston_or_providence =~ /texas/i
+        p.taggings.create(tag: "houston", internal: true)
+      else
+        p.taggings.create(tag: "providence", internal: true)
+      end
+    end
+  end
 
   def proposal_params
     params.require(:proposal).permit(:title, {tags: []}, :session_format_id, :track_id, :abstract, :details, :pitch, custom_fields: @event.custom_fields,

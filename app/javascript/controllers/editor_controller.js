@@ -43,15 +43,18 @@ export default class extends Controller {
     this.wysiwygTarget.classList.add("hidden");
     this.htmlTarget.classList.remove("hidden");
     this.htmlContentTarget.disabled = false;
-    this.initializeCodeMirror().setValue(this.wysiwygEditor.getContent());
+    this.initializeCodeMirror(this.wysiwygEditor.getContent());
   }
 
-  initializeCodeMirror() {
+  initializeCodeMirror(content) {
     var editor = CodeMirror.fromTextArea(this.htmlContentTarget, {
       mode: "htmlmixed",
       lineWrapping: true,
     });
-    for (var i=0;i<editor.lineCount();i++) { editor.indentLine(i); }
+    if (content) {
+      editor.setValue(content);
+    }
+    this.indentCodeMirror(editor);
     editor.on('change', (e) => {
       this.changedValue = true;
       this.preview(e.getValue());
@@ -61,6 +64,10 @@ export default class extends Controller {
       this.uploadFile(event.dataTransfer.files[0], event, e)
     })
     return editor;
+  }
+
+  indentCodeMirror(editor) {
+    for (var i=0;i<editor.lineCount();i++) { editor.indentLine(i); }
   }
 
   preview(content) {

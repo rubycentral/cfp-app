@@ -161,4 +161,35 @@ feature "Website Page Management" do
       expect(page).to have_content('FAQs')
     end
   end
+
+  scenario "Organizer switches between editors for page content", :js do
+    login_as(organizer)
+
+    visit event_path(event)
+    within('.navbar') { click_on("Website") }
+    within('.website-subnav') { click_on("Pages") }
+    click_on "New Page"
+
+    fill_in('Name', with: 'Home')
+    fill_in('Slug', with: 'home')
+
+    initial_text = "Let's Indent Some Code."
+    added_text = "TinyMCE should not mess up indenting."
+
+    indented_html = <<~HTML.chomp
+      <div>\r
+        <p>#{initial_text}</p>\r
+      </div>
+    HTML
+
+    fill_in_codemirror(indented_html)
+    click_on('WYSIWYG')
+    fill_in_tinymce(:page, :unpublished_body, added_text)
+    click_on('Edit HTML')
+    click_on('Save')
+
+    expect(page).to have_content('Home Page was successfully created')
+    expected_content = indented_html.gsub(initial_text, "#{initial_text}#{added_text}")
+    expect(Page.last.unpublished_body).to eq(expected_content)
+  end
 end

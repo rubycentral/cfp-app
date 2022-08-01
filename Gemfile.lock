@@ -370,7 +370,7 @@ GEM
       rack (>= 1.2.0)
     rack-protection (2.2.0)
       rack
-    rack-proxy (0.7.0)
+    rack-proxy (0.7.2)
       rack
     rack-test (2.0.2)
       rack (>= 1.3)
@@ -513,7 +513,7 @@ GEM
       nokogiri (~> 1.6)
       rubyzip (>= 1.3.0)
       selenium-webdriver (> 3.141, < 5.0)
-    webpacker (5.4.2)
+    webpacker (5.4.3)
       activesupport (>= 5.2)
       rack-proxy (>= 0.6.1)
       railties (>= 5.2)

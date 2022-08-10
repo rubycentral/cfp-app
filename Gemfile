@@ -85,7 +85,7 @@ end
 group :development, :test do
   gem 'amazing_print', require: false
   gem 'capybara', '~> 3.37'
-  gem 'database_cleaner', '~> 1.6'
+  gem 'database_cleaner', '~> 2.0'
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
   gem 'growl'

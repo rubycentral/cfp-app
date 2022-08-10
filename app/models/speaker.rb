@@ -29,8 +29,10 @@ class Speaker < ApplicationRecord
 
   # NOTE: This is a temporary field to support an extra question in the CFP
   HOUSTON_OR_PROVIDENCE = [
-    "RubyConf in Texas from Nov 29 - Dec 1",
-    "RubyConf Mini in Rhode Island from Nov 15 - Nov 17"
+    "Only RubyConf in Texas from Nov 29 - Dec 1",
+    "Only RubyConf Mini in Rhode Island from Nov 15 - Nov 17",
+    "Prefer RubyConf in Texas from Nov 29 - Dec 1, open to RubyConf Mini in Rhode Island from Nov 15 - Nov 17",
+    "Prefer RubyConf Mini in Rhode Island from Nov 15 - Nov 17, open to RubyConf in Texas from Nov 29 - Dec 1"
   ]
 
   belongs_to :user

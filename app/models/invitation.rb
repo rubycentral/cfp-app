@@ -10,7 +10,7 @@ class Invitation < ApplicationRecord
     transaction do
       self.user = user
       self.state = State::ACCEPTED
-      proposal.speakers.create(user: user, event: proposal.event, skip_name_email_validation: true)
+      proposal.speakers.create(user: user, event: proposal.event, skip_name_email_validation: true, houston_or_providence: proposal.speakers.first.houston_or_providence)
       save
     end
   end

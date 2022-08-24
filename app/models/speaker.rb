@@ -22,7 +22,8 @@ class Speaker < ApplicationRecord
   # Racial categories according to the Census
   RACIAL_CATEGORIES = [
     "American Indian or Alaska Native", "Asian", "Black or African American",
-    "Hispanic or Latino", "Native Hawaiian or Other Pacific Islander",
+    "Hispanic or Latino", "Middle Eastern/North African",
+    "Native Hawaiian or Other Pacific Islander",
     "Native American or Alaskan Natives", "Non-Hispanic White",
     "Two or more races", "Other", "Decline to say"
   ].freeze

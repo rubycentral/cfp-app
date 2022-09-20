@@ -52,7 +52,8 @@ class Speaker < ApplicationRecord
   validates_format_of :email, with: Devise.email_regexp
 
   # NOTE: This is a temporary field to support an extra question in the CFP
-  validates :houston_or_providence, presence: true
+  # NOTE: I am commenting this out to add the Keynote speakers
+  # validates :houston_or_providence, presence: true
 
   attr_accessor :skip_name_email_validation
 

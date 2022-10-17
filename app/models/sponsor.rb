@@ -10,7 +10,7 @@ class Sponsor < ApplicationRecord
 
   validates_presence_of :primary_logo, :name, :tier, :url, :description
 
-  TIERS = ['platinum', 'gold', 'silver', 'bronze', 'other', 'supporter']
+  TIERS = ['diamond', 'platinum', 'gold', 'silver', 'bronze', 'other', 'supporter']
 
   scope :published, -> { where(published: true) }
   scope :with_footer_image, -> { joins(:footer_logo_attachment) }

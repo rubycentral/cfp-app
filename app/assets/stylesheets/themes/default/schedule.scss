@@ -345,3 +345,16 @@
       }
     }
   }
+
+  @media screen and (max-width: 700px) and (orientation: portrait),
+  (max-width: 523px) and (orientation: landscape) {
+    .schedule-page-wrapper {
+      nav.sub-nav {
+        ul {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+      }
+    }
+  }

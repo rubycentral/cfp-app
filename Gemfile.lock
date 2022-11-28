@@ -9,7 +9,6 @@ GEM
   remote: https://rails-assets.org/
   specs:
     rails-assets-momentjs (2.29.4)
-    strscan (3.0.1)
 
 GEM
   remote: https://rubygems.org/
@@ -178,7 +177,7 @@ GEM
     em-websocket (0.5.2)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
-    erubi (1.10.0)
+    erubi (1.11.0)
     erubis (2.7.0)
     eventmachine (1.2.7)
     execjs (2.8.1)
@@ -280,7 +279,7 @@ GEM
     listen (3.7.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    loofah (2.18.0)
+    loofah (2.19.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     lumberjack (1.2.8)
@@ -295,7 +294,7 @@ GEM
     mini_magick (4.11.0)
     mini_mime (1.1.2)
     mini_portile2 (2.8.0)
-    minitest (5.16.2)
+    minitest (5.16.3)
     msgpack (1.5.4)
     multi_json (1.15.0)
     multi_xml (0.6.0)
@@ -495,12 +494,13 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
+    strscan (3.0.1)
     temple (0.8.2)
     thor (1.2.1)
     tilt (2.0.10)
     timecop (0.9.5)
     timeout (0.3.0)
-    tinymce-rails (5.10.3)
+    tinymce-rails (6.3.0)
       railties (>= 3.1.1)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
@@ -528,7 +528,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.0)
+    zeitwerk (2.6.6)
 
 PLATFORMS
   ruby

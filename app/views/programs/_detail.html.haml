@@ -14,6 +14,12 @@
   .program-session-about
     %span About
     = program_session.abstract.html_safe
+    - if program_session.video_url
+      %a{ :href => "#{program_session.video_url}", :title => "Session Video", :target => "_blank" }
+        Video
+    - if program_session.slides_url
+      %a{ :href => "#{program_session.slides_url}", :title => "Session Slides", :target => "_blank" }
+        Slides
 
   .program-session-authors
     - program_session.speakers.each do |s|

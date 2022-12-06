@@ -119,12 +119,18 @@
       margin-bottom: 25px;
 
 
-      span {
+      span, a {
         font-family: var(--sans-serif-font);
         font-weight: 700;
         font-size: 16px;
         margin-bottom: 6px;
         display: block;
+      }
+
+      a {
+        margin-top: 0.6rem;
+        text-decoration: #F8B400 underline solid 2px;
+        text-underline-offset: 0.1em;
       }
     }
 

@@ -9,7 +9,6 @@ GEM
   remote: https://rails-assets.org/
   specs:
     rails-assets-momentjs (2.29.4)
-    strscan (3.0.1)
 
 GEM
   remote: https://rubygems.org/
@@ -280,7 +279,7 @@ GEM
     listen (3.7.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    loofah (2.18.0)
+    loofah (2.19.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     lumberjack (1.2.8)
@@ -369,7 +368,7 @@ GEM
       nio4r (~> 2.0)
     pundit (2.2.0)
       activesupport (>= 3.0.0)
-    racc (1.6.0)
+    racc (1.6.1)
     rack (2.2.4)
     rack-mini-profiler (2.3.3)
       rack (>= 1.2.0)
@@ -495,6 +494,7 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
+    strscan (3.0.1)
     temple (0.8.2)
     thor (1.2.1)
     tilt (2.0.10)

@@ -1,5 +1,4 @@
 class Teammate < ApplicationRecord
-
   PENDING = "pending"
   ACCEPTED = "accepted"
   DECLINED = "declined"
@@ -18,7 +17,7 @@ class Teammate < ApplicationRecord
   }
 
   belongs_to :event
-  belongs_to :user
+  belongs_to :user, optional: true
 
   validates_uniqueness_of :email, scope: :event
   validates_uniqueness_of :mention_name, scope: :event, allow_blank: true

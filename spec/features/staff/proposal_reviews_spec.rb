@@ -6,7 +6,7 @@ feature "Review Proposals" do
 
   # First proposal
   let(:user) { create(:user) }
-  let(:proposal) { create(:proposal,
+  let(:proposal) { create(:proposal_with_track,
                           title: 'First Proposal',
                           abstract: 'Well then.',
                           event: event)
@@ -18,7 +18,7 @@ feature "Review Proposals" do
 
   # Another proposal
   let(:user2) { create(:user) }
-  let(:proposal2) { create(:proposal,
+  let(:proposal2) { create(:proposal_with_track,
                           title: 'Second Proposal',
                           abstract: 'This is second.',
                           event: event)
@@ -64,7 +64,7 @@ feature "Review Proposals" do
   end
 
   context "When the reviewer submits a proposal" do
-    let!(:reviewer_proposal) { create(:proposal,
+    let!(:reviewer_proposal) { create(:proposal_with_track,
                                       title: 'Reviewer Proposal',
                                       abstract: 'Yes indeed.',
                                       event: event)

@@ -3,7 +3,7 @@ require 'rails_helper'
 feature "Program team views program sessions" do
 
   let(:event) { create(:event) }
-  let(:program_session) { create(:program_session, event: event) }
+  let(:program_session) { create(:program_session_with_proposal, event: event) }
 
   let(:program_team_user) { create(:user) }
   let!(:program_team_member) { create(:teammate, :program_team, user: program_team_user, event: event) }

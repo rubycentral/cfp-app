@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'Speaker Invitation received' do
   let(:event) { create(:event, state: 'open') }
-  let(:proposal) { create(:proposal,
+  let(:proposal) { create(:proposal_with_track,
                           title: 'Hello there',
                           abstract: 'Well then.',
                           event: event)

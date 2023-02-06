@@ -4,13 +4,13 @@ class Invitation < ApplicationRecord
   include Invitable
 
   belongs_to :proposal
-  belongs_to :user
+  belongs_to :user, optional: true
 
   def accept(user)
     transaction do
       self.user = user
       self.state = State::ACCEPTED
-      proposal.speakers.create(user: user, event: proposal.event, skip_name_email_validation: true, houston_or_providence: proposal.speakers.first.houston_or_providence)
+      proposal.speakers.create(user: user, event: proposal.event, skip_name_email_validation: true)
       save
     end
   end

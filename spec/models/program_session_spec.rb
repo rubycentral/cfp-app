@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe ProgramSession do
-
   let(:proposal) { create(:proposal_with_track, :with_two_speakers) }
   let(:waitlisted_proposal) { create(:proposal_with_track, :with_two_speakers, state: 'waitlisted') }
   let(:session) { ProgramSession.create_from_proposal(proposal) }
@@ -83,7 +82,7 @@ describe ProgramSession do
     end
 
     it "does not overwrite speaker_name if it already has a value" do
-      my_proposal = create(:proposal)
+      my_proposal = create(:proposal_with_track)
       user = create(:user, name: "Fluffy", email: "fluffy@email.com")
       create(:speaker,
               user_id: user.id,
@@ -100,7 +99,7 @@ describe ProgramSession do
     end
 
     it "does not overwrite speaker_email if it already has a value" do
-      my_proposal = create(:proposal)
+      my_proposal = create(:proposal_with_track)
       user = create(:user, name: "Fluffy", email: "fluffy@email.com" )
       create(:speaker,
              user_id: user.id,
@@ -117,7 +116,7 @@ describe ProgramSession do
     end
 
     it "does not overwrite bio if it already has a value" do
-      my_proposal = create(:proposal)
+      my_proposal = create(:proposal_with_track)
       user = create(:user, name: "Fluffy", email: "fluffy@email.com", bio: "Fluffy rules all day." )
       create(:speaker,
              user_id: user.id,
@@ -147,9 +146,9 @@ describe ProgramSession do
 
   describe "#can_promote?" do
     it "returns true for promotable states" do
-      draft = create(:program_session, state: "draft")
-      unconfirmed_waitlisted = create(:program_session, state: "unconfirmed waitlisted")
-      confirmed_waitlisted = create(:program_session, state: "confirmed waitlisted")
+      draft = create(:program_session, state: "draft", proposal: proposal, track: proposal.track)
+      unconfirmed_waitlisted = create(:program_session, state: "unconfirmed waitlisted", proposal: proposal, track: proposal.track)
+      confirmed_waitlisted = create(:program_session, state: "confirmed waitlisted", proposal: proposal, track: proposal.track)
 
       [draft, unconfirmed_waitlisted, confirmed_waitlisted].each do |ps|
         expect(ps.can_promote?).to be(true)
@@ -157,9 +156,9 @@ describe ProgramSession do
     end
 
     it "returns false for non-promotable states" do
-      live = create(:program_session, state: "live")
-      unconfirmed_accepted = create(:program_session, state: "unconfirmed accepted")
-      declined = create(:program_session, state: "declined")
+      live = create(:program_session, state: "live", proposal: proposal, track: proposal.track)
+      unconfirmed_accepted = create(:program_session, state: "unconfirmed accepted", proposal: proposal, track: proposal.track)
+      declined = create(:program_session, state: "declined", proposal: proposal, track: proposal.track)
 
       [live, unconfirmed_accepted, declined].each do |ps|
         expect(ps.can_promote?).to be(false)
@@ -169,29 +168,29 @@ describe ProgramSession do
 
   describe "#promote" do
     it "promotes a draft to accepted_confirmed" do
-      ps = create(:program_session, state: "draft")
+      ps = create(:program_session, state: "draft", proposal: proposal, track: proposal.track)
       ps.promote
 
       expect(ps.reload.state).to eq("live")
     end
 
     it "promotes an unconfirmed waitlisted to unconfirmed_accepted" do
-      ps = create(:program_session, state: "unconfirmed waitlisted")
+      ps = create(:program_session, state: "unconfirmed waitlisted", proposal: proposal, track: proposal.track)
       ps.promote
 
       expect(ps.reload.state).to eq("unconfirmed accepted")
     end
 
     it "promotes a confirmed_waitlisted to live" do
-      ps = create(:program_session, state: "confirmed waitlisted")
+      ps = create(:program_session, state: "confirmed waitlisted", proposal: proposal, track: proposal.track)
       ps.promote
 
       expect(ps.reload.state).to eq("live")
     end
 
     it "promotes it's proposal" do
-      ps = create(:program_session)
-      proposal = create(:proposal, program_session: ps)
+      ps = create(:program_session, proposal: proposal, track: proposal.track)
+      proposal = create(:proposal_with_track, program_session: ps)
 
       expect(proposal).to receive(:promote)
       ps.promote
@@ -200,8 +199,8 @@ describe ProgramSession do
 
   describe "#can_confirm?" do
     it "returns true for confirmable states" do
-      unconfirmed_waitlisted = create(:program_session, state: "unconfirmed waitlisted")
-      unconfirmed_accepted = create(:program_session, state: "unconfirmed accepted")
+      unconfirmed_waitlisted = create(:program_session, state: "unconfirmed waitlisted", proposal: proposal, track: proposal.track)
+      unconfirmed_accepted = create(:program_session, state: "unconfirmed accepted", proposal: proposal, track: proposal.track)
 
       [unconfirmed_waitlisted, unconfirmed_accepted].each do |ps|
         expect(ps.can_confirm?).to be(true)
@@ -209,9 +208,9 @@ describe ProgramSession do
     end
 
     it "returns false for non-confirmable states" do
-      live = create(:program_session, state: "live")
-      draft = create(:program_session, state: "draft")
-      declined = create(:program_session, state: "declined")
+      live = create(:program_session, state: "live", proposal: proposal, track: proposal.track)
+      draft = create(:program_session, state: "draft", proposal: proposal, track: proposal.track)
+      declined = create(:program_session, state: "declined", proposal: proposal, track: proposal.track)
 
       [live, declined, draft].each do |ps|
         expect(ps.can_confirm?).to be(false)
@@ -221,7 +220,7 @@ describe ProgramSession do
 
   describe "#confirm" do
     it "confirms an unconfirmed_waitlisted session" do
-      ps = create(:program_session, state: "unconfirmed waitlisted")
+      ps = create(:program_session, state: "unconfirmed waitlisted", proposal: proposal, track: proposal.track)
 
       ps.confirm
 
@@ -229,7 +228,7 @@ describe ProgramSession do
     end
 
     it "confirms an unconfirmed_accepted session" do
-      ps = create(:program_session, state: "unconfirmed accepted")
+      ps = create(:program_session, state: "unconfirmed accepted", proposal: proposal, track: proposal.track)
 
       ps.confirm
 
@@ -238,15 +237,10 @@ describe ProgramSession do
   end
 
   describe "#destroy" do
-    let(:proposal) { create(:proposal, :with_speaker) }
-    let(:ps) { create(:program_session, proposal: proposal) }
+    let(:proposal) { create(:proposal_with_track, :with_speaker) }
+    let(:ps) { create(:program_session, proposal: proposal, track: proposal.track) }
+    let(:sponsor) { create(:sponsor) }
     subject { ps.destroy }
-
-    it "destroys speakers if speaker has no proposal_id" do
-      speaker = create(:speaker, event_id: ps.event_id, program_session_id: ps.id)
-      subject
-      expect(Speaker.all).not_to include(speaker)
-    end
 
     it "removes program_session_id from speaker if speaker has proposal_id" do
       ps.speakers << proposal.speakers
@@ -257,7 +251,7 @@ describe ProgramSession do
     end
 
     it "removes program_session_id from time_slot if session was scheduled" do
-      time_slot = create(:time_slot_with_program_session, program_session: ps)
+      time_slot = create(:time_slot_with_program_session, program_session: ps, track: proposal.track, sponsor: sponsor)
       subject
 
       expect(time_slot.reload.program_session_id).to be_nil

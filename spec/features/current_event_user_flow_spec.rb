@@ -34,7 +34,7 @@ feature "A user sees correct information for the current event and their role" d
     end
 
     speaker = create(:speaker, event: event_1, user: normal_user)
-    proposal = create(:proposal, event: event_1)
+    proposal = create(:proposal_with_track, event: event_1)
     proposal.speakers << speaker
     visit root_path
 
@@ -96,7 +96,7 @@ feature "A user sees correct information for the current event and their role" d
     end
 
     speaker = create(:speaker, event: event_2, user: normal_user)
-    proposal = create(:proposal, event: event_2)
+    proposal = create(:proposal_with_track, event: event_2)
     proposal.speakers << speaker
 
     visit proposals_path
@@ -194,7 +194,7 @@ feature "A user sees correct information for the current event and their role" d
   scenario "User flow for an organizer" do
     event_1 = create(:event, state: "open")
     event_2 = create(:event, state: "open")
-    proposal = create(:proposal, :with_organizer_public_comment, event: event_2)
+    proposal = create(:proposal_with_track, :with_organizer_public_comment, event: event_2)
     create(:teammate, :organizer, user: organizer_user, event: event_2)
 
     signin(organizer_user.email, organizer_user.password)

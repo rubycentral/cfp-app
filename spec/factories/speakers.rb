@@ -9,7 +9,7 @@ FactoryBot.define do
 
   factory :speaker do
     user
-    event { Event.first || FactoryBot.create(:event) }
+    event
     bio { "Speaker bio" }
 
     trait :with_name do

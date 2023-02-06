@@ -6,8 +6,8 @@ describe Rating do
     event1 = create :event, name: 'RubyConf 2013'
     event2 = create :event, name: 'RubyConf 2014'
 
-    proposal_in_event1 = create :proposal, event: event1
-    proposal_in_event2 = create :proposal, event: event2
+    proposal_in_event1 = create :proposal_with_track, event: event1
+    proposal_in_event2 = create :proposal_with_track, event: event2
 
     create :rating, proposal: proposal_in_event1
     create :rating, proposal: proposal_in_event2

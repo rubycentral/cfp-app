@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature "Listing events for different roles" do
   let(:event) { create(:event, name: "Greens Event", state: 'open') }
-  let!(:proposal) { create(:proposal, title: "A Proposal", abstract: 'foo', event: event) }
+  let!(:proposal) { create(:proposal_with_track, title: "A Proposal", abstract: 'foo', event: event) }
   let(:normal_user) { create(:user) }
   let(:organizer) { create(:user) }
 

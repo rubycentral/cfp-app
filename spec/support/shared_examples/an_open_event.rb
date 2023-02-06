@@ -20,11 +20,11 @@ RSpec.shared_examples_for 'an open event' do
   let(:track1) { create :track, name: 'Open-source', event: event }
   let(:track2) { create :track, name: 'Closed-source', event: event }
 
-  let(:proposal1) { create :proposal, event: event, track: track1, state: accepted }
-  let(:proposal2) { create :proposal, event: event, track: track2, state: waitlisted }
-  let(:proposal3) { create :proposal, event: event, track: track2, state: soft_accepted }
-  let(:no_track_proposal) { create :proposal, event: event, track_id: nil, state: soft_waitlisted }
-  let(:withdrawn_proposal) { create :proposal, event: event, track_id: track1, state: withdrawn }
+  let(:proposal1) { create :proposal_with_track, event: event, track: track1, state: accepted }
+  let(:proposal2) { create :proposal_with_track, event: event, track: track2, state: waitlisted }
+  let(:proposal3) { create :proposal_with_track, event: event, track: track2, state: soft_accepted }
+  let(:no_track_proposal) { create :proposal, event: event, track: nil, state: soft_waitlisted }
+  let(:withdrawn_proposal) { create :proposal, event: event, track: track1, state: withdrawn }
 
   let!(:rating1) { create :rating, proposal: proposal1, user: user1 }
   let!(:rating2) { create :rating, proposal: proposal2, user: user2 }

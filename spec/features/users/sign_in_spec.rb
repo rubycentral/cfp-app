@@ -97,7 +97,7 @@ feature 'Sign In', :devise do
   #   When I sign in
   #   Then I see the events_path
   scenario 'speaker with proposals goes to their proposals' do
-    proposal = create(:proposal)
+    proposal = create(:proposal_with_track)
     speaker = create(:speaker)
     proposal.speakers << speaker
     user = speaker.user

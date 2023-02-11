@@ -142,25 +142,25 @@ feature "Organizers can manage proposals" do
     end
 
   # FactoryBot 😤
-  #   context "Promoting a waitlisted proposal" do
-  #     let(:proposal) { create(:proposal_with_track, state: Proposal::State::WAITLISTED) }
-  #     let(:program_session) { create(:program_session_with_proposal, state: ProgramSession::UNCONFIRMED_WAITLISTED, proposal: proposal) }
-  #
-  #     before do
-  #       visit event_staff_program_session_path(event, program_session)
-  #       click_link 'Promote'
-  #     end
-  #
-  #     it "sets proposal state to accepted and program session state to unconfirmed_accepted" do
-  #       skip "FactoryBot 😤"
-  #       expect(proposal.reload.state).to eql(Proposal::State::ACCEPTED)
-  #       expect(program_session.reload.state).to eql(ProgramSession::UNCONFIRMED_ACCEPTED)
-  #     end
-  #
-  #     it "doesn't send an email notification" do
-  #       skip "FactoryBot 😤"
-  #       expect(ActionMailer::Base.deliveries).to be_empty
-  #     end
-  #   end
-  # end
+    # context "Promoting a waitlisted proposal" do
+    #   let(:proposal) { create(:proposal_with_track, state: Proposal::State::WAITLISTED) }
+    #   let(:program_session) { create(:program_session_with_proposal, state: ProgramSession::UNCONFIRMED_WAITLISTED, proposal: proposal) }
+    #
+    #   before do
+    #     visit event_staff_program_session_path(event, program_session)
+    #     click_link 'Promote'
+    #   end
+    #
+    #   it "sets proposal state to accepted and program session state to unconfirmed_accepted" do
+    #     skip "FactoryBot 😤"
+    #     expect(proposal.reload.state).to eql(Proposal::State::ACCEPTED)
+    #     expect(program_session.reload.state).to eql(ProgramSession::UNCONFIRMED_ACCEPTED)
+    #   end
+    #
+    #   it "doesn't send an email notification" do
+    #     skip "FactoryBot 😤"
+    #     expect(ActionMailer::Base.deliveries).to be_empty
+    #   end
+    # end
+  end
 end

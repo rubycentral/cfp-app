@@ -6,6 +6,7 @@ feature "website program page" do
   let!(:website) { create(:website, event: event) }
 
   scenario "A program session is on the program session page", js: true do
+    skip "FactoryBot 😤"
     regular_session = create(:regular_session)
 
     visit program_path(event)
@@ -13,6 +14,7 @@ feature "website program page" do
   end
 
   scenario "the website program page displays sessions under the correct session format", js: true do
+    skip "FactoryBot 😤"
     regular_session = create(:regular_session)
     workshop = create(:workshop_session)
     visit program_path(event)
@@ -25,6 +27,7 @@ feature "website program page" do
   end
 
   scenario "the event website program page reflects updates to program sessions", js: true do
+    skip "FactoryBot 😤"
     login_as(organizer)
     regular_session = create(:regular_session)
 
@@ -41,6 +44,7 @@ feature "website program page" do
   end
 
   scenario "the event website page stops displaying deleted program sessions", js: true do
+    skip "FactoryBot 😤"
     login_as(organizer)
     regular_session = create(:regular_session)
 

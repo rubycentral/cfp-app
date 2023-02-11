@@ -4,7 +4,7 @@ feature 'Managing Speaker Invitations' do
   let(:second_speaker_email) { 'second_speaker@example.com' }
   let(:user) { create(:user) }
   let(:event) { create(:event, state: 'open') }
-  let(:proposal) { create(:proposal,
+  let(:proposal) { create(:proposal_with_track,
                           title: 'Hello there',
                           abstract: 'Well then.',
                           event: event)
@@ -49,7 +49,7 @@ feature 'Managing Speaker Invitations' do
   end
 
   context "Removing an invitation" do
-    let!(:invitation) { create(:invitation, proposal: proposal, email: second_speaker_email) }
+    let!(:invitation) { create(:invitation, proposal: proposal, email: second_speaker_email, user: user) }
 
     scenario "A speaker can remove an invitation" do
       go_to_proposal

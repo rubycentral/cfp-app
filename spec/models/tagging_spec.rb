@@ -21,7 +21,7 @@ describe Tagging do
 
   context '#count_by_tag' do
     let!(:event) { create(:event) }
-    let!(:proposal) { create(:proposal, event: event) }
+    let!(:proposal) { create(:proposal_with_track, event: event) }
 
     it 'gives a count for no tags' do
       expect(Tagging.count_by_tag(event)).to eq({})
@@ -41,7 +41,7 @@ describe Tagging do
 
     it "only counts tags attached to event" do
       event2 = create(:event)
-      proposal2 = create(:proposal, event: event2)
+      proposal2 = create(:proposal_with_track, event: event2)
 
       create_list(:tagging, 5, tag: 'test', proposal: proposal)
       create_list(:tagging, 3, tag: 'test', proposal: proposal2)

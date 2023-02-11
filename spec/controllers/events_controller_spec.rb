@@ -9,7 +9,7 @@ describe EventsController, type: :controller do
   end
 
   describe 'GET #show' do
-    let(:proposal) { build(:proposal) }
+    let(:proposal) { build(:proposal_with_track) }
     let(:event) { create(:event, proposals: [proposal]) }
 
     it 'should succeed' do

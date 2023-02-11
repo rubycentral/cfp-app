@@ -1,9 +1,9 @@
 class TimeSlot < ApplicationRecord
-  belongs_to :program_session
+  belongs_to :program_session, optional: true
   belongs_to :room
-  belongs_to :track
+  belongs_to :track, optional: true
   belongs_to :event
-  belongs_to :sponsor
+  belongs_to :sponsor, optional: true
 
   attr_reader :session_duration
 

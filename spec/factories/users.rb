@@ -42,7 +42,7 @@ FactoryBot.define do
 
     factory :organizer, traits: [ :organizer ] do
       transient do
-        event { build(:event) }
+        event { create(:event) }
       end
 
       after(:create) do |user, evaluator|

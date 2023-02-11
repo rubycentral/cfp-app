@@ -34,7 +34,7 @@ describe Notification do
     end
 
     it "uses proposal's url if proposal is present" do
-      proposal = create(:proposal)
+      proposal = create(:proposal_with_track)
       users.each do |user|
         Notification.create_for(user, proposal: proposal)
       end
@@ -51,7 +51,7 @@ describe Notification do
       users.each do |user|
         expect(Notification).to receive(:create_for)
           .exactly(1).times
-          .with(user, proposal: "this one")
+          .with(user, {proposal: "this one"})
       end
 
       described_class.create_for_all(users, proposal: "this one")
@@ -60,7 +60,7 @@ describe Notification do
 
   describe ".mark_as_read_for_proposal" do
     let!(:user) { create(:user) }
-    let!(:proposal) { create(:proposal) }
+    let!(:proposal) { create(:proposal_with_track) }
     let!(:notification) { create(:notification, :unread, user: user, target_path: "/proposal/#{proposal.id}") }
 
     it "marks read for proposal" do
@@ -102,10 +102,11 @@ describe Notification do
   end
 
   describe "#mark_as_read" do
+    let(:user) { create(:user) }
     it "sets read_at to DateTime.now" do
       now = DateTime.now
       allow(DateTime).to receive(:now) { now }
-      notification = create(:notification)
+      notification = create(:notification, user: user)
       notification.mark_as_read
       expect(notification.reload).to be_read
       expect(notification.read_at.to_time.to_s).to eq(now.to_time.to_s)
@@ -113,21 +114,23 @@ describe Notification do
   end
 
   describe "#read?" do
+    let(:user) { create(:user) }
     it "returns true for a read notification" do
-      notification = create(:notification)
+      notification = create(:notification, user: user)
       notification.mark_as_read
       expect(notification).to be_read
     end
 
     it "returns false for an unread notification" do
-      notification = create(:notification, read_at: nil)
+      notification = create(:notification, read_at: nil, user: user)
       expect(notification).to_not be_read
     end
   end
 
   describe "#short_message" do
+    let(:user) { create(:user) }
     before :each do
-      @notification = create(:notification, :with_long_message)
+      @notification = create(:notification, :with_long_message, user: user)
     end
 
     it "returns shortened message" do

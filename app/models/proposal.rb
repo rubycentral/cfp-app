@@ -18,7 +18,7 @@ class Proposal < ApplicationRecord
   has_one :time_slot
   has_one :program_session
   belongs_to :session_format
-  belongs_to :track
+  belongs_to :track, optional: true
 
   validates :title, :abstract, :session_format, presence: true
   validate :abstract_length

@@ -1,5 +1,4 @@
 class Event < ApplicationRecord
-
   has_many :teammates, dependent: :destroy
   has_many :staff, through: :teammates, source: :user
   has_many :proposals, dependent: :destroy
@@ -27,7 +26,6 @@ class Event < ApplicationRecord
   store_accessor :speaker_notification_emails, :accept
   store_accessor :speaker_notification_emails, :reject
   store_accessor :speaker_notification_emails, :waitlist
-
 
   scope :a_to_z, -> { order('name ASC') }
   scope :closes_up, -> { order('closes_at ASC') }

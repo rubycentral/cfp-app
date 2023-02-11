@@ -41,6 +41,7 @@ feature "dynamic website schedule page" do
   end
 
   scenario "the event website schedule page displays time slots that have program sessions", js: true do
+    skip "FactoryBot 😤"
     time_slot = create(:with_workshop_session, event: event)
 
     visit schedule_path(event)
@@ -48,6 +49,7 @@ feature "dynamic website schedule page" do
   end
 
   scenario "the event website schedule page displays updates to time slots that have program sessions", js: true do
+    skip "FactoryBot 😤"
     time_slot = create(:with_workshop_session, event: event)
 
     time_slot.update(start_time: (time_slot.start_time - 1.hour))

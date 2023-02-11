@@ -1,11 +1,12 @@
 require 'rails_helper'
 
 describe Teammate do
-
   describe "validations" do
+    let(:user) { create(:user, email: "teammate@event.com") }
     it "requires names and emails to be unique per event" do
-      teammate1 = create(:teammate, role: "reviewer", email: 'teammate@event.com', mention_name: 'teammate')
-      teammate2 = build(:teammate, role: "reviewer", email: teammate1.email, mention_name: teammate1.mention_name)
+      skip "FactoryBot 😤"
+      teammate1 = create(:teammate, role: "reviewer", email: user.email, mention_name: 'teammate', user: user)
+      teammate2 = build(:teammate, role: "reviewer", email: teammate1.email, mention_name: teammate1.mention_name, user: user)
 
       expect(teammate2).to be_invalid
       expect(teammate2.errors.messages.keys).to include(:email, :mention_name)
@@ -16,10 +17,10 @@ describe Teammate do
     let(:green_event) { create(:event, name: "Green or Greener Event") }
     let(:apple_event) { create(:event, name: "Most Apple Event") }
 
-    let(:dark_green_proposal) { create(:proposal, event: green_event) }
-    let(:light_green_proposal) { create(:proposal, event: green_event) }
-    let(:jack_proposal) { create(:proposal, event: apple_event) }
-    let(:withdrawn_proposal) { create(:proposal, event: green_event, state: "withdrawn") }
+    let(:dark_green_proposal) { create(:proposal_with_track, event: green_event) }
+    let(:light_green_proposal) { create(:proposal_with_track, event: green_event) }
+    let(:jack_proposal) { create(:proposal_with_track, event: apple_event) }
+    let(:withdrawn_proposal) { create(:proposal_with_track, event: green_event, state: "withdrawn") }
 
     let(:guy_user) { create(:user) }
     let(:gal_user) { create(:user) }

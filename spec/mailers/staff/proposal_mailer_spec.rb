@@ -3,7 +3,7 @@ require "rails_helper"
 describe Staff::ProposalMailer do
   let(:event) { create(:event) }
   let(:speaker) { create(:speaker) }
-  let(:proposal) { create(:proposal, event: event, speakers: [speaker]) }
+  let(:proposal) { create(:proposal_with_track, event: event, speakers: [speaker]) }
 
   after(:each) do
     ActionMailer::Base.deliveries.clear

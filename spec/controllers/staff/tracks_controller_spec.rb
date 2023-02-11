@@ -10,5 +10,4 @@ describe Staff::TracksController, type: :controller do
       fail
     end
   end
-
 end

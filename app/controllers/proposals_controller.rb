@@ -43,7 +43,7 @@ class ProposalsController < ApplicationController
       return
     end
     @proposal = @event.proposals.new
-    @proposal.speakers.build(user: current_user, houston_or_providence: Speaker::HOUSTON_OR_PROVIDENCE.first)
+    @proposal.speakers.build(user: current_user)
     flash.now[:warning] = incomplete_profile_msg unless current_user.complete?
   end
 
@@ -93,8 +93,6 @@ class ProposalsController < ApplicationController
     speaker.event_id = @event.id
 
     if @proposal.save
-      # NOTE: more houstong or providence hackery
-      hack_location_taggings
       current_user.update_bio
       flash[:confirm] = setup_flash_message
       redirect_to event_proposal_url(event_slug: @event.slug, uuid: @proposal)
@@ -121,8 +119,6 @@ class ProposalsController < ApplicationController
       @proposal.update(confirmed_at: DateTime.current)
       redirect_to event_event_proposals_url(slug: @event.slug, uuid: @proposal), flash: { success: "Thank you for confirming your participation" }
     elsif @proposal.speaker_update_and_notify(proposal_params)
-      # NOTE: more houstong or providence hackery
-      hack_location_taggings
       redirect_to event_proposal_url(event_slug: @event.slug, uuid: @proposal)
     else
       flash[:danger] = "There was a problem saving your proposal."
@@ -144,29 +140,10 @@ class ProposalsController < ApplicationController
 
   private
 
-  def hack_location_taggings
-    speaker = @proposal.speakers.first
-    speaker.proposals.where(event: @proposal.event).each do |p|
-      p.taggings.where(
-        internal: true,
-        tag: ["providence", "houston", "providence pref", "houston pref"]
-      ).destroy_all
-      if speaker.houston_or_providence =~ /Only RubyConf in Texas/
-        p.taggings.create(tag: "houston", internal: true)
-      elsif speaker.houston_or_providence =~ /Only RubyConf Mini in Rhode Island/
-        p.taggings.create(tag: "providence", internal: true)
-      elsif speaker.houston_or_providence =~ /Prefer RubyConf in Texas/
-        p.taggings.create(tag: "houston pref", internal: true)
-      else
-        p.taggings.create(tag: "providence pref", internal: true)
-      end
-    end
-  end
-
   def proposal_params
     params.require(:proposal).permit(:title, {tags: []}, :session_format_id, :track_id, :abstract, :details, :pitch, custom_fields: @event.custom_fields,
                                      comments_attributes: [:body, :proposal_id, :user_id],
-                                     speakers_attributes: [:bio, :id, :age_range, :pronouns, :ethnicity, :first_time_speaker, :houston_or_providence])
+                                     speakers_attributes: [:bio, :id, :age_range, :pronouns, :ethnicity, :first_time_speaker])
   end
 
   def notes_params

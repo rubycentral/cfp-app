@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  include Pundit
+  include Pundit::Authorization
   include ActivateNavigation
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 

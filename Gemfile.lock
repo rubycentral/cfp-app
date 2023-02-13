@@ -231,7 +231,7 @@ GEM
       haml (>= 4.0.6)
       railties (>= 5.1)
     hashie (5.0.0)
-    honeybadger (4.12.2)
+    honeybadger (5.1.0)
     html2haml (2.3.0)
       erubis (~> 2.7.0)
       haml (>= 4.0)
@@ -562,7 +562,7 @@ DEPENDENCIES
   guard-rspec
   haml (~> 5.0)
   haml-rails
-  honeybadger (~> 4.0)
+  honeybadger (~> 5.1)
   html2haml (~> 2.2)
   image_processing (~> 1.2)
   jbuilder

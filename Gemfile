@@ -22,7 +22,7 @@ gem 'net-pop', require: false
 gem 'pg'
 
 gem 'bootstrap-sass', '~> 3.4.1'
-gem 'haml', '~> 5.0'
+gem 'haml', '~> 6.1'
 gem 'jbuilder'
 gem 'jquery-datatables-rails'
 gem 'jquery-rails'

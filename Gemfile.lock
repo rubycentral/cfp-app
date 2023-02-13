@@ -222,8 +222,9 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
-    haml (5.2.2)
-      temple (>= 0.8.0)
+    haml (6.1.1)
+      temple (>= 0.8.2)
+      thor
       tilt
     haml-rails (2.1.0)
       actionpack (>= 5.1)
@@ -560,7 +561,7 @@ DEPENDENCIES
   guard
   guard-livereload (~> 2.1)
   guard-rspec
-  haml (~> 5.0)
+  haml (~> 6.1)
   haml-rails
   honeybadger (~> 4.0)
   html2haml (~> 2.2)

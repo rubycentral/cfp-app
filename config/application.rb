@@ -27,6 +27,6 @@ module CFPApp
 
     config.active_job.queue_adapter = :sidekiq
     config.active_record.yaml_column_permitted_classes =
-      [Symbol, Hash, Array, ActiveSupport::HashWithIndifferentAccess]
+      [Symbol, Hash, Array, ActiveSupport::HashWithIndifferentAccess, ActionController::Parameters]
   end
 end

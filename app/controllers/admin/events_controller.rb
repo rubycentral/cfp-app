@@ -41,7 +41,7 @@ class Admin::EventsController < Admin::ApplicationController
   end
 
   def index
-    @events = Event.order("archived").all
+    @events = Event.order(:archived, id: :desc)
   end
 
 end

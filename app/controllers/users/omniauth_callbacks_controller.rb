@@ -1,5 +1,6 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  before_action :check_current_user, only: [:twitter, :github]
+  before_action :check_current_user, only: [:twitter, :github, :developer]
+  skip_forgery_protection only: :developer
 
   def twitter
     authenticate_with_hash
@@ -7,6 +8,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def github
     authenticate_with_hash
+  end
+
+  def developer
+    user = User.find_by email: auth_hash.uid
+    authenticate_with_hash user
   end
 
   def failure
@@ -22,9 +28,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
 
-  def authenticate_with_hash
+  def authenticate_with_hash(user = nil)
     logger.info "Authenticating user credentials: #{auth_hash.inspect}"
-    @user = User.from_omniauth(auth_hash, session[:pending_invite_email])
+    @user = user || User.from_omniauth(auth_hash, session[:pending_invite_email])
 
     if @user.persisted?
       flash.now[:info] = "You have signed in with #{auth_hash['provider'].capitalize}."

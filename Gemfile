@@ -60,6 +60,7 @@ gem 'webpacker'
 
 gem 'sidekiq'
 
+gem 'diffy'
 gem 'paper_trail'
 
 gem 'sendgrid-ruby'

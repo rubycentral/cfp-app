@@ -162,6 +162,7 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.5.1)
+    diffy (3.4.3)
     dotenv (2.8.1)
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
@@ -549,6 +550,7 @@ DEPENDENCIES
   country_select (~> 8.0)
   database_cleaner (~> 2.0)
   devise (~> 4.8)
+  diffy
   dotenv-rails
   draper (~> 4.0)
   factory_bot_rails

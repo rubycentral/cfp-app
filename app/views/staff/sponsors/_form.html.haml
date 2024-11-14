@@ -1,0 +1,31 @@
+= simple_form_for @sponsor, url: [ event, :staff, @sponsor ] do |f|
+  .row
+    %fieldset.col-md-6
+      = f.input :name, maxlength: 60, input_html: { class: 'watched js-maxlength-alert', rows: 1 }
+      = f.input :tier, collection: Sponsor::TIERS
+      = f.input :url
+      = f.input :published, as: :boolean, wrapper: :vertical_radio_and_checkboxes
+      = f.input :description
+
+      - if f.object.primary_logo.attached?
+        = resize_image_tag(f.object.primary_logo, width: 100)
+      = f.input :primary_logo, class: "form-contorl-file"
+
+      - if f.object.footer_logo.attached?
+        = resize_image_tag(f.object.footer_logo, width: 100)
+      = f.input :footer_logo, class: "form-control-file"
+
+      - if f.object.banner_ad.attached?
+        = resize_image_tag(f.object.banner_ad, width: 100)
+      = f.input :banner_ad
+
+
+    %fieldset.col-md-6
+      %h4 Sponsor Offer
+      = f.input :offer_headline
+      = f.input :offer_url
+      = f.input :offer_text
+
+    .col-sm-12
+      = submit_tag("Save", class: "btn btn-success", type: "submit")
+      = link_to "Cancel", event_staff_sponsors_path, class: "btn btn-default"

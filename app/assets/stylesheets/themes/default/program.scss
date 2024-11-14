@@ -1,0 +1,177 @@
+.program-sessions-wrapper {
+  display: flex;
+  margin: auto;
+  max-width: 1600px;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 14px;
+  background-color: var(--main_content_background);
+  padding: 20px 0 0 0;
+  margin-bottom: 40px;
+
+  &.empty .empty-placeholder  {
+    display: block !important;
+    text-align: center;
+    margin-top: 30px;
+
+    h3 {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    p {
+      font-family: var(--secondary-body-font);
+      line-height: 130%;
+    }
+  }
+}
+
+.session-card {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 30%;
+  padding: 1.875rem 1.25rem .625rem 1.25rem;
+  border-radius: 10px;
+  border: 1px solid var(--grey-light);
+  box-shadow: 2px 4px 16px 4px rgba(0, 0, 0, 0.1);
+
+  .seesion-title-abstract-container {
+    height: 13.75rem;
+  }
+
+  .session-speaker-track-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    margin-bottom: .75rem;
+  }
+
+  .tag-wrapper {
+    .session-format-tag,
+    .track-tag {
+      margin-bottom: .25rem;
+    }
+  }
+
+  .session-title {
+    font-size: 21px;
+    font-weight: 700;
+    margin-bottom: .6rem;
+    text-decoration: #F8B400 underline solid 2px;
+    text-underline-offset: 0.1em;
+  }
+
+  .session-abstract {
+    font-family: var(--secondary-body-font);
+    height: 6.25rem;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    white-space: no-wrap;
+    overflow: hidden;
+  }
+
+  .session-speaker-details {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .session-accent {
+    width: 100%;
+    height: .5rem;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-radius: 0 0 100px 100px;
+  }
+}
+
+.fly-out-wrapper {
+  .program-session-detail {
+    margin: 0 40px 50px 30px;
+    overflow: scroll;
+
+    .program-session-title {
+      font-size: 21px;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    .program-session-tags {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 25px;
+    }
+
+    .program-session-about {
+      border-top: 1px solid #D1D1D1;
+      font-family: var(--secondary-body-font);
+      padding-top: 25px;
+      width: 100%;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 25px;
+      margin-bottom: 25px;
+
+
+      span, a {
+        font-family: var(--sans-serif-font);
+        font-weight: 700;
+        font-size: 16px;
+        margin-bottom: 6px;
+        display: block;
+      }
+
+      a {
+        margin-top: 0.6rem;
+        text-decoration: #F8B400 underline solid 2px;
+        text-underline-offset: 0.1em;
+      }
+    }
+
+    .program-session-authors {
+      .speaker-name {
+        font-weight: 700;
+        font-size: 16px;
+        margin-bottom: 6px;
+      }
+
+      .speaker-bio {
+        font-family: var(--secondary-body-font);
+        margin-bottom: 15px;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 25px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) and (orientation: portrait),
+  (max-width: 1123px) and (orientation: landscape) {
+    .program-sessions-wrapper {
+      padding: 15px 10px;
+    }
+    .session-card {
+      width: 40%;
+    }
+  }
+
+
+
+
+@media screen and (max-width: 900px) and (orientation: portrait),
+  (max-width: 823px) and (orientation: landscape) {
+    .program-sessions-wrapper {
+      padding: 25px;
+    }
+
+    .session-card {
+      width: 100%;
+    }
+  }

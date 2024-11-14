@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe CommentsController, type: :controller do
   describe "POST #create" do
-    let(:proposal) { create(:proposal, uuid: 'abc123') }
+    let(:proposal) { create(:proposal_with_track, uuid: 'abc123') }
     let(:user) { create(:user) }
     let(:referer_path) { event_proposal_path(event_slug: proposal.event.slug, uuid: proposal) }
     let(:mailer) { double("CommentNotificationMailer.speaker_notification") }
@@ -43,7 +43,7 @@ describe CommentsController, type: :controller do
 
       it "sends an email notification to all speakers" do
         speakers = build_list(:speaker, 3)
-        proposal = create(:proposal, speakers: speakers)
+        proposal = create(:proposal_with_track, speakers: speakers)
         allow(Proposal).to receive(:find).and_return(proposal)
         expect {
           post :create, params: params

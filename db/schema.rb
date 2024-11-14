@@ -2,18 +2,46 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_23_215132) do
+ActiveRecord::Schema.define(version: 2023_02_03_031006) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
 
   create_table "comments", force: :cascade do |t|
     t.bigint "proposal_id"
@@ -72,6 +100,23 @@ ActiveRecord::Schema.define(version: 2020_02_23_215132) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
+  create_table "pages", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "slug", null: false
+    t.bigint "website_id"
+    t.text "published_body"
+    t.text "unpublished_body"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "landing", default: false, null: false
+    t.boolean "hide_header", default: false, null: false
+    t.boolean "hide_footer", default: false, null: false
+    t.boolean "hide_page", default: false, null: false
+    t.string "footer_category"
+    t.datetime "body_published_at"
+    t.index ["website_id"], name: "index_pages_on_website_id"
   end
 
   create_table "program_sessions", force: :cascade do |t|
@@ -137,6 +182,18 @@ ActiveRecord::Schema.define(version: 2020_02_23_215132) do
     t.index ["event_id"], name: "index_rooms_on_event_id"
   end
 
+  create_table "session_format_configs", force: :cascade do |t|
+    t.bigint "website_id"
+    t.bigint "session_format_id"
+    t.integer "position"
+    t.string "name"
+    t.boolean "display"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["session_format_id"], name: "index_session_format_configs_on_session_format_id"
+    t.index ["website_id"], name: "index_session_format_configs_on_website_id"
+  end
+
   create_table "session_formats", force: :cascade do |t|
     t.bigint "event_id"
     t.string "name"
@@ -159,10 +216,29 @@ ActiveRecord::Schema.define(version: 2020_02_23_215132) do
     t.text "info"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string "age_range"
+    t.string "ethnicity"
+    t.boolean "first_time_speaker"
+    t.string "pronouns"
     t.index ["event_id"], name: "index_speakers_on_event_id"
     t.index ["program_session_id"], name: "index_speakers_on_program_session_id"
     t.index ["proposal_id"], name: "index_speakers_on_proposal_id"
     t.index ["user_id"], name: "index_speakers_on_user_id"
+  end
+
+  create_table "sponsors", force: :cascade do |t|
+    t.bigint "event_id"
+    t.string "name"
+    t.string "tier"
+    t.boolean "published"
+    t.string "url"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.text "description"
+    t.string "offer_headline"
+    t.text "offer_text"
+    t.string "offer_url"
+    t.index ["event_id"], name: "index_sponsors_on_event_id"
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -205,10 +281,12 @@ ActiveRecord::Schema.define(version: 2020_02_23_215132) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.bigint "track_id"
+    t.bigint "sponsor_id"
     t.index ["conference_day"], name: "index_time_slots_on_conference_day"
     t.index ["event_id"], name: "index_time_slots_on_event_id"
     t.index ["program_session_id"], name: "index_time_slots_on_program_session_id"
     t.index ["room_id"], name: "index_time_slots_on_room_id"
+    t.index ["sponsor_id"], name: "index_time_slots_on_sponsor_id"
     t.index ["track_id"], name: "index_time_slots_on_track_id"
   end
 
@@ -261,5 +339,65 @@ ActiveRecord::Schema.define(version: 2020_02_23_215132) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  create_table "website_contents", force: :cascade do |t|
+    t.text "html"
+    t.string "placement", default: "head", null: false
+    t.string "name"
+    t.bigint "website_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["website_id"], name: "index_website_contents_on_website_id"
+  end
+
+  create_table "website_fonts", force: :cascade do |t|
+    t.string "name"
+    t.boolean "primary"
+    t.boolean "secondary"
+    t.bigint "website_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["website_id"], name: "index_website_fonts_on_website_id"
+  end
+
+  create_table "website_meta_data", force: :cascade do |t|
+    t.string "title"
+    t.string "author"
+    t.text "description"
+    t.bigint "website_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["website_id"], name: "index_website_meta_data_on_website_id"
+  end
+
+  create_table "websites", force: :cascade do |t|
+    t.bigint "event_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "theme", default: "default", null: false
+    t.string "domains"
+    t.string "city"
+    t.text "location"
+    t.string "prospectus_link"
+    t.string "twitter_handle"
+    t.string "directions"
+    t.string "footer_categories", default: [], array: true
+    t.text "footer_about_content"
+    t.string "footer_copyright"
+    t.string "facebook_url"
+    t.string "instagram_url"
+    t.string "navigation_links", default: [], array: true
+    t.string "caching", default: "off", null: false
+    t.datetime "purged_at"
+    t.index ["event_id"], name: "index_websites_on_event_id"
+  end
+
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "pages", "websites"
+  add_foreign_key "session_format_configs", "session_formats"
+  add_foreign_key "session_format_configs", "websites"
   add_foreign_key "session_formats", "events"
+  add_foreign_key "sponsors", "events"
+  add_foreign_key "website_meta_data", "websites"
+  add_foreign_key "websites", "events"
 end

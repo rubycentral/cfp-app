@@ -37,6 +37,7 @@ RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = false
 
   config.include FactoryBot::Syntax::Methods
+  config.include ActiveSupport::Testing::TimeHelpers
 
   # DB cleaning
   config.before(:suite) do
@@ -56,6 +57,18 @@ RSpec.configure do |config|
   config.before(:all) do
     FactoryBot.reload
   end
+
+  config.after(:each, js: true) do |example|
+    if example.exception
+      save_timestamped_screenshot(Capybara.page)
+    end
+  end
+
+  config.around(:each, caching: true) do |example|
+    Rails.configuration.action_controller.perform_caching = true
+    example.run
+    Rails.configuration.action_controller.perform_caching = false
+  end
 end
 
 Capybara.register_driver :chrome do |app|
@@ -71,4 +84,12 @@ Capybara.register_driver :headless_chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
 end
 
-Capybara.javascript_driver = :headless_chrome
+Capybara.javascript_driver = ENV['CHROME'] ? :chrome : :headless_chrome
+
+def save_timestamped_screenshot(page)
+  timestamp = Time.zone.now.strftime("%Y_%m_%d-%H_%M_%S")
+  filename = "#{method_name}-#{timestamp}.png"
+  screenshot_path = Rails.root.join("tmp", "screenshots", filename)
+
+  page.save_screenshot(screenshot_path)
+end

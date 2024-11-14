@@ -18,11 +18,12 @@ The CFP App does not provide a public facing website for your conference, though
 
 ### Prerequisite Requirements
 
-* Ruby 2.6.5
-* Bundler (was installed with 1.17.3)
-* PostgreSQL
+* Ruby 3.1.2 (set in `.ruby-version`)
+* Bundler (was installed with 2.3.11)
+* PostgreSQL 14.1
+* Google Chrome browser must be installed to run tests
 
-Make sure you have Ruby and Postgres installed in your environment.  Double check in the [Gemfile](../blob/master/Gemfile) for the exact supported version.  This is a Rails 5 app and uses bundler to install all required gems.  We are also making the assumption that you're familiar with how Rails apps are setup and deployed.  If this is not the case then you'll want to refer to documentation that will bridge any gaps in the instructions below.
+Make sure you have Ruby and Postgres installed in your environment.  Double check in the [Gemfile](../blob/main/Gemfile) for the exact supported version.  This is a Rails 6 app and uses bundler to install all required gems.  We are also making the assumption that you're familiar with how Rails apps are setup and deployed.  If this is not the case then you'll want to refer to documentation that will bridge any gaps in the instructions below.
 
 Run [bin/setup](bin/setup) script to install gem dependencies and setup database for development.
 
@@ -30,21 +31,20 @@ Run [bin/setup](bin/setup) script to install gem dependencies and setup database
 bin/setup
 ```
 
-This will create `.env` and a development database with seed data. Seeds will make an admin user with an email of `an@admin.com` and password of `userpass` to get you started.
+This script will:
 
-You will also need to install the JavaScript packages. To do that run:
+- Install Ruby dependencies
+- Install Javascript dependencies
+- Setup the database
+- Clear old logs and tempfiles
+- Create `.env` and a development database with seed data. Seeds will make an admin user with an email of `an@admin.com` and password of `userpass` to get you started
+- Run the test suite
 
-```bash
-yarn install --check-files
-```
-
-Start the server:
+To start the server on port 3000:
 
 ```bash
 bin/rails server
 ```
-
-Runs on port 3000.
 
 If you have the heroku toolbelt installed you can also use:
 
@@ -52,7 +52,7 @@ If you have the heroku toolbelt installed you can also use:
 heroku local
 ```
 
-This will boot up using Foreman and allow the .env file to be read / set for use locally. Runs on port 5000.
+This will boot up using Foreman and allow the `.env` file to be read / set for use locally. Runs on port 5000.
 
 ### Environment variables
 
@@ -62,6 +62,10 @@ This will boot up using Foreman and allow the .env file to be read / set for use
     POSTGRES_USER (dev/test only)
     MAIL_HOST (production only - from host)
     MAIL_FROM (production only - from address)
+    SMTP_ADDRESS (production only - address of SMTP server, defaults to 'smtp.sendgrid.net')
+    SMTP_PORT (production only - port of SMTP server, defaults to 587)
+    SMTP_USERNAME (production only - SMTP account username, defaults to 'apikey' for use with SendGrid)
+    SMTP_PASSWORD (production only - SMTP account password, defaults to feching environment variable 'SENDGRID_API_KEY')
     SECRET_TOKEN (production only)
     GITHUB_KEY
     GITHUB_SECRET
@@ -89,7 +93,7 @@ There are five user roles in the CFP App. To log in as a user type in developmen
 
 ## Deployment on Heroku
 
-The app was written with a Heroku deployment stack in mind. You can easily deploy the application using the button below, or you can deploy it anywhere assuming you can run Ruby 2.6.5 and Rails 5.2.2 with a PostgreSQL database and an SMTP listener.
+The app was written with a Heroku deployment stack in mind. You can easily deploy the application using the button below, or you can deploy it anywhere assuming you can run Ruby and Rails with a PostgreSQL database and an SMTP listener.
 
 The Heroku stack will use the following free addons:
 
@@ -210,6 +214,11 @@ One thing that will happen is you will get notifications showing you what talks 
 
 ...Coming Soon...
 
+### Website Hosting <sup>beta</sup>
+
+CFP App can now host a website for your actual conference including managing the
+static content pages and dynamic schedule program pages. See [Website
+Documentation](/docs/website_documentation.md) for more details.
 
 
 ## Customizing and Contributing

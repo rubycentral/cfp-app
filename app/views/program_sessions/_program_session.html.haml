@@ -1,0 +1,22 @@
+.session-card{ class: current_website.program_filter_classes(program_session), data: { 'filter-target': 'content' } }
+  %div.seesion-title-abstract-container
+    %a.session-title{ href: "#", data: { action: 'click->fly-out#updateSidePanel', 'session-id': dom_id(program_session) } }
+      = program_session.title
+
+    .session-abstract
+      = program_session.abstract.html_safe
+
+  %div.session-speaker-track-container
+    .session-speaker-details
+      = program_session.speaker_names
+
+    .tag-wrapper
+      %span.session-format-tag{ class: "#{current_website.session_format_tag_class(program_session.session_format)}" }
+        = current_website.session_format_name(program_session.session_format)
+
+      -if program_session.track
+        %span.track-tag
+          %span.track-dot{ class: "#{current_website.track_background(program_session.track)}" }
+          = program_session.track_name
+
+  .session-accent{ class: program_session.track ? current_website.track_background(program_session.track) : current_website.session_format_background_class(program_session.session_format) }

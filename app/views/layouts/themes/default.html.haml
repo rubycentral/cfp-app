@@ -1,0 +1,61 @@
+!!!5
+%html(lang="en")
+  %head
+    %title= current_website.website_title(yield(:title))
+    %link{rel: "icon", type: "image/png", href: current_website.favicon_url}
+    %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    %meta{name: "description", content: current_website.description}
+
+    %meta{property: "og:title", content: current_website.website_title(yield(:title))}
+    %meta{property: "og:author", content: current_website.author}
+    %meta{property: "og:url", content: request.original_url}
+    %meta{property: "og:type", content: "website"}
+    %meta{property: "og:description", content: current_website.description}
+    %meta{property: "og:image", content: current_website.meta_image_url}
+
+    %meta{property: "twitter:card", content: "summary_large_image"}
+    %meta{property: "twitter:site", content: "@#{current_website.twitter_handle}"}
+    %meta{property: "twitter:title", content: current_website.website_title(yield(:title))}
+    %meta{property: "twitter:url", content: request.original_url}
+    %meta{property: "twitter:description", content: current_website.description}
+    %meta{property: "twitter:image", content: current_website.meta_image_url}
+
+    = stylesheet_link_tag current_website.theme, media: 'all'
+    = javascript_pack_tag "application"
+    :css
+      #{current_website.font_faces_css}
+      #{current_website.font_root_css}
+    = javascript_pack_tag "tailwind"
+    = current_website.head_content
+
+  %body
+    - unless @page&.hide_header?
+      = render 'layouts/themes/default/header'
+
+    #content
+      = yield
+
+    - unless @page&.hide_footer?
+      = render 'layouts/themes/default/footer'
+
+    - unless @page&.hide_header?
+      :javascript
+        var openEl = document.getElementById('menu-toggle');
+        var mobileNavEl = document.getElementById('main-nav');
+
+        function toggleNav() {
+          mobileNavEl.classList.toggle('menu-mobile--opened')
+          openEl.classList.toggle('menu-toggle--opened')
+        }
+
+        openEl.addEventListener('click', function (e) {
+          e.preventDefault()
+          toggleNav()
+        })
+
+        document.getElementById("main-nav").addEventListener('click', function(e) {
+          toggleNav()
+        })
+    = current_website.footer_content
+
+    = yield :javascript

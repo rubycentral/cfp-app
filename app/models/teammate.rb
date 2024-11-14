@@ -1,5 +1,4 @@
 class Teammate < ApplicationRecord
-
   PENDING = "pending"
   ACCEPTED = "accepted"
   DECLINED = "declined"
@@ -18,7 +17,7 @@ class Teammate < ApplicationRecord
   }
 
   belongs_to :event
-  belongs_to :user
+  belongs_to :user, optional: true
 
   validates_uniqueness_of :email, scope: :event
   validates_uniqueness_of :mention_name, scope: :event, allow_blank: true
@@ -27,7 +26,7 @@ class Teammate < ApplicationRecord
   validates_format_of :mention_name, with: /\A\w+\z/, message: "cannot include punctuation or spaces", allow_blank: true
 
   scope :for_event, -> (event) { where(event: event) }
-  scope :alphabetize, -> { Teammate.joins(:user).merge(User.order(name: :asc)) }
+  scope :alphabetize, -> { joins(:user).merge(User.order(name: :asc)) }
   scope :notify, -> { where(notifications: true) }
 
   scope :organizer, -> { where(role: "organizer") }
@@ -88,9 +87,9 @@ end
 #
 # Table name: teammates
 #
-#  id                      :bigint(8)        not null, primary key
-#  event_id                :bigint(8)
-#  user_id                 :bigint(8)
+#  id                      :integer          not null, primary key
+#  event_id                :integer
+#  user_id                 :integer
 #  role                    :string
 #  email                   :string
 #  state                   :string

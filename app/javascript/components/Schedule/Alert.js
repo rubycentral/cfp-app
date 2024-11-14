@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from "react"
-import PropTypes from "prop-types"
+import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 
 class Alert extends Component {
   render() {
@@ -7,18 +7,21 @@ class Alert extends Component {
 
     return (
       <div className="scheduling-error alert alert-danger">
-        <button className='close' onClick={this.props.onClose}> &times; </button>
-        { messages.map(message => {
-          return <p>{message}</p>
-        }) }
+        <button className="close" onClick={this.props.onClose}>
+          {' '}
+          &times;{' '}
+        </button>
+        {messages.map((message) => {
+          return <p>{message}</p>;
+        })}
       </div>
-    )
+    );
   }
 }
 
 Alert.propTypes = {
   onClose: PropTypes.func,
   messages: PropTypes.array,
-}
+};
 
-export default Alert
+export { Alert };

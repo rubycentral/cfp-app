@@ -1,0 +1,13 @@
+.row
+  .col-md-12
+    .page-header.clearfix
+      .btn-navbar
+        %h1 Edit Website
+      - if FastlyService.service
+        .pull-right
+          = button_to "Purge",
+            purge_event_staff_website_path(current_event),
+            class: 'btn btn-success',
+            data: { confirm: "Are you sure you want to purge all website cached content in Fastly?" }
+
+= render 'form', website: @website

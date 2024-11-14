@@ -147,7 +147,7 @@ end
 #
 # Table name: users
 #
-#  id                     :bigint(8)        not null, primary key
+#  id                     :integer          not null, primary key
 #  name                   :string
 #  email                  :string           default(""), not null
 #  bio                    :text

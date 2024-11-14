@@ -1,0 +1,40 @@
+= simple_form_for([current_event, :staff, page],
+  { data: { controller: :editor,
+  action: "beforeunload@window->editor#leavingPage",
+  'editor-changed-value' => "false" } }) do |f|
+  .preview-flex
+    .resize
+      .inner
+        = f.input :name
+        = f.input :slug
+        = f.input :hide_page, as: :boolean, wrapper: :vertical_radio_and_checkboxes
+        = f.input :hide_header, as: :boolean, wrapper: :vertical_radio_and_checkboxes
+        = f.input :hide_footer, as: :boolean, wrapper: :vertical_radio_and_checkboxes
+        = f.input :footer_category, collection: current_website.footer_categories
+        %div{ data: { "editor-target": :wysiwyg }, class: 'hidden', disabled: true }
+          = f.input :unpublished_body,
+            as: :text,
+            input_html: { data: { "editor-target": :wysiwygContent } }
+          = link_to("Edit HTML", '#', { data: { action: "click->editor#editHtml" } })
+        %div{ data: { "editor-target": :html } }
+          = f.input :unpublished_body,
+            as: :text,
+            label: "Unpublished Body #{link_to_docs("codemirror")}".html_safe,
+            input_html: { data: { "editor-target": :htmlContent } }
+          = link_to("WYSIWYG", '#', { data: { action: "click->editor#wysiwyg" } })
+    .resize
+      #page-preview-wrapper
+        %h4 Preview Page
+        %iframe{ src: "#{event_staff_page_path(current_event, @page, params.to_unsafe_hash)}",
+                 id: "page-preview", name: "page-preview" }
+  .row
+    .col-sm-12
+      = submit_tag("Save",
+        class: "btn btn-success",
+        type: "submit",
+        data: { action: "editor#allowFormSubmission" })
+      = link_to "Cancel", event_staff_pages_path(current_event), {:class=>"cancel-form btn btn-danger"}
+= form_with url: event_staff_page_path(current_event, @page),
+  html: { target: "page-preview", id: "preview-form" } do |f|
+  = f.hidden_field :preview, id: "hidden-preview"
+

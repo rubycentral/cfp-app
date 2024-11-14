@@ -1,4 +1,17 @@
 Rails.application.routes.draw do
+  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+  constraints DomainConstraint.new do
+    get '/', to: 'pages#show'
+    get '/(:slug)/program', to: 'programs#show'
+    get '/(:slug)/schedule', to: 'schedule#show'
+    get '/(:slug)/sponsors', to: 'sponsors#show'
+    get '/(:slug)/banner_ads', to: 'sponsors#banner_ads'
+    get '/(:slug)/sponsors_footer', to: 'sponsors#sponsors_footer'
+    get '/:domain_page_or_slug', to: 'pages#show'
+    get '/:slug/:page', to: 'pages#show'
+  end
+
   root 'home#show'
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   mount ActionCable.server => '/cable'
@@ -107,9 +120,24 @@ Rails.application.routes.draw do
 
       resources :session_formats, except: :show
       resources :tracks, except: [:show]
+      resource :website, only: [:new, :create, :edit, :update] do
+        member do
+          post :purge
+        end
+      end
+      resources :pages do
+        member do
+          get :preview
+          post :show
+          patch :publish
+          patch :promote
+        end
+      end
+      resources :sponsors, only: [:index, :new, :create, :edit, :update, :destroy]
     end
   end
 
+  resources :image_uploads, only: :create
   resource :public_comments, only: [:create], controller: :comments, type: 'PublicComment'
   resource :internal_comments, only: [:create], controller: :comments, type: 'InternalComment'
 
@@ -137,7 +165,14 @@ Rails.application.routes.draw do
   end
 
   get '/current-styleguide', :to => 'pages#current_styleguide'
-  get '/404', :to => 'errors#not_found'
+  get '/404', :to => 'errors#not_found', as: :not_found
   get '/422', :to => 'errors#unacceptable'
   get '/500', :to => 'errors#internal_error'
+
+  get '/(:slug)', to: 'pages#show', as: :landing
+  get '/(:slug)/program', to: 'programs#show', as: :program
+  get '/(:slug)/schedule', to: 'schedule#show', as: :schedule
+  get '/(:slug)/sponsors', to: 'sponsors#show', as: :sponsors
+  get '/(:slug)/:page', to: 'pages#show', as: :page
+
 end

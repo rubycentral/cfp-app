@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Staff::RatingsController, type: :controller do
-  let(:proposal) { create(:proposal) }
+  let(:proposal) { create(:proposal_with_track) }
   let(:event) { proposal.event }
   let(:reviewer) { create(:user, :reviewer) }
   let!(:speaker) { create(:speaker, proposal: proposal) }
@@ -10,7 +10,7 @@ describe Staff::RatingsController, type: :controller do
 
   context "reviewer has a submitted proposal" do
     let!(:speaker) { create(:speaker, user: reviewer) }
-    let!(:proposal) { create(:proposal, speakers: [ speaker ]) }
+    let!(:proposal) { create(:proposal_with_track, speakers: [ speaker ]) }
 
     it "prevents reviewer from rating their own proposals" do
       expect {

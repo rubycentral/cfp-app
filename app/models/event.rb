@@ -1,5 +1,4 @@
 class Event < ApplicationRecord
-
   has_many :teammates, dependent: :destroy
   has_many :staff, through: :teammates, source: :user
   has_many :proposals, dependent: :destroy
@@ -11,6 +10,8 @@ class Event < ApplicationRecord
   has_many :session_formats, dependent: :destroy
   has_many :taggings, through: :proposals
   has_many :ratings, through: :proposals
+  has_many :sponsors
+  has_one :website
 
   has_many :public_session_formats, ->{ where(public: true) }, class_name: 'SessionFormat'
 
@@ -25,7 +26,6 @@ class Event < ApplicationRecord
   store_accessor :speaker_notification_emails, :accept
   store_accessor :speaker_notification_emails, :reject
   store_accessor :speaker_notification_emails, :waitlist
-
 
   scope :a_to_z, -> { order('name ASC') }
   scope :closes_up, -> { order('closes_at ASC') }
@@ -240,7 +240,7 @@ end
 #
 # Table name: events
 #
-#  id                          :bigint(8)        not null, primary key
+#  id                          :integer          not null, primary key
 #  name                        :string
 #  slug                        :string
 #  url                         :string
@@ -257,7 +257,7 @@ end
 #  proposal_tags               :text
 #  review_tags                 :text
 #  custom_fields               :text
-#  speaker_notification_emails :text
+#  speaker_notification_emails :text             default({:accept=>"", :reject=>"", :waitlist=>""})
 #  created_at                  :datetime
 #  updated_at                  :datetime
 #

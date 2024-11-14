@@ -1,26 +1,30 @@
+# frozen_string_literal: true
+
 module Invitable
-  module State
-    unless const_defined?(:DECLINED)
-      DECLINED = 'declined'
-      PENDING = 'pending'
-      ACCEPTED = 'accepted'
+  extend ActiveSupport::Concern
+
+  included do
+    module State
+      unless const_defined?(:DECLINED)
+        DECLINED = 'declined'
+        PENDING = 'pending'
+        ACCEPTED = 'accepted'
+      end
     end
-  end
 
-  def self.included(klass)
-    klass.scope :pending,      -> { klass.where(state: State::PENDING) }
-    klass.scope :declined,      -> { klass.where(state: State::DECLINED) }
-    klass.scope :not_accepted, -> { klass.where(state: [ State::DECLINED, State::PENDING ]) }
+    scope :pending, -> { where(state: State::PENDING) }
+    scope :declined, -> { where(state: State::DECLINED) }
+    scope :not_accepted, -> { where(state: [State::DECLINED, State::PENDING]) }
 
-    klass.before_create :set_default_state
-    klass.before_create :set_slug
+    before_create :set_default_state
+    before_create :set_slug
 
-    klass.validates :email, presence: true
-    klass.validates_format_of :email, :with => /@/
+    validates :email, presence: true
+    validates_format_of :email, with: /@/
   end
 
   def decline
-    self.update(state: State::DECLINED)
+    update(state: State::DECLINED)
   end
 
   def pending?
@@ -34,7 +38,7 @@ module Invitable
   private
 
   def set_slug
-    self.slug = Digest::SHA1.hexdigest([email, rand(1000)].map(&:to_s).join('-'))[0,10]
+    self.slug = Digest::SHA1.hexdigest([email, rand(1000)].map(&:to_s).join('-'))[0, 10]
   end
 
   def set_default_state

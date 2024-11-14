@@ -5,6 +5,21 @@ $(document).ready(function() {
   setTimeout(function() {
     $(".alert").not('.alert-confirm, .scheduling-error').alert('close');
   }, 5000);
+
+  $(".selectize-sortable").selectize({
+    plugins: ["drag_drop"],
+  });
+
+  $(".selectize-create").selectize({
+    plugins: ["drag_drop"],
+    persist: false,
+    create: function (input) {
+      return {
+        value: input,
+        text: input,
+      };
+    },
+  });
 });
 
 // Datatable extension for reseting sort order

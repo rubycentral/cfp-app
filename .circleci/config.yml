@@ -1,0 +1,87 @@
+version: 2.1
+
+workflows:
+  version: 2.1
+  build:
+    jobs:
+      - build_and_test
+orbs:
+  browser-tools: circleci/browser-tools@1.1
+jobs:
+  build_and_test:
+    working_directory: ~/cfp_app
+    docker:
+      - image: cimg/ruby:3.1.2-browsers
+        environment:
+          PGHOST: localhost
+          PGUSER: cfp_app
+          RAILS_ENV: test
+      - image: postgres:12.5
+        environment:
+          POSTGRES_USER: cfp_app
+          POSTGRES_DB: cfp_app_test
+          POSTGRES_PASSWORD: ""
+          POSTGRES_HOST_AUTH_METHOD: trust
+    steps:
+      - browser-tools/install-browser-tools
+      - checkout
+      - run: |
+          ruby --version
+          node --version
+          java --version
+          google-chrome --version
+
+      - run: gem install bundler
+      - run: yarn install
+
+      # Restore Cached gem Dependencies
+      - restore_cache:
+          keys:
+              - cfp_app-gems-{{ checksum "Gemfile.lock" }}
+              - cfp_app-gems-
+      # Restore Cached node module Dependencies
+      - restore_cache:
+          keys:
+              - cfp_app-packages-{{ checksum "yarn.lock" }}
+              - cfp_app-packages-
+
+      # Bundle install dependencies
+      - run: bundle config set path 'vendor/bundle'
+      - run: bundle install
+
+      ## Cache Dependencies
+
+      # Generate this fallback cache first because the most recent match
+      # will be used even if there is a more precise match
+      - save_cache:
+          key: cfp_app-gems-
+          paths:
+              - vendor/bundle
+      # Generate a cache for this exact Gemfile.lock
+      - save_cache:
+          key: cfp_app-gems-{{ checksum "Gemfile.lock" }}
+          paths:
+              - vendor/bundle
+      # Generate a fallback cache of node packages
+      - save_cache:
+          key: cfp_app-packages-
+          paths:
+              - node_modules
+      # Generate a cache for this exact yarn.lock
+      - save_cache:
+          key: cfp_app-packages-{{ checksum "yarn.lock" }}
+          paths:
+              - node_modules
+
+      # Wait for DB
+      - run: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+      # Setup the database
+      - run: bundle exec rake db:setup
+
+      # Run the tests
+      - run: bin/rake
+
+      # Store failed js spec artifacts
+      - store_artifacts:
+          path: tmp/screenshots

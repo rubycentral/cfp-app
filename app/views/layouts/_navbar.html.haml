@@ -41,6 +41,12 @@
               = link_to event_staff_path(current_event) do
                 %span Dashboard
 
+          - if website_nav?
+            %li{class: nav_item_class("event-website-link")}
+              = link_to new_or_edit_website_path do
+                %span Website
+                %sup Beta
+
           - if admin_nav?
             = render partial: "layouts/nav/admin_nav"
 
@@ -63,3 +69,6 @@
 
 - elsif schedule_mode?
   = render partial: "layouts/nav/staff/schedule_subnav"
+
+- elsif display_website_subnav?
+  = render "layouts/nav/staff/website_subnav"

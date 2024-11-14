@@ -3,20 +3,22 @@ class SessionFormat < ApplicationRecord
   has_many :time_slots
   has_many :proposals
 
+  has_one :session_format_config
+
   validates_presence_of :event
   validates :description, length: { maximum: 250 }
   validates :name, uniqueness: {scope: :event}, presence: true
 
   scope :sort_by_name, ->{ order(:name) }
-  scope :publicly_viewable, ->{ where(public: true)}
+  scope :publicly_viewable, ->{ where(public: true) }
 end
 
 # == Schema Information
 #
 # Table name: session_formats
 #
-#  id          :bigint(8)        not null, primary key
-#  event_id    :bigint(8)
+#  id          :integer          not null, primary key
+#  event_id    :integer
 #  name        :string
 #  description :string
 #  duration    :integer

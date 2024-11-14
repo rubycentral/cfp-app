@@ -182,7 +182,7 @@ describe User do
 
   describe "#rating_for" do
     let(:user) { create(:user) }
-    let(:proposal) { create(:proposal) }
+    let(:proposal) { create(:proposal_with_track) }
 
     it "returns the proposal's rating if user has rated it" do
       rating = create(:rating, user: user, proposal: proposal)

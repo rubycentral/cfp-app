@@ -1,0 +1,5 @@
+.fly-out-wrapper.closed{ data: { 'fly-out-target': 'sidePanel'} }
+  %a{ href: "#", data: { action: 'fly-out#close' }, class: 'close-icon' }
+    = image_tag('themes/default/close.png')
+  = render 'filter'
+  = render partial: 'detail', collection: @program_sessions, as: :program_session

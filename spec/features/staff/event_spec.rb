@@ -49,7 +49,7 @@ feature "Event Dashboard" do
       event = organizer_teammate.event
       visit event_staff_info_path(event)
       expect(page).not_to have_link "Change Status"
-      create(:program_session, event: event)
+      create(:program_session_with_proposal, event: event)
       visit event_staff_info_path(event)
 
       within('.page-header') do

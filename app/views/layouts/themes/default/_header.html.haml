@@ -1,0 +1,12 @@
+%header#main-header{ **current_website.background_style }
+  .overlay
+    #header-logo-container
+      %a#menu-toggle{ href: "#"}
+      = resize_image_tag(current_website.logo, width: 36)
+      .website-info
+        = link_to(current_website.name, landing_path(website_event_slug))
+        .city
+          = current_website.city
+    %nav#main-nav
+      - current_website.navigation_links.each do |slug|
+        = link_to current_website.link_options.key(slug), page_path(website_event_slug, slug)

@@ -1,0 +1,111 @@
+<div class="pb-6 w-screen z-0 relative" background-image-style-url>
+  <div class="pt-8 w-full flex flex-col items-center lg:items-start lg:flex-row lg:justify-between h-full max-w-5xl mx-auto">
+    <div class="lg:w-1/2 pl-12 mb-6 lg:mb-0 lg:pt-8 z-10">
+        <h2 class="text-3xl font-semibold mb-3">Maecenas faucibus mollis interdum. Etiam porta sem malesuada magna mollis euismod. Nulla vitae elit libero, a pharetra augue.</h2>
+        <!-- Use for email collection -->
+        <input class="w-3/5 p-3 mr-2 rounded-md" type="text" id="fname" name="fname" placeholder="Enter your email" /> <button class="py-3 px-4 bg-gray-200 rounded-md text-sm font-bold">Notify Me</button>
+    </div>
+    <%= image_tag 'themes/default/image-placeholder.png', class: "block w-3/4 lg:w-1/2 z-20 rounded-md" %>
+  </div>
+</div>
+
+<!-- Conference Stats -->
+<div class="flex px-6 py-6 gap-6 flex-wrap border border-grey-200 w-3/5 justify-around mx-auto relative -top-4 bg-white max-w-3xl mb-6">
+  <div class="text-center"><span class="block text-5xl font-bold">00</span> <span>Adipiscing</span></div>
+  <div class="text-center"><span class="block text-5xl font-bold">00</span> <span>Fringilla</span></div>
+  <div class="text-center"><span class="block text-5xl font-bold">00</span> <span>Venenatis</span></div>
+  <div class="text-center"><span class="block text-5xl font-bold">00</span> <span>Pharetra</span></div>
+</div>
+
+<!-- Location Information-->
+<h4 class="text-center text-3xl font-bold tracking-wider mb-6">Meet you in <%= current_website.city %></h4>
+<div class="grid grid-cols-2 lg:grid-cols-3 grid-rows-2 gap-x-4 gap-y-3 max-w-5xl mx-auto mb-6">
+  <div class="col-span-2 self-end">
+    <%= image_tag 'themes/default/image-placeholder.png', class: "mx-auto" %>
+  </div>
+  <div class="col-span-2 lg:col-span-1 lg:row-span-2 flex lg:block items-center">
+    <div class="p-3 w-1/3 lg:w-full">
+      <div class="mb-3">
+        <h6 class="text-xl font-bold mb-1">Hotel</h6>
+        <span class="block bg-yellow-200">HOTEL NAME</span><span class="block bg-yellow-200">HOTEL ADDRESS</span> <span class="block bg-yellow-200">HOTEL CITY/ZIP</span>
+      </div>
+      <div class="mb-3">
+        <h6 class="text-xl font-bold mb-1">Venue</h6>
+        <span><%= current_website.location %></span>
+      </div>
+      <a class="mb-3 underline" href="<%= current_website.directions %>">Directions</a>
+    </div>
+    <div class="p-3 w-2/3 lg:w-full">
+      <p class="mb-3 leading-5">Curabitur blandit tempus porttitor. Maecenas faucibus mollis interdum. Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Nullam quis risus eget urna mollis ornare vel eu leo. Donec ullamcorper nulla non metus auctor fringilla.</p>
+      <p class="mb-6 leading-5">Sed posuere consectetur est at lobortis. Nulla vitae elit libero, a pharetra augue. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas sed diam eget risus varius blandit sit amet non magna. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Vestibulum id ligula porta felis euismod semper.</p>
+      <a href="#" class="bg-gray-200 rounded-lg p-4 text-sm font-bold">Make a Reservation</a>
+    </div>
+  </div>
+  <div class="self-center"><%= image_tag 'themes/default/image-placeholder.png', class: "mx-auto" %></div>
+  <div class="self-center"><%= image_tag 'themes/default/image-placeholder.png', class: "mx-auto" %></div>
+</div>
+
+<!-- Optional Contnent -->
+<h4 class="text-center text-3xl font-bold tracking-wider mb-6">Inceptos</h4>
+<div class="grid grid-cols-2 grid-rows-2 gap-x-3 gap-y-4 max-w-4xl mx-auto mb-6">
+  <div class="self-end">
+    <%= image_tag 'themes/default/image-placeholder.png', class: "mx-auto" %>
+  </div>
+  <div class="order-last lg:order-none">
+    <%= image_tag 'themes/default/image-placeholder.png', class: "mx-auto" %>
+  </div>
+  <div class="row-span-2 lg:row-span-1 lg:col-span-2 lg:columns-3 flex flex-col justify-center">
+    <p class="mb-3">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec ullamcorper nulla non metus auctor fringilla. Nullam quis risus eget urna mollis ornare vel eu leo. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+    <p class="mb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mattis consectetur purus sit amet fermentum. Etiam porta sem malesuada magna mollis euismod. Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Donec id elit non mi porta gravida at eget metus.</p>
+  </div>
+</div>
+
+<!-- CFP Component -->
+<h4 class="text-center text-3xl font-bold tracking-wider mb-6">Become A Speaker</h4>
+<div class="mb-6 flex flex-col lg:flex-row items-center lg:justify-center gap-4 max-w-5xl mx-auto mb-12">
+  <div class="w-full flex flex-row justify-center lg:w-2/5 lg:flex-col">
+    <%= image_tag 'themes/default/image-placeholder.png', class: "w-1/3 lg:w-full mr-3 block mb-4" %>
+    <div>
+      <h6 class="text-xl font-bold mb-3">Speak at <%= current_website.name %></h6>
+      <p class="mb-3">Submit a proposal through our CFP application.<br/>
+        Proposals must be submitted by <%= current_website.closes_at %></p>
+      <%= link_to(
+        'Apply',
+        event_url(current_website.event),
+          class: "py-3 px-4 bg-gray-200 rounded-md text-sm font-bold")
+      %>
+    </div>
+  </div>
+  <div class="w-full lg:w-2/5 flex flex-row justify-center lg:flex-col">
+    <%= image_tag 'themes/default/image-placeholder.png', class: "w-1/3 h-1/3 lg:w-full lg:h-full block mr-4 mb-4" %>
+    <%= image_tag 'themes/default/image-placeholder.png', class: "w-1/3 h-1/3 lg:w-full lg:h-full" %>
+  </div>
+</div>
+
+<!-- Optional Contnent -->
+<h4 class="text-center text-3xl font-bold tracking-wider mb-6">Adipiscing Elit</h4>
+<div class="mb-8 flex flex-col items-center lg:flex-row lg:items-start gap-8 max-w-4xl mx-auto">
+  <div class="w-4/5 lg:w-full">
+    <%= image_tag 'themes/default/image-placeholder.png', class: "mb-3" %>
+    <h5 class="mb-2 font-bold text-xl">Ligula Purus Tortor</h5>
+    <p class="mb-3">Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Curabitur blandit tempus porttitor. Curabitur blandit tempus porttitor.</p>
+    <a class="px-4 py-3 font-bold text-sm bg-gray-200 rounded-lg">Apply</a></div>
+  <div class="w-4/5 lg:w-full">
+    <%= image_tag 'themes/default/image-placeholder.png', class: "mb-3" %>
+    <h5 class="mb-2 font-bold text-xl">Commodo Parturient Vulputate</h5>
+    <p class="mb-3">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Nulla vitae elit libero, a pharetra augue. Donec ullamcorper nulla non metus auctor fringilla. Curabitur blandit tempus porttitor.</p>
+    <a class="px-4 py-3 font-bold text-sm bg-gray-200 rounded-lg">Apply</a></div>
+</div>
+
+<!-- Sponsors Footer -->
+<div class="flex flex-col items-center">
+  <h4 class="text-3xl font-bold tracking-wider mb-6">Thank you to our Sponsors</h4>
+  <p class="max-w-2xl mb-6">Interested in becoming a sponsor? Check out our
+    <%= link_to(
+      'Sponsorship Prospectus',
+      current_website.prospectus_link)
+    %>
+    to learn about sponsorship opportunities.
+  </p>
+  <sponsors-footer></sponsors-footer>
+</div>

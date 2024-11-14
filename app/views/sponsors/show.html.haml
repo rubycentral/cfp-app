@@ -1,0 +1,14 @@
+- content_for(:title) { "Sponsors" }
+%div.sponsors-page-wrapper
+  %h3.page-title
+    Sponsors
+
+  #sponsors
+    - @sponsors_by_tier.each do |tier, sponsors|
+      .sponsor-tier-wrapper
+        .tier-title
+          = tier
+        .sponsors-wrapper
+          = render sponsors
+
+  = embed(content_tag("sponsors-banner-adds"))

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'digest/sha1'
 
 class Proposal < ApplicationRecord
@@ -16,25 +18,24 @@ class Proposal < ApplicationRecord
   has_one :time_slot
   has_one :program_session
   belongs_to :session_format
-  belongs_to :track
+  belongs_to :track, optional: true
 
   validates :title, :abstract, :session_format, presence: true
   validate :abstract_length
-  validates :title, length: {maximum: 60}
+  validates :title, length: { maximum: 60 }
   validates_inclusion_of :state, in: valid_states, allow_nil: true, message: "'%{value}' not a valid state."
   validates_inclusion_of :state, in: FINAL_STATES, allow_nil: false, message: "'%{value}' not a confirmable state.",
-                         if: :confirmed_at_changed?
+                                 if: :confirmed_at_changed?
 
   serialize :last_change
   serialize :proposal_data, Hash
 
-  has_paper_trail only: [:title, :abstract, :details, :pitch]
+  has_paper_trail only: %i[title abstract details pitch]
 
   attr_accessor :tags, :review_tags, :updating_user
 
-  accepts_nested_attributes_for :public_comments, reject_if: Proc.new { |comment_attributes| comment_attributes[:body].blank? }
+  accepts_nested_attributes_for :public_comments, reject_if: proc { |comment_attributes| comment_attributes[:body].blank? }
   accepts_nested_attributes_for :speakers
-
 
   before_create :set_uuid, :set_updated_by_speaker_at
   before_update :save_attr_history
@@ -43,7 +44,7 @@ class Proposal < ApplicationRecord
   scope :accepted, -> { where(state: ACCEPTED) }
   scope :waitlisted, -> { where(state: WAITLISTED) }
   scope :submitted, -> { where(state: SUBMITTED) }
-  scope :confirmed, -> { where("confirmed_at IS NOT NULL") }
+  scope :confirmed, -> { where('confirmed_at IS NOT NULL') }
 
   scope :soft_accepted, -> { where(state: SOFT_ACCEPTED) }
   scope :soft_waitlisted, -> { where(state: SOFT_WAITLISTED) }
@@ -53,15 +54,15 @@ class Proposal < ApplicationRecord
 
   scope :unrated, -> { where('id NOT IN ( SELECT proposal_id FROM ratings )') }
   scope :rated, -> { where('id IN ( SELECT proposal_id FROM ratings )') }
-  scope :not_withdrawn, -> {where.not(state: WITHDRAWN)}
+  scope :not_withdrawn, -> { where.not(state: WITHDRAWN) }
   scope :not_owned_by, ->(user) { where.not(id: user.proposals.map(&:id)) }
-  scope :for_state, ->(state) do
-    where(state: state).order(:title).includes(:event, {speakers: :user}, :review_taggings)
-  end
-  scope :in_track, ->(track_id) do
+  scope :for_state, lambda { |state|
+    where(state: state).order(:title).includes(:event, { speakers: :user }, :review_taggings)
+  }
+  scope :in_track, lambda { |track_id|
     track_id = nil if track_id.try(:strip) == ''
     where(track_id: track_id)
-  end
+  }
 
   scope :emails, -> { joins(speakers: :user).pluck(:email).uniq }
 
@@ -72,8 +73,8 @@ class Proposal < ApplicationRecord
   # - They have rated or made a public comment on this proposal, and are not a speaker on this proposal
   def reviewers
     User.joins(:teammates,
-                 'LEFT OUTER JOIN ratings AS r ON r.user_id = users.id',
-                 'LEFT OUTER JOIN comments AS c ON c.user_id = users.id')
+               'LEFT OUTER JOIN ratings AS r ON r.user_id = users.id',
+               'LEFT OUTER JOIN comments AS c ON c.user_id = users.id')
         .where("teammates.event_id = ? AND (r.proposal_id = ? or (c.proposal_id = ? AND c.type = 'PublicComment'))",
                event.id, id, id)
         .where.not(id: speakers.map(&:user_id)).distinct
@@ -84,13 +85,14 @@ class Proposal < ApplicationRecord
   end
 
   def unmentioned_reviewers(mention_names, commenter_id)
-    reviewers.where.not(id: commenter_id, teammates: {mention_name: mention_names})
+    reviewers.where.not(id: commenter_id)
+             .where.not(teammates: { mention_name: mention_names })
   end
 
   def mentioned_event_staff(mention_names, commenter_id)
     event.staff.includes(:teammates)
-      .where.not(id: commenter_id)
-      .where(teammates: {event: event, mention_name: mention_names})
+         .where.not(id: commenter_id)
+         .where(teammates: { event: event, mention_name: mention_names })
   end
 
   # Return all proposals from speakers of this proposal. Does not include this proposal.
@@ -98,9 +100,7 @@ class Proposal < ApplicationRecord
     proposals = []
     speakers.each do |speaker|
       speaker.proposals.each do |p|
-        if p.id != id && p.event_id == event.id
-          proposals << p
-        end
+        proposals << p if p.id != id && p.event_id == event.id
       end
     end
     proposals
@@ -120,7 +120,7 @@ class Proposal < ApplicationRecord
 
   def finalize
     transaction do
-      update_state(SOFT_TO_FINAL[state]) if SOFT_TO_FINAL.has_key?(state)
+      update_state(SOFT_TO_FINAL[state]) if SOFT_TO_FINAL.key?(state)
       if becomes_program_session?
         ps = ProgramSession.create_from_proposal(self)
         ps.persisted?
@@ -136,15 +136,13 @@ class Proposal < ApplicationRecord
     update(state: WITHDRAWN)
     reviewers.each do |reviewer|
       Notification.create_for(reviewer, proposal: self,
-                            message: "Proposal, #{title}, withdrawn")
+                                        message: "Proposal, #{title}, withdrawn")
     end
   end
 
   def confirm
     update(confirmed_at: DateTime.current)
-    if program_session.present?
-      program_session.confirm
-    end
+    program_session.confirm if program_session.present?
   end
 
   def promote
@@ -157,7 +155,7 @@ class Proposal < ApplicationRecord
   end
 
   def draft?
-    self.state == SUBMITTED
+    state == SUBMITTED
   end
 
   def finalized?
@@ -169,7 +167,7 @@ class Proposal < ApplicationRecord
   end
 
   def confirmed?
-    self.confirmed_at.present?
+    confirmed_at.present?
   end
 
   def awaiting_confirmation?
@@ -194,6 +192,7 @@ class Proposal < ApplicationRecord
 
   def average_rating
     return nil if ratings.empty?
+
     ratings.map(&:score).inject(:+).to_f / ratings.size
   end
 
@@ -202,12 +201,12 @@ class Proposal < ApplicationRecord
       scores = ratings.map(&:score)
 
       squared_reducted_total = 0.0
-      average = scores.inject(:+)/scores.length.to_f
+      average = scores.inject(:+) / scores.length.to_f
 
       scores.each do |score|
-        squared_reducted_total = squared_reducted_total + (score - average)**2
+        squared_reducted_total += (score - average)**2
       end
-      Math.sqrt(squared_reducted_total/(scores.length))
+      Math.sqrt(squared_reducted_total / scores.length)
     end
   end
 
@@ -237,12 +236,12 @@ class Proposal < ApplicationRecord
 
   def speaker_update_and_notify(attributes)
     old_title = title
-    speaker_updates = attributes.merge({updated_by_speaker_at: Time.current})
-    if update_attributes(speaker_updates)
+    speaker_updates = attributes.merge({ updated_by_speaker_at: Time.current })
+    if update(speaker_updates)
       field_names = last_change.join(', ')
       reviewers.each do |reviewer|
         Notification.create_for(reviewer, proposal: self,
-                              message: "Proposal, #{old_title}, updated [ #{field_names} ]")
+                                          message: "Proposal, #{old_title}, updated [ #{field_names} ]")
       end
     end
   end
@@ -259,25 +258,22 @@ class Proposal < ApplicationRecord
 
   def abstract_length
     return unless abstract_changed? && abstract.gsub(/\r/, '').gsub(/\n/, '').length > 600
-    errors.add(:abstract, "is too long (maximum is 600 characters)")
+
+    errors.add(:abstract, 'is too long (maximum is 600 characters)')
   end
 
   def save_tags
-    if @tags
-      update_tags(proposal_taggings, @tags, false)
-    end
+    update_tags(proposal_taggings, @tags, false) if @tags
   end
 
   def save_review_tags
-    if @review_tags
-      update_tags(review_taggings, @review_tags, true)
-    end
+    update_tags(review_taggings, @review_tags, true) if @review_tags
   end
 
   def update_tags(old, new, internal)
     old.destroy_all
     tags = new.uniq.sort.map do |t|
-      {tag: t.strip, internal: internal} if t.present?
+      { tag: t.strip, internal: internal } if t.present?
     end.compact
     taggings.create(tags)
   end
@@ -291,12 +287,12 @@ class Proposal < ApplicationRecord
   end
 
   def save_attr_history
-    if updating_user && updating_user.organizer_for_event?(event)
+    if updating_user&.organizer_for_event?(event)
       # Erase the record of last change if the proposal is updated by an
       # organizer
       self.last_change = nil
     else
-      changes_whitelist = %w(pitch abstract details title)
+      changes_whitelist = %w[pitch abstract details title]
       self.last_change = changes_whitelist & changed
     end
   end
@@ -314,13 +310,13 @@ end
 #
 # Table name: proposals
 #
-#  id                    :bigint(8)        not null, primary key
-#  event_id              :bigint(8)
+#  id                    :integer          not null, primary key
+#  event_id              :integer
 #  state                 :string           default("submitted")
 #  uuid                  :string
 #  title                 :string
-#  session_format_id     :bigint(8)
-#  track_id              :bigint(8)
+#  session_format_id     :integer
+#  track_id              :integer
 #  abstract              :text
 #  details               :text
 #  pitch                 :text

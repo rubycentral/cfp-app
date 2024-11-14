@@ -1,0 +1,14 @@
+%tr
+  %td= sponsor.name
+  %td= sponsor.tier
+  %td= sponsor.published
+  %td
+    %a{ href: sponsor.url, target: "_blank" }
+      = sponsor.url
+  %td
+    - if sponsor.footer_logo.attached?
+      %span.glyphicon.glyphicon-ok
+  %td
+    - if sponsor.banner_ad.attached?
+      %span.glyphicon.glyphicon-ok
+  %td= link_to "Edit Sponsor", edit_event_staff_sponsor_path(current_event, sponsor)

@@ -1,0 +1,38 @@
+%tr
+  %td= link_to(page.name, edit_event_staff_page_path(current_event, page))
+  %td= link_to(page.slug, edit_event_staff_page_path(current_event, page))
+  %td
+    - if page.published?
+      %span.glyphicon.glyphicon-ok
+  %td
+    - if page.published?
+      = time_ago_in_words(page.body_published_at || page.updated_at)
+    - else
+      %span.label-warning Not Published
+  %td
+    - if page.unpublished_changes?
+      %span.glyphicon.glyphicon-bell
+  %td
+    - if page.landing?
+      %span.glyphicon.glyphicon-ok
+  %td
+    = link_to("Edit",
+      edit_event_staff_page_path(current_event, page),
+      class: 'btn btn-primary')
+    = link_to("Preview",
+      preview_event_staff_page_path(current_event, page),
+      class: 'btn btn-primary')
+    = link_to("Publish",
+      publish_event_staff_page_path(current_event, page),
+      method: :patch,
+      data: { confirm: "Are you sure you want to publish?" },
+      class: 'btn btn-primary')
+    - promote_action = page.landing? ? "Unpromote" : "Promote"
+    = link_to(promote_action,
+      promote_event_staff_page_path(current_event, page),
+      method: :patch,
+      data: { confirm: "Are you sure you want to #{promote_action} #{page.name} to be the landing page?" },
+        class: 'btn btn-primary')
+    - if page.published_body.present?
+      = link_to("View", page_path(current_event, page), class: 'btn btn-primary')
+    = link_to 'Destroy', event_staff_page_path(@event, page), method: :delete, data: { confirm: 'Are you sure you want to delete this page?' }, class: "btn btn-danger"

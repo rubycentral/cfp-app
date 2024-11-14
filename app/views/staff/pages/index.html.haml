@@ -1,0 +1,25 @@
+.row
+  .col-md-12
+    %header
+      %h3
+        Website Pages
+        = link_to "New Page",
+          new_event_staff_page_path(current_event),
+          class: "btn btn-primary btn-sm pull-right"
+.row
+  .col-md-12
+    %table.datatable.table.table-striped
+      %thead
+        %tr
+          %th Name
+          %th Slug
+          %th Published
+          %th Last Published
+          %th Unpublished Changes
+          %th Landing Page
+          %th
+            Actions
+            = link_to_docs("previewing")
+      %tbody
+        = render @pages
+%hr

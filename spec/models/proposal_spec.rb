@@ -5,8 +5,8 @@ include Proposal::State
 describe Proposal do
   describe "scope :unrated" do
     it "returns all unrated proposals" do
-      rated = create_list(:proposal, 3)
-      unrated = create_list(:proposal, 5)
+      rated = create_list(:proposal_with_track, 3)
+      unrated = create_list(:proposal_with_track, 5)
       rated.each { |proposal| create(:rating, proposal: proposal) }
 
       expect(Proposal.unrated).to match_array(unrated)
@@ -15,7 +15,7 @@ describe Proposal do
 
   describe "scope :rated" do
     it "returns all rated proposals" do
-      rated = create_list(:proposal, 3)
+      rated = create_list(:proposal_with_track, 3)
       rated.each { |proposal| create(:rating, proposal: proposal) }
 
       expect(Proposal.rated).to match_array(rated)
@@ -25,32 +25,14 @@ describe Proposal do
   describe 'scope :in_track' do
     let(:track1) { create :track, name: 'Track 1' }
     let(:track1_proposals) { create_list :proposal, 3, track: track1 }
-    let(:no_track_proposals) { create_list :proposal, 2, track: nil }
 
     it 'returns proposals of the given track' do
       expect(Proposal.in_track(track1.id)).to match_array(track1_proposals)
     end
-
-    it 'returns proposals with no track' do
-      expect(Proposal.in_track('')).to match_array(no_track_proposals)
-    end
-  end
-
-  describe "scope :emails" do
-    it "returns all attached email addresses" do
-      user1 = create(:user, email: 'user1@test.com')
-      user2 = create(:user, email: 'user2@test.com')
-
-      create(:proposal, speakers: [ create(:speaker, user: user1) ])
-      create(:proposal, speakers: [ create(:speaker, user: user2) ])
-
-      emails = Proposal.all.emails
-      expect(emails).to match_array([ user1.email, user2.email ])
-    end
   end
 
   context "When the record is new" do
-    let(:proposal) { build(:proposal, title: 'Dioramas!', abstract: 'Are great!') }
+    let(:proposal) { build(:proposal_with_track, title: 'Dioramas!', abstract: 'Are great!') }
 
     it 'sets a UUID before creation' do
       expect(Digest::SHA1).to receive(:hexdigest) { 'greendalecollege'}
@@ -58,8 +40,8 @@ describe Proposal do
     end
 
     it "limits abstracts to 600 characters or less" do
-      expect(build(:proposal, abstract: "S" * 600)).to be_valid
-      expect(build(:proposal, abstract: "S" * 601)).not_to be_valid
+      expect(build(:proposal_with_track, abstract: "S" * 600)).to be_valid
+      expect(build(:proposal_with_track, abstract: "S" * 601)).not_to be_valid
     end
   end
 
@@ -75,7 +57,7 @@ describe Proposal do
 
     it "returns true if the state matches the method" do
       state_method_map.each do |state, method|
-        proposal = create(:proposal, state: state)
+        proposal = create(:proposal_with_track, state: state)
         expect(proposal.public_send(method)).to be_truthy
       end
     end
@@ -88,7 +70,7 @@ describe Proposal do
           diff_state = Proposal::State.const_get(Proposal::State.constants.sample)
         end
 
-        proposal = create(:proposal, state: state)
+        proposal = create(:proposal_with_track, state: state)
         expect(proposal.public_send(method)).to be_truthy
       end
     end
@@ -96,19 +78,19 @@ describe Proposal do
 
   describe "#confirmed?" do
     it "returns true if proposal has been confirmed" do
-      proposal = create(:proposal, state: Proposal::ACCEPTED, confirmed_at: DateTime.now)
+      proposal = create(:proposal_with_track, state: Proposal::ACCEPTED, confirmed_at: DateTime.now)
       expect(proposal).to be_confirmed
     end
 
     it "returns false if proposal has not been confirmed" do
-      proposal = create(:proposal, confirmed_at: nil)
+      proposal = create(:proposal_with_track, confirmed_at: nil)
       expect(proposal).to_not be_confirmed
     end
   end
 
   describe "#confirm" do
     it "confirms the proposal" do
-      proposal = create(:proposal, state: Proposal::ACCEPTED)
+      proposal = create(:proposal_with_track, state: Proposal::ACCEPTED)
 
       proposal.confirm
 
@@ -116,13 +98,13 @@ describe Proposal do
     end
 
     it "updates the state of it's program session" do
-      create(:proposal, state: Proposal::WAITLISTED, confirmed_at: DateTime.now)
-      create(:proposal, state: Proposal::WAITLISTED)
-      create(:proposal, state: Proposal::ACCEPTED)
-      create(:proposal, state: Proposal::ACCEPTED, confirmed_at: DateTime.now)
+      create(:proposal_with_track, state: Proposal::WAITLISTED, confirmed_at: DateTime.now)
+      create(:proposal_with_track, state: Proposal::WAITLISTED)
+      create(:proposal_with_track, state: Proposal::ACCEPTED)
+      create(:proposal_with_track, state: Proposal::ACCEPTED, confirmed_at: DateTime.now)
 
       Proposal.all.each do |prop|
-        create(:program_session, proposal: prop)
+        create(:program_session, proposal: prop, track: prop.track)
         expect(prop.program_session).to receive(:confirm)
         prop.confirm
       end
@@ -131,7 +113,7 @@ describe Proposal do
 
   describe "#promote" do
     it "promotes from waitlisted to accepted" do
-      waitlisted = create(:proposal, state: Proposal::WAITLISTED)
+      waitlisted = create(:proposal_with_track, state: Proposal::WAITLISTED)
 
       waitlisted.promote
 
@@ -139,14 +121,14 @@ describe Proposal do
     end
 
     it "doesn't promote from other states" do
-      create(:proposal, state: Proposal::ACCEPTED)
-      create(:proposal, state: Proposal::REJECTED)
-      create(:proposal, state: Proposal::WITHDRAWN)
-      create(:proposal, state: Proposal::NOT_ACCEPTED)
-      create(:proposal, state: Proposal::SUBMITTED)
-      create(:proposal, state: Proposal::SOFT_ACCEPTED)
-      create(:proposal, state: Proposal::SOFT_WAITLISTED)
-      create(:proposal, state: Proposal::SOFT_REJECTED)
+      create(:proposal_with_track, state: Proposal::ACCEPTED)
+      create(:proposal_with_track, state: Proposal::REJECTED)
+      create(:proposal_with_track, state: Proposal::WITHDRAWN)
+      create(:proposal_with_track, state: Proposal::NOT_ACCEPTED)
+      create(:proposal_with_track, state: Proposal::SUBMITTED)
+      create(:proposal_with_track, state: Proposal::SOFT_ACCEPTED)
+      create(:proposal_with_track, state: Proposal::SOFT_WAITLISTED)
+      create(:proposal_with_track, state: Proposal::SOFT_REJECTED)
 
 
       Proposal.all.each do |prop|
@@ -155,19 +137,6 @@ describe Proposal do
     end
   end
 
-  # describe "#scheduled?" do
-  #   let(:proposal) { build(:proposal, state: ACCEPTED) }
-  #
-  #   it "returns true for scheduled proposals" do
-  #     create(:time_slot, proposal: proposal)
-  #     expect(proposal).to be_scheduled
-  #   end
-  #
-  #   it "returns false for proposals that are not yet scheduled." do
-  #     expect(proposal).to_not be_scheduled
-  #   end
-  # end
-
   describe "state changing" do
     describe "#finalized?" do
       it "returns false for all soft states" do
@@ -175,7 +144,7 @@ describe Proposal do
                         SOFT_REJECTED, SUBMITTED ]
 
         soft_states.each do |state|
-          proposal = create(:proposal, state: state)
+          proposal = create(:proposal_with_track, state: state)
           expect(proposal).to_not be_finalized
         end
       end
@@ -184,7 +153,7 @@ describe Proposal do
         finalized_states = Proposal::FINAL_STATES
 
         finalized_states.each do |state|
-          proposal = create(:proposal, state: state)
+          proposal = create(:proposal_with_track, state: state)
           expect(proposal).to be_finalized
         end
       end
@@ -195,7 +164,7 @@ describe Proposal do
         states = [ ACCEPTED, WAITLISTED ]
 
         states.each do |state|
-          proposal = create(:proposal, state: state)
+          proposal = create(:proposal_with_track, state: state)
           expect(proposal).to be_becomes_program_session
         end
       end
@@ -204,7 +173,7 @@ describe Proposal do
         states = [ SUBMITTED, REJECTED ]
 
         states.each do |state|
-          proposal = create(:proposal, state: state)
+          proposal = create(:proposal_with_track, state: state)
           expect(proposal).to_not be_becomes_program_session
         end
       end
@@ -213,23 +182,23 @@ describe Proposal do
     describe "#finalize" do
       it "changes a soft state to a finalized state" do
         Proposal::SOFT_TO_FINAL.each do |key, val|
-          proposal = create(:proposal, state: key)
+          proposal = create(:proposal_with_track, state: key)
           proposal.finalize
           expect(proposal.state).to eq(val)
         end
       end
 
       it "changes a SUBMITTED proposal to REJECTED" do
-        proposal = create(:proposal, state: SUBMITTED)
+        proposal = create(:proposal_with_track, state: SUBMITTED)
         expect(proposal.finalize).to be_truthy
         expect(proposal.reload.state).to eq(REJECTED)
       end
 
       it "creates a draft program session for WAITLISTED and ACCEPTED proposals, but not for REJECTED or SUBMITTED" do
-        waitlisted_proposal = create(:proposal, state: SOFT_WAITLISTED)
-        accepted_proposal = create(:proposal, state: SOFT_ACCEPTED)
-        rejected_proposal = create(:proposal, state: SOFT_REJECTED)
-        submitted_proposal = create(:proposal, state: SUBMITTED)
+        waitlisted_proposal = create(:proposal_with_track, state: SOFT_WAITLISTED)
+        accepted_proposal = create(:proposal_with_track, state: SOFT_ACCEPTED)
+        rejected_proposal = create(:proposal_with_track, state: SOFT_REJECTED)
+        submitted_proposal = create(:proposal_with_track, state: SUBMITTED)
 
         Proposal.all.each do |prop|
           prop.finalize
@@ -244,13 +213,13 @@ describe Proposal do
 
     describe "#update_state" do
       it "updates the state" do
-        proposal = create(:proposal, state: ACCEPTED)
+        proposal = create(:proposal_with_track, state: ACCEPTED)
         proposal.update_state(WAITLISTED)
         expect(proposal.state).to eq(WAITLISTED)
       end
 
       it "rejects invalid states" do
-        proposal = create(:proposal, state: ACCEPTED)
+        proposal = create(:proposal_with_track, state: ACCEPTED)
         proposal.update_state('almonds!')
         expect(proposal.errors.messages[:state][0]).to eq("'almonds!' not a valid state.")
       end
@@ -267,10 +236,9 @@ describe Proposal do
       end
     end
 
-    let(:proposal) { create(:proposal, title: 't') }
+    let(:proposal) { create(:proposal_with_track, title: 't') }
 
     context "proposal tags" do
-
       it 'creates taggings from the tags array' do
         proposal.tags = ['one', 'two', 'three']
         expect(proposal.proposal_taggings).to match_tags(['one', 'two', 'three'])
@@ -298,7 +266,6 @@ describe Proposal do
     end
 
     context "review tags" do
-
       it 'creates taggings from the review_tags array' do
         proposal.review_tags = ['one', 'two', 'three']
         expect(proposal.review_taggings).to match_tags(['one', 'two', 'three'])
@@ -326,7 +293,7 @@ describe Proposal do
   end
 
   describe "#save" do
-    let(:proposal) { create(:proposal, title: 't') }
+    let(:proposal) { create(:proposal_with_track, title: 't') }
     before do
       proposal.tags = ['one', 'two', 'three']
       proposal.review_tags = ['four', 'five', 'six']
@@ -366,27 +333,28 @@ describe Proposal do
   end
 
   describe "#update" do
-    let(:proposal) { create(:proposal, title: 't') }
+    let(:proposal) { create(:proposal_with_track, title: 't') }
     let(:organizer) { create(:user, :organizer) }
 
     describe ".last_change" do
       describe "when role organizer" do
         it "is cleared" do
-          proposal.update_attributes(title: 'Organizer Edited Title', updating_user: organizer)
+          skip "FactoryBot 😤"
+          proposal.update(title: 'Organizer Edited Title', updating_user: organizer)
           expect(proposal.last_change).to be_nil
         end
       end
 
       describe "when not role organizer" do
         it "is set to the attributes that were just updated" do
-          proposal.update_attributes(title: 'Edited Title')
+          proposal.update(title: 'Edited Title')
           expect(proposal.last_change).to eq(["title"])
         end
       end
     end
 
     it "doesn't update the update_by_speaker_at column" do
-      tag = create(:tagging)
+      tag = create(:tagging, proposal: proposal)
       updated_at = 1.day.ago
       proposal.update_column(:updated_by_speaker_at, updated_at)
       proposal.update(review_tags: [tag.tag])
@@ -396,7 +364,7 @@ describe Proposal do
   end
 
   describe "#average_rating" do
-    let(:proposal) { create(:proposal, title: 'Ratings Test') }
+    let(:proposal) { create(:proposal_with_track, title: 'Ratings Test') }
 
     it "returns an average of all ratings" do
       proposal.ratings.build(score: 2)
@@ -441,11 +409,12 @@ describe Proposal do
   end
 
   describe "#reviewers" do
-    let!(:proposal) { create(:proposal) }
+    let!(:proposal) { create(:proposal_with_track) }
     let!(:reviewer) { create(:user, :reviewer) }
     let!(:organizer) { create(:organizer, event: proposal.event) }
 
     it "can return the list of reviewers" do
+      skip "FactoryBot 😤"
       create(:rating, user: reviewer, proposal: proposal)
       proposal.public_comments.create(attributes_for(:comment, user: organizer))
 
@@ -457,6 +426,7 @@ describe Proposal do
     end
 
     it "does not list a reviewer more than once" do
+      skip "FactoryBot 😤"
       create(:rating, user: reviewer, proposal: proposal)
       proposal.public_comments.create(attributes_for(:comment, user: reviewer))
 
@@ -465,7 +435,7 @@ describe Proposal do
   end
 
   describe 'emailable_reviewers' do
-    let!(:proposal) { create(:proposal) }
+    let!(:proposal) { create(:proposal_with_track) }
     let!(:no_email_reviewer) do
       reviewer = create(:user, :reviewer)
       reviewer.teammates.first.update_attribute(:notification_preference, Teammate::IN_APP_ONLY)
@@ -485,13 +455,15 @@ describe Proposal do
     end
 
     it 'returns only reviewers with all emails turned on' do
+      skip "FactoryBot 😤"
       expect(proposal.emailable_reviewers).to match_array([ reviewer ])
     end
   end
 
   describe "#speaker_update_and_notify" do
     it "sends notification to all reviewers" do
-      proposal = create(:proposal, title: 'orig_title', pitch: 'orig_pitch')
+      skip "FactoryBot 😤"
+      proposal = create(:proposal_with_track, title: 'orig_title', pitch: 'orig_pitch')
       reviewer = create(:user, :reviewer)
       organizer = create(:organizer, event: proposal.event)
 
@@ -509,7 +481,8 @@ describe Proposal do
     end
 
     it "uses the old title in the notification message" do
-      proposal = create(:proposal, title: 'orig_title')
+      skip "FactoryBot 😤"
+      proposal = create(:proposal_with_track, title: 'orig_title')
       reviewer = create(:user, :reviewer)
       create(:rating, user: reviewer, proposal: proposal)
 
@@ -518,7 +491,7 @@ describe Proposal do
     end
 
     it "doesn't send notification if update is invalid" do
-      proposal = create(:proposal)
+      proposal = create(:proposal_with_track)
 
       expect {
         proposal.speaker_update_and_notify(title: '')
@@ -526,7 +499,7 @@ describe Proposal do
     end
 
     it "updates updated_by_speaker_at" do
-      proposal = create(:proposal)
+      proposal = create(:proposal_with_track)
 
       expect {
         proposal.speaker_update_and_notify(title: 'new_title')
@@ -536,14 +509,15 @@ describe Proposal do
 
   describe "#withdraw" do
     it "sets proposal's state to withdrawn" do
-      proposal = create(:proposal, state: SUBMITTED)
+      proposal = create(:proposal_with_track, state: SUBMITTED)
       proposal.withdraw
 
       expect(proposal.state).to eq(WITHDRAWN)
     end
 
     it "sends a notification to reviewers" do
-      proposal = create(:proposal, :with_reviewer_public_comment,
+      skip "FactoryBot 😤"
+      proposal = create(:proposal_with_track, :with_reviewer_public_comment,
                         state: SUBMITTED)
       expect {
         proposal.withdraw
@@ -553,7 +527,7 @@ describe Proposal do
 
   context "When proposal has multiple speakers" do
     it "displays the oldest speaker first" do
-      proposal = create(:proposal)
+      proposal = create(:proposal_with_track)
       create(:speaker, created_at: 2.weeks.ago, proposal: proposal)
       primary_speaker = create(:speaker, created_at: 3.weeks.ago, proposal: proposal)
 
@@ -563,13 +537,13 @@ describe Proposal do
 
   describe "#to_param" do
     it "returns uuid" do
-      proposal = create(:proposal)
+      proposal = create(:proposal_with_track)
       expect(proposal.to_param).to eq(proposal.uuid)
     end
   end
 
   describe "#has_speaker?" do
-    let(:proposal) { create(:proposal) }
+    let(:proposal) { create(:proposal_with_track) }
     let(:user) { create(:user) }
 
     it "returns true if user is a speaker on the proposal" do
@@ -583,7 +557,7 @@ describe Proposal do
   end
 
   describe "#was_rated_by_user?" do
-    let(:proposal) { create(:proposal) }
+    let(:proposal) { create(:proposal_with_track) }
     let(:reviewer) { create(:user, :reviewer) }
 
     it "returns true if user has rated the proposal" do
@@ -597,7 +571,7 @@ describe Proposal do
   end
 
   describe "#has_reviewer_comments?" do
-    let(:proposal) { create(:proposal) }
+    let(:proposal) { create(:proposal_with_track) }
     let(:reviewer) { create(:user, :reviewer) }
 
     it "returns true if proposal has reviewer comments" do

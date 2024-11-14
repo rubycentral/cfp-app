@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  include Pundit
+  include Pundit::Authorization
   include ActivateNavigation
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
@@ -9,9 +9,11 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   helper_method :current_event
+  helper_method :current_website
   helper_method :display_staff_event_subnav?
   helper_method :display_staff_selection_subnav?
   helper_method :display_staff_program_subnav?
+  helper_method :display_website_subnav?
   helper_method :program_mode?
   helper_method :schedule_mode?
   helper_method :program_tracks
@@ -49,6 +51,31 @@ class ApplicationController < ActionController::Base
 
   def current_event
     @current_event ||= set_current_event(session[:current_event_id]) if session[:current_event_id]
+  end
+
+  def current_website
+    @current_website ||= begin
+      if current_event
+        current_event.website
+      elsif params[:slug]
+        Website.joins(:event).find_by(events: { slug: params[:slug] })
+      else
+        older_domain_website || latest_domain_website
+      end
+    end&.decorate
+  end
+
+  def older_domain_website
+    @older_domain_website ||=
+      domain_websites.find_by(events: { slug: params[:domain_page_or_slug] })
+  end
+
+  def latest_domain_website
+    @latest_domain_website ||= domain_websites.first
+  end
+
+  def domain_websites
+    Website.domain_match(request.domain).joins(:event).order(created_at: :desc)
   end
 
   def set_current_event(event_id)
@@ -89,8 +116,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def require_website
+    redirect_to not_found_path and return unless current_website
+  end
+
   def require_proposal
     @proposal = @event.proposals.find_by!(uuid: params[:proposal_uuid] || params[:uuid])
+  end
+
+  def require_website
+    redirect_to not_found_path and return unless current_website
   end
 
   def user_not_authorized
@@ -142,6 +177,14 @@ class ApplicationController < ActionController::Base
     @display_schedule_subnav = true
   end
 
+  def display_website_subnav?
+    @display_website_subnav
+  end
+
+  def enable_website_subnav
+    @display_website_subnav = true
+  end
+
   def program_mode?
     @display_program_subnav || @display_selection_subnav
   end
@@ -152,5 +195,23 @@ class ApplicationController < ActionController::Base
 
   def program_tracks
     @program_tracks ||= current_event && current_event.tracks.any? ? current_event.tracks : []
+  end
+
+  def set_cache_headers
+    return unless Rails.configuration.action_controller.perform_caching
+
+    server_cache_age =
+      current_website.caching_off? ? 0 : ENV.fetch('CACHE_CONTROL_S_MAXAGE', 1.week)
+
+    expires_in(
+      ENV.fetch('CACHE_CONTROL_MAX_AGE', 0).to_i,
+      public: !current_website.caching_off?,
+      's-maxage': server_cache_age.to_i
+    )
+    response.headers['Surrogate-Key'] = current_website.event.slug if FastlyService.service
+    fresh_when(
+      current_website,
+      last_modified: current_website.purged_at || current_website.updated_at
+    ) unless current_website.caching_off?
   end
 end

@@ -1,0 +1,81 @@
+= simple_form_for website, url: :event_staff_website do |f|
+  .row
+    .col-md-6
+      %fieldset
+        = legend_with_docs("General Content")
+        = image_input(f, :logo)
+        = image_input(f, :background)
+        = image_input(f, :favicon)
+        = f.input :city
+        = f.input :location, as: :text
+        = f.input :directions
+        = f.input :prospectus_link
+      %fieldset
+        = legend_with_docs("Navigation and Footer")
+        = f.label :navigation_links
+        = f.select :navigation_links,
+          website.link_options,
+          { include_hidden: false },
+          { class: 'selectize-sortable', multiple: true }
+        = f.label :footer_categories
+        = f.select :footer_categories,
+          website.footer_categories,
+          { include_hidden: false },
+          { class: 'selectize-create', multiple: true }
+        = f.input :footer_about_content
+        = f.input :footer_copyright
+        = f.input :twitter_handle
+        = f.input :facebook_url
+        = f.input :instagram_url
+    .col-md-6
+      %fieldset
+      = legend_with_docs("Configure Website Session Formats")
+      = f.simple_fields_for :session_format_configs do |ff|
+        .session-format-name
+          = "Configure #{ff.object.session_format.name}"
+        .inline-form
+          = ff.input :display, wrapper_html: { class: 'col-md-3' }
+          = ff.input :position, wrapper_html: { class: 'col-md-3' }
+          = ff.input :name
+          = ff.hidden_field :session_format_id
+
+      %div{"data-controller": "nested-form", class: "nested-fonts"}
+        =legend_with_docs("Fonts")
+        %template{"data-nested-form-target": "template"}
+          = f.simple_fields_for :fonts,
+            Website::Font.new,
+            child_index: 'NEW_RECORD' do |font|
+            = render 'font_fields', form: font
+        = f.simple_fields_for :fonts do |font|
+          = render 'font_fields', form: font
+        %div{"data-nested-form-target": "links"}
+          = link_to "Add Font", "#", class: 'btn btn-success',
+            data: { action: "click->nested-form#add_association" }
+
+      %div{"data-controller": "nested-form"}
+        = legend_with_docs("Head and Footer Content")
+        %template{"data-nested-form-target": "template"}
+          = f.simple_fields_for :contents,
+            Website::Content.new,
+            child_index: 'NEW_RECORD' do |content|
+            = render 'content_fields', form: content
+        = f.simple_fields_for :contents do |content|
+          = render 'content_fields', form: content
+        %div{"data-nested-form-target": "links"}
+          = link_to "Add Content", "#", class: 'btn btn-success',
+            data: { action: "click->nested-form#add_association" }
+
+      = legend_with_docs("Meta Data")
+      = f.simple_fields_for :meta_data, website.meta_data do |ff|
+        = ff.input :title
+        = ff.input :author
+        = ff.input :description
+        = image_input(ff, :image)
+
+      = legend_with_docs("Domains and Caching")
+      = f.input :domains
+      = f.input :caching, collection: Website.cachings, include_blank: false
+  .row
+    .col-sm-12
+      = submit_tag("Save", class: "pull-right btn btn-success", type: "submit")
+      = link_to "Cancel", event_staff_path(current_event), {:class=>"cancel-form pull-right btn btn-danger"}

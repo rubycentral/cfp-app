@@ -1,0 +1,42 @@
+- content_for(:title) { "Schedule" }
+.schedule-page-wrapper{ data: { 'controller': 'sub-nav fly-out filter',
+                                'sub-nav-displayed-id-value': current_website.schedule_id_for_event_day,
+                                'filter-element-slug': '.time-slot-card' } }
+  = render 'fly_out', collection: schedule
+  %h3.page-title Schedule
+  %button.filter-toggle-button{ data: { action: 'click->fly-out#toggleFilter' } }
+    = image_tag 'themes/default/open-filter.png', class: 'open-filter-icon'
+    %span Filters
+  %nav.sub-nav
+    %ul
+      - current_website.event.days.times do |i|
+        %li
+          %a.schedule-day-link{ href: "#",
+                                class: i + 1 == current_website.event_day ? "selected" : '',
+                                data: { action: 'click->sub-nav#updateDisplay',
+                                        displayedId: "schedule-day-#{i + 1}",
+                                        date: current_website.event.conference_date(i + 1).to_i }}
+            = current_website.event.conference_date(i + 1).strftime("%B %-e")
+            %span.visible-count{ data: { 'filter-target': 'visibleCount' } }
+
+  #schedule-container
+    - current_website.event.days.times do |i|
+      .schedule-day-wrapper{ id: "schedule-day-#{i + 1}", data: { 'sub-nav-target': 'hideable', 'filter-target': 'container', 'subcontainer-class': 'schedule-block-container' } }
+        = render 'layouts/themes/default/empty_placeholder'
+        = render partial: 'schedule_block', collection: schedule_for_day(schedule, i + 1), as: :time_slots
+
+- content_for :javascript do
+  :javascript
+    document.addEventListener('DOMContentLoaded', function() {
+      var now = Math.round(new Date().getTime() / 1000);
+
+      const dayLinks = Array.from(document.querySelectorAll('.schedule-day-link')).reverse()
+      const startLink = dayLinks.slice(-1)[0]
+      const afterEvent = +dayLinks[0].dataset.date + 86400
+
+      if (now >= startLink.dataset.date && now <= afterEvent) {
+        dayLinks.find((link) => link.dataset.date < now).click()
+      } else {
+        startLink.click()
+      }
+    })

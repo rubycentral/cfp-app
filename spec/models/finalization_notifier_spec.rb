@@ -8,7 +8,7 @@ RSpec.describe FinalizationNotifier do
   describe '.notify' do
     let(:user)     { create(:user) }
     let(:event)    { create(:event) }
-    let(:proposal) { create(:proposal, :with_two_speakers, event: event, state: Proposal::State::ACCEPTED) }
+    let(:proposal) { create(:proposal_with_track, :with_two_speakers, event: event, state: Proposal::State::ACCEPTED) }
 
     it 'calls Staff::ProposalMailer.send_email' do
       allow(Staff::ProposalMailer).to receive_message_chain(':send_email.delivier_now')

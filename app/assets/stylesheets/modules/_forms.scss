@@ -49,8 +49,19 @@ span[title="required"] {
 // e.g., the show page for proposal
 .fieldset-legend {
   @extend legend;
+  padding-top: 20px;
 }
 
 .cfp-date-input {
   width: 50%;
+}
+
+input.boolean {
+  margin: 4px;
+}
+
+.inline-form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }

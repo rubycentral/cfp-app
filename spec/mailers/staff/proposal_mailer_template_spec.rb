@@ -4,7 +4,7 @@ describe Staff::ProposalMailerTemplate do
   include Rails.application.routes.url_helpers
 
   let(:event) { create(:event) }
-  let(:proposal) { create(:proposal, event: event) }
+  let(:proposal) { create(:proposal_with_track, event: event) }
 
   describe "render" do
     it "passes unknown tags as themselves" do

@@ -1,8 +1,9 @@
 class TimeSlot < ApplicationRecord
-  belongs_to :program_session
+  belongs_to :program_session, optional: true
   belongs_to :room
-  belongs_to :track
+  belongs_to :track, optional: true
   belongs_to :event
+  belongs_to :sponsor, optional: true
 
   attr_reader :session_duration
 
@@ -132,10 +133,10 @@ end
 #
 # Table name: time_slots
 #
-#  id                 :bigint(8)        not null, primary key
-#  program_session_id :bigint(8)
-#  room_id            :bigint(8)
-#  event_id           :bigint(8)
+#  id                 :integer          not null, primary key
+#  program_session_id :integer
+#  room_id            :integer
+#  event_id           :integer
 #  conference_day     :integer
 #  start_time         :time
 #  end_time           :time
@@ -144,7 +145,7 @@ end
 #  presenter          :text
 #  created_at         :datetime
 #  updated_at         :datetime
-#  track_id           :bigint(8)
+#  track_id           :integer
 #
 # Indexes
 #
@@ -152,5 +153,4 @@ end
 #  index_time_slots_on_event_id            (event_id)
 #  index_time_slots_on_program_session_id  (program_session_id)
 #  index_time_slots_on_room_id             (room_id)
-#  index_time_slots_on_track_id            (track_id)
 #

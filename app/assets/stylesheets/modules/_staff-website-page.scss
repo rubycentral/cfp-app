@@ -1,0 +1,35 @@
+#page-preview-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.preview-flex {
+  display: flex;
+  width: 100%;
+
+  .resize {
+    flex-grow: 1;
+    display: flex;
+    margin: 10px;
+    padding: 10px;
+    overflow: scroll;
+    resize: both;
+    border: 1px solid black;
+    height: 70vh;
+    max-width: 70vw;
+    .inner {
+      flex-grow: 1;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      display: block;
+    }
+  }
+  iframe {
+    border: 0;
+    width: 100%;
+    height: 100vh;
+  }
+}

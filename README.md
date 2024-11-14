@@ -18,7 +18,7 @@ The CFP App does not provide a public facing website for your conference, though
 
 ### Prerequisite Requirements
 
-* Ruby 3.1.2 (set in `.ruby-version`)
+* Ruby 3.1.6 (set in `.ruby-version`)
 * Bundler (was installed with 2.3.11)
 * PostgreSQL 14.1
 * Google Chrome browser must be installed to run tests

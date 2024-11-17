@@ -6,7 +6,7 @@ workflows:
     jobs:
       - build_and_test
 orbs:
-  browser-tools: circleci/browser-tools@1.1
+  browser-tools: circleci/browser-tools@1.4
 jobs:
   build_and_test:
     working_directory: ~/cfp_app

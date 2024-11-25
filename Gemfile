@@ -54,7 +54,7 @@ gem 'pundit'
 gem 'redcarpet', '~> 3.5'
 gem 'simple_form'
 gem 'tinymce-rails'
-gem 'image_processing', '~> 1.2'
+gem 'image_processing', '~> 1.13'
 gem 'react-rails'
 gem 'webpacker'
 

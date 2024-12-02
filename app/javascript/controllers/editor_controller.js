@@ -18,7 +18,7 @@ export default class extends Controller {
       toolbar: 'undo redo | formatselect | ' +
       ' bold italic backcolor | alignleft aligncenter ' +
       ' alignright alignjustify | bullist numlist outdent indent | ' +
-      ' removeformat | image code | help',
+      ' removeformat | image link code | help',
       valid_elements: '*[*]',
       forced_root_block : '',
       images_upload_url: '/image_uploads',

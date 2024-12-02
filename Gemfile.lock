@@ -147,9 +147,9 @@ GEM
     country_select (10.0.0)
       countries (> 5.0, < 8.0)
     crass (1.0.6)
-    database_cleaner (2.0.1)
-      database_cleaner-active_record (~> 2.0.0)
-    database_cleaner-active_record (2.0.1)
+    database_cleaner (2.1.0)
+      database_cleaner-active_record (>= 2, < 3)
+    database_cleaner-active_record (2.2.0)
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
@@ -549,7 +549,7 @@ DEPENDENCIES
   chartkick
   coderay (~> 1.0)
   country_select (~> 10.0)
-  database_cleaner (~> 2.0)
+  database_cleaner (~> 2.1)
   devise (~> 4.8)
   diffy
   dotenv-rails

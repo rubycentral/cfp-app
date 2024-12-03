@@ -2,7 +2,7 @@
   "dependencies": {
     "@babel/core": "^7",
     "@babel/preset-react": "^7.14.5",
-    "@rails/webpacker": "^5.4.0",
+    "@rails/webpacker": "6.0.0-rc.6",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "codemirror": "^5.65.3",
     "core-js": "^3.12.1",

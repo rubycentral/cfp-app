@@ -42,6 +42,7 @@ Rails.application.routes.draw do
 
     #Staff URLS
     namespace 'staff' do
+      get 'themes/:name', controller: :themes, action: :show
       get '/' => 'events#show'
       get :show
 

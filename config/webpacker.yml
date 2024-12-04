@@ -2,13 +2,13 @@
 
 default: &default
   source_path: app/javascript
-  source_entry_path: packs
+  source_entry_path: /
   public_root_path: public
   public_output_path: packs
   cache_path: tmp/cache/webpacker
   webpack_compile_output: true
 
-  # Additional paths webpack should lookup modules
+  # Additional paths webpack should look up modules
   # ['app/assets', 'engine/foo/app/assets']
   additional_paths: []
 
@@ -57,10 +57,16 @@ development:
     host: localhost
     port: 3035
     public: localhost:3035
+    # Hot Module Replacement updates modules while the application is running without a full reload
     hmr: false
     # Inline should be set to true if using HMR
     inline: true
-    overlay: true
+    # Default to the inverse of hmr. Uncomment to manually set this.
+    # live_reload: true
+    client:
+      # Should we show a full-screen overlay in the browser when there are compiler errors or warnings?
+      overlay: true
+
     compress: true
     disable_host_check: true
     use_local_ip: false
@@ -68,9 +74,9 @@ development:
     pretty: false
     headers:
       'Access-Control-Allow-Origin': '*'
-    watch_options:
-      ignored: '**/node_modules/**'
-
+    static:
+      watch:
+        ignored: '**/node_modules/**'
 
 test:
   <<: *default

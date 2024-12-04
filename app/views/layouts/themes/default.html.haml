@@ -21,7 +21,7 @@
     %meta{property: "twitter:image", content: current_website.meta_image_url}
 
     = stylesheet_link_tag current_website.theme, media: 'all'
-    = javascript_pack_tag "application"
+    = append_javascript_pack_tag "application"
     :css
       #{current_website.font_faces_css}
       #{current_website.font_root_css}

@@ -28,7 +28,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '15.14.0'
+          cache: 'yarn'
 
       - name: Run tests
         env:

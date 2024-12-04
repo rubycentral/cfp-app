@@ -32,21 +32,6 @@ default: &default
     - .woff
     - .woff2
 
-  extensions:
-    - .mjs
-    - .js
-    - .sass
-    - .scss
-    - .css
-    - .module.sass
-    - .module.scss
-    - .module.css
-    - .png
-    - .svg
-    - .gif
-    - .jpeg
-    - .jpg
-
 development:
   <<: *default
   compile: true

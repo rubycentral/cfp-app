@@ -56,7 +56,7 @@ gem 'simple_form'
 gem 'tinymce-rails'
 gem 'image_processing', '~> 1.13'
 gem 'react-rails'
-gem 'webpacker', '6.0.0.rc.6'
+gem 'shakapacker', '~> 6.6'
 
 gem 'sidekiq'
 

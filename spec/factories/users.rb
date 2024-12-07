@@ -48,7 +48,7 @@ FactoryBot.define do
       after(:create) do |user, evaluator|
         teammate = user.organizer_teammates.first
         teammate.event = evaluator.event
-        teammate.event.save
+        teammate.save
       end
     end
 
@@ -60,7 +60,7 @@ FactoryBot.define do
       after(:create) do |user, evaluator|
         teammate = user.reviewer_teammates.first
         teammate.event = evaluator.event
-        teammate.event.save
+        teammate.save
       end
     end
 

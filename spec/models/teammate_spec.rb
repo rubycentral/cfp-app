@@ -3,10 +3,10 @@ require 'rails_helper'
 describe Teammate do
   describe "validations" do
     let(:user) { create(:user, email: "teammate@event.com") }
+    let(:event) { create(:event) }
     it "requires names and emails to be unique per event" do
-      skip "FactoryBot 😤"
-      teammate1 = create(:teammate, role: "reviewer", email: user.email, mention_name: 'teammate', user: user)
-      teammate2 = build(:teammate, role: "reviewer", email: teammate1.email, mention_name: teammate1.mention_name, user: user)
+      teammate1 = create(:teammate, role: "reviewer", email: user.email, mention_name: 'teammate', user: user, event: event)
+      teammate2 = build(:teammate, role: "reviewer", email: teammate1.email, mention_name: teammate1.mention_name, user: user, event: event)
 
       expect(teammate2).to be_invalid
       expect(teammate2.errors.messages.keys).to include(:email, :mention_name)

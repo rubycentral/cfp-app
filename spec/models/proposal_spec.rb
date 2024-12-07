@@ -334,12 +334,11 @@ describe Proposal do
 
   describe "#update" do
     let(:proposal) { create(:proposal_with_track, title: 't') }
-    let(:organizer) { create(:user, :organizer) }
+    let(:organizer) { create(:organizer, event: proposal.event) }
 
     describe ".last_change" do
       describe "when role organizer" do
         it "is cleared" do
-          skip "FactoryBot 😤"
           proposal.update(title: 'Organizer Edited Title', updating_user: organizer)
           expect(proposal.last_change).to be_nil
         end
@@ -410,11 +409,10 @@ describe Proposal do
 
   describe "#reviewers" do
     let!(:proposal) { create(:proposal_with_track) }
-    let!(:reviewer) { create(:user, :reviewer) }
+    let!(:reviewer) { create(:reviewer, event: proposal.event) }
     let!(:organizer) { create(:organizer, event: proposal.event) }
 
     it "can return the list of reviewers" do
-      skip "FactoryBot 😤"
       create(:rating, user: reviewer, proposal: proposal)
       proposal.public_comments.create(attributes_for(:comment, user: organizer))
 
@@ -426,7 +424,6 @@ describe Proposal do
     end
 
     it "does not list a reviewer more than once" do
-      skip "FactoryBot 😤"
       create(:rating, user: reviewer, proposal: proposal)
       proposal.public_comments.create(attributes_for(:comment, user: reviewer))
 
@@ -437,34 +434,32 @@ describe Proposal do
   describe 'emailable_reviewers' do
     let!(:proposal) { create(:proposal_with_track) }
     let!(:no_email_reviewer) do
-      reviewer = create(:user, :reviewer)
+      reviewer = create(:reviewer, event: proposal.event)
       reviewer.teammates.first.update_attribute(:notification_preference, Teammate::IN_APP_ONLY)
       create(:rating, user: reviewer, proposal: proposal)
       reviewer
     end
     let!(:mentions_only_reviewer) do
-      reviewer = create(:user, :reviewer)
+      reviewer = create(:reviewer, event: proposal.event)
       reviewer.teammates.first.update_attribute(:notification_preference, Teammate::MENTIONS)
       create(:rating, user: reviewer, proposal: proposal)
       reviewer
     end
     let!(:reviewer) do
-      reviewer = create(:user, :reviewer)
+      reviewer = create(:reviewer, event: proposal.event)
       create(:rating, user: reviewer, proposal: proposal)
       reviewer
     end
 
     it 'returns only reviewers with all emails turned on' do
-      skip "FactoryBot 😤"
       expect(proposal.emailable_reviewers).to match_array([ reviewer ])
     end
   end
 
   describe "#speaker_update_and_notify" do
     it "sends notification to all reviewers" do
-      skip "FactoryBot 😤"
       proposal = create(:proposal_with_track, title: 'orig_title', pitch: 'orig_pitch')
-      reviewer = create(:user, :reviewer)
+      reviewer = create(:reviewer, event: proposal.event)
       organizer = create(:organizer, event: proposal.event)
 
       create(:rating, user: reviewer, proposal: proposal)
@@ -481,9 +476,8 @@ describe Proposal do
     end
 
     it "uses the old title in the notification message" do
-      skip "FactoryBot 😤"
       proposal = create(:proposal_with_track, title: 'orig_title')
-      reviewer = create(:user, :reviewer)
+      reviewer = create(:reviewer, event: proposal.event)
       create(:rating, user: reviewer, proposal: proposal)
 
       proposal.speaker_update_and_notify(title: 'new_title')
@@ -516,7 +510,6 @@ describe Proposal do
     end
 
     it "sends a notification to reviewers" do
-      skip "FactoryBot 😤"
       proposal = create(:proposal_with_track, :with_reviewer_public_comment,
                         state: SUBMITTED)
       expect {

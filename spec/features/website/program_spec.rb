@@ -6,17 +6,15 @@ feature "website program page" do
   let!(:website) { create(:website, event: event) }
 
   scenario "A program session is on the program session page", js: true do
-    skip "FactoryBot 😤"
-    regular_session = create(:regular_session)
+    regular_session = create(:regular_session, event: event)
 
     visit program_path(event)
     expect(page).to have_content(regular_session.title)
   end
 
   scenario "the website program page displays sessions under the correct session format", js: true do
-    skip "FactoryBot 😤"
-    regular_session = create(:regular_session)
-    workshop = create(:workshop_session)
+    regular_session = create(:regular_session, event: event)
+    workshop = create(:workshop_session, event: event)
     visit program_path(event)
 
     expect(page).to have_content(regular_session.title)
@@ -27,9 +25,8 @@ feature "website program page" do
   end
 
   scenario "the event website program page reflects updates to program sessions", js: true do
-    skip "FactoryBot 😤"
     login_as(organizer)
-    regular_session = create(:regular_session)
+    regular_session = create(:regular_session, event: event)
 
     visit program_path(event)
     expect(page).to have_content(regular_session.title)
@@ -44,9 +41,8 @@ feature "website program page" do
   end
 
   scenario "the event website page stops displaying deleted program sessions", js: true do
-    skip "FactoryBot 😤"
     login_as(organizer)
-    regular_session = create(:regular_session)
+    regular_session = create(:regular_session, event: event)
 
     visit program_path(event)
     expect(page).to have_content(regular_session.title)

@@ -73,8 +73,7 @@ describe Staff::ProposalsController, type: :controller do
     end
 
     it "sends appropriate emails" do
-      skip "Record not found -- need to figure out the factory magic here"
-      proposal = create(:proposal_with_track, state: Proposal::State::SOFT_ACCEPTED)
+      proposal = create(:proposal_with_track, event: event, state: Proposal::State::SOFT_ACCEPTED)
       mail = double(:mail, deliver_now: nil)
       expect(Staff::ProposalMailer).to receive('send_email').and_return(mail)
       post :finalize, params: {event_slug: event, proposal_uuid: proposal.uuid}

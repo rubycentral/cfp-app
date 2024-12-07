@@ -19,7 +19,7 @@ FactoryBot.define do
 
     trait :with_reviewer_public_comment do
       after(:create) do |proposal|
-        reviewer = FactoryBot.create(:user, :reviewer)
+        reviewer = FactoryBot.create(:reviewer, event: proposal.event)
         FactoryBot.create(:comment, proposal: proposal, type: "PublicComment", user: reviewer, body: "Reviewer comment" )
       end
     end

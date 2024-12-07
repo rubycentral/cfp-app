@@ -9,7 +9,6 @@ describe PublicComment do
         let(:proposal) { create(:proposal_with_track, :with_organizer_public_comment, :with_speaker) }
         let(:organizer) { Teammate.for_event(proposal.event).organizer.first.user }
         it "creates a notification" do
-          skip "FactoryBot 😤"
           expect {
             proposal.public_comments.create(attributes_for(:comment, user: speaker))
           }.to change {
@@ -18,7 +17,6 @@ describe PublicComment do
         end
 
         it "does not show the name of the speaker" do
-          skip "FactoryBot 😤"
           proposal.public_comments.create(attributes_for(:comment, user: speaker))
           expect(organizer.reload.notifications.last.message).to_not match(speaker.name)
         end
@@ -29,7 +27,6 @@ describe PublicComment do
         let(:reviewer) { Teammate.for_event(proposal.event).reviewer.first.user }
 
         it "creates a notification" do
-          skip "FactoryBot 😤"
           expect {
             proposal.public_comments.create(attributes_for(:comment, user: speaker))
           }.to change {
@@ -38,7 +35,6 @@ describe PublicComment do
         end
 
         it "does not show the name of the speaker" do
-          skip "FactoryBot 😤"
           proposal.public_comments.create(attributes_for(:comment, user: speaker))
           expect(reviewer.reload.notifications.last.message).to_not match(speaker.name)
         end
@@ -89,7 +85,6 @@ describe PublicComment do
 
       describe "for organizers who have rated the proposal" do
         it "creates a notification" do
-          skip "FactoryBot 😤"
           proposal = create(:proposal_with_track, :with_speaker)
           organizer = create(:organizer, event: proposal.event)
           create(:rating, proposal: proposal, user: organizer)
@@ -134,7 +129,7 @@ describe PublicComment do
   describe "#send_emails" do
     let!(:proposal) { create(:proposal_with_track) }
     let!(:speakers) { create_list(:speaker, 3, proposal: proposal) }
-    let!(:reviewer) { create(:user, :reviewer) }
+    let!(:reviewer) { create(:reviewer, event: proposal.event) }
     context "when reviewer creates a PublicComment" do
       it "should send notication to each speaker" do
         expect {
@@ -148,7 +143,6 @@ describe PublicComment do
     context 'Speaker create a PublicComment' do
       before { proposal.public_comments.create(attributes_for(:comment, user: reviewer)) }
       it 'should send notification to reviewer if speaker comments' do
-        skip "FactoryBot 😤"
         expect {
           proposal.public_comments.create(attributes_for(:comment, user: speakers.first.user))
         }.to change(ActionMailer::Base.deliveries, :count).by(1)

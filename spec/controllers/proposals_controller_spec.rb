@@ -107,8 +107,7 @@ describe ProposalsController, type: :controller do
     end
 
     it "sends an in-app notification to reviewers" do
-      skip("Rating not recognized as a proposal.reviewer and I haven't figured out how to make FactoryBot happy")
-      create(:rating, proposal: proposal, user: create(:organizer))
+      create(:rating, proposal: proposal, user: create(:reviewer, event: event))
       expect {
         post :withdraw, params: {event_slug: event.slug, uuid: proposal.uuid}
       }.to change { Notification.count }.by(1)
@@ -157,7 +156,6 @@ describe ProposalsController, type: :controller do
     end
 
     it "sends a notifications to an organizer" do
-      skip("Rating not recognized as a proposal.reviewer and I haven't figured out how to make FactoryBot happy")
       proposal.update(title: 'orig_title', pitch: 'orig_pitch')
       organizer = create(:organizer, event: proposal.event)
       create(:rating, proposal: proposal, user: organizer)

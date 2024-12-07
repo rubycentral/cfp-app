@@ -3,8 +3,9 @@ require 'rails_helper'
 RSpec.describe ProposalPolicy do
   let(:reviewer) { create(:user, :reviewer) }
   let(:program_team) { create(:user, :program_team) }
-  let(:organizer) { create(:organizer) }
-  let(:speaker) { create(:speaker) }
+  let(:event) { create(:event) }
+  let(:organizer) { create(:organizer, event: event) }
+  let(:speaker) { create(:speaker, event: event) }
 
   subject { described_class }
 
@@ -36,7 +37,6 @@ RSpec.describe ProposalPolicy do
     end
 
     it 'allows organizer users' do
-      skip "FactoryBot 😤"
       expect(subject).to permit(pundit_user(organizer), speaker)
     end
 

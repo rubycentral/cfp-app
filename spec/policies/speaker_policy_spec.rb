@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe SpeakerPolicy do
   let(:program_team) { create(:user, :program_team) }
-  let(:organizer) { create(:user, :organizer) }
-  let(:speaker) { create(:speaker) }
+  let(:event) { create(:event) }
+  let(:organizer) { create(:organizer, event: event) }
+  let(:speaker) { create(:speaker, event: event) }
 
   subject { described_class }
 
@@ -17,7 +18,6 @@ RSpec.describe SpeakerPolicy do
     end
 
     it 'allows organizer users' do
-      skip "FactoryBot 😤"
       expect(subject).to permit(pundit_user(organizer), speaker)
     end
   end

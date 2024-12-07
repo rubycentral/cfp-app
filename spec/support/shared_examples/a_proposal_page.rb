@@ -14,7 +14,6 @@ shared_examples "a proposal page" do |path_method|
       end
 
       it "can leave a public comment" do
-        skip "FactoryBot 😤"
         form = find('#new_public_comment')
 
         form.fill_in 'public_comment_body', with: 'A new comment'
@@ -24,7 +23,6 @@ shared_examples "a proposal page" do |path_method|
       end
 
       it "can leave an internal comment" do
-        skip "FactoryBot 😤"
         form = find('#new_internal_comment')
 
         form.fill_in 'internal_comment_body', with: 'A new comment'
@@ -38,7 +36,6 @@ shared_examples "a proposal page" do |path_method|
       before { visit send(path_method, event, proposal) }
 
       it "can rate a proposal", js: true do
-        skip "FactoryBot 😤"
         within("#rating-form") do
           find("input[value='5']", visible: false).set(true)
         end

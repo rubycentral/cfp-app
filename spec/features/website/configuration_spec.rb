@@ -6,7 +6,6 @@ feature "Website Configuration" do
   let(:organizer) { create(:organizer, event: event) }
 
   scenario "Organizer creates a new website for event" do
-    skip "FactoryBot 😤"
     login_as(organizer)
 
     visit event_path(event)
@@ -18,7 +17,6 @@ feature "Website Configuration" do
   end
 
   scenario "Organizer configures domain for an existing website for event", :js do
-    skip "FactoryBot 😤"
     website = create(:website, event: event)
     home_page = create(:page, website: website)
 
@@ -50,7 +48,6 @@ feature "Website Configuration" do
   end
 
   scenario "Organizer fails to add font file correctly", :js do
-    skip "FactoryBot 😤"
     website = create(:website, event: event)
 
     login_as(organizer)

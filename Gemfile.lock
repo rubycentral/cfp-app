@@ -372,7 +372,7 @@ GEM
       rack
     rack-test (2.1.0)
       rack (>= 1.3)
-    rack-timeout (0.6.3)
+    rack-timeout (0.7.0)
     rails (6.1.7.2)
       actioncable (= 6.1.7.2)
       actionmailbox (= 6.1.7.2)
@@ -595,7 +595,7 @@ DEPENDENCIES
   puma
   pundit
   rack-mini-profiler
-  rack-timeout (~> 0.6)
+  rack-timeout (~> 0.7)
   rails (~> 6.1.6)
   rails-assets-momentjs!
   rails-controller-testing

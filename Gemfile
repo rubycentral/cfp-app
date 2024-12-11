@@ -79,7 +79,6 @@ group :development do
   gem 'html2haml', '~> 2.2'
   gem 'launchy'
   gem 'rack-mini-profiler'
-  gem 'spring-commands-rspec', require: false
   gem 'web-console'
 end
 
@@ -100,6 +99,5 @@ group :development, :test do
   gem 'rspec'
   gem 'rspec-rails'
   gem 'selenium-webdriver'
-  gem 'spring'
   gem 'timecop'
 end

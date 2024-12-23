@@ -341,8 +341,8 @@ GEM
       omniauth-oauth (~> 1.1)
       rack
     orm_adapter (0.5.0)
-    paper_trail (14.0.0)
-      activerecord (>= 6.0)
+    paper_trail (16.0.0)
+      activerecord (>= 6.1)
       request_store (~> 1.4)
     pg (1.5.9)
     pry (0.14.2)
@@ -411,7 +411,7 @@ GEM
     redis-client (0.12.1)
       connection_pool
     regexp_parser (2.7.0)
-    request_store (1.5.1)
+    request_store (1.7.0)
       rack (>= 1.4)
     responders (3.1.0)
       actionpack (>= 5.2)

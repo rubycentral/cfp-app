@@ -568,6 +568,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   launchy
+  logger
   matrix
   mime-types
   mime-types-data

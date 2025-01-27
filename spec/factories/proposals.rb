@@ -9,7 +9,7 @@ FactoryBot.define do
 
     factory :proposal_with_track do
       event
-      sequence(:title) { |i| "A fine proposal#{i}" }
+      sequence(:title) { |i| "A fine proposal with track#{i}" }
       abstract { Faker::Hacker.say_something_smart }
       details { Faker::Hipster.sentence }
       pitch { Faker::Superhero.name }

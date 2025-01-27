@@ -242,7 +242,6 @@ feature "Proposals" do
     end
 
     it "sends a notification to reviewers" do
-      skip "FactoryBot 😤"
       expect(Notification.count).to eq(1)
     end
 

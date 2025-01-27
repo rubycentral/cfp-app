@@ -84,7 +84,6 @@ feature "Organizers can manage program sessions" do
   end
 
   scenario "organizer can add speaker to program session" do
-    skip "FactoryBot 😤"
     visit event_staff_program_session_path(event, program_session)
 
     click_link("Add Speaker")

@@ -2,6 +2,10 @@
 
 require "pathname"
 require "bundler/setup"
+
+# Working around on missing logger problem by requiring "logger" earlier than "webpacker"...
+require "logger"
+
 require "webpacker"
 require "webpacker/webpack_runner"
 

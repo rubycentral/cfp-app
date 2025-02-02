@@ -57,26 +57,6 @@ feature "Organizers can manage proposals" do
     end
   end
 
-  xcontext "Edit a proposal" do
-    before do
-      proposal.last_change = ['abstract']
-      proposal.save!
-      visit edit_event_staff_proposal_path(event, proposal)
-      fill_in "Title", with: "A New Title"
-      click_button 'Save'
-      proposal.reload
-    end
-
-    it "changes the title of the proposal" do
-      expect(proposal.title).to eq("A New Title")
-    end
-
-    it "clears out the last_change array" do
-
-      expect(proposal.last_change).to be_nil
-    end
-  end
-
   context "Viewing a proposal" do
     it_behaves_like "a proposal page", :event_staff_proposal_path
 

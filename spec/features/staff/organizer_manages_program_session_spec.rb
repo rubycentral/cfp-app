@@ -78,15 +78,16 @@ feature "Organizers can manage program sessions" do
     fill_in "Video url", with: "http://www.youtube.com"
     click_on "Save"
 
-    expect(current_path).to eq(event_staff_program_session_path(event, program_session))
     expect(page).to have_content("New Session Title")
     expect(page).to have_link("http://www.youtube.com")
+    expect(current_path).to eq(event_staff_program_session_path(event, program_session))
   end
 
   scenario "organizer can add speaker to program session" do
     visit event_staff_program_session_path(event, program_session)
 
     click_link("Add Speaker")
+    expect(page).to have_content("New Speaker")
     expect(current_path).to eq(new_event_staff_program_session_speaker_path(event, program_session))
     fill_in "speaker[speaker_name]", with: "Mary McSpeaker"
     fill_in "speaker[speaker_email]", with: "marymcspeaker@seed.event"
@@ -119,8 +120,8 @@ feature "Organizers can manage program sessions" do
     visit edit_event_staff_program_session_path(event, program_session)
     page.accept_confirm { click_on "Delete Program Session" }
 
-    expect(current_path).to eq(event_staff_program_sessions_path(event))
     expect(page).not_to have_content(program_session.title)
+    expect(current_path).to eq(event_staff_program_sessions_path(event))
     expect(event.speakers).not_to include(speaker)
   end
 
@@ -131,8 +132,8 @@ feature "Organizers can manage program sessions" do
     visit edit_event_staff_program_session_path(event, program_session_two)
     page.accept_confirm { click_on "Delete Program Session" }
 
-    expect(current_path).to eq(event_staff_program_sessions_path(event))
     expect(page).not_to have_content(program_session_two.title)
+    expect(current_path).to eq(event_staff_program_sessions_path(event))
     expect(event.speakers).to include(speaker)
     expect(event.proposals).to include(speaker.proposal)
   end

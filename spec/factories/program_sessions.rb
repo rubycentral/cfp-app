@@ -7,7 +7,7 @@ FactoryBot.define do
     event
 
     factory :program_session_with_proposal do
-      proposal { create(:proposal_with_track, state: Proposal::ACCEPTED) }
+      proposal { create(:proposal_with_track, state: Proposal::ACCEPTED, event: event) }
       track { proposal.track }
 
       trait :with_speaker do

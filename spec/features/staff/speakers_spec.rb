@@ -14,24 +14,19 @@ feature "Organizers can manage speakers for Program Sessions" do
   let!(:event_staff_teammate) { create(:teammate, :organizer, user: organizer_user, event: event) }
 
   let(:speaker_user_1) { create(:user) }
-  let!(:speaker_1) { create(:speaker, proposal: proposal_1,
-                                      user: speaker_user_1) }
+  let!(:speaker_1) { create(:speaker, event: event, proposal: proposal_1, user: speaker_user_1) }
 
   let(:speaker_user_2) { create(:user) }
-  let!(:speaker_2) { create(:speaker, proposal: proposal_2,
-                                      user: speaker_user_2) }
+  let!(:speaker_2) { create(:speaker, event: event, proposal: proposal_2, user: speaker_user_2) }
 
   let(:speaker_user_3) { create(:user) }
-  let!(:speaker_3) { create(:speaker, program_session: program_session_1,
-                                      user: speaker_user_3) }
+  let!(:speaker_3) { create(:speaker, event: event, program_session: program_session_1, user: speaker_user_3) }
 
   let(:speaker_user_4) { create(:user) }
-  let!(:speaker_4) { create(:speaker, program_session: program_session_1,
-                                      user: speaker_user_4) }
+  let!(:speaker_4) { create(:speaker, event: event, program_session: program_session_1, user: speaker_user_4) }
 
   let(:speaker_user_5) { create(:user) }
-  let!(:speaker_5) { create(:speaker, program_session: program_session_2,
-                                      user: speaker_user_5) }
+  let!(:speaker_5) { create(:speaker, event: event, program_session: program_session_2, user: speaker_user_5) }
 
   before :each do
     logout
@@ -41,7 +36,6 @@ feature "Organizers can manage speakers for Program Sessions" do
 
   context "An organizer" do
     it "Only sees speakers of program sessions" do
-      skip "FactoryBot 😤"
       expect(page).to have_content(speaker_3.name)
       expect(page).to have_content(speaker_3.email)
       # check for program session title linking to ?program session show page?
@@ -60,7 +54,6 @@ feature "Organizers can manage speakers for Program Sessions" do
     end
 
     it "Can edit a program sessions speaker" do
-      skip "FactoryBot 😤"
       row = find("tr#speaker-#{speaker_3.id}")
       old_name = speaker_3.name
       old_email = speaker_3.email
@@ -101,7 +94,6 @@ feature "Organizers can manage speakers for Program Sessions" do
     end
 
     it "Can't update a speaker with a bad email" do
-      skip "FactoryBot 😤"
       row = find("tr#speaker-#{speaker_3.id}")
       within row do
         click_on "Edit"

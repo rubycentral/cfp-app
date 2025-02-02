@@ -115,20 +115,19 @@ feature "Organizers can manage program sessions" do
   end
 
   scenario "organizer deleting program session deletes speaker if no proposals", js: true do
-    speaker = create(:speaker, event: program_session.event, program_session: program_session)
+    speaker = create(:speaker, event: event, program_session: program_session)
 
     visit edit_event_staff_program_session_path(event, program_session)
     page.accept_confirm { click_on "Delete Program Session" }
 
-    # expect(current_path).to eq(event_staff_program_sessions_path(event))
+    expect(current_path).to eq(event_staff_program_sessions_path(event))
     expect(page).not_to have_content(program_session.title)
     expect(event.speakers).not_to include(speaker)
   end
 
   scenario "organizer can delete program session without deleting speakers associated with a proposal", js: true do
-    skip "FactoryBot 😤"
-    program_session_two = create(:program_session_with_proposal)
-    speaker = create(:speaker, event: program_session_two.event, proposal: program_session_two.proposal, program_session: program_session_two)
+    program_session_two = create(:program_session_with_proposal, event: event)
+    speaker = create(:speaker, event: event, proposal: program_session_two.proposal, program_session: program_session_two)
 
     visit edit_event_staff_program_session_path(event, program_session_two)
     page.accept_confirm { click_on "Delete Program Session" }

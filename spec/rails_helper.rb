@@ -75,22 +75,13 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
+  config.use_transactional_fixtures = true
+
   config.include FactoryBot::Syntax::Methods
   config.include ActiveSupport::Testing::TimeHelpers
 
-  # DB cleaning
-  config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation)
-  end
-
   config.before(:each) do |example|
     init_mock_omniauth
-    DatabaseCleaner.strategy= example.metadata[:js] ? :truncation : :transaction
-    DatabaseCleaner.start
-  end
-
-  config.after(:each) do
-    DatabaseCleaner.clean
   end
 
   config.before(:all) do

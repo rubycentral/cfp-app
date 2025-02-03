@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "Organizers can manage the program" do
+feature "Organizers can manage the program", type: :system do
 
   let(:proposal) { create(:proposal_with_track, state: Proposal::State::ACCEPTED) }
   let(:organizer) { create(:organizer, event: proposal.event) }

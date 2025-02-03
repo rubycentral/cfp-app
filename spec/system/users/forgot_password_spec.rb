@@ -3,7 +3,7 @@ require 'rails_helper'
 #   As a user
 #   I want to forgot password
 #   So I can visit protected areas of the site
-feature 'Forgot Password', :devise do
+feature 'Forgot Password', :devise, type: :system do
 
   # Scenario: User cannot forgot password if not registered
   #   Given I do not exist as a user

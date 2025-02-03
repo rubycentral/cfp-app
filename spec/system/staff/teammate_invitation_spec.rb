@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "Teammate Invitation received" do
+feature "Teammate Invitation received", type: :system do
   let(:event) { create(:event, name: "My Event") }
 
   let(:newguy_invitation) { create(:teammate, :has_been_invited, event: event, email: "new@per.son") }

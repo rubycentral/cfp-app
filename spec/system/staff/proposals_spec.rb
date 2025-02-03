@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "Organizers can manage proposals" do
+feature "Organizers can manage proposals", type: :system do
   let(:event) { create(:event, review_tags: ['intro', 'advanced']) }
   let(:proposal) { create(:proposal_with_track, event: event) }
 

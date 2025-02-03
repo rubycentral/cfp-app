@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "Website Page Management" do
+feature "Website Page Management", type: :system do
   let(:event) { create(:event) }
   let(:organizer) { create(:organizer, event: event) }
   let!(:website) { create(:website, :with_details, event: event) }

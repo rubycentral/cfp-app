@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Event Sponsors' do
+feature 'Event Sponsors', type: :system do
   let(:event) { create(:event, name: 'My Event') }
   let(:organizer) { create(:organizer, event: event) }
 

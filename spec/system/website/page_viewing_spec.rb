@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Public Page Viewing' do
+feature 'Public Page Viewing', type: :system do
   let(:event) { create(:event) }
   let!(:website) { create(:website, event: event) }
 

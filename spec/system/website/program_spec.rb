@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "website program page" do
+feature "website program page", type: :system do
   let(:event) { create(:event) }
   let(:organizer) { create(:organizer, event: event) }
   let!(:website) { create(:website, event: event) }

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "A user sees correct information for the current event and their role" do
+feature "A user sees correct information for the current event and their role", type: :system do
   let!(:normal_user) { create(:user) }
   let!(:reviewer_user) { create(:user) }
   let!(:organizer_user) { create(:user) }

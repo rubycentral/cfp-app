@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "Program team views program sessions" do
+feature "Program team views program sessions", type: :system do
 
   let(:event) { create(:event) }
   let(:program_session) { create(:program_session_with_proposal, event: event) }

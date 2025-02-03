@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "Organizers can manage program sessions" do
+feature "Organizers can manage program sessions", type: :system do
 
   let!(:event) { create(:event) }
   let!(:session_format) { create(:session_format, event: event) }

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "Event Guidelines" do
+feature "Event Guidelines", type: :system do
   let(:event) { create(:event, name: "My Event") }
   let(:admin_user) { create(:user, admin: true) }
   let!(:admin_teammate) { create(:teammate,

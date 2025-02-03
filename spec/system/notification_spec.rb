@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "User's can interact with notifications" do
+feature "User's can interact with notifications", type: :system do
   let!(:user) { create(:user) }
   let!(:notification) { create(:notification, :unread, message: 'new message', user: user) }
 

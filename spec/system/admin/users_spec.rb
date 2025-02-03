@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "Users Admin Dashboard" do
+feature "Users Admin Dashboard", type: :system do
   let(:admin_user) { create(:user, admin: true) }
   let!(:admin_teammate) { create(:teammate, user: admin_user, role: 'organizer')}
 

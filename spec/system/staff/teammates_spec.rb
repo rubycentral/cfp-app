@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "Staff Organizers can manage teammates" do
+feature "Staff Organizers can manage teammates", type: :system do
   let(:invitation) { create(:teammate, :has_been_invited) }
 
   let!(:organizer_user) { create(:user) }

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "Event Config" do
+feature "Event Config", type: :system do
   let(:event) { create(:event, review_tags: ["intro", "advanced"]) }
 
   let(:organizer_user) { create(:user) }

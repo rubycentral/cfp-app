@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Managing Speaker Invitations' do
+feature 'Managing Speaker Invitations', type: :system do
   let(:second_speaker_email) { 'second_speaker@example.com' }
   let(:user) { create(:user) }
   let(:event) { create(:event, state: 'open') }

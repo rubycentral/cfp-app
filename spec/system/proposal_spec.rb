@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "Proposals" do
+feature "Proposals", type: :system do
   let!(:user) { create(:user) }
   let!(:event) { create(:event, state: 'open') }
   let!(:closed_event) { create(:event, state: 'closed') }

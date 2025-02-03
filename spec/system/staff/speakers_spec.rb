@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "Organizers can manage speakers for Program Sessions" do
+feature "Organizers can manage speakers for Program Sessions", type: :system do
 
   let(:event) { create(:event) }
 

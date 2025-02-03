@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "Review Proposals" do
+feature "Review Proposals", type: :system do
   let(:event) { create(:event, state: 'open') }
   let(:reviewer_user) {create(:user) }
 

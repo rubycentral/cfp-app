@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Wesite displays an events sponsors' do
+feature 'Wesite displays an events sponsors', type: :system do
   let(:event) { create(:event, name: 'My Event') }
   let!(:website) { create(:website, event: event) }
   let(:organizer) { create(:organizer, event: event) }

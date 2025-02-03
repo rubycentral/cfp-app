@@ -3,7 +3,7 @@ require 'rails_helper'
 #   As a user
 #   I want to sign Up
 #   So I can visit protected areas of the site
-feature 'Sign Up', :devise do
+feature 'Sign Up', :devise, type: :system do
 
   # Scenario: User cannot sign up if no password
   #   Given I do not exist as a user

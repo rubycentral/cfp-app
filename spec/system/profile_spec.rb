@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'User Profile' do
+feature 'User Profile', type: :system do
   let(:user) { create(:user) }
 
   before { login_as(user) }

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "Event Dashboard" do
+feature "Event Dashboard", type: :system do
   let(:organizer_user) { create(:user) }
   let!(:organizer_teammate) { create(:teammate,
                                        user: organizer_user,

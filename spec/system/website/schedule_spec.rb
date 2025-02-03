@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature "dynamic website schedule page" do
+feature "dynamic website schedule page", type: :system do
   let(:event) { create(:event) }
   let!(:website) { create(:website, event: event) }
 

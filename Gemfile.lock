@@ -121,7 +121,7 @@ GEM
     bindex (0.8.1)
     binding_of_caller (1.0.1)
       debug_inspector (>= 1.2.0)
-    bootsnap (1.16.0)
+    bootsnap (1.18.4)
       msgpack (~> 1.2)
     bootstrap-multiselect-rails (0.9.9)
       rails (>= 4.0.0)
@@ -295,7 +295,7 @@ GEM
     mini_mime (1.1.2)
     mini_portile2 (2.8.8)
     minitest (5.25.4)
-    msgpack (1.6.0)
+    msgpack (1.8.0)
     multi_json (1.15.0)
     multi_xml (0.6.0)
     nenv (0.3.0)
@@ -543,7 +543,7 @@ DEPENDENCIES
   aws-sdk-s3
   better_errors
   binding_of_caller
-  bootsnap (~> 1.13)
+  bootsnap (~> 1.18)
   bootstrap-multiselect-rails (~> 0.9.9)
   bootstrap-sass (~> 3.4.1)
   capybara (~> 3.37)

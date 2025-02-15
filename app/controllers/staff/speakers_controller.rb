@@ -21,7 +21,7 @@ class Staff::SpeakersController < Staff::ApplicationController
     if @speaker.save
       redirect_to event_staff_program_session_path(current_event, @program_session)
     else
-      flash[:danger] = "There was a problem saving this speaker."
+      flash[:danger] = "There was a problem saving this speaker: #{@speaker.errors.full_messages.to_sentence}."
       render :new
     end
   end

@@ -28,7 +28,7 @@ class Speaker < ApplicationRecord
     "Two or more races", "Other", "Decline to say"
   ].freeze
 
-  belongs_to :user
+  belongs_to :user, optional: true
   belongs_to :event
   belongs_to :proposal, optional: true
   belongs_to :program_session, optional: true

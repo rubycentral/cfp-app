@@ -36,7 +36,7 @@ class ProgramSession < ApplicationRecord
   }
 
   belongs_to :event
-  belongs_to :proposal
+  belongs_to :proposal, optional: true
   belongs_to :track, optional: true
   belongs_to :session_format
   has_one :time_slot, dependent: :nullify

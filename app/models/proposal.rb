@@ -28,7 +28,7 @@ class Proposal < ApplicationRecord
                                  if: :confirmed_at_changed?
 
   serialize :last_change
-  serialize :proposal_data, Hash
+  serialize :proposal_data, type: Hash
 
   has_paper_trail only: %i[title abstract details pitch]
 

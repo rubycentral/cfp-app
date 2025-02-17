@@ -36,7 +36,7 @@ class Speaker < ApplicationRecord
   has_many :proposals, through: :user
   has_many :program_sessions
 
-  serialize :info, Hash
+  serialize :info, type: Hash
 
   validates :event, presence: true
   validates :bio, length: {maximum: 500}

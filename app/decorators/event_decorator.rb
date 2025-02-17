@@ -37,7 +37,7 @@ class EventDecorator < ApplicationDecorator
 
   def closes_at(format = nil)
     if format && object.closes_at
-      object.closes_at.to_s(format)
+      object.closes_at.to_fs(format)
     else
       object.closes_at
     end
@@ -136,6 +136,6 @@ class EventDecorator < ApplicationDecorator
   end
 
   def format_date(date)
-      date.to_s(:long) if date.present?
+      date.to_fs(:long) if date.present?
   end
 end

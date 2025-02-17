@@ -22,5 +22,5 @@
             - notifications.each do |notification|
               %tr{ class: notification.read? ? '' : 'unread' }
                 %td= notification.message
-                %td= notification.created_at.to_s(:short)
+                %td= notification.created_at.to_fs(:short)
                 %td= link_to('Show', notification)

@@ -78,7 +78,7 @@
                       %td= invite.email
                       %td= invite.state
                       %td= invite.role
-                      %td= invite.created_at.to_s(:day_at_time)
+                      %td= invite.created_at.to_fs(:day_at_time)
                       - if current_user.organizer_for_event?(current_event)
                         %td= link_to 'Remove',
                           event_staff_teammate_path(event, invite),

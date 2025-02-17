@@ -49,7 +49,7 @@ class ProgramSession < ApplicationRecord
 
   validates_inclusion_of :state, in: STATES
 
-  serialize :info, type: Hash
+  serialize :info, type: Hash, coder: YAML
 
   after_destroy :destroy_speakers
 

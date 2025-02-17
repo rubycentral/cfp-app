@@ -17,11 +17,11 @@ class Event < ApplicationRecord
 
   accepts_nested_attributes_for :proposals
 
-  serialize :proposal_tags, type: Array
-  serialize :review_tags, type: Array
-  serialize :custom_fields, type: Array
-  serialize :settings, type: Hash
-  serialize :speaker_notification_emails, type: Hash
+  serialize :proposal_tags, type: Array, coder: YAML
+  serialize :review_tags, type: Array, coder: YAML
+  serialize :custom_fields, type: Array, coder: YAML
+  serialize :settings, type: Hash, coder: YAML
+  serialize :speaker_notification_emails, type: Hash, coder: YAML
 
   store_accessor :speaker_notification_emails, :accept
   store_accessor :speaker_notification_emails, :reject

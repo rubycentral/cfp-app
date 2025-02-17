@@ -23,21 +23,21 @@
             %h2 CFP Dates
             = f.label :opens_at
             = f.text_field :opens_at, class: 'form-control',
-              value: (f.object.opens_at.blank? ? "" : f.object.opens_at.to_s(:long_with_zone) )
+              value: (f.object.opens_at.blank? ? "" : f.object.opens_at.to_fs(:long_with_zone) )
             %p.help-block Optional. You can manually open the CFP when ready.
             = f.label :closes_at
             = f.text_field :closes_at, class: 'form-control',
-              value: (f.object.closes_at.blank? ? "" : f.object.closes_at.to_s(:long_with_zone) )
+              value: (f.object.closes_at.blank? ? "" : f.object.closes_at.to_fs(:long_with_zone) )
             %p.help-block When the CFP will stop taking submissions. Must be set before opening the CFP.
 
             %h2 Event Dates
             = f.label :start_date
             = f.text_field :start_date, class: 'form-control',
-              value: (f.object.start_date.blank? ? "" : f.object.start_date.to_s(:month_day_year) )
+              value: (f.object.start_date.blank? ? "" : f.object.start_date.to_fs(:month_day_year) )
             %p.help-block First day of your event
             = f.label :end_date
             = f.text_field :end_date, class: 'form-control',
-              value: (f.object.end_date.blank? ? "" : f.object.end_date.to_s(:month_day_year) )
+              value: (f.object.end_date.blank? ? "" : f.object.end_date.to_fs(:month_day_year) )
             %p.help-block Last day of your event
 
       .row.col-md-12.form-submit

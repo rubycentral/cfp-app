@@ -79,8 +79,8 @@
               %tr
                 %td.text-primary
                   %strong Start date:
-                %td= event.start_date.try(:to_s, :month_day_year)
+                %td= event.start_date.try(:to_fs, :month_day_year)
               %tr
                 %td.text-primary
                   %strong End date:
-                %td= event.end_date.try(:to_s, :month_day_year)
+                %td= event.end_date.try(:to_fs, :month_day_year)

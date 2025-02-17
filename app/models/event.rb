@@ -195,11 +195,11 @@ class Event < ApplicationRecord
   end
 
   def cfp_opens
-    opens_at.try(:to_s, :long_with_zone)
+    opens_at.try(:to_fs, :long_with_zone)
   end
 
   def cfp_closes
-    closes_at.try(:to_s, :long_with_zone)
+    closes_at.try(:to_fs, :long_with_zone)
   end
 
   def conference_date(conference_day)

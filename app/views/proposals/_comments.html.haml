@@ -6,7 +6,7 @@
           .info
             %p.name
               = commenter_name(comment)
-            %span.time #{comment.created_at.to_s(:day_at_time)}
+            %span.time #{comment.created_at.to_fs(:day_at_time)}
         .text
           =markdown(comment.body)
 

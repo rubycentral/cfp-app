@@ -33,7 +33,7 @@ class BulkTimeSlot
       start_times.each do |starts_at|
         end_time = Time.parse(starts_at) + duration.minutes
         slots << TimeSlot.new(event: event, conference_day: day, room: room,
-                              start_time: starts_at, end_time: end_time.to_s(:time) )
+                              start_time: starts_at, end_time: end_time.to_fs(:time) )
       end
     end
     slots

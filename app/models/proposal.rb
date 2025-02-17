@@ -27,8 +27,8 @@ class Proposal < ApplicationRecord
   validates_inclusion_of :state, in: FINAL_STATES, allow_nil: false, message: "'%{value}' not a confirmable state.",
                                  if: :confirmed_at_changed?
 
-  serialize :last_change
-  serialize :proposal_data, type: Hash
+  serialize :last_change, coder: YAML
+  serialize :proposal_data, type: Hash, coder: YAML
 
   has_paper_trail only: %i[title abstract details pitch]
 

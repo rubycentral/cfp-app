@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-CFPApp::Application.load_tasks
+CfpApp::Application.load_tasks

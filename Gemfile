@@ -13,7 +13,7 @@ gem 'mime-types-data'
 gem 'mime-types'
 gem 'rexml'
 gem 'matrix'
-gem 'honeybadger', '~> 5.20'
+gem 'honeybadger', '~> 5.26'
 
 # Required until Rails 7 - https://github.com/mikel/mail/pull/1472#issuecomment-1165161541
 gem 'net-smtp', require: false

@@ -1,11 +1,5 @@
 # Call for Proposals (CFP) App 2.0
 
-## WARNING
-
-This is a major upgrade from the original CFP App that is not backwards compatible.  We redesigned many of the core data models and changed how the app works. Some functionality may be unavailable to Internet Explorer 9 and earlier.
-
-It is expected that you will install CFP App 2.0 into a new, pristine database and you will run future events on it.  If you have an existing installation of CFP App 1.0 and you want to preserve your data, you will need to handle the data migration on your own.
-
 ## Overview
 
 This is a Ruby on Rails application that lets you manage your conference's call for proposals (CFP), program and schedule.  It was written by Ruby Central to run the CFPs for RailsConf and RubyConf.
@@ -20,10 +14,10 @@ The CFP App does not provide a public facing website for your conference, though
 
 * Ruby 3.4.2 (set in `.ruby-version`)
 * Bundler
-* PostgreSQL 14.1
+* PostgreSQL 14.1 or higher
 * Google Chrome browser must be installed to run tests
 
-Make sure you have Ruby and Postgres installed in your environment.  Double check in the [Gemfile](../blob/main/Gemfile) for the exact supported version.  This is a Rails 6 app and uses bundler to install all required gems.  We are also making the assumption that you're familiar with how Rails apps are setup and deployed.  If this is not the case then you'll want to refer to documentation that will bridge any gaps in the instructions below.
+Make sure you have Ruby and Postgres installed in your environment.  Double check in the [Gemfile](../blob/main/Gemfile) for the exact supported version.  This is a Rails 7 app and uses bundler to install all required gems.  We are also making the assumption that you're familiar with how Rails apps are setup and deployed.  If this is not the case then you'll want to refer to documentation that will bridge any gaps in the instructions below.
 
 Run [bin/setup](bin/setup) script to install gem dependencies and setup database for development.
 
@@ -209,6 +203,9 @@ Finally internal comments can be viewed below, once you have rated the talk.  Th
 One note, at this point updating the review tags or posting a comment in either comment box will refresh the page and lose changes in the other comment box.  Only Rating is an ajax call that will not disturb the rest of the page.
 
 One thing that will happen is you will get notifications showing you what talks have been updated after this point.  You only get notifications for talks you have reviewed though.  We added a flag in the participants sections which defaults to true for reviewers to receive an email when comments have been left on the talk.  You will not receive an email for an update though notifications for updates do appear in the Notifications nav list.
+
+### Migrating From CFP App 1.0
+This is a major upgrade from the original CFP App that is not backwards compatible. If you have an existing installation of CFP App 1.0 and you want to preserve your data, you will need to handle the data migration on your own (RubyKaigi team did that, and it wasn't that hard).
 
 ### Organizing Duties
 

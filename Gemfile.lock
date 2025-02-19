@@ -255,7 +255,7 @@ GEM
       haml (>= 4.0.6)
       railties (>= 5.1)
     hashie (5.0.0)
-    honeybadger (5.26.3)
+    honeybadger (5.26.4)
       logger
       ostruct
     html2haml (2.3.0)

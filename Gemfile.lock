@@ -291,7 +291,7 @@ GEM
       railties (>= 3.2.16)
     jsonapi-renderer (0.2.2)
     jwt (2.7.0)
-    launchy (3.1.0)
+    launchy (3.1.1)
       addressable (~> 2.8)
       childprocess (~> 5.0)
       logger (~> 1.6)

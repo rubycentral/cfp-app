@@ -456,7 +456,7 @@ GEM
       execjs
       railties (>= 3.2)
       tilt
-    redcarpet (3.6.0)
+    redcarpet (3.6.1)
     redis-client (0.23.2)
       connection_pool
     regexp_parser (2.7.0)
@@ -644,7 +644,7 @@ DEPENDENCIES
   rails-assets-momentjs!
   rails-controller-testing
   react-rails
-  redcarpet (~> 3.5)
+  redcarpet (~> 3.6)
   rexml
   rspec
   rspec-rails

@@ -214,7 +214,7 @@ GEM
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
     faraday-net_http (3.0.2)
-    fastly (9.0.0)
+    fastly (10.0.0)
       typhoeus (~> 1.0, >= 1.0.1)
     ffi (1.17.1)
     foreman (0.88.1)

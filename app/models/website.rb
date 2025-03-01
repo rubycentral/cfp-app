@@ -1,5 +1,5 @@
 class Website < ApplicationRecord
-  enum caching: { off: 'off', automatic: 'automatic', manual: 'manual' }, _prefix: true
+  enum :caching, { off: 'off', automatic: 'automatic', manual: 'manual' }, prefix: true
 
   belongs_to :event
   has_many :time_slots, through: :event

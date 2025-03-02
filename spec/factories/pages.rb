@@ -5,6 +5,6 @@ FactoryBot.define do
     sequence(:slug) { |i| "home#{i if i > 1}" }
     unpublished_body { "<p>#{Faker::Lorem.paragraph}</p>" }
     published_body { "<p>#{Faker::Lorem.paragraph}</p>" }
-    body_published_at { Time.current - 1.day }
+    body_published_at { 1.day.ago }
   end
 end

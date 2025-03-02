@@ -18,9 +18,9 @@ feature "Event Dashboard" do
       fill_in "Name", with: "My Other Event"
       fill_in "Slug", with: "otherevent"
       fill_in "Contact email", with: "me@example.com"
-      fill_in "Start date", with: Time.current + 10.days
-      fill_in "End date", with: Time.current + 15.days
-      fill_in "Closes at", with: Time.current + 15.days
+      fill_in "Start date", with: 10.days.from_now
+      fill_in "End date", with: 15.days.from_now
+      fill_in "Closes at", with: 15.days.from_now
       click_button "Save"
 
       event = Event.last

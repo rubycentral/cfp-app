@@ -30,7 +30,7 @@ feature "Listing events for different roles" do
 
       expect(page).to have_content event.name
       expect(page).to have_link 'Submit a proposal'
-      expect(page).to have_content "Closes at #{(Time.current + 21.days).strftime('%b %-d')}"
+      expect(page).to have_content "Closes at #{(21.days.from_now).strftime('%b %-d')}"
       expect(page).to have_content '21 days left to submit your proposal'
       expect(page).to have_content '1 proposal submitted'
     end

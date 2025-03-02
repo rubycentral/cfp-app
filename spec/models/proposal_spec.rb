@@ -78,7 +78,7 @@ describe Proposal do
 
   describe "#confirmed?" do
     it "returns true if proposal has been confirmed" do
-      proposal = create(:proposal_with_track, state: Proposal::ACCEPTED, confirmed_at: Time.now)
+      proposal = create(:proposal_with_track, state: Proposal::ACCEPTED, confirmed_at: Time.current)
       expect(proposal).to be_confirmed
     end
 
@@ -98,10 +98,10 @@ describe Proposal do
     end
 
     it "updates the state of it's program session" do
-      create(:proposal_with_track, state: Proposal::WAITLISTED, confirmed_at: Time.now)
+      create(:proposal_with_track, state: Proposal::WAITLISTED, confirmed_at: Time.current)
       create(:proposal_with_track, state: Proposal::WAITLISTED)
       create(:proposal_with_track, state: Proposal::ACCEPTED)
-      create(:proposal_with_track, state: Proposal::ACCEPTED, confirmed_at: Time.now)
+      create(:proposal_with_track, state: Proposal::ACCEPTED, confirmed_at: Time.current)
 
       Proposal.all.each do |prop|
         create(:program_session, proposal: prop, track: prop.track)

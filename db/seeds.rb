@@ -27,52 +27,52 @@ def create_seed_data
   admin = User.where(name: "Admin", email: "an@admin.com", admin: true).first_or_create do |u|
     u.password = pwd
     u.password_confirmation = pwd
-    u.confirmed_at = Time.now
+    u.confirmed_at = Time.current
   end
   organizer = User.where(name: "Event MC", email: "mc@seed.event").first_or_create do |u|
     u.password = pwd
     u.password_confirmation = pwd
-    u.confirmed_at = Time.now
+    u.confirmed_at = Time.current
   end
   track_director = User.where(name: "Track Director", email: "track@seed.event").first_or_create do |u|
     u.password = pwd
     u.password_confirmation = pwd
-    u.confirmed_at = Time.now
+    u.confirmed_at = Time.current
   end
   reviewer = User.where(name: "Reviewer", email: "review@seed.event").first_or_create do |u|
     u.password = pwd
     u.password_confirmation = pwd
-    u.confirmed_at = Time.now
+    u.confirmed_at = Time.current
   end
   speaker_reviewer = User.where(name: "Speak and Review", email: "both@seed.event").first_or_create do |u|
     u.password = pwd
     u.password_confirmation = pwd
-    u.confirmed_at = Time.now
+    u.confirmed_at = Time.current
   end
   speaker_1 = User.where(name: "Jenny Talksalot", email: "speak1@seed.event").first_or_create do |u|
     u.password = pwd
     u.password_confirmation = pwd
-    u.confirmed_at = Time.now
+    u.confirmed_at = Time.current
   end
   speaker_2 = User.where(name: "Pamela Speakerson", email: "speak2@seed.event").first_or_create do |u|
     u.password = pwd
     u.password_confirmation = pwd
-    u.confirmed_at = Time.now
+    u.confirmed_at = Time.current
   end
   speaker_3 = User.where(name: "Jim Talksman", email: "speak3@seed.event").first_or_create do |u|
     u.password = pwd
     u.password_confirmation = pwd
-    u.confirmed_at = Time.now
+    u.confirmed_at = Time.current
   end
   speaker_4 = User.where(name: "Mark Speaksmith", email: "speak4@seed.event").first_or_create do |u|
     u.password = pwd
     u.password_confirmation = pwd
-    u.confirmed_at = Time.now
+    u.confirmed_at = Time.current
   end
   speaker_5 = User.where(name: "Erin McTalky", email: "speak5@seed.event").first_or_create do |u|
     u.password = pwd
     u.password_confirmation = pwd
-    u.confirmed_at = Time.now
+    u.confirmed_at = Time.current
   end
 
   ### SeedConf -- event is in the middle of the CFP
@@ -493,7 +493,7 @@ If you are on the cutting edge with savvy scheduling skills, we want you!
   # Program Sessions
   if schedule_event.proposals.count == 0
     120.times do |i|
-      speaker_user = User.create!(name: Faker::Name.name, email: Faker::Internet.email, password: pwd, password_confirmation: pwd, confirmed_at: Time.now)
+      speaker_user = User.create!(name: Faker::Name.name, email: Faker::Internet.email, password: pwd, password_confirmation: pwd, confirmed_at: Time.current)
 
       accepted_proposal = schedule_event.proposals.create!({
         event: seed_event,

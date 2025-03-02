@@ -101,7 +101,7 @@ describe ProposalsController, type: :controller do
     end
 
     it "leaves state unchanged for confirmed proposals" do
-      proposal.update_attribute(:confirmed_at, Time.now)
+      proposal.update_attribute(:confirmed_at, Time.current)
       post :withdraw, params: {event_slug: event.slug, uuid: proposal.uuid}
       expect(proposal.reload).not_to be_withdrawn
     end
@@ -126,7 +126,7 @@ describe ProposalsController, type: :controller do
     end
 
     it "sets the state to withdrawn for confirmed proposals" do
-      proposal.update_attribute(:confirmed_at, Time.now)
+      proposal.update_attribute(:confirmed_at, Time.current)
       post :decline, params: {event_slug: proposal.event.slug, uuid: proposal.uuid}
       expect(proposal.reload).to be_withdrawn
     end

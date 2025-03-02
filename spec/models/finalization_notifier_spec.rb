@@ -11,7 +11,7 @@ RSpec.describe FinalizationNotifier do
     let(:proposal) { create(:proposal_with_track, :with_two_speakers, event: event, state: Proposal::State::ACCEPTED) }
 
     it 'calls Staff::ProposalMailer.send_email' do
-      allow(Staff::ProposalMailer).to receive_message_chain(':send_email.delivier_now')
+      allow(Staff::ProposalMailer).to receive_message_chain('send_email.delivier_now')
       expect(Staff::ProposalMailer)
         .to receive(:send_email)
           .exactly(1).times

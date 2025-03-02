@@ -111,7 +111,7 @@ describe Event do
   describe "#unmet_requirements_for_scheduling" do
     it "doesn't show any missing prereqs for valid event" do
       event =
-        create(:event, start_date: DateTime.now, end_date: Date.tomorrow)
+        create(:event, start_date: Date.today, end_date: Date.tomorrow)
       create(:room, event: event)
 
       expect(event.unmet_requirements_for_scheduling).to be_empty

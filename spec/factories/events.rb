@@ -6,6 +6,6 @@ FactoryBot.define do
     contact_email { "admin@example.com" }
     start_date { 25.days.from_now }
     end_date { 30.days.from_now }
-    closes_at { 3.weeks.from_now.to_datetime }
+    closes_at { 3.weeks.from_now }
   end
 end

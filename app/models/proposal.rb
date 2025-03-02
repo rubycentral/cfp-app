@@ -141,7 +141,7 @@ class Proposal < ApplicationRecord
   end
 
   def confirm
-    update(confirmed_at: DateTime.current)
+    update(confirmed_at: Time.current)
     program_session.confirm if program_session.present?
   end
 
@@ -150,7 +150,7 @@ class Proposal < ApplicationRecord
   end
 
   def decline
-    update(state: WITHDRAWN, confirmed_at: DateTime.current)
+    update(state: WITHDRAWN, confirmed_at: Time.current)
     program_session.update(state: ProgramSession::DECLINED)
   end
 

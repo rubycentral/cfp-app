@@ -32,7 +32,7 @@ class EventDecorator < ApplicationDecorator
   end
 
   def cfp_days_remaining
-    ((object.closes_at - DateTime.current).to_i / 1.day) if object.closes_at && (object.closes_at - DateTime.now).to_i / 1.day > 1
+    ((object.closes_at - Time.current).to_i / 1.day) if object.closes_at && (object.closes_at - DateTime.now).to_i / 1.day > 1
   end
 
   def closes_at(format = nil)

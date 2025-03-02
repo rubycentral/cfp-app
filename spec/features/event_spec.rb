@@ -36,7 +36,7 @@ feature "Listing events for different roles" do
     end
 
     scenario "the event title is a link if it's set" do
-      new_event = Event.create(name: "Coolest Event", slug: "cool", url: "", state: "open", closes_at: DateTime.current + 21.days)
+      new_event = Event.create(name: "Coolest Event", slug: "cool", url: "", state: "open", closes_at: Time.current + 21.days)
       visit event_path(new_event)
 
       within('.page-header') do

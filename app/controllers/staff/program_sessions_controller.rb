@@ -98,6 +98,6 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
   end
 
   def json_filename
-    "#{current_event.slug}-program-#{DateTime.current.to_fs(:db_just_date)}.json"
+    "#{current_event.slug}-program-#{Time.current.to_fs(:db_just_date)}.json"
   end
 end

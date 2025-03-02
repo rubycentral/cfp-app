@@ -103,7 +103,7 @@ describe Notification do
 
   describe "#mark_as_read" do
     let(:user) { create(:user) }
-    it "sets read_at to Time.now" do
+    it "sets read_at to Time.current" do
       now = Time.current
       allow(Time).to receive(:current) { now }
       notification = create(:notification, user: user)

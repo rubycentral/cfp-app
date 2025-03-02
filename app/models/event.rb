@@ -231,7 +231,7 @@ class Event < ApplicationRecord
 
   def update_closes_at_if_manually_closed
     if changes.key?(:state) && changes[:state] == [STATUSES[:open], STATUSES[:closed]]
-      self.closes_at = Time.now
+      self.closes_at = Time.current
     end
   end
 end

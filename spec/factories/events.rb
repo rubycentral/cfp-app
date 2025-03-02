@@ -4,8 +4,8 @@ FactoryBot.define do
     url { "http://fineevent.com/" }
     guidelines { "We want all the good talks!" }
     contact_email { "admin@example.com" }
-    start_date { Time.now + 25.days }
-    end_date { Time.now + 30.days }
-    closes_at { 3.weeks.from_now.to_datetime }
+    start_date { 25.days.from_now }
+    end_date { 30.days.from_now }
+    closes_at { 3.weeks.from_now }
   end
 end

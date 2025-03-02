@@ -206,7 +206,7 @@ feature "Proposals" do
       let!(:speaker) { create(:speaker, proposal: proposal, user: user) }
 
       before do
-        proposal.update(confirmed_at: Time.now)
+        proposal.update(confirmed_at: Time.current)
         visit event_proposal_path(event_slug: proposal.event.slug, uuid: proposal)
       end
 

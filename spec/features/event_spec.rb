@@ -30,13 +30,13 @@ feature "Listing events for different roles" do
 
       expect(page).to have_content event.name
       expect(page).to have_link 'Submit a proposal'
-      expect(page).to have_content "Closes at #{(DateTime.now + 21.days).strftime('%b %-d')}"
+      expect(page).to have_content "Closes at #{(Time.now + 21.days).strftime('%b %-d')}"
       expect(page).to have_content '21 days left to submit your proposal'
       expect(page).to have_content '1 proposal submitted'
     end
 
     scenario "the event title is a link if it's set" do
-      new_event = Event.create(name: "Coolest Event", slug: "cool", url: "", state: "open", closes_at: DateTime.current + 21.days)
+      new_event = Event.create(name: "Coolest Event", slug: "cool", url: "", state: "open", closes_at: 21.days.from_now)
       visit event_path(new_event)
 
       within('.page-header') do

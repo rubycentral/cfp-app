@@ -18,7 +18,7 @@ class Notification < ApplicationRecord
   end
 
   def self.mark_as_read_for_proposal(proposal_url)
-    all.unread.where(target_path: proposal_url).update_all(read_at: DateTime.current)
+    all.unread.where(target_path: proposal_url).update_all(read_at: Time.current)
   end
 
   def self.more_unread?
@@ -30,7 +30,7 @@ class Notification < ApplicationRecord
   end
 
   def mark_as_read
-    update(read_at: DateTime.current)
+    update(read_at: Time.current)
   end
 
   def read?

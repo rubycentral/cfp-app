@@ -6,7 +6,7 @@ describe Event do
       live_events =
         create_list(:event, 3, closes_at: 3.weeks.from_now, state: 'open')
 
-      create(:event, closes_at: DateTime.yesterday)
+      create(:event, closes_at: Date.yesterday)
       create(:event)
       expect(Event.live).to match_array(live_events)
     end
@@ -29,7 +29,7 @@ describe Event do
     end
 
     it "returns false for closed events" do
-      event = create(:event, state: 'open', closes_at: DateTime.yesterday)
+      event = create(:event, state: 'open', closes_at: Date.yesterday)
       expect(event).to_not be_open
 
       event = create(:event, state: nil, closes_at: 3.weeks.from_now)
@@ -111,7 +111,7 @@ describe Event do
   describe "#unmet_requirements_for_scheduling" do
     it "doesn't show any missing prereqs for valid event" do
       event =
-        create(:event, start_date: DateTime.now, end_date: DateTime.tomorrow)
+        create(:event, start_date: Date.today, end_date: Date.tomorrow)
       create(:room, event: event)
 
       expect(event.unmet_requirements_for_scheduling).to be_empty

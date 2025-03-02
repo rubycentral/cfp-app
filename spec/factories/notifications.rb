@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :notification do
     user { nil }
     message { "MyString" }
-    read_at { DateTime.now }
+    read_at { Time.now }
     target_path { '/events' }
 
     trait :unread do

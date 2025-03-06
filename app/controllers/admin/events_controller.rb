@@ -1,6 +1,10 @@
 class Admin::EventsController < Admin::ApplicationController
   before_action :require_event, only: [:destroy, :archive, :unarchive]
 
+  def index
+    @events = Event.order(:archived, id: :desc)
+  end
+
   def new
     @event = Event.new
   end
@@ -39,9 +43,4 @@ class Admin::EventsController < Admin::ApplicationController
     end
     redirect_to admin_events_path
   end
-
-  def index
-    @events = Event.order(:archived, id: :desc)
-  end
-
 end

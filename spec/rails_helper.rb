@@ -69,22 +69,15 @@ RSpec.configure do |config|
     example.run
     Rails.configuration.action_controller.perform_caching = false
   end
-end
 
-Capybara.register_driver :chrome do |app|
-  browser_options = ::Selenium::WebDriver::Chrome::Options.new
-  browser_options.args << '--window-size=1280,1024'
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
-end
+  config.before type: :system do
+    driven_by :rack_test
+  end
 
-Capybara.register_driver :headless_chrome do |app|
-  browser_options = ::Selenium::WebDriver::Chrome::Options.new
-  browser_options.args << '--headless'
-  browser_options.args << '--window-size=1280,1024'
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
+  config.before type: :system, js: true do
+    driven_by :selenium, using: :headless_chrome, screen_size: [1400, 1400]
+  end
 end
-
-Capybara.javascript_driver = ENV['CHROME'] ? :chrome : :headless_chrome
 
 def save_timestamped_screenshot(page)
   timestamp = Time.zone.now.strftime("%Y_%m_%d-%H_%M_%S")

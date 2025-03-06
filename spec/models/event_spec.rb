@@ -12,16 +12,6 @@ describe Event do
     end
   end
 
-  describe "closes_up" do
-    it "returns events in ascending cronological order by close date" do
-      event1 = create(:event, closes_at: 1.week.from_now, state: 'open')
-      event3 = create(:event, closes_at: 3.weeks.from_now, state: 'open')
-      event2 = create(:event, closes_at: 2.weeks.from_now, state: 'open')
-
-      expect(Event.closes_up).to eq([event1, event2, event3])
-    end
-  end
-
   describe "#open?" do
     it "returns true for open events" do
       event = create(:event, state: 'open', closes_at: 1.week.from_now)

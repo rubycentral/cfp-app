@@ -17,3 +17,9 @@
             = f.button :submit, "Log in", class: "btn btn-primary"
 
           .form-group= render "devise/shared/links"
+
+      - unless Rails.env.production?
+        .col-sm-5.col-centered
+          .well.clearfix
+            .form-group
+              = link_to 'Developer Login', '/users/auth/developer', class: 'btn btn-danger', method: :post

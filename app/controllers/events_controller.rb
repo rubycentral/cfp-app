@@ -4,7 +4,7 @@ class EventsController < ApplicationController
 
   def index
     render locals: {
-      events: Event.not_draft.closes_up.decorate
+      events: Event.not_draft.order(id: :desc).decorate
     }
   end
 

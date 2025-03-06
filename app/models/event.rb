@@ -28,7 +28,6 @@ class Event < ApplicationRecord
   store_accessor :speaker_notification_emails, :waitlist
 
   scope :a_to_z, -> { order('name ASC') }
-  scope :closes_up, -> { order('closes_at ASC') }
   scope :live, -> { where("state = 'open' and (closes_at is null or closes_at > ?)", Time.current) }
   scope :not_draft, -> { where "state != 'draft'"}
 

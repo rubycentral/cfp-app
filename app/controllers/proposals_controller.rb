@@ -131,7 +131,7 @@ class ProposalsController < ApplicationController
     respond_to do |format|
       format.js do
         render locals: {
-          field_id: params[:id],
+          field_name: params[:name],
           text: markdown(params[:text])
         }
       end

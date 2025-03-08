@@ -1,18 +1,18 @@
 .proposal-section
   %h3.control-label Abstract
-  .markdown{ data: { 'field-id' => 'proposal_abstract' } }
+  .markdown{ data: { 'field-name' => 'proposal[abstract]' } }
     = proposal.abstract_markdown
 
 %h2.fieldset-legend For Review Committee
 
 .proposal-section
   %h3.control-label Details
-  .markdown{ data: { 'field-id' => 'proposal_details' } }
+  .markdown{ data: { 'field-name' => 'proposal[details]' } }
     = proposal.details_markdown
 
 .proposal-section
   %h3.control-label Pitch
-  .markdown{ data: { 'field-id' => 'proposal_pitch' } }
+  .markdown{ data: { 'field-name' => 'proposal[pitch]' } }
     =proposal.pitch_markdown
 
 - if proposal.custom_fields.any?

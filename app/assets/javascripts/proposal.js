@@ -5,7 +5,7 @@ $(function() {
     $('.watched').blur(function() {
       $.ajax({
         data: {
-          id: this.id,
+          name: this.name,
           text: $(this).val()
         },
         url: url

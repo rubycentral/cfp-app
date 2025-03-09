@@ -32,8 +32,8 @@ class Proposal < ApplicationRecord
 
   has_paper_trail only: %i[title abstract details pitch]
 
-  attr_accessor :review_tags, :updating_user
-  attr_writer :tags
+  attr_accessor :updating_user
+  attr_writer :tags, :review_tags
 
   accepts_nested_attributes_for :public_comments, reject_if: proc { |comment_attributes| comment_attributes[:body].blank? }
   accepts_nested_attributes_for :speakers

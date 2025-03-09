@@ -1,5 +1,5 @@
 class Schedule
-  attr_reader :event, :slots
+  attr_reader :event
 
   def initialize(event)
     @event = event

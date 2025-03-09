@@ -1,7 +1,5 @@
 require 'rails_helper'
 
-include Proposal::State
-
 describe Proposal do
   describe "scope :unrated" do
     it "returns all unrated proposals" do
@@ -48,10 +46,10 @@ describe Proposal do
   describe "state methods" do
     let(:state_method_map) do
       {
-        SUBMITTED => :draft?,
-        WITHDRAWN => :withdrawn?,
-        ACCEPTED => :accepted?,
-        WAITLISTED => :waitlisted?
+        Proposal::SUBMITTED => :draft?,
+        Proposal::WITHDRAWN => :withdrawn?,
+        Proposal::ACCEPTED => :accepted?,
+        Proposal::WAITLISTED => :waitlisted?
       }
     end
 
@@ -140,8 +138,7 @@ describe Proposal do
   describe "state changing" do
     describe "#finalized?" do
       it "returns false for all soft states" do
-        soft_states = [ SOFT_ACCEPTED, SOFT_WAITLISTED,
-                        SOFT_REJECTED, SUBMITTED ]
+        soft_states = [ Proposal::SOFT_ACCEPTED, Proposal::SOFT_WAITLISTED, Proposal::SOFT_REJECTED, Proposal::SUBMITTED ]
 
         soft_states.each do |state|
           proposal = create(:proposal_with_track, state: state)
@@ -161,7 +158,7 @@ describe Proposal do
 
     describe "#becomes_program_session?" do
       it "returns true for WAITLISTED and  ACCEPTED" do
-        states = [ ACCEPTED, WAITLISTED ]
+        states = [ Proposal::ACCEPTED, Proposal::WAITLISTED ]
 
         states.each do |state|
           proposal = create(:proposal_with_track, state: state)
@@ -170,7 +167,7 @@ describe Proposal do
       end
 
       it "returns false for SUBMITTED and REJECTED" do
-        states = [ SUBMITTED, REJECTED ]
+        states = [ Proposal::SUBMITTED, Proposal::REJECTED ]
 
         states.each do |state|
           proposal = create(:proposal_with_track, state: state)
@@ -189,16 +186,16 @@ describe Proposal do
       end
 
       it "changes a SUBMITTED proposal to REJECTED" do
-        proposal = create(:proposal_with_track, state: SUBMITTED)
+        proposal = create(:proposal_with_track, state: Proposal::SUBMITTED)
         expect(proposal.finalize).to be_truthy
-        expect(proposal.reload.state).to eq(REJECTED)
+        expect(proposal.reload.state).to eq(Proposal::REJECTED)
       end
 
       it "creates a draft program session for WAITLISTED and ACCEPTED proposals, but not for REJECTED or SUBMITTED" do
-        waitlisted_proposal = create(:proposal_with_track, state: SOFT_WAITLISTED)
-        accepted_proposal = create(:proposal_with_track, state: SOFT_ACCEPTED)
-        rejected_proposal = create(:proposal_with_track, state: SOFT_REJECTED)
-        submitted_proposal = create(:proposal_with_track, state: SUBMITTED)
+        waitlisted_proposal = create(:proposal_with_track, state: Proposal::SOFT_WAITLISTED)
+        accepted_proposal = create(:proposal_with_track, state: Proposal::SOFT_ACCEPTED)
+        rejected_proposal = create(:proposal_with_track, state: Proposal::SOFT_REJECTED)
+        submitted_proposal = create(:proposal_with_track, state: Proposal::SUBMITTED)
 
         Proposal.all.each do |prop|
           prop.finalize
@@ -213,13 +210,13 @@ describe Proposal do
 
     describe "#update_state" do
       it "updates the state" do
-        proposal = create(:proposal_with_track, state: ACCEPTED)
-        proposal.update_state(WAITLISTED)
-        expect(proposal.state).to eq(WAITLISTED)
+        proposal = create(:proposal_with_track, state: Proposal::ACCEPTED)
+        proposal.update_state(Proposal::WAITLISTED)
+        expect(proposal.state).to eq(Proposal::WAITLISTED)
       end
 
       it "rejects invalid states" do
-        proposal = create(:proposal_with_track, state: ACCEPTED)
+        proposal = create(:proposal_with_track, state: Proposal::ACCEPTED)
         proposal.update_state('almonds!')
         expect(proposal.errors.messages[:state][0]).to eq("'almonds!' not a valid state.")
       end
@@ -503,15 +500,14 @@ describe Proposal do
 
   describe "#withdraw" do
     it "sets proposal's state to withdrawn" do
-      proposal = create(:proposal_with_track, state: SUBMITTED)
+      proposal = create(:proposal_with_track, state: Proposal::SUBMITTED)
       proposal.withdraw
 
-      expect(proposal.state).to eq(WITHDRAWN)
+      expect(proposal.state).to eq(Proposal::WITHDRAWN)
     end
 
     it "sends a notification to reviewers" do
-      proposal = create(:proposal_with_track, :with_reviewer_public_comment,
-                        state: SUBMITTED)
+      proposal = create(:proposal_with_track, :with_reviewer_public_comment, state: Proposal::SUBMITTED)
       expect {
         proposal.withdraw
       }.to change { Notification.count }.by(1)

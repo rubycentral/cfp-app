@@ -1,7 +1,5 @@
 require 'rails_helper'
 
-include Proposal::State
-
 describe ProposalDecorator do
   describe "#speaker_names" do
     it "returns speaker names as a comma separated string" do
@@ -27,19 +25,19 @@ describe ProposalDecorator do
 
   describe "#state" do
     it "returns 'not accepted' for a rejected state" do
-      proposal = create(:proposal_with_track, state: REJECTED)
-      expect(proposal.decorate.state).to eq(NOT_ACCEPTED)
+      proposal = create(:proposal_with_track, state: ProposalDecorator::REJECTED)
+      expect(proposal.decorate.state).to eq(ProposalDecorator::NOT_ACCEPTED)
     end
 
     it "returns the current state for non-rejected states" do
       states = [
-        ACCEPTED,
-        WAITLISTED,
-        WITHDRAWN,
-        SUBMITTED,
-        SOFT_ACCEPTED,
-        SOFT_WAITLISTED,
-        SOFT_REJECTED
+        ProposalDecorator::ACCEPTED,
+        ProposalDecorator::WAITLISTED,
+        ProposalDecorator::WITHDRAWN,
+        ProposalDecorator::SUBMITTED,
+        ProposalDecorator::SOFT_ACCEPTED,
+        ProposalDecorator::SOFT_WAITLISTED,
+        ProposalDecorator::SOFT_REJECTED
       ]
 
       states.each do |state|

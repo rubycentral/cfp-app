@@ -1,7 +1,8 @@
 class BulkTimeSlot
   include ActiveModel::Model
 
-  attr_accessor :event, :day, :rooms, :start_times, :duration, :session_format
+  attr_accessor :session_format
+  attr_reader :event, :day, :rooms, :start_times, :duration
   validates :day, :rooms, :start_times, :duration, presence: true
 
   def event=(event)

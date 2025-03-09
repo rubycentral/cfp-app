@@ -1,7 +1,8 @@
 require 'rails_helper'
 
-include ActionView::Helpers::SanitizeHelper
 feature "Website Configuration", type: :system do
+  include ActionView::Helpers::SanitizeHelper
+
   let(:event) { create(:event) }
   let(:organizer) { create(:organizer, event: event) }
 

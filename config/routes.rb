@@ -35,7 +35,6 @@ Rails.application.routes.draw do
       member { post :decline }
       member { post :update_notes }
       member { delete :destroy }
-      member { get :finalized_notification }
     end
 
     get 'parse_edit_field' => 'proposals#parse_edit_field', as: :parse_edit_field_proposal

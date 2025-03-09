@@ -24,6 +24,8 @@ class ApplicationController < ActionController::Base
   layout 'application'
   decorates_assigned :event
 
+  private
+
   def after_sign_in_path_for(user)
     if session[:pending_invite_accept_url]
       session[:pending_invite_accept_url]
@@ -45,8 +47,6 @@ class ApplicationController < ActionController::Base
       root_path
     end
   end
-
-  private
 
   def current_event
     @current_event ||= set_current_event(session[:current_event_id]) if session[:current_event_id]

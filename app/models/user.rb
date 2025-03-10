@@ -76,34 +76,34 @@ class User < ApplicationRecord
   end
 
   def organizer?
-    organizer_events.count > 0
+    organizer_events.exists?
   end
 
   def organizer_for_event?(event)
     #Checks for role of organizer through teammates
-    teammates.organizer.for_event(event).size > 0
+    teammates.organizer.for_event(event).exists?
   end
 
   def staff_for?(event)
     #Checks for any role in the event through teammates
-    teammates.for_event(event).size > 0
+    teammates.for_event(event).exists?
   end
 
   def reviewer?
-    reviewer_events.count > 0
+    reviewer_events.exists?
   end
 
   def reviewer_for_event?(event)
     #Checks for role of reviewer through teammates
-    teammates.reviewer.for_event(event).size > 0
+    teammates.reviewer.for_event(event).exists?
   end
 
   def program_team?
-    teammates.program_team.size > 0
+    teammates.program_team.exists?
   end
 
   def program_team_for_event?(event)
-    teammates.program_team.for_event(event).size > 0
+    teammates.program_team.for_event(event).exists?
   end
 
   def rating_for(proposal, build_new = true)

@@ -150,7 +150,7 @@ class Event < ApplicationRecord
     missing_prereqs << "Event must have a start date" unless start_date
     missing_prereqs << "Event must have a end date" unless end_date
 
-    unless rooms.size > 0
+    unless rooms.exists?
       missing_prereqs << "Event must have at least one room"
     end
 

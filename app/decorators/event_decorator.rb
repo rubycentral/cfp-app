@@ -54,7 +54,7 @@ class EventDecorator < ApplicationDecorator
 
   def reviewed_percent
     if proposals.count > 1
-      "#{((object.proposals.rated.count.to_f/object.proposals.count.to_f)*100).round(1)}%"
+      "#{((object.proposals.rated.count.to_f/object.proposals.count)*100).round(1)}%"
     else
       "0%"
     end
@@ -76,7 +76,7 @@ class EventDecorator < ApplicationDecorator
 
   def confirmed_percent
     if (accepted_confirmed_count = proposals.accepted.confirmed.count) > 0
-      "#{((accepted_confirmed_count.to_f / object.proposals.accepted.count.to_f) * 100).round(1)}%"
+      "#{((accepted_confirmed_count.to_f / object.proposals.accepted.count) * 100).round(1)}%"
     else
       "0%"
     end
@@ -99,7 +99,7 @@ class EventDecorator < ApplicationDecorator
 
   def waitlisted_percent
     if (waitlisted_confirmed_count = proposals.waitlisted.confirmed.count) > 0
-      "#{((waitlisted_confirmed_count.to_f / object.proposals.waitlisted.count.to_f) * 100).round(1)}%"
+      "#{((waitlisted_confirmed_count.to_f / object.proposals.waitlisted.count) * 100).round(1)}%"
     else
       "0%"
     end

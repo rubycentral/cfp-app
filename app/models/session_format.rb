@@ -1,6 +1,5 @@
 class SessionFormat < ApplicationRecord
   belongs_to :event
-  has_many :time_slots
   has_many :proposals
 
   has_one :session_format_config

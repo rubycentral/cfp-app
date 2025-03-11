@@ -34,7 +34,6 @@ class Speaker < ApplicationRecord
   belongs_to :program_session, optional: true
 
   has_many :proposals, through: :user
-  has_many :program_sessions
 
   serialize :info, type: Hash, coder: YAML
 

@@ -15,7 +15,6 @@ class Proposal < ApplicationRecord
   has_many :invitations, dependent: :destroy
 
   belongs_to :event
-  has_one :time_slot
   has_one :program_session
   belongs_to :session_format
   belongs_to :track, optional: true

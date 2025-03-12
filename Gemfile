@@ -6,7 +6,7 @@ source 'https://rubygems.org'
 ruby File.read(".ruby-version").strip
 
 gem 'puma'
-gem 'rails', '~> 8.0.0'
+gem 'rails', '~> 8.0.2'
 gem 'logger'
 gem 'mimemagic'
 gem 'mime-types-data'

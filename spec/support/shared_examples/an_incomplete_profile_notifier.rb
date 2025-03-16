@@ -7,11 +7,11 @@ end
 
 RSpec.shared_examples_for 'an incomplete profile notifier' do
   let(:unconfirmed_email_msg) { " Email #{user.unconfirmed_email} needs confirmation" }
-  let(:blank_name_msg) { " Name can't be blank" }
-  let(:blank_email_msg) { " Email can't be blank" }
-  let(:blank_name_and_email_msg) { " Name can't be blank and Email can't be blank" }
+  let(:blank_name_msg) { " Name can&#39;t be blank" }
+  let(:blank_email_msg) { " Email can&#39;t be blank" }
+  let(:blank_name_and_email_msg) { " Name can&#39;t be blank and Email can&#39;t be blank" }
   let(:unconfirmed_email_and_blank_name_msg) do
-    " Name can't be blank and Email #{user.unconfirmed_email} needs confirmation"
+    " Name can&#39;t be blank and Email #{user.unconfirmed_email} needs confirmation"
   end
 
   context 'name is missing' do

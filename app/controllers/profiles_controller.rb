@@ -32,9 +32,8 @@ class ProfilesController < ApplicationController
 
   def incomplete_profile_msg
     if profile_errors = current_user.profile_errors
-      msg = 'Your profile is incomplete. Please correct the following: '
-      msg << profile_errors.full_messages.to_sentence + '.'
-      msg.html_safe
+      msg = 'Your profile is incomplete. Please correct the following: '.html_safe
+      msg << profile_errors.full_messages.to_sentence << '.'
     end
   end
 end

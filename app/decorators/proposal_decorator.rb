@@ -110,8 +110,7 @@ class ProposalDecorator < ApplicationDecorator
       h.withdraw_event_proposal_path(uuid: object, event_slug: object.event.slug),
       method: :post,
       data: {
-        confirm: 'This will remove your talk from consideration and send an ' +
-                 'email to the event coordinator. Are you sure you want to do this?'
+        confirm: 'This will remove your talk from consideration and send an email to the event coordinator. Are you sure you want to do this?'
       },
       class: 'btn btn-warning',
       id: 'withdraw'

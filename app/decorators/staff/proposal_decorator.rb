@@ -53,8 +53,7 @@ class Staff::ProposalDecorator < ProposalDecorator
       method: :delete,
       data: {
         confirm:
-          'This will delete this talk. Are you sure you want to do this? ' +
-          'It can not be undone.'
+          'This will delete this talk. Are you sure you want to do this? It can not be undone.'
       },
       class: 'btn btn-danger navbar-btn',
       id: 'delete' do
@@ -89,8 +88,7 @@ class Staff::ProposalDecorator < ProposalDecorator
                  h.event_staff_program_proposal_finalize_path(object.event, object),
                  data: {
                    confirm:
-                     'Finalizing the state will prevent any additional state changes, ' +
-                     'and emails will be sent to all speakers. Are you sure you want to continue?'
+                     'Finalizing the state will prevent any additional state changes, and emails will be sent to all speakers. Are you sure you want to continue?'
                  },
                  type: 'btn-warning',
                  hidden: finalize_button_hidden?,

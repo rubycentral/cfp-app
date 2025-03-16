@@ -53,10 +53,10 @@
           %p The CFP has not yet opened.  
           %p Please check back soon!
 
-    - if event.proposals.count > 5
+    - if (proposals_count = event.proposals.count) > 5
       .stats
         %h2 CFP Stats
-        = pluralize(event.proposals.count, "proposal")
+        = pluralize(proposals_count, "proposal")
         = event.line_chart
 
   .col-md-8.col-md-pull-4

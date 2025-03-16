@@ -62,7 +62,7 @@ class WebsiteDecorator < ApplicationDecorator
   end
 
   def background_style_html
-    background_style.map {|key, value| "#{key} = \"#{value}\""}.join(' ').html_safe
+    h.safe_join(background_style.map {|key, value| "#{key} = \"#{value}\""}, ' ')
   end
 
   def session_format_configs
@@ -159,14 +159,17 @@ class WebsiteDecorator < ApplicationDecorator
   end
 
   def font_faces_css
-    fonts.map do |font|
-      <<~CSS
-        @font-face {
-          font-family: "#{font.name}";
-          src: url('#{h.rails_storage_proxy_path(font.file)}');
-        }
-      CSS
-    end.join("\n").html_safe
+    h.safe_join(
+      fonts.map do |font|
+        <<~CSS
+          @font-face {
+            font-family: "#{font.name}";
+            src: url('#{h.rails_storage_proxy_path(font.file)}');
+          }
+        CSS
+      end,
+      "\n"
+    )
   end
 
   def font_root_css
@@ -183,11 +186,11 @@ class WebsiteDecorator < ApplicationDecorator
   end
 
   def head_content
-    object.contents.for(Website::Content::HEAD).pluck(:html).join.html_safe
+    h.safe_join(object.contents.for(Website::Content::HEAD).pluck(:html))
   end
 
   def footer_content
-    object.contents.for(Website::Content::FOOTER).pluck(:html).join.html_safe
+    h.safe_join(object.contents.for(Website::Content::FOOTER).pluck(:html))
   end
 
   def meta_data

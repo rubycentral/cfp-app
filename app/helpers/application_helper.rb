@@ -48,15 +48,17 @@ module ApplicationHelper
   end
 
   def show_flash
-    flash.map do |key, value|
-      key += " alert-info" if key == "notice" || key == 'confirm'
-      key = "danger" if key == "alert"
-      content_tag(:div, class: "container alert alert-dismissable alert-#{key}") do
-        content_tag(:button, content_tag(:span, '', class: 'glyphicon glyphicon-remove'),
-                    class: 'close', data: {dismiss: 'alert'}) +
-          simple_format(value)
+    safe_join(
+      flash.map do |key, value|
+        key += " alert-info" if key == "notice" || key == 'confirm'
+        key = "danger" if key == "alert"
+        content_tag(:div, class: "container alert alert-dismissable alert-#{key}") do
+          content_tag(:button, content_tag(:span, '', class: 'glyphicon glyphicon-remove'),
+                      class: 'close', data: {dismiss: 'alert'}) +
+            simple_format(value)
+        end
       end
-    end.join.html_safe
+    )
   end
 
   def copy_email_btn

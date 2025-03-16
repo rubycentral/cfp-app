@@ -23,7 +23,7 @@ class Staff::ProposalDecorator < ProposalDecorator
     btns << hard_reset_button if show_hard_reset
     btns << finalize_state_button if show_finalize
 
-    btns.join("\n").html_safe
+    h.safe_join(btns, "\n")
   end
 
   def small_state_buttons

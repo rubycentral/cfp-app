@@ -60,13 +60,17 @@ class ProposalDecorator < ApplicationDecorator
   end
 
   def review_tags_labels
-    object.review_tags.map { |tag|
-      h.content_tag :span, tag, class: 'label label-success label-compact' }.join("\n").html_safe
+    h.safe_join(
+      object.review_tags.map { |tag| h.content_tag :span, tag, class: 'label label-success label-compact' },
+      "\n"
+    )
   end
 
   def tags_labels
-    object.tags.map { |tag|
-      h.content_tag :span, tag, class: 'label label-primary label-compact' }.join("\n").html_safe
+    h.safe_join(
+      object.tags.map { |tag| h.content_tag :span, tag, class: 'label label-primary label-compact' },
+      "\n"
+    )
   end
 
   def review_tags_list

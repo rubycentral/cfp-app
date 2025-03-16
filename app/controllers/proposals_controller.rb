@@ -164,11 +164,10 @@ class ProposalsController < ApplicationController
   end
 
   def incomplete_profile_msg
-    if profile_errors = current_user.profile_errors
-      msg = "Before submitting a proposal your profile needs completing. Please correct the following: "
+    if (profile_errors = current_user.profile_errors)
+      msg = "Before submitting a proposal your profile needs completing. Please correct the following: ".html_safe
       msg << profile_errors.full_messages.to_sentence
-      msg << ". Visit #{view_context.link_to('My Profile', edit_profile_path)} to update."
-      msg.html_safe
+      msg << ". Visit " << view_context.link_to('My Profile', edit_profile_path) << " to update."
     end
   end
 end

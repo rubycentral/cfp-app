@@ -127,10 +127,9 @@ class EventDecorator < ApplicationDecorator
     if object.proposals.any? && object.closes_at
       event_first_proposal_created_at = object.proposals.order(created_at: :asc).pick(:created_at)
 
-      proposal_date_range =
-        event_first_proposal_created_at..(now < object.closes_at ? now : object.closes_at )
+      event_first_proposal_created_at..(now < object.closes_at ? now : object.closes_at )
     else
-      proposal_date_range = (now..(now + 3.months))
+      (now..(now + 3.months))
     end
   end
 

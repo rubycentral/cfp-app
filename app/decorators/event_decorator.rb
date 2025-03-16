@@ -124,7 +124,7 @@ class EventDecorator < ApplicationDecorator
 
   def proposal_date_range
     now = Time.current
-    if object.proposals.present? && object.closes_at
+    if object.proposals.any? && object.closes_at
       event_first_proposal_created_at =
         object.proposals.order(created_at: :asc).pluck(:created_at).first
 

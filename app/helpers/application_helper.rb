@@ -96,7 +96,7 @@ module ApplicationHelper
   end
 
   def speaker_nav?
-    current_user.proposals.present? || current_user.pending_invitations.present?
+    current_user.proposals.any? || current_user.pending_invitations.any?
   end
 
   def review_nav?

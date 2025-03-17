@@ -211,7 +211,11 @@ class Proposal < ApplicationRecord
   end
 
   def has_speaker?(user)
-    speakers.where(user_id: user).exists?
+    if speakers.loaded?
+      speakers.any? {|s| s.user_id == user.id }
+    else
+      speakers.where(user_id: user).exists?
+    end
   end
 
   def has_invited?(user)

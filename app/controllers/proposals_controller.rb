@@ -2,7 +2,7 @@ class ProposalsController < ApplicationController
   before_action :require_event, except: :index
   before_action :require_user
   before_action :require_proposal, except: [ :index, :create, :new, :parse_edit_field ]
-  before_action :load_speakers, only: :show
+  before_action :load_proposal_associations, only: :show
   before_action :require_invite_or_speaker, only: [:show]
   before_action :require_speaker, except: [ :index, :create, :new, :parse_edit_field ]
 
@@ -133,8 +133,9 @@ class ProposalsController < ApplicationController
     params.require(:proposal).permit(:confirmation_notes)
   end
 
-  def load_speakers
+  def load_proposal_associations
     @proposal.speakers.load
+    @proposal.public_comments.load
   end
 
   def require_invite_or_speaker

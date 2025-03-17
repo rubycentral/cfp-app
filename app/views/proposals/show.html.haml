@@ -125,7 +125,7 @@
         .widget.widget-card
           .widget-header
             %i.fa.fa-comments
-            %h3= pluralize(proposal.public_comments.count, 'comment')
+            %h3= pluralize(proposal.public_comments.size, 'comment')
           .widget-content
             = render partial: 'proposals/comments',
               locals: { proposal: proposal, comments: proposal.public_comments }

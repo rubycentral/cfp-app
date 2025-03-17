@@ -1,12 +1,13 @@
 %li.notifications-link.dropdown
+  - unread_notifications = current_user.notifications.recent_unread.records
   %a.dropdown-toggle{title: "Notifications Toggle", href: "#", data: { toggle: "dropdown" } }
     %i.fa.fa-envelope
-    %span.badge= current_user.notifications.unread.length if current_user.notifications.unread.any?
+    %span.badge= unread_notifications.length if unread_notifications.any?
 
   %ul.dropdown-menu.notifications-dropdown
-    - if current_user.notifications.unread.any?
+    - if unread_notifications.any?
       %li
-        - current_user.notifications.recent_unread.each do |notification|
+        - unread_notifications.each do |notification|
           = link_to notification_path(notification) do
             %i.fa.fa-exclamation
             %span=notification.short_message
@@ -19,4 +20,4 @@
       = link_to notifications_path do
         %i.fa.fa-eye
         %span
-          =  current_user.notifications.more_unread? ? "#{current_user.notifications.more_unread_count} More Unread" : "View all notifications"
+          = (more_unread_count = current_user.notifications.more_unread_count) > 0 ? "#{more_unread_count} More Unread" : "View all notifications"

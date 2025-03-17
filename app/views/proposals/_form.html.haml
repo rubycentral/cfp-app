@@ -15,7 +15,7 @@
       %div #{proposal.session_format_name}
 
   - if event.multiple_tracks? && !proposal.has_reviewer_activity?
-    - opts_tracks = event.tracks.sort_by_name.map {|t| [t.name, t.id]}
+    - opts_tracks = event.tracks.sort_by_name.pluck(:name, :id)
     = f.association :track, collection: opts_tracks, include_blank: proposal.no_track_name_for_speakers, input_html: {class: 'dropdown'},
       hint: "Optional: suggest a specific track to be considered for.", popover_icon: { content: track_tooltip }
   - else

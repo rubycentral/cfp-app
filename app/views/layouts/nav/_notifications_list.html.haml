@@ -20,4 +20,4 @@
       = link_to notifications_path do
         %i.fa.fa-eye
         %span
-          =  current_user.notifications.more_unread? ? "#{current_user.notifications.more_unread_count} More Unread" : "View all notifications"
+          = (more_unread_count = current_user.notifications.more_unread_count) > 0 ? "#{more_unread_count} More Unread" : "View all notifications"

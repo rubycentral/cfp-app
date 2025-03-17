@@ -1,5 +1,5 @@
 %ul.messages_layout
-  - comments.order(:created_at).each do |comment|
+  - comments.sort_by(&:created_at).each do |comment|
     %li.comment.markdown{ class: choose_class_for(comment) }
       .message_wrap
         - if comment.user.present?

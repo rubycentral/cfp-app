@@ -1,7 +1,7 @@
 .speaker.clearfix
   %strong= speaker.name
 
-  - if withdraw && speaker.proposal.speakers.count > 1 && !speaker.proposal.finalized?
+  - if withdraw && speaker.proposal.speakers.size > 1 && !speaker.proposal.finalized?
     %p= link_to "Withdraw",
         speaker_path(speaker.id),
         method: :delete,

@@ -50,7 +50,7 @@
           .col-sm-4
             .col-sm-6.no-pad-left
               .proposal-meta-item
-                .info-item-heading #{ 'Speaker'.pluralize(proposal.speakers.count) }
+                .info-item-heading #{ 'Speaker'.pluralize(proposal.speakers.size) }
                 = proposal.speakers.collect { |speaker| speaker.name }.join(', ')
             .col-sm-6
               -if proposal.tags.present?
@@ -125,7 +125,7 @@
         .widget.widget-card
           .widget-header
             %i.fa.fa-comments
-            %h3= pluralize(proposal.public_comments.count, 'comment')
+            %h3= pluralize(proposal.public_comments.size, 'comment')
           .widget-content
             = render partial: 'proposals/comments',
               locals: { proposal: proposal, comments: proposal.public_comments }

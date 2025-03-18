@@ -2,7 +2,7 @@
   - time_slot.row_data_time_sortable.each do |cell|
     - if cell.is_a?(Time)
       %td{ data: { order: cell } }
-        = cell.try(:to_s, :time_p)
+        = cell.try(:to_fs, :time_p)
     - else
       %td= cell
   %td.actions

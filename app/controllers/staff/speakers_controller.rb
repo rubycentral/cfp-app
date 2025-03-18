@@ -6,7 +6,7 @@ class Staff::SpeakersController < Staff::ApplicationController
   before_action :enable_staff_program_subnav
 
   def index
-    @program_speakers = current_event.speakers.in_program
+    @program_speakers = current_event.speakers.in_program.includes(program_session: [:track, :session_format])
   end
 
   def new

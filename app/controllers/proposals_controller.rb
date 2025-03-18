@@ -9,7 +9,7 @@ class ProposalsController < ApplicationController
   decorates_assigned :proposal
 
   def index
-    proposals = current_user.proposals.order(event_id: :desc).decorate.group_by {|p| p.event}
+    proposals = current_user.proposals.includes(:event, {speakers: :user}, :session_format).order(event_id: :desc).decorate.group_by {|p| p.event}
     invitations = current_user.pending_invitations.decorate.group_by {|inv| inv.proposal.event}
     events = (proposals.keys | invitations.keys).uniq
 

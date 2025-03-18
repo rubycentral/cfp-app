@@ -2,13 +2,15 @@ class Staff::TimeSlotsController < Staff::ApplicationController
   include ScheduleSupport
 
   before_action :set_time_slot, only: [:edit, :update, :destroy]
-  before_action :set_time_slots, only: :index
 
   helper_method :time_slot_decorated
 
   decorates_assigned :time_slots, with: Staff::TimeSlotDecorator
 
   def index
+    @time_slots = current_event.time_slots.grid_order
+                      .includes(:room, program_session: [{speakers: :user}, :track])
+
     respond_to do |format|
       format.html
       format.csv { send_data time_slots.to_csv }
@@ -87,11 +89,6 @@ class Staff::TimeSlotsController < Staff::ApplicationController
 
   def set_time_slot
     @time_slot = current_event.time_slots.find(params[:id])
-  end
-
-  def set_time_slots
-    @time_slots = current_event.time_slots.grid_order
-                      .includes(:room, program_session: { proposal: {speakers: :user }})
   end
 
   def time_slot_decorated

@@ -11,8 +11,9 @@ class Staff::ProposalReviewsController < Staff::ApplicationController
     set_title('Review Proposals')
 
     proposals = policy_scope(Proposal)
-      .includes(:proposal_taggings, :review_taggings, :ratings, :session_format,
-                              :internal_comments, :public_comments)
+      .select("*,
+        (#{Comment.select('COUNT(*)').where('proposal_id = proposals.id').to_sql}) as comments_count")
+      .includes(:proposal_taggings, :review_taggings, :ratings, :session_format)
 
     proposals.to_a.sort_by! { |p| [p.ratings.present? ? 1 : 0, p.created_at] }
     proposals = Staff::ProposalDecorator.decorate_collection(proposals)

@@ -11,7 +11,7 @@ class Staff::ProposalReviewsController < Staff::ApplicationController
     set_title('Review Proposals')
 
     proposals = policy_scope(Proposal)
-                    .includes(:proposal_taggings, :review_taggings, :ratings,
+      .includes(:proposal_taggings, :review_taggings, :ratings, :session_format,
                               :internal_comments, :public_comments)
 
     proposals.to_a.sort_by! { |p| [p.ratings.present? ? 1 : 0, p.created_at] }

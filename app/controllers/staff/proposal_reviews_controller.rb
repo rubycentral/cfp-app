@@ -12,6 +12,7 @@ class Staff::ProposalReviewsController < Staff::ApplicationController
 
     proposals = policy_scope(Proposal)
       .select("*,
+        (#{Rating.select('score').where('proposal_id = proposals.id').where(user_id: current_user).to_sql}) as your_score,
         (#{Comment.select('COUNT(*)').where('proposal_id = proposals.id').to_sql}) as comments_count")
       .includes(:proposal_taggings, :review_taggings, :ratings, :session_format)
 

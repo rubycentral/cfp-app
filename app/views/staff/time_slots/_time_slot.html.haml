@@ -1,9 +1,21 @@
 %tr{ id: "time_slot_#{time_slot.id}" }
-  - time_slot.row_data_time_sortable.each do |cell|
-    - if cell.is_a?(Time)
-      %td{ data: { order: cell } }
-        = cell.try(:to_fs, :time_p)
-    - else
-      %td= cell
+  %td= time_slot.conference_day
+
+  %td{ data: {order: time_slot.object.start_time} }
+    = time_slot.start_time
+
+  %td{ data: {order: time_slot.object.end_time} }
+    = time_slot.end_time
+
+  %td= time_slot.linked_title
+
+  %td= time_slot.display_presenter
+
+  %td= time_slot.room_name
+
+  %td= time_slot.display_sponsor_star
+
+  %td= time_slot.display_track_name
+
   %td.actions
     = time_slot.action_links

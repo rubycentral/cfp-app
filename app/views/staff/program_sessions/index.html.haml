@@ -72,5 +72,5 @@
           %th.hidden
 
       %tbody
-        = render partial: 'session_row_active', collection: sessions, as: :program_session
+        = render partial: 'session_row_active', collection: sessions, as: :program_session, locals: {is_organizer: current_user.organizer_for_event?(current_event)}
 %hr

@@ -11,10 +11,14 @@ class Staff::ProposalReviewsController < Staff::ApplicationController
     set_title('Review Proposals')
 
     proposals = policy_scope(Proposal)
-                    .includes(:proposal_taggings, :review_taggings, :ratings,
-                              :internal_comments, :public_comments)
+      .select("*,
+        (#{Rating.select('AVG(score)').where('proposal_id = proposals.id').to_sql}) as avg_rating,
+        (#{Rating.select('score').where('proposal_id = proposals.id').where(user_id: current_user).to_sql}) as your_score,
+        (#{Rating.select('COUNT(*)').where('proposal_id = proposals.id').to_sql}) as ratings_count,
+        (#{Comment.select('COUNT(*)').where('proposal_id = proposals.id').to_sql}) as comments_count")
+      .includes(:proposal_taggings, :review_taggings, :session_format)
 
-    proposals.to_a.sort_by! { |p| [p.ratings.present? ? 1 : 0, p.created_at] }
+    proposals.to_a.sort_by! { |p| [p.ratings_count > 0 ? 1 : 0, p.created_at] }
     proposals = Staff::ProposalDecorator.decorate_collection(proposals)
 
     render locals: {

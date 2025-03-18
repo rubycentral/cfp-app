@@ -65,11 +65,11 @@
         - proposals.each do |proposal|
           %tr{ class: "proposal-#{proposal.id}", data: { 'proposal-id' => proposal.id, 'proposal-uuid' => proposal.uuid } }
             %td.average-rating
-              = proposal.average_rating if proposal.score_for(current_user).present?
+              = number_with_precision(proposal.avg_rating, precision: 1) if proposal.your_score
             %td.my-rating
-              = proposal.score_for(current_user)
+              = proposal.your_score
             %td.ratings-count
-              = proposal.ratings.size
+              = proposal.ratings_count
             %td.title
               = proposal.title_link_for_review
               = state_label(small: true) if proposal.withdrawn?
@@ -82,7 +82,7 @@
             %td.review-tags
               = proposal.review_tags_labels
             %td.comment-count
-              = proposal.comment_count
+              = proposal.comments_count
             %td.created-at
               = proposal.created_at
             %td.updated-at

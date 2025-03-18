@@ -77,8 +77,9 @@ class ApplicationController < ActionController::Base
     Website.domain_match(request.domain).joins(:event).order(created_at: :desc)
   end
 
-  def set_current_event(event_id)
-    @current_event = Event.find_by(id: event_id).try(:decorate)
+  def set_current_event(event_or_event_id)
+    event_or_event_id = Event.find_by(id: event_or_event_id) unless Event === event_or_event_id
+    @current_event = event_or_event_id.try(:decorate)
     session[:current_event_id] = @current_event.try(:id)
     @current_event
   end
@@ -108,7 +109,7 @@ class ApplicationController < ActionController::Base
   def require_event
     @event = Event.find_by(slug: params[:event_slug] || params[:slug])
     if @event
-      set_current_event(event.id)
+      set_current_event(@event)
     else
       flash[:danger] = "Your event could not be found, please check the url."
       redirect_to events_path

@@ -9,7 +9,7 @@ class Staff::TimeSlotsController < Staff::ApplicationController
 
   def index
     @time_slots = current_event.time_slots.grid_order
-                      .includes(:room, program_session: {speakers: :user})
+                      .includes(:room, program_session: [{speakers: :user}, :track])
 
     respond_to do |format|
       format.html

@@ -14,7 +14,6 @@ class Staff::ProposalsController < Staff::ApplicationController
     @proposals = @event.proposals
                    .includes(:event, :review_taggings, :proposal_taggings, :ratings, :session_format, {speakers: :user}).load
     @proposals = Staff::ProposalsDecorator.decorate(@proposals)
-    @taggings_count = Tagging.count_by_tag(@event)
   end
 
   def show

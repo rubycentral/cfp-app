@@ -55,7 +55,7 @@ class Proposal < ApplicationRecord
   scope :unrated, -> { where('id NOT IN ( SELECT proposal_id FROM ratings )') }
   scope :rated, -> { where('id IN ( SELECT proposal_id FROM ratings )') }
   scope :not_withdrawn, -> { where.not(state: WITHDRAWN) }
-  scope :not_owned_by, ->(user) { where.not(id: user.proposals.map(&:id)) }
+  scope :not_owned_by, ->(user) { where.not(id: user.proposals) }
   scope :for_state, lambda { |state|
     where(state: state).order(:title).includes(:event, { speakers: :user }, :review_taggings)
   }

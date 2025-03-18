@@ -65,7 +65,7 @@
         - proposals.each do |proposal|
           %tr{ class: "proposal-#{proposal.id}", data: { 'proposal-id' => proposal.id, 'proposal-uuid' => proposal.uuid } }
             %td.average-rating
-              = proposal.average_rating if proposal.your_score
+              = number_with_precision(proposal.avg_rating, precision: 1) if proposal.your_score
             %td.my-rating
               = proposal.your_score
             %td.ratings-count

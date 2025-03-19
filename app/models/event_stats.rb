@@ -59,11 +59,14 @@ class EventStats
   def track_review_stats(track_id='all')
     p = event.proposals
     p = filter_by_track(p, track_id) unless track_id == 'all'
+
+    comments_per_type = Comment.joins(:proposal).group(:type).where(proposal: p).count
+
     {
       proposals: p.count,
       reviews: p.rated.count,
-      public_comments: PublicComment.joins(:proposal).where(proposal: p).count,
-      internal_comments: InternalComment.joins(:proposal).where(proposal: p).count,
+      public_comments: comments_per_type['PublicComment'] || 0,
+      internal_comments: comments_per_type['InternalComment'] || 0,
       needs_review: p.left_outer_joins(:ratings).group("proposals.id").having("count(ratings.id) < ?", 2).length
     }
   end

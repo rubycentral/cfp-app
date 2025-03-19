@@ -30,30 +30,6 @@ class EventStats
     q.size
   end
 
-  def accepted_proposals(track_id='all')
-    q = event.proposals.accepted
-    q = filter_by_track(q, track_id)
-    q.size
-  end
-
-  def waitlisted_proposals(track_id='all')
-    q = event.proposals.waitlisted
-    q = filter_by_track(q, track_id)
-    q.size
-  end
-
-  def soft_accepted_proposals(track_id='all')
-    q = event.proposals.soft_accepted
-    q = filter_by_track(q, track_id)
-    q.size
-  end
-
-  def soft_waitlisted_proposals(track_id='all')
-    q = event.proposals.soft_waitlisted
-    q = filter_by_track(q, track_id)
-    q.size
-  end
-
   def all_accepted_proposals(track_id='all')
     q = event.proposals.where(state: [Proposal::ACCEPTED, Proposal::SOFT_ACCEPTED])
     q = filter_by_track(q, track_id)
@@ -102,11 +78,14 @@ class EventStats
   end
 
   def track_program_stats(track_id='all')
+    query = event.proposals.group(:state)
+    query = query.in_track(track_id) unless track_id == 'all'
+    results = query.count
     {
-      accepted: accepted_proposals(track_id),
-      soft_accepted: soft_accepted_proposals(track_id),
-      waitlisted: waitlisted_proposals(track_id),
-      soft_waitlisted: soft_waitlisted_proposals(track_id)
+      accepted: results[Proposal::State::ACCEPTED] || 0,
+      soft_accepted: results[Proposal::State::SOFT_ACCEPTED] || 0,
+      waitlisted: results[Proposal::State::WAITLISTED] || 0,
+      soft_waitlisted: results[Proposal::State::SOFT_WAITLISTED] || 0
     }
   end
 

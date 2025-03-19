@@ -90,21 +90,23 @@ class EventStats
   end
 
   def schedule
-    stats = {'Total' => schedule_day_stats}
+    time_slots_per_day = event.time_slots.group(:conference_day).count
+    scheduled_time_slots_per_day = event.time_slots.scheduled.group(:conference_day).count
+    empty_time_slots_per_day = event.time_slots.empty.group(:conference_day).count
+
+    stats = {'Total' => {
+      time_slots: time_slots_per_day.values.sum || 0,
+      scheduled_slots: scheduled_time_slots_per_day.values.sum || 0,
+      empty_slots: empty_time_slots_per_day.values.sum || 0
+    }}
     event.days.times do |i|
-      stats[day_name(i)] = schedule_day_stats(i)
+      stats[day_name(i)] = {
+        time_slots: time_slots_per_day[i + 1] || 0,
+        scheduled_slots: scheduled_time_slots_per_day[i + 1] || 0,
+        empty_slots: empty_time_slots_per_day[i + 1] || 0
+      }
     end
     stats
-  end
-
-  def schedule_day_stats(day_index="all")
-    days = day_index == "all" ? (1..event.days).to_a : day_index + 1
-    time_slots = event.time_slots.where(conference_day: days)
-    {
-      time_slots: time_slots.size,
-      scheduled_slots: time_slots.scheduled.size,
-      empty_slots: time_slots.empty.size,
-    }
   end
 
   def day_name(day_index)

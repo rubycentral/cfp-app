@@ -31,7 +31,7 @@ class Teammate < ApplicationRecord
 
   scope :organizer, -> { where(role: "organizer") }
   scope :program_team, -> { where(role: ["program team", "organizer"]) }
-  scope :reviewer, -> { where(role: ["reviewer", "program team", "organizer"]) }
+  scope :reviewer, -> { where(role: STAFF_ROLES) }
 
   scope :pending, -> { where(state: PENDING) }
   scope :accepted, -> { where(state: ACCEPTED) }

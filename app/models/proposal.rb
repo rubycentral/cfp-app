@@ -52,8 +52,8 @@ class Proposal < ApplicationRecord
   scope :soft_states, -> { where(state: SOFT_STATES) }
   scope :working_program, -> { where(state: [SOFT_ACCEPTED, SOFT_WAITLISTED, ACCEPTED, WAITLISTED]) }
 
-  scope :unrated, -> { where('id NOT IN ( SELECT proposal_id FROM ratings )') }
-  scope :rated, -> { where('id IN ( SELECT proposal_id FROM ratings )') }
+  scope :unrated, -> { where.not(id: Rating.select(:proposal_id)) }
+  scope :rated, -> { where(id: Rating.select(:proposal_id)) }
   scope :not_withdrawn, -> { where.not(state: WITHDRAWN) }
   scope :not_owned_by, ->(user) { where.not(id: user.proposals) }
   scope :for_state, lambda { |state|

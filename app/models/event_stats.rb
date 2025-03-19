@@ -154,8 +154,8 @@ class EventStats
       if rating_count > 0
         stats[teammate.name] = {
           reviews: rating_count,
-          public_comments: PublicComment.where(user_id: teammate.user_id).joins(proposal: :event).where(proposals: {event_id: event}).count,
-          internal_comments: InternalComment.where(user_id: teammate.user_id).joins(proposal: :event).where(proposals: {event_id: event}).count,
+          public_comments: PublicComment.where(user_id: teammate.user_id).joins(:proposal).where(proposals: {event_id: event}).count,
+          internal_comments: InternalComment.where(user_id: teammate.user_id).joins(:proposal).where(proposals: {event_id: event}).count,
         }
       end
     end

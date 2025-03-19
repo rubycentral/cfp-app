@@ -50,8 +50,13 @@ class EventStats
 
   def review
     stats = {'Total' => track_review_stats}
+
+    proposals_per_track = event.proposals.left_joins(:track).group('tracks.name').count
+    stats['Total'][:proposals] = proposals_per_track.values.sum || 0
+
     event.tracks.each do |track|
       stats[track.name] = track_review_stats(track.id)
+      stats[track.name][:proposals] = proposals_per_track[track.name] || 0
     end
     stats
   end
@@ -63,7 +68,6 @@ class EventStats
     comments_per_type = Comment.joins(:proposal).group(:type).where(proposal: p).count
 
     {
-      proposals: p.count,
       reviews: p.rated.count,
       public_comments: comments_per_type['PublicComment'] || 0,
       internal_comments: comments_per_type['InternalComment'] || 0,

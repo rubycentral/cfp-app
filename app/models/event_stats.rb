@@ -122,9 +122,9 @@ class EventStats
     days = day_index == "all" ? (1..event.days).to_a : day_index + 1
     time_slots = event.time_slots.where(conference_day: days)
     {
-      time_slots: time_slots.length,
-      scheduled_slots: time_slots.scheduled.length,
-      empty_slots: time_slots.empty.length,
+      time_slots: time_slots.size,
+      scheduled_slots: time_slots.scheduled.size,
+      empty_slots: time_slots.empty.size,
     }
   end
 

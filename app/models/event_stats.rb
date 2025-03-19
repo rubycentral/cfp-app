@@ -69,24 +69,24 @@ class EventStats
   end
 
   def program
-    stats = {'Total' => track_program_stats}
-    stats[Track::NO_TRACK] = track_program_stats('')
-    event.tracks.each do |track|
-      stats[track.name] = track_program_stats(track.id)
+    proposals_per_track_and_state = event.proposals.left_joins(:track).group('tracks.name', :state).count
+
+    stats = {'Total' => {
+      accepted: proposals_per_track_and_state.select {|k, _v| k[1] == Proposal::State::ACCEPTED }.sum(&:second) || 0,
+      soft_accepted: proposals_per_track_and_state.select {|k, _v| k[1] == Proposal::State::SOFT_ACCEPTED }.sum(&:second) || 0,
+      waitlisted: proposals_per_track_and_state.select {|k, _v| k[1] == Proposal::State::WAITLISTED }.sum(&:second) || 0,
+      soft_waitlisted: proposals_per_track_and_state.select {|k, _v| k[1] == Proposal::State::SOFT_WAITLISTED }.sum(&:second) || 0
+    }}
+    # Prepending `nil` for "General" track
+    event.tracks.pluck(:name).prepend(nil).each do |track_name|
+      stats[track_name || Track::NO_TRACK] = {
+        accepted: proposals_per_track_and_state[[track_name, Proposal::State::ACCEPTED]] || 0,
+        soft_accepted: proposals_per_track_and_state[[track_name, Proposal::State::SOFT_ACCEPTED]] || 0,
+        waitlisted: proposals_per_track_and_state[[track_name, Proposal::State::WAITLISTED]] || 0,
+        soft_waitlisted: proposals_per_track_and_state[[track_name, Proposal::State::SOFT_WAITLISTED]] || 0
+      }
     end
     stats
-  end
-
-  def track_program_stats(track_id='all')
-    query = event.proposals.group(:state)
-    query = query.in_track(track_id) unless track_id == 'all'
-    results = query.count
-    {
-      accepted: results[Proposal::State::ACCEPTED] || 0,
-      soft_accepted: results[Proposal::State::SOFT_ACCEPTED] || 0,
-      waitlisted: results[Proposal::State::WAITLISTED] || 0,
-      soft_waitlisted: results[Proposal::State::SOFT_WAITLISTED] || 0
-    }
   end
 
   def schedule

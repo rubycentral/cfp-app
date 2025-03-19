@@ -152,10 +152,11 @@ class EventStats
     event.teammates.active.alphabetize.includes(:user).each do |teammate|
       rating_count = teammate.ratings_count(event)
       if rating_count > 0
+        comments_count_per_type = Comment.group(:type).where(user_id: teammate.user_id).joins(:proposal).where(proposals: {event_id: event}).count
         stats[teammate.name] = {
           reviews: rating_count,
-          public_comments: PublicComment.where(user_id: teammate.user_id).joins(:proposal).where(proposals: {event_id: event}).count,
-          internal_comments: InternalComment.where(user_id: teammate.user_id).joins(:proposal).where(proposals: {event_id: event}).count,
+          public_comments: comments_count_per_type['PublicComment'] || 0,
+          internal_comments: comments_count_per_type['InternalComment'] || 0
         }
       end
     end

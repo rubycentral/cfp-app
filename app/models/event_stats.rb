@@ -49,34 +49,29 @@ class EventStats
   end
 
   def review
-    stats = {'Total' => track_review_stats}
-
     proposals_per_track = event.proposals.left_joins(:track).group('tracks.name').count
     rated_proposals_per_track = event.proposals.rated.left_joins(:track).group('tracks.name').count
+    needs_review_proposals_per_track = event.proposals.left_joins(:ratings, :track).group('tracks.name', 'proposals.id').having('count(ratings.id) < ?', 2).count.group_by {|k, _v| k.first }.transform_values {|v| v.sum(&:second) }
     comments_per_track_and_type = Comment.joins(:proposal).merge(Proposal.left_joins(:track)).group('tracks.name', :type).where(proposals: {event_id: event}).count
 
-    stats['Total'][:proposals] = proposals_per_track.values.sum || 0
-    stats['Total'][:reviews] = rated_proposals_per_track.values.sum || 0
-    stats['Total'][:public_comments] = comments_per_track_and_type.select {|k, _v| k[1] == 'PublicComment' }.sum(&:second) || 0
-    stats['Total'][:internal_comments] = comments_per_track_and_type.select {|k, _v| k[1] == 'InternalComment' }.sum(&:second) || 0
+    stats = {'Total' => {
+      proposals: proposals_per_track.values.sum || 0,
+      reviews: rated_proposals_per_track.values.sum || 0,
+      needs_review: needs_review_proposals_per_track.values.sum || 0,
+      public_comments: comments_per_track_and_type.select {|k, _v| k[1] == 'PublicComment' }.sum(&:second) || 0,
+      internal_comments: comments_per_track_and_type.select {|k, _v| k[1] == 'InternalComment' }.sum(&:second) || 0
+    }}
 
-    event.tracks.each do |track|
-      stats[track.name] = track_review_stats(track.id)
-      stats[track.name][:proposals] = proposals_per_track[track.name] || 0
-      stats[track.name][:reviews] = rated_proposals_per_track[track.name] || 0
-      stats[track.name][:public_comments] = comments_per_track_and_type[[track.name, 'PublicComment']] || 0
-      stats[track.name][:internal_comments] = comments_per_track_and_type[[track.name, 'InternalComment']] || 0
+    event.tracks.pluck(:name).each do |track_name|
+      stats[track_name || Track::NO_TRACK] = {
+        proposals: proposals_per_track[track_name] || 0,
+        reviews: rated_proposals_per_track[track_name] || 0,
+        needs_review: needs_review_proposals_per_track[track_name] || 0,
+        public_comments: comments_per_track_and_type[[track_name, 'PublicComment']] || 0,
+        internal_comments: comments_per_track_and_type[[track_name, 'InternalComment']] || 0
+      }
     end
     stats
-  end
-
-  def track_review_stats(track_id='all')
-    p = event.proposals
-    p = filter_by_track(p, track_id) unless track_id == 'all'
-
-    {
-      needs_review: p.left_outer_joins(:ratings).group("proposals.id").having("count(ratings.id) < ?", 2).length
-    }
   end
 
   def program

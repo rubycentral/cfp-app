@@ -149,7 +149,7 @@ class EventStats
   def team
     stats = {}
 
-    event.teammates.active.alphabetize.each do |teammate|
+    event.teammates.active.alphabetize.includes(:user).each do |teammate|
       rating_count = teammate.ratings_count(event)
       if rating_count > 0
         stats[teammate.name] = {

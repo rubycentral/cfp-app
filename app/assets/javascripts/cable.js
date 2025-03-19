@@ -1,4 +1,4 @@
-//= require action_cable
+//= require actioncable
 //= require_self
 
 (function() {

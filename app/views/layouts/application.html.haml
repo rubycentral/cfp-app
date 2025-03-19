@@ -17,11 +17,6 @@
 
     = csrf_meta_tags
 
-    // html5 shim and respond.js ie8 support of html5 elements and media queries
-    /[if lt ie 9]
-      = javascript_include_tag "/js/html5shiv.js"
-      = javascript_include_tag "/js/respond.min.js"
-
   %body{id: body_id}
     = render partial: "layouts/navbar"
 

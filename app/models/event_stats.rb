@@ -150,10 +150,10 @@ class EventStats
     stats = {}
 
     comments_per_user_id_and_type = Comment.group(:user_id, :type).joins(:proposal).where(proposals: {event_id: event}).count
+    ratings_per_user_id = Rating.group(:user_id).not_withdrawn.for_event(event).count
 
     event.teammates.active.alphabetize.includes(:user).each do |teammate|
-      rating_count = teammate.ratings_count(event)
-      if rating_count > 0
+      if (rating_count = ratings_per_user_id[teammate.user_id] || 0) > 0
         stats[teammate.name] = {
           reviews: rating_count,
           public_comments: comments_per_user_id_and_type[[teammate.user_id, 'PublicComment']] || 0,

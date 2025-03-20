@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-
   constraints DomainConstraint.new do
     get '/', to: 'pages#show'
     get '/(:slug)/program', to: 'programs#show'
@@ -26,8 +24,6 @@ Rails.application.routes.draw do
 
   resources :events, param: :slug do
     get '/' => 'events#show', as: :event
-
-    post '/proposals' => 'proposals#create', as: :event_proposals
 
     resources :proposals, param: :uuid do
       member { post :confirm }
@@ -173,5 +169,4 @@ Rails.application.routes.draw do
   get '/(:slug)/schedule', to: 'schedule#show', as: :schedule
   get '/(:slug)/sponsors', to: 'sponsors#show', as: :sponsors
   get '/(:slug)/:page', to: 'pages#show', as: :page
-
 end

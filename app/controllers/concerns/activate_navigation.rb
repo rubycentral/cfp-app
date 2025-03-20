@@ -54,7 +54,7 @@ module ActivateNavigation
     @nav_item_map ||= {
         'my-proposals-link' => [
             starts_with_path(:proposals),
-            starts_with_path(:event_event_proposals, current_event)
+            starts_with_path(:event_proposals, current_event)
         ],
         'event-website-link' => website_subnav_item_map,
         'event-review-proposals-link' => starts_with_path(:event_staff_proposals, current_event),

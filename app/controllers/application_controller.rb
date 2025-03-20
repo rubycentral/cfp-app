@@ -107,7 +107,12 @@ class ApplicationController < ActionController::Base
   end
 
   def require_event
-    @event = Event.find_by(slug: params[:event_slug] || params[:slug])
+    slug = params[:event_slug] || params[:slug]
+    @event = if @current_event && (@current_event.slug == slug)
+      @current_event
+    else
+      Event.find_by(slug: params[:event_slug] || params[:slug])
+    end
     if @event
       set_current_event(@event)
     else

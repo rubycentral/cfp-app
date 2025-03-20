@@ -623,9 +623,6 @@ DEPENDENCIES
   mime-types
   mime-types-data
   mimemagic
-  net-imap
-  net-pop
-  net-smtp
   nokogiri
   omniauth-github
   omniauth-rails_csrf_protection (~> 1.0)

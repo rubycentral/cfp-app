@@ -157,7 +157,7 @@ GEM
     country_select (10.0.1)
       countries (> 5.0, < 8.0)
     crass (1.0.6)
-    csv (3.3.2)
+    csv (3.3.3)
     database_cleaner (2.1.0)
       database_cleaner-active_record (>= 2, < 3)
     database_cleaner-active_record (2.2.0)

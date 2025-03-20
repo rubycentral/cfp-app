@@ -5,6 +5,7 @@ class Teammate < ApplicationRecord
   STATES = ["pending", "accepted", "declined"]
 
   STAFF_ROLES = ['reviewer', 'program team', 'organizer']
+  PROGRAM_TEAM_ROLES = ['program team', 'organizer']
 
   ALL = 'all'
   MENTIONS = 'mentions'
@@ -30,8 +31,8 @@ class Teammate < ApplicationRecord
   scope :notify, -> { where(notifications: true) }
 
   scope :organizer, -> { where(role: "organizer") }
-  scope :program_team, -> { where(role: ["program team", "organizer"]) }
-  scope :reviewer, -> { where(role: ["reviewer", "program team", "organizer"]) }
+  scope :program_team, -> { where(role: PROGRAM_TEAM_ROLES) }
+  scope :reviewer, -> { where(role: STAFF_ROLES) }
 
   scope :pending, -> { where(state: PENDING) }
   scope :accepted, -> { where(state: ACCEPTED) }

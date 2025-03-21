@@ -53,11 +53,11 @@ module ActivateNavigation
   def nav_item_map
     @nav_item_map ||= {
         'my-proposals-link' => [
-            starts_with_path(:proposals),
-            starts_with_path(:event_proposals, current_event)
+            starts_with_path(Proposal),
+            starts_with_path(current_event, Proposal)
         ],
         'event-website-link' => website_subnav_item_map,
-        'event-review-proposals-link' => starts_with_path(:event_staff_proposals, current_event),
+        'event-review-proposals-link' => starts_with_path(current_event, :staff, Proposal),
         'event-selection-link' => selection_subnav_item_map,
         'event-program-link' => program_subnav_item_map,
         'event-schedule-link' => schedule_subnav_item_map,
@@ -67,54 +67,54 @@ module ActivateNavigation
 
   def event_subnav_item_map
     @event_subnav_item_map ||= {
-        'event-staff-dashboard-link' => exact_path(:event_staff, current_event),
+        'event-staff-dashboard-link' => exact_path(current_event, :staff),
         'event-staff-info-link' => [
-            exact_path(:event_staff_info, current_event),
-            exact_path(:event_staff_edit, current_event)
+            exact_path(current_event, :staff, :info),
+            exact_path(current_event, :staff, :edit)
         ],
-        'event-staff-teammates-link' => exact_path(:event_staff_teammates, current_event),
-        'event-staff-config-link' => exact_path(:event_staff_config, current_event),
-        'event-staff-guidelines-link' => exact_path(:event_staff_guidelines, current_event),
-        'event-staff-speaker-emails-link' => exact_path(:event_staff_speaker_email_notifications, current_event),
+        'event-staff-teammates-link' => exact_path(current_event, :staff, Teammate),
+        'event-staff-config-link' => exact_path(current_event, :staff, :config),
+        'event-staff-guidelines-link' => exact_path(current_event, :staff, :guidelines),
+        'event-staff-speaker-emails-link' => exact_path(current_event, :staff, :speaker_email_notifications),
     }
   end
 
   def website_subnav_item_map
     @website_subnav_item_map ||= {
-      'event-website-configuration-link' => starts_with_path(:event_staff_website, current_event),
-      'event-pages-link' => exact_path(:event_staff_pages, current_event)
+      'event-website-configuration-link' => starts_with_path(current_event, :staff, :website),
+      'event-pages-link' => exact_path(current_event, :staff, Page)
     }
   end
 
   def selection_subnav_item_map
     @selection_subnav_item_map ||= {
         'event-program-proposals-selection-link' => [
-            starts_with_path(:selection_event_staff_program_proposals, current_event),
+            starts_with_path(:selection, current_event, :staff, :program, Proposal),
         # add_path(:event_staff_program_proposal, current_event, @proposal)
         #How to leverage session[:prev_page] here? Considering lamdas
         ],
-        'event-program-bulk-finalize-link' => starts_with_path(:bulk_finalize_event_staff_program_proposals, current_event),
-        'event-program-proposals-link' => starts_with_path(:event_staff_program_proposals, current_event)
+        'event-program-bulk-finalize-link' => starts_with_path(:bulk_finalize, current_event, :staff, :program, Proposal),
+        'event-program-proposals-link' => starts_with_path(current_event, :staff, :program, Proposal)
     }
   end
 
   def program_subnav_item_map
     @program_subnav_item_map ||= {
-        'event-program-sessions-link' => starts_with_path(:event_staff_program_sessions, current_event),
-        'event-program-speakers-link' => starts_with_path(:event_staff_program_speakers, current_event)
+        'event-program-sessions-link' => starts_with_path(current_event, :staff, ProgramSession),
+        'event-program-speakers-link' => starts_with_path(current_event, :staff, :program, Speaker)
     }
   end
 
   def schedule_subnav_item_map
     @schedule_subnav_item_map ||= {
-      'event-schedule-time-slots-link' => exact_path(:event_staff_schedule_time_slots, current_event),
-      'event-schedule-rooms-link' => exact_path(:event_staff_schedule_rooms, current_event),
-      'event-schedule-grid-link' => exact_path(:event_staff_schedule_grid, current_event)
+      'event-schedule-time-slots-link' => exact_path(current_event, :staff, :schedule, TimeSlot),
+      'event-schedule-rooms-link' => exact_path(current_event, :staff, :schedule, Room),
+      'event-schedule-grid-link' => exact_path(current_event, :staff, :schedule, :grid)
     }
   end
 
-  def exact_path(sym, *deps)
-    send(sym.to_s + '_path', *deps) unless deps.include?(nil) # don't generate the path unless all dependencies are present
+  def exact_path(*args)
+    url_for(args << {only_path: true}) unless args.include?(nil) # don't generate the path unless all dependencies are present
   end
 
   def starts_with_path(sym, *deps)

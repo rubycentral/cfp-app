@@ -1,13 +1,15 @@
 Rails.application.routes.draw do
-  constraints DomainConstraint.new do
-    get '/', to: 'pages#show'
-    get '/(:slug)/program', to: 'programs#show'
-    get '/(:slug)/schedule', to: 'schedule#show'
-    get '/(:slug)/sponsors', to: 'sponsors#show'
-    get '/(:slug)/banner_ads', to: 'sponsors#banner_ads'
-    get '/(:slug)/sponsors_footer', to: 'sponsors#sponsors_footer'
-    get '/:domain_page_or_slug', to: 'pages#show'
-    get '/:slug/:page', to: 'pages#show'
+  unless ENV['DISABLE_WEBSITE']
+    constraints DomainConstraint.new do
+      get '/', to: 'pages#show'
+      get '/(:slug)/program', to: 'programs#show'
+      get '/(:slug)/schedule', to: 'schedule#show'
+      get '/(:slug)/sponsors', to: 'sponsors#show'
+      get '/(:slug)/banner_ads', to: 'sponsors#banner_ads'
+      get '/(:slug)/sponsors_footer', to: 'sponsors#sponsors_footer'
+      get '/:domain_page_or_slug', to: 'pages#show'
+      get '/:slug/:page', to: 'pages#show'
+    end
   end
 
   root 'home#show'

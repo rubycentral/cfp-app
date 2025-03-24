@@ -7,7 +7,6 @@ ruby File.read(".ruby-version").strip
 
 gem 'puma'
 gem 'rails', '~> 8.0.2'
-gem 'logger'
 gem 'mimemagic'
 gem 'mime-types-data'
 gem 'mime-types'
@@ -74,7 +73,6 @@ group :development do
   gem 'binding_of_caller'
   gem 'foreman'
   gem 'haml-rails'
-  gem 'html2haml', '~> 2.2'
   gem 'launchy'
   gem 'rack-mini-profiler'
   gem 'web-console'

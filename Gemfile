@@ -74,7 +74,6 @@ group :development do
   gem 'binding_of_caller'
   gem 'foreman'
   gem 'haml-rails'
-  gem 'html2haml', '~> 2.2'
   gem 'launchy'
   gem 'rack-mini-profiler'
   gem 'web-console'

@@ -190,7 +190,6 @@ GEM
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0)
     erubi (1.13.1)
-    erubis (2.7.0)
     ethon (0.16.0)
       ffi (>= 1.15.0)
     eventmachine (1.2.7)
@@ -250,11 +249,6 @@ GEM
     honeybadger (5.27.0)
       logger
       ostruct
-    html2haml (2.3.0)
-      erubis (~> 2.7.0)
-      haml (>= 4.0)
-      nokogiri (>= 1.6.0)
-      ruby_parser (~> 3.5)
     http_parser.rb (0.8.0)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
@@ -491,8 +485,6 @@ GEM
       logger
     ruby2_keywords (0.0.5)
     ruby_http_client (3.5.5)
-    ruby_parser (3.19.2)
-      sexp_processor (~> 4.16)
     rubyzip (2.4.1)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
@@ -515,7 +507,6 @@ GEM
     semantic_range (3.1.0)
     sendgrid-ruby (6.7.0)
       ruby_http_client (~> 3.4)
-    sexp_processor (4.16.1)
     shakapacker (6.6.0)
       activesupport (>= 5.2)
       rack-proxy (>= 0.6.1)
@@ -611,7 +602,6 @@ DEPENDENCIES
   haml
   haml-rails
   honeybadger (~> 5.27)
-  html2haml (~> 2.2)
   image_processing (~> 1.14)
   jbuilder
   jquery-datatables-rails

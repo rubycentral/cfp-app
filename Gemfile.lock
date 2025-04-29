@@ -152,7 +152,7 @@ GEM
       logger (~> 1.5)
     coderay (1.1.3)
     concurrent-ruby (1.3.5)
-    connection_pool (2.5.2)
+    connection_pool (2.5.3)
     countries (7.1.1)
       unaccent (~> 0.3)
     country_select (10.0.1)
@@ -366,6 +366,7 @@ GEM
       rack
     orm_adapter (0.5.0)
     ostruct (0.6.1)
+    package_json (0.1.0)
     paper_trail (16.0.0)
       activerecord (>= 6.1)
       request_store (~> 1.4)
@@ -508,8 +509,9 @@ GEM
     semantic_range (3.1.0)
     sendgrid-ruby (6.7.0)
       ruby_http_client (~> 3.4)
-    shakapacker (6.6.0)
+    shakapacker (8.3.0)
       activesupport (>= 5.2)
+      package_json
       rack-proxy (>= 0.6.1)
       railties (>= 5.2)
       semantic_range (>= 2.3.0)
@@ -533,7 +535,7 @@ GEM
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
-    stringio (3.1.6)
+    stringio (3.1.7)
     temple (0.10.3)
     thor (1.3.2)
     tilt (2.6.0)
@@ -635,7 +637,7 @@ DEPENDENCIES
   selectize-rails
   selenium-webdriver
   sendgrid-ruby
-  shakapacker (~> 6.6)
+  shakapacker (~> 8.3)
   sidekiq
   simple_form
   timecop

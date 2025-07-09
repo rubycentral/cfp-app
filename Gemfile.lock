@@ -147,7 +147,7 @@ GEM
       xpath (~> 3.2)
     case_transform (0.2)
       activesupport
-    chartkick (5.1.5)
+    chartkick (5.2.0)
     childprocess (5.1.0)
       logger (~> 1.5)
     coderay (1.1.3)

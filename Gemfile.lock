@@ -488,7 +488,7 @@ GEM
       logger
     ruby2_keywords (0.0.5)
     ruby_http_client (3.5.5)
-    rubyzip (2.4.1)
+    rubyzip (3.1.0)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
     sassc (2.4.0)
@@ -501,11 +501,11 @@ GEM
       tilt
     securerandom (0.4.1)
     selectize-rails (0.12.6)
-    selenium-webdriver (4.32.0)
+    selenium-webdriver (4.35.0)
       base64 (~> 0.2)
       logger (~> 1.4)
       rexml (~> 3.2, >= 3.2.5)
-      rubyzip (>= 1.2.2, < 3.0)
+      rubyzip (>= 1.2.2, < 4.0)
       websocket (~> 1.0)
     semantic_range (3.1.0)
     sendgrid-ruby (6.7.0)

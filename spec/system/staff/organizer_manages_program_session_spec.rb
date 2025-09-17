@@ -29,10 +29,13 @@ feature "Organizers can manage program sessions", type: :system do
 
     scenario "from program session show page", js: true do
       visit event_staff_program_session_path(event, waitlisted_session)
+      expect(page).to have_content ProgramSession::CONFIRMED_WAITLISTED.upcase
+
       page.accept_confirm do
         click_link("Promote")
       end
 
+      expect(page).to have_content ProgramSession::LIVE.upcase
       expect(page).to_not have_css(".alert-danger")
       expect(waitlisted_session.reload.state).to eq(ProgramSession::LIVE)
     end
@@ -53,10 +56,13 @@ feature "Organizers can manage program sessions", type: :system do
 
     scenario "from program session show page", js: true do
       visit event_staff_program_session_path(event, draft_session)
+      expect(page).to have_content ProgramSession::DRAFT.upcase
+
       page.accept_confirm do
         click_link("Promote")
       end
 
+      expect(page).to have_content ProgramSession::LIVE.upcase
       expect(page).to_not have_css(".alert-danger")
       expect(draft_session.reload.state).to eq(ProgramSession::LIVE)
     end

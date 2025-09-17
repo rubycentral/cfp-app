@@ -1,4 +1,4 @@
-%tr{ data: { 'emails' => speakers_emails(program_session) } }
+%tr{ id: dom_id(program_session.object), data: { 'emails' => speakers_emails(program_session) } }
   %td= link_to(program_session.title,
       event_staff_program_session_path(program_session.event, program_session))
   %td= program_session.speakers.map { |speaker| link_to speaker.name, event_staff_program_speaker_path(program_session.event, speaker) }.join(", ").html_safe

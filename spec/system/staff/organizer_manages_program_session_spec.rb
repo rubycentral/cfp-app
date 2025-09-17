@@ -18,11 +18,18 @@ feature "Organizers can manage program sessions", type: :system do
 
     scenario "from program session index", js: true do
       visit event_staff_program_sessions_path(event)
+      within("##{ActionView::RecordIdentifier.dom_id(waitlisted_session)}") do
+        expect(page).to have_content ProgramSession::CONFIRMED_WAITLISTED.upcase
+      end
+
       page.accept_confirm do
         page.find('#waitlist').click
         find('tr', text: waitlisted_session.title).click_link("Promote")
       end
 
+      within("##{ActionView::RecordIdentifier.dom_id(waitlisted_session)}") do
+        expect(page).to have_content ProgramSession::LIVE.upcase
+      end
       expect(page).to_not have_css(".alert-danger")
       expect(waitlisted_session.reload.state).to eq(ProgramSession::LIVE)
     end
@@ -46,10 +53,17 @@ feature "Organizers can manage program sessions", type: :system do
 
     scenario "from program session index", js: true do
       visit event_staff_program_sessions_path(event)
+      within("##{ActionView::RecordIdentifier.dom_id(draft_session)}") do
+        expect(page).to have_content ProgramSession::DRAFT.upcase
+      end
+
       page.accept_confirm do
         find('tr', text: draft_session.title).click_link("Promote")
       end
 
+      within("##{ActionView::RecordIdentifier.dom_id(draft_session)}") do
+        expect(page).to have_content ProgramSession::LIVE.upcase
+      end
       expect(page).to_not have_css(".alert-danger")
       expect(draft_session.reload.state).to eq(ProgramSession::LIVE)
     end

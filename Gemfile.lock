@@ -248,7 +248,7 @@ GEM
       haml (>= 4.0.6)
       railties (>= 5.1)
     hashie (5.0.0)
-    honeybadger (5.27.2)
+    honeybadger (6.1.0)
       logger
       ostruct
     http_parser.rb (0.8.0)
@@ -366,7 +366,7 @@ GEM
       omniauth-oauth (~> 1.1)
       rack
     orm_adapter (0.5.0)
-    ostruct (0.6.1)
+    ostruct (0.6.3)
     paper_trail (16.0.0)
       activerecord (>= 6.1)
       request_store (~> 1.4)
@@ -604,7 +604,7 @@ DEPENDENCIES
   guard-rspec
   haml
   haml-rails
-  honeybadger (~> 5.27)
+  honeybadger (~> 6.1)
   image_processing (~> 1.14)
   jbuilder
   jquery-datatables-rails

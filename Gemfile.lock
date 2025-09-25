@@ -154,10 +154,10 @@ GEM
     coderay (1.1.3)
     concurrent-ruby (1.3.5)
     connection_pool (2.5.4)
-    countries (7.1.1)
+    countries (8.0.4)
       unaccent (~> 0.3)
-    country_select (10.0.1)
-      countries (> 5.0, < 8.0)
+    country_select (11.0.0)
+      countries (> 6.0, < 9.0)
     crass (1.0.6)
     csv (3.3.5)
     database_cleaner (2.1.0)
@@ -590,7 +590,7 @@ DEPENDENCIES
   capybara (~> 3.37)
   chartkick
   coderay (~> 1.0)
-  country_select (~> 10.0)
+  country_select (~> 11.0)
   csv
   database_cleaner (~> 2.1)
   devise (~> 4.9)

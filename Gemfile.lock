@@ -465,7 +465,7 @@ GEM
       railties (>= 5.2)
     rexml (3.4.4)
     rouge (4.5.1)
-    rspec (3.13.0)
+    rspec (3.13.1)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
       rspec-mocks (~> 3.13.0)
@@ -485,7 +485,7 @@ GEM
       rspec-expectations (~> 3.13)
       rspec-mocks (~> 3.13)
       rspec-support (~> 3.13)
-    rspec-support (3.13.4)
+    rspec-support (3.13.6)
     ruby-vips (2.2.3)
       ffi (~> 1.12)
       logger

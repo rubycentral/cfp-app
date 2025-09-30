@@ -244,7 +244,7 @@ GEM
       temple (>= 0.8.2)
       thor
       tilt
-    haml-rails (2.1.0)
+    haml-rails (3.0.0)
       actionpack (>= 5.1)
       activesupport (>= 5.1)
       haml (>= 4.0.6)
@@ -539,9 +539,9 @@ GEM
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
     stringio (3.1.7)
-    temple (0.10.3)
+    temple (0.10.4)
     thor (1.4.0)
-    tilt (2.6.0)
+    tilt (2.6.1)
     timecop (0.9.10)
     timeout (0.4.3)
     tinymce-rails (6.3.1)

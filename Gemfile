@@ -53,7 +53,7 @@ gem 'simple_form'
 gem 'tinymce-rails'
 gem 'image_processing', '~> 1.14'
 gem 'react-rails'
-gem 'shakapacker', '~> 6.6'
+gem 'shakapacker', '~> 9.0'
 
 gem 'sidekiq'
 

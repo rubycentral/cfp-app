@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 ruby file: '.ruby-version'
 
 gem 'puma'
-gem 'rails', '~> 8.0.3'
+gem 'rails', '~> 8.1.0'
 gem 'mimemagic'
 gem 'mime-types-data'
 gem 'mime-types'

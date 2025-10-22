@@ -2,8 +2,7 @@
 
 source 'https://rubygems.org'
 
-# https://andycroll.com/ruby/read-ruby-version-in-your-gemfile/
-ruby File.read(".ruby-version").strip
+ruby file: '.ruby-version'
 
 gem 'puma'
 gem 'rails', '~> 8.0.3'

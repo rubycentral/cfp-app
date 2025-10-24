@@ -372,8 +372,8 @@ GEM
       rack
     orm_adapter (0.5.0)
     ostruct (0.6.3)
-    paper_trail (16.0.0)
-      activerecord (>= 6.1)
+    paper_trail (17.0.0)
+      activerecord (>= 7.1)
       request_store (~> 1.4)
     pg (1.6.2)
     pp (0.6.3)

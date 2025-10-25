@@ -82,7 +82,6 @@ group :development, :test do
   gem 'database_cleaner', '~> 2.1'
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
-  gem 'growl'
   gem 'guard'
   gem 'guard-livereload', '~> 2.1'
   gem 'guard-rspec'

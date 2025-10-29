@@ -548,7 +548,7 @@ GEM
     tilt (2.6.1)
     timecop (0.9.10)
     timeout (0.4.4)
-    tinymce-rails (6.3.1)
+    tinymce-rails (8.2.0)
       railties (>= 3.1.1)
     tsort (0.2.0)
     typhoeus (1.4.1)

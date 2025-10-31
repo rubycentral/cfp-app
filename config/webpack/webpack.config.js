@@ -17,7 +17,12 @@ const customConfig = {
       '.jpeg',
       '.jpg'
     ]
-  }
+  },
+  ignoreWarnings: [
+    {
+      module: /tailwind\.js/
+    },
+  ]
 }
 
 module.exports = merge(webpackConfig, customConfig)

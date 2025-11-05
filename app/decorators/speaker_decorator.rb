@@ -45,10 +45,10 @@ class SpeakerDecorator < ApplicationDecorator
 
   def link_to_twitter
     case
-    when user.provider == 'twitter'
+    when user&.provider == 'twitter'
       uname = twitter_uid_to_uname user.uid
       h.link_to "@#{uname}", "https://twitter.com/#{uname}", target: '_blank'
-    when user.twitter_account.present?
+    when user&.twitter_account.present?
       h.link_to "@#{user.twitter_account}", "https://twitter.com/#{user.twitter_account}", target: '_blank'
     else
       'none'

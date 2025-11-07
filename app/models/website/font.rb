@@ -13,11 +13,11 @@ end
 #
 # Table name: website_fonts
 #
-#  id         :bigint(8)        not null, primary key
+#  id         :integer          not null, primary key
 #  name       :string
 #  primary    :boolean
 #  secondary  :boolean
-#  website_id :bigint(8)
+#  website_id :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

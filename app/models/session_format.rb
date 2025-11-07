@@ -29,7 +29,3 @@ end
 #
 #  index_session_formats_on_event_id  (event_id)
 #
-# Foreign Keys
-#
-#  fk_rails_...  (event_id => events.id)
-#

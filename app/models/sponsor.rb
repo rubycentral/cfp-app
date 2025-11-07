@@ -35,13 +35,12 @@ end
 #
 # Table name: sponsors
 #
-#  id             :bigint(8)        not null, primary key
-#  event_id       :bigint(8)
+#  id             :integer          not null, primary key
+#  event_id       :integer
 #  name           :string
 #  tier           :string
 #  published      :boolean
 #  url            :string
-#  other_title    :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  description    :text
@@ -52,8 +51,4 @@ end
 # Indexes
 #
 #  index_sponsors_on_event_id  (event_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (event_id => events.id)
 #

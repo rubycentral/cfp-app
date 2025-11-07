@@ -16,6 +16,14 @@ module ApplicationHelper
     def block_code(code, language)
       language ||= :ruby
       CodeRay.highlight(code, language)
+    rescue
+      <<~HTML
+        <div class="CodeRay">
+          <div class="code">
+            <pre>#{ERB::Util.html_escape(code)}</pre>
+          </div>
+        </div>
+      HTML
     end
   end
 

@@ -18,7 +18,7 @@ describe Staff::TimeSlotsController, type: :controller do
       conf_time_slot = create(:time_slot, conference_day: 3, event: event)
       put :update, xhr: true, params: {id: conf_time_slot, event_slug: conf_time_slot.event,
           time_slot: { conference_day: 5 }}
-      expect(assigns(:time_slot).conference_day).to eq(5)
+      expect(conf_time_slot.reload.conference_day).to eq(5)
       expect(response).to be_successful
     end
 
@@ -27,7 +27,7 @@ describe Staff::TimeSlotsController, type: :controller do
       conf_time_slot = create(:time_slot, event: program_session.event)
       put :update, xhr: true, params: {id: conf_time_slot, event_slug: conf_time_slot.event,
           time_slot: { program_session_id: program_session.id }}
-      expect(assigns(:time_slot).program_session).to eq(program_session)
+      expect(conf_time_slot.reload.program_session).to eq(program_session)
     end
   end
 end

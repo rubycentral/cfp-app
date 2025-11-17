@@ -25,7 +25,6 @@ feature "Listing events for different roles", type: :system do
 
   context "Event CFP page" do
     scenario "the user sees proper stats" do
-      skip "FIX ME, WHICH USER?! 'the user' is far too generic. Also why is it failing with 1 day off?"
       visit event_path(event)
 
       expect(page).to have_content event.name

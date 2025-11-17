@@ -79,7 +79,6 @@ end
 
 group :development, :test do
   gem 'capybara', '~> 3.37'
-  gem 'database_cleaner', '~> 2.1'
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
   gem 'guard'

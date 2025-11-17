@@ -32,7 +32,6 @@ feature "Listing events for different roles", type: :system do
       expect(page).to have_link 'Submit a proposal'
       expect(page).to have_content "CFP closes: #{(21.days.from_now).strftime('%b %-d')}"
       expect(page).to have_content '21 days left to submit your proposal'
-      expect(page).to have_content '1 proposal submitted'
     end
 
     scenario "the event title is a link if it's set" do

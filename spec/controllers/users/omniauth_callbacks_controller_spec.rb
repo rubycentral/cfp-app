@@ -20,20 +20,6 @@ describe Users::OmniauthCallbacksController, type: :controller do
       get :twitter
       expect(response).to redirect_to(edit_profile_url)
     end
-
-    it "adds any pending invitations to the new user record" do
-      pending "This is broken and hard to read intended test"
-      allow(User).to receive(:from_omniauth).with(twitter_auth_hash).and_return(user)
-      allow(Invitation).to receive(:find_by).and_return(invitation)
-      allow(Invitation).to receive(:where).and_return([other_invitation])
-
-      expect(other_invitation).to receive(:update_column).and_return(true)
-
-      get :twitter
-
-      expect(response).to redirect_to(events_url)
-    end
-
   end
 
   describe "GET #new" do

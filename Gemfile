@@ -85,7 +85,6 @@ group :development, :test do
   gem 'guard'
   gem 'guard-livereload', '~> 2.1'
   gem 'guard-rspec'
-  gem 'rails-controller-testing'
   gem 'rspec'
   gem 'rspec-rails'
   gem 'selenium-webdriver'

@@ -33,17 +33,15 @@ describe Staff::ProposalsController, type: :controller do
   end
 
   describe "POST 'update_session_format'" do
+    render_views
     let(:session_format) { create :session_format }
 
-    it 'updates the format' do
+    it 'updates the format and renders the inline edit partial' do
       post :update_session_format, params: {event_slug: event, proposal_uuid: proposal.uuid, session_format_id: session_format.id}
       proposal.reload
-      expect(proposal.session_format_id).to eq session_format.id
-    end
 
-    it 'renders the inline edit partial' do
-      post :update_session_format, params: {event_slug: event, proposal_uuid: proposal.uuid, session_format_id: session_format.id}
-      expect(response).to render_template partial: '_inline_format_edit'
+      expect(response.body).to include(/select class=".*?proposal-format-select.*?"/)
+      expect(proposal.session_format_id).to eq session_format.id
     end
   end
 
@@ -63,13 +61,13 @@ describe Staff::ProposalsController, type: :controller do
     it "finalizes the state" do
       proposal = create(:proposal_with_track, event: event, state: Proposal::State::SOFT_ACCEPTED)
       post :finalize, params: {event_slug: event, proposal_uuid: proposal.uuid}
-      expect(assigns(:proposal).state).to eq(Proposal::State::ACCEPTED)
+      expect(proposal.reload.state).to eq(Proposal::State::ACCEPTED)
     end
 
     it "creates a draft program session" do
       proposal = create(:proposal_with_track, event: event, state: Proposal::State::SOFT_ACCEPTED)
       post :finalize, params: {event_slug: event, proposal_uuid: proposal.uuid}
-      expect(assigns(:proposal).program_session.state).to eq(ProgramSession::UNCONFIRMED_ACCEPTED)
+      expect(proposal.program_session.state).to eq(ProgramSession::UNCONFIRMED_ACCEPTED)
     end
 
     it "sends appropriate emails" do

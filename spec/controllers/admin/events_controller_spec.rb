@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 describe Admin::EventsController, type: :controller do
-
   describe "GET #index" do
+    render_views
 
     it "should succeed" do
       sign_in(create(:admin))
       get :index
-      expect(response).to render_template :index
+      expect(response.body).to include('<h1>Events Admin</h1>')
     end
   end
 

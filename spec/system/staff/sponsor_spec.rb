@@ -8,7 +8,6 @@ feature 'Event Sponsors', type: :system do
     before { login_as(organizer) }
 
     it 'can create an event sponsor with images', js: true do
-      skip "FactoryBot 😤"
       visit event_staff_sponsors_path(event)
       expect(page).to have_link 'New Sponsor'
 
@@ -35,7 +34,6 @@ feature 'Event Sponsors', type: :system do
     end
 
     it 'can edit a sponsor' do
-      skip "FactoryBot 😤"
       sponsor = create(:sponsor, event: event)
       visit edit_event_staff_sponsor_path(event, sponsor)
 

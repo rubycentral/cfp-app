@@ -2,6 +2,7 @@ class Page < ApplicationRecord
   TEMPLATES = {
     'splash' => { hide_header: true, hide_footer: true },
     'home' => { },
+    'about' => { },
   }
 
   belongs_to :website

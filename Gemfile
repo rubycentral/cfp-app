@@ -32,7 +32,7 @@ gem 'underscore-rails'
 gem 'devise', '~> 4.9'
 gem 'omniauth-github'
 gem 'omniauth-twitter'
-gem "omniauth-rails_csrf_protection", "~> 1.0"
+gem "omniauth-rails_csrf_protection", "~> 2.0"
 
 gem 'actionview-encoded_mail_to'
 gem 'active_model_serializers', '~> 0.10.15'

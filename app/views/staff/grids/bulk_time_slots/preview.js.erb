@@ -12,11 +12,12 @@
     if (controller) controller.refreshDay();
   }
 
-  var $tabs = $('.nav-tabs > li');
-  $tabs.removeClass('active');
-  $('.tab-pane').removeClass('active');
-  $('a[href="#grid_day_<%= @bulk.day %>"]').parent().addClass('active');
-  $('#grid_day_<%= @bulk.day %>').addClass('active');
+  // Switch to the preview day using Stimulus
+  var tabsElement = document.querySelector('[data-controller~="schedule-tabs"]');
+  if (tabsElement) {
+    var tabsController = window.Stimulus.getControllerForElementAndIdentifier(tabsElement, 'schedule-tabs');
+    if (tabsController) tabsController.showDay(<%= @bulk.day %>);
+  }
 
   $dialog.modal('hide');
 

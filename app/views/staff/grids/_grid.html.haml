@@ -1,8 +1,8 @@
-.schedule-grid{id: "schedule_day_#{day}"}
-  %ul.ruler
+.schedule-grid{id: "schedule_day_#{day}", data: { controller: "schedule-grid", schedule_grid_tracks_css_value: schedule.event.tracks.pluck(:name).map(&:parameterize).to_json }}
+  %ul.ruler{data: { schedule_grid_target: "ruler" }}
   - schedule.each_room(day) do |room, slots|
     .room-column{class: grid_position_css(room)}
-      .column-header
+      .column-header{data: { schedule_grid_target: "columnHeader" }}
         = room.name
       .time-slots
         &nbsp;

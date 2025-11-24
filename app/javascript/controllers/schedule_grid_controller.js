@@ -1,7 +1,9 @@
 import { Controller } from 'stimulus'
-import moment from 'moment'
-import palette from 'palette'
-import _ from 'lodash'
+
+// These are available globally from the Rails asset pipeline
+const moment = window.moment
+const palette = window.palette
+const _ = window._
 
 export default class extends Controller {
   static targets = ['grid', 'ruler', 'timeSlot', 'columnHeader']
@@ -34,16 +36,7 @@ export default class extends Controller {
   }
 
   addGridLineStyle() {
-    const $columns = $(this.element).find('.room-column')
-    if ($columns.length === 0) return
-
-    const lineWidth = $columns.length * $columns.width()
-    const styleId = 'schedule-grid-style'
-
-    // Remove existing style if present
-    $(`#${styleId}`).remove()
-
-    $(`<style id="${styleId}">.schedule-grid .ruler li:after { width: ${lineWidth}px; }</style>`).appendTo('head')
+    // No longer adding horizontal grid lines - using schedule_ruler without :after pseudo-element
   }
 
   updateDayRange() {
@@ -80,30 +73,102 @@ export default class extends Controller {
     this.assignSizeClass($cards, $slot)
     this.assignTrackColor($cards)
 
+    // Setup draggable for session cards in this slot
+    const sessionCards = slot.querySelectorAll('.draggable-session-card')
+    sessionCards.forEach(card => this.makeDraggable(card))
+
     if (!$slot.hasClass('preview')) {
       $slot.off('click').on('click', (e) => this.onTimeSlotClick(e, slot))
     }
 
-    // Setup droppable
-    $slot.droppable({
-      accept: '.draggable-session-card',
-      hoverClass: 'draggable-hover',
-      drop: (event, ui) => this.handleDrop(event, ui, slot)
+    // Setup native HTML5 drag and drop
+    this.setupDropZone(slot)
+  }
+
+  makeDraggable(sessionCard) {
+    sessionCard.setAttribute('draggable', 'true')
+    sessionCard.addEventListener('dragstart', (e) => {
+      e.currentTarget.style.opacity = '0.4'
+      e.dataTransfer.effectAllowed = 'move'
+      e.dataTransfer.setData('text/plain', e.currentTarget.dataset.id)
+    })
+    sessionCard.addEventListener('dragend', (e) => {
+      e.currentTarget.style.opacity = '1'
     })
   }
 
-  handleDrop(event, ui, slot) {
-    const $sessionCard = $(ui.draggable)
+  setupDropZone(slot) {
+    slot.addEventListener('dragover', this.handleDragOver.bind(this))
+    slot.addEventListener('dragenter', this.handleDragEnter.bind(this))
+    slot.addEventListener('dragleave', this.handleDragLeave.bind(this))
+    slot.addEventListener('drop', this.handleNativeDrop.bind(this))
+  }
+
+  handleDragOver(e) {
+    if (e.preventDefault) {
+      e.preventDefault()
+    }
+    e.dataTransfer.dropEffect = 'move'
+    return false
+  }
+
+  handleDragEnter(e) {
+    const slot = e.currentTarget
+    if (slot.classList.contains('time-slot')) {
+      slot.classList.add('draggable-hover')
+    }
+  }
+
+  handleDragLeave(e) {
+    const slot = e.currentTarget
+    if (e.target === slot) {
+      slot.classList.remove('draggable-hover')
+    }
+  }
+
+  handleNativeDrop(e) {
+    if (e.stopPropagation) {
+      e.stopPropagation()
+    }
+    e.preventDefault()
+
+    const slot = e.currentTarget
+    slot.classList.remove('draggable-hover')
+
+    const sessionId = e.dataTransfer.getData('text/plain')
+    const sessionCard = document.querySelector(`[data-id="${sessionId}"].draggable-session-card`)
+
+    if (sessionCard && slot.classList.contains('time-slot')) {
+      this.handleDrop(sessionCard, slot)
+    }
+
+    return false
+  }
+
+  handleDrop(sessionCard, slot) {
+    const $sessionCard = $(sessionCard)
     const $slot = $(slot)
 
+    // Check if slot already has a session - if so, move it to unscheduled
+    const existingCard = slot.querySelector('.draggable-session-card')
+    if (existingCard && existingCard !== sessionCard) {
+      this.moveToUnscheduled(existingCard)
+    }
+
     $sessionCard.detach().removeAttr('style').appendTo(slot)
+    $sessionCard.css({
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      height: '100%',
+      width: '100%',
+      margin: 0
+    })
     this.assignSizeClass($sessionCard, $slot)
     this.assignTrackColor($sessionCard)
 
     if ($sessionCard.data('scheduled')) {
-      if (window.Schedule && window.Schedule.Drag) {
-        window.Schedule.Drag.unschedule($sessionCard)
-      }
+      this.unscheduleSession($sessionCard)
     } else {
       $sessionCard.data('scheduled', true)
     }
@@ -115,8 +180,58 @@ export default class extends Controller {
       'data-target': null,
     })
 
-    if (window.Schedule && window.Schedule.Drag) {
-      $sessionCard.off('click', window.Schedule.Drag.showProgramSession)
+    $sessionCard.off('click', this.showProgramSession)
+  }
+
+  moveToUnscheduled(sessionCard) {
+    const $sessionCard = $(sessionCard)
+    const widget = document.querySelector('.unscheduled-sessions-widget')
+
+    if (widget) {
+      $sessionCard.detach().removeAttr('style').removeClass('small medium large').prependTo(widget)
+
+      $sessionCard.data('scheduled', null)
+      $sessionCard.attr({
+        'data-scheduled': null,
+        'data-toggle': 'modal',
+        'data-target': '#program-session-show-dialog'
+      })
+    }
+  }
+
+  unscheduleSession($sessionCard) {
+    const unschedulePath = $sessionCard.data('unscheduleTimeSlotPath')
+    if (unschedulePath) {
+      $.ajax({
+        url: unschedulePath,
+        method: 'patch',
+        data: { time_slot: { program_session_id: '' } },
+        success: (data) => {
+          $('.header_wrapper .badge').text(
+            data.unscheduled_count + '/' + data.total_count
+          )
+          $('.total.time-slots .badge').each(function(i, badge) {
+            const counts = data.day_counts[i + 1]
+            $(badge).text(counts.scheduled + '/' + counts.total)
+          })
+        }
+      })
+    }
+
+    $sessionCard.data('scheduled', null)
+    $sessionCard.attr({
+      'data-scheduled': null,
+      'data-toggle': 'modal',
+      'data-target': '#program-session-show-dialog'
+    })
+  }
+
+  showProgramSession(e) {
+    const $card = $(e.currentTarget)
+    const url = $card.data('showPath')
+    const scheduled = $card.data('scheduled')
+    if (url && !scheduled) {
+      $.ajax({ url: url })
     }
   }
 
@@ -153,7 +268,7 @@ export default class extends Controller {
 
     $ruler.empty()
     for (let i = this.dayStartValue; i <= this.dayEndValue; i += this.stepValue) {
-      $ruler.append('<li>' + m.minutes(this.stepValue).format('hh:mma') + '</li>')
+      $ruler.append('<li class="ruler_tick">' + m.minutes(this.stepValue).format('hh:mma') + '</li>')
     }
   }
 
@@ -168,7 +283,7 @@ export default class extends Controller {
         time_slot: { program_session_id: $dragged_session.data('id') }
       },
       success: (data) => {
-        $('.unscheduled-sessions-toggle .badge').text(
+        $('.header_wrapper .badge').text(
           data.unscheduled_count + '/' + data.total_count
         )
         $('.total.time-slots .badge').each(function(i, badge) {

@@ -1,4 +1,4 @@
-.draggable-session-card{data: ps.ps_data}
+.draggable-session-card{data: ps.ps_data.merge({ draggable_sessions_target: "session" })}
   .track
     %span=truncate(ps.track_name, length: 18)
   .session-card-body

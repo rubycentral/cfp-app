@@ -1,4 +1,3 @@
-var drag = window.Schedule.Drag;
 var $dialog = $('#grid-time-slot-edit-dialog');
 $dialog.find('.errors').html('');
 
@@ -17,7 +16,12 @@ $dialog.find('.errors').html("<%= @time_slot.errors.full_messages.join(', ') %>"
     if (controller) controller.refreshTimeSlot($timeSlot[0]);
   }
 
-  drag.initDraggableSession($draggableSession)
+  var sessionsElement = document.querySelector('[data-controller~="draggable-sessions"]');
+  if (sessionsElement && $draggableSession.length) {
+    var sessionsController = window.Stimulus.getControllerForElementAndIdentifier(sessionsElement, 'draggable-sessions');
+    if (sessionsController) sessionsController.initDraggableSession($draggableSession[0]);
+  }
+
   $dialog.modal('hide');
 <% end %>
 

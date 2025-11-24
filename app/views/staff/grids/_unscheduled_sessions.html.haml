@@ -1,11 +1,11 @@
-.unscheduled-sessions
-  = link_to "#", class: "unscheduled-sessions-toggle" do
+.unscheduled-sessions{data: { controller: "draggable-sessions", draggable_sessions_tracks_css_value: @event.tracks.pluck(:name).map(&:parameterize).to_json }}
+  = link_to "#", class: "unscheduled-sessions-toggle", data: { draggable_sessions_target: "toggle", action: "click->draggable-sessions#toggleWidget" } do
     %span.title Unscheduled Sessions
-    %span.badge= "#{@unscheduled_sessions.count}/#{@sessions.count}"
+    %span.badge{data: { draggable_sessions_target: "badge" }}= "#{@unscheduled_sessions.count}/#{@sessions.count}"
   .search-sessions-wrapper
     %label Search:
-    = text_field_tag(:session_search)
-  .unscheduled-sessions-widget
+    = text_field_tag(:session_search, nil, data: { draggable_sessions_target: "searchInput", action: "keyup->draggable-sessions#filterSessions" })
+  .unscheduled-sessions-widget{data: { draggable_sessions_target: "widget" }}
     - @unscheduled_sessions.each do |unscheduled_session|
       - ps = Staff::ProgramSessionDecorator.decorate(unscheduled_session)
       = render partial: 'draggable_session', locals: { ps: ps }

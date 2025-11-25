@@ -19,7 +19,6 @@ gem 'pg'
 
 gem 'bootstrap-sass', '~> 3.4.1'
 gem 'haml'
-gem 'jbuilder'
 gem 'jquery-datatables-rails'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'

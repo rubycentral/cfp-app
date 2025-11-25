@@ -484,6 +484,10 @@ input[type=number]::-webkit-outer-spin-button {
   padding: 0px 5px;
   display: inline-block;
   left: 0px;
+
+  .schedule-grid & {
+    margin-top: 37px;
+  }
 }
 
 .ruler_tick {

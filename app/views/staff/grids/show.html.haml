@@ -26,7 +26,7 @@
         .grid_container
           = render partial: 'staff/grids/grid', locals: {schedule: @schedule, day: day}
           .unscheduled_area
-            = render partial: 'staff/grids/unscheduled_sessions'
+            = render partial: 'staff/grids/unscheduled_sessions', locals: {day: day}
 
   / Modals
   #bulk-time-slot-create-dialog.modal.fade{role: "dialog"}

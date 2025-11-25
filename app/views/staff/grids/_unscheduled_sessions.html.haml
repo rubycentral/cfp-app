@@ -1,10 +1,9 @@
-.unscheduled-sessions{data: { controller: "draggable-sessions", draggable_sessions_tracks_css_value: @event.tracks.pluck(:name).map(&:parameterize).to_json }}
-  = link_to "#", class: "unscheduled-sessions-toggle", data: { draggable_sessions_target: "toggle", action: "click->draggable-sessions#toggleWidget" } do
-    %span.title Unscheduled Sessions
+%div{data: { controller: "draggable-sessions", draggable_sessions_tracks_css_value: @event.tracks.pluck(:name).map(&:parameterize).to_json }}
+  .header_wrapper{data: { action: "click->draggable-sessions#toggleWidget" }}
+    %h3 Unscheduled Sessions
     %span.badge{data: { draggable_sessions_target: "badge" }}= "#{@unscheduled_sessions.count}/#{@sessions.count}"
-  .search-sessions-wrapper
-    %label Search:
-    = text_field_tag(:session_search, nil, id: nil, data: { draggable_sessions_target: "searchInput", action: "keyup->draggable-sessions#filterSessions" })
+  = text_field_tag(:session_search, nil, id: nil, placeholder: "Search", data: { draggable_sessions_target: "searchInput", action: "keyup->draggable-sessions#filterSessions" })
+  %span.glyphicon.glyphicon-remove{data: { action: "click->draggable-sessions#clearSearch" }}
   .unscheduled-sessions-widget{data: { draggable_sessions_target: "widget" }}
     - @unscheduled_sessions.each do |unscheduled_session|
       - ps = Staff::ProgramSessionDecorator.decorate(unscheduled_session)

@@ -1,5 +1,4 @@
 (function($) {
-  var grid = window.Schedule.Grid;
   var $dialog = $('#bulk-time-slot-create-dialog');
   var $gridDay = $('#schedule_day_<%= @bulk.day %>');
   var $bar = $gridDay.closest('.grid-wrapper').find('.bulk-preview-bar');
@@ -7,13 +6,18 @@
   $bar.html('<%=j render partial: 'preview_bar', locals: { bulk: @bulk} %>');
   $gridDay.replaceWith('<%=j render partial: 'staff/grids/grid', locals: { schedule: @schedule, day: @bulk.day} %>');
 
-  grid.initGridDay(<%= @bulk.day %>);
+  var gridElement = document.getElementById('schedule_day_<%= @bulk.day %>');
+  if (gridElement) {
+    var controller = window.Stimulus.getControllerForElementAndIdentifier(gridElement, 'schedule-grid');
+    if (controller) controller.refreshDay();
+  }
 
-  var $tabs = $('.nav-tabs > li');
-  $tabs.removeClass('active');
-  $('.tab-pane').removeClass('active');
-  $('a[href="#grid_day_<%= @bulk.day %>"]').parent().addClass('active');
-  $('#grid_day_<%= @bulk.day %>').addClass('active');
+  // Switch to the preview day using Stimulus
+  var tabsElement = document.querySelector('[data-controller~="schedule-tabs"]');
+  if (tabsElement) {
+    var tabsController = window.Stimulus.getControllerForElementAndIdentifier(tabsElement, 'schedule-tabs');
+    if (tabsController) tabsController.showDay(<%= @bulk.day %>);
+  }
 
   $dialog.modal('hide');
 

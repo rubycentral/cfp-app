@@ -1,1 +1,34 @@
-= react_component('Schedule', render(template: "staff/grids/schedule", formats: [:json]))
+#schedule{data: {tracks_css: @event.tracks.pluck(:name).map(&:parameterize).to_json}}
+  .schedule_grid{data: {controller: "schedule-tabs", schedule_tabs_active_day_value: 1}}
+    / Alert area
+    .alert.alert-danger{style: "display: none;", data: {controller: "alert"}}
+      %button.close{type: "button", data: {action: "click->alert#close"}}
+        %span &times;
+      %div{data: {alert_target: "message"}}
+
+    / Day navigation
+    .nav_wrapper
+      %ul.schedule_nav
+        - (1..@event.days).each do |day|
+          - day_slots = @event.time_slots.where(conference_day: day)
+          - scheduled_count = day_slots.where.not(program_session_id: nil).count
+          - total_count = day_slots.count
+          %li{data: {schedule_tabs_target: "tab", day: day, action: "click->schedule-tabs#switchDay"}, class: (day == 1 ? 'active' : '')}
+            %span Day #{day}
+            %span.badge{data: {schedule_tabs_target: "badge", day: day}}= "#{scheduled_count}/#{total_count}"
+
+      .generate_btn
+        = link_to "Generate Grid", new_event_staff_schedule_grid_bulk_time_slot_path(@event, day: 1), remote: true, class: "btn btn-primary", data: {toggle: "modal", target: "#bulk-time-slot-create-dialog"}
+
+    / Tab content - One grid per day
+    - @schedule.each_day do |day, slots|
+      .tab-pane{id: "grid_day_#{day}", class: (day == 1 ? 'active' : ''), data: {schedule_tabs_target: "panel", day: day}}
+        .grid_container
+          = render partial: 'staff/grids/grid', locals: {schedule: @schedule, day: day}
+          .unscheduled_area
+            = render partial: 'staff/grids/unscheduled_sessions', locals: {day: day}
+
+  / Modals
+  #bulk-time-slot-create-dialog.modal.fade{role: "dialog"}
+  #grid-time-slot-edit-dialog.modal.fade{role: "dialog"}
+  #program-session-show-dialog.modal.fade{role: "dialog"}

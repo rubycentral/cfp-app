@@ -1,6 +1,4 @@
 $(document).ready(function() {
-  $('body').tooltip({selector: "[data-toggle~='tooltip']", html: true});
-
   setTimeout(function() {
     $(".alert").not('.alert-confirm, .scheduling-error').alert('close');
   }, 5000);

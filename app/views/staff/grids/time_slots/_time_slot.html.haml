@@ -9,5 +9,5 @@
       .track
         %span=truncate(ts.track_name, length: 18)
       .session-card-body
-        .title=truncate(ts.display_title, length: 50)
-        .presenter=truncate(ts.display_presenter, length: 30)
+        %p=truncate(ts.display_title, length: 50)
+        %p.presenter=truncate(ts.display_presenter, length: 30)

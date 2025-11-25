@@ -2,4 +2,4 @@
   .track
     %span=truncate(ps.track_name, length: 18)
   .session-card-body
-    .title=truncate(ps.title, length: 31, separator: ' ')
+    %p=truncate(ps.title, length: 31, separator: ' ')

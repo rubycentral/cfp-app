@@ -21,9 +21,6 @@ var registerNotificationChannel = function() {
 };
 
 $(document).ready(function () {
-  $.datepicker.regional[""].dateFormat = 'yy-mm-dd ';
-  $.datepicker.setDefaults($.datepicker.regional['']);
-
   var oTable = cfpDataTable('#reviewer-proposals.datatable', ['number', null,
       'number', 'text', 'text', 'text', 'text', 'text', 'number', 'text', 'text'],
       {

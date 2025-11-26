@@ -7,4 +7,4 @@
   .col-md-12
     %span.required_notification * Required
     = simple_form_for event, url: admin_events_path, html: {role: 'form'} do |f|
-      = render partial: 'form', locals: {f: f}
+      = render partial: 'staff/events/form', locals: {f: f}

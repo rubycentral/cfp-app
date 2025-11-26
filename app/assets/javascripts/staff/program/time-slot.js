@@ -65,8 +65,8 @@
     var end = document.getElementById('time_slot_end_time').value;
 
     if (start && end) {
-      var s = moment(start, 'h:mm a');
-      var e = moment(end, 'h:mm a');
+      var s = moment(start, 'HH:mm');
+      var e = moment(end, 'HH:mm');
       var diff = e.diff(s, 'minutes');
       $length.text(diff + ' minutes');
     }

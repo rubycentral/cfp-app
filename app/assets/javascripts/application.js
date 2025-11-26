@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require underscore
-//= require jquery-ui
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require chartkick

@@ -7,33 +7,10 @@
   }
 
   function initDialog($dialog) {
-    initTimePickers();
-
     $dialog.find('.available-proposals').change(onSessionSelectChange);
     $dialog.find('.start-time, .end-time').change(onTimeChange);
 
     updateInfoFields($dialog);
-  }
-
-  function initTimePickers() {
-    $('#time_slot_start_time').timepicker({
-      controlType: 'select',
-      timeFormat: 'h:mm tt',
-      stepMinute: 5,
-      onSelect: function(time) {
-        $('#time_slot_end_time').timepicker('destroy');
-        initTimePickers();
-      }
-    });
-    $('#time_slot_end_time').timepicker({
-      controlType: 'select',
-      timeFormat: 'h:mm tt',
-      stepMinute: 5,
-      onSelect: function(time) {
-        $('#time_slot_start_time').timepicker('destroy');
-        initTimePickers();
-      }
-    });
   }
 
   function updateInfoFields($container) {
@@ -65,8 +42,8 @@
     var end = document.getElementById('time_slot_end_time').value;
 
     if (start && end) {
-      var s = moment(start, 'h:mm a');
-      var e = moment(end, 'h:mm a');
+      var s = moment(start, 'HH:mm');
+      var e = moment(end, 'HH:mm');
       var diff = e.diff(s, 'minutes');
       $length.text(diff + ' minutes');
     }

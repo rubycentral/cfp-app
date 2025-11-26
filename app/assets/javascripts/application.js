@@ -19,8 +19,6 @@
 //= require dataTables/jquery.dataTables
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 //= require jquery.dataTables.columnFilter
-//= require jquery-ui-sliderAccess
-//= require jquery-ui-timepicker-addon
 //= require jquery.mentionsInput
 //= require bootstrap-multiselect
 //= require momentjs

@@ -12,10 +12,10 @@
     %fieldset
       %h2 CFP Dates
       = f.label :opens_at
-      = f.text_field :opens_at, class: 'form-control', value: (f.object.opens_at.blank? ? "" : f.object.opens_at.to_fs(:long_with_zone) )
+      = f.datetime_local_field :opens_at, class: 'form-control'
       %p.help-block Optional. You can manually open the CFP when ready.
       = f.label :closes_at
-      = f.text_field :closes_at, class: 'form-control', value: (f.object.closes_at.blank? ? "" : f.object.closes_at.to_fs(:long_with_zone) )
+      = f.datetime_local_field :closes_at, class: 'form-control'
       %p.help-block When the CFP will stop taking submissions. Must be set before opening the CFP.
 
       %h2 Event Dates

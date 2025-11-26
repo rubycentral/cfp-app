@@ -2,8 +2,8 @@
   = f.input :conference_day, collection: 1..event.days, label: 'Day'
   = f.input :room_id, collection: current_event.rooms, include_blank: true
 .form-inline
-  = f.input :start_time, collection: time_select_options, selected: f.object.object.start_time&.strftime('%H:%M'), input_html: {class: 'start-time'}
-  = f.input :end_time, collection: time_select_options, selected: f.object.object.end_time&.strftime('%H:%M'), input_html: {class: 'end-time'}
+  = f.input :start_time, collection: time_select_options, selected: f.object.object.start_time&.strftime('%H:%M'), input_html: {class: 'start-time', data: {controller: 'time-select', action: 'keydown->time-select#keydown'}}
+  = f.input :end_time, collection: time_select_options, selected: f.object.object.end_time&.strftime('%H:%M'), input_html: {class: 'end-time', data: {controller: 'time-select', action: 'keydown->time-select#keydown'}}
 .length-label
   %span.bold Length:
   %span.length="#{time_slot.session_duration}"

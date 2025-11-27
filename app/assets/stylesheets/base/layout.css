@@ -1,7 +1,7 @@
 body {
   padding-top: var(--navbar-height);
 
-  // flexbox for sticky footer
+/* flexbox for sticky footer */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -49,7 +49,7 @@ body {
   }
 }
 
-// Flexbox module
+/* Flexbox module */
 .flex-container {
   display: flex;
 }

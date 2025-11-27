@@ -47,7 +47,7 @@ $column-width: 180px;
       left: -2px;
       bottom: 0;
       width: 58px;
-      // border: 1px solid black;
+/* border: 1px solid black; */
       background-color: #FFF;
       height: 100%;
     }
@@ -122,9 +122,9 @@ $column-width: 180px;
   }
 }
 
-// the draggable session card has a different appearance depending on context:
+/* the draggable session card has a different appearance depending on context: */
 
-// in the body (as it's being dragged) and global
+/* in the body (as it's being dragged) and global */
 body .draggable-session-card,
 body .custom-session-card {
   width: $column-width;
@@ -165,11 +165,11 @@ body .ui-draggable-dragging {
 body .custom-session-card {
   cursor: pointer;
 }
-// in the unscheduled sessions widget
+/* in the unscheduled sessions widget */
 .unscheduled-sessions-widget .draggable-session-card {
   opacity: 1
 }
-// in the grid
+/* in the grid */
 .schedule-grid .draggable-session-card,
 .schedule-grid .custom-session-card {
   opacity: 1;

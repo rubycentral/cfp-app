@@ -68,7 +68,7 @@
     margin-left: var(--padding-base-horizontal);
     color: var(--gray);
 
-    // display meta info on separate lines for xs screens
+/* display meta info on separate lines for xs screens */
     @media (max-width: 767px) {
       margin-left: 0;
       display: block;
@@ -127,7 +127,7 @@
   }
 }
 
-// Event status badge base styling (replaces Bootstrap 3 .label)
+/* Event status badge base styling (replaces Bootstrap 3 .label) */
 .event-status-badge {
   display: inline;
   padding: .2em .6em .3em;

@@ -1,4 +1,4 @@
-// spacing
+/* spacing */
 .margin-top {
   margin-top: 1em;
 }
@@ -14,7 +14,7 @@
 .red-text {
   color: red !important;
 }
-// alignment
+/* alignment */
 
 .inline-block {
   display: inline-block;

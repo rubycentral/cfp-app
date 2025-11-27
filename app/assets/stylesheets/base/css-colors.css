@@ -1,9 +1,9 @@
-// CSS Custom Properties for colors
-// Using color-mix() (Baseline 2023) for dynamic color calculations
-// This provides a foundation for future Bootstrap migration
+/* CSS Custom Properties for colors */
+/* Using color-mix() (Baseline 2023) for dynamic color calculations */
+/* This provides a foundation for future Bootstrap migration */
 
 :root {
-  // Base palette colors
+/* Base palette colors */
   --white: #fff;
   --black: #000;
   --ruby-central-red: #91181C;
@@ -16,13 +16,13 @@
   --brand-gray: #ccc;
   --gray-light: #b2afaa;
 
-  // Gray scale - using relative color syntax
+/* Gray scale - using relative color syntax */
   --gray-darker: hsl(from var(--black) h s calc(l + 13.5));
   --gray-dark: hsl(from var(--black) h s calc(l + 20));
   --gray: hsl(from var(--black) h s calc(l + 33.5));
   --gray-lighter: hsl(from var(--black) h s calc(l + 93.5));
 
-  // Brand colors
+/* Brand colors */
   --brand-primary: var(--ruby-central-red);
   --brand-success: var(--green);
   --brand-info: var(--bright-blue);
@@ -31,8 +31,8 @@
   --brand-danger: hsl(from var(--dark-red) h s calc(l + 30));
   --brand-accent: var(--gold);
 
-  // State colors - using relative color syntax (Baseline 2024)
-  // Note: l is 0-100, so calc(l + 50) adds 50 to lightness
+/* State colors - using relative color syntax (Baseline 2024) */
+/* Note: l is 0-100, so calc(l + 50) adds 50 to lightness */
   --state-success-text: #3c763d;
   --state-success-bg: hsl(from var(--brand-success) h s calc(l + 50));
   --state-success-border: hsl(from var(--state-success-bg) h s calc(l - 5));
@@ -49,12 +49,12 @@
   --state-danger-bg: hsl(from var(--brand-danger) h s calc(l + 50));
   --state-danger-border: hsl(from var(--state-danger-bg) h s calc(l - 5));
 
-  // Text and link colors
+/* Text and link colors */
   --text-color: var(--gray-dark);
   --link-color: var(--bright-blue);
   --link-hover-color: hsl(from var(--bright-blue) h s calc(l - 15));
 
-  // Typography base values
+/* Typography base values */
   --font-size-base: 14px;
   --font-size-large: calc(var(--font-size-base) * 1.25);
   --font-size-small: calc(var(--font-size-base) * 0.85);
@@ -64,32 +64,32 @@
   --line-height-base: 1.428571429;
   --line-height-computed: calc(var(--font-size-base) * var(--line-height-base));
 
-  // Spacing base values
+/* Spacing base values */
   --padding-base-vertical: 6px;
   --padding-base-horizontal: 12px;
   --padding-large-vertical: 10px;
   --padding-small-vertical: 5px;
   --padding-xs-horizontal: 5px;
 
-  // Border radius
+/* Border radius */
   --border-radius-base: 4px;
 
-  // Legend
+/* Legend */
   --legend-color: var(--gray-dark);
   --legend-border-color: #e5e5e5;
 
-  // Navbar
+/* Navbar */
   --navbar-height: 44px;
   --navbar-padding-vertical: calc((var(--navbar-height) - var(--line-height-computed)) / 2);
 
-  // Z-index
+/* Z-index */
   --zindex-subnavbar: 1020;
   --zindex-alert: 1080;
 
-  // Labels
+/* Labels */
   --label-color: #fff;
 
-  // Buttons
+/* Buttons */
   --btn-gray-color: #000;
   --btn-gray-border: #bfbfbf;
 }

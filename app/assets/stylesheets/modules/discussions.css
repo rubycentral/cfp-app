@@ -51,7 +51,7 @@ textarea.mention {
   .reviewer-comment &   { border-color: var(--gray-light); }
   .organizer-comment &  { border-color: var(--brand-primary); }
 
-  // comment info bar
+/* comment info bar */
   .info {
     width: 100%;
     border-bottom: 1px solid #fff;
@@ -83,7 +83,7 @@ textarea.mention {
     margin-left: 6px
   }
 
-  // comment body
+/* comment body */
   .text {
     width: 100%;
     border-top: 1px solid var(--gray-light);

@@ -1,4 +1,4 @@
-// Base label styles - pattern defined once
+/* Base label styles - pattern defined once */
 [class^="label-"], [class*=" label-"] {
   background-color: var(--label-bg);
   border: 1px solid hsl(from var(--label-bg) h s calc(l - 5));
@@ -13,7 +13,7 @@
   }
 }
 
-// Variants just set the custom properties
+/* Variants just set the custom properties */
 .label-default {
   --label-bg: var(--gray-lighter);
   --label-text: var(--gray);

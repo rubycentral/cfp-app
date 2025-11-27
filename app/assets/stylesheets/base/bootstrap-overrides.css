@@ -1,12 +1,12 @@
-// Bootstrap 3.4.1 CSS Overrides
-// These override the pre-compiled Bootstrap defaults with custom brand colors
+/* Bootstrap 3.4.1 CSS Overrides */
+/* These override the pre-compiled Bootstrap defaults with custom brand colors */
 
-// Typography
+/* Typography */
 body {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-// Links
+/* Links */
 a {
   color: var(--bright-blue);
 
@@ -16,7 +16,7 @@ a {
   }
 }
 
-// Navbar
+/* Navbar */
 .navbar {
   min-height: 44px;
 }
@@ -95,7 +95,7 @@ a {
   padding-bottom: 12px;
 }
 
-// Buttons
+/* Buttons */
 .btn-primary {
   background-color: var(--dark-blue);
   border-color: #042e46;
@@ -166,7 +166,7 @@ a {
   }
 }
 
-// State colors (alerts, form validation)
+/* State colors (alerts, form validation) */
 .alert-success {
   background-color: #b5f3c5;
   border-color: #9fefa7;
@@ -191,7 +191,7 @@ a {
   color: #a94442;
 }
 
-// Form validation states
+/* Form validation states */
 .has-success .help-block,
 .has-success .control-label,
 .has-success .radio,
@@ -243,7 +243,7 @@ a {
   border-color: #ffc8d3;
 }
 
-// Tooltips
+/* Tooltips */
 .tooltip-inner {
   background-color: var(--brand-primary);
 }
@@ -264,7 +264,7 @@ a {
   border-left-color: var(--brand-primary);
 }
 
-// Popovers
+/* Popovers */
 .popover {
   background-color: var(--beige);
 }
@@ -277,7 +277,7 @@ a {
   border-top-color: var(--beige);
 }
 
-// Pagination
+/* Pagination */
 .pagination > .active > a,
 .pagination > .active > span,
 .pagination > .active > a:hover,
@@ -300,7 +300,7 @@ a {
   color: #126799;
 }
 
-// Panels
+/* Panels */
 .panel-primary {
   border-color: var(--brand-primary);
 
@@ -350,7 +350,7 @@ a {
   }
 }
 
-// Progress bars
+/* Progress bars */
 .progress-bar {
   background-color: var(--brand-primary);
 }
@@ -371,7 +371,7 @@ a {
   background-color: #e1000b;
 }
 
-// List groups
+/* List groups */
 .list-group-item.active,
 .list-group-item.active:hover,
 .list-group-item.active:focus {
@@ -379,26 +379,26 @@ a {
   border-color: var(--brand-primary);
 }
 
-// Badges
+/* Badges */
 .badge {
   background-color: var(--gray-light);
 }
 
-// Dropdowns (active state uses brand-primary)
+/* Dropdowns (active state uses brand-primary) */
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:hover,
 .dropdown-menu > .active > a:focus {
   background-color: var(--brand-primary);
 }
 
-// Nav pills
+/* Nav pills */
 .nav-pills > li.active > a,
 .nav-pills > li.active > a:hover,
 .nav-pills > li.active > a:focus {
   background-color: var(--brand-primary);
 }
 
-// Labels - ensure custom colors
+/* Labels - ensure custom colors */
 .label-default {
   background-color: var(--gray-lighter);
   color: var(--gray);

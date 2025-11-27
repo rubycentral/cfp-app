@@ -104,7 +104,7 @@
           font-weight: bold;
           height: 100%;
           padding: 0 15px;
-          @include transition(color .15s ease-in-out);
+          transition: color .15s ease-in-out;
           &:hover {
             color: $gray-dark;
             text-decoration: none;

@@ -16,7 +16,7 @@
   width: 22.50%;
   -webkit-border-radius: 5px;
   border-radius: 5px;
-  @include transition(all ease-in-out .15s);
+  transition: all ease-in-out .15s;
 }
 
 .shortcuts .shortcut .shortcut-icon {

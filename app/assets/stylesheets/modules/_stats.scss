@@ -71,7 +71,7 @@
   font-size:30px;
   display:block;
   line-height: 40px;
-  @include transition(color ease-in-out .15s);
+  transition: color ease-in-out .15s;
 }
 #big_stats .stat:hover i {color: $brand-primary;}
 

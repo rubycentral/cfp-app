@@ -20,7 +20,7 @@
     border: 1px solid #d6d6d6;
     height: 40px;
     line-height: 40px;
-    @include gradient-vertical($beige, #f2efea, 0%, 100%);
+    background: linear-gradient(to bottom, $beige 0%, #f2efea 100%);
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
 

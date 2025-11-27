@@ -16,42 +16,43 @@
   --brand-gray: #ccc;
   --gray-light: #b2afaa;
 
-  // Gray scale - using color-mix for dynamic calculation
-  --gray-darker: color-mix(in hsl, var(--black), white 13.5%);
-  --gray-dark: color-mix(in hsl, var(--black), white 20%);
-  --gray: color-mix(in hsl, var(--black), white 33.5%);
-  --gray-lighter: color-mix(in hsl, var(--black), white 93.5%);
+  // Gray scale - using relative color syntax
+  --gray-darker: hsl(from var(--black) h s calc(l + 13.5));
+  --gray-dark: hsl(from var(--black) h s calc(l + 20));
+  --gray: hsl(from var(--black) h s calc(l + 33.5));
+  --gray-lighter: hsl(from var(--black) h s calc(l + 93.5));
 
   // Brand colors
   --brand-primary: var(--ruby-central-red);
   --brand-success: var(--green);
   --brand-info: var(--bright-blue);
   --brand-info-alt: var(--dark-blue);
-  --brand-warning: color-mix(in hsl, var(--gold), white 20%);
-  --brand-danger: color-mix(in hsl, var(--dark-red), white 30%);
+  --brand-warning: hsl(from var(--gold) h s calc(l + 20));
+  --brand-danger: hsl(from var(--dark-red) h s calc(l + 30));
   --brand-accent: var(--gold);
 
-  // State colors
+  // State colors - using relative color syntax (Baseline 2024)
+  // Note: l is 0-100, so calc(l + 50) adds 50 to lightness
   --state-success-text: #3c763d;
-  --state-success-bg: color-mix(in hsl, var(--brand-success), white 50%);
-  --state-success-border: color-mix(in hsl, var(--state-success-bg), black 5%);
+  --state-success-bg: hsl(from var(--brand-success) h s calc(l + 50));
+  --state-success-border: hsl(from var(--state-success-bg) h s calc(l - 5));
 
   --state-info-text: #31708f;
-  --state-info-bg: color-mix(in hsl, var(--brand-info), white 35%);
-  --state-info-border: color-mix(in hsl, var(--state-info-bg), black 7%);
+  --state-info-bg: hsl(from var(--brand-info) h s calc(l + 35));
+  --state-info-border: hsl(from var(--state-info-bg) h s calc(l - 7));
 
   --state-warning-text: #8a6d3b;
-  --state-warning-bg: color-mix(in hsl, var(--brand-warning), white 15%);
-  --state-warning-border: color-mix(in hsl, var(--state-warning-bg), black 5%);
+  --state-warning-bg: hsl(from var(--brand-warning) h s calc(l + 15));
+  --state-warning-border: hsl(from var(--state-warning-bg) h s calc(l - 5));
 
   --state-danger-text: #a94442;
-  --state-danger-bg: color-mix(in hsl, var(--brand-danger), white 50%);
-  --state-danger-border: color-mix(in hsl, var(--state-danger-bg), black 5%);
+  --state-danger-bg: hsl(from var(--brand-danger) h s calc(l + 50));
+  --state-danger-border: hsl(from var(--state-danger-bg) h s calc(l - 5));
 
   // Text and link colors
   --text-color: var(--gray-dark);
   --link-color: var(--bright-blue);
-  --link-hover-color: color-mix(in hsl, var(--bright-blue), black 15%);
+  --link-hover-color: hsl(from var(--bright-blue) h s calc(l - 15));
 
   // Typography base values
   --font-size-base: 14px;

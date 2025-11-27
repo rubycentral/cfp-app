@@ -17,14 +17,21 @@
   color: #333;
 }
 
+.icon-twitter,
+.icon-github {
+  background-size: 25px 25px;
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 25px;
+  vertical-align: middle;
+  width: 25px;
+  margin-right: 2px;
+}
+
 .icon-twitter {
   background-image: asset-url("twitter_32.png");
-  margin-right: 2px;
-  @include icon-generic;
 }
 
 .icon-github {
   background-image: asset-url("github_32.png");
-  margin-right: 2px;
-  @include icon-generic;
 }

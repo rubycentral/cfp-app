@@ -38,21 +38,21 @@
   --yellow: #FFD801;
   --white: #FFFFFF;
 
-  // Layout
+  /* Layout */
   --body_background_color: var(--white);
   --nav_background_color: var(--black);
   --nav_text_color: var(--white);
   --nav_link_hover: var(--white);
   --main_content_background: var(--white);
 
-  // Session Formats
+  /* Session Formats */
   --session-format-tag-1: var(--pastel-pink);
   --session-format-tag-2: var(--pastel-purple);
   --session-format-tag-3: var(--pastel-peach);
   --session-format-tag-4: var(--pastel-blue-light);
   --session-format-tag-5: var(--pastel-blue);
 
-  // Track Tags
+  /* Track Tags */
   --bg-track-1: var(--yellow);
   --bg-track-2: var(--orange-burnt);
   --bg-track-3: var(--pink);

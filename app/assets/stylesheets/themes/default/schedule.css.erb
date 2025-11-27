@@ -227,10 +227,10 @@
           .sponsor-tier-star {
             margin-right: 3px;
             display: inline-block;
-            -webkit-mask-image: asset_url('themes/default/sponsor-tier.svg');
+            -webkit-mask-image: url('<%= asset_path('themes/default/sponsor-tier.svg') %>');
             -webkit-mask-repeat: no-repeat;
             -webkit-mask-size: 15px 15px;
-            mask-image: asset_url('themes/default/sponsor-tier.svg');
+            mask-image: url('<%= asset_path('themes/default/sponsor-tier.svg') %>');
             mask-repeat: no-repeat;
             mask-size: 15px 15px;
             height: 15px;
@@ -278,7 +278,7 @@
             &::after {
               content: "";
               margin-left: 9px;
-              background-image: asset_url('themes/default/arrow-white.png');
+              background-image: url('<%= asset_path('themes/default/arrow-white.png') %>');
               display: inline-block;
               height: 15px;
               width: 15px;

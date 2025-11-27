@@ -1,10 +1,14 @@
-@import 'colors';
-@import 'shared';
-@import 'nav';
-@import 'footer';
-@import 'program';
-@import 'schedule';
-@import 'sponsors';
+/*
+ * Default theme application styles
+ *
+ *= require themes/default/colors
+ *= require themes/default/shared
+ *= require themes/default/nav
+ *= require themes/default/footer
+ *= require themes/default/program
+ *= require themes/default/schedule
+ *= require themes/default/sponsors
+ */
 
 :root {
   --sans-serif-font: 'Rubik';

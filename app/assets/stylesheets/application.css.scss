@@ -1,8 +1,7 @@
 // vendor styles
-@import "bootstrap-sprockets";
-@import "base/variables";
 @import "bootstrap";
 @import "base/css-colors";
+@import "base/bootstrap-overrides";
 
 
 @import "vendor/jquery.mentionsInput";

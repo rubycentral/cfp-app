@@ -13,7 +13,7 @@
 //= require jquery
 //= require underscore
 //= require jquery_ujs
-//= require bootstrap-sprockets
+//= require bootstrap
 //= require chartkick
 //= require dataTables/jquery.dataTables
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap

@@ -1,0 +1,429 @@
+// Bootstrap 3.4.1 CSS Overrides
+// These override the pre-compiled Bootstrap defaults with custom brand colors
+
+// Typography
+body {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+// Links
+a {
+  color: var(--bright-blue);
+
+  &:hover,
+  &:focus {
+    color: #126799;
+  }
+}
+
+// Navbar
+.navbar {
+  min-height: 44px;
+}
+
+.navbar-default {
+  background-color: var(--brand-primary);
+  border-color: #751317;
+
+  .navbar-brand {
+    color: var(--white);
+    height: 44px;
+    padding: 12px 15px;
+
+    &:hover,
+    &:focus {
+      color: #e6e6e6;
+      background-color: transparent;
+    }
+  }
+
+  .navbar-nav > li > a {
+    color: var(--white);
+
+    &:hover,
+    &:focus {
+      color: #ccc;
+      background-color: transparent;
+    }
+  }
+
+  .navbar-nav > .active > a,
+  .navbar-nav > .active > a:hover,
+  .navbar-nav > .active > a:focus {
+    color: var(--white);
+    background-color: #ad1d21;
+  }
+
+  .navbar-nav > .open > a,
+  .navbar-nav > .open > a:hover,
+  .navbar-nav > .open > a:focus {
+    color: var(--white);
+    background-color: #ad1d21;
+  }
+
+  .navbar-nav > .disabled > a,
+  .navbar-nav > .disabled > a:hover,
+  .navbar-nav > .disabled > a:focus {
+    color: #ccc;
+    background-color: transparent;
+  }
+
+  .navbar-toggle {
+    border-color: #751317;
+
+    &:hover,
+    &:focus {
+      background-color: #751317;
+    }
+
+    .icon-bar {
+      background-color: var(--white);
+    }
+  }
+
+  .navbar-collapse {
+    border-color: #751317;
+  }
+
+  .navbar-text {
+    color: var(--white);
+  }
+}
+
+.navbar-nav > li > a {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+// Buttons
+.btn-primary {
+  background-color: var(--dark-blue);
+  border-color: #042e46;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.active {
+    background-color: #052d44;
+    border-color: #031d2d;
+  }
+}
+
+.open > .dropdown-toggle.btn-primary {
+  background-color: #052d44;
+  border-color: #031d2d;
+}
+
+.btn-success {
+  background-color: var(--green);
+  border-color: #147b30;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.active {
+    background-color: #147b30;
+    border-color: #106328;
+  }
+}
+
+.btn-info {
+  background-color: var(--bright-blue);
+  border-color: #1786c6;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.active {
+    background-color: #1786c6;
+    border-color: #1472a8;
+  }
+}
+
+.btn-warning {
+  background-color: #d3d05b;
+  border-color: #ceca47;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.active {
+    background-color: #ceca47;
+    border-color: #c4c03d;
+  }
+}
+
+.btn-danger {
+  background-color: #e1000b;
+  border-color: #c80009;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.active {
+    background-color: #c80009;
+    border-color: #af0008;
+  }
+}
+
+// State colors (alerts, form validation)
+.alert-success {
+  background-color: #b5f3c5;
+  border-color: #9fefa7;
+  color: #3c763d;
+}
+
+.alert-info {
+  background-color: #b3ddf6;
+  border-color: #93dff2;
+  color: #31708f;
+}
+
+.alert-warning {
+  background-color: #e3e197;
+  border-color: #decc83;
+  color: #8a6d3b;
+}
+
+.alert-danger {
+  background-color: #ffe1e2;
+  border-color: #ffc8d3;
+  color: #a94442;
+}
+
+// Form validation states
+.has-success .help-block,
+.has-success .control-label,
+.has-success .radio,
+.has-success .checkbox,
+.has-success .radio-inline,
+.has-success .checkbox-inline,
+.has-success.radio label,
+.has-success.checkbox label,
+.has-success.radio-inline label,
+.has-success.checkbox-inline label {
+  color: #3c763d;
+}
+
+.has-success .form-control {
+  border-color: #9fefa7;
+}
+
+.has-warning .help-block,
+.has-warning .control-label,
+.has-warning .radio,
+.has-warning .checkbox,
+.has-warning .radio-inline,
+.has-warning .checkbox-inline,
+.has-warning.radio label,
+.has-warning.checkbox label,
+.has-warning.radio-inline label,
+.has-warning.checkbox-inline label {
+  color: #8a6d3b;
+}
+
+.has-warning .form-control {
+  border-color: #decc83;
+}
+
+.has-error .help-block,
+.has-error .control-label,
+.has-error .radio,
+.has-error .checkbox,
+.has-error .radio-inline,
+.has-error .checkbox-inline,
+.has-error.radio label,
+.has-error.checkbox label,
+.has-error.radio-inline label,
+.has-error.checkbox-inline label {
+  color: #a94442;
+}
+
+.has-error .form-control {
+  border-color: #ffc8d3;
+}
+
+// Tooltips
+.tooltip-inner {
+  background-color: var(--brand-primary);
+}
+
+.tooltip.top .tooltip-arrow {
+  border-top-color: var(--brand-primary);
+}
+
+.tooltip.right .tooltip-arrow {
+  border-right-color: var(--brand-primary);
+}
+
+.tooltip.bottom .tooltip-arrow {
+  border-bottom-color: var(--brand-primary);
+}
+
+.tooltip.left .tooltip-arrow {
+  border-left-color: var(--brand-primary);
+}
+
+// Popovers
+.popover {
+  background-color: var(--beige);
+}
+
+.popover-title {
+  background-color: #f4efe6;
+}
+
+.popover > .arrow::after {
+  border-top-color: var(--beige);
+}
+
+// Pagination
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+  background-color: var(--brand-primary);
+  border-color: var(--brand-primary);
+}
+
+.pagination > li > a,
+.pagination > li > span {
+  color: var(--bright-blue);
+}
+
+.pagination > li > a:hover,
+.pagination > li > span:hover,
+.pagination > li > a:focus,
+.pagination > li > span:focus {
+  color: #126799;
+}
+
+// Panels
+.panel-primary {
+  border-color: var(--brand-primary);
+
+  > .panel-heading {
+    background-color: var(--brand-primary);
+    border-color: var(--brand-primary);
+  }
+}
+
+.panel-success {
+  border-color: #9fefa7;
+
+  > .panel-heading {
+    background-color: #b5f3c5;
+    border-color: #9fefa7;
+    color: #3c763d;
+  }
+}
+
+.panel-info {
+  border-color: #93dff2;
+
+  > .panel-heading {
+    background-color: #b3ddf6;
+    border-color: #93dff2;
+    color: #31708f;
+  }
+}
+
+.panel-warning {
+  border-color: #decc83;
+
+  > .panel-heading {
+    background-color: #e3e197;
+    border-color: #decc83;
+    color: #8a6d3b;
+  }
+}
+
+.panel-danger {
+  border-color: #ffc8d3;
+
+  > .panel-heading {
+    background-color: #ffe1e2;
+    border-color: #ffc8d3;
+    color: #a94442;
+  }
+}
+
+// Progress bars
+.progress-bar {
+  background-color: var(--brand-primary);
+}
+
+.progress-bar-success {
+  background-color: var(--green);
+}
+
+.progress-bar-info {
+  background-color: var(--bright-blue);
+}
+
+.progress-bar-warning {
+  background-color: #d3d05b;
+}
+
+.progress-bar-danger {
+  background-color: #e1000b;
+}
+
+// List groups
+.list-group-item.active,
+.list-group-item.active:hover,
+.list-group-item.active:focus {
+  background-color: var(--brand-primary);
+  border-color: var(--brand-primary);
+}
+
+// Badges
+.badge {
+  background-color: var(--gray-light);
+}
+
+// Dropdowns (active state uses brand-primary)
+.dropdown-menu > .active > a,
+.dropdown-menu > .active > a:hover,
+.dropdown-menu > .active > a:focus {
+  background-color: var(--brand-primary);
+}
+
+// Nav pills
+.nav-pills > li.active > a,
+.nav-pills > li.active > a:hover,
+.nav-pills > li.active > a:focus {
+  background-color: var(--brand-primary);
+}
+
+// Labels - ensure custom colors
+.label-default {
+  background-color: var(--gray-lighter);
+  color: var(--gray);
+}
+
+.label-primary {
+  background-color: var(--bright-blue);
+}
+
+.label-success {
+  background-color: #b5f3c5;
+  color: #3c763d;
+}
+
+.label-info {
+  background-color: #b3ddf6;
+  color: #31708f;
+}
+
+.label-warning {
+  background-color: #e3e197;
+  color: #8a6d3b;
+}
+
+.label-danger {
+  background-color: #ffe1e2;
+  color: #a94442;
+}

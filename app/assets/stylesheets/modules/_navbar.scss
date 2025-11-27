@@ -188,14 +188,14 @@
 
   a:hover {
     background-color: $dark-blue;
-    color: darken($white, 10%);
+    color: #{"hsl(from $white h s calc(l - 10))"};
   }
 
   li.active {
-    border-bottom: 3px solid darken($dark-blue, 10%);
+    border-bottom: 3px solid #{"hsl(from $dark-blue h s calc(l - 10))"};
     > a, a:hover, a:focus {
-      color: darken($white, 10%);
-      background-color: lighten($dark-blue, 10%);
+      color: #{"hsl(from $white h s calc(l - 10))"};
+      background-color: #{"hsl(from $dark-blue h s calc(l + 10))"};
     }
   }
 

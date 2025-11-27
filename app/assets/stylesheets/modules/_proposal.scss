@@ -109,8 +109,8 @@ span.disabled-state {
 }
 
 .callout {
-  border-left: solid darken(#dff0d8, 10%) 5px;
-  background-color: lighten(#dff0d8, 5%);
+  border-left: solid #{"hsl(from #dff0d8 h s calc(l - 10))"} 5px;
+  background-color: #{"hsl(from #dff0d8 h s calc(l + 5))"};
   padding: $padding-base-horizontal;
 
   .callout-title {
@@ -187,11 +187,11 @@ div.col-md-4 {
   }
   .selectize-input.items .item {
     background: $state-success-bg;
-    border: 1px solid darken($state-success-bg, 30%);
+    border: 1px solid #{"hsl(from $state-success-bg h s calc(l - 30))"};
     color: $state-success-text;
     text-shadow: none;
     .remove {
-      border-left: 1px solid darken($state-success-bg, 30%);
+      border-left: 1px solid #{"hsl(from $state-success-bg h s calc(l - 30))"};
     }
   }
   .selectize-dropdown-content > .option.active {

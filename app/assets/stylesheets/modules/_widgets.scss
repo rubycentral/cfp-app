@@ -165,6 +165,6 @@
   &.widget-card-alt,
   &.widget-card-alt .widget-header,
   &.widget-card-alt .widget-content {
-    background: lighten($brand-info, 45%);
+    background: #{"hsl(from $brand-info h s calc(l + 45))"};
   }
 }

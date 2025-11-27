@@ -6,7 +6,7 @@
 }
 
 .help-block {
-  color: darken($brand-success, 5%);
+  color: #{"hsl(from $brand-success h s calc(l - 5))"};
   font-size: 0.9em;
   font-style: italic;
 }

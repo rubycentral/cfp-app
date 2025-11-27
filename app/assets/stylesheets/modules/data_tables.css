@@ -12,7 +12,7 @@ table.datatable {
     }
   }
   tr.updated td {
-    background-color: #{"hsl(from #dff0d8 h s calc(l + 5))"};
+    background-color: hsl(from #dff0d8 h s calc(l + 5));
   }
   .form-control {
     width: 100%;

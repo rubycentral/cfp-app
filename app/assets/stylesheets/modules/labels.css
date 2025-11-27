@@ -1,15 +1,15 @@
 // Base label styles - pattern defined once
 [class^="label-"], [class*=" label-"] {
   background-color: var(--label-bg);
-  border: 1px solid #{"hsl(from var(--label-bg) h s calc(l - 5))"};
+  border: 1px solid hsl(from var(--label-bg) h s calc(l - 5));
   border-radius: 0;
   color: var(--label-text);
   text-transform: uppercase;
 
   &[href]:hover,
   &[href]:focus {
-    border-color: #{"hsl(from var(--label-bg) h s calc(l - 10))"};
-    color: #{"hsl(from var(--label-text) h s calc(l - 10))"};
+    border-color: hsl(from var(--label-bg) h s calc(l - 10));
+    color: hsl(from var(--label-text) h s calc(l - 10));
   }
 }
 

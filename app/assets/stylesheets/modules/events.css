@@ -178,7 +178,7 @@
       border: 1px solid var(--btn-gray-border);
 
       &:hover, &:active {
-        background-color: #{"hsl(from var(--brand-gray) h s calc(l - 10))"};
+        background-color: hsl(from var(--brand-gray) h s calc(l - 10));
       }
     }
   }
@@ -186,7 +186,7 @@
   .template-preview .contents,
   .template-short .contents  {
     background-color: var(--beige);
-    border: 1px solid #{"hsl(from var(--beige) h s calc(l - 10))"};
+    border: 1px solid hsl(from var(--beige) h s calc(l - 10));
     border-radius: 5px;
     margin: 1em 0;
     padding: 10px;

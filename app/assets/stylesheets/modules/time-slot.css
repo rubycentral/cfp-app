@@ -41,7 +41,7 @@
 .modal-dialog {
   .errors {
     background-color: #edd1d1;
-    color: #{"hsl(from #edd1d1 h s calc(l - 50))"};
+    color: hsl(from #edd1d1 h s calc(l - 50));
     border-radius: .25em;
     padding-left: .25em;
   }

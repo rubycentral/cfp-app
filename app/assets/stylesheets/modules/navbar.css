@@ -188,14 +188,14 @@
 
   a:hover {
     background-color: var(--dark-blue);
-    color: #{"hsl(from var(--white) h s calc(l - 10))"};
+    color: hsl(from var(--white) h s calc(l - 10));
   }
 
   li.active {
-    border-bottom: 3px solid #{"hsl(from var(--dark-blue) h s calc(l - 10))"};
+    border-bottom: 3px solid hsl(from var(--dark-blue) h s calc(l - 10));
     > a, a:hover, a:focus {
-      color: #{"hsl(from var(--white) h s calc(l - 10))"};
-      background-color: #{"hsl(from var(--dark-blue) h s calc(l + 10))"};
+      color: hsl(from var(--white) h s calc(l - 10));
+      background-color: hsl(from var(--dark-blue) h s calc(l + 10));
     }
   }
 

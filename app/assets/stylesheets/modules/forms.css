@@ -1,5 +1,5 @@
- _notification {
-  border-bottom: 1px solid #{"hsl(from #edd1d1 h s calc(l - 50))"};
+._notification {
+  border-bottom: 1px solid hsl(from #edd1d1 h s calc(l - 50));
   color: var(--brand-warning);
   font-weight: 700;
   margin-bottom: 10px;
@@ -11,7 +11,7 @@
     background-color: #edd1d1;
   }
   label, .help-block {
-    color: #{"hsl(from #edd1d1 h s calc(l - 50))"};
+    color: hsl(from #edd1d1 h s calc(l - 50));
   }
 }
 
@@ -22,13 +22,13 @@
 }
 
 .required_notification {
-  color:#{"hsl(from #edd1d1 h s calc(l - 50))"};
+  color: hsl(from #edd1d1 h s calc(l - 50));
   font-style: italic;
   float:right;
 }
 
 span[title="required"] {
-  color: #{"hsl(from #edd1d1 h s calc(l - 50))"};
+  color: hsl(from #edd1d1 h s calc(l - 50));
 }
 
 .control-label {

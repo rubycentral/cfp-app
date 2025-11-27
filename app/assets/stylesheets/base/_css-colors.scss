@@ -1,0 +1,53 @@
+// CSS Custom Properties for colors
+// Using color-mix() (Baseline 2023) for dynamic color calculations
+// This provides a foundation for future Bootstrap migration
+
+:root {
+  // Base palette colors
+  --white: #fff;
+  --black: #000;
+  --ruby-central-red: #91181C;
+  --dark-red: #440407;
+  --gold: #9E9B2A;
+  --dark-blue: #063E5E;
+  --bright-blue: #1A95DD;
+  --green: #189138;
+  --beige: #f9f6f1;
+  --brand-gray: #ccc;
+  --gray-light: #b2afaa;
+
+  // Gray scale - using color-mix for dynamic calculation
+  --gray-darker: color-mix(in hsl, var(--black), white 13.5%);
+  --gray-dark: color-mix(in hsl, var(--black), white 20%);
+  --gray: color-mix(in hsl, var(--black), white 33.5%);
+  --gray-lighter: color-mix(in hsl, var(--black), white 93.5%);
+
+  // Brand colors
+  --brand-primary: var(--ruby-central-red);
+  --brand-success: var(--green);
+  --brand-info: var(--bright-blue);
+  --brand-info-alt: var(--dark-blue);
+  --brand-warning: color-mix(in hsl, var(--gold), white 20%);
+  --brand-danger: color-mix(in hsl, var(--dark-red), white 30%);
+  --brand-accent: var(--gold);
+
+  // State colors
+  --state-success-text: #3c763d;
+  --state-success-bg: color-mix(in hsl, var(--brand-success), white 50%);
+  --state-success-border: color-mix(in hsl, var(--state-success-bg), black 5%);
+
+  --state-info-text: #31708f;
+  --state-info-bg: color-mix(in hsl, var(--brand-info), white 35%);
+  --state-info-border: color-mix(in hsl, var(--state-info-bg), black 7%);
+
+  --state-warning-text: #8a6d3b;
+  --state-warning-bg: color-mix(in hsl, var(--brand-warning), white 15%);
+  --state-warning-border: color-mix(in hsl, var(--state-warning-bg), black 5%);
+
+  --state-danger-text: #a94442;
+  --state-danger-bg: color-mix(in hsl, var(--brand-danger), white 50%);
+  --state-danger-border: color-mix(in hsl, var(--state-danger-bg), black 5%);
+
+  // Link colors
+  --link-hover-color: color-mix(in hsl, var(--bright-blue), black 15%);
+}

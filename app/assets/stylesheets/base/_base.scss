@@ -5,7 +5,7 @@
   z-index: var(--zindex-alert);
 }
 
-@media (min-width: $screen-md) {
+@media (min-width: 992px) {
 
   .alert {
     width: 50%;

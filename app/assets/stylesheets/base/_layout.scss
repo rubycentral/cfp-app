@@ -87,7 +87,7 @@ body {
   }
 }
 
-@media screen and (max-width: $screen-xs-max) {
+@media screen and (max-width: 767px) {
   .flex-container-md {
     flex-direction: column;
   }

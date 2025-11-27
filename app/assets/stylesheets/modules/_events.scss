@@ -69,7 +69,7 @@
     color: var(--gray);
 
     // display meta info on separate lines for xs screens
-    @media (max-width: $screen-xs-max) {
+    @media (max-width: 767px) {
       margin-left: 0;
       display: block;
     }

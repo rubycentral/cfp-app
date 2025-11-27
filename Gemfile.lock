@@ -606,7 +606,6 @@ DEPENDENCIES
   rexml
   rspec
   rspec-rails
-  sassc-rails
   selectize-rails
   selenium-webdriver
   sendgrid-ruby

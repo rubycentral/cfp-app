@@ -1,25 +1,47 @@
+// Base label styles - pattern defined once
+[class^="label-"], [class*=" label-"] {
+  background-color: var(--label-bg);
+  border: 1px solid #{"hsl(from var(--label-bg) h s calc(l - 5))"};
+  border-radius: 0;
+  color: var(--label-text);
+  text-transform: uppercase;
+
+  &[href]:hover,
+  &[href]:focus {
+    border-color: #{"hsl(from var(--label-bg) h s calc(l - 10))"};
+    color: #{"hsl(from var(--label-text) h s calc(l - 10))"};
+  }
+}
+
+// Variants just set the custom properties
 .label-default {
-  @include label-variant($label-default-bg, $label-default-text);
+  --label-bg: var(--gray-lighter);
+  --label-text: var(--gray);
 }
 
 .label-primary {
-  @include label-variant($label-primary-bg, $label-primary-text);
+  --label-bg: var(--bright-blue);
+  --label-text: #fff;
 }
 
 .label-success {
-  @include label-variant($label-success-bg, $label-success-text);
+  --label-bg: var(--state-success-bg);
+  --label-text: var(--state-success-text);
 }
 
 .label-info {
-  @include label-variant($label-info-bg, $label-info-text);
+  --label-bg: var(--state-info-bg);
+  --label-text: var(--state-info-text);
 }
 
 .label-warning {
-  @include label-variant($label-warning-bg, $label-warning-text);
+  --label-bg: var(--state-warning-bg);
+  --label-text: var(--state-warning-text);
 }
 
 .label-danger {
-  @include label-variant($label-danger-bg, $label-danger-text);
+  --label-bg: var(--state-danger-bg);
+  --label-text: var(--state-danger-text);
 }
 
 .label-mini {

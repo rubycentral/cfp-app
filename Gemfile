@@ -17,7 +17,6 @@ gem 'csv'
 
 gem 'pg'
 
-gem 'bootstrap-sass', '~> 3.4.1'
 gem 'haml'
 gem 'jquery-datatables-rails'
 gem 'jquery-rails'

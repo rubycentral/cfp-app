@@ -1,0 +1,47 @@
+/* spacing */
+.margin-top {
+  margin-top: 1em;
+}
+
+.margin-bottom {
+  margin-bottom: 1em;
+}
+
+.flush-top {
+  margin-top: 0 !important;
+}
+
+.red-text {
+  color: red !important;
+}
+/* alignment */
+
+.inline-block {
+  display: inline-block;
+}
+
+.inline {
+  display: inline;
+}
+
+.no-pad-left {
+  padding-left: 0;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.bg-gray-base { background-color: var(--black); }
+.bg-gray-darker { background-color: var(--gray-darker); }
+.bg-gray-dark { background-color: var(--gray-dark); }
+.bg-gray { background-color: var(--gray) }
+.bg-gray-light { background-color: var(--gray-light); }
+.bg-gray-lighter { background-color: var(--gray-lighter); }
+.bg-brand-primary { background-color: var(--brand-primary); }
+.bg-brand-success { background-color: var(--brand-success); }
+.bg-brand-info { background-color: var(--brand-info); }
+.bg-brand-info-alt { background-color: var(--brand-info-alt); }
+.bg-brand-warning { background-color: var(--brand-warning); }
+.bg-brand-danger { background-color: var(--brand-danger); }
+.bg-brand-accent { background-color: var(--brand-accent); }

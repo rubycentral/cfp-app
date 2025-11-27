@@ -1,0 +1,75 @@
+._notification {
+  border-bottom: 1px solid hsl(from #edd1d1 h s calc(l - 50));
+  color: var(--brand-warning);
+  font-weight: 700;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+}
+
+.field_with_errors {
+  .form-control {
+    background-color: #edd1d1;
+  }
+  label, .help-block {
+    color: hsl(from #edd1d1 h s calc(l - 50));
+  }
+}
+
+.form-submit {
+  border-top: 1px solid var(--gray-light);
+  margin: 1em 0 5em;
+  padding-top: 1em;
+}
+
+.required_notification {
+  color: hsl(from #edd1d1 h s calc(l - 50));
+  font-style: italic;
+  float:right;
+}
+
+span[title="required"] {
+  color: hsl(from #edd1d1 h s calc(l - 50));
+}
+
+.control-label {
+  display: block;
+  max-width: 100%;
+  margin-bottom: 5px;
+  margin-top: 0;
+  font-size: var(--font-size-base);
+  font-weight: bold;
+}
+
+.cancel-form {
+  margin-right: .5em;
+}
+
+/* Use a legend as the heading for major sections in a form. */
+/* Can also use the .fieldset-legend class to form heading styles */
+/* e.g., the show page for proposal */
+.fieldset-legend {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin-bottom: var(--line-height-computed);
+  font-size: calc(var(--font-size-base) * 1.5);
+  line-height: inherit;
+  color: var(--legend-color);
+  border: 0;
+  border-bottom: 1px solid var(--legend-border-color);
+  padding-top: 20px;
+}
+
+.cfp-date-input {
+  width: 50%;
+}
+
+input.boolean {
+  margin: 4px;
+}
+
+.inline-form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}

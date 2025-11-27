@@ -1,0 +1,37 @@
+.btn-facebook-alt i {
+  color: #23386a;
+}
+.btn-twitter-alt i {
+  color: #0098d0;
+}
+.btn-google-alt i {
+  color: #b6362d;
+}
+.btn-linkedin-alt i {
+  color: #0073b2;
+}
+.btn-pinterest-alt i {
+  color: #ab171e;
+}
+.btn-github-alt i {
+  color: #333;
+}
+
+.icon-twitter,
+.icon-github {
+  background-size: 25px 25px;
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 25px;
+  vertical-align: middle;
+  width: 25px;
+  margin-right: 2px;
+}
+
+.icon-twitter {
+  background-image: asset-url("twitter_32.png");
+}
+
+.icon-github {
+  background-image: asset-url("github_32.png");
+}

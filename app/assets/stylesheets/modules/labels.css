@@ -1,0 +1,69 @@
+/* Base label styles - pattern defined once */
+[class^="label-"], [class*=" label-"] {
+  background-color: var(--label-bg);
+  border: 1px solid hsl(from var(--label-bg) h s calc(l - 5));
+  border-radius: 0;
+  color: var(--label-text);
+  text-transform: uppercase;
+
+  &[href]:hover,
+  &[href]:focus {
+    border-color: hsl(from var(--label-bg) h s calc(l - 10));
+    color: hsl(from var(--label-text) h s calc(l - 10));
+  }
+}
+
+/* Variants just set the custom properties */
+.label-default {
+  --label-bg: var(--gray-lighter);
+  --label-text: var(--gray);
+}
+
+.label-primary {
+  --label-bg: var(--bright-blue);
+  --label-text: #fff;
+}
+
+.label-success {
+  --label-bg: var(--state-success-bg);
+  --label-text: var(--state-success-text);
+}
+
+.label-info {
+  --label-bg: var(--state-info-bg);
+  --label-text: var(--state-info-text);
+}
+
+.label-warning {
+  --label-bg: var(--state-warning-bg);
+  --label-text: var(--state-warning-text);
+}
+
+.label-danger {
+  --label-bg: var(--state-danger-bg);
+  --label-text: var(--state-danger-text);
+}
+
+.label-mini {
+  font-size: var(--font-size-small);
+}
+
+.label-large {
+  font-size: var(--font-size-large);
+}
+
+.label-compact {
+  font-size: var(--font-size-compact);
+  display: inline-block;
+  padding: .2em .6em .35em;
+}
+
+.other-proposal-status .label-mini,
+.proposal-status .label-mini {
+  display: inline-block;
+  padding: .2em .6em .1em;
+}
+
+.session-status .label-large {
+  padding: 0 5px 0;
+}

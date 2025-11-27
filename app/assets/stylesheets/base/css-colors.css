@@ -1,0 +1,95 @@
+/* CSS Custom Properties for colors */
+/* Using color-mix() (Baseline 2023) for dynamic color calculations */
+/* This provides a foundation for future Bootstrap migration */
+
+:root {
+/* Base palette colors */
+  --white: #fff;
+  --black: #000;
+  --ruby-central-red: #91181C;
+  --dark-red: #440407;
+  --gold: #9E9B2A;
+  --dark-blue: #063E5E;
+  --bright-blue: #1A95DD;
+  --green: #189138;
+  --beige: #f9f6f1;
+  --brand-gray: #ccc;
+  --gray-light: #b2afaa;
+
+/* Gray scale - using relative color syntax */
+  --gray-darker: hsl(from var(--black) h s calc(l + 13.5));
+  --gray-dark: hsl(from var(--black) h s calc(l + 20));
+  --gray: hsl(from var(--black) h s calc(l + 33.5));
+  --gray-lighter: hsl(from var(--black) h s calc(l + 93.5));
+
+/* Brand colors */
+  --brand-primary: var(--ruby-central-red);
+  --brand-success: var(--green);
+  --brand-info: var(--bright-blue);
+  --brand-info-alt: var(--dark-blue);
+  --brand-warning: hsl(from var(--gold) h s calc(l + 20));
+  --brand-danger: hsl(from var(--dark-red) h s calc(l + 30));
+  --brand-accent: var(--gold);
+
+/* State colors - using relative color syntax (Baseline 2024) */
+/* Note: l is 0-100, so calc(l + 50) adds 50 to lightness */
+  --state-success-text: #3c763d;
+  --state-success-bg: hsl(from var(--brand-success) h s calc(l + 50));
+  --state-success-border: hsl(from var(--state-success-bg) h s calc(l - 5));
+
+  --state-info-text: #31708f;
+  --state-info-bg: hsl(from var(--brand-info) h s calc(l + 35));
+  --state-info-border: hsl(from var(--state-info-bg) h s calc(l - 7));
+
+  --state-warning-text: #8a6d3b;
+  --state-warning-bg: hsl(from var(--brand-warning) h s calc(l + 15));
+  --state-warning-border: hsl(from var(--state-warning-bg) h s calc(l - 5));
+
+  --state-danger-text: #a94442;
+  --state-danger-bg: hsl(from var(--brand-danger) h s calc(l + 50));
+  --state-danger-border: hsl(from var(--state-danger-bg) h s calc(l - 5));
+
+/* Text and link colors */
+  --text-color: var(--gray-dark);
+  --link-color: var(--bright-blue);
+  --link-hover-color: hsl(from var(--bright-blue) h s calc(l - 15));
+
+/* Typography base values */
+  --font-size-base: 14px;
+  --font-size-large: calc(var(--font-size-base) * 1.25);
+  --font-size-small: calc(var(--font-size-base) * 0.85);
+  --font-size-xs: calc(var(--font-size-base) * 0.75);
+  --font-size-compact: calc(var(--font-size-base) * 0.6);
+  --font-size-h3: calc(var(--font-size-base) * 1.7);
+  --line-height-base: 1.428571429;
+  --line-height-computed: calc(var(--font-size-base) * var(--line-height-base));
+
+/* Spacing base values */
+  --padding-base-vertical: 6px;
+  --padding-base-horizontal: 12px;
+  --padding-large-vertical: 10px;
+  --padding-small-vertical: 5px;
+  --padding-xs-horizontal: 5px;
+
+/* Border radius */
+  --border-radius-base: 4px;
+
+/* Legend */
+  --legend-color: var(--gray-dark);
+  --legend-border-color: #e5e5e5;
+
+/* Navbar */
+  --navbar-height: 44px;
+  --navbar-padding-vertical: calc((var(--navbar-height) - var(--line-height-computed)) / 2);
+
+/* Z-index */
+  --zindex-subnavbar: 1020;
+  --zindex-alert: 1080;
+
+/* Labels */
+  --label-color: #fff;
+
+/* Buttons */
+  --btn-gray-color: #000;
+  --btn-gray-border: #bfbfbf;
+}

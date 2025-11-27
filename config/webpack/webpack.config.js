@@ -5,11 +5,7 @@ const customConfig = {
     extensions: [
       '.mjs',
       '.js',
-      '.sass',
-      '.scss',
       '.css',
-      '.module.sass',
-      '.module.scss',
       '.module.css',
       '.png',
       '.svg',

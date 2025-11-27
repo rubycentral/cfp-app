@@ -16,5 +16,5 @@
 // const imagePath = (name) => images(name, true)
 
 // Support component names relative to this directory:
-import '../stylesheets/application.scss'
+import '../stylesheets/application.css'
 import "controllers"

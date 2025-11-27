@@ -11,18 +11,20 @@ gem 'mime-types-data'
 gem 'mime-types'
 gem 'rexml'
 gem 'matrix'
+
+gem 'sprockets-rails'
+gem 'shakapacker', '~> 6.6'
+
 gem 'honeybadger', '~> 6.1'
 
 gem 'csv'
 
 gem 'pg'
 
-gem 'bootstrap-sass', '~> 3.4.1'
 gem 'haml'
 gem 'jquery-datatables-rails'
 gem 'jquery-rails'
 gem 'rails-assets-momentjs', source: 'https://rails-assets.org'
-gem 'sassc-rails'
 gem 'selectize-rails'
 gem 'uglifier', '>= 1.3.0'
 gem 'underscore-rails'
@@ -49,7 +51,6 @@ gem 'redcarpet', '~> 3.6'
 gem 'simple_form'
 gem 'tinymce-rails'
 gem 'image_processing', '~> 1.14'
-gem 'shakapacker', '~> 6.6'
 
 gem 'sidekiq'
 

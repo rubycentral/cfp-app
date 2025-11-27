@@ -1,0 +1,99 @@
+#main-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  color: var(--nav_text_color);
+  z-index: 11;
+
+  .overlay {
+    padding: 30px;
+    background: var(--nav_background_color);
+    opacity: 0.9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  #header-logo-container {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+
+    .website-info {
+      margin-left: 10px;
+      a {
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 18px;
+      }
+    }
+  }
+
+  #main-nav {
+    margin-right: 15px;
+    display: flex;
+    gap: 25px;
+
+    a {
+      display: block;
+      color: var(--nav_text_color);
+      &:hover {
+        color: var(--nav_link_hover);
+        transform: translateX(2px);
+      }
+    }
+  }
+
+  a {
+    text-decoration: none;
+    width: auto;
+    &#menu-toggle {
+      display: none;
+    }
+  }
+}
+
+@media screen and (max-width: 900px) and (orientation: portrait),
+  (max-width: 823px) and (orientation: landscape) {
+    #main-header .overlay{
+      padding: 20px;
+      z-index: 20;
+      flex-direction: column;
+      align-items: start;
+
+      #header-logo-container {
+        white-space: nowrap;
+      }
+
+      a {
+        &#menu-toggle {
+          display: block;
+          width: 64px;
+          height: 64px;
+          position: absolute;
+          right: 0;
+          background: url('<%= asset_path('themes/default/menu.svg') %>') center center no-repeat;
+          transition: none;
+          &.menu-toggle--opened {
+            background: url('<%= asset_path('themes/default/menu-close.svg') %>') center center no-repeat;
+          }
+        }
+      }
+    }
+    #main-nav {
+      margin-left: 10px;
+      display: none!important;
+      transition: transform .35s ease-in-out;
+      a {
+        padding: 0;
+        height: 36px;
+        line-height: 36px;
+        display: block;
+        text-indent: 8px;
+      }
+      &.menu-mobile--opened {
+        display: block!important;
+        transform: translate(0, 0)!important;
+      }
+    }
+  }

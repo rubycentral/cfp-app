@@ -1,0 +1,37 @@
+/* Text modules */
+/* Include any overrides to Bootstrap typography here */
+.meta-text {
+  font-size: var(--font-size-small);
+  color: var(--gray);
+}
+
+.help-block {
+  color: hsl(from var(--brand-success) h s calc(l - 5));
+  font-size: 0.9em;
+  font-style: italic;
+}
+
+/* Misc helper classes */
+.white-text { color: var(--white); }
+.gray-base { color: var(--black); }
+.gray-darker { color: var(--gray-darker); }
+.gray-dark { color: var(--gray-dark); }
+.gray { color: var(--gray) }
+.gray-light { color: var(--gray-light); }
+.gray-lighter { color: var(--gray-lighter); }
+.brand-primary { color: var(--brand-primary); }
+.brand-success { color: var(--brand-success); }
+.brand-info { color: var(--brand-info); }
+.brand-info-alt { color: var(--brand-info-alt); }
+.brand-warning { color: var(--brand-warning); }
+.brand-danger { color: var(--brand-danger); }
+.brand-accent { color: var(--brand-accent); }
+
+/* Responsive text: */
+/* Reset to left-align on smaller screens */
+.text-right-responsive,
+.text-center-responsive {
+  @media (max-width: 767px) {
+    text-align: left;
+  }
+}

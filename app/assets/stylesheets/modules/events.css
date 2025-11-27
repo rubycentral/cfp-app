@@ -1,0 +1,203 @@
+.event {
+  .info-bar {
+    h4 {
+      line-height: 1.35em;
+    }
+  }
+  .checklist {
+    a {
+      color: var(--white);
+    }
+    .set {
+      background-color: var(--brand-success);
+    }
+    .missing {
+      background-color: var(--brand-danger);
+    }
+    .optional a {
+      color: var(--black);
+    }
+  }
+
+  .status-dropdown {
+    display: none;
+  }
+
+  #event_state {
+    width: 100%;
+    display: block;
+    margin-bottom:.25em;
+  }
+
+  #session_format_public {
+    height: 2em;
+    width: 2em;
+    display: inline-block;
+  }
+
+  .cfp-button {
+    display: block;
+    margin: .5em auto 0;
+    width: 65%;
+  }
+
+  .incomplete-msg {
+    background-color: var(--state-danger-bg);
+    border-color: var(--state-danger-border);
+    color: var(--state-danger-text);
+    padding: .25em;
+    margin: 1em 0;
+    border: 1px solid transparent;
+    border-radius: 4px;
+  }
+}
+
+.event-info-bar {
+  margin-top: 20px;
+}
+
+.event-info {
+  font-size: var(--font-size-base);
+
+  .event-title,
+  .event-meta {
+    display: inline-block;
+  }
+
+  .event-meta {
+    margin-left: var(--padding-base-horizontal);
+    color: var(--gray);
+
+/* display meta info on separate lines for xs screens */
+    @media (max-width: 767px) {
+      margin-left: 0;
+      display: block;
+    }
+  }
+}
+
+.event-info-block {
+  margin-bottom: calc(var(--padding-large-vertical) * 2);
+  position: relative;
+
+  .event-title,
+  .event-meta {
+    display: block;
+  }
+
+  .event-title {
+    font-size: var(--font-size-h3);
+    padding-right: 80px;
+  }
+
+  .event-callout {
+    font-size: var(--font-size-large);
+    font-weight: bold;
+  }
+
+  .event-meta {
+    margin-top: calc(var(--padding-large-vertical) / 2);
+    margin-left: 0;
+  }
+
+  .event-status-badge {
+    position: absolute;
+    right: calc(var(--padding-large-vertical) / 2);
+    top: calc(var(--padding-large-vertical) / 2);
+  }
+}
+
+#review-stats-table, #program-stats-table, #team-activity-table {
+  thead > tr > th:not(:first-of-type) {
+    text-align: center;
+  }
+  tbody {
+    > tr > td:not(:first-of-type) {
+      text-align: center;
+    }
+  }
+}
+
+#review-stats-table, #program-stats-table {
+  tbody {
+    > tr:first-of-type {
+      font-weight: bold;
+      background-color: var(--state-success-bg);
+    }
+  }
+}
+
+/* Event status badge base styling (replaces Bootstrap 3 .label) */
+.event-status-badge {
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: bold;
+  line-height: 1;
+  color: var(--label-color);
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+}
+
+.event-status-open {
+  background-color: var(--state-success-bg);
+  color: var(--state-success-text);
+}
+
+.event-status-draft {
+  background-color: var(--state-info-bg);
+  color: var(--state-info-text);
+}
+
+.event-status-closed {
+  background-color: var(--gray-lighter);
+  color: var(--gray);
+}
+
+.template-section {
+  padding-bottom: 1em;
+
+  .notice {
+    color: var(--dark-red);
+    font-style: italic;
+    margin: .5em 0;
+  }
+
+  .template-title {
+    display: inline;
+  }
+
+  .template-actions {
+    float: right;
+
+    .btn-gray {
+      color: var(--btn-gray-color);
+      background-color: var(--brand-gray);
+      border: 1px solid var(--btn-gray-border);
+
+      &:hover, &:active {
+        background-color: hsl(from var(--brand-gray) h s calc(l - 10));
+      }
+    }
+  }
+
+  .template-preview .contents,
+  .template-short .contents  {
+    background-color: var(--beige);
+    border: 1px solid hsl(from var(--beige) h s calc(l - 10));
+    border-radius: 5px;
+    margin: 1em 0;
+    padding: 10px;
+
+    ul {
+      list-style-type: disc;
+    }
+  }
+
+  .template-short .contents {
+    height: 55px;
+    overflow: hidden;
+  }
+}

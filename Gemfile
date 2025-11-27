@@ -11,6 +11,10 @@ gem 'mime-types-data'
 gem 'mime-types'
 gem 'rexml'
 gem 'matrix'
+
+gem 'sprockets-rails'
+gem 'shakapacker', '~> 6.6'
+
 gem 'honeybadger', '~> 6.1'
 
 gem 'csv'
@@ -47,7 +51,6 @@ gem 'redcarpet', '~> 3.6'
 gem 'simple_form'
 gem 'tinymce-rails'
 gem 'image_processing', '~> 1.14'
-gem 'shakapacker', '~> 6.6'
 
 gem 'sidekiq'
 

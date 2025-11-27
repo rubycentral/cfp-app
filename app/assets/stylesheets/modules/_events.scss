@@ -138,20 +138,33 @@ $event-draft-bg:      $state-info-bg;
 $event-draft-border:  $state-info-border;
 $event-draft-text:    $state-info-text;
 
+// Event status badge base styling (replaces Bootstrap 3 .label)
 .event-status-badge {
-  @extend .label;
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: bold;
+  line-height: 1;
+  color: $label-color;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
 }
 
 .event-status-open {
-  @extend .label-success;
+  background-color: $label-success-bg;
+  color: $label-success-text;
 }
 
 .event-status-draft {
-  @extend .label-info;
+  background-color: $label-info-bg;
+  color: $label-info-text;
 }
 
 .event-status-closed {
-  @extend .label-default;
+  background-color: $label-default-bg;
+  color: $label-default-text;
 }
 
 .template-section {

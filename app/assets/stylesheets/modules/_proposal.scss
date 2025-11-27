@@ -114,7 +114,10 @@ span.disabled-state {
   padding: $padding-base-horizontal;
 
   .callout-title {
-    @extend .control-label;
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: bold;
     margin-bottom: $padding-large-vertical * 2;
   }
 }

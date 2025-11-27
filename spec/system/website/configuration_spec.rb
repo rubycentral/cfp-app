@@ -32,7 +32,7 @@ feature "Website Configuration", type: :system do
     expect(page).to have_content("Edit Website")
 
     fill_in('Domains', with: 'www.example.com')
-    fill_in('Navigation links', with: "Home\n")
+    select("Home", from: 'Navigation links')
     click_on("Save")
 
     expect(page).to have_content("Website was successfully updated")

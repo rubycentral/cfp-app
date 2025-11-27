@@ -12,15 +12,15 @@
   }
 
   &.confirmation {
-    border: 2px solid $brand_danger;
+    border: 2px solid var(--brand-danger);
   }
 
   .widget-header {
-    background: $beige;
+    background: var(--beige);
     border: 1px solid #d6d6d6;
     height: 40px;
     line-height: 40px;
-    background: linear-gradient(to bottom, $beige 0%, #f2efea 100%);
+    background: linear-gradient(to bottom, var(--beige) 0%, #f2efea 100%);
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
 
@@ -133,12 +133,12 @@
 }
 
 .widget-card {
-  background: $beige;
+  background: var(--beige);
   padding: 15px;
 
   .widget-header,
   .widget-content {
-    background: $beige;
+    background: var(--beige);
     border: none;
     border-radius: 0;
     padding: 15px 0;
@@ -165,6 +165,6 @@
   &.widget-card-alt,
   &.widget-card-alt .widget-header,
   &.widget-card-alt .widget-content {
-    background: #{"hsl(from $brand-info h s calc(l + 45))"};
+    background: #{"hsl(from var(--brand-info) h s calc(l + 45))"};
   }
 }

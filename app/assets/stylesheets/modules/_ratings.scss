@@ -7,18 +7,18 @@
 
   ul.star-rating {
     padding: 0.25em 0;
-    color: $bright-blue;
+    color: var(--bright-blue);
     transition: color .5s;
 
     &:not(.preview-delete):hover {
-      color: $green;
+      color: var(--green);
     }
 
     &.preview-delete {
-      color: $gray;
+      color: var(--gray);
 
       &:hover {
-        color: $gray;
+        color: var(--gray);
       }
     }
   }
@@ -27,10 +27,10 @@
   li.trash-wrapper, li.abstain-wrapper { width: 36px; }
 
   li.trash-wrapper {
-    color: $gray;
+    color: var(--gray);
 
     &:hover {
-      color: $gray-dark;
+      color: var(--gray-dark);
     }
   }
 
@@ -65,7 +65,7 @@
     }
 
     &.ratings-closed {
-      color: $gray;
+      color: var(--gray);
 
       input {
         pointer-events: none;
@@ -79,11 +79,11 @@
   }
 
   .ratings_list {
-    font-size: $font-size-small;
+    font-size: var(--font-size-small);
     margin-bottom: 0;
 
     .avg-rating {
-      font-size: $font-size-base;
+      font-size: var(--font-size-base);
     }
 
     dt {

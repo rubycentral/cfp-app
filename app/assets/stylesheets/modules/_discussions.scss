@@ -47,9 +47,9 @@ textarea.mention {
   -moz-box-shadow: rgba(0,0,0,0.1) 0 1px 0px;
   box-shadow: rgba(0,0,0,0.1) 0 1px 0px;
 
-  .speaker-comment &    { border-color: $bright-blue; }
-  .reviewer-comment &   { border-color: $gray-light; }
-  .organizer-comment &  { border-color: $brand-primary; }
+  .speaker-comment &    { border-color: var(--bright-blue); }
+  .reviewer-comment &   { border-color: var(--gray-light); }
+  .organizer-comment &  { border-color: var(--brand-primary); }
 
   // comment info bar
   .info {
@@ -72,9 +72,9 @@ textarea.mention {
     float: left;
     font-weight: bold;
 
-    .speaker-comment &    { color: $bright-blue; }
-    .reviewer-comment &   { color: $gray; }
-    .organizer-comment &  { color: $brand-primary; }
+    .speaker-comment &    { color: var(--bright-blue); }
+    .reviewer-comment &   { color: var(--gray); }
+    .organizer-comment &  { color: var(--brand-primary); }
   }
 
   .time {
@@ -86,7 +86,7 @@ textarea.mention {
   // comment body
   .text {
     width: 100%;
-    border-top: 1px solid $gray-light;
+    border-top: 1px solid var(--gray-light);
     padding-top: 5px
   }
 }

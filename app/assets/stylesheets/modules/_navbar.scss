@@ -13,11 +13,11 @@
     }
 
     .counts-container {
-      font-size: $font-size-xs;
+      font-size: var(--font-size-xs);
       margin-left: 6px;
 
       .badge {
-        font-size: $font-size-xs;
+        font-size: var(--font-size-xs);
         margin-top: -2px;
         padding: 1px 8px;
       }
@@ -36,7 +36,7 @@
 
 
   li.static {
-    height: $navbar-height;
+    height: var(--navbar-height);
     display: inline-flex;
     align-items: center;
     color: #ccc;
@@ -48,8 +48,8 @@
   }
 
   li.dropdown > a {
-    padding-bottom:    $navbar-padding-vertical;
-    padding-top:    $navbar-padding-vertical;
+    padding-bottom: var(--navbar-padding-vertical);
+    padding-top: var(--navbar-padding-vertical);
   }
 }
 
@@ -60,7 +60,7 @@
   > li {
     > a {
       padding: 5px 10px;
-      color: $gray-light;
+      color: var(--gray-light);
     }
   }
   
@@ -72,11 +72,11 @@
 
 .subnavbar {
   margin: 0 0;
-  padding-top: $navbar-height;
-  z-index: $zindex-subnavbar;
+  padding-top: var(--navbar-height);
+  z-index: var(--zindex-subnavbar);
   .subnavbar-inner {
     background: #fff;
-    border-bottom: 1px solid $gray-light;
+    border-bottom: 1px solid var(--gray-light);
     height: 60px;
   }
   .container-fluid {
@@ -86,7 +86,7 @@
       margin: 0;
       padding: 0;
       > li {
-        border-left: 1px solid $gray-light;
+        border-left: 1px solid var(--gray-light);
         float: left;
         height: 60px;
         list-style: none;
@@ -95,10 +95,10 @@
         padding: 0;
         text-align: center;
         &:last-child {
-          border-right: 1px solid $gray-light;
+          border-right: 1px solid var(--gray-light);
         }
         > a {
-          color: $gray-light;
+          color: var(--gray-light);
           display: block;
           font-size: 12px;
           font-weight: bold;
@@ -106,7 +106,7 @@
           padding: 0 15px;
           transition: color .15s ease-in-out;
           &:hover {
-            color: $gray-dark;
+            color: var(--gray-dark);
             text-decoration: none;
           }
           > i {
@@ -121,9 +121,9 @@
           }
         }
         &.active {
-          border-bottom: 3px solid $brand-primary;
+          border-bottom: 3px solid var(--brand-primary);
           > a {
-            color: $gray-darker;
+            color: var(--gray-darker);
           }
         }
       }
@@ -178,31 +178,31 @@
 .navbar-fixed-top.schedule-subnav,
 .navbar-fixed-top.website-subnav {
   border-radius: 0;
-  background-color: $dark-blue;
-  border-color: $dark-blue;
-  padding-top: $navbar-height;
-  z-index: $zindex-subnavbar;
+  background-color: var(--dark-blue);
+  border-color: var(--dark-blue);
+  padding-top: var(--navbar-height);
+  z-index: var(--zindex-subnavbar);
   li > a {
-    color: $white;
+    color: var(--white);
   }
 
   a:hover {
-    background-color: $dark-blue;
-    color: #{"hsl(from $white h s calc(l - 10))"};
+    background-color: var(--dark-blue);
+    color: #{"hsl(from var(--white) h s calc(l - 10))"};
   }
 
   li.active {
-    border-bottom: 3px solid #{"hsl(from $dark-blue h s calc(l - 10))"};
+    border-bottom: 3px solid #{"hsl(from var(--dark-blue) h s calc(l - 10))"};
     > a, a:hover, a:focus {
-      color: #{"hsl(from $white h s calc(l - 10))"};
-      background-color: #{"hsl(from $dark-blue h s calc(l + 10))"};
+      color: #{"hsl(from var(--white) h s calc(l - 10))"};
+      background-color: #{"hsl(from var(--dark-blue) h s calc(l + 10))"};
     }
   }
 
   li.download-link a {
     padding-left: 0;
     &:focus {
-      background-color: $dark-blue;
+      background-color: var(--dark-blue);
     }
   }
 }

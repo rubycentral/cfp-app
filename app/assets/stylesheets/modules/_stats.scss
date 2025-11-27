@@ -73,7 +73,7 @@
   line-height: 40px;
   transition: color ease-in-out .15s;
 }
-#big_stats .stat:hover i {color: $brand-primary;}
+#big_stats .stat:hover i {color: var(--brand-primary);}
 
 h6.bigstats{margin: 20px;
 border-bottom: 1px solid #eee;

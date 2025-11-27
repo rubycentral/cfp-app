@@ -23,15 +23,15 @@
 }
 
 .label-mini {
-  font-size: $font-size-small;
+  font-size: var(--font-size-small);
 }
 
 .label-large {
-  font-size: $font-size-large;
+  font-size: var(--font-size-large);
 }
 
 .label-compact {
-  font-size: $font-size-compact;
+  font-size: var(--font-size-compact);
   display: inline-block;
   padding: .2em .6em .35em;
 }

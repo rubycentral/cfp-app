@@ -2,7 +2,7 @@
   position: fixed;
   left: 0;
   right: 0;
-  z-index: $zindex-alert;
+  z-index: var(--zindex-alert);
 }
 
 @media (min-width: $screen-md) {

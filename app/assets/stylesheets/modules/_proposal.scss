@@ -55,7 +55,7 @@
 .other-proposal-rating,
 .other-proposal-format,
 .other-proposal-track {
-  font-size: $font-size-small;
+  font-size: var(--font-size-small);
 }
 
 .other_proposal_tags {
@@ -82,7 +82,7 @@ ul {
     margin-right: 1em;
   }
   li.proposal {
-    border-bottom: 1px solid $gray-lighter;
+    border-bottom: 1px solid var(--gray-lighter);
     &:last-of-type {
       border-bottom: none;
     }
@@ -111,14 +111,14 @@ span.disabled-state {
 .callout {
   border-left: solid #{"hsl(from #dff0d8 h s calc(l - 10))"} 5px;
   background-color: #{"hsl(from #dff0d8 h s calc(l + 5))"};
-  padding: $padding-base-horizontal;
+  padding: var(--padding-base-horizontal);
 
   .callout-title {
     display: inline-block;
     max-width: 100%;
     margin-bottom: 5px;
     font-weight: bold;
-    margin-bottom: $padding-large-vertical * 2;
+    margin-bottom: calc(var(--padding-large-vertical) * 2);
   }
 }
 
@@ -152,8 +152,8 @@ div.col-md-4 {
 #edit-format-icon,
 #cancel-format-editing,
 #cancel-track-editing {
-  color: $bright-blue;
-  font-size: $font-size-large;
+  color: var(--bright-blue);
+  font-size: var(--font-size-large);
   margin-left: 5px;
   padding: 0;
 }
@@ -186,22 +186,22 @@ div.col-md-4 {
     display: none;
   }
   .selectize-input.items .item {
-    background: $state-success-bg;
-    border: 1px solid #{"hsl(from $state-success-bg h s calc(l - 30))"};
-    color: $state-success-text;
+    background: var(--state-success-bg);
+    border: 1px solid #{"hsl(from var(--state-success-bg) h s calc(l - 30))"};
+    color: var(--state-success-text);
     text-shadow: none;
     .remove {
-      border-left: 1px solid #{"hsl(from $state-success-bg h s calc(l - 30))"};
+      border-left: 1px solid #{"hsl(from var(--state-success-bg) h s calc(l - 30))"};
     }
   }
   .selectize-dropdown-content > .option.active {
-    background: $state-success-bg;
+    background: var(--state-success-bg);
   }
 }
 
 // Refactored proposals list items
 .proposal-info-bar {
-  padding-bottom: $padding-large-vertical;
+  padding-bottom: var(--padding-large-vertical);
 
   i.fa {
     position:relative;
@@ -210,21 +210,21 @@ div.col-md-4 {
 
   .proposal-title {
     margin-top: 0;
-    margin-bottom: $padding-base-vertical;
+    margin-bottom: var(--padding-base-vertical);
     font-weight: bold;
   }
 
   .proposal-meta {
-    font-size: $font-size-base;
-    color: $black;
+    font-size: var(--font-size-base);
+    color: var(--black);
 
     .proposal-meta-item {
       display: inline-block;
-      margin-right: $padding-base-horizontal;
+      margin-right: var(--padding-base-horizontal);
 
       strong {
-        font-size: $font-size-xs;
-        color: $gray;
+        font-size: var(--font-size-xs);
+        color: var(--gray);
       }
 
       .label {
@@ -232,8 +232,8 @@ div.col-md-4 {
       }
 
       .info-item-heading {
-        color: $gray;
-        font-size: $font-size-xs;
+        color: var(--gray);
+        font-size: var(--font-size-xs);
         font-weight: normal;
       }
 
@@ -245,12 +245,12 @@ div.col-md-4 {
 
     .proposal-description {
       line-height: 1;
-      margin-bottom: $padding-base-vertical * 2;
+      margin-bottom: calc(var(--padding-base-vertical) * 2);
     }
   }
 
   .proposal-status {
-    padding-bottom: $padding-large-vertical;
+    padding-bottom: var(--padding-large-vertical);
 
     .label {
       margin-right: 0;
@@ -258,7 +258,7 @@ div.col-md-4 {
   }
 
   .invitation-status {
-    padding-bottom: $padding-large-vertical;
+    padding-bottom: var(--padding-large-vertical);
 
     .label {
       margin-right: 0;
@@ -266,7 +266,7 @@ div.col-md-4 {
   }
 
   .page-header & {
-    padding-top: $padding-large-vertical;
+    padding-top: var(--padding-large-vertical);
     padding-bottom: 0;
   }
 }

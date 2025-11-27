@@ -1,6 +1,6 @@
  _notification {
   border-bottom: 1px solid #{"hsl(from #edd1d1 h s calc(l - 50))"};
-  color: $brand-warning;
+  color: var(--brand-warning);
   font-weight: 700;
   margin-bottom: 10px;
   padding-bottom: 5px;
@@ -16,7 +16,7 @@
 }
 
 .form-submit {
-  border-top: 1px solid $gray-light;
+  border-top: 1px solid var(--gray-light);
   margin: 1em 0 5em;
   padding-top: 1em;
 }
@@ -36,7 +36,7 @@ span[title="required"] {
   max-width: 100%;
   margin-bottom: 5px;
   margin-top: 0;
-  font-size: $font-size-base;
+  font-size: var(--font-size-base);
   font-weight: bold;
 }
 
@@ -51,12 +51,12 @@ span[title="required"] {
   display: block;
   width: 100%;
   padding: 0;
-  margin-bottom: $line-height-computed;
-  font-size: ($font-size-base * 1.5);
+  margin-bottom: var(--line-height-computed);
+  font-size: calc(var(--font-size-base) * 1.5);
   line-height: inherit;
-  color: $legend-color;
+  color: var(--legend-color);
   border: 0;
-  border-bottom: 1px solid $legend-border-color;
+  border-bottom: 1px solid var(--legend-border-color);
   padding-top: 20px;
 }
 

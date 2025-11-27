@@ -7,7 +7,7 @@
 }
 
 .shortcuts .shortcut {
-  background: $beige;
+  background: var(--beige);
   display: inline-block;
   margin: 0 .9% 1em;
   padding: 12px 0;
@@ -20,14 +20,14 @@
 }
 
 .shortcuts .shortcut .shortcut-icon {
-  color: $gray-dark;
+  color: var(--gray-dark);
   font-size: 32px;
   margin-top: .25em;
   margin-bottom: .25em;
 }
 
 .shortcuts .shortcut:hover {
-  background: $brand-primary;
+  background: var(--brand-primary);
 }
 
 .shortcuts .shortcut:hover span{

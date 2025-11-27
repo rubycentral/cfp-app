@@ -9,13 +9,13 @@ $column-width: 180px;
   .active {
     .nav-tab-content {
       .day {
-        color: $ruby-central-red;
+        color: var(--ruby-central-red);
       }
     }
   }
 
   .navbar-fixed-top.nav-tabs {
-    padding-top: $navbar-height * 2 + 10px;
+    padding-top: calc(var(--navbar-height) * 2 + 10px);
     margin-left: 2%;
     z-index: 1000;
     background: #fff;
@@ -65,7 +65,7 @@ $column-width: 180px;
     .counts-container {
       text-align: right;
       margin-left: 2em;
-      color: $text-color;
+      color: var(--text-color);
     }
   }
 
@@ -79,7 +79,7 @@ $column-width: 180px;
     display: block;
 
     .badge {
-      background-color: $bright-blue;
+      background-color: var(--bright-blue);
       font-size: .75em;
     }
 
@@ -88,13 +88,13 @@ $column-width: 180px;
     }
 
     &:visited, &:focus {
-      color: $bright-blue;
+      color: var(--bright-blue);
     }
 
     &:hover {
-      color: #126799;
+      color: var(--link-hover-color);
       .badge {
-        background-color: #126799;
+        background-color: var(--link-hover-color);
       }
     }
   }
@@ -265,7 +265,7 @@ body .custom-session-card {
     width: 45px;
     border-radius: 2px;
     color: #000;
-    font-size: $font-size-xs;
+    font-size: var(--font-size-xs);
     margin: 37px 5px 0 0;
     white-space: nowrap;
     background-color: #FFF;
@@ -309,13 +309,13 @@ body .custom-session-card {
     justify-content: center;
     width: 100%;
     height: 40px;
-    font-size: $font-size-base;
-    line-height: $line-height-base;
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
     text-align: center;
     color: #FFF;
     background: #6d6b6b;
     border-right: 1px solid #FFF;
-  
+
     .room-number {
       font-style: italic;
     }
@@ -345,19 +345,19 @@ body .custom-session-card {
     position: absolute;
     width: calc(100% - 6px);
     text-align: left;
-    font-size: $font-size-small;
+    font-size: var(--font-size-small);
     background: #FFF;
     cursor: pointer;
     z-index: 10;
     border-width: 1px .5px .5px 0;
 
     &.draggable-hover {
-      background: $beige;
+      background: var(--beige);
     }
 
     &.preview {
       cursor: default;
-      background: $brand-info;
+      background: var(--brand-info);
       .title {
         color: #fff;
       }

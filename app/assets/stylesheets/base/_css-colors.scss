@@ -48,6 +48,47 @@
   --state-danger-bg: color-mix(in hsl, var(--brand-danger), white 50%);
   --state-danger-border: color-mix(in hsl, var(--state-danger-bg), black 5%);
 
-  // Link colors
+  // Text and link colors
+  --text-color: var(--gray-dark);
+  --link-color: var(--bright-blue);
   --link-hover-color: color-mix(in hsl, var(--bright-blue), black 15%);
+
+  // Typography base values
+  --font-size-base: 14px;
+  --font-size-large: calc(var(--font-size-base) * 1.25);
+  --font-size-small: calc(var(--font-size-base) * 0.85);
+  --font-size-xs: calc(var(--font-size-base) * 0.75);
+  --font-size-compact: calc(var(--font-size-base) * 0.6);
+  --font-size-h3: calc(var(--font-size-base) * 1.7);
+  --line-height-base: 1.428571429;
+  --line-height-computed: calc(var(--font-size-base) * var(--line-height-base));
+
+  // Spacing base values
+  --padding-base-vertical: 6px;
+  --padding-base-horizontal: 12px;
+  --padding-large-vertical: 10px;
+  --padding-small-vertical: 5px;
+  --padding-xs-horizontal: 5px;
+
+  // Border radius
+  --border-radius-base: 4px;
+
+  // Legend
+  --legend-color: var(--gray-dark);
+  --legend-border-color: #e5e5e5;
+
+  // Navbar
+  --navbar-height: 44px;
+  --navbar-padding-vertical: calc((var(--navbar-height) - var(--line-height-computed)) / 2);
+
+  // Z-index
+  --zindex-subnavbar: 1020;
+  --zindex-alert: 1080;
+
+  // Labels
+  --label-color: #fff;
+
+  // Buttons
+  --btn-gray-color: #000;
+  --btn-gray-border: #bfbfbf;
 }

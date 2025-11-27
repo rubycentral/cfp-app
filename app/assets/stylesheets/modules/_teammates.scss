@@ -3,14 +3,14 @@
   margin-top: 15px;
 
   .teammate-meta {
-    font-size: $font-size-small;
-    color: $gray;
+    font-size: var(--font-size-small);
+    color: var(--gray);
 
     .teammate-meta-item {
       display: inline-block;
-      margin-right: $padding-base-horizontal;
-      font-size: $font-size-small;
-      color: $gray;
+      margin-right: var(--padding-base-horizontal);
+      font-size: var(--font-size-small);
+      color: var(--gray);
     }
   }
 }

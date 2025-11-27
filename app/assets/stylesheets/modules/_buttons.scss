@@ -3,7 +3,7 @@
     margin-top: 30px;
   }
   .btn {
-    margin-right: $padding-xs-horizontal;
+    margin-right: var(--padding-xs-horizontal);
     &:last-child {
       margin-right: 0;
     }
@@ -37,14 +37,14 @@
 }
 
 .hint-btn {
-  color: $brand-info;
+  color: var(--brand-info);
   cursor: pointer;
-  font-size: $font-size-large;
+  font-size: var(--font-size-large);
   margin-top: -2px;
 
   &:active,
   &:focus {
-    color: $brand-info;
+    color: var(--brand-info);
   }
 }
 

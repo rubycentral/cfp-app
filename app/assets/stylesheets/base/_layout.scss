@@ -1,5 +1,5 @@
 body {
-  padding-top: $navbar-height;
+  padding-top: var(--navbar-height);
 
   // flexbox for sticky footer
   min-height: 100vh;
@@ -25,27 +25,27 @@ body {
 
   .label {
     display: inline-block;
-    margin-bottom: $padding-base-vertical;
+    margin-bottom: var(--padding-base-vertical);
     vertical-align: middle;
   }
 
   .meta-text {
-    margin-bottom: $padding-base-vertical;
+    margin-bottom: var(--padding-base-vertical);
   }
 }
 
 .main {
-  padding-bottom: $padding-large-vertical;
+  padding-bottom: var(--padding-large-vertical);
   flex: 1;
 }
 
 .page-footer {
-  margin-top: $padding-large-vertical * 2;
+  margin-top: calc(var(--padding-large-vertical) * 2);
 
   .page-footer-inner {
-    padding-top: $padding-large-vertical * 2;
-    padding-bottom: $padding-large-vertical * 2;
-    border-top: 1px solid $gray-lighter;
+    padding-top: calc(var(--padding-large-vertical) * 2);
+    padding-bottom: calc(var(--padding-large-vertical) * 2);
+    border-top: 1px solid var(--gray-lighter);
   }
 }
 
@@ -66,8 +66,8 @@ body {
   flex: 1 1 auto;
 
   &.flex-item-padded {
-    padding-left: $padding-base-horizontal / 2;
-    padding-right: $padding-base-horizontal / 2;
+    padding-left: calc(var(--padding-base-horizontal) / 2);
+    padding-right: calc(var(--padding-base-horizontal) / 2);
 
     &:first-child {
       padding-left: 0;

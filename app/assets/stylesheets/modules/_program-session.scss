@@ -6,22 +6,22 @@
   width: 80%;
 
   .session-speakers-header, section {
-    border-bottom: 1px solid $gray-lighter;
+    border-bottom: 1px solid var(--gray-lighter);
 
     .new-speaker {
-      margin-bottom: $padding-small-vertical;
+      margin-bottom: var(--padding-small-vertical);
     }
   }
 
   .session-speaker-header {
-    margin-top: $padding-small-vertical;
+    margin-top: var(--padding-small-vertical);
   }
 
   .edit-session-speaker,
   .remove-session-speaker {
     .btn {
       width: 100%;
-      margin-bottom: $padding-small-vertical;
+      margin-bottom: var(--padding-small-vertical);
     }
   }
 }
@@ -40,17 +40,17 @@ table#program-sessions {
     display: inline-block;
     padding-right: 1em;
     cursor: pointer;
-    color: $link-color;
+    color: var(--link-color);
     margin-bottom: 0.5em;
 
     .badge {
-      background-color: $link-color;
+      background-color: var(--link-color);
     }
 
     &:hover {
-      color: $link-hover-color;
+      color: var(--link-hover-color);
       .badge {
-        background-color: $link-hover-color;
+        background-color: var(--link-hover-color);
       }
     }
   }
@@ -59,7 +59,7 @@ table#program-sessions {
     position: absolute;
     bottom: 0;
     height: 5px;
-    background-color: $link-hover-color;
-    border-radius: $border-radius-base;
+    background-color: var(--link-hover-color);
+    border-radius: var(--border-radius-base);
   }
 }

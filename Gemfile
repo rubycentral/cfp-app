@@ -23,7 +23,6 @@ gem 'pg'
 
 gem 'haml'
 gem 'jquery-rails'
-gem 'rails-assets-momentjs', source: 'https://rails-assets.org'
 gem 'uglifier', '>= 1.3.0'
 gem 'underscore-rails'
 

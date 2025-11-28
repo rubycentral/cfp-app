@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require underscore/underscore
-//= require jquery_ujs
+//= require @rails/ujs/app/assets/javascripts/rails-ujs
 //= require bootstrap
 //= require chartkick
 //= require datatables.net/js/jquery.dataTables

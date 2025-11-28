@@ -6,7 +6,7 @@
  *= require base/bootstrap-overrides
  *
  *= require vendor/jquery.mentionsInput
- *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
+ *= require datatables.net-bs/css/dataTables.bootstrap
  *= require bootstrap-multiselect
  *= require selectize/dist/css/selectize
  *= require selectize/dist/css/selectize.default

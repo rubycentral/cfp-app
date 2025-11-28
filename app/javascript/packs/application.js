@@ -17,4 +17,5 @@
 
 // Support component names relative to this directory:
 import '../stylesheets/application.css'
+import '../datatables'
 import "controllers"

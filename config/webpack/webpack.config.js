@@ -14,6 +14,10 @@ const customConfig = {
       '.jpg'
     ]
   },
+  externals: {
+    // Use jQuery from Sprockets (jquery-rails gem) as external
+    jquery: 'jQuery'
+  },
   ignoreWarnings: [
     {
       module: /tailwind\.js/

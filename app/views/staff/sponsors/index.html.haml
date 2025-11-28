@@ -11,15 +11,15 @@
 .row
   .col-md-12
     %table#program-sessions.datatable.table.table-striped
-      %tr
-        %th Name
-        %th Tier
-        %th Published
-        %th Url
-        %th Footer Logo?
-        %th Banner Ad?
-        %th Edit
-        %th.hidden
+      %thead
+        %tr
+          %th Name
+          %th Tier
+          %th Published
+          %th Url
+          %th Footer Logo?
+          %th Banner Ad?
+          %th Edit
 
       %tbody
         = render @sponsors

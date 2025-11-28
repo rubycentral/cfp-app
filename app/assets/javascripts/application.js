@@ -15,8 +15,8 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require chartkick
-//= require dataTables/jquery.dataTables
-//= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
+//= require datatables.net/js/jquery.dataTables
+//= require datatables.net-bs/js/dataTables.bootstrap
 //= require jquery.dataTables.columnFilter
 //= require jquery.mentionsInput
 //= require bootstrap-multiselect

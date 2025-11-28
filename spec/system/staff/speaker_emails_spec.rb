@@ -39,7 +39,11 @@ feature "Speaker Emails", type: :system do
 
       within first('.template-section') do
         find_button("Edit").click
+      end
+      within first('.template-section') do
         fill_in "event[accept]", with: "Yay! You've been accepted to speak!"
+      end
+      within first('.template-section') do
         find_button("Save").click
       end
 
@@ -56,7 +60,11 @@ feature "Speaker Emails", type: :system do
       visit event_staff_speaker_email_notifications_path(event)
       within first('.template-section') do
         find_button("Edit").click
+      end
+      within first('.template-section') do
         fill_in "event[accept]", with: "Yay! You've been accepted to speak!"
+      end
+      within first('.template-section') do
         find_button("Save").click
       end
 

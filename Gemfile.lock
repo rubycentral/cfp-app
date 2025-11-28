@@ -480,7 +480,6 @@ GEM
       sprockets-rails
       tilt
     securerandom (0.4.1)
-    selectize-rails (0.12.6)
     selenium-webdriver (4.38.0)
       base64 (~> 0.2)
       logger (~> 1.4)
@@ -606,7 +605,6 @@ DEPENDENCIES
   rexml
   rspec
   rspec-rails
-  selectize-rails
   selenium-webdriver
   sendgrid-ruby
   shakapacker (~> 6.6)

@@ -23,5 +23,5 @@
 //= require moment/moment
 //= require selectize/dist/js/standalone/selectize
 //= require palette.js
-//= require tinymce
+//= require tinymce/tinymce
 //= require_tree .

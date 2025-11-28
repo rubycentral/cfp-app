@@ -15,7 +15,7 @@ const customConfig = {
     ]
   },
   externals: {
-    // Use jQuery from Sprockets (jquery-rails gem) as external
+    // Use jQuery from Sprockets (loaded via node_modules) as external
     jquery: 'jQuery'
   },
   ignoreWarnings: [

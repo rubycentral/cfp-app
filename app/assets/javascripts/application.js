@@ -10,9 +10,9 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
+//= require jquery/dist/jquery
 //= require underscore/underscore
-//= require jquery_ujs
+//= require @rails/ujs/app/assets/javascripts/rails-ujs
 //= require bootstrap
 //= require chartkick
 //= require datatables.net/js/jquery.dataTables

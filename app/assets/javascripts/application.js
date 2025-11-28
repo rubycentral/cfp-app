@@ -20,7 +20,7 @@
 //= require jquery.dataTables.columnFilter
 //= require jquery.mentionsInput
 //= require bootstrap-multiselect
-//= require momentjs
+//= require moment/moment
 //= require selectize/dist/js/standalone/selectize
 //= require palette.js
 //= require tinymce

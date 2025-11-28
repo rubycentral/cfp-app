@@ -1,9 +1,4 @@
 GEM
-  remote: https://rails-assets.org/
-  specs:
-    rails-assets-momentjs (2.30.1)
-
-GEM
   remote: https://rubygems.org/
   specs:
     action_text-trix (2.1.15)
@@ -584,7 +579,6 @@ DEPENDENCIES
   rack-mini-profiler
   rack-timeout (~> 0.7)
   rails (~> 8.1.1)
-  rails-assets-momentjs!
   redcarpet (~> 3.6)
   rexml
   rspec

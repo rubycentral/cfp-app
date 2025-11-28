@@ -8,8 +8,8 @@
  *= require vendor/jquery.mentionsInput
  *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
  *= require bootstrap-multiselect
- *= require selectize
- *= require selectize.default
+ *= require selectize/dist/css/selectize
+ *= require selectize/dist/css/selectize.default
  *
  *= require base/base
  *= require base/layout

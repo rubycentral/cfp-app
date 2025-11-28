@@ -24,7 +24,6 @@ gem 'pg'
 gem 'haml'
 gem 'jquery-rails'
 gem 'uglifier', '>= 1.3.0'
-gem 'underscore-rails'
 
 gem 'devise', '~> 4.9'
 gem 'omniauth-github'

@@ -11,14 +11,14 @@
 // about supported directives.
 //
 //= require jquery
-//= require underscore
+//= require underscore/underscore
 //= require jquery_ujs
 //= require bootstrap
 //= require chartkick
 //= require datatables.net/js/jquery.dataTables
 //= require datatables.net-bs/js/dataTables.bootstrap
 //= require jquery.dataTables.columnFilter
-//= require jquery.mentionsInput
+//= require @viostec/jquery-mentions-input/jquery.mentionsInput
 //= require bootstrap-multiselect
 //= require moment/moment
 //= require selectize/dist/js/standalone/selectize

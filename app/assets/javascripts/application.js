@@ -21,7 +21,7 @@
 //= require jquery.mentionsInput
 //= require bootstrap-multiselect
 //= require momentjs
-//= require selectize
+//= require selectize/dist/js/standalone/selectize
 //= require palette.js
 //= require tinymce
 //= require_tree .

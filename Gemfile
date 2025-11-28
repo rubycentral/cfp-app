@@ -25,7 +25,6 @@ gem 'haml'
 gem 'jquery-datatables-rails'
 gem 'jquery-rails'
 gem 'rails-assets-momentjs', source: 'https://rails-assets.org'
-gem 'selectize-rails'
 gem 'uglifier', '>= 1.3.0'
 gem 'underscore-rails'
 

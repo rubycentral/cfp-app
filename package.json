@@ -14,6 +14,7 @@
     "@viostec/jquery-mentions-input": "^1.6.0",
     "babel-loader": "^9.2.1",
     "babel-plugin-macros": "^3.1.0",
+    "bootstrap-multiselect": "^0.9.15",
     "codemirror": "^5.65.3",
     "compression-webpack-plugin": "^11.1.0",
     "core-js": "^3.12.1",

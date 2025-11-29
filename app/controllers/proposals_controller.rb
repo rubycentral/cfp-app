@@ -1,10 +1,10 @@
 class ProposalsController < ApplicationController
   before_action :require_event, except: :index
   before_action :require_user
-  before_action :require_proposal, except: [ :index, :create, :new, :parse_edit_field, :preview ]
+  before_action :require_proposal, except: [ :index, :create, :new, :preview ]
   before_action :load_proposal_associations, only: :show
   before_action :require_invite_or_speaker, only: [:show]
-  before_action :require_speaker, except: [ :index, :create, :new, :parse_edit_field, :preview ]
+  before_action :require_speaker, except: [ :index, :create, :new, :preview ]
 
   decorates_assigned :proposal
 
@@ -109,17 +109,6 @@ class ProposalsController < ApplicationController
     else
       flash[:danger] = "There was a problem saving your proposal."
       render :edit
-    end
-  end
-
-  def parse_edit_field
-    respond_to do |format|
-      format.js do
-        render locals: {
-          field_name: params[:name],
-          text: params[:text]
-        }
-      end
     end
   end
 

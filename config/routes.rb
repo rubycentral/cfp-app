@@ -36,8 +36,6 @@ Rails.application.routes.draw do
       collection { post :preview }
     end
 
-    get 'parse_edit_field' => 'proposals#parse_edit_field', as: :parse_edit_field_proposal
-
     #Staff URLS
     namespace 'staff' do
       get '/' => 'events#show'

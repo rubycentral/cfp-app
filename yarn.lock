@@ -1166,14 +1166,6 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@viostec/jquery-mentions-input@^1.6.0":
-  version "1.6.0"
-  resolved "https://registry.npmjs.org/@viostec/jquery-mentions-input/-/jquery-mentions-input-1.6.0.tgz"
-  integrity sha512-FlfBmNE2QUkvXVVYBY0mBRPrKgdTkdRXJSuXYQfvsZGnTtqWRDw33rzF+B0F5KS/6lVVGBG8Xg7zA9rCDOvfKQ==
-  dependencies:
-    jquery ">=1.6"
-    underscore ">=1.2"
-
 "@webassemblyjs/ast@1.14.1", "@webassemblyjs/ast@^1.14.1":
   version "1.14.1"
   resolved "https://registry.npmjs.org/@webassemblyjs/ast/-/ast-1.14.1.tgz"
@@ -2657,7 +2649,7 @@ jest-worker@^29.7.0:
     merge-stream "^2.0.0"
     supports-color "^8.0.0"
 
-"jquery@1.8 - 4", jquery@>=1.6, jquery@^3.7.1:
+"jquery@1.8 - 4", jquery@^3.7.1:
   version "3.7.1"
   resolved "https://registry.npmjs.org/jquery/-/jquery-3.7.1.tgz"
   integrity sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==
@@ -3998,9 +3990,9 @@ type-is@~1.6.18:
     media-typer "0.3.0"
     mime-types "~2.1.24"
 
-underscore@>=1.2:
+underscore@^1.13.7:
   version "1.13.7"
-  resolved "https://registry.npmjs.org/underscore/-/underscore-1.13.7.tgz"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.13.7.tgz#970e33963af9a7dda228f17ebe8399e5fbe63a10"
   integrity sha512-GMXzWtsc57XAtguZgaQViUOzs0KTkk8ojr3/xAxXLITqf/3EMwxC0inyETfDFjH/Krbhuep0HNbbjI9i/q3F3g==
 
 unicode-canonical-property-names-ecmascript@^2.0.0:

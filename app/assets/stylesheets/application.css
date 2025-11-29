@@ -1,7 +1,7 @@
 /*
  * Application styles
  *
- *= require bootstrap
+ *= require bootstrap/dist/css/bootstrap
  *= require base/css-colors
  *= require base/bootstrap-overrides
  *

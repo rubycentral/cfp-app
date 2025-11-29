@@ -15,7 +15,6 @@
     "@viostec/jquery-mentions-input": "^1.6.0",
     "babel-loader": "^9.2.1",
     "babel-plugin-macros": "^3.1.0",
-    "bootstrap-multiselect": "^0.9.15",
     "chart.js": "^4.5.1",
     "chartkick": "^5.0.1",
     "codemirror": "^5.65.3",

@@ -11,7 +11,6 @@
 // about supported directives.
 //
 //= require jquery/dist/jquery
-//= require underscore/underscore
 //= require @rails/ujs/app/assets/javascripts/rails-ujs
 //= require bootstrap
 //= require chartkick

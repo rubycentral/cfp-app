@@ -18,6 +18,7 @@ feature 'Sign out', :devise, type: :system do
 
     find('.dropdown-menu').find('a', text: 'Sign Out').click
 
+    expect(page).to have_no_content I18n.t('devise.sessions.signed_in')
     expect(page).to have_content I18n.t 'devise.sessions.signed_out'
   end
 end

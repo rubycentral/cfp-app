@@ -32,7 +32,6 @@
     "postcss": "^8.2.10",
     "prop-types": "^15.7.2",
     "regenerator-runtime": "^0.13.7",
-    "selectize": "^0.12.6",
     "shakapacker": "6",
     "stimulus": "^3.0.1",
     "style-loader": "^4.0.0",

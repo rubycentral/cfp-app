@@ -21,7 +21,6 @@
 //= require @viostec/jquery-mentions-input/jquery.mentionsInput
 //= require tom-select/dist/js/tom-select.complete
 //= require moment/moment
-//= require selectize/dist/js/standalone/selectize
 //= require palette.js
 //= require tinymce/tinymce
 //= require_tree .

@@ -1,1 +1,2 @@
-$('[data-field-name="<%= field_name %>"]')[0].innerHTML = '<%=j markdown(text) %>';
+var el = $('[data-field-name="<%= field_name %>"]')[0];
+if (el) { el.innerHTML = '<%=j markdown(text) %>'; }

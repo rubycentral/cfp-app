@@ -15,9 +15,9 @@ feature 'Sign out', :devise, type: :system do
     expect(page).to have_content I18n.t 'devise.sessions.signed_in'
 
     find('.gravatar-container').click
-    click_link 'Sign Out'
+
+    find('.dropdown-menu').find('a', text: 'Sign Out').click
+
     expect(page).to have_content I18n.t 'devise.sessions.signed_out'
   end
 end
-
-

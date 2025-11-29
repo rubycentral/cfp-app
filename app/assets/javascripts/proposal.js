@@ -58,12 +58,14 @@ $(function() {
     $('.proposal-reviewer-tags, #edit-tags-icon').toggle();
   });
 
-  if($('#autocomplete-options').length > 0) {
-    var html = $('#autocomplete-options').html();
+  var autocompleteEl = document.getElementById('autocomplete-options');
+  var reviewTagsEl = document.getElementById('proposal_review_tags');
+  if(autocompleteEl && reviewTagsEl) {
+    var html = autocompleteEl.innerHTML;
     var data = JSON.parse(html);
     var items = data.map(function(x) { return { item: x }; });
 
-    $('#proposal_review_tags').selectize({
+    new TomSelect(reviewTagsEl, {
       delimiter: ',',
       persist: false,
       plugins: ['remove_button'],

@@ -60,25 +60,19 @@ $(document).ready(function () {
 
   $('table input').addClass('form-control');
 
-  $('.multiselect').multiselect({
-    buttonClass: 'btn btn-default',
-    buttonText: function (options, select) {
-      if (options.length == 0) {
-        return 'None selected <b class="caret"></b>';
-      } else {
-        var tagClass = 'label ';
-        if ($(select).hasClass('review-tags')) {
-          tagClass += 'label-success';
-        } else {
-          tagClass += 'label-primary';
+  // Initialize Tom Select for tag multi-selects
+  document.querySelectorAll('.multiselect').forEach(function(el) {
+    var isReviewTags = el.classList.contains('review-tags');
+    var labelClass = isReviewTags ? 'label label-success' : 'label label-primary';
+
+    new TomSelect(el, {
+      plugins: ['remove_button'],
+      render: {
+        item: function(data, escape) {
+          return '<div class="' + labelClass + '" style="margin-right: 4px;">' + escape(data.text) + '</div>';
         }
-        var selected = '';
-        options.each(function () {
-          selected += '<span class="' + tagClass + '">' + $(this).html() + '</span> ';
-        });
-        return selected + '<b class="caret"></b>';
       }
-    }
+    });
   });
 });
 

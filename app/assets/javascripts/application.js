@@ -19,7 +19,7 @@
 //= require datatables.net-bs/js/dataTables.bootstrap
 //= require jquery.dataTables.columnFilter
 //= require @viostec/jquery-mentions-input/jquery.mentionsInput
-//= require bootstrap-multiselect/dist/js/bootstrap-multiselect
+//= require tom-select/dist/js/tom-select.complete
 //= require moment/moment
 //= require selectize/dist/js/standalone/selectize
 //= require palette.js

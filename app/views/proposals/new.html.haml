@@ -22,14 +22,14 @@
     .col-md-12
       %h1 Submit a Proposal
 
-.row
+.row{'data-controller' => 'proposal-preview', 'data-proposal-preview-url-value' => preview_event_proposals_path(event)}
   .col-md-12
     .tabbable
       %ul.nav.nav-tabs
         %li.active
           %a{"data-toggle" => "tab", :href => "#create-proposal"} Proposal Form
         %li
-          %a{"data-toggle" => "tab", :href => "#preview"} Preview
+          %a{"data-toggle" => "tab", :href => "#preview", "data-action" => "click->proposal-preview#refresh"} Preview
       .tab-content
         #create-proposal.tab-pane.active
           .row
@@ -43,7 +43,7 @@
                 %a{href: 'https://help.github.com/articles/github-flavored-markdown'}
                   %strong GitHub Flavored Markdown.
 
-              = simple_form_for proposal, url: event_proposals_path(event) do |f|
+              = simple_form_for proposal, url: event_proposals_path(event), html: {'data-proposal-preview-target' => 'form'} do |f|
                 = render partial: 'form', locals: {f: f}
         #preview.tab-pane
           = render partial: 'preview', locals: { proposal: proposal }

@@ -1,21 +1,24 @@
 $(document).ready(function () {
-    $('textarea.mention').mentionsInput({
-        showAvatars: false,
-        minChars: 1,
-        elastic: false,
+    document.querySelectorAll('textarea.mention').forEach(function(el) {
+        var mentionNames = JSON.parse(el.dataset.mentionNames || '[]') || [];
+        var values = mentionNames.filter(Boolean).map(function(name) {
+            return { key: name, value: name };
+        });
 
-        onDataRequest: function(mode, query, callback) {
-            var data = formattedMentionNames($(this).data("mention-names"))
+        var tribute = new Tribute({
+            trigger: '@',
+            values: values,
+            selectTemplate: function(item) {
+                return '@' + item.original.value;
+            },
+            menuItemTemplate: function(item) {
+                return '@' + item.original.value;
+            },
+            noMatchTemplate: '',
+            lookup: 'key',
+            fillAttr: 'value'
+        });
 
-            data = _.filter(data, function(item) { return item.name.toLowerCase().indexOf(query.toLowerCase()) > -1 });
-
-            callback.call(this, data);
-        }
-    })
-
-    function formattedMentionNames(mentionNames) {
-        return _.map(_.compact(mentionNames), function(mentionName) {
-        	return { name: "@" + mentionName, type: 'default', id: 1 }
-        })
-    }
+        tribute.attach(el);
+    });
 });

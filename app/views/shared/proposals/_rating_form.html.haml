@@ -1,8 +1,8 @@
 - disabled = disable_rating_form?(proposal)
-#rating-form
+#rating-form{data: {controller: 'rating'}}
   - if show_rating_form?(proposal, rating)
     .col-lg-5
-      = simple_form_for [event, :staff, proposal, rating] do |f|
+      = simple_form_for [event, :staff, proposal, rating], data: {rating_target: 'form', turbo_frame: dom_id(proposal, :rating_widget), remote: false} do |f|
         = program_tracker
         - unless disabled
           = link_to "#", id: "rating-tooltip-toggle", data: { container: 'body', toggle: 'popover', placement: "left", content: rating_tooltip, html: true } do
@@ -12,20 +12,19 @@
           %ul.star-rating
             - (1..5).each do |score|
               %li.star-wrapper{class: disabled ? "ratings-closed" : nil}
-                = f.label :score do
+                = f.label :score, data: {action: 'mouseenter->rating#preview mouseleave->rating#showRating'} do
                   %span.star
                     %i.fa.fa-star-o
                     %i.fa.fa-star
-                  = f.check_box :score, { class: "star-rating-select",
-                      disabled: disabled }, score, nil
+                  = f.check_box :score, {class: 'star-rating-select', disabled: disabled}, score, nil
             - if show_ratings_toggle?(proposal, rating)
               %li.abstain-wrapper
-                = link_to "#", class: "abstain" do
+                = link_to "#", class: 'abstain', data: {action: 'click->rating#toggleCommentsAndRatings'} do
                   %i.fa.fa-commenting-o
                   %i.fa.fa-commenting.hidden
             - if show_destroy_rating?(proposal, rating)
               %li.trash-wrapper
-                = f.label :score do
+                = f.label :score, data: {action: 'mouseenter->rating#previewDelete mouseleave->rating#cancelPreviewDelete'} do
                   %span.trash
                     %i.fa.fa-trash
                   = f.check_box :score, { class: "star-rating-select delete" }, "", nil

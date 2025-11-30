@@ -1,0 +1,9 @@
+= turbo_frame_tag dom_id(proposal, :reviewer_tags), data: {controller: 'reviewer-tags'} do
+  .proposal-reviewer-tags{data: {reviewer_tags_target: 'display'}}
+    - if proposal.review_tags.present?
+      = proposal.review_tags_labels
+    - else
+      %em None
+  #edit-tags-icon.fa.fa-pencil{data: {reviewer_tags_target: 'icon', action: 'click->reviewer-tags#toggle'}}
+  #review-tags-form-wrapper{data: {reviewer_tags_target: 'form'}, style: 'display: none'}
+    = render 'shared/proposals/tags_form', event: event, proposal: proposal

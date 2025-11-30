@@ -33,17 +33,6 @@ $(function() {
     $('#current-format').show();
   });
 
-  // Reviewer tags editing
-  $('#edit-tags-icon').click(function() {
-    $('.proposal-reviewer-tags, #edit-tags-icon').toggle();
-    $('#review-tags-form-wrapper').slideToggle();
-  });
-
-  $('#cancel-tags-editing').click(function() {
-    $('#review-tags-form-wrapper').toggle();
-    $('.proposal-reviewer-tags, #edit-tags-icon').toggle();
-  });
-
   var autocompleteEl = document.getElementById('autocomplete-options');
   var reviewTagsEl = document.getElementById('proposal_review_tags');
   if(autocompleteEl && reviewTagsEl) {

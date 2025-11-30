@@ -1,4 +1,4 @@
-= form_for proposal, url: event_staff_proposal_path(event, proposal), html: {role: 'form', remote: true} do |f|
+= form_for proposal, url: event_staff_proposal_path(event, proposal), data: {turbo_frame: dom_id(proposal, :reviewer_tags)} do |f|
   .form-group.col-sm-8.no-pad-left
     .tag-list
       #autocomplete-options
@@ -8,5 +8,5 @@
   .form-group.col-sm-4
     %button.btn.btn-success.btn-sm(type="submit")
       %span.glyphicon.glyphicon-ok
-    #cancel-tags-editing.btn.btn-danger.btn-sm
+    #cancel-tags-editing.btn.btn-danger.btn-sm{data: {action: 'click->reviewer-tags#toggle'}}
       %span.glyphicon.glyphicon-remove

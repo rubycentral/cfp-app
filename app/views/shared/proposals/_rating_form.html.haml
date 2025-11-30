@@ -2,7 +2,7 @@
 #rating-form
   - if show_rating_form?(proposal, rating)
     .col-lg-5
-      = simple_form_for [event, :staff, proposal, rating], remote: true do |f|
+      = simple_form_for [event, :staff, proposal, rating] do |f|
         = program_tracker
         - unless disabled
           = link_to "#", id: "rating-tooltip-toggle", data: { container: 'body', toggle: 'popover', placement: "left", content: rating_tooltip, html: true } do

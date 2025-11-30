@@ -4,7 +4,7 @@ class Staff::ProposalReviewsController < Staff::ApplicationController
   before_action :prevent_self_review, except: [:index]
 
   decorates_assigned :proposal, with: Staff::ProposalDecorator
-  respond_to :html, :js
+  respond_to :html
 
   def index
     authorize Proposal, :reviewer?
@@ -60,6 +60,7 @@ class Staff::ProposalReviewsController < Staff::ApplicationController
     else
       @proposal.reload
     end
+    render partial: 'shared/proposals/reviewer_tags', locals: {event: current_event, proposal: @proposal.decorate}
   end
 
   private

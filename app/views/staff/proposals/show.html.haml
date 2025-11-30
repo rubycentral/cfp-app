@@ -71,14 +71,7 @@
           .col-sm-4
             .proposal-meta-item.col-sm-12.no-pad-left
               .info-item-heading Reviewer Tags
-              .proposal-reviewer-tags
-                -if proposal.review_tags.present?
-                  #{proposal.review_tags_labels}
-                -else
-                  %em None
-              #edit-tags-icon.fa.fa-pencil
-              #review-tags-form-wrapper
-                = render 'shared/proposals/tags_form', locals: { event: event, proposal: proposal }
+              = render 'shared/proposals/reviewer_tags', event: event, proposal: proposal
 
   .row
     .col-md-4

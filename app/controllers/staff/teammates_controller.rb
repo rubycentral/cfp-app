@@ -1,7 +1,7 @@
 class Staff::TeammatesController < Staff::ApplicationController
   before_action :enable_staff_event_subnav
   before_action :require_contact_email, only: [:create]
-  respond_to :html, :json
+  respond_to :html
 
   def index
     @staff = TeammateDecorator.decorate_collection(current_event.teammates.accepted.alphabetize)
@@ -28,14 +28,7 @@ class Staff::TeammatesController < Staff::ApplicationController
     teammate = current_event.teammates.find(params[:id])
     teammate.update(params.require(:teammate).permit(:role, :notifications, :mention_name))
     if teammate.save
-      respond_to do |format|
-        format.html do
-          redirect_to event_staff_teammates_path(current_event)
-        end
-        format.js do
-          render locals: { teammate: teammate }
-        end
-      end
+      redirect_to event_staff_teammates_path(current_event)
     else
       redirect_to event_staff_teammates_path(current_event),
         flash: { danger: "There was a problem updating #{teammate.name}. #{teammate.errors.full_messages.join(", ")}." }

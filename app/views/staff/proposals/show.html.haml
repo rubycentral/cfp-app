@@ -30,8 +30,8 @@
           .proposal-meta.proposal-description
             .proposal-meta-item
               %strong Status:
-              %span.proposal-status #{proposal.state_label(small: true)}
-            %span.state-buttons #{proposal.state_buttons(show_hard_reset: true)}
+              = render 'staff/proposals/proposal_status', proposal: proposal, context: 'show', small: true, show_confirmed: false
+            = render 'staff/proposals/proposal_state_buttons', proposal: proposal, context: 'show', buttons: proposal.state_buttons(show_hard_reset: true)
     .row
       .proposal-info-bar.clearfix
         .proposal-meta.proposal-description.clearfix

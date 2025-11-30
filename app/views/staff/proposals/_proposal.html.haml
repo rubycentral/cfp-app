@@ -11,6 +11,6 @@
       %td= proposal.tags_labels
     %td= proposal.review_tags_labels
     %td
-      %span.proposal-status= proposal.state_label(small: true, show_confirmed: true)
+      = render 'staff/proposals/proposal_status', proposal: proposal, context: 'index', small: true, show_confirmed: true
     %td
-      %span.state-buttons= proposal.small_state_buttons
+      = render 'staff/proposals/proposal_state_buttons', proposal: proposal, context: 'index', buttons: proposal.small_state_buttons

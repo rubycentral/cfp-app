@@ -76,7 +76,8 @@ class Staff::ProposalDecorator < ProposalDecorator
   private
 
   def state_button(text, path, opts = {})
-    opts = { method: :post, remote: :true, type: 'btn-default', hidden: false }.merge(opts)
+    opts = {type: 'btn-default', hidden: false, data: {}}.merge(opts)
+    opts[:data] = {turbo: true, turbo_method: :post}.merge(opts[:data])
 
     opts[:class] = "#{opts[:class]} btn #{opts[:type]} " + (opts[:hidden] ? 'hidden' : '')
     opts[:class] += opts[:small] ? ' btn-xs' : ' btn-sm'

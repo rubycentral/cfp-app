@@ -7,14 +7,11 @@ class Staff::RatingsController < Staff::ApplicationController
 
   def create
     authorize @proposal, :rate?
-    @rating = Rating.find_or_create_by(proposal: @proposal, user: current_user)
-    @rating.update(rating_params)
-    if @rating.save
-      render partial: 'shared/proposals/rating_widget', locals: {event: @proposal.event, proposal: @proposal, rating: @rating}
-    else
-      logger.warn("Error creating rating for proposal [#{@proposal.id}] for user [#{current_user.id}]: #{@rating.errors.full_messages}")
-      render json: @rating.to_json, status: :bad_request
-    end
+
+    @rating = Rating.find_or_initialize_by(proposal: @proposal, user: current_user)
+    @rating.update!(rating_params)
+
+    render partial: 'shared/proposals/rating_widget', locals: {event: @proposal.event, proposal: @proposal, rating: @rating}
   end
 
   def update
@@ -27,12 +24,9 @@ class Staff::RatingsController < Staff::ApplicationController
       render partial: 'shared/proposals/rating_widget', locals: {event: @proposal.event, proposal: @proposal, rating: @rating}
       return
     end
-    if @rating.update(rating_params)
-      render partial: 'shared/proposals/rating_widget', locals: {event: @proposal.event, proposal: @proposal, rating: @rating}
-    else
-      logger.warn("Error updating rating for proposal [#{@proposal.id}] for user [#{current_user.id}]: #{@rating.errors.full_messages}")
-      render json: @rating.to_json, status: :bad_request
-    end
+
+    @rating.update!(rating_params)
+    render partial: 'shared/proposals/rating_widget', locals: {event: @proposal.event, proposal: @proposal, rating: @rating}
   end
 
   private

@@ -3,8 +3,6 @@ class Staff::RatingsController < Staff::ApplicationController
   before_action :require_proposal
   before_action :prevent_self_review
 
-  respond_to :js
-
   decorates_assigned :proposal
 
   def create
@@ -12,9 +10,7 @@ class Staff::RatingsController < Staff::ApplicationController
     @rating = Rating.find_or_create_by(proposal: @proposal, user: current_user)
     @rating.update(rating_params)
     if @rating.save
-      respond_to do |format|
-        format.js
-      end
+      render partial: 'shared/proposals/rating_widget', locals: {event: @proposal.event, proposal: @proposal, rating: @rating}
     else
       logger.warn("Error creating rating for proposal [#{@proposal.id}] for user [#{current_user.id}]: #{@rating.errors.full_messages}")
       render json: @rating.to_json, status: :bad_request
@@ -28,15 +24,11 @@ class Staff::RatingsController < Staff::ApplicationController
     if rating_params[:score].blank?
       @rating.destroy
       @rating = current_user.ratings.build(proposal: @proposal)
-      respond_to do |format|
-        format.js
-      end
+      render partial: 'shared/proposals/rating_widget', locals: {event: @proposal.event, proposal: @proposal, rating: @rating}
       return
     end
     if @rating.update(rating_params)
-      respond_to do |format|
-        format.js
-      end
+      render partial: 'shared/proposals/rating_widget', locals: {event: @proposal.event, proposal: @proposal, rating: @rating}
     else
       logger.warn("Error updating rating for proposal [#{@proposal.id}] for user [#{current_user.id}]: #{@rating.errors.full_messages}")
       render json: @rating.to_json, status: :bad_request

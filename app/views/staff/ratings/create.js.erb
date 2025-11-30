@@ -1,7 +1,0 @@
-$('#rating-form').html('<%=j render partial: "shared/proposals/rating_form",
-                       locals: { event: @proposal.event, proposal: @proposal, rating: @rating } %>');
-$('.internal-comments').fadeIn();
-$('.avg-rating').fadeIn();
-$('.rating-list').fadeIn();
-$('.active-popover').remove();
-$('#rating-tooltip-toggle').popover({})

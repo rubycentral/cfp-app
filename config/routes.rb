@@ -68,7 +68,7 @@ Rails.application.routes.draw do
 
       # Reviewer flow for proposals
       resources :proposals, controller: 'proposal_reviews', only: [:index, :show, :update], param: :uuid do
-        resources :ratings, only: [:create, :update], defaults: {format: :js}
+        resources :ratings, only: [:create, :update]
       end
 
       scope :program, as: 'program' do

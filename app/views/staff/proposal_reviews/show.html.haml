@@ -111,13 +111,4 @@
             %p
               %em Ratings are closed
 
-        .widget-content
-          = render partial: 'shared/proposals/rating_form', locals: { event: event, proposal: proposal, rating: rating }
-
-        .internal-comments{ class: !rating.persisted? ? "hidden" : nil }
-          .widget-header
-            %i.fa.fa-comments
-            %h3.comments-heading= pluralize(proposal.internal_comments.count, 'Internal Comment')
-          .widget-content
-            = render partial: 'proposals/comments',
-                locals: { proposal: proposal, comments: proposal.internal_comments }
+        = render partial: 'shared/proposals/rating_widget', locals: { event: event, proposal: proposal, rating: rating }

@@ -37,7 +37,7 @@ class Staff::ProposalsController < Staff::ApplicationController
 
     respond_to do |format|
       format.html { redirect_to event_staff_program_proposals_path(@proposal.event) }
-      format.js
+      format.turbo_stream
     end
   end
 

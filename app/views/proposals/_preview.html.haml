@@ -1,6 +1,6 @@
 .row
   .col-md-8
-    #proposal-preview{ data: { 'remote-url' => event_parse_edit_field_proposal_path(event.slug) } }
+    = turbo_frame_tag 'proposal-preview-frame' do
       .proposal-info-bar
         .proposal-meta.proposal-description
           .proposal-meta-item

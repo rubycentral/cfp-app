@@ -6,6 +6,7 @@ ruby file: '.ruby-version'
 
 gem 'puma'
 gem 'rails', '~> 8.1.1'
+gem 'turbo-rails'
 gem 'mimemagic'
 gem 'mime-types-data'
 gem 'mime-types'

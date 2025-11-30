@@ -18,4 +18,8 @@
 // Support component names relative to this directory:
 import '../stylesheets/application.css'
 import '../datatables'
+import * as Turbo from "@hotwired/turbo"
+
+// Disable Turbo Drive globally - opt-in instead of opt-out for existing app
+Turbo.session.drive = false
 import "controllers"

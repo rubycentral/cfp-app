@@ -1,10 +1,10 @@
 class ProposalsController < ApplicationController
   before_action :require_event, except: :index
   before_action :require_user
-  before_action :require_proposal, except: [ :index, :create, :new, :parse_edit_field ]
+  before_action :require_proposal, except: [ :index, :create, :new, :preview ]
   before_action :load_proposal_associations, only: :show
   before_action :require_invite_or_speaker, only: [:show]
-  before_action :require_speaker, except: [ :index, :create, :new, :parse_edit_field ]
+  before_action :require_speaker, except: [ :index, :create, :new, :preview ]
 
   decorates_assigned :proposal
 
@@ -112,15 +112,9 @@ class ProposalsController < ApplicationController
     end
   end
 
-  def parse_edit_field
-    respond_to do |format|
-      format.js do
-        render locals: {
-          field_name: params[:name],
-          text: params[:text]
-        }
-      end
-    end
+  def preview
+    @proposal = @event.proposals.new(preview_params).decorate
+    render partial: 'preview', locals: { proposal: @proposal }
   end
 
   private
@@ -129,6 +123,10 @@ class ProposalsController < ApplicationController
     params.require(:proposal).permit(:title, {tags: []}, :session_format_id, :track_id, :abstract, :details, :pitch, custom_fields: @event.custom_fields,
                                      comments_attributes: [:body, :proposal_id, :user_id],
                                      speakers_attributes: [:bio, :id, :age_range, :pronouns, :ethnicity, :first_time_speaker])
+  end
+
+  def preview_params
+    params.fetch(:proposal, {}).permit(:title, {tags: []}, :session_format_id, :track_id, :abstract, :details, :pitch, custom_fields: @event.custom_fields)
   end
 
   def notes_params

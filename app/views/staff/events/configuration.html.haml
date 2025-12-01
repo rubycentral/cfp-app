@@ -1,4 +1,4 @@
-.event
+.event{data: {controller: 'remote-modal'}}
   .row
     .col-md-12
       .page-header.clearfix
@@ -28,7 +28,7 @@
         .widget-header
           %i.fa.fa-exchange
           %h3 Tracks
-          = link_to "Add Track", new_event_staff_track_path(event), remote: true,
+          = link_to "Add Track", new_event_staff_track_path(event), data: {action: 'remote-modal#open'},
             class: "btn btn-success btn-sm pull-right" unless !current_user.organizer_for_event?(event)
         .widget-content
           %table.table.table-striped.table-bordered#tracks
@@ -39,12 +39,12 @@
                 %th Guidelines
                 - unless !current_user.organizer_for_event?(event)
                   %th Actions
-            %tbody
+            %tbody#tracks-table-body
               = render event.tracks.sort_by_name
 
-    #config-modal.modal.fade
+    #config-modal.modal.fade{data: {remote_modal_target: 'modal'}}
       .modal-dialog
-        .modal-content
+        #config-modal-content.modal-content{data: {remote_modal_target: 'content'}}
   .row
     .col-md-4
       .widget

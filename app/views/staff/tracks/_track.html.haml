@@ -1,4 +1,4 @@
-%tr{ id: "track_#{track.id}" }
+%tr{id: dom_id(track)}
   %td= track.name
   %td= truncate(track.description, length: 60)
   %td
@@ -17,10 +17,8 @@
   - unless !current_user.organizer_for_event?(event)
     %td
       .pull-right
-        = link_to "Edit", edit_event_staff_track_path(event, track), remote: true,
+        = link_to "Edit", edit_event_staff_track_path(event, track), data: {action: 'remote-modal#open'},
           class: "btn btn-primary btn-xs"
         = link_to "Remove", event_staff_track_path(event, track),
-          method: :delete,
-          remote: true,
-          data: { confirm: "Are you sure you want to remove this track?" },
+          data: {turbo: true, turbo_method: :delete, turbo_confirm: "Are you sure you want to remove this track?"},
           class: "btn btn-danger btn-xs"

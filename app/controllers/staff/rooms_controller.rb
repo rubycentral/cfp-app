@@ -8,24 +8,32 @@ class Staff::RoomsController < Staff::ApplicationController
   end
 
   def create
-    room = current_event.rooms.build(room_params)
-    unless room.save
-      flash.now[:danger] = "There was a problem saving your room, #{room.errors.full_messages.join(", ")}"
-    end
-    respond_to do |format|
-      format.js do
-        render locals: { room: room }
+    @room = current_event.rooms.build(room_params)
+    if @room.save
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to event_staff_schedule_rooms_path(current_event) }
+      end
+    else
+      flash.now[:danger] = "There was a problem saving your room, #{@room.errors.full_messages.join(", ")}."
+      respond_to do |format|
+        format.turbo_stream { render :create_error, status: :unprocessable_entity }
+        format.html { redirect_to event_staff_schedule_rooms_path(current_event) }
       end
     end
   end
 
   def update
-    unless @room.update(room_params)
+    if @room.update(room_params)
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to event_staff_schedule_rooms_path(current_event) }
+      end
+    else
       flash.now[:danger] = "There was a problem updating your room, #{@room.errors.full_messages.join(", ")}."
-    end
-    respond_to do |format|
-      format.js do
-        render locals: { room: @room }
+      respond_to do |format|
+        format.turbo_stream { render :update_error, status: :unprocessable_entity }
+        format.html { redirect_to event_staff_schedule_rooms_path(current_event) }
       end
     end
   end
@@ -37,9 +45,8 @@ class Staff::RoomsController < Staff::ApplicationController
       flash.now[:danger] = "There was a problem deleting #{@room.name}."
     end
     respond_to do |format|
-      format.js do
-        render locals: { room: @room }
-      end
+      format.turbo_stream
+      format.html { redirect_to event_staff_schedule_rooms_path(current_event) }
     end
   end
 

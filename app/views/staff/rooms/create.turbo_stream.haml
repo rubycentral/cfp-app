@@ -1,0 +1,14 @@
+= turbo_stream.append 'rooms-table-body' do
+  = render @room
+
+= turbo_stream.update 'room-new-form' do
+  = simple_form_for [current_event, :staff, :schedule, Room.new], data: {turbo_frame: 'room-new-form', action: 'turbo:submit-end->modal-form#submitEnd'} do |f|
+    .modal-header
+      %h3 New Room
+      .errors
+    .modal-body
+      = render partial: 'staff/rooms/form', locals: {f: f}
+    .modal-footer
+      .btn-toolbar
+        %button.pull-right.btn.btn-primary{type: 'submit'} Save
+        %button.btn.btn-default{'data-dismiss' => 'modal'} Cancel

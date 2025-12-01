@@ -18,18 +18,19 @@
             %th Capacity
             %th Grid Position
             %th.actions Actions
-        %tbody
+        %tbody#rooms-table-body
           = render event.rooms
-      #room-new-dialog.modal.fade
+      #room-new-dialog.modal.fade{data: {controller: 'modal-form', modal_form_target: 'modal'}}
         .modal-dialog
           .modal-content
-            = simple_form_for [ event, :staff, :schedule, Room.new ], remote: true do |f|
-              .modal-header
-                %h3 New Room
-                .errors
-              .modal-body
-                = render partial: "staff/rooms/form", locals: { f: f }
-              .modal-footer
-                .btn-toolbar
-                  %button.pull-right.btn.btn-primary{:type => "submit"} Save
-                  %button.btn.btn-default{"data-dismiss" => "modal"} Cancel
+            = turbo_frame_tag 'room-new-form' do
+              = simple_form_for [event, :staff, :schedule, Room.new], data: {turbo_frame: 'room-new-form', action: 'turbo:submit-end->modal-form#submitEnd'} do |f|
+                .modal-header
+                  %h3 New Room
+                  .errors
+                .modal-body
+                  = render partial: 'staff/rooms/form', locals: {f: f}
+                .modal-footer
+                  .btn-toolbar
+                    %button.pull-right.btn.btn-primary{type: 'submit'} Save
+                    %button.btn.btn-default{'data-dismiss' => 'modal'} Cancel

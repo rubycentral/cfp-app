@@ -9,7 +9,7 @@
         .widget-header
           %i.fa.fa-comments-o
           %h3 Session Formats
-          = link_to "Add Session Format", new_event_staff_session_format_path(event), remote: true,
+          = link_to "Add Session Format", new_event_staff_session_format_path(event), data: {action: 'remote-modal#open'},
             class: "btn btn-success btn-sm pull-right" unless !current_user.organizer_for_event?(event)
         .widget-content
           %table.table.table-striped.table-bordered#session-formats
@@ -21,7 +21,7 @@
                 %th Public
                 - unless !current_user.organizer_for_event?(event)
                   %th= "Actions"
-            %tbody
+            %tbody#session-formats-table-body
               = render event.session_formats
 
       .widget.widget-table

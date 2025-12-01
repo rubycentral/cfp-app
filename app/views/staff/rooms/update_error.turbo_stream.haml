@@ -1,0 +1,14 @@
+= turbo_stream.update dom_id(@room, :edit) do
+  = simple_form_for [current_event, :staff, :schedule, @room], data: {turbo_frame: dom_id(@room, :edit), action: 'turbo:submit-end->modal-form#submitEnd'} do |f|
+    .modal-header
+      %h3 Edit Room
+      .errors= @room.errors.full_messages.join(', ')
+    .modal-body
+      = render partial: 'staff/rooms/form', locals: {room: @room, f: f}
+    .modal-footer
+      .btn-toolbar
+        %button.pull-right.btn.btn-primary{type: 'submit'} Save
+        %button.btn.btn-default{'data-dismiss' => 'modal'} Cancel
+
+= turbo_stream.update 'flash' do
+  = show_flash

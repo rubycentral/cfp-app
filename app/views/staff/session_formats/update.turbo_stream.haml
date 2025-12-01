@@ -1,0 +1,5 @@
+= turbo_stream.replace dom_id(@session_format) do
+  = render @session_format, event: current_event
+
+= turbo_stream.update 'config-modal-content' do
+  %div{data: {hide_modal: true}}

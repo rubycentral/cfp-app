@@ -7,47 +7,49 @@ class Staff::SessionFormatsController < Staff::ApplicationController
 
   def new
     @session_format = SessionFormat.new
+    render layout: false
   end
 
   def edit
-    respond_to do |format|
-      format.js do
-        render locals: { session_format: @session_format }
-      end
-    end
+    render layout: false
   end
 
   def create
-    session_format = @event.session_formats.build(session_format_params)
-    unless session_format.save
-      flash.now[:danger] = "There was a problem saving your session format, #{session_format.errors.full_messages.join(", ")}."
-    end
-    respond_to do |format|
-      format.js do
-        render locals: { session_format: session_format }
+    @session_format = @event.session_formats.build(session_format_params)
+    if @session_format.save
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to event_staff_config_path(current_event) }
+      end
+    else
+      flash.now[:danger] = "There was a problem saving your session format, #{@session_format.errors.full_messages.join(", ")}."
+      respond_to do |format|
+        format.turbo_stream { render :create_error, status: :unprocessable_entity }
+        format.html { render :new, layout: false, status: :unprocessable_entity }
       end
     end
   end
 
   def update
-    unless @session_format.update(session_format_params)
+    if @session_format.update(session_format_params)
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to event_staff_config_path(current_event) }
+      end
+    else
       flash.now[:danger] = "There was a problem updating your session format, #{@session_format.errors.full_messages.join(", ")}."
-    end
-    respond_to do |format|
-      format.js do
-        render locals: { session_format: @session_format }
+      respond_to do |format|
+        format.turbo_stream { render :update_error, status: :unprocessable_entity }
+        format.html { render :edit, layout: false, status: :unprocessable_entity }
       end
     end
   end
 
   def destroy
-    unless @session_format.destroy
-      flash.now[:danger] = "There was a problem deleting the #{@session_format.name} session format."
-    end
+    @session_format.destroy
     respond_to do |format|
-      format.js do
-        render locals: { session_format: @session_format }
-      end
+      format.turbo_stream
+      format.html { redirect_to event_staff_config_path(current_event) }
     end
   end
 

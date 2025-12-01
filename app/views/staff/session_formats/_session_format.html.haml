@@ -1,4 +1,4 @@
-%tr{ id: "session_format_#{session_format.id}" }
+%tr{id: dom_id(session_format)}
   %td= session_format.name
   %td= truncate(session_format.description, length: 60)
   %td= session_format.duration
@@ -6,10 +6,8 @@
   - unless !current_user.organizer_for_event?(event)
     %td
       .pull-right
-        = link_to "Edit", edit_event_staff_session_format_path(event, session_format), remote: true,
+        = link_to "Edit", edit_event_staff_session_format_path(event, session_format), data: {action: 'remote-modal#open'},
           class: "btn btn-primary btn-xs"
         = link_to "Remove", event_staff_session_format_path(event, session_format),
-          method: :delete,
-          remote: true,
-          data: { confirm: "Are you sure you want to remove this session format?" },
+          data: {turbo: true, turbo_method: :delete, turbo_confirm: "Are you sure you want to remove this session format?"},
           class: "btn btn-danger btn-xs"

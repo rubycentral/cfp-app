@@ -1,0 +1,8 @@
+= turbo_stream.replace "time_slot_#{dom_id(@time_slot)}" do
+  = render partial: 'time_slot', locals: {ts: time_slot_decorated}
+
+= turbo_stream.append 'grid-time-slot-actions' do
+  %div{data: {controller: 'grid-time-slot-refresh', grid_time_slot_refresh_time_slot_id_value: dom_id(@time_slot)}}
+
+= turbo_stream.update 'flash' do
+  = show_flash

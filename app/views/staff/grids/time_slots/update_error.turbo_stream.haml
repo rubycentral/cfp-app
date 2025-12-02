@@ -1,0 +1,5 @@
+= turbo_stream.update 'grid-time-slot-edit-dialog .errors' do
+  = @time_slot.errors.full_messages.join(', ')
+
+= turbo_stream.update 'flash' do
+  = show_flash

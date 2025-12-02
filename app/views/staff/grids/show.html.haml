@@ -23,10 +23,12 @@
     / Tab content - One grid per day
     - @schedule.each_day do |day, slots|
       .tab-pane{id: "grid_day_#{day}", class: (day == 1 ? 'active' : ''), data: {schedule_tabs_target: "panel", day: day}}
-        .grid_container
-          = render partial: 'staff/grids/grid', locals: {schedule: @schedule, day: day}
-          .unscheduled_area
-            = render partial: 'staff/grids/unscheduled_sessions', locals: {day: day}
+        .grid-wrapper
+          .bulk-preview-bar
+          .grid_container
+            = render partial: 'staff/grids/grid', locals: {schedule: @schedule, day: day}
+            .unscheduled_area
+              = render partial: 'staff/grids/unscheduled_sessions', locals: {day: day}
 
   / Modals
   #bulk-time-slot-create-dialog.modal.fade{role: "dialog"}

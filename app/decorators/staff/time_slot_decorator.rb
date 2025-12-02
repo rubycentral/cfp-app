@@ -42,14 +42,11 @@ class Staff::TimeSlotDecorator < Draper::Decorator
       h.link_to('Edit',
                 h.edit_event_staff_schedule_time_slot_path(object.event, object),
                 class: 'btn btn-primary btn-xs',
-                remote: true,
-                data: {toggle: 'modal', target: "#time-slot-edit-dialog"}),
+                data: {turbo: true, turbo_frame: 'time-slot-edit-dialog'}),
 
       h.link_to('Remove',
                 h.event_staff_schedule_time_slot_path(object.event, object),
-                method: :delete,
-                data: {confirm: "Are you sure you want to remove this time slot?"},
-                remote: true,
+                data: {turbo: true, turbo_method: :delete, turbo_confirm: 'Are you sure you want to remove this time slot?'},
                 class: 'btn btn-danger btn-xs')
     ]
     h.safe_join(links, "\n")

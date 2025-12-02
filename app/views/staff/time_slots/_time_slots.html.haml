@@ -10,9 +10,8 @@
         %h3.pull-left Time Slots
         = link_to "Add Time Slot",
             new_event_staff_schedule_time_slot_path,
-            remote: true,
             class: "btn pull-left btn-primary btn-sm pull-left " + (has_missing_requirements?(event) ? 'disabled' : ''),
-            data: { toggle: 'modal', target: "#time-slot-new-dialog" },
+            data: {turbo: true, turbo_frame: 'time-slot-new-dialog'},
             id: 'add-time-slot'
   .row
     .col-md-12

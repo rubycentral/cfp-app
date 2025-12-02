@@ -8,6 +8,10 @@ class Staff::Grids::BulkTimeSlotsController < Staff::ApplicationController
   def preview
     @bulk = BulkTimeSlot.new(bulk_time_slot_params)
 
+    unless @bulk.valid?
+      render :create and return
+    end
+
     slots = @bulk.build_time_slots
     @schedule = Schedule.new(current_event)
     @schedule.add_preview_slots(slots)

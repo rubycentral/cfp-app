@@ -175,7 +175,7 @@ class ProposalDecorator < ApplicationDecorator
   end
 
   def standalone_track_select(tooltip)
-    h.simple_form_for :proposal, remote: true do |f|
+    h.simple_form_for :proposal do |f|
       f.input :track,
         required: false,
         label_html: { class: 'info-item-heading' },
@@ -194,7 +194,7 @@ class ProposalDecorator < ApplicationDecorator
   end
 
   def standalone_format_select(tooltip)
-    h.simple_form_for :proposal, remote: true do |f|
+    h.simple_form_for :proposal do |f|
       f.input :format,
         required: false,
         label_html: { class: 'info-item-heading' },

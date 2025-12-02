@@ -73,7 +73,7 @@
           %h3.control-label.float-start
             Speakers
           - if current_user.organizer_for_event?(current_event)
-            = link_to "Add Speaker", new_event_staff_program_session_speaker_path(current_event, program_session), class: "btn btn-success btn-xs float-end new-speaker"
+            = link_to "Add Speaker", new_event_staff_program_session_speaker_path(current_event, program_session), class: "btn btn-success btn-sm float-end new-speaker"
         - @speakers.each do |speaker|
           %section
             .session-speaker-header.clearfix
@@ -82,7 +82,7 @@
                 %p= speaker.email
               - if current_user.organizer_for_event?(current_event)
                 .session-speaker-actions.float-end
-                  .edit-session-speaker= link_to "Edit", edit_event_staff_program_speaker_path(current_event, speaker), class: "btn btn-primary btn-xs"
+                  .edit-session-speaker= link_to "Edit", edit_event_staff_program_speaker_path(current_event, speaker), class: "btn btn-primary btn-sm"
                   - if program_session.multiple_speakers?
-                    .remove-session-speaker= link_to "Remove", event_staff_program_speaker_path(current_event, speaker), data: {turbo: true, turbo_method: :delete, turbo_confirm: "Are you sure you want to remove this speaker?"}, class: "btn btn-danger btn-xs"
+                    .remove-session-speaker= link_to "Remove", event_staff_program_speaker_path(current_event, speaker), data: {turbo: true, turbo_method: :delete, turbo_confirm: "Are you sure you want to remove this speaker?"}, class: "btn btn-danger btn-sm"
             %p &nbsp;

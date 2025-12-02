@@ -5,5 +5,5 @@
       placeholder: 'Separate multiple tags with commas',
       hint: "This is a comma separated list of tags allowed for use during proposal reviews. These limits apply to tags used internally by reviewers and not to publicly displayed tags."
     .float-end
-      = link_to 'Cancel', event_staff_config_path(@event), class: 'btn btn-default', data: {turbo: true, turbo_frame: 'reviewer-tags'}
+      = link_to 'Cancel', event_staff_config_path(@event), class: 'btn btn-secondary', data: {turbo: true, turbo_frame: 'reviewer-tags'}
       %button.btn.btn-primary{type: "submit"} Save

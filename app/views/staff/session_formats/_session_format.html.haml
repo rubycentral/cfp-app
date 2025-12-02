@@ -7,7 +7,7 @@
     %td
       .float-end
         = link_to "Edit", edit_event_staff_session_format_path(event, session_format), data: {action: 'remote-modal#open'},
-          class: "btn btn-primary btn-xs"
+          class: "btn btn-primary btn-sm"
         = link_to "Remove", event_staff_session_format_path(event, session_format),
           data: {turbo: true, turbo_method: :delete, turbo_confirm: "Are you sure you want to remove this session format?"},
-          class: "btn btn-danger btn-xs"
+          class: "btn btn-danger btn-sm"

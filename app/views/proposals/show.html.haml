@@ -92,15 +92,15 @@
                           - unless invitation.declined?
                             = link_to 'Resend',
                               resend_invitation_path(invitation_slug: invitation.slug, proposal_uuid: proposal.uuid),
-                              class: 'btn btn-xs btn-primary'
+                              class: 'btn btn-sm btn-primary'
                           = link_to 'Remove',
                             invitation_path(invitation_slug: invitation.slug, proposal_uuid: proposal.uuid),
-                            class: 'btn btn-xs btn-danger',
+                            class: 'btn btn-sm btn-danger',
                             data: {turbo: true, turbo_method: :delete, turbo_confirm: 'Are you sure you want to remove this invitation?'}
 
                 %hr
               .new-speaker-invite
-                = link_to "Invite a Speaker", "#", class: "btn btn-success btn-xs speaker-invite-btn",
+                = link_to "Invite a Speaker", "#", class: "btn btn-success btn-sm speaker-invite-btn",
                   data: { toggle: "modal", target: "#new-speaker-invitation" },
                   id: "invite-new-speaker"
                 %p.help-block You may invite other speakers to your proposal.

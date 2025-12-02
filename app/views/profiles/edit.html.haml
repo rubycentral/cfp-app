@@ -61,7 +61,7 @@
 
           - if current_user.provider.present?
             .service
-              %button.btn.btn-default.disabled{class: "btn-#{current_user.provider.downcase}-alt"}
+              %button.btn.btn-secondary.disabled{class: "btn-#{current_user.provider.downcase}-alt"}
                 %i{class: "fa fa-#{current_user.provider.downcase}"}
                 | Connected via
                 = current_user.provider

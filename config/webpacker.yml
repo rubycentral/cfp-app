@@ -8,6 +8,9 @@ default: &default
   cache_path: tmp/cache/webpacker
   webpack_compile_output: true
 
+  # Use esbuild instead of babel - faster and requires minimal config
+  webpack_loader: esbuild
+
   # Additional paths webpack should look up modules
   # ['app/assets', 'engine/foo/app/assets']
   additional_paths: []

@@ -1,0 +1,5 @@
+= turbo_stream.update 'bulk-time-slot-dialog' do
+  = render partial: 'create_dialog', locals: {bulk: @bulk}
+
+= turbo_stream.append 'grid-time-slot-actions' do
+  %div{data: {controller: 'bulk-dialog-show'}}

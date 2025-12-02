@@ -33,9 +33,9 @@ module ScheduleHelper
 
   def cancel_bulk_preview_button(day)
     link_to('Cancel',
-            cancel_event_staff_schedule_grid_bulk_time_slot_path(current_event, day),
+            cancel_event_staff_schedule_grid_bulk_time_slot_path(current_event, day: day),
             class: 'btn btn-default btn-sm bulk-cancel',
-            remote: true
+            data: {turbo: true, turbo_method: :get}
     )
   end
 

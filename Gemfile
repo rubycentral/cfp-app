@@ -65,7 +65,6 @@ group :development do
   gem 'haml-rails'
   gem 'launchy'
   gem 'rack-mini-profiler'
-  gem 'web-console'
 end
 
 group :development, :test do

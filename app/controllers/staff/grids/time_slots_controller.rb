@@ -6,15 +6,21 @@ class Staff::Grids::TimeSlotsController < Staff::ApplicationController
   helper_method :time_slot_decorated
 
   def edit
+    render partial: 'edit_dialog', locals: {time_slot: time_slot_decorated, event: current_event}
   end
 
   def update
     respond_to do |format|
       if @time_slot.update(time_slot_params)
         format.json { render json: update_response.merge(status: :ok) }
+        format.turbo_stream { flash.now[:info] = "Time slot updated." }
         format.html { flash.now[:info] = "Time slot updated." }
       else
         format.json { render json: update_response.merge({ errors: @time_slot.errors.full_messages, status: :bad_request }) }
+        format.turbo_stream do
+          flash.now[:danger] = "There was a problem saving this time slot."
+          render :update_error, status: :unprocessable_entity
+        end
         format.html { flash.now[:danger] = "There was a problem saving this time slot." }
       end
     end

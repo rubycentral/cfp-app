@@ -1,6 +1,6 @@
 .modal-dialog
   .modal-content
-    = simple_form_for [event, :staff, :schedule, :grid, time_slot], remote: true, html: {role: 'form'} do |f|
+    = simple_form_for [event, :staff, :schedule, :grid, time_slot], data: {turbo: true, action: 'turbo:submit-end->modal-form#submitEnd'}, html: {role: 'form'} do |f|
       .modal-header
         .col-xs-6
           %h3 Edit Time Slot

@@ -228,7 +228,18 @@ export default class extends Controller {
     const url = $card.data('showPath')
     const scheduled = $card.data('scheduled')
     if (url && !scheduled) {
-      $.ajax({ url: url })
+      fetch(url, {
+        headers: {
+          'Accept': 'text/vnd.turbo-stream.html, text/html',
+          'Turbo-Frame': 'program-session-show-dialog'
+        }
+      }).then(response => response.text())
+        .then(html => {
+          const frame = document.getElementById('program-session-show-dialog').querySelector('turbo-frame')
+          if (frame) {
+            frame.innerHTML = html
+          }
+        })
     }
   }
 
@@ -295,7 +306,18 @@ export default class extends Controller {
     const url = slot.dataset.editPath
     if (!url || url.length === 0) return
 
-    $.ajax({ url: url })
+    fetch(url, {
+      headers: {
+        'Accept': 'text/vnd.turbo-stream.html, text/html',
+        'Turbo-Frame': 'grid-time-slot-edit-dialog'
+      }
+    }).then(response => response.text())
+      .then(html => {
+        const dialog = document.getElementById('grid-time-slot-edit-dialog')
+        dialog.innerHTML = html
+        window.Schedule.TimeSlots.initDialog($(dialog))
+        $(dialog).modal('show')
+      })
   }
 
   setupScrollHandlers() {

@@ -2,7 +2,7 @@
   "name": "app",
   "private": true,
   "dependencies": {
-    "@hotwired/turbo": "^8.0.20",
+    "@hotwired/turbo-rails": "^8.0.20",
     "@tailwindcss/postcss": "^4.1.17",
     "autoprefixer": "^10.4.22",
     "bootstrap": "3.4.1",

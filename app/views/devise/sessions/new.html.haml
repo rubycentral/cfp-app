@@ -22,4 +22,4 @@
         .col-sm-5.col-centered
           .well.clearfix
             .form-group
-              = link_to 'Developer Login', '/users/auth/developer', class: 'btn btn-danger', method: :post
+              = link_to 'Developer Login', '/users/auth/developer', class: 'btn btn-danger', data: {turbo: true, turbo_method: :post}

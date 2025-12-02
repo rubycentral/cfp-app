@@ -39,10 +39,10 @@ class Staff::TeammatesController < Staff::ApplicationController
     teammate = current_event.teammates.find(params[:id])
     if teammate.destroy
       redirect_to event_staff_teammates_path(current_event),
-        flash: { info: "#{teammate.email} was removed." }
+        flash: { info: "#{teammate.email} was removed." }, status: :see_other
     else
       redirect_to event_staff_teammates_path(current_event),
-        flash: { danger: "There was a problem removing #{teammate.email}." }
+        flash: { danger: "There was a problem removing #{teammate.email}." }, status: :see_other
     end
   end
 

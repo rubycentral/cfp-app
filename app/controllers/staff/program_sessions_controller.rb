@@ -69,15 +69,15 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
     else
       flash[:danger] = "There was a problem promoting this program session."
     end
-    redirect_to event_staff_program_sessions_path(current_event)
+    redirect_to event_staff_program_sessions_path(current_event), status: :see_other
   end
 
   def destroy
     @program_session = current_event.program_sessions.find(params[:id])
     authorize @program_session
     @program_session.destroy
-    redirect_to event_staff_program_sessions_path(event)
     flash[:info] = "Program session was successfully deleted."
+    redirect_to event_staff_program_sessions_path(event), status: :see_other
   end
 
   def confirm_for_speaker
@@ -85,7 +85,7 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
     authorize @program_session
     @program_session.proposal.confirm
 
-    redirect_to event_staff_program_session_path(current_event, @program_session)
+    redirect_to event_staff_program_session_path(current_event, @program_session), status: :see_other
   end
 
   private

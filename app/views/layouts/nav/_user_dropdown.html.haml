@@ -9,6 +9,6 @@
         %i.fa.fa-user
         %span My Profile
     %li
-      = link_to destroy_user_session_path, method: :delete do
+      = link_to destroy_user_session_path, data: {turbo: true, turbo_method: :delete} do
         %i.fa.fa-sign-out
         %span Sign Out

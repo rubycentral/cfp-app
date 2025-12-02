@@ -5,7 +5,7 @@ class Staff::ProposalDecorator < ProposalDecorator
     if new_state == object.state
       h.content_tag :span, new_state, class: 'disabled-state'
     else
-      h.link_to new_state, update_state_path(new_state), method: :post
+      h.link_to new_state, update_state_path(new_state), data: {turbo: true, turbo_method: :post}
     end
   end
 
@@ -52,7 +52,7 @@ class Staff::ProposalDecorator < ProposalDecorator
     h.button_to h.event_staff_program_proposal_path,
       method: :delete,
       data: {
-        confirm:
+        turbo_confirm:
           'This will delete this talk. Are you sure you want to do this? It can not be undone.'
       },
       class: 'btn btn-danger navbar-btn',
@@ -88,12 +88,11 @@ class Staff::ProposalDecorator < ProposalDecorator
     state_button('Finalize State',
                  h.event_staff_program_proposal_finalize_path(object.event, object),
                  data: {
-                   confirm:
+                   turbo_confirm:
                      'Finalizing the state will prevent any additional state changes, and emails will be sent to all speakers. Are you sure you want to continue?'
                  },
                  type: 'btn-warning',
                  hidden: finalize_button_hidden?,
-                 remote: false,
                  id: 'finalize')
   end
 
@@ -106,7 +105,7 @@ class Staff::ProposalDecorator < ProposalDecorator
   def hard_reset_button
     state_button('Hard Reset', update_state_path(SUBMITTED),
                  data: {
-                     confirm:
+                     turbo_confirm:
                          "This proposal's status has been finalized. Proceed with status reset?"
                  },
                  small: true,

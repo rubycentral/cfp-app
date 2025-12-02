@@ -121,7 +121,7 @@ class Staff::EventsController < Staff::ApplicationController
     else
       flash['danger alert-confirm'] = "There was a problem opening your CFP: #{@event.errors.full_messages.to_sentence}"
     end
-    redirect_to event_staff_path(@event)
+    redirect_to event_staff_path(@event), status: :see_other
   end
 
   def test_speaker_template

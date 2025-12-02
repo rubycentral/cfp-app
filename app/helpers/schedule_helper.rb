@@ -26,8 +26,7 @@ module ScheduleHelper
     link_to('Generate Grid',
             new_event_staff_schedule_grid_bulk_time_slot_path(current_event, day),
             class: 'btn btn-primary btn-sm generate-grid',
-            remote: true,
-            data: {toggle: 'modal', target: '#bulk-time-slot-create-dialog'}
+            data: {turbo: true, toggle: 'modal', target: '#bulk-time-slot-create-dialog'}
     )
   end
 

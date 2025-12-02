@@ -32,6 +32,6 @@
                 %td= event.opens_at.to_fs(:long_with_zone) unless event.opens_at.blank?
                 %td= event.closes_at.to_fs(:long_with_zone) unless event.closes_at.blank?
                 - if event.current?
-                  %td= link_to "Archive", admin_event_archive_path(event_slug: event.slug), method: :post, class: "btn btn-danger btn-xs", data: {confirm: "This will hide this event from reviewers and organizers. Would you like to continue?" }
+                  %td= link_to "Archive", admin_event_archive_path(event_slug: event.slug), data: {turbo: true, turbo_method: :post, turbo_confirm: "This will hide this event from reviewers and organizers. Would you like to continue?"}, class: "btn btn-danger btn-xs"
                 - else
-                  %td= link_to "Unarchive", admin_event_unarchive_path(event_slug: event.slug), method: :post, class: "btn btn-success btn-xs"
+                  %td= link_to "Unarchive", admin_event_unarchive_path(event_slug: event.slug), data: {turbo: true, turbo_method: :post}, class: "btn btn-success btn-xs"

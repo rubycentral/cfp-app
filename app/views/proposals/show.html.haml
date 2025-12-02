@@ -26,7 +26,7 @@
           - if proposal.speaker_can_withdraw?(current_user)
             = proposal.withdraw_button
           - if proposal.speaker_can_delete?(current_user)
-            = link_to event_proposal_path, method: :delete, data: {confirm: 'This will delete your talk. Are you sure you want to do this? It can not be undone.'}, class: 'btn btn-warning', id: 'delete' do
+            = link_to event_proposal_path, data: {turbo: true, turbo_method: :delete, turbo_confirm: 'This will delete your talk. Are you sure you want to do this? It can not be undone.'}, class: 'btn btn-warning', id: 'delete' do
               %span.glyphicon.glyphicon-exclamation-sign
               Delete Proposal
 
@@ -95,9 +95,8 @@
                               class: 'btn btn-xs btn-primary'
                           = link_to 'Remove',
                             invitation_path(invitation_slug: invitation.slug, proposal_uuid: proposal.uuid),
-                            method: :delete,
                             class: 'btn btn-xs btn-danger',
-                            data: {confirm: 'Are you sure you want to remove this invitation?'}
+                            data: {turbo: true, turbo_method: :delete, turbo_confirm: 'Are you sure you want to remove this invitation?'}
 
                 %hr
               .new-speaker-invite

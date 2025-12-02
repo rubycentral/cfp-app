@@ -108,9 +108,10 @@ class ProposalDecorator < ApplicationDecorator
   def withdraw_button
     h.link_to h.bang('Withdraw Proposal'),
       h.withdraw_event_proposal_path(uuid: object, event_slug: object.event.slug),
-      method: :post,
       data: {
-        confirm: 'This will remove your talk from consideration and send an email to the event coordinator. Are you sure you want to do this?'
+        turbo: true,
+        turbo_method: :post,
+        turbo_confirm: 'This will remove your talk from consideration and send an email to the event coordinator. Are you sure you want to do this?'
       },
       class: 'btn btn-warning',
       id: 'withdraw'
@@ -119,16 +120,17 @@ class ProposalDecorator < ApplicationDecorator
   def confirm_button
     h.link_to 'Confirm',
               h.confirm_event_proposal_path(uuid: object, event_slug: object.event.slug),
-              method: :post,
+              data: {turbo: true, turbo_method: :post},
               class: 'btn btn-success'
   end
 
   def decline_button
     h.link_to h.bang('Decline'),
               h.decline_event_proposal_path(uuid: object, event_slug: object.event.slug),
-              method: :post,
               data: {
-                  confirm: 'This will remove your talk from consideration and notify the event staff. Are you sure you want to do this?'
+                turbo: true,
+                turbo_method: :post,
+                turbo_confirm: 'This will remove your talk from consideration and notify the event staff. Are you sure you want to do this?'
               },
               class: 'btn btn-warning'
   end
@@ -175,7 +177,7 @@ class ProposalDecorator < ApplicationDecorator
   end
 
   def standalone_track_select(tooltip)
-    h.simple_form_for :proposal, remote: true do |f|
+    h.simple_form_for :proposal do |f|
       f.input :track,
         required: false,
         label_html: { class: 'info-item-heading' },
@@ -194,7 +196,7 @@ class ProposalDecorator < ApplicationDecorator
   end
 
   def standalone_format_select(tooltip)
-    h.simple_form_for :proposal, remote: true do |f|
+    h.simple_form_for :proposal do |f|
       f.input :format,
         required: false,
         label_html: { class: 'info-item-heading' },

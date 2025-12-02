@@ -50,7 +50,7 @@ class Staff::TracksController < Staff::ApplicationController
     @track.destroy
     respond_to do |format|
       format.turbo_stream
-      format.html { redirect_to event_staff_config_path(current_event) }
+      format.html { redirect_to event_staff_config_path(current_event), status: :see_other }
     end
   end
 

@@ -51,7 +51,7 @@ class InvitationsController < ApplicationController
 
   def destroy
     @invitation.destroy
-    redirect_back fallback_location: event_proposal_path(@proposal.event, uuid: @proposal)
+    redirect_back fallback_location: event_proposal_path(@proposal.event, uuid: @proposal), status: :see_other
   end
 
   def resend

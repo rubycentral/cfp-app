@@ -36,7 +36,7 @@ class Staff::ProposalsController < Staff::ApplicationController
     @proposal.update_state(params[:new_state])
 
     respond_to do |format|
-      format.html { redirect_to event_staff_program_proposals_path(@proposal.event) }
+      format.html { redirect_to event_staff_program_proposals_path(@proposal.event), status: :see_other }
       format.turbo_stream
     end
   end
@@ -84,7 +84,7 @@ class Staff::ProposalsController < Staff::ApplicationController
     else
       flash[:danger] = "There was a problem finalizing the proposal: #{@proposal.errors.full_messages.join(', ')}"
     end
-    redirect_to event_staff_program_proposal_path(@proposal.event, @proposal)
+    redirect_to event_staff_program_proposal_path(@proposal.event, @proposal), status: :see_other
   end
 
   def bulk_finalize

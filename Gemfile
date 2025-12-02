@@ -60,23 +60,19 @@ end
 
 group :development do
   gem 'annotate'
-  gem 'better_errors'
   gem 'binding_of_caller'
   gem 'foreman'
   gem 'haml-rails'
   gem 'launchy'
   gem 'rack-mini-profiler'
-  gem 'web-console'
 end
 
 group :development, :test do
   gem 'capybara', '~> 3.37'
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
-  gem 'guard'
-  gem 'guard-livereload', '~> 2.1'
-  gem 'guard-rspec'
   gem 'rspec'
   gem 'rspec-rails'
   gem 'selenium-webdriver'
+  gem 'debug'
 end

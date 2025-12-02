@@ -2,11 +2,12 @@
  * Application styles
  *
  *= require bootstrap/dist/css/bootstrap
+ *= require bootstrap-icons/font/bootstrap-icons
  *= require base/css-colors
  *= require base/bootstrap-overrides
  *
  *= require tributejs/dist/tribute
- *= require datatables.net-bs/css/dataTables.bootstrap
+ *= require datatables.net-bs5/css/dataTables.bootstrap5
  *= require tom-select/dist/css/tom-select.default
  *
  *= require base/base

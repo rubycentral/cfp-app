@@ -52,7 +52,7 @@ class Staff::ProposalDecorator < ProposalDecorator
     h.button_to h.event_staff_program_proposal_path,
       method: :delete,
       data: {
-        confirm:
+        turbo_confirm:
           'This will delete this talk. Are you sure you want to do this? It can not be undone.'
       },
       class: 'btn btn-danger navbar-btn',

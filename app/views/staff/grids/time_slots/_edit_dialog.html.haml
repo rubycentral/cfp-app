@@ -2,9 +2,9 @@
   .modal-content
     = simple_form_for [event, :staff, :schedule, :grid, time_slot], data: {turbo: true, action: 'turbo:submit-end->modal-form#submitEnd'}, html: {role: 'form'} do |f|
       .modal-header
-        .col-xs-6
+        .col-6
           %h3 Edit Time Slot
-        .col-xs-6.text-right
+        .col-6.text-end
           .time-slot-info
             = "Day #{time_slot.conference_day}, "
             = "#{time_slot.start_time} - #{time_slot.end_time}, "

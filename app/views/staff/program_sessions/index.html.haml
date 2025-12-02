@@ -27,7 +27,7 @@
   .col-md-4.text-end
     - if current_user.organizer_for_event?(current_event)
       = link_to event_staff_program_sessions_path(format: "json"), class: "btn btn-info btn-sm" do
-        %span.glyphicon.glyphicon-download-alt
+        %span.bi.bi-download
         Download as JSON
       = copy_email_btn
       = link_to "+ New Session", new_event_staff_program_session_path(current_event), class: "btn btn-success btn-sm"

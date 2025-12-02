@@ -5,7 +5,7 @@
         = link_to event_staff_program_session_path(current_event, @program_session),
           data: {turbo: true, turbo_method: :delete, turbo_confirm: 'This will delete this talk. Are you sure you want to do this? ' + 'It can not be undone.'},
           class: 'btn btn-danger navbar-btn', id: 'delete' do
-          %span.glyphicon.glyphicon-exclamation-sign
+          %span.bi.bi-exclamation-circle
           Delete Program Session
       %h1 Edit Program Session
 

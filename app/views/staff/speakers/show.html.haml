@@ -23,7 +23,7 @@
         .btn-navbar.float-end
           - if current_user.organizer_for_event?(current_event)
             = link_to edit_event_staff_program_speaker_path(current_event, @speaker), class: 'btn btn-primary' do
-              %span.glyphicon.glyphicon-edit
+              %span.bi.bi-pencil
               Edit
         %h1 Speaker Profile
 

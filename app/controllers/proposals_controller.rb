@@ -46,25 +46,25 @@ class ProposalsController < ApplicationController
   def confirm
     @proposal.confirm
     flash[:success] = "You have confirmed your participation in #{@proposal.event.name}."
-    redirect_to event_proposal_path(slug: @proposal.event.slug, uuid: @proposal)
+    redirect_to event_proposal_path(slug: @proposal.event.slug, uuid: @proposal), status: :see_other
   end
 
   def withdraw
     @proposal.withdraw unless @proposal.confirmed?
     flash[:info] = "As requested, your talk has been removed for consideration."
-    redirect_to event_proposal_url(slug: @proposal.event.slug, uuid: @proposal)
+    redirect_to event_proposal_url(slug: @proposal.event.slug, uuid: @proposal), status: :see_other
   end
 
   def decline
     @proposal.decline
     flash[:info] = "As requested, your talk has been removed for consideration."
-    redirect_to event_proposal_url(slug: @proposal.event.slug, uuid: @proposal)
+    redirect_to event_proposal_url(slug: @proposal.event.slug, uuid: @proposal), status: :see_other
   end
 
   def destroy
     @proposal.destroy
     flash[:info] = "Your proposal has been deleted."
-    redirect_to event_proposals_url
+    redirect_to event_proposals_url, status: :see_other
   end
 
   def create

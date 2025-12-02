@@ -33,8 +33,8 @@ class Staff::SponsorsController < Staff::ApplicationController
   def destroy
     @sponsor = current_event.sponsors.find(params[:id])
     @sponsor.destroy
-    redirect_to event_staff_sponsors_path
     flash[:info] = "Sponsor was successfully removed."
+    redirect_to event_staff_sponsors_path, status: :see_other
   end
 
   private

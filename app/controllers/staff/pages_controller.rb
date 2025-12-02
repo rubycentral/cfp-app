@@ -42,19 +42,19 @@ class Staff::PagesController < Staff::ApplicationController
     @page.update(published_body: @page.unpublished_body,
                  body_published_at: Time.current)
     flash[:success] = "#{@page.name} Page was successfully published."
-    redirect_to event_staff_pages_path(current_event)
+    redirect_to event_staff_pages_path(current_event), status: :see_other
   end
 
   def promote
     Page.promote(@page)
     flash[:success] = "#{@page.name} Page was successfully promoted."
-    redirect_to event_staff_pages_path(current_event)
+    redirect_to event_staff_pages_path(current_event), status: :see_other
   end
 
   def destroy
     @page.destroy
     flash[:success] = "#{@page.name} Page was successfully destroyed."
-    redirect_to event_staff_pages_path(current_event)
+    redirect_to event_staff_pages_path(current_event), status: :see_other
   end
 
   private

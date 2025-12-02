@@ -29,7 +29,7 @@ class Admin::UsersController < Admin::ApplicationController
   # DELETE /admin/users/1
   def destroy
     @user.destroy
-    redirect_to admin_users_url, flash: { info: "User account for #{@user.name} was successfully deleted." }
+    redirect_to admin_users_url, flash: { info: "User account for #{@user.name} was successfully deleted." }, status: :see_other
   end
 
   private

@@ -1,8 +1,9 @@
 import { Controller } from "@hotwired/stimulus"
+import { Modal } from "bootstrap"
 
 export default class extends Controller {
   connect() {
-    const $modal = $(this.element).closest('.modal')
+    const modalElement = this.element.closest('.modal')
     const $dialog = $(this.element)
 
     // Initialize the bulk dialog - sync session format with duration
@@ -19,8 +20,9 @@ export default class extends Controller {
       }
     })
 
-    if (!$modal.hasClass('in')) {
-      $modal.modal('show')
+    if (!modalElement.classList.contains('show')) {
+      const modal = Modal.getOrCreateInstance(modalElement)
+      modal.show()
     }
   }
 }

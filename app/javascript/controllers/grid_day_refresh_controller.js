@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import { Modal } from "bootstrap"
 
 export default class extends Controller {
   static values = {
@@ -22,7 +23,9 @@ export default class extends Controller {
     }
 
     // Close the modal
-    $('#bulk-time-slot-create-dialog').modal('hide')
+    const modalElement = document.getElementById('bulk-time-slot-create-dialog')
+    const modal = Modal.getInstance(modalElement)
+    if (modal) modal.hide()
 
     this.element.remove()
   }

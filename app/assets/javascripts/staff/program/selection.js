@@ -42,8 +42,8 @@ $(function() {
   }
 
   function setupPopovers() {
-    $('[data-toggle="popover"]').popover({
-      container: 'body',
+    document.querySelectorAll('[data-bs-toggle="popover"]').forEach(function(el) {
+      new bootstrap.Popover(el, { container: 'body' });
     });
   }
 

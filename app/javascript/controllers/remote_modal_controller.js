@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import { Modal } from "bootstrap"
 
 export default class extends Controller {
   static targets = ["modal", "content"]
@@ -6,7 +7,8 @@ export default class extends Controller {
   connect() {
     this.observer = new MutationObserver(() => {
       if (this.contentTarget.querySelector('[data-hide-modal]')) {
-        $(this.modalTarget).modal('hide')
+        const modal = Modal.getInstance(this.modalTarget)
+        if (modal) modal.hide()
       }
     })
     this.observer.observe(this.contentTarget, {childList: true})
@@ -29,7 +31,8 @@ export default class extends Controller {
     .then(response => response.text())
     .then(html => {
       this.contentTarget.innerHTML = html
-      $(this.modalTarget).modal('show')
+      const modal = Modal.getOrCreateInstance(this.modalTarget)
+      modal.show()
     })
   }
 }

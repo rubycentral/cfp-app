@@ -1,4 +1,5 @@
 import { Controller } from 'stimulus'
+import { Modal } from 'bootstrap'
 
 // These are available globally from the Rails asset pipeline
 const moment = window.moment
@@ -316,7 +317,8 @@ export default class extends Controller {
         const dialog = document.getElementById('grid-time-slot-edit-dialog')
         dialog.innerHTML = html
         window.Schedule.TimeSlots.initDialog($(dialog))
-        $(dialog).modal('show')
+        const modal = Modal.getOrCreateInstance(dialog)
+        modal.show()
       })
   }
 

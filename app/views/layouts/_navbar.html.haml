@@ -1,18 +1,15 @@
-.navbar.navbar-default.navbar-fixed-top
+.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
   .container-fluid
-    .navbar-header
-      %button.navbar-toggle{ type: "button", data: { bs_toggle: "collapse", bs_target: ".navbar-collapse" } }
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
-      - if current_event
-        = link_to "#{current_event.name} CFP", event_path(current_event), class: 'navbar-brand'
-      - else
-        = link_to "CFP App", events_path, class: 'navbar-brand'
+    - if current_event
+      = link_to "#{current_event.name} CFP", event_path(current_event), class: 'navbar-brand'
+    - else
+      = link_to "CFP App", events_path, class: 'navbar-brand'
+    %button.navbar-toggler{ type: "button", data: { bs_toggle: "collapse", bs_target: ".navbar-collapse" }, aria: { controls: "navbarNav", expanded: "false", label: "Toggle navigation" } }
+      %span.navbar-toggler-icon
 
-    .collapse.navbar-collapse
+    .collapse.navbar-collapse#navbarNav
       - if current_user
-        %ul.nav.navbar-nav.navbar-right
+        %ul.navbar-nav.ms-auto
           - roles = current_user.teammates.where(event_id: current_event).pluck(:role)
 
           - if speaker_nav?
@@ -57,8 +54,8 @@
           = render partial: "layouts/nav/user_dropdown"
 
       - else
-        %ul.nav.navbar-nav.navbar-right
-          %li= link_to "Log in", new_user_session_path
+        %ul.navbar-nav.ms-auto
+          %li.nav-item= link_to "Log in", new_user_session_path, class: 'nav-link'
 
 - if display_staff_event_subnav?
   = render partial: "layouts/nav/staff/event_subnav"

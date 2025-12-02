@@ -24,4 +24,3 @@ class Staff::ProfilesController < Staff::ApplicationController
     params.require(:user).permit(:bio, :gender, :ethnicity, :country, :name, :email)
   end
 end
-

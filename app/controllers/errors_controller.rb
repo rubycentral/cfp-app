@@ -13,4 +13,3 @@ class ErrorsController < ApplicationController
   end
 
 end
-

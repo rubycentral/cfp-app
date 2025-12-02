@@ -36,5 +36,3 @@ RSpec.describe PagePolicy do
     end
   end
 end
-
-

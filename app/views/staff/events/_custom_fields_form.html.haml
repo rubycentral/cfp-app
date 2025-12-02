@@ -4,6 +4,6 @@
     = f.input :custom_fields_string, label: false, autofocus: true,
       placeholder: 'Separate multiple fields with commas',
       hint: "This is a comma separated list of custom fields allowed for use on proposals."
-    .pull-right
+    .float-end
       = link_to 'Cancel', event_staff_config_path(@event), class: 'btn btn-default', data: {turbo: true, turbo_frame: 'custom-fields'}
       %button.btn.btn-primary{type: "submit"} Save

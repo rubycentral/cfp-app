@@ -5,7 +5,7 @@
   %td= session_format.public? ? "\u2713" : ""
   - unless !current_user.organizer_for_event?(event)
     %td
-      .pull-right
+      .float-end
         = link_to "Edit", edit_event_staff_session_format_path(event, session_format), data: {action: 'remote-modal#open'},
           class: "btn btn-primary btn-xs"
         = link_to "Remove", event_staff_session_format_path(event, session_format),

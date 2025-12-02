@@ -2,8 +2,8 @@
   = turbo_frame_tag 'custom-fields' do
     - if event.custom_fields_string.empty? && current_user.organizer_for_event?(event)
       = link_to "Add", event_staff_custom_fields_path(event),
-        data: {turbo: true, turbo_frame: 'custom-fields'}, class: "btn btn-success btn-sm pull-right add-custom-fields"
+        data: {turbo: true, turbo_frame: 'custom-fields'}, class: "btn btn-success btn-sm float-end add-custom-fields"
     - else
       %p= event.custom_fields_string
       = link_to "Edit", event_staff_custom_fields_path(event),
-        data: {turbo: true, turbo_frame: 'custom-fields'}, class: "btn btn-primary btn-sm pull-right edit-custom-fields" unless !current_user.organizer_for_event?(event)
+        data: {turbo: true, turbo_frame: 'custom-fields'}, class: "btn btn-primary btn-sm float-end edit-custom-fields" unless !current_user.organizer_for_event?(event)

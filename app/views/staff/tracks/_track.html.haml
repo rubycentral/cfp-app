@@ -16,7 +16,7 @@
 
   - unless !current_user.organizer_for_event?(event)
     %td
-      .pull-right
+      .float-end
         = link_to "Edit", edit_event_staff_track_path(event, track), data: {action: 'remote-modal#open'},
           class: "btn btn-primary btn-xs"
         = link_to "Remove", event_staff_track_path(event, track),

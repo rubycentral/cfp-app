@@ -16,7 +16,7 @@
           %span.event-meta
             CFP closes:
             %strong= event.closes_at(:month_day_year)
-    .col-md-4.text-right
+    .col-md-4.text-end
       .btn-nav
         = link_to(event_staff_proposals_path, class: "btn btn-primary btn-sm") do
           &laquo; Return to Proposals
@@ -28,7 +28,7 @@
       .col-md-8
         %h1
           = proposal.title
-      .col-sm-4.text-right
+      .col-sm-4.text-end
         .proposal-info-bar
           .proposal-meta.proposal-description
             .proposal-meta-item
@@ -55,7 +55,7 @@
               .proposal-meta-item.full-width
                 #current-format
                   .info-item-heading Format
-                  #format-name.pull-left
+                  #format-name.float-start
                     #{proposal.session_format_name}
                   - if track_and_format_edit
                     #edit-format-icon.fa.fa-pencil
@@ -67,7 +67,7 @@
               .proposal-meta-item.full-width
                 #current-track
                   .info-item-heading Track
-                  #track-name.pull-left
+                  #track-name.float-start
                     #{proposal.track_name}
                   - if track_and_format_edit
                     #edit-track-icon.fa.fa-pencil

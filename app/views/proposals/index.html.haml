@@ -22,7 +22,7 @@
               %span{:class => "event-status-badge event-status-#{event.status}"}
                 CFP
                 = event.status
-              %span.pull-right
+              %span.float-end
                 - if event.open?
                   = link_to 'Submit a proposal', new_event_proposal_path(event.slug), class: 'btn btn-primary btn-sm'
               .event-meta

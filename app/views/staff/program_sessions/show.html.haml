@@ -7,7 +7,7 @@
           %span.event-meta
             %i.fa.fa-fw.fa-calendar
             = current_event.date_range
-    .col-md-4.text-right.text-right-responsive
+    .col-md-4.text-end.text-end-responsive
       .event-info.event-info-dense
         %span{:class => "event-meta event-status-badge event-status-#{current_event.status}"}
           CFP
@@ -20,7 +20,7 @@
   .page-header.page-header-slim
     .row
       .col-md-12
-        .btn-navbar.pull-right
+        .btn-navbar.float-end
           - if current_user.organizer_for_event?(current_event)
             = link_to edit_event_staff_program_session_path(current_event, @program_session), class: 'btn btn-primary' do
               %span.glyphicon.glyphicon-edit
@@ -70,18 +70,18 @@
         %p= render 'confirmation_notes', program_session: program_session
       .program-session-item.session-speakers
         .session-speakers-header.clearfix
-          %h3.control-label.pull-left
+          %h3.control-label.float-start
             Speakers
           - if current_user.organizer_for_event?(current_event)
-            = link_to "Add Speaker", new_event_staff_program_session_speaker_path(current_event, program_session), class: "btn btn-success btn-xs pull-right new-speaker"
+            = link_to "Add Speaker", new_event_staff_program_session_speaker_path(current_event, program_session), class: "btn btn-success btn-xs float-end new-speaker"
         - @speakers.each do |speaker|
           %section
             .session-speaker-header.clearfix
-              .pull-left
+              .float-start
                 %b.speaker-name= link_to speaker.name, event_staff_program_speaker_path(current_event, speaker)
                 %p= speaker.email
               - if current_user.organizer_for_event?(current_event)
-                .session-speaker-actions.pull-right
+                .session-speaker-actions.float-end
                   .edit-session-speaker= link_to "Edit", edit_event_staff_program_speaker_path(current_event, speaker), class: "btn btn-primary btn-xs"
                   - if program_session.multiple_speakers?
                     .remove-session-speaker= link_to "Remove", event_staff_program_speaker_path(current_event, speaker), data: {turbo: true, turbo_method: :delete, turbo_confirm: "Are you sure you want to remove this speaker?"}, class: "btn btn-danger btn-xs"

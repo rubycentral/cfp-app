@@ -9,7 +9,7 @@
           = render partial: 'staff/time_slots/form',
               locals: {f: f, time_slot: time_slot}
         .modal-footer
-          %ul#form-flash.pull-left
+          %ul#form-flash.float-start
             - flash.map do |key, value|
               %li{class: "alert alert-#{key}"}= value
 

@@ -2,7 +2,7 @@
   .row
     .col-md-12
       .page-header.clearfix
-        .btn-nav.pull-right
+        .btn-nav.float-end
           = link_to("« Return to Speaker List", event_staff_program_speakers_path, class: "btn btn-primary", id: "back")
 
         %h1 New Speaker
@@ -24,5 +24,5 @@
             %p.help-block Bio is limited to 500 characters.
 
         .row.col-md-12.form-submit.btn-toolbar
-          %button.pull-right.btn.btn-success{:type => "submit"} Save
-          = link_to("Cancel", event_staff_program_session_path(current_event, @program_session), class: "button pull-right btn btn-danger")
+          %button.float-end.btn.btn-success{:type => "submit"} Save
+          = link_to("Cancel", event_staff_program_session_path(current_event, @program_session), class: "button float-end btn btn-danger")

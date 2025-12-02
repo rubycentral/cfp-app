@@ -7,7 +7,7 @@
           %span.event-meta
             %i.fa.fa-fw.fa-calendar
             = event.date_range
-    .col-md-4.text-right.text-right-responsive
+    .col-md-4.text-end.text-end-responsive
       .event-info.event-info-dense
         %span{:class => "event-meta event-status-badge event-status-#{event.status}"}
           CFP
@@ -23,7 +23,7 @@
   &nbsp;
 
 .row
-  .col-sm-8.text-left
+  .col-sm-8.text-start
     %ul.selection-counts
       %li.total.soft-accepted
         %span Accepted
@@ -31,8 +31,8 @@
       %li.total.soft-waitlisted
         %span Waitlisted
         %span.badge= @all_waitlisted_count
-  .col-sm-4.text-right
-    %small.text-right <em>Hint:</em> Hold <kbd>shift</kbd> to sort by multiple columns
+  .col-sm-4.text-end
+    %small.text-end <em>Hint:</em> Hold <kbd>shift</kbd> to sort by multiple columns
 
 .row
   .col-md-12

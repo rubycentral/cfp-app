@@ -4,6 +4,6 @@
     = f.input :valid_proposal_tags, label: false, autofocus: true,
       placeholder: "Separate multiple tags with commas",
       hint: "This is a comma separated list of tags allowed for use on proposals. These limits apply to publicly displayed tags and not to tags used internally by reviewers."
-    .pull-right
+    .float-end
       = link_to 'Cancel', event_staff_config_path(@event), class: 'btn btn-default', data: {turbo: true, turbo_frame: 'proposal-tags'}
       %button.btn.btn-primary{type: "submit"} Save

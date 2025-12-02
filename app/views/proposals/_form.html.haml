@@ -50,7 +50,7 @@
 
 = render partial: 'speakers/fields', locals: { f: f, event: event }
 
-.form-submit.clearfix.text-right
+.form-submit.clearfix.text-end
   - if proposal.persisted?
     = link_to "Cancel", event_proposal_path(event_slug: event.slug, uuid: proposal), {class: "btn btn-default btn-lg"}
   - else

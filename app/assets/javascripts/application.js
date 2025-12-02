@@ -11,7 +11,6 @@
 // about supported directives.
 //
 //= require jquery/dist/jquery
-//= require @rails/ujs/app/assets/javascripts/rails-ujs
 //= require bootstrap/dist/js/bootstrap
 //= require chartkick
 //= require datatables.net/js/jquery.dataTables

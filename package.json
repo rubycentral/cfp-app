@@ -12,7 +12,6 @@
     "@babel/preset-env": "^7.26.0",
     "@babel/runtime": "^7.26.0",
     "@hotwired/turbo": "^8.0.20",
-    "@rails/ujs": "^7.1.3-4",
     "babel-loader": "^9.2.1",
     "babel-plugin-macros": "^3.1.0",
     "bootstrap": "3.4.1",

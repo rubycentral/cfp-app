@@ -26,5 +26,3 @@ RSpec.describe WebsitePolicy do
     end
   end
 end
-
-

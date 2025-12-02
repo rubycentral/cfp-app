@@ -3,7 +3,6 @@ import { Controller } from 'stimulus'
 // These are available globally from the Rails asset pipeline
 const moment = window.moment
 const palette = window.palette
-const _ = window._
 
 export default class extends Controller {
   static targets = ['grid', 'ruler', 'timeSlot', 'columnHeader']
@@ -40,17 +39,15 @@ export default class extends Controller {
   }
 
   updateDayRange() {
-    const times = _.flatten(
-      this.timeSlotTargets.map(slot => {
-        const starts = parseInt(slot.dataset.starts)
-        const duration = parseInt(slot.dataset.duration)
-        return [starts, starts + duration]
-      })
-    )
+    const times = this.timeSlotTargets.flatMap(slot => {
+      const starts = parseInt(slot.dataset.starts)
+      const duration = parseInt(slot.dataset.duration)
+      return [starts, starts + duration]
+    })
 
     if (times.length > 0) {
-      this.dayStartValue = Math.min(this.dayStartValue, _.min(times))
-      this.dayEndValue = Math.max(this.dayEndValue, _.max(times))
+      this.dayStartValue = Math.min(this.dayStartValue, ...times)
+      this.dayEndValue = Math.max(this.dayEndValue, ...times)
     }
   }
 

@@ -1,7 +1,6 @@
-.alert.alert-info.bar
-  .col-xs-6
-    Previewing grid changes
-  .col.xs-6.text-right
+.generate-confirm
+  %span Previewing grid changes
+  .button-container
     = cancel_bulk_preview_button(bulk.day)
 
     = simple_form_for bulk, url: edit_event_staff_schedule_grid_bulk_time_slot_path(current_event),

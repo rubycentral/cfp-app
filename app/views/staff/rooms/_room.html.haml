@@ -7,7 +7,7 @@
   %td= room.grid_position
   %td.actions
     = link_to 'Edit', '#', class: 'btn btn-primary btn-sm',
-      data: { toggle: 'modal', target: "#room-edit-#{room.id}" }
+      data: { bs_toggle: 'modal', bs_target: "#room-edit-#{room.id}" }
 
     = link_to 'Remove', event_staff_schedule_room_path(event, room),
       data: {turbo: true, turbo_method: :delete, turbo_confirm: "Are you sure you want to remove this room?"},
@@ -26,4 +26,4 @@
               .modal-footer
                 .btn-toolbar
                   %button.float-end.btn.btn-primary{type: 'submit'} Save
-                  %button.btn.btn-secondary{'data-dismiss' => 'modal'} Cancel
+                  %button.btn.btn-secondary{'data-bs-dismiss' => 'modal'} Cancel

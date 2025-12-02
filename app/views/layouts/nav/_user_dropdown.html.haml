@@ -1,5 +1,5 @@
 %li.dropdown
-  %a.dropdown-toggle.gravatar-container{ href: "#", data: { toggle: "dropdown" } }
+  %a.dropdown-toggle.gravatar-container{ href: "#", data: { bs_toggle: "dropdown" } }
     = image_tag("https://www.gravatar.com/avatar/#{current_user.gravatar_hash}?s=25", class: 'user-dropdown-gravatar', alt: '')
     &nbsp; #{current_user.name}
     %b.caret

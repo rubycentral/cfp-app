@@ -57,7 +57,7 @@
               - if current_user.organizer_for_event?(current_event)
                 .float-end
                   = link_to "Invite New Teammate", "#", class: "btn btn-primary btn-sm invite-btn",
-                    data: { toggle: "modal", target: "#new-teammate-invitation" },
+                    data: { bs_toggle: "modal", bs_target: "#new-teammate-invitation" },
                     id: "invite-new-teammate"
               %i.fa.fa-envelope-o
               %h3 Team Invitations

@@ -11,5 +11,5 @@
           = f.input :email, label: 'Send To', as: :string, autofocus: true, input_html: {value: sticky_template_test_email || current_user.email}
 
         .modal-footer
-          %button.btn.btn-secondary{'data-dismiss' => 'modal', type: 'button'} Cancel
+          %button.btn.btn-secondary{'data-bs-dismiss' => 'modal', type: 'button'} Cancel
           %button.btn.btn-success{type: 'submit'} Send

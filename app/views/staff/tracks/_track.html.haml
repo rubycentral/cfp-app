@@ -3,7 +3,7 @@
   %td= truncate(track.description, length: 60)
   %td
     -if track.guidelines.present?
-      = link_to "#", data: { toggle: "modal", target: "#track-guidelines-#{track.id}" } do
+      = link_to "#", data: { bs_toggle: "modal", bs_target: "#track-guidelines-#{track.id}" } do
         %span.fa.fa-list-alt
 
       %div{ id: "track-guidelines-#{track.id}", class: 'modal fade' }

@@ -1,6 +1,6 @@
 %li.notifications-link.dropdown
   - unread_notifications = current_user.notifications.recent_unread.records
-  %a.dropdown-toggle{title: "Notifications Toggle", href: "#", data: { toggle: "dropdown" } }
+  %a.dropdown-toggle{title: "Notifications Toggle", href: "#", data: { bs_toggle: "dropdown" } }
     %i.fa.fa-envelope
     %span.badge= unread_notifications.length if unread_notifications.any?
 

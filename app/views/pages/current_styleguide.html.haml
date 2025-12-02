@@ -13,23 +13,23 @@
         .tabbable
           %ul.nav.nav-tabs
             %li.active
-              %a{"data-toggle" => "tab", :href => "#colors-tab"} Headers/Colors
+              %a{"data-bs-toggle" => "tab", :href => "#colors-tab"} Headers/Colors
             %li
-              %a{"data-toggle" => "tab", :href => "#formcontrols"} Form Controls
+              %a{"data-bs-toggle" => "tab", :href => "#formcontrols"} Form Controls
             %li
-              %a{"data-toggle" => "tab", :href => "#jscontrols"} Alerts/Modals
+              %a{"data-bs-toggle" => "tab", :href => "#jscontrols"} Alerts/Modals
             %li
-              %a{"data-toggle" => "tab", :href => "#buttons-examples"} Buttons
+              %a{"data-bs-toggle" => "tab", :href => "#buttons-examples"} Buttons
             %li
-              %a{"data-toggle" => "tab", :href => "#tables-examples"} Tables
+              %a{"data-bs-toggle" => "tab", :href => "#tables-examples"} Tables
             %li
-              %a{"data-toggle" => "tab", :href => "#discussion-example"} Discussions
+              %a{"data-bs-toggle" => "tab", :href => "#discussion-example"} Discussions
             %li
-              %a{"data-toggle" => "tab", :href => "#shortcuts-example"} Shortcuts / Stats
+              %a{"data-bs-toggle" => "tab", :href => "#shortcuts-example"} Shortcuts / Stats
             %li
-              %a{"data-toggle" => "tab", :href => "#cal-news-example"} Calendar / News
+              %a{"data-bs-toggle" => "tab", :href => "#cal-news-example"} Calendar / News
             %li
-              %a{"data-toggle" => "tab", :href => "#ui-components"} UI Elements
+              %a{"data-bs-toggle" => "tab", :href => "#ui-components"} UI Elements
 
 
           .tab-content
@@ -208,7 +208,7 @@
                     .col-sm-6
                       .input-group
                         .input-group-text
-                          %button.btn.btn-secondary.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+                          %button.btn.btn-secondary.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-bs-toggle" => "dropdown", :type => "button"}
                             Action
                             %span.caret
                           %ul.dropdown-menu
@@ -229,7 +229,7 @@
                       .input-group
                         %input.form-control{"aria-label" => "...", :type => "text"}
                           .input-group-text
-                            %button.btn.btn-secondary.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+                            %button.btn.btn-secondary.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-bs-toggle" => "dropdown", :type => "button"}
                               Action
                               %span.caret
                             %ul.dropdown-menu.dropdown-menu-end
@@ -253,7 +253,7 @@
                         %a.btn.btn-primary{:href => "#"}
                           %i.glyphicon.glyphicon-user.icon-white
                           User
-                        %a.btn.btn-primary.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                        %a.btn.btn-primary.dropdown-toggle{"data-bs-toggle" => "dropdown", :href => "#"}
                           %span.caret
                         %ul.dropdown-menu
                           %li
@@ -304,17 +304,17 @@
                     %label.control-label Alerts
                     .controls
                       .alert.alert-danger
-                        %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+                        %button.close{"data-bs-dismiss" => "alert", :type => "button"} &times;
                         %strong Danger!
                       .alert.alert-success
-                        %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+                        %button.close{"data-bs-dismiss" => "alert", :type => "button"} &times;
                         %strong Success!
                         %a.alert-link{:href => "#"} Linking to something in an alert
                       .alert.alert-info
-                        %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+                        %button.close{"data-bs-dismiss" => "alert", :type => "button"} &times;
                         %strong Info!
                       .alert.alert-warning
-                        %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+                        %button.close{"data-bs-dismiss" => "alert", :type => "button"} &times;
                         %strong Warning!
                     / /controls
                   / /form-group
@@ -365,7 +365,7 @@
                     %label.control-label Modals
                     .controls
                       / Button to trigger modal
-                      %a.btn.btn-secondary{"data-toggle" => "modal", :href => "#myModal", :role => "button"}
+                      %a.btn.btn-secondary{"data-bs-toggle" => "modal", :href => "#myModal", :role => "button"}
                         %i.glyphicon.glyphicon-modal-window
                         Launch demo modal
                       / Modal
@@ -373,12 +373,12 @@
                         .modal-dialog
                           .modal-content
                             .modal-header
-                              %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+                              %button.close{"aria-hidden" => "true", "data-bs-dismiss" => "modal", :type => "button"} ×
                               %h3#myModalLabel Hi Friend!
                             .modal-body
                               %p Content
                             .modal-footer
-                              %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+                              %button.btn{"aria-hidden" => "true", "data-bs-dismiss" => "modal"} Close
                               %button.btn.btn-primary Save
                       / end myModal
                     / /controls
@@ -634,7 +634,7 @@
                             %span.time 1 hour ago
                             .options_arrow
                               .dropdown.float-end
-                                %a#dLabel.dropdown-toggle{"data-target" => "#", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+                                %a#dLabel.dropdown-toggle{"data-bs-target" => "#", "data-bs-toggle" => "dropdown", :href => "#", :role => "button"}
                                   %span.caret
                                 %ul.dropdown-menu{"aria-labelledby" => "dLabel", :role => "menu"}
                                   %li

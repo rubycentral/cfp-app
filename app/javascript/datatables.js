@@ -1,7 +1,7 @@
-// Import DataTables and Bootstrap 3 styling
+// Import DataTables and Bootstrap 5 styling
 // jQuery is provided as external from Sprockets (jquery-rails gem)
 import 'datatables.net'
-import 'datatables.net-bs'
+import 'datatables.net-bs5'
 
-// Import DataTables Bootstrap 3 CSS
-import 'datatables.net-bs/css/dataTables.bootstrap.css'
+// Import DataTables Bootstrap 5 CSS
+import 'datatables.net-bs5/css/dataTables.bootstrap5.css'

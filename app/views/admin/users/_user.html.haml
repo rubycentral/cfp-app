@@ -7,4 +7,4 @@
   %td.actions
     = link_to 'Edit', edit_admin_user_path(user), class: 'btn btn-primary btn-xs'
     - unless user == current_user
-      = link_to 'Delete', admin_user_path(user), method: :delete, data: { confirm: "Are you sure you want to delete this user?" }, class: 'btn btn-danger btn-xs'
+      = link_to 'Delete', admin_user_path(user), data: {turbo: true, turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this user?"}, class: 'btn btn-danger btn-xs'

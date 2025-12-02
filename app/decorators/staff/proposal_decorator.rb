@@ -5,7 +5,7 @@ class Staff::ProposalDecorator < ProposalDecorator
     if new_state == object.state
       h.content_tag :span, new_state, class: 'disabled-state'
     else
-      h.link_to new_state, update_state_path(new_state), method: :post
+      h.link_to new_state, update_state_path(new_state), data: {turbo: true, turbo_method: :post}
     end
   end
 
@@ -106,7 +106,7 @@ class Staff::ProposalDecorator < ProposalDecorator
   def hard_reset_button
     state_button('Hard Reset', update_state_path(SUBMITTED),
                  data: {
-                     confirm:
+                     turbo_confirm:
                          "This proposal's status has been finalized. Proceed with status reset?"
                  },
                  small: true,

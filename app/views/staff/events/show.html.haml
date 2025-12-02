@@ -104,9 +104,9 @@
             %strong.text-primary No CFP Statistics
             - if event.checklist_complete?
               - if current_user.organizer_for_event?(current_event)
-                = link_to "Open CFP", event_staff_open_cfp_path(current_event), method: :patch,
+                = link_to "Open CFP", event_staff_open_cfp_path(current_event),
                   class: "btn btn-success btn-lg cfp-button",
-                  data: {confirm: "Are you sure you'd like to open the CFP?" }
+                  data: {turbo: true, turbo_method: :patch, turbo_confirm: "Are you sure you'd like to open the CFP?"}
               - else
                 %button.btn.btn-lg.cfp-button.disabled Open CFP
                 %p.incomplete-msg You must be an organizer to open CFP

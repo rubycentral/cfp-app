@@ -19,6 +19,5 @@
       class: 'btn btn-primary')
     = link_to("Publish",
       publish_event_staff_page_path(current_event, @page),
-      method: :patch,
-      data: { confirm: "Are you sure you want to publish?" },
+      data: {turbo: true, turbo_method: :patch, turbo_confirm: "Are you sure you want to publish?"},
       class: 'btn btn-primary')

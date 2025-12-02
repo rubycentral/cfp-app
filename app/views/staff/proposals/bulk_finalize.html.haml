@@ -25,10 +25,8 @@
                   %td.col-sm-9= "#{proposals.last.count} #{proposals.first} proposal".pluralize(proposals.last.count)
                   %td.col-sm-3.text-center
                     = link_to "Finalize", finalize_by_state_event_staff_program_proposals_path(event, proposals_state: proposals.first),
-                      method: :post,
-                      data: { confirm: "This will finalize #{proposals.last.count} proposal".pluralize(proposals.last.count) + " in the #{proposals.first} state. Proceed?" },
-                      class: "btn btn-danger btn-sm",
-                      remote: true
+                      data: {turbo: true, turbo_method: :post, turbo_confirm: "This will finalize #{proposals.last.count} proposal".pluralize(proposals.last.count) + " in the #{proposals.first} state. Proceed?"},
+                      class: "btn btn-danger btn-sm"
 
 :javascript
   registerNotificationChannel();

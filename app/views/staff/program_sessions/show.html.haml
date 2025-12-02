@@ -64,7 +64,7 @@
             - if program_session.proposal.awaiting_confirmation?
               = link_to 'Confirm for Speaker', confirm_for_speaker_event_staff_program_session_path(slug: program_session.proposal.event.slug, uuid: program_session.proposal),
                 class: "btn btn-primary btn-sm",
-                method: :post
+                data: {turbo: true, turbo_method: :post}
       .program-session-item
         %h3.control-label Confirmation Notes
         %p= render 'confirmation_notes', program_session: program_session
@@ -84,5 +84,5 @@
                 .session-speaker-actions.pull-right
                   .edit-session-speaker= link_to "Edit", edit_event_staff_program_speaker_path(current_event, speaker), class: "btn btn-primary btn-xs"
                   - if program_session.multiple_speakers?
-                    .remove-session-speaker= link_to "Remove", event_staff_program_speaker_path(current_event, speaker), method: :delete, data: { confirm: "Are you sure you want to remove this speaker?" }, class: "btn btn-danger btn-xs"
+                    .remove-session-speaker= link_to "Remove", event_staff_program_speaker_path(current_event, speaker), data: {turbo: true, turbo_method: :delete, turbo_confirm: "Are you sure you want to remove this speaker?"}, class: "btn btn-danger btn-xs"
             %p &nbsp;

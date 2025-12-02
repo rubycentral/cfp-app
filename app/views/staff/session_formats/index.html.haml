@@ -26,6 +26,6 @@
               %td.action-edit
                 = link_to 'Edit', edit_event_staff_session_format_path(@event, st), class: "btn btn-primary"
               %td.action-destroy
-                = link_to 'Destroy', event_staff_session_format_path(@event, st), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"
+                = link_to 'Destroy', event_staff_session_format_path(@event, st), data: {turbo: true, turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: "btn btn-danger"
     -else
       %p No session formats defined for this event.

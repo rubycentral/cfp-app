@@ -77,7 +77,7 @@ module ApplicationHelper
 
   def promote_button(program_session)
     if program_session.can_promote?
-      link_to 'Promote', promote_event_staff_program_session_path(program_session.event, program_session), method: :patch, data: { confirm: "Are you sure you want to promote #{program_session.title}?" }, class: 'btn btn-warning'
+      link_to 'Promote', promote_event_staff_program_session_path(program_session.event, program_session), data: {turbo: true, turbo_method: :patch, turbo_confirm: "Are you sure you want to promote #{program_session.title}?"}, class: 'btn btn-warning'
     end
   end
 

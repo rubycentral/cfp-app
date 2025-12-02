@@ -1,14 +1,6 @@
-.navbar.fixed-top.program-subnav
+.navbar.navbar-expand-lg.fixed-top.program-subnav
   .container-fluid
-    %ul.nav.navbar-nav.ms-auto
-      %li{class: subnav_item_class("event-program-sessions-link")}
-        = link_to event_staff_program_sessions_path do
-          %span Sessions
-      %li{class: subnav_item_class("event-program-speakers-link")}
-        = link_to event_staff_program_speakers_path do
-          %span Speakers
-
-    %ul.nav.navbar-nav.session-counts
+    %ul.navbar-nav.session-counts
       %li.static
         %span.title Sessions:
         %div.counts-container
@@ -24,7 +16,7 @@
           %span.title By Track:
           %form.track-select{data: {event: current_event.slug}}
             %select{id: 'track-select', name: 'track'}
-              %option{value: 'all', selected: sticky_selected_track.blank? } All
+              %option{value: 'all', selected: sticky_selected_track.blank?} All
               %option{value: ' '} General
               - program_tracks.each do |track|
                 %option{value: track.id, selected: track.id.to_s==sticky_selected_track}= track.name
@@ -35,3 +27,11 @@
             .by-track.all-waitlisted
               %span Waitlisted
               %span.badge= @all_waitlisted_track_count
+
+    %ul.navbar-nav.ms-auto
+      %li.nav-item{class: subnav_item_class("event-program-sessions-link")}
+        = link_to event_staff_program_sessions_path, class: 'nav-link' do
+          %span Sessions
+      %li.nav-item{class: subnav_item_class("event-program-speakers-link")}
+        = link_to event_staff_program_speakers_path, class: 'nav-link' do
+          %span Speakers

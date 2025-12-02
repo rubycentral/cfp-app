@@ -69,34 +69,34 @@ class Staff::EventsController < Staff::ApplicationController
   def configuration
   end
 
+  def custom_fields
+    render partial: 'custom_fields_form'
+  end
+
   def update_custom_fields
     authorize_update
     @event.update(event_params)
-    respond_to do |format|
-      format.js do
-        render locals: { event: @event }
-      end
-    end
+    render partial: 'custom_fields', locals: {event: @event}
+  end
+
+  def reviewer_tags
+    render partial: 'reviewer_tags_form'
   end
 
   def update_reviewer_tags
     authorize_update
     @event.update(params.require(:event).permit(:valid_review_tags))
-    respond_to do |format|
-      format.js do
-        render locals: { event: @event }
-      end
-    end
+    render partial: 'reviewer_tags', locals: {event: @event}
+  end
+
+  def proposal_tags
+    render partial: 'proposal_tags_form'
   end
 
   def update_proposal_tags
     authorize_update
     @event.update(params.require(:event).permit(:valid_proposal_tags))
-    respond_to do |format|
-      format.js do
-        render locals: { event: @event }
-      end
-    end
+    render partial: 'proposal_tags', locals: {event: @event}
   end
 
   def update
@@ -135,6 +135,10 @@ class Staff::EventsController < Staff::ApplicationController
     Staff::ProposalMailer.send_test_email(send_to, @type_key, current_event).deliver_now
 
     flash.now[:info] = "'#{template_display_name}' test email successfully sent to #{send_to}."
+
+    respond_to do |format|
+      format.turbo_stream
+    end
   end
 
   private

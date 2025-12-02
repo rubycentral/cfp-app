@@ -304,17 +304,17 @@
                     %label.control-label Alerts
                     .controls
                       .alert.alert-danger
-                        %button.close{"data-bs-dismiss" => "alert", :type => "button"} &times;
+                        %button.btn-close{"data-bs-dismiss" => "alert", :type => "button"}
                         %strong Danger!
                       .alert.alert-success
-                        %button.close{"data-bs-dismiss" => "alert", :type => "button"} &times;
+                        %button.btn-close{"data-bs-dismiss" => "alert", :type => "button"}
                         %strong Success!
                         %a.alert-link{:href => "#"} Linking to something in an alert
                       .alert.alert-info
-                        %button.close{"data-bs-dismiss" => "alert", :type => "button"} &times;
+                        %button.btn-close{"data-bs-dismiss" => "alert", :type => "button"}
                         %strong Info!
                       .alert.alert-warning
-                        %button.close{"data-bs-dismiss" => "alert", :type => "button"} &times;
+                        %button.btn-close{"data-bs-dismiss" => "alert", :type => "button"}
                         %strong Warning!
                     / /controls
                   / /form-group
@@ -373,7 +373,7 @@
                         .modal-dialog
                           .modal-content
                             .modal-header
-                              %button.close{"aria-hidden" => "true", "data-bs-dismiss" => "modal", :type => "button"} ×
+                              %button.btn-close{"aria-hidden" => "true", "data-bs-dismiss" => "modal", :type => "button"}
                               %h3#myModalLabel Hi Friend!
                             .modal-body
                               %p Content

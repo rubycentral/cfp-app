@@ -88,12 +88,11 @@ class Staff::ProposalDecorator < ProposalDecorator
     state_button('Finalize State',
                  h.event_staff_program_proposal_finalize_path(object.event, object),
                  data: {
-                   confirm:
+                   turbo_confirm:
                      'Finalizing the state will prevent any additional state changes, and emails will be sent to all speakers. Are you sure you want to continue?'
                  },
                  type: 'btn-warning',
                  hidden: finalize_button_hidden?,
-                 remote: false,
                  id: 'finalize')
   end
 

@@ -28,13 +28,11 @@ class Staff::TimeSlotsController < Staff::ApplicationController
       @time_slot = current_event.time_slots.build(start_time: start_time, end_time: end_time)
     end
 
-    respond_to do |format|
-      format.js
-    end
+    render layout: false
   end
 
   def create
-    save_and_add = params[:button] == 'save_and_add'
+    @save_and_add = params[:button] == 'save_and_add'
     @time_slot = current_event.time_slots.build(time_slot_params)
 
     if @time_slot.save
@@ -45,39 +43,44 @@ class Staff::TimeSlotsController < Staff::ApplicationController
         room_id: @time_slot.room ? @time_slot.room.id : nil
       }
       @time_slot.reload
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to event_staff_schedule_time_slots_path(current_event) }
+      end
     else
       flash.now[:danger] = "There was a problem creating this time slot."
-    end
-
-    respond_to do |format|
-      format.js do
-        render locals: { save_and_add: save_and_add }
+      respond_to do |format|
+        format.turbo_stream { render :create_error, status: :unprocessable_entity }
+        format.html { redirect_to event_staff_schedule_time_slots_path(current_event) }
       end
     end
   end
 
   def edit
+    render layout: false
   end
 
   def update
     if @time_slot.update(time_slot_params)
       flash.now[:info] = "Time slot updated."
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to event_staff_schedule_time_slots_path(current_event) }
+      end
     else
       flash.now[:danger] = "There was a problem saving this time slot."
-    end
-
-    respond_to do |format|
-      format.js
+      respond_to do |format|
+        format.turbo_stream { render :update_error, status: :unprocessable_entity }
+        format.html { redirect_to event_staff_schedule_time_slots_path(current_event) }
+      end
     end
   end
 
   def destroy
-    time_slot_id = @time_slot.id
     @time_slot.destroy
     respond_to do |format|
-      format.js do
-        render locals: { time_slot_id: time_slot_id }
-      end
+      format.turbo_stream
+      format.html { redirect_to event_staff_schedule_time_slots_path(current_event) }
     end
   end
 

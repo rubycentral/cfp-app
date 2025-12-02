@@ -10,6 +10,6 @@
               .col-md-12
                 = render partial: 'time_slots'
 
-        #time-slot-edit-dialog.modal.fade
+        = turbo_frame_tag 'time-slot-edit-dialog', class: 'modal fade', data: {controller: 'modal-form', modal_form_target: 'modal'}
 
-        #time-slot-new-dialog.modal.fade
+        = turbo_frame_tag 'time-slot-new-dialog', class: 'modal fade', data: {controller: 'modal-form', modal_form_target: 'modal'}

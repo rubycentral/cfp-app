@@ -63,6 +63,12 @@ a {
     background-color: #ad1d21;
   }
 
+  .navbar-nav .dropdown-menu {
+    margin-top: -1px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
   .navbar-toggler {
     border-color: #751317;
 

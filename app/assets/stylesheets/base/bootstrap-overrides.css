@@ -1,6 +1,12 @@
 /* Bootstrap 3.4.1 CSS Overrides */
 /* These override the pre-compiled Bootstrap defaults with custom brand colors */
 
+/* Grid - restore custom gutter width (was $grid-gutter-width: 4% in Bootstrap 3) */
+.container-fluid {
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
 /* Typography */
 body {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;

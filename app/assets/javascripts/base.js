@@ -21,6 +21,13 @@ $(document).ready(function() {
     });
   }
 
+  // Initialize Bootstrap 5 tooltips
+  if (typeof bootstrap !== 'undefined' && bootstrap.Tooltip) {
+    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function(el) {
+      new bootstrap.Tooltip(el);
+    });
+  }
+
   // Tom Select for sortable multi-selects
   document.querySelectorAll(".selectize-sortable").forEach(function(el) {
     new TomSelect(el, {

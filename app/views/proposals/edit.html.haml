@@ -28,10 +28,10 @@
   .col-md-12
     .tabbable
       %ul.nav.nav-tabs
-        %li.active
-          %a{"data-bs-toggle" => "tab", :href => "#edit-proposal"} Proposal Form
-        %li
-          %a{'data-bs-toggle' => 'tab', href: '#preview', 'data-action' => 'click->proposal-preview#refresh'} Preview
+        %li.nav-item
+          %a.nav-link.active{"data-bs-toggle" => "tab", :href => "#edit-proposal"} Proposal Form
+        %li.nav-item
+          %a.nav-link{'data-bs-toggle' => 'tab', href: '#preview', 'data-action' => 'click->proposal-preview#refresh'} Preview
       .tab-content
         #edit-proposal.tab-pane.active
           .row

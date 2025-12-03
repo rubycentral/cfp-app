@@ -1,7 +1,25 @@
 $(document).ready(function() {
+  // Auto-dismiss alerts after 5 seconds (Bootstrap 5 style)
   setTimeout(function() {
-    $(".alert").not('.alert-confirm, .scheduling-error').alert('close');
+    document.querySelectorAll('.alert:not(.alert-confirm):not(.scheduling-error)').forEach(function(el) {
+      if (typeof bootstrap !== 'undefined' && bootstrap.Alert) {
+        var alert = bootstrap.Alert.getOrCreateInstance(el);
+        alert.close();
+      }
+    });
   }, 5000);
+
+  // Initialize Bootstrap 5 dropdowns with manual click handling
+  // (Bootstrap's native data-bs-toggle doesn't work with Sprockets loading)
+  if (typeof bootstrap !== 'undefined' && bootstrap.Dropdown) {
+    document.querySelectorAll('.dropdown-toggle').forEach(function(el) {
+      var dropdown = new bootstrap.Dropdown(el);
+      el.addEventListener('click', function(e) {
+        e.preventDefault();
+        bootstrap.Dropdown.getInstance(el).toggle();
+      });
+    });
+  }
 
   // Tom Select for sortable multi-selects
   document.querySelectorAll(".selectize-sortable").forEach(function(el) {

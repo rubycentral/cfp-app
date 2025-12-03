@@ -8,7 +8,7 @@
  *
  *= require tributejs/dist/tribute
  *= require datatables.net-bs5/css/dataTables.bootstrap5
- *= require tom-select/dist/css/tom-select.default
+ *= require tom-select/dist/css/tom-select.bootstrap5
  *
  *= require base/base
  *= require base/layout

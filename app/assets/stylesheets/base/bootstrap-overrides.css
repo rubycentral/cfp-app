@@ -99,6 +99,10 @@ a {
 }
 
 /* Buttons */
+.btn {
+  font-size: 14px;
+}
+
 .btn-primary {
   background-color: var(--dark-blue);
   border-color: #042e46;

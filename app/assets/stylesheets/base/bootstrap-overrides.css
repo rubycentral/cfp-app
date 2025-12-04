@@ -37,6 +37,7 @@ a {
     color: var(--white);
     height: var(--navbar-height);
     padding: 12px 15px;
+    line-height: 20px;
 
     &:hover,
     &:focus {

@@ -103,6 +103,20 @@ a {
   }
 }
 
+/* Tables - restore Bootstrap 3 border color */
+.table {
+  --bs-table-border-color: #ddd;
+  border-color: #ddd;
+}
+
+.table > :not(caption) > * > * {
+  border-color: #ddd;
+}
+
+.table-bordered > :not(caption) > * {
+  border-color: #ddd;
+}
+
 /* Forms - restore Bootstrap 3 form-group margin */
 .form-group {
   margin-bottom: 15px;

@@ -141,7 +141,7 @@ class Staff::TimeSlotDecorator < Draper::Decorator
   end
 
   def display_sponsor_star
-    h.content_tag(:span, "", class: "glyphicon glyphicon-star") if sponsored?
+    h.content_tag(:i, '', class: 'bi bi-star-fill') if sponsored?
   end
 
   def preview_css

@@ -80,7 +80,7 @@ class Staff::ProposalDecorator < ProposalDecorator
     opts[:data] = {turbo: true, turbo_method: :post}.merge(opts[:data])
 
     opts[:class] = "#{opts[:class]} btn #{opts[:type]} " + (opts[:hidden] ? 'hidden' : '')
-    opts[:class] += opts[:small] ? ' btn-xs' : ' btn-sm'
+    opts[:class] += ' btn-sm'
     h.link_to(text, path, opts)
   end
 

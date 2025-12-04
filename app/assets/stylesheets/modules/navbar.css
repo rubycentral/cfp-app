@@ -219,6 +219,7 @@
   }
 
   li.download-link a {
+    color: var(--white);
     padding-left: 0;
     &:focus {
       background-color: var(--dark-blue);

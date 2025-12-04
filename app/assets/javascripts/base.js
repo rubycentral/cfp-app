@@ -25,18 +25,6 @@ $(document).ready(function() {
   });
 });
 
-// Datatable extension for reseting sort order
-$.fn.dataTableExt.oApi.fnSortNeutral = function ( oSettings ) {
-    oSettings.aaSorting = [];
-    oSettings.aiDisplay.sort( function (x,y) {
-        return x-y;
-    } );
-    oSettings.aiDisplayMaster.sort( function (x,y) {
-        return x-y;
-    } );
-    oSettings.oApi._fnReDraw( oSettings );
-};
-
 function cfpDataTable(selector, columnTypes, opt_options) {
   var columns = columnTypes.map(function(t) {
     if (t !== null) return { type: t };
@@ -51,8 +39,11 @@ function cfpDataTable(selector, columnTypes, opt_options) {
 
   $.extend(options, opt_options);
 
-  return $(selector).dataTable(options).columnFilter({
+  var $table = $(selector).dataTable(options);
+  $table.columnFilter({
     sPlaceHolder: "head:before",
     aoColumns: columns
   });
+  // Return the API instance for modern API access (e.g., fnSortNeutral)
+  return $table.api();
 }

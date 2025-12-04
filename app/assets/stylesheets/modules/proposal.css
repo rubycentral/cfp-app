@@ -99,7 +99,7 @@ ul {
 }
 
 .btn.save-comment {
-  width: 105px;
+  white-space: nowrap;
   float: right;
 }
 

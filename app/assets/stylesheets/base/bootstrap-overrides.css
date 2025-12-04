@@ -98,6 +98,11 @@ a {
   }
 }
 
+/* Forms - restore Bootstrap 3 form-group margin */
+.form-group {
+  margin-bottom: 15px;
+}
+
 /* Buttons */
 .btn {
   font-size: 14px;

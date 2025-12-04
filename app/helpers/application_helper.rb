@@ -60,9 +60,8 @@ module ApplicationHelper
       flash.map do |key, value|
         key += " alert-info" if key == "notice" || key == 'confirm'
         key = "danger" if key == "alert"
-        content_tag(:div, class: "container alert alert-dismissable alert-#{key}") do
-          content_tag(:button, content_tag(:i, '', class: 'bi bi-x-lg'),
-                      class: 'close', data: {dismiss: 'alert'}) +
+        content_tag(:div, class: "container alert alert-dismissible alert-#{key}") do
+          content_tag(:button, '', class: 'btn-close', type: 'button', data: {bs_dismiss: 'alert'}, aria: {label: 'Close'}) +
             simple_format(value)
         end
       end

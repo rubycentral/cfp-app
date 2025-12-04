@@ -2,7 +2,6 @@
  * Application styles
  *
  *= require bootstrap/dist/css/bootstrap
- *= require bootstrap-icons/font/bootstrap-icons
  *= require base/css-colors
  *= require base/bootstrap-overrides
  *

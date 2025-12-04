@@ -55,7 +55,12 @@ $(document).ready(function () {
   }
 
   $("#sort_reset").click(function () {
-    oTable.fnSortNeutral();
+    // Clear sort order and restore original row order
+    var settings = oTable.settings()[0];
+    settings.aaSorting = [];
+    settings.aiDisplay.sort(function(x, y) { return x - y; });
+    settings.aiDisplayMaster.sort(function(x, y) { return x - y; });
+    oTable.draw();
   });
 
   $('table input').addClass('form-control');

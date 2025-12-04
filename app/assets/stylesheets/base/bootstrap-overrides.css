@@ -131,6 +131,7 @@ a {
 }
 
 .btn-info {
+  color: var(--white);
   background-color: var(--bright-blue);
   border-color: #1786c6;
 
@@ -138,6 +139,7 @@ a {
   &:focus,
   &:active,
   &.active {
+    color: var(--white);
     background-color: #1786c6;
     border-color: #1472a8;
   }

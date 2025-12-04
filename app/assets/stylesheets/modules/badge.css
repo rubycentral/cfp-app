@@ -1,3 +1,7 @@
+.badge {
+  font-weight: bold;
+}
+
 .badge.badge-important {
   background-color: red;
 }

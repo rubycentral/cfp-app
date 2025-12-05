@@ -103,6 +103,12 @@ a {
   }
 }
 
+/* Cards - restore Bootstrap 3 .well styling */
+.card {
+  background-color: #f5f5f5;
+  border-color: #e3e3e3;
+}
+
 /* Tables - restore Bootstrap 3 border color */
 .table {
   --bs-table-border-color: #ddd;

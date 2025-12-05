@@ -14,8 +14,8 @@
       - if program_tracks.any?
         %li.static
           %span.title By Track:
-          %form.track-select{data: {event: current_event.slug}}
-            %select{id: 'track-select', name: 'track'}
+          %form.track-select{data: {controller: 'track-filter', event: current_event.slug}}
+            %select{name: 'track', data: {track_filter_target: 'select', action: 'change->track-filter#filter'}}
               %option{value: 'all', selected: sticky_selected_track.blank?} All
               %option{value: ' '} General
               - program_tracks.each do |track|

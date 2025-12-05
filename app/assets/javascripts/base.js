@@ -58,6 +58,13 @@ $(document).ready(function() {
 });
 
 function cfpDataTable(selector, columnTypes, opt_options) {
+  var $el = $(selector);
+
+  // Skip if already initialized (prevents Turbo cache issues)
+  if ($.fn.DataTable.isDataTable($el)) {
+    return $el.DataTable();
+  }
+
   var columns = columnTypes.map(function(t) {
     if (t !== null) return { type: t };
   });
@@ -71,7 +78,7 @@ function cfpDataTable(selector, columnTypes, opt_options) {
 
   $.extend(options, opt_options);
 
-  var $table = $(selector).dataTable(options);
+  var $table = $el.dataTable(options);
   $table.columnFilter({
     sPlaceHolder: "head:before",
     aoColumns: columns

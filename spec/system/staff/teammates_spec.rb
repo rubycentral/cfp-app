@@ -65,7 +65,7 @@ feature "Staff Organizers can manage teammates", type: :system do
       visit event_staff_teammates_path(invitation.event)
       row = find("tr#teammate-#{program_team_teammate.id}")
 
-      page.execute_script("$('#teammate-#{program_team_teammate.id} .change-role').click()")
+      within(row) { find('.change-role').click }
       select "reviewer", from: "Role"
 
       click_button "Save"
@@ -78,7 +78,7 @@ feature "Staff Organizers can manage teammates", type: :system do
       visit event_staff_teammates_path(invitation.event)
       row = find("tr#teammate-#{program_team_teammate.id}")
 
-      page.execute_script("$('#teammate-#{program_team_teammate.id} .edit-mention-name').click()")
+      within(row) { find('.edit-mention-name').click }
       fill_in "Mention Name", with: "new_mention_name"
 
       click_button "Save"

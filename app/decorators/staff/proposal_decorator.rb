@@ -62,11 +62,11 @@ class Staff::ProposalDecorator < ProposalDecorator
   end
 
   def created_at
-    object.created_at.to_fs(:short)
+    object.created_at.strftime('%Y/%m/%d %H:%M')
   end
 
   def updated_by_speaker_at
-    object.updated_by_speaker_at.to_fs(:short)
+    object.updated_by_speaker_at.strftime('%Y/%m/%d %H:%M')
   end
 
   def comment_count

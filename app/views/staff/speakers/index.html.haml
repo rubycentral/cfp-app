@@ -25,7 +25,7 @@
 
 .row
   .col-md-12
-    %table#organizer-speakers.datatable.table.table-striped.speaker-list
+    %table#organizer-speakers.datatable.table.table-striped{data: {controller: 'cfp-datatable', cfp_column_types: '["text", "text", "text", null, "text"]'}}
       %thead
         %tr
           %th

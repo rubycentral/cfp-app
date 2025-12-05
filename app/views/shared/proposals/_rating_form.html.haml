@@ -5,7 +5,7 @@
       = simple_form_for [event, :staff, proposal, rating], data: {rating_target: 'form', turbo_frame: dom_id(proposal, :rating_widget), remote: false} do |f|
         = program_tracker
         - unless disabled
-          = link_to "#", id: "rating-tooltip-toggle", data: { container: 'body', bs_toggle: 'popover', placement: "left", content: rating_tooltip, html: true } do
+          %span.me-2{role: 'button', id: 'rating-tooltip-toggle', data: {bs_toggle: 'popover', bs_placement: 'left', bs_content: rating_tooltip, bs_html: 'true'}}
             %i.fa.fa-question-circle
         = f.label :score, "Rating"
         .rating-form-wrapper

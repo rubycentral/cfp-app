@@ -28,6 +28,13 @@ $(document).ready(function() {
     });
   }
 
+  // Initialize Bootstrap 5 popovers
+  if (typeof bootstrap !== 'undefined' && bootstrap.Popover) {
+    document.querySelectorAll('[data-bs-toggle="popover"]').forEach(function(el) {
+      new bootstrap.Popover(el);
+    });
+  }
+
   // Tom Select for sortable multi-selects
   document.querySelectorAll(".selectize-sortable").forEach(function(el) {
     new TomSelect(el, {

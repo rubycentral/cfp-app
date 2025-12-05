@@ -1,5 +1,5 @@
 = turbo_frame_tag :guidelines do
-  = form_for @event, url: event_staff_update_guidelines_path(@event), html: {role: 'form'} do |f|
+  = form_for @event, url: event_staff_guidelines_path, method: :patch, html: {role: 'form'} do |f|
     .row
       .col-md-6
         .form-group

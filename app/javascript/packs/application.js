@@ -17,6 +17,7 @@
 
 // Support component names relative to this directory:
 import '../stylesheets/application.css'
+import 'bootstrap-icons/font/bootstrap-icons.css'
 import '../datatables'
 import "@hotwired/turbo-rails"
 import { Turbo } from "@hotwired/turbo-rails"

@@ -99,7 +99,7 @@ ul {
 }
 
 .btn.save-comment {
-  width: 105px;
+  white-space: nowrap;
   float: right;
 }
 
@@ -122,7 +122,7 @@ span.disabled-state {
   }
 }
 
-span.glyphicon-question-sign {
+span.bi-question-circle {
   font-size: 1.3em;
   display: inline-block;
 }

@@ -26,9 +26,10 @@
       = f.date_field :end_date, class: 'form-control'
       %p.help-block Last day of your event
 
-.row.col-md-12.form-submit
-  - if event && event.persisted? && current_user.admin?
-    = link_to 'Delete Event', admin_event_path(event), data: {turbo: true, turbo_method: :delete, turbo_confirm: 'Are you sure you want to delete this event?'}, class: 'btn btn-danger pull-left'
+.row
+  .col-md-12.form-submit
+    - if event && event.persisted? && current_user.admin?
+      = link_to 'Delete Event', admin_event_path(event), data: {turbo: true, turbo_method: :delete, turbo_confirm: 'Are you sure you want to delete this event?'}, class: 'btn btn-danger float-start'
 
-  =submit_tag("Save", class: "pull-right btn btn-success", type: "submit")
-  = link_to "Cancel", :back, {:class=>"cancel-form pull-right btn btn-danger"}
+    = submit_tag("Save", class: "float-end btn btn-success", type: "submit")
+    = link_to "Cancel", :back, {class: "cancel-form float-end btn btn-danger"}

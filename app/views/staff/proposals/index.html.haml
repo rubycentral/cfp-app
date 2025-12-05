@@ -7,7 +7,7 @@
           %span.event-meta
             %i.fa.fa-fw.fa-calendar
             = event.date_range
-    .col-md-4.text-right.text-right-responsive
+    .col-md-4.text-end.text-end-responsive
       .event-info.event-info-dense
         %span{:class => "event-meta event-status-badge event-status-#{event.status}"}
           CFP
@@ -21,9 +21,9 @@
 
 -#.row
 -#  .col-sm-offset-6.col-sm-6
--#    .btn-nav.text-right
+-#    .btn-nav.text-end
 -#      = link_to event_staff_proposals_path(format: "csv"), id: "download_link", class: "btn btn-info btn-sm" do
--#        %span.glyphicon.glyphicon-download-alt
+-#        %span.bi.bi-download
 -#        Download CSV
 .row
   &nbsp;
@@ -35,13 +35,13 @@
 -#        %ul#columns.list-inline
 -#          -row.each do |name, count|
 -#            %li
--#              .label.label-success
+-#              .label.badge text-bg-success
 -#                = name
 -#                = count
 
 .row
-  .col-sm-offset-6.col-sm-6.text-right
-    %small.text-right <em>Hint:</em> Hold <kbd>shift</kbd> to sort by multiple columns
+  .col-sm-offset-6.col-sm-6.text-end
+    %small.text-end <em>Hint:</em> Hold <kbd>shift</kbd> to sort by multiple columns
 
 .row
   .col-md-12

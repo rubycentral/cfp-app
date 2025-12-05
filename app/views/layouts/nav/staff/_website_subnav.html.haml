@@ -1,12 +1,12 @@
-.navbar.navbar-fixed-top.website-subnav
+.navbar.navbar-expand-lg.fixed-top.website-subnav
   .container-fluid
-    %ul.nav.navbar-nav.navbar-right
-      %li{class: subnav_item_class('event-website-configuration-link')}
-        = link_to edit_event_staff_website_path(current_event) do
+    %ul.navbar-nav.ms-auto
+      %li.nav-item{class: subnav_item_class('event-website-configuration-link')}
+        = link_to edit_event_staff_website_path(current_event), class: 'nav-link' do
           %span Configuration
-      %li{class: subnav_item_class('event-pages-link')}
-        = link_to event_staff_pages_path(current_event) do
+      %li.nav-item{class: subnav_item_class('event-pages-link')}
+        = link_to event_staff_pages_path(current_event), class: 'nav-link' do
           %span Pages
-      %li{class: subnav_item_class('event-sponsor-link')}
-        = link_to event_staff_sponsors_path do
+      %li.nav-item{class: subnav_item_class('event-sponsor-link')}
+        = link_to event_staff_sponsors_path, class: 'nav-link' do
           %span Sponsors

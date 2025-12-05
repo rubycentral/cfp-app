@@ -7,19 +7,21 @@
 
     .form-inputs
       .col-sm-5.col-centered
-        .well.clearfix
-          = f.error_notification
-          = f.input :email, required: false, autofocus: true, wrapper_html: {class: "col-sm-12"}
-          = f.input :password, required: false, wrapper_html: {class: "col-sm-12"}
-          = f.input :remember_me, as: :boolean, wrapper: :inline_checkbox if devise_mapping.rememberable?
+        .card
+          .card-body
+            = f.error_notification
+            = f.input :email, required: false, autofocus: true, wrapper_html: {class: "col-sm-12"}
+            = f.input :password, required: false, wrapper_html: {class: "col-sm-12"}
+            = f.input :remember_me, as: :boolean, wrapper: :inline_checkbox if devise_mapping.rememberable?
 
-          .form-group.col-sm-12
-            = f.button :submit, "Log in", class: "btn btn-primary"
+            .form-group.col-sm-12
+              = f.button :submit, "Log in", class: "btn btn-primary"
 
-          .form-group= render "devise/shared/links"
+            .form-group= render "devise/shared/links"
 
-  - unless Rails.env.production?
-    .col-sm-5.col-centered
-      .well.clearfix
+- unless Rails.env.production?
+  .col-sm-5.col-centered.mt-3
+    .card
+      .card-body
         .form-group
           = button_to 'Developer Login', '/users/auth/developer', class: 'btn btn-danger', method: :post

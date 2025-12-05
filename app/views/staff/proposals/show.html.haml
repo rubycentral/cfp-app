@@ -16,8 +16,8 @@
           %span.event-meta
             CFP closes:
             %strong= event.closes_at(:month_day_year)
-    .col-md-4.text-right.clearfix
-      .btn-nav.pull-right
+    .col-md-4.text-end.clearfix
+      .btn-nav.float-end
         = smart_return_button
         =link_to "Next Proposal", event_staff_program_proposal_path(uuid: "PLACEHOLDER"), class: "next-proposal btn btn-primary btn-sm", data: {"proposal-uuid" => proposal.uuid }
 
@@ -25,7 +25,7 @@
     .row
       .col-md-7
         %h1= proposal.title
-      .col-md-5.text-right
+      .col-md-5.text-end
         .proposal-info-bar
           .proposal-meta.proposal-description
             .proposal-meta-item
@@ -50,7 +50,7 @@
               .proposal-meta-item.full-width
                 #current-format
                   .info-item-heading Format
-                  #format-name.pull-left
+                  #format-name.float-start
                     #{proposal.session_format_name}
                   #edit-format-icon.fa.fa-pencil
                 #edit-format-wrapper
@@ -61,7 +61,7 @@
               .proposal-meta-item.full-width
                 #current-track
                   .info-item-heading Track
-                  #track-name.pull-left
+                  #track-name.float-start
                     #{proposal.track_name}
                   #edit-track-icon.fa.fa-pencil
                 #edit-track-wrapper

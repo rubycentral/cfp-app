@@ -7,7 +7,7 @@
           %span.event-meta
             %i.fa.fa-fw.fa-calendar
             = event.date_range
-    .col-md-4.text-right.text-right-responsive
+    .col-md-4.text-end.text-end-responsive
       .event-info.event-info-dense
         %span{:class => "event-meta event-status-badge event-status-#{event.status}"}
           CFP
@@ -19,7 +19,7 @@
 .row
   &nbsp;
 .row
-  .col-sm-6.text-left
+  .col-sm-6.text-start
     .event-info.event-info-dense
       %span
         Total Rated:
@@ -27,11 +27,11 @@
       %span
         You've rated:
         %span.badge.badge-info=event.proposals_you_rated_message
-  .col-sm-6.text-right
-    %small.text-right <em>Hint:</em> Hold <kbd>shift</kbd> to sort by multiple columns
+  .col-sm-6.text-end
+    %small.text-end <em>Hint:</em> Hold <kbd>shift</kbd> to sort by multiple columns
 .row
-  .col-sm-offset-6.col-sm-6
-    %button.btn.btn-primary.btn-sm.pull-right#sort_reset Reset Sort Order
+  .offset-sm-6.col-sm-6
+    %button.btn.btn-primary.btn-sm.float-end#sort_reset Reset Sort Order
 
 .row
   .col-md-12

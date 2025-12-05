@@ -1,8 +1,10 @@
 import { Controller } from "@hotwired/stimulus"
+import { Modal } from "bootstrap"
 
 export default class extends Controller {
   connect() {
-    const $modal = $('#bulk-time-slot-create-dialog')
+    const modalElement = document.getElementById('bulk-time-slot-create-dialog')
+    const $modal = $(modalElement)
 
     // Re-initialize the dialog form handlers
     const $dialog = $modal.find('.modal-dialog')
@@ -19,7 +21,8 @@ export default class extends Controller {
       }
     })
 
-    $modal.modal('show')
+    const modal = Modal.getOrCreateInstance(modalElement)
+    modal.show()
     this.element.remove()
   }
 }

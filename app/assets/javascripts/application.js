@@ -11,10 +11,11 @@
 // about supported directives.
 //
 //= require jquery/dist/jquery
+//= require @popperjs/core/dist/umd/popper
 //= require bootstrap/dist/js/bootstrap
 //= require chartkick
 //= require datatables.net/js/jquery.dataTables
-//= require datatables.net-bs/js/dataTables.bootstrap
+//= require datatables.net-bs5/js/dataTables.bootstrap5
 //= require jquery.dataTables.columnFilter
 //= require tributejs/dist/tribute
 //= require tom-select/dist/js/tom-select.complete

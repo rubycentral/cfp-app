@@ -41,13 +41,13 @@ class Staff::TimeSlotDecorator < Draper::Decorator
     links = [
       h.link_to('Edit',
                 h.edit_event_staff_schedule_time_slot_path(object.event, object),
-                class: 'btn btn-primary btn-xs',
+                class: 'btn btn-primary btn-sm',
                 data: {turbo: true, turbo_frame: 'time-slot-edit-dialog'}),
 
       h.link_to('Remove',
                 h.event_staff_schedule_time_slot_path(object.event, object),
                 data: {turbo: true, turbo_method: :delete, turbo_confirm: 'Are you sure you want to remove this time slot?'},
-                class: 'btn btn-danger btn-xs')
+                class: 'btn btn-danger btn-sm')
     ]
     h.safe_join(links, "\n")
   end
@@ -141,7 +141,7 @@ class Staff::TimeSlotDecorator < Draper::Decorator
   end
 
   def display_sponsor_star
-    h.content_tag(:span, "", class: "glyphicon glyphicon-star") if sponsored?
+    h.content_tag(:i, '', class: 'bi bi-star-fill') if sponsored?
   end
 
   def preview_css

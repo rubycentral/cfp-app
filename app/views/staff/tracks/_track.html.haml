@@ -3,7 +3,7 @@
   %td= truncate(track.description, length: 60)
   %td
     -if track.guidelines.present?
-      = link_to "#", data: { toggle: "modal", target: "#track-guidelines-#{track.id}" } do
+      = link_to "#", data: { bs_toggle: "modal", bs_target: "#track-guidelines-#{track.id}" } do
         %span.fa.fa-list-alt
 
       %div{ id: "track-guidelines-#{track.id}", class: 'modal fade' }
@@ -16,9 +16,9 @@
 
   - unless !current_user.organizer_for_event?(event)
     %td
-      .pull-right
+      .float-end
         = link_to "Edit", edit_event_staff_track_path(event, track), data: {action: 'remote-modal#open'},
-          class: "btn btn-primary btn-xs"
+          class: "btn btn-primary btn-sm"
         = link_to "Remove", event_staff_track_path(event, track),
           data: {turbo: true, turbo_method: :delete, turbo_confirm: "Are you sure you want to remove this track?"},
-          class: "btn btn-danger btn-xs"
+          class: "btn btn-danger btn-sm"

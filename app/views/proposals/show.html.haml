@@ -16,25 +16,25 @@
           %span.event-meta
             CFP closes:
             %strong= event.closes_at(:month_day_year)
-    .col-md-4.text-right
+    .col-md-4.text-end
       - if proposal.has_speaker?(current_user)
         .btn-nav.clearfix
           - if proposal.speaker_can_edit?(current_user)
             = link_to edit_event_proposal_path(event_slug: event.slug, uuid: proposal), class: 'btn btn-primary' do
-              %span.glyphicon.glyphicon-edit
+              %span.bi.bi-pencil
               Edit
           - if proposal.speaker_can_withdraw?(current_user)
             = proposal.withdraw_button
           - if proposal.speaker_can_delete?(current_user)
             = link_to event_proposal_path, data: {turbo: true, turbo_method: :delete, turbo_confirm: 'This will delete your talk. Are you sure you want to do this? It can not be undone.'}, class: 'btn btn-warning', id: 'delete' do
-              %span.glyphicon.glyphicon-exclamation-sign
+              %span.bi.bi-exclamation-circle
               Delete Proposal
 
   .page-header.page-header-slim
     .row
       .col-md-8
         %h1= proposal.title
-      .col-sm-4.text-right
+      .col-sm-4.text-end
         .proposal-info-bar
           .proposal-meta.proposal-description
             .proposal-meta-item
@@ -59,11 +59,11 @@
                   #{proposal.tags_labels}
           .col-sm-4
             .col-sm-6.no-pad-left
-              .proposal-meta-item.text-left
+              .proposal-meta-item.text-start
                 .info-item-heading Format
                 #{proposal.session_format_name}
             .col-sm-6
-              .proposal-meta-item.text-left
+              .proposal-meta-item.text-start
                 .info-item-heading Track
                 #{proposal.track_name}
 
@@ -88,20 +88,20 @@
                       %li
                         = invitation.state_label
                         = invitation.email
-                        .pull-right
+                        .float-end
                           - unless invitation.declined?
                             = link_to 'Resend',
                               resend_invitation_path(invitation_slug: invitation.slug, proposal_uuid: proposal.uuid),
-                              class: 'btn btn-xs btn-primary'
+                              class: 'btn btn-sm btn-primary'
                           = link_to 'Remove',
                             invitation_path(invitation_slug: invitation.slug, proposal_uuid: proposal.uuid),
-                            class: 'btn btn-xs btn-danger',
+                            class: 'btn btn-sm btn-danger',
                             data: {turbo: true, turbo_method: :delete, turbo_confirm: 'Are you sure you want to remove this invitation?'}
 
                 %hr
               .new-speaker-invite
-                = link_to "Invite a Speaker", "#", class: "btn btn-success btn-xs speaker-invite-btn",
-                  data: { toggle: "modal", target: "#new-speaker-invitation" },
+                = link_to "Invite a Speaker", "#", class: "btn btn-success btn-sm speaker-invite-btn",
+                  data: { bs_toggle: "modal", bs_target: "#new-speaker-invitation" },
                   id: "invite-new-speaker"
                 %p.help-block You may invite other speakers to your proposal.
 
@@ -120,7 +120,7 @@
               = simple_form_for proposal, url: update_notes_event_proposal_path(slug: proposal.event.slug, uuid: proposal), wrapper: :vertical_form, method: :post do |f|
                 = f.input :confirmation_notes, label: "Notes for the #{event.name} team", input_html: { rows: 6, placeholder: 'Notes' },
                 popover_icon: {content: 'Please note any scheduling conflicts, or any additional information an organizer may need to schedule your talk.', placement: 'left'}
-                %button.btn.btn-success.pull-right(type="submit") Update
+                %button.btn.btn-success.float-end(type="submit") Update
         .widget.widget-card
           .widget-header
             %i.fa.fa-comments

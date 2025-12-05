@@ -2,9 +2,9 @@
   .row
     .col-md-12
       %header
-        %h3.pull-left Rooms
-        = link_to "Add Room", "#", class: "btn btn-primary btn-sm pull-left",
-          data: { toggle: "modal", target: "#room-new-dialog" }
+        %h3.float-start Rooms
+        = link_to "Add Room", "#", class: "btn btn-primary btn-sm float-start",
+          data: { bs_toggle: "modal", bs_target: "#room-new-dialog" }
         .clearfix
   .row
     .col-md-12
@@ -32,5 +32,5 @@
                   = render partial: 'staff/rooms/form', locals: {f: f}
                 .modal-footer
                   .btn-toolbar
-                    %button.pull-right.btn.btn-primary{type: 'submit'} Save
-                    %button.btn.btn-default{'data-dismiss' => 'modal'} Cancel
+                    %button.float-end.btn.btn-primary{type: 'submit'} Save
+                    %button.btn.btn-secondary{'data-bs-dismiss' => 'modal'} Cancel

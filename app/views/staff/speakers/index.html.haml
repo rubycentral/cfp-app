@@ -7,7 +7,7 @@
           %span.event-meta
             %i.fa.fa-fw.fa-calendar
             = current_event.date_range
-    .col-md-4.text-right.text-right-responsive
+    .col-md-4.text-end.text-end-responsive
       .event-info.event-info-dense
         %span{:class => "event-meta event-status-badge event-status-#{current_event.status}"}
           CFP
@@ -53,4 +53,4 @@
             - if is_organizer
               %td{ id: "speaker-action-buttons-#{speaker.id}" }
                 %span>
-                  = link_to "Edit", edit_event_staff_program_speaker_path(current_event, speaker), class: "btn btn-primary btn-xs"
+                  = link_to "Edit", edit_event_staff_program_speaker_path(current_event, speaker), class: "btn btn-primary btn-sm"

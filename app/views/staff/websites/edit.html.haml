@@ -4,7 +4,7 @@
       .btn-navbar
         %h1 Edit Website
       - if FastlyService.service
-        .pull-right
+        .float-end
           = button_to "Purge",
             purge_event_staff_website_path(current_event),
             class: 'btn btn-success',

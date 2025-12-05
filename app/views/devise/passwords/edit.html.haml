@@ -7,12 +7,13 @@
 
     .form-inputs
       .col-sm-5.col-centered
-        .well.clearfix
-          = f.error_notification
-          = f.input :reset_password_token, as: :hidden
-          = f.full_error :reset_password_token
-          = f.input :password, label: "New password", required: true, autofocus: true, wrapper_html: {class: "col-sm-12"}, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length)
-          = f.input :password_confirmation, label: "Confirm your new password", required: true, wrapper_html: {class: "col-sm-12"}
+        .card
+          .card-body
+            = f.error_notification
+            = f.input :reset_password_token, as: :hidden
+            = f.full_error :reset_password_token
+            = f.input :password, label: "New password", required: true, autofocus: true, wrapper_html: {class: "col-sm-12"}, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length)
+            = f.input :password_confirmation, label: "Confirm your new password", required: true, wrapper_html: {class: "col-sm-12"}
 
-          .form-group.col-sm-12
-            = f.button :submit, "Change my password", class: "btn btn-success"
+            .form-group.col-sm-12
+              = f.button :submit, "Change my password", class: "btn btn-success"

@@ -3,18 +3,18 @@
   %td= link_to(page.slug, edit_event_staff_page_path(current_event, page))
   %td
     - if page.published?
-      %span.glyphicon.glyphicon-ok
+      %span.bi.bi-check
   %td
     - if page.published?
       = time_ago_in_words(page.body_published_at || page.updated_at)
     - else
-      %span.label-warning Not Published
+      %span.badge text-bg-warning Not Published
   %td
     - if page.unpublished_changes?
-      %span.glyphicon.glyphicon-bell
+      %span.bi.bi-bell
   %td
     - if page.landing?
-      %span.glyphicon.glyphicon-ok
+      %span.bi.bi-check
   %td
     = link_to("Edit",
       edit_event_staff_page_path(current_event, page),

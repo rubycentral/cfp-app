@@ -1,12 +1,14 @@
 import { Controller } from "@hotwired/stimulus"
+import { Modal } from "bootstrap"
 
 export default class extends Controller {
   connect() {
-    const $modal = $(this.element).closest('.modal')
-    window.Schedule.TimeSlots.initDialog($modal)
+    const modalElement = this.element.closest('.modal')
+    window.Schedule.TimeSlots.initDialog($(modalElement))
     // Only show if not already visible
-    if (!$modal.hasClass('in')) {
-      $modal.modal('show')
+    if (!modalElement.classList.contains('show')) {
+      const modal = Modal.getOrCreateInstance(modalElement)
+      modal.show()
     }
   }
 }

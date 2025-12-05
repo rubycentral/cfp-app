@@ -1,6 +1,6 @@
 = teammate.role
 - if current_user.organizer_for_event?(current_event)
-  = link_to '#', class: 'change-role', data: { toggle: 'modal', target: "#teammate-change-role-#{teammate.id}" } do
+  = link_to '#', class: 'change-role', data: { bs_toggle: 'modal', bs_target: "#teammate-change-role-#{teammate.id}" } do
     .fa.fa-pencil
   %div{ id: "teammate-change-role-#{teammate.id}", class: 'modal fade' }
     .modal-dialog
@@ -12,5 +12,5 @@
             = f.label :role
             = f.select :role, Teammate::STAFF_ROLES, class: 'form-control'
           .modal-footer
-            %button.btn.btn-default{'data-dismiss' => "modal"} Cancel
-            %button.pull-right.btn.btn-primary{:type => "submit"} Save
+            %button.btn.btn-secondary{'data-bs-dismiss' => "modal"} Cancel
+            %button.float-end.btn.btn-primary{:type => "submit"} Save

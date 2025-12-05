@@ -122,6 +122,8 @@
   tbody {
     > tr:first-of-type {
       font-weight: bold;
+      --bs-table-striped-bg: var(--state-success-bg);
+      --bs-table-bg: var(--state-success-bg);
       background-color: var(--state-success-bg);
     }
   }

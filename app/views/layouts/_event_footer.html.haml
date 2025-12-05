@@ -13,6 +13,6 @@
                   = mail_to(current_event.contact_email, current_event.contact_email, encode: "javascript")
           - else
             = link_to "#{Rails.application.class.module_parent_name}", events_path
-        .col-md-4.text-right
+        .col-md-4.text-end
           Powered by
           = link_to 'CFP App', 'https://github.com/rubycentral/cfp-app', target: '_blank'

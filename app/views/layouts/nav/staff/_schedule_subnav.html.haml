@@ -1,21 +1,21 @@
-.navbar.navbar-fixed-top.schedule-subnav
+.navbar.navbar-expand-lg.fixed-top.schedule-subnav
   .container-fluid
-    %ul.nav.navbar-nav.navbar-left
+    %ul.navbar-nav
       %li.download-link
         = link_to event_staff_schedule_time_slots_path(format: :json) do
-          %span.glyphicon.glyphicon-download-alt
+          %span.bi.bi-download
           %span  Download Schedule JSON
-    %ul.nav.navbar-nav.navbar-right
-      %li{class: subnav_item_class('event-schedule-grid-link')}
-        = link_to event_staff_schedule_grid_path do
+    %ul.navbar-nav.ms-auto
+      %li.nav-item{class: subnav_item_class('event-schedule-grid-link')}
+        = link_to event_staff_schedule_grid_path, class: 'nav-link' do
           %i.fa.fa-calendar-times-o
           %span Grid
-      %li{class: subnav_item_class('event-schedule-time-slots-link')}
-        = link_to event_staff_schedule_time_slots_path do
+      %li.nav-item{class: subnav_item_class('event-schedule-time-slots-link')}
+        = link_to event_staff_schedule_time_slots_path, class: 'nav-link' do
           %i.fa.fa-clock-o
           %span Time Slots
-      %li{class: subnav_item_class('event-schedule-rooms-link')}
-        = link_to event_staff_schedule_rooms_path do
+      %li.nav-item{class: subnav_item_class('event-schedule-rooms-link')}
+        = link_to event_staff_schedule_rooms_path, class: 'nav-link' do
           %i.fa.fa-tag
           %span Rooms
    

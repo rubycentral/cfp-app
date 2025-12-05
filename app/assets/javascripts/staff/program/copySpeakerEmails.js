@@ -39,7 +39,7 @@ $(function() {
         var $flash = $("<div class='container alert alert-dismissable alert-info'></div>")
         $flash.html("<p class='text-center'>emails copied to clipboard</p>")
         var $closeButton = $("<button class='close' data-dismiss='alert'></button")
-        $closeButton.html("<span class='glyphicon glyphicon-remove'></span>")
+        $closeButton.html("<i class='bi bi-x-lg'></i>")
         $flash.prepend($closeButton)
         $('#flash').append($flash)
     }

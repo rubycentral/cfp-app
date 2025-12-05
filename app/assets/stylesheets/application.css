@@ -6,8 +6,8 @@
  *= require base/bootstrap-overrides
  *
  *= require tributejs/dist/tribute
- *= require datatables.net-bs/css/dataTables.bootstrap
- *= require tom-select/dist/css/tom-select.default
+ *= require datatables.net-bs5/css/dataTables.bootstrap5
+ *= require tom-select/dist/css/tom-select.bootstrap5
  *
  *= require base/base
  *= require base/layout

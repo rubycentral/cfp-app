@@ -2,7 +2,7 @@
   .schedule_grid{data: {controller: "schedule-tabs", schedule_tabs_active_day_value: 1}}
     / Alert area
     .alert.alert-danger{style: "display: none;", data: {controller: "alert"}}
-      %button.close{type: "button", data: {action: "click->alert#close"}}
+      %button.btn-close{type: "button", data: {action: "click->alert#close"}}
         %span &times;
       %div{data: {alert_target: "message"}}
 

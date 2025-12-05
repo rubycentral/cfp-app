@@ -12,24 +12,24 @@
       .widget-content
         .tabbable
           %ul.nav.nav-tabs
-            %li.active
-              %a{"data-toggle" => "tab", :href => "#colors-tab"} Headers/Colors
-            %li
-              %a{"data-toggle" => "tab", :href => "#formcontrols"} Form Controls
-            %li
-              %a{"data-toggle" => "tab", :href => "#jscontrols"} Alerts/Modals
-            %li
-              %a{"data-toggle" => "tab", :href => "#buttons-examples"} Buttons
-            %li
-              %a{"data-toggle" => "tab", :href => "#tables-examples"} Tables
-            %li
-              %a{"data-toggle" => "tab", :href => "#discussion-example"} Discussions
-            %li
-              %a{"data-toggle" => "tab", :href => "#shortcuts-example"} Shortcuts / Stats
-            %li
-              %a{"data-toggle" => "tab", :href => "#cal-news-example"} Calendar / News
-            %li
-              %a{"data-toggle" => "tab", :href => "#ui-components"} UI Elements
+            %li.nav-item
+              %a.nav-link.active{"data-bs-toggle" => "tab", :href => "#colors-tab"} Headers/Colors
+            %li.nav-item
+              %a.nav-link{"data-bs-toggle" => "tab", :href => "#formcontrols"} Form Controls
+            %li.nav-item
+              %a.nav-link{"data-bs-toggle" => "tab", :href => "#jscontrols"} Alerts/Modals
+            %li.nav-item
+              %a.nav-link{"data-bs-toggle" => "tab", :href => "#buttons-examples"} Buttons
+            %li.nav-item
+              %a.nav-link{"data-bs-toggle" => "tab", :href => "#tables-examples"} Tables
+            %li.nav-item
+              %a.nav-link{"data-bs-toggle" => "tab", :href => "#discussion-example"} Discussions
+            %li.nav-item
+              %a.nav-link{"data-bs-toggle" => "tab", :href => "#shortcuts-example"} Shortcuts / Stats
+            %li.nav-item
+              %a.nav-link{"data-bs-toggle" => "tab", :href => "#cal-news-example"} Calendar / News
+            %li.nav-item
+              %a.nav-link{"data-bs-toggle" => "tab", :href => "#ui-components"} UI Elements
 
 
           .tab-content
@@ -44,19 +44,19 @@
                       %label Headers
                       %h1
                         H1 with label
-                        %span.label.label-default Default
+                        %span.label.badge text-bg-secondary Default
                       %h2
                         H2 with label
-                        %span.label.label-default Default
+                        %span.label.badge text-bg-secondary Default
                       %h3
                         H3 with label
-                        %span.label.label-default Default
+                        %span.label.badge text-bg-secondary Default
                       %h4
                         H4 with label
-                        %span.label.label-default Default
+                        %span.label.badge text-bg-secondary Default
                       %h5
                         H5 with label
-                        %span.label.label-default Default
+                        %span.label.badge text-bg-secondary Default
 
                   .row
                     .col-sm-12
@@ -101,12 +101,12 @@
                       %br/
                       %label Labels
                       %br/
-                      %span.label.label-default Default
-                      %span.label.label-primary Primary
-                      %span.label.label-success Success
-                      %span.label.label-info Info
-                      %span.label.label-warning Warning
-                      %span.label.label-danger Danger
+                      %span.label.badge text-bg-secondary Default
+                      %span.label.badge text-bg-primary Primary
+                      %span.label.badge text-bg-success Success
+                      %span.label.badge text-bg-info Info
+                      %span.label.badge text-bg-warning Warning
+                      %span.label.badge text-bg-danger Danger
 
                   .row
                     .col-sm-12
@@ -117,13 +117,13 @@
                       %a{href: "#"}
                         inbox
                         %span.badge 42
-                      %button.btn.btn-default{type: "button"}
+                      %button.btn.btn-secondary{type: "button"}
                         Messages
                         %span.badge 4
                       %button.btn.btn-primary{type: "button"}
                         Messages
                         %span.badge 10
-                      %span.label.label-primary.label-lg
+                      %span.label.badge text-bg-primary.label-lg
                         Notifications
                         %span.badge 42
             #formcontrols.tab-pane
@@ -180,17 +180,17 @@
                     %label.control-label.col-sm-2{:for => "radiobtns"} Combined Textbox
                     .col-sm-8
                       .input-group.col-sm-5
-                        %span.input-group-addon $
+                        %span.input-group-text $
                         %input#appendedPrependedInput.form-control{:type => "text"}
-                          %span.input-group-addon .00
+                          %span.input-group-text .00
                     / /col-sm-8
                   / /form-group
                   .form-group
                     %label.control-label.col-sm-2{:for => "radiobtns"} Textbox with Button Front
                     .col-sm-6
                       .input-group
-                        %span.input-group-btn
-                          %button.btn.btn-default{:type => "button"} Go!
+                        %span.input-group-text
+                          %button.btn.btn-secondary{:type => "button"} Go!
                         %input.form-control{:placeholder => "Search for...", :type => "text"}
                       / /input-group
                     / /.col-lg-6
@@ -200,15 +200,15 @@
                     .col-sm-6
                       .input-group
                         %input#appendedInputButton.form-control{:type => "text"}
-                          %span.input-group-btn
-                            %button.btn.btn-default{:type => "button"} Go!
+                          %span.input-group-text
+                            %button.btn.btn-secondary{:type => "button"} Go!
                   / /form-group
                   .form-group
                     %label.control-label.col-sm-2{:for => "radiobtns"} Textbox with Dropdown Front
                     .col-sm-6
                       .input-group
-                        .input-group-btn
-                          %button.btn.btn-default.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+                        .input-group-text
+                          %button.btn.btn-secondary.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-bs-toggle" => "dropdown", :type => "button"}
                             Action
                             %span.caret
                           %ul.dropdown-menu
@@ -228,11 +228,11 @@
                     .col-sm-6
                       .input-group
                         %input.form-control{"aria-label" => "...", :type => "text"}
-                          .input-group-btn
-                            %button.btn.btn-default.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+                          .input-group-text
+                            %button.btn.btn-secondary.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-bs-toggle" => "dropdown", :type => "button"}
                               Action
                               %span.caret
-                            %ul.dropdown-menu.dropdown-menu-right
+                            %ul.dropdown-menu.dropdown-menu-end
                               %li
                                 %a{:href => "#"} Action
                               %li
@@ -251,22 +251,22 @@
                     .col-sm-6
                       .btn-group
                         %a.btn.btn-primary{:href => "#"}
-                          %i.glyphicon.glyphicon-user.icon-white
+                          %i.bi.bi-person.icon-white
                           User
-                        %a.btn.btn-primary.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                        %a.btn.btn-primary.dropdown-toggle{"data-bs-toggle" => "dropdown", :href => "#"}
                           %span.caret
                         %ul.dropdown-menu
                           %li
                             %a{:href => "#"}
-                              %i.glyphicon.glyphicon-pencil
+                              %i.bi.bi-pencil
                               Edit
                           %li
                             %a{:href => "#"}
-                              %i.glyphicon.glyphicon-trash
+                              %i.bi.bi-trash
                               Delete
                           %li
                             %a{:href => "#"}
-                              %i.glyphicon.glyphicon-ban-circle
+                              %i.bi.bi-slash-circle
                               Ban
                           %li.divider
                           %li
@@ -276,17 +276,17 @@
                   .form-group
                     %label.control-label.col-sm-2{:for => "radiobtns"} Button sizes
                     .col-sm-8
-                      %a.btn.btn-default.btn-lg{:href => "#"}
-                        %i.glyphicon.glyphicon-star
+                      %a.btn.btn-secondary.btn-lg{:href => "#"}
+                        %i.bi.bi-star-fill
                         Star
-                      %a.btn.btn-default{:href => "#"}
-                        %i.glyphicon.glyphicon-star
+                      %a.btn.btn-secondary{:href => "#"}
+                        %i.bi.bi-star-fill
                         Star
-                      %a.btn.btn-default.btn-sm{:href => "#"}
-                        %i.glyphicon.glyphicon-star
+                      %a.btn.btn-secondary.btn-sm{:href => "#"}
+                        %i.bi.bi-star-fill
                         Star
-                      %a.btn.btn-default.btn-xs{:href => "#"}
-                        %i.glyphicon.glyphicon-star
+                      %a.btn.btn-secondary.btn-sm{:href => "#"}
+                        %i.bi.bi-star-fill
                         Star
                     / /col-sm-8
                   / /form-group
@@ -304,17 +304,17 @@
                     %label.control-label Alerts
                     .controls
                       .alert.alert-danger
-                        %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+                        %button.btn-close{"data-bs-dismiss" => "alert", :type => "button"}
                         %strong Danger!
                       .alert.alert-success
-                        %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+                        %button.btn-close{"data-bs-dismiss" => "alert", :type => "button"}
                         %strong Success!
                         %a.alert-link{:href => "#"} Linking to something in an alert
                       .alert.alert-info
-                        %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+                        %button.btn-close{"data-bs-dismiss" => "alert", :type => "button"}
                         %strong Info!
                       .alert.alert-warning
-                        %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+                        %button.btn-close{"data-bs-dismiss" => "alert", :type => "button"}
                         %strong Warning!
                     / /controls
                   / /form-group
@@ -365,20 +365,20 @@
                     %label.control-label Modals
                     .controls
                       / Button to trigger modal
-                      %a.btn.btn-default{"data-toggle" => "modal", :href => "#myModal", :role => "button"}
-                        %i.glyphicon.glyphicon-modal-window
+                      %a.btn.btn-secondary{"data-bs-toggle" => "modal", :href => "#myModal", :role => "button"}
+                        %i.bi.bi-window
                         Launch demo modal
                       / Modal
                       #myModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
                         .modal-dialog
                           .modal-content
                             .modal-header
-                              %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+                              %button.btn-close{"aria-hidden" => "true", "data-bs-dismiss" => "modal", :type => "button"}
                               %h3#myModalLabel Hi Friend!
                             .modal-body
                               %p Content
                             .modal-footer
-                              %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+                              %button.btn{"aria-hidden" => "true", "data-bs-dismiss" => "modal"} Close
                               %button.btn.btn-primary Save
                       / end myModal
                     / /controls
@@ -393,7 +393,7 @@
                   .form-group
                     %label.control-label Buttons
                     .controls
-                      %button.btn.btn-default Default
+                      %button.btn.btn-secondary Default
                       %button.btn.btn-primary{:type => "submit"} Save
                       %button.btn.btn-info Info
                       %button.btn.btn-danger Danger
@@ -402,16 +402,7 @@
                       %button.btn.btn-success Success
                       %button.btn.btn-link Cancel
                   .form-group
-                    %button.btn.btn-xs.btn-default Default
-                    %button.btn.btn-primary.btn-xs{:type => "submit"} Save
-                    %button.btn.btn-xs.btn-info Info
-                    %button.btn.btn-xs.btn-danger Danger
-                    %button.btn.btn-xs.btn-warning Warning
-                    %button.btn.btn-xs.btn-invert Invert
-                    %button.btn.btn-xs.btn-success Success
-                    %button.btn.btn-xs.btn-link Cancel
-                  .form-group
-                    %button.btn.btn-sm.btn-default Default
+                    %button.btn.btn-sm.btn-secondary Default
                     %button.btn.btn-primary.btn-sm{:type => "submit"} Save
                     %button.btn.btn-sm.btn-info Info
                     %button.btn.btn-sm.btn-danger Danger
@@ -420,7 +411,16 @@
                     %button.btn.btn-sm.btn-success Success
                     %button.btn.btn-sm.btn-link Cancel
                   .form-group
-                    %button.btn.btn-lg.btn-default Default
+                    %button.btn.btn-sm.btn-secondary Default
+                    %button.btn.btn-primary.btn-sm{:type => "submit"} Save
+                    %button.btn.btn-sm.btn-info Info
+                    %button.btn.btn-sm.btn-danger Danger
+                    %button.btn.btn-sm.btn-warning Warning
+                    %button.btn.btn-sm.btn-invert Invert
+                    %button.btn.btn-sm.btn-success Success
+                    %button.btn.btn-sm.btn-link Cancel
+                  .form-group
+                    %button.btn.btn-lg.btn-secondary Default
                     %button.btn.btn-primary.btn-lg{:type => "submit"} Save
                     %button.btn.btn-lg.btn-info Info
                     %button.btn.btn-lg.btn-danger Danger
@@ -433,17 +433,17 @@
                     %label.control-label{:for => "radiobtns"} Button sizes
                     .row
                       .col-sm-8
-                        %a.btn.btn-default.btn-lg{:href => "#"}
-                          %i.glyphicon.glyphicon-star
+                        %a.btn.btn-secondary.btn-lg{:href => "#"}
+                          %i.bi.bi-star-fill
                           Star
-                        %a.btn.btn-default{:href => "#"}
-                          %i.glyphicon.glyphicon-star
+                        %a.btn.btn-secondary{:href => "#"}
+                          %i.bi.bi-star-fill
                           Star
-                        %a.btn.btn-default.btn-sm{:href => "#"}
-                          %i.glyphicon.glyphicon-star
+                        %a.btn.btn-secondary.btn-sm{:href => "#"}
+                          %i.bi.bi-star-fill
                           Star
-                        %a.btn.btn-default.btn-xs{:href => "#"}
-                          %i.glyphicon.glyphicon-star
+                        %a.btn.btn-secondary.btn-sm{:href => "#"}
+                          %i.bi.bi-star-fill
                           Star
                       / /col-sm-8
                   / /form-group
@@ -451,22 +451,22 @@
                   .form-group
                     %label.control-label Social Buttons
                     .controls
-                      %button.btn.btn-default.btn-facebook-alt
+                      %button.btn.btn-secondary.btn-facebook-alt
                         %i.fa.fa-facebook
                         Facebook
-                      %button.btn.btn-default.btn-twitter-alt
+                      %button.btn.btn-secondary.btn-twitter-alt
                         %i.fa.fa-twitter
                         Twitter
-                      %button.btn.btn-default.btn-google-alt
+                      %button.btn.btn-secondary.btn-google-alt
                         %i.fa.fa-google-plus
                         Google+
-                      %button.btn.btn-default.btn-linkedin-alt
+                      %button.btn.btn-secondary.btn-linkedin-alt
                         %i.fa.fa-linkedin
                         Linked In
-                      %button.btn.btn-default.btn-pinterest-alt
+                      %button.btn.btn-secondary.btn-pinterest-alt
                         %i.fa.fa-pinterest
                         Pinterest
-                      %button.btn.btn-default.btn-github-alt
+                      %button.btn.btn-secondary.btn-github-alt
                         %i.fa.fa-github
                         GitHub
                     / /controls
@@ -493,25 +493,25 @@
                         %td http://www.getbootstrap.com/
                         %td
                           %a.btn.btn-sm.btn-success{:href => "javascript:;"}
-                            %i.btn-icon-only.glyphicon.glyphicon-ok
+                            %i.btn-icon-only.bi.bi-check
                           %a.btn.btn-danger.btn-sm{:href => "javascript:;"}
-                            %i.btn-icon-only.glyphicon.glyphicon-remove
+                            %i.btn-icon-only.bi.bi-x
                       %tr
                         %td Bootstrap
                         %td http://www.getbootstrap.com/
                         %td
                           %a.btn.btn-sm.btn-success{:href => "javascript:;"}
-                            %i.btn-icon-only.glyphicon.glyphicon-ok
+                            %i.btn-icon-only.bi.bi-check
                           %a.btn.btn-danger.btn-sm{:href => "javascript:;"}
-                            %i.btn-icon-only.glyphicon.glyphicon-remove
+                            %i.btn-icon-only.bi.bi-x
                       %tr
                         %td Bootstrap
                         %td http://www.getbootstrap.com/
                         %td
                           %a.btn.btn-sm.btn-success{:href => "javascript:;"}
-                            %i.btn-icon-only.glyphicon.glyphicon-ok
+                            %i.btn-icon-only.bi.bi-check
                           %a.btn.btn-danger.btn-sm{:href => "javascript:;"}
-                            %i.btn-icon-only.glyphicon.glyphicon-remove
+                            %i.btn-icon-only.bi.bi-x
                 / /widget-content
               / /widget widget-table
             / /tables-examples
@@ -524,28 +524,28 @@
                   .widget-content
                     .shortcuts
                       %a.shortcut{:href => "javascript:;"}
-                        %i.shortcut-icon.glyphicon.glyphicon-list-alt
+                        %i.shortcut-icon.bi.bi-list-ul
                         %span.shortcut-label Apps
                       %a.shortcut{:href => "javascript:;"}
-                        %i.shortcut-icon.glyphicon.glyphicon-bookmark
+                        %i.shortcut-icon.bi.bi-bookmark
                         %span.shortcut-label Bookmarks
                       %a.shortcut{:href => "javascript:;"}
-                        %i.shortcut-icon.glyphicon.glyphicon-signal
+                        %i.shortcut-icon.bi.bi-bar-chart
                         %span.shortcut-label Reports
                       %a.shortcut{:href => "javascript:;"}
-                        %i.shortcut-icon.glyphicon.glyphicon-comment
+                        %i.shortcut-icon.bi.bi-chat
                         %span.shortcut-label Comments
                       %a.shortcut{:href => "javascript:;"}
-                        %i.shortcut-icon.glyphicon.glyphicon-user
+                        %i.shortcut-icon.bi.bi-person
                         %span.shortcut-label Users
                       %a.shortcut{:href => "javascript:;"}
-                        %i.shortcut-icon.glyphicon.glyphicon-file
+                        %i.shortcut-icon.bi.bi-file-earmark
                         %span.shortcut-label Notes
                       %a.shortcut{:href => "javascript:;"}
-                        %i.shortcut-icon.glyphicon.glyphicon-picture
+                        %i.shortcut-icon.bi.bi-image
                         %span.shortcut-label Photos
                       %a.shortcut{:href => "javascript:;"}
-                        %i.shortcut-icon.glyphicon.glyphicon-tag
+                        %i.shortcut-icon.bi.bi-tag
                         %span.shortcut-label Tags
                   / /widget-content
                 / /widget widget-shortcuts
@@ -633,21 +633,21 @@
                             %a.name John Smith
                             %span.time 1 hour ago
                             .options_arrow
-                              .dropdown.pull-right
-                                %a#dLabel.dropdown-toggle{"data-target" => "#", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+                              .dropdown.float-end
+                                %a#dLabel.dropdown-toggle{"data-bs-target" => "#", "data-bs-toggle" => "dropdown", :href => "#", :role => "button"}
                                   %span.caret
                                 %ul.dropdown-menu{"aria-labelledby" => "dLabel", :role => "menu"}
                                   %li
                                     %a{:href => "#"}
-                                      %i.glyphicon.glyphicon-share-alt.icon-large
+                                      %i.bi.bi-share.icon-large
                                       Reply
                                   %li
                                     %a{:href => "#"}
-                                      %i.glyphicon.glyphicon-trash.icon-large
+                                      %i.bi.bi-trash.icon-large
                                       Delete
                                   %li
                                     %a{:href => "#"}
-                                      %i.glyphicon.glyphicon-share.icon-large
+                                      %i.bi.bi-box-arrow-up.icon-large
                                       Share
                           .text As an interesting side note, as a head without a body, I envy the dead. There's one way and only one way to determine if an animal is intelligent. Dissect its brain! Man, I'm sore all over. I feel like I just went ten rounds with mighty Thor.
                       %li.by_myself.right

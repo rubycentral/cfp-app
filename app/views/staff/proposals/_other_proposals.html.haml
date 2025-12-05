@@ -5,9 +5,9 @@
         .row.other-proposal-header
           .col-sm-7.other-proposal-title=link_to truncate(proposal.title, length: 25), event_staff_program_proposal_path(event, proposal)
           &nbsp;
-          .col-sm-5.other-proposal-status.text-right= proposal.state_label(small: true)
+          .col-sm-5.other-proposal-status.text-end= proposal.state_label(small: true)
         .rating-and-format
-          .other-proposal-rating.pull-right
+          .other-proposal-rating.float-end
             %b Rating:
             = proposal.average_rating ? number_with_precision(proposal.average_rating, precision: 1) : "No Rating"
           .other-proposal-format

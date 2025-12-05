@@ -7,7 +7,7 @@
           %span.event-meta 
             %i.fa.fa-fw.fa-calendar
             = event.date_range
-    .col-md-4.text-right.text-right-responsive
+    .col-md-4.text-end.text-end-responsive
       .event-info.event-info-dense
         %span{:class => "event-meta event-status-badge event-status-#{event.status}"}
           CFP 
@@ -28,10 +28,10 @@
   .col-md-12
     .tabbable
       %ul.nav.nav-tabs
-        %li.active
-          %a{"data-toggle" => "tab", :href => "#edit-proposal"} Proposal Form
-        %li
-          %a{'data-toggle' => 'tab', href: '#preview', 'data-action' => 'click->proposal-preview#refresh'} Preview
+        %li.nav-item
+          %a.nav-link.active{"data-bs-toggle" => "tab", :href => "#edit-proposal"} Proposal Form
+        %li.nav-item
+          %a.nav-link{'data-bs-toggle' => 'tab', href: '#preview', 'data-action' => 'click->proposal-preview#refresh'} Preview
       .tab-content
         #edit-proposal.tab-pane.active
           .row

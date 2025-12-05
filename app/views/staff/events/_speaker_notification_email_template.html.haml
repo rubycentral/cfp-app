@@ -2,7 +2,7 @@
   %h3.template-title= f.label "#{type_text} template"
   .form-group.template-actions
     - if policy(@event).update?
-      = link_to 'Test', '#', class: 'btn btn-sm btn-primary template-test-btn', data: { toggle: 'modal', target: "#test-template-#{type_key}-dialog"}
+      = link_to 'Test', '#', class: 'btn btn-sm btn-primary template-test-btn', data: { bs_toggle: 'modal', bs_target: "#test-template-#{type_key}-dialog"}
     %button.btn.btn-sm.btn-primary.template-preview-btn Preview
     %button.btn.btn-sm.btn-gray.template-exit-preview-btn Exit Preview
     - if policy(@event).update?

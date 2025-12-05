@@ -2,7 +2,7 @@
   .row
     .col-md-12
       .page-header.clearfix
-        .pull-right
+        .float-end
           %h3
             %strong Event Status:
             = event.status.capitalize
@@ -11,7 +11,7 @@
               = link_to "Edit Info", event_staff_edit_path(event), class: "btn btn-primary"
               - if event.checklist_complete?
                 = link_to "Change Status", '#', class: "btn btn-primary status-button"
-            .status-dropdown.pull-right
+            .status-dropdown.float-end
               = form_for(event, url: event_staff_update_status_path(event)) do |f|
                 = f.select(:state, options_for_select(Event::STATUSES.values, f.object.state))
                 = link_to "Cancel", '#', {:class=>"cancel-status-change btn btn-danger"}

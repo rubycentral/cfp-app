@@ -4,10 +4,10 @@ module SimpleForm
       def tooltip(wrapper_options = nil)
         unless tooltip_text.nil?
           input_html_options[:rel] ||= 'tooltip'
-          input_html_options['data-toggle'] ||= 'tooltip'
-          input_html_options['data-placement'] ||= tooltip_position
-          input_html_options['data-trigger'] ||= 'focus'
-          input_html_options['data-original-title'] ||= tooltip_text
+          input_html_options['data-bs-toggle'] ||= 'tooltip'
+          input_html_options['data-bs-placement'] ||= tooltip_position
+          input_html_options['data-bs-trigger'] ||= 'hover focus'
+          input_html_options['title'] ||= tooltip_text
           nil
         end
       end

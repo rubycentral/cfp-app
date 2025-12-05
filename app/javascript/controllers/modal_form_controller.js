@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import { Modal } from "bootstrap"
 
 export default class extends Controller {
   static targets = ["modal"]
@@ -12,7 +13,8 @@ export default class extends Controller {
         // Don't hide modal for "Save and Add"
         return
       }
-      $(this.modalTarget).modal('hide')
+      const modal = Modal.getInstance(this.modalTarget)
+      if (modal) modal.hide()
     }
   }
 }

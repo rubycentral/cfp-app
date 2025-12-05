@@ -1,13 +1,12 @@
-%li.notifications-link.dropdown
-  %a.dropdown-toggle{title: "Admin Toggle", href: "#", data: { toggle: "dropdown" } }
+%li.nav-item.dropdown
+  %a.nav-link.dropdown-toggle{title: 'Admin Toggle', href: '#', role: 'button', data: {bs_toggle: 'dropdown'}, aria: {expanded: 'false'}}
     Admin
-    %b.caret
-  %ul.dropdown-menu.admin-dropdown
-    %li{class: "#{request.path == admin_users_path ? 'active' : ''}"}
-      = link_to admin_users_path do
+  %ul.dropdown-menu.dropdown-menu-end
+    %li
+      = link_to admin_users_path, class: "dropdown-item #{'active' if request.path == admin_users_path}" do
         %i.fa.fa-users
         %span Users
-      %li{class: "#{request.path == admin_events_path ? 'active' : ''}"}
-        =link_to admin_events_path do
-          %i.fa.fa-calendar
-          %span Events
+    %li
+      = link_to admin_events_path, class: "dropdown-item #{'active' if request.path == admin_events_path}" do
+        %i.fa.fa-calendar
+        %span Events

@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import { Popover } from "bootstrap"
 
 export default class extends Controller {
   static targets = ["form"]
@@ -30,8 +31,8 @@ export default class extends Controller {
 
   setupPopover() {
     const toggle = this.element.querySelector('#rating-tooltip-toggle')
-    if (toggle && typeof $ !== 'undefined') {
-      $(toggle).popover({})
+    if (toggle) {
+      new Popover(toggle)
       toggle.addEventListener('click', (e) => e.preventDefault())
     }
   }

@@ -1,3 +1,8 @@
+/* visibility */
+.hidden {
+  display: none !important;
+}
+
 /* spacing */
 .margin-top {
   margin-top: 1em;

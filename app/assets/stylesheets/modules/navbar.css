@@ -174,32 +174,52 @@
   }
 }
 
-.navbar-fixed-top.program-subnav,
-.navbar-fixed-top.schedule-subnav,
-.navbar-fixed-top.website-subnav {
+.fixed-top.program-subnav,
+.fixed-top.schedule-subnav,
+.fixed-top.website-subnav {
   border-radius: 0;
   background-color: var(--dark-blue);
   border-color: var(--dark-blue);
-  padding-top: var(--navbar-height);
+  top: var(--navbar-height);
+  height: var(--navbar-height);
+  padding-top: 0;
+  padding-bottom: 0;
   z-index: var(--zindex-subnavbar);
-  li > a {
-    color: var(--white);
+
+  .navbar-nav {
+    height: 100%;
+    margin: 0;
   }
 
-  a:hover {
-    background-color: var(--dark-blue);
+  .navbar-nav .nav-item {
+    height: 100%;
+  }
+
+  .navbar-nav .nav-link {
+    color: var(--white);
+    padding: 0 16px;
+    line-height: var(--navbar-height);
+    height: 100%;
+  }
+
+  .navbar-nav .nav-link:hover {
+    background-color: hsl(from var(--dark-blue) h s calc(l + 10));
     color: hsl(from var(--white) h s calc(l - 10));
   }
 
-  li.active {
-    border-bottom: 3px solid hsl(from var(--dark-blue) h s calc(l - 10));
-    > a, a:hover, a:focus {
+  .nav-item.active {
+    box-shadow: inset 0 -3px 0 hsl(from var(--dark-blue) h s calc(l - 10));
+
+    .nav-link,
+    .nav-link:hover,
+    .nav-link:focus {
       color: hsl(from var(--white) h s calc(l - 10));
       background-color: hsl(from var(--dark-blue) h s calc(l + 10));
     }
   }
 
   li.download-link a {
+    color: var(--white);
     padding-left: 0;
     &:focus {
       background-color: var(--dark-blue);

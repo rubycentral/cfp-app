@@ -7,9 +7,10 @@
 
     .form-inputs
       .col-sm-5.col-centered
-        .well.clearfix
-          = f.error_notification
-          = f.input :email, required: true, autofocus: true, wrapper_html: {class: "col-sm-12"}
+        .card
+          .card-body
+            = f.error_notification
+            = f.input :email, required: true, autofocus: true, wrapper_html: {class: "col-sm-12"}
 
-          .form-group.col-sm-12
-            = f.button :submit, "Send me reset password instructions", class: "btn btn-success"
+            .form-group.col-sm-12
+              = f.button :submit, "Send me reset password instructions", class: "btn btn-success"

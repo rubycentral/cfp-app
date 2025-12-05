@@ -56,6 +56,7 @@ Rails.application.routes.draw do
       put :update_proposal_tags
 
       get :guidelines
+      get :edit_guidelines
       patch :update_guidelines
 
       post :test_speaker_template

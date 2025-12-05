@@ -7,15 +7,16 @@
             %strong Event Status:
             = event.status.capitalize
           - if current_user.organizer_for_event?(event)
-            .btn-nav
-              = link_to "Edit Info", event_staff_edit_path(event), class: "btn btn-primary"
-              - if event.checklist_complete?
-                = link_to "Change Status", '#', class: "btn btn-primary status-button"
-            .status-dropdown.float-end
-              = form_for(event, url: event_staff_update_status_path(event)) do |f|
-                = f.select(:state, options_for_select(Event::STATUSES.values, f.object.state))
-                = link_to "Cancel", '#', {:class=>"cancel-status-change btn btn-danger"}
-                = f.submit "Update Status", class: "btn btn-success"
+            %div{data: {controller: 'status-toggle'}}
+              .btn-nav{data: {status_toggle_target: 'button'}}
+                = link_to "Edit Info", event_staff_edit_path(event), class: "btn btn-primary"
+                - if event.checklist_complete?
+                  = link_to "Change Status", '#', class: "btn btn-primary", data: {action: 'click->status-toggle#show'}
+              .status-dropdown.float-end{data: {status_toggle_target: 'dropdown'}}
+                = form_for(event, url: event_staff_update_status_path(event)) do |f|
+                  = f.select(:state, options_for_select(Event::STATUSES.values, f.object.state))
+                  = link_to "Cancel", '#', class: "btn btn-danger", data: {action: 'click->status-toggle#hide'}
+                  = f.submit "Update Status", class: "btn btn-success"
         %h1 Event Info
 
   .row

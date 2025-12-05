@@ -178,7 +178,6 @@ export default class extends Controller {
       'data-bs-target': null,
     })
 
-    $sessionCard.off('click', this.showProgramSession)
   }
 
   moveToUnscheduled(sessionCard) {
@@ -222,26 +221,6 @@ export default class extends Controller {
       'data-bs-toggle': 'modal',
       'data-bs-target': '#program-session-show-dialog'
     })
-  }
-
-  showProgramSession(e) {
-    const $card = $(e.currentTarget)
-    const url = $card.data('showPath')
-    const scheduled = $card.data('scheduled')
-    if (url && !scheduled) {
-      fetch(url, {
-        headers: {
-          'Accept': 'text/vnd.turbo-stream.html, text/html',
-          'Turbo-Frame': 'program-session-show-dialog'
-        }
-      }).then(response => response.text())
-        .then(html => {
-          const frame = document.getElementById('program-session-show-dialog').querySelector('turbo-frame')
-          if (frame) {
-            frame.innerHTML = html
-          }
-        })
-    }
   }
 
   assignTrackColor($element) {

@@ -170,12 +170,6 @@ class ProposalDecorator < ApplicationDecorator
     form.input :speaker
   end
 
-  def abstract_input(form, tooltip = "Proposal Abstract")
-    form.input :abstract,
-      maxlength: 1005, input_html: { class: 'watched js-maxlength-alert', rows: 5 },
-      hint: 'A concise, engaging description for the public program. Limited to 600 characters.'#, popover_icon: { content: tooltip }
-  end
-
   def standalone_track_select(tooltip)
     h.simple_form_for :proposal do |f|
       f.input :track,

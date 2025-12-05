@@ -23,8 +23,7 @@
       = f.label :track, 'Track'
       %div #{proposal.track_name_for_speakers}
 
-
-  = proposal.abstract_input(f, 'A concise, engaging description for the public program. Limited to 600 characters.')
+  = f.input :abstract, maxlength: 1005, input_html: {class: 'watched js-maxlength-alert', rows: 5}, hint: 'A concise, engaging description for the public program. Limited to 600 characters.'
 
   - if event.public_tags?
     .form-group

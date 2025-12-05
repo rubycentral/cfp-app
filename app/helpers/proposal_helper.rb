@@ -38,8 +38,4 @@ module ProposalHelper
       end
     end
   end
-
-  def notes_tooltip
-    "Please note any scheduling conflicts, or any additional information an organizer may need to schedule your talk."
-  end
 end

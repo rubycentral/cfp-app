@@ -174,11 +174,10 @@ export default class extends Controller {
     this.updateTimeSlot($slot, $sessionCard)
 
     $sessionCard.attr({
-      'data-toggle': null,
-      'data-target': null,
+      'data-bs-toggle': null,
+      'data-bs-target': null,
     })
 
-    $sessionCard.off('click', this.showProgramSession)
   }
 
   moveToUnscheduled(sessionCard) {
@@ -191,19 +190,21 @@ export default class extends Controller {
       $sessionCard.data('scheduled', null)
       $sessionCard.attr({
         'data-scheduled': null,
-        'data-toggle': 'modal',
-        'data-target': '#program-session-show-dialog'
+        'data-bs-toggle': 'modal',
+        'data-bs-target': '#program-session-show-dialog'
       })
     }
   }
 
   unscheduleSession($sessionCard) {
     const unschedulePath = $sessionCard.data('unscheduleTimeSlotPath')
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
     if (unschedulePath) {
       $.ajax({
         url: unschedulePath,
         method: 'patch',
         data: { time_slot: { program_session_id: '' } },
+        headers: { 'X-CSRF-Token': csrfToken },
         success: (data) => {
           $('.header_wrapper .badge').text(
             data.unscheduled_count + '/' + data.total_count
@@ -219,29 +220,9 @@ export default class extends Controller {
     $sessionCard.data('scheduled', null)
     $sessionCard.attr({
       'data-scheduled': null,
-      'data-toggle': 'modal',
-      'data-target': '#program-session-show-dialog'
+      'data-bs-toggle': 'modal',
+      'data-bs-target': '#program-session-show-dialog'
     })
-  }
-
-  showProgramSession(e) {
-    const $card = $(e.currentTarget)
-    const url = $card.data('showPath')
-    const scheduled = $card.data('scheduled')
-    if (url && !scheduled) {
-      fetch(url, {
-        headers: {
-          'Accept': 'text/vnd.turbo-stream.html, text/html',
-          'Turbo-Frame': 'program-session-show-dialog'
-        }
-      }).then(response => response.text())
-        .then(html => {
-          const frame = document.getElementById('program-session-show-dialog').querySelector('turbo-frame')
-          if (frame) {
-            frame.innerHTML = html
-          }
-        })
-    }
   }
 
   assignTrackColor($element) {
@@ -285,12 +266,14 @@ export default class extends Controller {
     const updatePath = $timeSlot.data('updatePath')
     if (!updatePath) return
 
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
     $.ajax({
       url: updatePath,
       method: 'patch',
       data: {
         time_slot: { program_session_id: $dragged_session.data('id') }
       },
+      headers: { 'X-CSRF-Token': csrfToken },
       success: (data) => {
         $('.header_wrapper .badge').text(
           data.unscheduled_count + '/' + data.total_count

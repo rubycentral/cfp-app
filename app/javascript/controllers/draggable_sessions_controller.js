@@ -46,8 +46,8 @@ export default class extends Controller {
 
     const scheduled = session.dataset.scheduled
     if (!scheduled) {
-      session.setAttribute('data-toggle', 'modal')
-      session.setAttribute('data-target', '#program-session-show-dialog')
+      session.setAttribute('data-bs-toggle', 'modal')
+      session.setAttribute('data-bs-target', '#program-session-show-dialog')
       session.addEventListener('click', this.handleSessionClick.bind(this))
     }
   }
@@ -72,7 +72,18 @@ export default class extends Controller {
     const scheduled = session.dataset.scheduled
 
     if (url && !scheduled) {
-      $.ajax({ url: url })
+      fetch(url, {
+        headers: {
+          'Accept': 'text/html',
+          'Turbo-Frame': 'program-session-show-dialog'
+        }
+      }).then(response => response.text())
+        .then(html => {
+          const frame = document.querySelector('#program-session-show-dialog turbo-frame')
+          if (frame) {
+            frame.innerHTML = html
+          }
+        })
     }
   }
 
@@ -115,12 +126,14 @@ export default class extends Controller {
 
   unschedule($sessionCard) {
     const unschedulePath = $sessionCard.data('unscheduleTimeSlotPath')
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
 
     if (unschedulePath) {
       $.ajax({
         url: unschedulePath,
         method: 'patch',
         data: { time_slot: { program_session_id: '' } },
+        headers: { 'X-CSRF-Token': csrfToken },
         success: (data) => {
           if (this.hasBadgeTarget) {
             this.badgeTarget.textContent = data.unscheduled_count + '/' + data.total_count
@@ -136,8 +149,8 @@ export default class extends Controller {
     $sessionCard.data('scheduled', null)
     $sessionCard.attr({
       'data-scheduled': null,
-      'data-toggle': 'modal',
-      'data-target': '#program-session-show-dialog'
+      'data-bs-toggle': 'modal',
+      'data-bs-target': '#program-session-show-dialog'
     })
   }
 

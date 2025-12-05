@@ -36,19 +36,6 @@ class Staff::EventsController < Staff::ApplicationController
     end
   end
 
-  def guidelines
-  end
-
-  def update_guidelines
-    authorize_update
-    if @event.update(params.require(:event).permit(:guidelines))
-      redirect_to event_staff_guidelines_path
-    else
-      flash[:danger] = "There was a problem saving your guidelines; please review the form for issues and try again."
-      render :guidelines
-    end
-  end
-
   def info
   end
 

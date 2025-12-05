@@ -55,8 +55,7 @@ Rails.application.routes.draw do
       get 'proposal-tags', as: :proposal_tags
       put :update_proposal_tags
 
-      get :guidelines
-      patch :update_guidelines
+      resource :guidelines, only: [:show, :edit, :update]
 
       post :test_speaker_template
 

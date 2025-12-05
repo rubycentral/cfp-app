@@ -1,0 +1,16 @@
+.row
+  .col-md-12
+    .page-header
+      %h1 CFP Guidelines
+
+= turbo_frame_tag :guidelines do
+  .row
+    .col-md-6
+      - if @event.guidelines
+        = markdown(@event.guidelines)
+      - else
+        %em No Guidelines
+
+    .col-md-3
+      - if current_user.organizer?
+        = link_to "Edit Guidelines", edit_event_staff_guidelines_path, class: 'btn btn-primary btn-lg'

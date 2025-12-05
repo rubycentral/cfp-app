@@ -141,7 +141,8 @@ body .custom-session-card {
   .track {
     width: 100%;
     color: white;
-    padding: .5em;
+    padding: .25em .5em;
+    font-size: .75em;
   }
 
   .format {
@@ -150,6 +151,7 @@ body .custom-session-card {
 
   .title {
     font-weight: bold;
+    font-size: 1.1em;
   }
 }
 

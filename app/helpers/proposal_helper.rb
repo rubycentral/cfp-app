@@ -39,10 +39,6 @@ module ProposalHelper
     end
   end
 
-  def abstract_tooltip
-    "A concise, engaging description for the public program. Limited to 600 characters."
-  end
-
   def details_tooltip
     "Include any pertinent details such as outlines, outcomes or intended audience."
   end

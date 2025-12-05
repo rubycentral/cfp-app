@@ -24,7 +24,7 @@
       %div #{proposal.track_name_for_speakers}
 
 
-  = proposal.abstract_input(f, abstract_tooltip)
+  = proposal.abstract_input(f, 'A concise, engaging description for the public program. Limited to 600 characters.')
 
   - if event.public_tags?
     .form-group

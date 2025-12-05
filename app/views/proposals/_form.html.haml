@@ -39,11 +39,9 @@
   %p
     This content will <strong> only</strong> be visible to the review committee.
 
-  = f.input :details, input_html: { class: 'watched', rows: 5 },
-    hint: 'Include any pertinent details such as outlines, outcomes or intended audience.'#, popover_icon: { content: details_tooltip }
+  = f.input :details, input_html: { class: 'watched', rows: 5 }, hint: 'Include any pertinent details such as outlines, outcomes or intended audience.'
 
-  = f.input :pitch, input_html: { class: 'watched', rows: 5 },
-    hint: 'Explain why this talk should be considered and what makes you qualified to speak on the topic.'#, popover_icon: { content: pitch_tooltip }
+  = f.input :pitch, input_html: { class: 'watched', rows: 5 }, hint: 'Explain why this talk should be considered and what makes you qualified to speak on the topic.'
 
 - if event.custom_fields.any?
   - event.custom_fields.each do |custom_field|

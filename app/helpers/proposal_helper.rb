@@ -39,18 +39,6 @@ module ProposalHelper
     end
   end
 
-  def details_tooltip
-    "Include any pertinent details such as outlines, outcomes or intended audience."
-  end
-
-  def pitch_tooltip
-    "Explain why this talk should be considered and what makes you qualified to speak on the topic."
-  end
-
-  def bio_tooltip
-    "Your bio should be short, no longer than 500 characters. It's related to why you're speaking about this topic."
-  end
-
   def notes_tooltip
     "Please note any scheduling conflicts, or any additional information an organizer may need to schedule your talk."
   end

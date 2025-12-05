@@ -129,6 +129,19 @@ module ApplicationHelper
     current_user.admin?
   end
 
+  def event_status_class(state)
+    case state
+    when 'open'
+      'bg-success'
+    when 'draft'
+      'bg-info'
+    when 'closed'
+      'bg-secondary'
+    else
+      'bg-secondary'
+    end
+  end
+
   def new_or_edit_website_path
     if current_website
       edit_event_staff_website_path(current_event)

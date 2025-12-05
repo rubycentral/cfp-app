@@ -29,9 +29,9 @@
 }
 
 .icon-twitter {
-  background-image: asset-url("twitter_32.png");
+  background-image: url("twitter_32.png");
 }
 
 .icon-github {
-  background-image: asset-url("github_32.png");
+  background-image: url("github_32.png");
 }

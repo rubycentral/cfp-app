@@ -1,0 +1,11 @@
+%section.template-section
+  %h3.template-title= "#{type_text} template"
+  .form-group.template-actions
+    - if policy(@event).update?
+      = link_to 'Test', '#', class: 'btn btn-sm btn-primary', data: {bs_toggle: 'modal', bs_target: "#test-template-#{type_key}-dialog"}
+      = link_to 'Edit', edit_event_staff_speaker_email_template_path(@event, type_key), class: 'btn btn-sm btn-primary'
+  .template-content
+    - if text.blank?
+      %p.notice Using default template.
+    - else
+      %div.contents= markdown(text)

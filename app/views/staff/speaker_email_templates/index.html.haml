@@ -1,9 +1,15 @@
 .row
+  .col-md-12
+    .page-header
+      %h1 Speaker Email Notification Templates
+
+.row
   .col-md-7
-    %fieldset
-      - SpeakerEmailTemplate::TYPES.each do |type_key|
-        = render partial: "speaker_notification_email_template", locals: {f: f, type_key: type_key, type_text: SpeakerEmailTemplate::DISPLAY_TYPES[type_key], text: f.object.speaker_notification_emails[type_key]}
-  .col-md-5.email-markup-help
+    - SpeakerEmailTemplate::TYPES.each do |type_key|
+      = turbo_frame_tag dom_id(@event, type_key) do
+        = render partial: "template_show", locals: {type_key: type_key, type_text: SpeakerEmailTemplate::DISPLAY_TYPES[type_key], text: @event.speaker_notification_emails[type_key]}
+
+  .col-md-5
     %h3 Email markup
     %p Paragraphs are separated by two newlines.
     %p
@@ -19,3 +25,6 @@
       %br
       %code [link text](::confirmation_link::)
     %p.help-block * confirmation link is not available in Reject emails
+
+- SpeakerEmailTemplate::TYPES.each do |type_key|
+  = render partial: 'test_dialog', locals: {type_key: type_key}

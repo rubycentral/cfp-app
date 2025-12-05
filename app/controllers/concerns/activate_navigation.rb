@@ -75,7 +75,7 @@ module ActivateNavigation
         'event-staff-teammates-link' => exact_path(current_event, :staff, Teammate),
         'event-staff-config-link' => exact_path(current_event, :staff, :config),
         'event-staff-guidelines-link' => exact_path(current_event, :staff, :guidelines),
-        'event-staff-speaker-emails-link' => exact_path(current_event, :staff, :speaker_email_notifications),
+        'event-staff-speaker-emails-link' => starts_with_path(current_event, :staff, :speaker_email_templates),
     }
   end
 

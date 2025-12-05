@@ -1,15 +1,14 @@
 .modal.fade{id: "test-template-#{type_key}-dialog", data: {controller: 'modal-form', modal_form_target: 'modal'}}
   .modal-dialog
     .modal-content
-      = simple_form_for :speaker_email_template, url: event_staff_test_speaker_template_path(@event), method: 'post', data: {turbo: true, action: 'turbo:submit-end->modal-form#submitEnd'}, html: {role: 'form'} do |f|
+      = simple_form_for :speaker_email_template, url: test_event_staff_speaker_email_template_path(@event, type_key), method: 'post', data: {turbo: true, action: 'turbo:submit-end->modal-form#submitEnd'}, html: {role: 'form'} do |f|
         .modal-header
           %h3 Send Test '#{SpeakerEmailTemplate::DISPLAY_TYPES[type_key]}' Email
         .errors
 
         .modal-body
-          = f.input :type_key, as: :hidden, input_html: {value: type_key}
           = f.input :email, label: 'Send To', as: :string, autofocus: true, input_html: {value: sticky_template_test_email || current_user.email}
 
         .modal-footer
-          %button.btn.btn-secondary{'data-bs-dismiss' => 'modal', type: 'button'} Cancel
+          %button.btn.btn-secondary{data: {bs_dismiss: 'modal'}, type: 'button'} Cancel
           %button.btn.btn-success{type: 'submit'} Send

@@ -23,7 +23,7 @@
       = f.label :track, 'Track'
       %div #{proposal.track_name_for_speakers}
 
-  = f.input :abstract, maxlength: 1005, input_html: {class: 'watched js-maxlength-alert', rows: 5}, hint: 'A concise, engaging description for the public program. Limited to 600 characters.'
+  = f.input :abstract, maxlength: 1005, input_html: {class: 'watched js-maxlength-alert', rows: 20}, hint: 'A concise, engaging description for the public program. Limited to 600 characters.'
 
   - if event.public_tags?
     .form-group
@@ -38,7 +38,7 @@
   %p
     This content will <strong> only</strong> be visible to the review committee.
 
-  = f.input :details, input_html: { class: 'watched', rows: 5 }, hint: 'Include any pertinent details such as outlines, outcomes or intended audience.'
+  = f.input :details, input_html: {class: 'watched', rows: 30}, hint: 'Include any pertinent details such as outlines, outcomes or intended audience.'
 
   = f.input :pitch, input_html: { class: 'watched', rows: 5 }, hint: 'Explain why this talk should be considered and what makes you qualified to speak on the topic.'
 

@@ -330,7 +330,7 @@ export default class extends Controller {
     const $headers = $(this.columnHeaderTargets)
 
     if (scroll >= 55) {
-      $headers.css({ position: 'fixed', width: '180px', top: '130px', zIndex: '15' })
+      $headers.css({ position: 'fixed', width: '240px', top: '130px', zIndex: '15' })
     } else {
       $headers.css({ position: 'static', width: '100%', zIndex: '10' })
     }

@@ -1,5 +1,15 @@
-- events.each do |event|
-  .event
-    %h1
-      = link_to event.name, event_path(event.slug), class: 'event-title'
-      %small= event.status
+.container.py-4
+  %h1.mb-4 Events
+  .row
+    .col-lg-6
+      %ul.list-group
+        - events.each do |event|
+          %li.list-group-item.d-flex.justify-content-between.align-items-center
+            %div
+              = link_to event.name, event_path(event.slug)
+              %small.text-muted.ms-2
+                - if event.start_date.present? && event.end_date.present?
+                  = event.date_range
+                - else
+                  Dates TBD
+            %span.badge{class: event_status_class(event.status)}= event.status

@@ -174,8 +174,8 @@ export default class extends Controller {
     this.updateTimeSlot($slot, $sessionCard)
 
     $sessionCard.attr({
-      'data-toggle': null,
-      'data-target': null,
+      'data-bs-toggle': null,
+      'data-bs-target': null,
     })
 
     $sessionCard.off('click', this.showProgramSession)
@@ -191,8 +191,8 @@ export default class extends Controller {
       $sessionCard.data('scheduled', null)
       $sessionCard.attr({
         'data-scheduled': null,
-        'data-toggle': 'modal',
-        'data-target': '#program-session-show-dialog'
+        'data-bs-toggle': 'modal',
+        'data-bs-target': '#program-session-show-dialog'
       })
     }
   }
@@ -219,8 +219,8 @@ export default class extends Controller {
     $sessionCard.data('scheduled', null)
     $sessionCard.attr({
       'data-scheduled': null,
-      'data-toggle': 'modal',
-      'data-target': '#program-session-show-dialog'
+      'data-bs-toggle': 'modal',
+      'data-bs-target': '#program-session-show-dialog'
     })
   }
 

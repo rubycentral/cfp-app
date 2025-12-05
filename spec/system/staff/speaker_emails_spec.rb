@@ -35,19 +35,15 @@ feature "Speaker Emails", type: :system do
     before { login_as(admin_user) }
 
     it "can edit speaker emails", js: true do
-      visit event_staff_speaker_email_notifications_path(event)
+      visit event_staff_speaker_email_templates_path(event)
 
       within first('.template-section') do
-        find_button("Edit").click
+        click_link "Edit"
       end
-      within first('.template-section') do
-        fill_in "event[accept]", with: "Yay! You've been accepted to speak!"
-      end
-      within first('.template-section') do
-        find_button("Save").click
-      end
+      fill_in "event[accept]", with: "Yay! You've been accepted to speak!"
+      click_button "Save"
 
-      within first('.contents'), js: true do
+      within first('.contents') do
         expect(page).to have_content "Yay! You've been accepted to speak!"
       end
     end
@@ -57,18 +53,15 @@ feature "Speaker Emails", type: :system do
     before { login_as(organizer_user) }
 
     it "can edit speaker emails", js: true do
-      visit event_staff_speaker_email_notifications_path(event)
-      within first('.template-section') do
-        find_button("Edit").click
-      end
-      within first('.template-section') do
-        fill_in "event[accept]", with: "Yay! You've been accepted to speak!"
-      end
-      within first('.template-section') do
-        find_button("Save").click
-      end
+      visit event_staff_speaker_email_templates_path(event)
 
-      within first('.contents'), js: true do
+      within first('.template-section') do
+        click_link "Edit"
+      end
+      fill_in "event[accept]", with: "Yay! You've been accepted to speak!"
+      click_button "Save"
+
+      within first('.contents') do
         expect(page).to have_content "Yay! You've been accepted to speak!"
       end
     end
@@ -78,9 +71,9 @@ feature "Speaker Emails", type: :system do
     before { login_as(reviewer_user) }
 
     it "cannot edit speaker emails", js: true do
-      visit event_staff_speaker_email_notifications_path(event)
+      visit event_staff_speaker_email_templates_path(event)
 
-      expect(page).to_not have_button "Save"
+      expect(page).to_not have_link "Edit"
     end
   end
 
@@ -88,9 +81,9 @@ feature "Speaker Emails", type: :system do
     before { login_as(program_team_user) }
 
     it "cannot edit speaker emails", js: true do
-      visit event_staff_speaker_email_notifications_path(event)
+      visit event_staff_speaker_email_templates_path(event)
 
-      expect(page).to_not have_button "Save"
+      expect(page).to_not have_link "Edit"
     end
   end
 end

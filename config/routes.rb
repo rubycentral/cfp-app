@@ -57,11 +57,11 @@ Rails.application.routes.draw do
 
       resource :guidelines, only: [:show, :edit, :update]
 
-      post :test_speaker_template
-
-      get '/speaker-emails' => 'events#speaker_emails', as: :speaker_email_notifications
-      patch :update_speaker_emails
-      patch '/remove_speaker_email_template/:type' => 'events#remove_speaker_email_template', as: :remove_speaker_email_template
+      resources :speaker_email_templates, only: [:index, :show, :edit, :update, :destroy] do
+        member do
+          post :test
+        end
+      end
 
       resources :teammates, path: 'team'
 

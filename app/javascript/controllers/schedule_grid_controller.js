@@ -198,11 +198,13 @@ export default class extends Controller {
 
   unscheduleSession($sessionCard) {
     const unschedulePath = $sessionCard.data('unscheduleTimeSlotPath')
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
     if (unschedulePath) {
       $.ajax({
         url: unschedulePath,
         method: 'patch',
         data: { time_slot: { program_session_id: '' } },
+        headers: { 'X-CSRF-Token': csrfToken },
         success: (data) => {
           $('.header_wrapper .badge').text(
             data.unscheduled_count + '/' + data.total_count
@@ -264,12 +266,14 @@ export default class extends Controller {
     const updatePath = $timeSlot.data('updatePath')
     if (!updatePath) return
 
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
     $.ajax({
       url: updatePath,
       method: 'patch',
       data: {
         time_slot: { program_session_id: $dragged_session.data('id') }
       },
+      headers: { 'X-CSRF-Token': csrfToken },
       success: (data) => {
         $('.header_wrapper .badge').text(
           data.unscheduled_count + '/' + data.total_count

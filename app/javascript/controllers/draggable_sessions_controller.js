@@ -126,12 +126,14 @@ export default class extends Controller {
 
   unschedule($sessionCard) {
     const unschedulePath = $sessionCard.data('unscheduleTimeSlotPath')
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
 
     if (unschedulePath) {
       $.ajax({
         url: unschedulePath,
         method: 'patch',
         data: { time_slot: { program_session_id: '' } },
+        headers: { 'X-CSRF-Token': csrfToken },
         success: (data) => {
           if (this.hasBadgeTarget) {
             this.badgeTarget.textContent = data.unscheduled_count + '/' + data.total_count

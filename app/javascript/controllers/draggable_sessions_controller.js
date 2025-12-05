@@ -159,4 +159,14 @@ export default class extends Controller {
       }
     })
   }
+
+  clearSearch(e) {
+    e.preventDefault()
+    if (this.hasSearchInputTarget) {
+      this.searchInputTarget.value = ''
+      this.widgetTarget.querySelectorAll('.draggable-session-card').forEach(session => {
+        session.classList.remove('hidden')
+      })
+    }
+  }
 }

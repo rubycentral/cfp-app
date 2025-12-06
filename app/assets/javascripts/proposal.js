@@ -1,26 +1,4 @@
 $(function() {
-  // Track editing
-  $('#edit-track-icon').click(function() {
-    $('#current-track').hide();
-    $('#edit-track-wrapper').show();
-  });
-
-  $('#cancel-track-editing').click(function() {
-    $('#edit-track-wrapper').hide();
-    $('#current-track').show();
-  });
-
-  // Format editing
-  $('#edit-format-icon').click(function() {
-    $('#current-format').hide();
-    $('#edit-format-wrapper').show();
-  });
-
-  $('#cancel-format-editing').click(function() {
-    $('#edit-format-wrapper').hide();
-    $('#current-format').show();
-  });
-
   var autocompleteEl = document.getElementById('autocomplete-options');
   var reviewTagsEl = document.getElementById('proposal_review_tags');
   if(autocompleteEl && reviewTagsEl) {

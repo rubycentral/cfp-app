@@ -1,25 +1,3 @@
-var registerNotificationChannel = function() {
-  App.notifications = App.cable.subscriptions.create("NotificationsChannel", {
-    connected: function() {
-      // Called when the subscription is ready for use on the server
-      console.log("Connected to notifications channel");
-    },
-
-    disconnected: function() {
-      // Called when the subscription has been terminated by the server
-      console.log("Disconnected from notifications channel");
-    },
-
-    received: function(data) {
-      console.log("Received data:", data);
-      $('#notifications').text(data.message);
-      if (data.complete === "1") {
-        $('tr[data-state=' + data.state + ']').remove();
-      }
-    }
-  });
-};
-
 $(document).ready(function () {
   var oTable = cfpDataTable('#reviewer-proposals.datatable', ['number', null,
       'number', 'text', 'text', 'text', 'text', 'text', 'number', 'text', 'text'],

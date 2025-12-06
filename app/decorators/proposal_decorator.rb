@@ -182,7 +182,9 @@ class ProposalDecorator < ApplicationDecorator
         input_html: {
           class: 'proposal-track-select form-control select',
           data: {
-            target_path: h.event_staff_program_proposal_update_track_path(object.event, object)
+            target_path: h.event_staff_program_proposal_update_track_path(object.event, object),
+            select_type: 'track',
+            action: 'change->proposal-select#change'
           },
         },
         popover_icon: { content: tooltip }
@@ -201,7 +203,9 @@ class ProposalDecorator < ApplicationDecorator
         input_html: {
           class: 'proposal-format-select form-control select',
           data: {
-            target_path: h.event_staff_program_proposal_update_session_format_path(object.event, object)
+            target_path: h.event_staff_program_proposal_update_session_format_path(object.event, object),
+            select_type: 'format',
+            action: 'change->proposal-select#change'
           },
         },
         popover_icon: { content: tooltip }

@@ -64,20 +64,5 @@ $(document).ready(function () {
   });
 
   $('table input').addClass('form-control');
-
-  // Initialize Tom Select for tag multi-selects
-  document.querySelectorAll('.multiselect').forEach(function(el) {
-    var isReviewTags = el.classList.contains('review-tags');
-    var labelClass = isReviewTags ? 'label label-success' : 'label label-primary';
-
-    new TomSelect(el, {
-      plugins: ['remove_button'],
-      render: {
-        item: function(data, escape) {
-          return '<div class="' + labelClass + '" style="margin-right: 4px;">' + escape(data.text) + '</div>';
-        }
-      }
-    });
-  });
 });
 

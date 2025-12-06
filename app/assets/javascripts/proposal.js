@@ -7,10 +7,6 @@ $(function() {
     }
   });
 
-  $('.speaker-invite-button').click(function() {
-    $('.speaker-invite-form').toggle();
-  });
-
   // Track editing
   $('#edit-track-icon').click(function() {
     $('#current-track').hide();

@@ -13,6 +13,7 @@ export default class extends Controller {
         this.filter()
       }, 0)
     })
+    this.updateByTrackVisibility()
   }
 
   filter() {
@@ -26,5 +27,25 @@ export default class extends Controller {
       const trackColumn = dataTable.column(':contains(Track)')
       trackColumn.search(track).draw()
     }
+
+    this.updateBadgeCounts()
+  }
+
+  updateBadgeCounts() {
+    const trackId = this.selectTarget.value.trim()
+    const eventSlug = this.element.dataset.event
+
+    fetch(`/events/${eventSlug}/staff/program/proposals/session_counts?track_id=${trackId}`)
+      .then(response => response.json())
+      .then(data => {
+        document.querySelector('.by-track.all-accepted .badge').textContent = data.all_accepted_proposals
+        document.querySelector('.by-track.all-waitlisted .badge').textContent = data.all_waitlisted_proposals
+        this.updateByTrackVisibility()
+      })
+  }
+
+  updateByTrackVisibility() {
+    const display = this.selectTarget.value === 'all' ? 'none' : 'block'
+    document.querySelectorAll('.by-track').forEach(el => el.style.display = display)
   }
 }

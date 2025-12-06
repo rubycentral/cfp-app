@@ -1,8 +1,10 @@
 import { Controller } from '@hotwired/stimulus'
+import { createConsumer } from '@rails/actioncable'
 
 export default class extends Controller {
   connect() {
-    this.subscription = App.cable.subscriptions.create('NotificationsChannel', {
+    this.consumer = createConsumer()
+    this.subscription = this.consumer.subscriptions.create('NotificationsChannel', {
       connected: () => console.log('Connected to notifications channel'),
       disconnected: () => console.log('Disconnected from notifications channel'),
       received: (data) => {
@@ -18,6 +20,9 @@ export default class extends Controller {
   disconnect() {
     if (this.subscription) {
       this.subscription.unsubscribe()
+    }
+    if (this.consumer) {
+      this.consumer.disconnect()
     }
   }
 }

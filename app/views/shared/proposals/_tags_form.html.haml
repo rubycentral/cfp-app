@@ -1,9 +1,7 @@
-= form_for proposal, url: event_staff_proposal_path(event, proposal), data: {turbo_frame: dom_id(proposal, :reviewer_tags)} do |f|
+= form_for proposal, url: event_staff_proposal_path(event, proposal), data: {turbo_frame: dom_id(proposal, :reviewer_tags), controller: 'review-tags', review_tags_options_value: (event.review_tags | proposal.review_tags).to_json} do |f|
   .form-group.col-sm-8.no-pad-left
     .tag-list
-      #autocomplete-options
-        = (event.review_tags | proposal.review_tags)
-      = f.text_field :review_tags, { value: proposal.review_tags.join(','), tabindex: '-1' }
+      = f.text_field :review_tags, value: proposal.review_tags.join(','), tabindex: '-1', data: {review_tags_target: 'input'}
       = program_tracker
   .form-group.col-sm-4
     %button.btn.btn-success.btn-sm(type="submit")

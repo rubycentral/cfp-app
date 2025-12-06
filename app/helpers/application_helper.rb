@@ -69,9 +69,9 @@ module ApplicationHelper
   end
 
   def copy_email_btn
-    link_to "<i class='fa fa-files-o'></i> Copy Speaker Emails".html_safe, '#',
-            class: "btn btn-primary btn-sm",
-            id: 'copy-filtered-speaker-emails'
+    link_to "#", class: "btn btn-primary btn-sm", data: {controller: 'copy-speaker-emails', action: 'click->copy-speaker-emails#copy'} do
+      '<span class="bi bi-clipboard"></span> Copy Speaker Emails'.html_safe
+    end
   end
 
   def promote_button(program_session)

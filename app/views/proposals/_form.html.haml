@@ -31,7 +31,7 @@
         Tags
       = f.select :tags,
         options_for_select(event.proposal_tags, proposal.object.tags),
-        {}, {class: 'multiselect proposal-tags', multiple: true }
+        {}, {class: 'multiselect proposal-tags', multiple: true, data: {controller: 'multiselect'}}
 
 %fieldset
   %legend.fieldset-legend For Review Committee

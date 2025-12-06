@@ -20,7 +20,7 @@
       .btn-nav
         = link_to(event_staff_proposals_path, class: "btn btn-primary btn-sm") do
           &laquo; Return to Proposals
-        = link_to "Next Proposal", event_staff_proposal_path(uuid: "PLACEHOLDER"), class: "next-proposal btn btn-primary btn-sm", data: {"proposal-uuid" => proposal.uuid }
+        = link_to "Next Proposal", event_staff_proposal_path(uuid: "PLACEHOLDER"), class: "next-proposal btn btn-primary btn-sm", data: {controller: 'next-proposal', proposal_uuid: proposal.uuid}
 
 #proposal
   .page-header.page-header-slim

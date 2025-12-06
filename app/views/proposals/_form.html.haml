@@ -23,7 +23,7 @@
       = f.label :track, 'Track'
       %div #{proposal.track_name_for_speakers}
 
-  = f.input :abstract, maxlength: 1005, input_html: {class: 'watched js-maxlength-alert', rows: 20}, hint: 'A concise, engaging description for the public program. Limited to 600 characters.'
+  = f.input :abstract, maxlength: 1005, input_html: {class: 'watched', rows: 20, data: {controller: 'maxlength-alert', action: 'keyup->maxlength-alert#check'}}, hint: 'A concise, engaging description for the public program. Limited to 600 characters.'
 
   - if event.public_tags?
     .form-group

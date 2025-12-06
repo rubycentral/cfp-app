@@ -1,7 +1,7 @@
 = simple_form_for @sponsor, url: [ event, :staff, @sponsor ] do |f|
   .row
     %fieldset.col-md-6
-      = f.input :name, maxlength: 60, input_html: { class: 'watched js-maxlength-alert', rows: 1 }
+      = f.input :name, maxlength: 60, input_html: {class: 'watched', rows: 1, data: {controller: 'maxlength-alert', action: 'keyup->maxlength-alert#check'}}
       = f.input :tier, collection: Sponsor::TIERS
       = f.input :url
       = f.input :published, as: :boolean, wrapper: :vertical_radio_and_checkboxes

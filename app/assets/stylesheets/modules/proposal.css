@@ -148,10 +148,7 @@ div.col-md-4 {
 }
 
 #edit-tags-icon,
-#edit-track-icon,
-#edit-format-icon,
-#cancel-format-editing,
-#cancel-track-editing {
+.inline-edit-icon {
   color: var(--bright-blue);
   font-size: var(--font-size-large);
   margin-left: 5px;

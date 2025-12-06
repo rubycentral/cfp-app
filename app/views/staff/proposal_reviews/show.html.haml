@@ -52,29 +52,29 @@
                   #{proposal.tags_labels}
           .col-sm-4
             .col-sm-6.no-pad-left
-              .proposal-meta-item.full-width
-                #current-format
+              .proposal-meta-item.full-width{data: {controller: 'inline-edit'}}
+                #current-format{data: {inline_edit_target: 'display'}}
                   .info-item-heading Format
                   #format-name.float-start
                     #{proposal.session_format_name}
                   - if track_and_format_edit
-                    #edit-format-icon.fa.fa-pencil
-                #edit-format-wrapper
+                    %i.fa.fa-pencil.inline-edit-icon{data: {action: 'click->inline-edit#show'}}
+                #edit-format-wrapper{data: {inline_edit_target: 'edit'}}
                   %span
                     = render 'shared/proposals/inline_format_edit', proposal: proposal
-                  #cancel-format-editing.fa.fa-undo
+                  %i.fa.fa-undo.inline-edit-icon{data: {action: 'click->inline-edit#cancel'}}
             .col-sm-6
-              .proposal-meta-item.full-width
-                #current-track
+              .proposal-meta-item.full-width{data: {controller: 'inline-edit'}}
+                #current-track{data: {inline_edit_target: 'display'}}
                   .info-item-heading Track
                   #track-name.float-start
                     #{proposal.track_name}
                   - if track_and_format_edit
-                    #edit-track-icon.fa.fa-pencil
-                #edit-track-wrapper
+                    %i.fa.fa-pencil.inline-edit-icon{data: {action: 'click->inline-edit#show'}}
+                #edit-track-wrapper{data: {inline_edit_target: 'edit'}}
                   %span
                     = render 'shared/proposals/inline_track_edit', proposal: proposal
-                  #cancel-track-editing.btn.fa.fa-undo
+                  %i.fa.fa-undo.inline-edit-icon{data: {action: 'click->inline-edit#cancel'}}
           .col-sm-4
             .proposal-meta-item.col-sm-8
               .info-item-heading Reviewer Tags

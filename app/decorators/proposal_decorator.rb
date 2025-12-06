@@ -171,7 +171,7 @@ class ProposalDecorator < ApplicationDecorator
   end
 
   def standalone_track_select(tooltip)
-    h.simple_form_for :proposal do |f|
+    h.simple_form_for :proposal, html: {data: {controller: 'proposal-select'}} do |f|
       f.input :track,
         required: false,
         label_html: { class: 'info-item-heading' },
@@ -192,12 +192,11 @@ class ProposalDecorator < ApplicationDecorator
   end
 
   def standalone_format_select(tooltip)
-    h.simple_form_for :proposal do |f|
+    h.simple_form_for :proposal, html: {data: {controller: 'proposal-select'}} do |f|
       f.input :format,
         required: false,
         label_html: { class: 'info-item-heading' },
         collection: format_options,
-        include_blank: Track::NO_TRACK,
         selected: object.session_format_id,
         id: 'track',
         input_html: {

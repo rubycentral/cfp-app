@@ -197,7 +197,6 @@ class ProposalDecorator < ApplicationDecorator
         required: false,
         label_html: { class: 'info-item-heading' },
         collection: format_options,
-        include_blank: Track::NO_TRACK,
         selected: object.session_format_id,
         id: 'track',
         input_html: {

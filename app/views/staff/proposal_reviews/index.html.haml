@@ -29,12 +29,12 @@
         %span.badge.badge-info=event.proposals_you_rated_message
   .col-sm-6.text-end
     %small.text-end <em>Hint:</em> Hold <kbd>shift</kbd> to sort by multiple columns
-.row{data: {controller: 'reviewer-proposals'}}
+.row{data: {controller: 'proposals-table'}}
   .offset-sm-6.col-sm-6
-    %button.btn.btn-primary.btn-sm.float-end{data: {action: 'click->reviewer-proposals#resetSort'}} Reset Sort Order
+    %button.btn.btn-primary.btn-sm.float-end{data: {action: 'click->proposals-table#resetSort'}} Reset Sort Order
 
   .col-md-12
-    %table#reviewer-proposals.datatable.table.table-striped{data: {reviewer_proposals_target: 'table', cfp_column_types: '["number", null, "number", "text", "text", "text", "text", "text", "number", "text", "text"]'}}
+    %table#reviewer-proposals.datatable.table.table-striped{data: {proposals_table_target: 'table', cfp_column_types: '["number", null, "number", "text", "text", "text", "text", "text", "number", "text", "text"]'}}
       %thead
         %tr
           %th

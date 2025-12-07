@@ -299,7 +299,7 @@ export default class extends Controller {
       .then(html => {
         const dialog = document.getElementById('grid-time-slot-edit-dialog')
         dialog.innerHTML = html
-        window.Schedule.TimeSlots.initDialog($(dialog))
+        // Stimulus time-slot-dialog controller auto-connects when HTML is inserted
         const modal = Modal.getOrCreateInstance(dialog)
         modal.show()
       })

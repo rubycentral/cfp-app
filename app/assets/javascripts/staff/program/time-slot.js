@@ -59,49 +59,8 @@
     updateLength($form)
   }
 
-
-
-  function initTable() {
-    cfpDataTable('#organizer-time-slots.datatable', [ 'number', 'date',
-      'date', 'text', 'text', 'text', 'text'], { "aaSorting": [[0, 'asc'], [1, 'asc']] });
-  }
-
-  function getDataTable() {
-    return $('#organizer-time-slots.datatable').dataTable();
-  }
-
-  function reloadTable(rows) {
-    var table = getDataTable();
-    table.fnClearTable();
-
-    for (var i = 0; i < rows.length; ++i) {
-      addRow(rows[i], table);
-    }
-  }
-
-  function addRow(row_obj, opt_table) {
-    var table;
-
-    if (opt_table === undefined) {
-      table = getDataTable();
-    } else {
-      table = opt_table;
-    }
-    
-    table.api().row.add($(row_obj)).draw()
-  }
-
-
   window.Schedule.TimeSlots = {
-    initTable: initTable,
-    reloadTable: reloadTable,
-    addRow: addRow,
-
     initDialog: initDialog
   };
 
 })(jQuery, window);
-
-$(document).ready(function() {
-  window.Schedule.TimeSlots.initTable();
-});

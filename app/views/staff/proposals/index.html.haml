@@ -43,9 +43,9 @@
   .col-sm-offset-6.col-sm-6.text-end
     %small.text-end <em>Hint:</em> Hold <kbd>shift</kbd> to sort by multiple columns
 
-.row
+.row{data: {controller: 'proposals-table'}}
   .col-md-12
-    %table#organizer-proposals.datatable.table.table-striped.proposal-list
+    %table#organizer-proposals.datatable.table.table-striped.proposal-list{data: {proposals_table_target: 'table', cfp_column_types: '["number", "number", "number", "text", "text", null, "text", "text", "text", "text", null]'}}
       %thead
         %tr
           %th

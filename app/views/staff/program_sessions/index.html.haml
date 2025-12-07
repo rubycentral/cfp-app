@@ -31,25 +31,25 @@
         Download as JSON
       = copy_email_btn
       = link_to "+ New Session", new_event_staff_program_session_path(current_event), class: "btn btn-success btn-sm"
-.row
+.row{data: {controller: 'program-sessions'}}
   .col-md-8
     %h4.quick-filter-tabs
-      .tab#program
+      .tab#program{data: {action: 'click->program-sessions#filter'}}
         %h4
           Program
           %span.badge= sessions.object.program.count
-      .tab#waitlist
+      .tab#waitlist{data: {action: 'click->program-sessions#filter'}}
         %h4
           Waitlist
           %span.badge= sessions.object.waitlisted.count
-      .tab#declined
+      .tab#declined{data: {action: 'click->program-sessions#filter'}}
         %h4
           Declined
           %span.badge= sessions.object.declined.count
-      .indicator
-.row
+      .indicator{data: {program_sessions_target: 'indicator'}}
+
   .col-md-12
-    %table#program-sessions.datatable.table.table-striped
+    %table#program-sessions.datatable.table.table-striped{data: {program_sessions_target: 'table', cfp_column_types: '["text", "text", "text", null, "text", "text", "text"]'}}
       %thead
         %tr
           %th

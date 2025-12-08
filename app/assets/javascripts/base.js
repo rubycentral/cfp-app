@@ -11,13 +11,6 @@ $(document).ready(function() {
     });
   }
 
-  // Initialize Bootstrap 5 tooltips
-  if (typeof bootstrap !== 'undefined' && bootstrap.Tooltip) {
-    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function(el) {
-      new bootstrap.Tooltip(el);
-    });
-  }
-
   // Focus autofocus elements in modals when shown
   document.querySelectorAll('.modal').forEach(function(el) {
     el.addEventListener('shown.bs.modal', function() {

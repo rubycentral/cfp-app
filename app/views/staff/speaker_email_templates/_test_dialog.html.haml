@@ -1,4 +1,4 @@
-.modal.fade{id: "test-template-#{type_key}-dialog", data: {controller: 'modal-form', modal_form_target: 'modal'}}
+.modal.fade{id: "test-template-#{type_key}-dialog", data: {controller: 'modal-form modal-autofocus', modal_form_target: 'modal'}}
   .modal-dialog
     .modal-content
       = simple_form_for :speaker_email_template, url: test_event_staff_speaker_email_template_path(@event, type_key), method: 'post', data: {turbo: true, action: 'turbo:submit-end->modal-form#submitEnd'}, html: {role: 'form'} do |f|

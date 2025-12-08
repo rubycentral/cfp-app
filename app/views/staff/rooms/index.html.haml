@@ -20,7 +20,7 @@
             %th.actions Actions
         %tbody#rooms-table-body
           = render event.rooms
-      #room-new-dialog.modal.fade{data: {controller: 'modal-form', modal_form_target: 'modal'}}
+      #room-new-dialog.modal.fade{data: {controller: 'modal-form modal-autofocus', modal_form_target: 'modal'}}
         .modal-dialog
           .modal-content
             = turbo_frame_tag 'room-new-form' do

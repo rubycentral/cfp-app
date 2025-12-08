@@ -20,6 +20,5 @@
 //= require tributejs/dist/tribute
 //= require tom-select/dist/js/tom-select.complete
 //= require moment/moment
-//= require palette.js
 //= require tinymce/tinymce
 //= require_tree .

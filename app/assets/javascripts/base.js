@@ -28,13 +28,6 @@ $(document).ready(function() {
     });
   }
 
-  // Initialize Bootstrap 5 popovers
-  if (typeof bootstrap !== 'undefined' && bootstrap.Popover) {
-    document.querySelectorAll('[data-bs-toggle="popover"]').forEach(function(el) {
-      new bootstrap.Popover(el);
-    });
-  }
-
   // Focus autofocus elements in modals when shown
   document.querySelectorAll('.modal').forEach(function(el) {
     el.addEventListener('shown.bs.modal', function() {

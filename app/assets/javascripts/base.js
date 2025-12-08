@@ -11,14 +11,6 @@ $(document).ready(function() {
     });
   }
 
-  // Focus autofocus elements in modals when shown
-  document.querySelectorAll('.modal').forEach(function(el) {
-    el.addEventListener('shown.bs.modal', function() {
-      var autofocusEl = el.querySelector('[autofocus]');
-      if (autofocusEl) autofocusEl.focus();
-    });
-  });
-
   // Tom Select for sortable multi-selects
   document.querySelectorAll(".selectize-sortable").forEach(function(el) {
     new TomSelect(el, {

@@ -1,4 +1,4 @@
-%div{ id: "new-speaker-invitation", class: 'modal fade' }
+%div{id: "new-speaker-invitation", class: 'modal fade', data: {controller: 'modal-autofocus'}}
   .modal-dialog
     .modal-content
       = simple_form_for(:speaker, url: invitations_path(proposal_uuid: proposal.uuid)) do |f|

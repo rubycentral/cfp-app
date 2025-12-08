@@ -13,7 +13,7 @@
       data: {turbo: true, turbo_method: :delete, turbo_confirm: "Are you sure you want to remove this room?"},
       class: 'btn btn-danger btn-sm'
 
-    %div{id: "room-edit-#{room.id}", class: 'modal fade', data: {controller: 'modal-form', modal_form_target: 'modal'}}
+    %div{id: "room-edit-#{room.id}", class: 'modal fade', data: {controller: 'modal-form modal-autofocus', modal_form_target: 'modal'}}
       .modal-dialog
         .modal-content
           = turbo_frame_tag dom_id(room, :edit) do

@@ -1,4 +1,4 @@
-%div{ id: "new-teammate-invitation", class: "modal fade" }
+%div{id: "new-teammate-invitation", class: "modal fade", data: {controller: 'modal-autofocus'}}
   .modal-dialog
     .modal-content
       = simple_form_for(:teammate, url: event_staff_teammates_path(event)) do |f|

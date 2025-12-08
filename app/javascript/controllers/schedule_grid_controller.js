@@ -172,12 +172,6 @@ export default class extends Controller {
     }
 
     this.updateTimeSlot($slot, $sessionCard)
-
-    $sessionCard.attr({
-      'data-bs-toggle': null,
-      'data-bs-target': null,
-    })
-
   }
 
   moveToUnscheduled(sessionCard) {
@@ -188,11 +182,7 @@ export default class extends Controller {
       $sessionCard.detach().removeAttr('style').removeClass('small medium large').prependTo(widget)
 
       $sessionCard.data('scheduled', null)
-      $sessionCard.attr({
-        'data-scheduled': null,
-        'data-bs-toggle': 'modal',
-        'data-bs-target': '#program-session-show-dialog'
-      })
+      $sessionCard.attr('data-scheduled', null)
     }
   }
 
@@ -218,11 +208,7 @@ export default class extends Controller {
     }
 
     $sessionCard.data('scheduled', null)
-    $sessionCard.attr({
-      'data-scheduled': null,
-      'data-bs-toggle': 'modal',
-      'data-bs-target': '#program-session-show-dialog'
-    })
+    $sessionCard.attr('data-scheduled', null)
   }
 
   assignTrackColor($element) {
@@ -299,7 +285,7 @@ export default class extends Controller {
       .then(html => {
         const dialog = document.getElementById('grid-time-slot-edit-dialog')
         dialog.innerHTML = html
-        window.Schedule.TimeSlots.initDialog($(dialog))
+        // Stimulus time-slot-dialog controller auto-connects when HTML is inserted
         const modal = Modal.getOrCreateInstance(dialog)
         modal.show()
       })

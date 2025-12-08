@@ -46,8 +46,6 @@ export default class extends Controller {
 
     const scheduled = session.dataset.scheduled
     if (!scheduled) {
-      session.setAttribute('data-bs-toggle', 'modal')
-      session.setAttribute('data-bs-target', '#program-session-show-dialog')
       session.addEventListener('click', this.handleSessionClick.bind(this))
     }
   }
@@ -147,11 +145,7 @@ export default class extends Controller {
     }
 
     $sessionCard.data('scheduled', null)
-    $sessionCard.attr({
-      'data-scheduled': null,
-      'data-bs-toggle': 'modal',
-      'data-bs-target': '#program-session-show-dialog'
-    })
+    $sessionCard.attr('data-scheduled', null)
   }
 
   toggleWidget(e) {

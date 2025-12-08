@@ -15,13 +15,13 @@
         = f.label :navigation_links
         = f.select :navigation_links,
           website.link_options,
-          { include_hidden: false },
-          { class: 'selectize-sortable', multiple: true }
+          {include_hidden: false},
+          {multiple: true, data: {controller: 'tom-select', tom_select_sortable_value: true}}
         = f.label :footer_categories
         = f.select :footer_categories,
           website.footer_categories,
-          { include_hidden: false },
-          { class: 'selectize-create', multiple: true }
+          {include_hidden: false},
+          {multiple: true, data: {controller: 'tom-select', tom_select_sortable_value: true, tom_select_create_value: true}}
         = f.input :footer_about_content
         = f.input :footer_copyright
         = f.input :twitter_handle

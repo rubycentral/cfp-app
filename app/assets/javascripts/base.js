@@ -1,17 +1,3 @@
-$(document).ready(function() {
-  // Initialize Bootstrap 5 dropdowns with manual click handling
-  // (Bootstrap's native data-bs-toggle doesn't work with Sprockets loading)
-  if (typeof bootstrap !== 'undefined' && bootstrap.Dropdown) {
-    document.querySelectorAll('.dropdown-toggle').forEach(function(el) {
-      var dropdown = new bootstrap.Dropdown(el);
-      el.addEventListener('click', function(e) {
-        e.preventDefault();
-        bootstrap.Dropdown.getInstance(el).toggle();
-      });
-    });
-  }
-});
-
 function cfpDataTable(selector, columnTypes, opt_options) {
   var $el = $(selector);
 

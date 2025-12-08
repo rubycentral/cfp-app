@@ -1,18 +1,12 @@
 import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  connect() {
-    this.setupPopovers()
-  }
-
   change(e) {
     const select = e.target
     const selectType = select.dataset.selectType
     const id = select.value
     const url = select.dataset.targetPath
     const container = select.closest('td, span, div')
-
-    this.removePopover(selectType)
 
     const params = selectType === 'track' ? {track_id: id} : {session_format_id: id}
 
@@ -28,7 +22,6 @@ export default class extends Controller {
       .then(html => {
         container.innerHTML = html
         this.updateProposalSelect(html, selectType, id)
-        this.setupPopovers()
       })
   }
 
@@ -49,22 +42,5 @@ export default class extends Controller {
 
     const currentEl = document.getElementById(`current-${selectType}`)
     if (currentEl) currentEl.style.display = ''
-  }
-
-  setupPopovers() {
-    document.querySelectorAll('[data-bs-toggle="popover"]').forEach(el => {
-      new bootstrap.Popover(el, {container: 'body'})
-    })
-  }
-
-  removePopover(selectType) {
-    const wrapper = document.getElementById(`edit-${selectType}-wrapper`)
-    if (wrapper) {
-      const select = wrapper.querySelector('select')
-      if (select) {
-        const targetId = select.getAttribute('aria-describedby')
-        if (targetId) document.getElementById(targetId)?.remove()
-      }
-    }
   }
 }

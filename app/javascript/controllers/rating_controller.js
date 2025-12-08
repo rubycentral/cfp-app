@@ -1,20 +1,16 @@
 import { Controller } from "@hotwired/stimulus"
-import { Popover } from "bootstrap"
 
 export default class extends Controller {
   static targets = ["form"]
 
   connect() {
     this.showRating()
-    this.setupPopover()
     this.boundHandleChange = this.handleChange.bind(this)
     this.formTarget.addEventListener('change', this.boundHandleChange)
   }
 
   disconnect() {
     this.formTarget.removeEventListener('change', this.boundHandleChange)
-    // Remove orphaned popover from body when frame is replaced
-    document.querySelectorAll('.popover').forEach(el => el.remove())
   }
 
   handleChange(event) {
@@ -26,14 +22,6 @@ export default class extends Controller {
         }
       })
       this.formTarget.requestSubmit()
-    }
-  }
-
-  setupPopover() {
-    const toggle = this.element.querySelector('#rating-tooltip-toggle')
-    if (toggle) {
-      new Popover(toggle)
-      toggle.addEventListener('click', (e) => e.preventDefault())
     }
   }
 

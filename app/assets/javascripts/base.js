@@ -1,14 +1,4 @@
 $(document).ready(function() {
-  // Auto-dismiss alerts after 5 seconds (Bootstrap 5 style)
-  setTimeout(function() {
-    document.querySelectorAll('.alert:not(.alert-confirm):not(.scheduling-error)').forEach(function(el) {
-      if (typeof bootstrap !== 'undefined' && bootstrap.Alert) {
-        var alert = bootstrap.Alert.getOrCreateInstance(el);
-        alert.close();
-      }
-    });
-  }, 5000);
-
   // Initialize Bootstrap 5 dropdowns with manual click handling
   // (Bootstrap's native data-bs-toggle doesn't work with Sprockets loading)
   if (typeof bootstrap !== 'undefined' && bootstrap.Dropdown) {

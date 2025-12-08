@@ -1,20 +1,20 @@
-import { Controller } from '@hotwired/stimulus'
-import cfpDataTable from '../utils/cfp_datatable'
+import CfpDatatableController from './cfp_datatable_controller'
 
-export default class extends Controller {
-  static targets = ['table']
-
-  connect() {
-    this.dataTable = cfpDataTable(this.tableTarget, JSON.parse(this.tableTarget.dataset.cfpColumnTypes || '[]'), {
+export default class extends CfpDatatableController {
+  get options() {
+    return {
       stateSaveParams: () => {
-        const rows = this.tableTarget.querySelectorAll('[data-proposal-id]')
+        const rows = this.tableElement.querySelectorAll('[data-proposal-id]')
         const uuids = Array.from(rows).map(row => row.dataset.proposalUuid)
         localStorage.proposal_uuid_table_order = JSON.stringify(uuids)
       },
       sDom: '<"top"i>Crt<"bottom"lp><"clear">'
-    })
+    }
+  }
 
-    this.tableTarget.querySelectorAll('input').forEach(el => el.classList.add('form-control'))
+  connect() {
+    super.connect()
+    this.tableElement.querySelectorAll('input').forEach(el => el.classList.add('form-control'))
   }
 
   resetSort() {

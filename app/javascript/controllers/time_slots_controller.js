@@ -1,13 +1,12 @@
-import { Controller } from '@hotwired/stimulus'
-import cfpDataTable from '../utils/cfp_datatable'
+import CfpDatatableController from './cfp_datatable_controller'
 
-export default class extends Controller {
-  static targets = ['table']
+export default class extends CfpDatatableController {
+  get columnTypes() {
+    return ['number', 'date', 'date', 'text', 'text', 'text', 'text']
+  }
 
-  connect() {
-    this.dataTable = cfpDataTable(this.tableTarget, ['number', 'date', 'date', 'text', 'text', 'text', 'text'], {
-      aaSorting: [[0, 'asc'], [1, 'asc']]
-    })
+  get options() {
+    return {aaSorting: [[0, 'asc'], [1, 'asc']]}
   }
 
   reloadTable(rows) {

@@ -1,14 +1,14 @@
-import { Controller } from '@hotwired/stimulus'
-import cfpDataTable from '../utils/cfp_datatable'
+import CfpDatatableController from './cfp_datatable_controller'
 
-export default class extends Controller {
-  static targets = ['table', 'indicator']
+export default class extends CfpDatatableController {
+  static targets = [...CfpDatatableController.targets, 'indicator']
+
+  get options() {
+    return {sDom: '<"top">Crt<"bottom"lp><"clear">'}
+  }
 
   connect() {
-    this.dataTable = cfpDataTable(this.tableTarget, JSON.parse(this.tableTarget.dataset.cfpColumnTypes || '[]'), {
-      sDom: '<"top">Crt<"bottom"lp><"clear">'
-    })
-
+    super.connect()
     this.filterBy('program')
   }
 

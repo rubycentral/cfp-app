@@ -10,27 +10,6 @@ $(document).ready(function() {
       });
     });
   }
-
-  // Tom Select for sortable multi-selects
-  document.querySelectorAll(".selectize-sortable").forEach(function(el) {
-    new TomSelect(el, {
-      plugins: ["drag_drop"],
-    });
-  });
-
-  // Tom Select for creatable multi-selects
-  document.querySelectorAll(".selectize-create").forEach(function(el) {
-    new TomSelect(el, {
-      plugins: ["drag_drop"],
-      persist: false,
-      create: function (input) {
-        return {
-          value: input,
-          text: input,
-        };
-      },
-    });
-  });
 });
 
 function cfpDataTable(selector, columnTypes, opt_options) {

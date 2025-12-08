@@ -1798,6 +1798,11 @@ glob@^7.1.3, glob@^7.2.0:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
+google-palette@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/google-palette/-/google-palette-1.1.1.tgz#671b3b932c8393271b67da908ccd7f2c48e84cc7"
+  integrity sha512-yZiM5oLl8lCZzf06IMOGdDkxqvCMd9HNFcCiOMqWgGGiGzC22vWBVhKJNvykXXbeC0NAElNH97jA/y0bq6TCrA==
+
 gopd@^1.0.1:
   version "1.1.0"
   resolved "https://registry.npmjs.org/gopd/-/gopd-1.1.0.tgz"

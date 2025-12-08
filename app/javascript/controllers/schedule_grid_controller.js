@@ -1,9 +1,9 @@
 import { Controller } from 'stimulus'
 import { Modal } from 'bootstrap'
+import palette from 'google-palette'
 
-// These are available globally from the Rails asset pipeline
+// moment is available globally from the Rails asset pipeline
 const moment = window.moment
-const palette = window.palette
 
 export default class extends Controller {
   static targets = ['grid', 'ruler', 'timeSlot', 'columnHeader']

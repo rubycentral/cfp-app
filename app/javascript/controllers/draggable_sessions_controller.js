@@ -1,7 +1,5 @@
 import { Controller } from 'stimulus'
-
-// palette is available globally from the Rails asset pipeline
-const palette = window.palette
+import palette from 'google-palette'
 
 export default class extends Controller {
   static targets = ['widget', 'session', 'toggle', 'badge', 'searchInput']

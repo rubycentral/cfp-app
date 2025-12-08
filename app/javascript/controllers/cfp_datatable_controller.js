@@ -16,15 +16,12 @@ export default class extends Controller {
   }
 
   connect() {
-    this.dataTable = this.initDataTable()
-  }
-
-  initDataTable() {
     const $el = $(this.tableElement)
 
     // Skip if already initialized (prevents Turbo cache issues)
     if ($.fn.DataTable.isDataTable($el)) {
-      return $el.DataTable()
+      this.dataTable = $el.DataTable()
+      return
     }
 
     const columns = this.columnTypes.map(t => {
@@ -44,6 +41,6 @@ export default class extends Controller {
       aoColumns: columns
     })
 
-    return $table.api()
+    this.dataTable = $table.api()
   }
 }

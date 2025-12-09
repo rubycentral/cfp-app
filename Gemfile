@@ -31,7 +31,7 @@ gem 'omniauth-twitter'
 gem "omniauth-rails_csrf_protection", "~> 2.0"
 
 gem 'actionview-encoded_mail_to'
-gem 'active_model_serializers', '~> 0.10.15'
+gem 'active_model_serializers', '~> 0.10.16'
 gem 'bootsnap', '~> 1.19', require: false
 gem 'chartkick'
 gem 'country_select', '~> 11.0'

@@ -13,10 +13,6 @@ const customConfig = {
       '.jpeg',
       '.jpg'
     ]
-  },
-  externals: {
-    // Use jQuery from Sprockets (loaded via node_modules) as external
-    jquery: 'jQuery'
   }
 }
 

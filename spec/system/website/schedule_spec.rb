@@ -23,8 +23,6 @@ feature "dynamic website schedule page", type: :system do
   end
 
   scenario "the schedule page display sponsor information for time slots with sponsors", js: true do
-    pending 'Not passing'
-
     sponsor = create(:sponsor)
     time_slot = create(:time_slot, event: event)
 

@@ -14,6 +14,7 @@ gem 'rexml'
 gem 'matrix'
 
 gem 'propshaft'
+gem 'jsbundling-rails'
 gem 'cssbundling-rails'
 gem 'shakapacker', '~> 6.6'
 

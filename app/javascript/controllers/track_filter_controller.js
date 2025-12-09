@@ -1,26 +1,25 @@
 import { Controller } from '@hotwired/stimulus'
+import DataTable from 'datatables.net-bs5'
 
 export default class extends Controller {
   static targets = ['select']
 
   connect() {
-    // Use jQuery's ready to ensure this runs after all other $(document).ready
-    // handlers have been registered AND executed. This replicates the timing
-    // of the old track.js which ran after sessions.js.
-    // We use a nested setTimeout to ensure we run after jQuery's ready queue.
-    $(() => {
-      setTimeout(() => {
-        this.filter()
-      }, 0)
-    })
+    // Wait for DataTable to be initialized, then apply filter
+    setTimeout(() => {
+      this.filter()
+    }, 0)
     this.updateByTrackVisibility()
   }
 
   filter() {
-    const dataTable = $('table.datatable').DataTable()
+    const tableElement = document.querySelector('table.datatable')
+    if (!tableElement || !DataTable.isDataTable(tableElement)) return
+
+    const dataTable = new DataTable(tableElement)
     const track = this.selectTarget.options[this.selectTarget.selectedIndex].text
 
-    // Replicate old track.js behavior: clear all column searches first
+    // Clear all column searches first
     dataTable.search('').columns().search('').draw()
 
     if (track !== 'All') {

@@ -4,7 +4,14 @@ export default class extends CfpDatatableController {
   static targets = [...CfpDatatableController.targets, 'indicator']
 
   get options() {
-    return {sDom: '<"top">Crt<"bottom"lp><"clear">'}
+    return {
+      layout: {
+        topStart: null,
+        topEnd: null,
+        bottomStart: 'pageLength',
+        bottomEnd: 'paging'
+      }
+    }
   }
 
   connect() {

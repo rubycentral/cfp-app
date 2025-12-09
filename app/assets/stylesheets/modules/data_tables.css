@@ -8,7 +8,13 @@ table.datatable {
         line-height: 1.2;
         vertical-align: top;
       }
-
+    }
+    /* Hide sort indicators on the first (filter) row */
+    > tr:first-child > th {
+      cursor: default;
+      &::before, &::after {
+        display: none !important;
+      }
     }
   }
   tr.updated td {

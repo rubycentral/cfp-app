@@ -28,6 +28,7 @@ export default class extends Controller {
     const defaultOptions = {
       paging: false,
       stateSave: true,
+      orderCellsTop: false,
       layout: {
         topStart: null,
         topEnd: null,
@@ -43,13 +44,19 @@ export default class extends Controller {
           const cell = filterRow.children[index]
           const type = columnTypes[index]
 
-          if (!cell || type === null) return
+          if (!cell) return
+
+          // Clear cell content and prevent sort clicks on filter row
+          cell.innerHTML = ''
+          cell.addEventListener('click', (e) => e.stopPropagation())
+
+          // Skip adding filter input for null columns
+          if (type === null) return
 
           const input = document.createElement('input')
           input.type = 'text'
           input.className = 'form-control form-control-sm'
           input.placeholder = ''
-          cell.innerHTML = ''
           cell.appendChild(input)
 
           input.addEventListener('keyup', () => {

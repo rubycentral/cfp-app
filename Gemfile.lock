@@ -133,7 +133,6 @@ GEM
     chartkick (5.2.1)
     childprocess (5.1.0)
       logger (~> 1.5)
-    coderay (1.1.3)
     concurrent-ruby (1.3.5)
     connection_pool (2.5.5)
     countries (8.0.4)
@@ -483,7 +482,6 @@ DEPENDENCIES
   bootsnap (~> 1.19)
   capybara (~> 3.37)
   chartkick
-  coderay (~> 1.0)
   country_select (~> 11.0)
   csv
   debug

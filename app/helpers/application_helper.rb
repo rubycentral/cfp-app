@@ -14,16 +14,8 @@ module ApplicationHelper
 
   class MarkdownRenderer < Redcarpet::Render::HTML
     def block_code(code, language)
-      language ||= :ruby
-      CodeRay.highlight(code, language)
-    rescue
-      <<~HTML
-        <div class="CodeRay">
-          <div class="code">
-            <pre>#{ERB::Util.html_escape(code)}</pre>
-          </div>
-        </div>
-      HTML
+      language ||= 'ruby'
+      %(<pre><code class="language-#{language}">#{ERB::Util.html_escape(code)}</code></pre>)
     end
   end
 
@@ -40,7 +32,7 @@ module ApplicationHelper
       :superscript => true
     }
     markdown_to_html = Redcarpet::Markdown.new(rndr, options)
-    markdown_to_html.render(text).html_safe
+    content_tag(:div, markdown_to_html.render(text).html_safe, data: {controller: 'highlight'})
   end
 
   def smart_return_button

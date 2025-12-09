@@ -49,7 +49,7 @@ h3.tags {
   }
 }
 
-//datepicker
+/* datepicker */
 .ui-datepicker {
   z-index: 10000 !important;
 }

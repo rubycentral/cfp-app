@@ -1,1 +1,45 @@
 /* Entry point for your PostCSS build */
+
+@import "bootstrap/dist/css/bootstrap.css";
+@import "tributejs/dist/tribute.css";
+@import "datatables.net-bs5/css/dataTables.bootstrap5.css";
+@import "tom-select/dist/css/tom-select.bootstrap5.css";
+
+@import "./base/css-colors.css";
+@import "./base/bootstrap-overrides.css";
+@import "./base/base.css";
+@import "./base/layout.css";
+@import "./base/helper_classes.css";
+@import "./base/typography.css";
+
+@import "./modules/badge.css";
+@import "./modules/buttons.css";
+@import "./modules/calendar.css";
+@import "./modules/code-mirror.css";
+@import "./modules/dashboard.css";
+@import "./modules/data_tables.css";
+@import "./modules/discussions.css";
+@import "./modules/events.css";
+@import "./modules/forms.css";
+@import "./modules/icons.css";
+@import "./modules/labels.css";
+@import "./modules/navbar.css";
+@import "./modules/markdown.css";
+@import "./modules/news.css";
+@import "./modules/notification.css";
+@import "./modules/event-teammate-invitations.css";
+@import "./modules/program-session.css";
+@import "./modules/proposal.css";
+@import "./modules/profile.css";
+@import "./modules/ratings.css";
+@import "./modules/schedule.css";
+@import "./modules/selection.css";
+@import "./modules/time-slot.css";
+@import "./modules/social-buttons.css";
+@import "./modules/shortcuts.css";
+@import "./modules/speaker.css";
+@import "./modules/stats.css";
+@import "./modules/tooltips.css";
+@import "./modules/widgets.css";
+@import "./modules/teammates.css";
+@import "./modules/staff-website-page.css";

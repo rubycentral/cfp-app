@@ -108,47 +108,52 @@ export default class extends Controller {
     const sessionCard = document.querySelector(`[data-id="${sessionId}"].draggable-session-card`)
 
     if (sessionCard) {
-      const $sessionCard = $(sessionCard)
-      $sessionCard.detach().removeAttr('style').prependTo(this.widgetTarget)
-      $sessionCard.removeClass('small medium large')
+      // Remove inline styles and move to widget
+      sessionCard.removeAttribute('style')
+      sessionCard.classList.remove('small', 'medium', 'large')
+      this.widgetTarget.prepend(sessionCard)
 
-      if ($sessionCard.data('scheduled')) {
-        this.unschedule($sessionCard)
+      if (sessionCard.dataset.scheduled) {
+        this.unschedule(sessionCard)
       }
     }
 
     return false
   }
 
-  unschedule($sessionCard) {
-    const unschedulePath = $sessionCard.data('unscheduleTimeSlotPath')
+  unschedule(sessionCard) {
+    const unschedulePath = sessionCard.dataset.unscheduleTimeSlotPath
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
 
     if (unschedulePath) {
-      $.ajax({
-        url: unschedulePath,
-        method: 'patch',
-        data: { time_slot: { program_session_id: '' } },
-        headers: { 'X-CSRF-Token': csrfToken },
-        success: (data) => {
+      fetch(unschedulePath, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-CSRF-Token': csrfToken
+        },
+        body: 'time_slot[program_session_id]='
+      })
+        .then(response => response.json())
+        .then(data => {
           if (this.hasBadgeTarget) {
             this.badgeTarget.textContent = data.unscheduled_count + '/' + data.total_count
           }
-          $('.total.time-slots .badge').each(function(i, badge) {
+          document.querySelectorAll('.total.time-slots .badge').forEach((badge, i) => {
             const counts = data.day_counts[i + 1]
-            $(badge).text(counts.scheduled + '/' + counts.total)
+            if (counts) badge.textContent = counts.scheduled + '/' + counts.total
           })
-        }
-      })
+        })
     }
 
-    $sessionCard.data('scheduled', null)
-    $sessionCard.attr('data-scheduled', null)
+    delete sessionCard.dataset.scheduled
   }
 
   toggleWidget(e) {
     e.preventDefault()
-    $('.unscheduled-sessions-widget, .search-sessions-wrapper').toggleClass('hidden')
+    document.querySelectorAll('.unscheduled-sessions-widget, .search-sessions-wrapper').forEach(el => {
+      el.classList.toggle('hidden')
+    })
   }
 
   filterSessions(e) {

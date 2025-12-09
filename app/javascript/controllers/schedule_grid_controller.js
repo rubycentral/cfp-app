@@ -25,7 +25,6 @@ export default class extends Controller {
   }
 
   disconnect() {
-    // Cleanup event listeners if needed
     this.teardownScrollHandlers()
   }
 
@@ -58,29 +57,31 @@ export default class extends Controller {
   }
 
   initTimeSlot(slot) {
-    const $slot = $(slot)
     const duration = parseInt(slot.dataset.duration)
     const starts = parseInt(slot.dataset.starts)
 
-    $slot.css({
-      height: (duration * this.verticalScaleValue) + 'px',
-      top: ((starts - this.dayStartValue) * this.verticalScaleValue) + 'px'
-    })
+    slot.style.height = (duration * this.verticalScaleValue) + 'px'
+    slot.style.top = ((starts - this.dayStartValue) * this.verticalScaleValue) + 'px'
 
-    const $cards = $slot.find('.draggable-session-card, .custom-session-card')
-    this.assignSizeClass($cards, $slot)
-    this.assignTrackColor($cards)
+    const cards = slot.querySelectorAll('.draggable-session-card, .custom-session-card')
+    cards.forEach(card => {
+      this.assignSizeClass(card, slot)
+      this.assignTrackColor(card)
+    })
 
     // Setup draggable for session cards in this slot
     const sessionCards = slot.querySelectorAll('.draggable-session-card')
     sessionCards.forEach(card => this.makeDraggable(card))
 
-    if (!$slot.hasClass('preview')) {
-      $slot.off('click').on('click', (e) => this.onTimeSlotClick(e, slot))
+    if (!slot.classList.contains('preview')) {
+      // Remove old listener by cloning (simpler than tracking handlers)
+      const newSlot = slot.cloneNode(true)
+      slot.parentNode.replaceChild(newSlot, slot)
+      newSlot.addEventListener('click', (e) => this.onTimeSlotClick(e, newSlot))
+      this.setupDropZone(newSlot)
+    } else {
+      this.setupDropZone(slot)
     }
-
-    // Setup native HTML5 drag and drop
-    this.setupDropZone(slot)
   }
 
   makeDraggable(sessionCard) {
@@ -144,132 +145,139 @@ export default class extends Controller {
   }
 
   handleDrop(sessionCard, slot) {
-    const $sessionCard = $(sessionCard)
-    const $slot = $(slot)
-
     // Check if slot already has a session - if so, move it to unscheduled
     const existingCard = slot.querySelector('.draggable-session-card')
     if (existingCard && existingCard !== sessionCard) {
       this.moveToUnscheduled(existingCard)
     }
 
-    $sessionCard.detach().removeAttr('style').appendTo(slot)
-    $sessionCard.css({
+    sessionCard.removeAttribute('style')
+    slot.appendChild(sessionCard)
+    Object.assign(sessionCard.style, {
       position: 'absolute',
-      top: 0,
-      left: 0,
+      top: '0',
+      left: '0',
       height: '100%',
       width: '100%',
-      margin: 0
+      margin: '0'
     })
-    this.assignSizeClass($sessionCard, $slot)
-    this.assignTrackColor($sessionCard)
+    this.assignSizeClass(sessionCard, slot)
+    this.assignTrackColor(sessionCard)
 
-    if ($sessionCard.data('scheduled')) {
-      this.unscheduleSession($sessionCard)
+    if (sessionCard.dataset.scheduled) {
+      this.unscheduleSession(sessionCard)
     } else {
-      $sessionCard.data('scheduled', true)
+      sessionCard.dataset.scheduled = 'true'
     }
 
-    this.updateTimeSlot($slot, $sessionCard)
+    this.updateTimeSlot(slot, sessionCard)
   }
 
   moveToUnscheduled(sessionCard) {
-    const $sessionCard = $(sessionCard)
     const widget = document.querySelector('.unscheduled-sessions-widget')
 
     if (widget) {
-      $sessionCard.detach().removeAttr('style').removeClass('small medium large').prependTo(widget)
-
-      $sessionCard.data('scheduled', null)
-      $sessionCard.attr('data-scheduled', null)
+      sessionCard.removeAttribute('style')
+      sessionCard.classList.remove('small', 'medium', 'large')
+      widget.prepend(sessionCard)
+      delete sessionCard.dataset.scheduled
     }
   }
 
-  unscheduleSession($sessionCard) {
-    const unschedulePath = $sessionCard.data('unscheduleTimeSlotPath')
+  unscheduleSession(sessionCard) {
+    const unschedulePath = sessionCard.dataset.unscheduleTimeSlotPath
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
+
     if (unschedulePath) {
-      $.ajax({
-        url: unschedulePath,
-        method: 'patch',
-        data: { time_slot: { program_session_id: '' } },
-        headers: { 'X-CSRF-Token': csrfToken },
-        success: (data) => {
-          $('.header_wrapper .badge').text(
-            data.unscheduled_count + '/' + data.total_count
-          )
-          $('.total.time-slots .badge').each(function(i, badge) {
-            const counts = data.day_counts[i + 1]
-            $(badge).text(counts.scheduled + '/' + counts.total)
-          })
-        }
+      fetch(unschedulePath, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-CSRF-Token': csrfToken
+        },
+        body: 'time_slot[program_session_id]='
       })
+        .then(response => response.json())
+        .then(data => {
+          const headerBadge = document.querySelector('.header_wrapper .badge')
+          if (headerBadge) {
+            headerBadge.textContent = data.unscheduled_count + '/' + data.total_count
+          }
+          document.querySelectorAll('.total.time-slots .badge').forEach((badge, i) => {
+            const counts = data.day_counts[i + 1]
+            if (counts) badge.textContent = counts.scheduled + '/' + counts.total
+          })
+        })
     }
 
-    $sessionCard.data('scheduled', null)
-    $sessionCard.attr('data-scheduled', null)
+    delete sessionCard.dataset.scheduled
   }
 
-  assignTrackColor($element) {
-    const trackCss = $element.data('trackCss')
+  assignTrackColor(element) {
+    const trackCss = element.dataset.trackCss
     if (!trackCss || !this.hasTracksCssValue) return
 
     const i = this.tracksCssValue.indexOf(trackCss)
     if (i >= 0 && this.trackColors[i]) {
-      $element.find('.track').css({
-        backgroundColor: '#' + this.trackColors[i],
-        color: 'white'
-      })
+      const trackEl = element.querySelector('.track')
+      if (trackEl) {
+        trackEl.style.backgroundColor = '#' + this.trackColors[i]
+        trackEl.style.color = 'white'
+      }
     }
   }
 
-  assignSizeClass($sessionCard, $slot) {
-    const slotHeight = $slot.height()
+  assignSizeClass(sessionCard, slot) {
+    const slotHeight = slot.offsetHeight
 
-    $sessionCard.removeClass('small medium large')
+    sessionCard.classList.remove('small', 'medium', 'large')
 
     if (slotHeight < 70) {
-      $sessionCard.addClass('small')
+      sessionCard.classList.add('small')
     } else if (slotHeight < 140) {
-      $sessionCard.addClass('medium')
+      sessionCard.classList.add('medium')
     } else {
-      $sessionCard.addClass('large')
+      sessionCard.classList.add('large')
     }
   }
 
   initRuler(ruler) {
-    const $ruler = $(ruler)
     const m = moment().startOf('day').minutes(this.dayStartValue - this.stepValue)
 
-    $ruler.empty()
+    ruler.innerHTML = ''
     for (let i = this.dayStartValue; i <= this.dayEndValue; i += this.stepValue) {
-      $ruler.append('<li class="ruler_tick">' + m.minutes(this.stepValue).format('hh:mma') + '</li>')
+      const li = document.createElement('li')
+      li.className = 'ruler_tick'
+      li.textContent = m.minutes(this.stepValue).format('hh:mma')
+      ruler.appendChild(li)
     }
   }
 
-  updateTimeSlot($timeSlot, $dragged_session) {
-    const updatePath = $timeSlot.data('updatePath')
+  updateTimeSlot(slot, draggedSession) {
+    const updatePath = slot.dataset.updatePath
     if (!updatePath) return
 
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
-    $.ajax({
-      url: updatePath,
-      method: 'patch',
-      data: {
-        time_slot: { program_session_id: $dragged_session.data('id') }
+
+    fetch(updatePath, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-CSRF-Token': csrfToken
       },
-      headers: { 'X-CSRF-Token': csrfToken },
-      success: (data) => {
-        $('.header_wrapper .badge').text(
-          data.unscheduled_count + '/' + data.total_count
-        )
-        $('.total.time-slots .badge').each(function(i, badge) {
-          const counts = data.day_counts[i + 1]
-          $(badge).text(counts.scheduled + '/' + counts.total)
-        })
-      }
+      body: `time_slot[program_session_id]=${draggedSession.dataset.id}`
     })
+      .then(response => response.json())
+      .then(data => {
+        const headerBadge = document.querySelector('.header_wrapper .badge')
+        if (headerBadge) {
+          headerBadge.textContent = data.unscheduled_count + '/' + data.total_count
+        }
+        document.querySelectorAll('.total.time-slots .badge').forEach((badge, i) => {
+          const counts = data.day_counts[i + 1]
+          if (counts) badge.textContent = counts.scheduled + '/' + counts.total
+        })
+      })
   }
 
   onTimeSlotClick(ev, slot) {
@@ -285,7 +293,6 @@ export default class extends Controller {
       .then(html => {
         const dialog = document.getElementById('grid-time-slot-edit-dialog')
         dialog.innerHTML = html
-        // Stimulus time-slot-dialog controller auto-connects when HTML is inserted
         const modal = Modal.getOrCreateInstance(dialog)
         modal.show()
       })
@@ -295,31 +302,33 @@ export default class extends Controller {
     this.gridScrollHandler = this.handleGridScroll.bind(this)
     this.windowScrollHandler = this.handleWindowScroll.bind(this)
 
-    $(this.element).on('scroll', this.gridScrollHandler)
-    $(window).on('scroll', this.windowScrollHandler)
+    this.element.addEventListener('scroll', this.gridScrollHandler)
+    window.addEventListener('scroll', this.windowScrollHandler)
   }
 
   teardownScrollHandlers() {
-    $(this.element).off('scroll', this.gridScrollHandler)
-    $(window).off('scroll', this.windowScrollHandler)
+    this.element.removeEventListener('scroll', this.gridScrollHandler)
+    window.removeEventListener('scroll', this.windowScrollHandler)
   }
 
   handleGridScroll(e) {
     this.columnHeaderTargets.forEach(header => {
-      const positionX = $(header).parent().position().left
-      $(header).css({ left: positionX })
+      const parent = header.parentElement
+      const positionX = parent.offsetLeft - this.element.scrollLeft
+      header.style.left = positionX + 'px'
     })
   }
 
   handleWindowScroll() {
-    const scroll = $(window).scrollTop()
-    const $headers = $(this.columnHeaderTargets)
+    const scroll = window.scrollY
 
-    if (scroll >= 55) {
-      $headers.css({ position: 'fixed', width: '240px', top: '130px', zIndex: '15' })
-    } else {
-      $headers.css({ position: 'static', width: '100%', zIndex: '10' })
-    }
+    this.columnHeaderTargets.forEach(header => {
+      if (scroll >= 55) {
+        Object.assign(header.style, { position: 'fixed', width: '240px', top: '130px', zIndex: '15' })
+      } else {
+        Object.assign(header.style, { position: 'static', width: '100%', zIndex: '10' })
+      }
+    })
   }
 
   // Public methods for external use
@@ -333,18 +342,19 @@ export default class extends Controller {
   }
 
   initBulkDialog(dialog) {
-    const $dialog = $(dialog)
-    const $format = $dialog.find('select.session-format')
-    const $duration = $dialog.find('.time-slot-duration')
+    const formatSelect = dialog.querySelector('select.session-format')
+    const durationInput = dialog.querySelector('.time-slot-duration')
 
-    $format.off('change').on('change', function(ev) {
-      $duration.val($format.val())
-    })
+    if (formatSelect && durationInput) {
+      formatSelect.addEventListener('change', () => {
+        durationInput.value = formatSelect.value
+      })
 
-    $duration.off('keyup').on('keyup', function(ev) {
-      if ($duration.is(':focus')) {
-        $format.val('')
-      }
-    })
+      durationInput.addEventListener('keyup', () => {
+        if (document.activeElement === durationInput) {
+          formatSelect.value = ''
+        }
+      })
+    }
   }
 }

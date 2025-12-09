@@ -6,7 +6,8 @@ export default class extends Controller {
   }
 
   connect() {
-    $("#time-slot-new-dialog .errors").html(this.messageValue)
+    const errorsEl = document.querySelector("#time-slot-new-dialog .errors")
+    if (errorsEl) errorsEl.innerHTML = this.messageValue
     this.element.remove()
   }
 }

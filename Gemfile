@@ -13,7 +13,7 @@ gem 'mime-types'
 gem 'rexml'
 gem 'matrix'
 
-gem 'sprockets-rails'
+gem 'propshaft'
 gem 'shakapacker', '~> 6.6'
 
 gem 'honeybadger', '~> 6.1'
@@ -23,7 +23,6 @@ gem 'csv'
 gem 'pg'
 
 gem 'haml'
-gem 'uglifier', '>= 1.3.0'
 
 gem 'devise', '~> 4.9'
 gem 'omniauth-github'

@@ -6,19 +6,24 @@ export default class extends Controller {
   }
 
   connect() {
-    const $timeSlot = $(`#time_slot_${this.timeSlotIdValue}`)
-    const $draggableSession = $timeSlot.find('.draggable-session-card')
+    const timeSlot = document.getElementById(`time_slot_${this.timeSlotIdValue}`)
+    if (!timeSlot) {
+      this.element.remove()
+      return
+    }
 
-    const gridElement = $timeSlot.closest('[data-controller~="schedule-grid"]')[0]
+    const draggableSession = timeSlot.querySelector('.draggable-session-card')
+
+    const gridElement = timeSlot.closest('[data-controller~="schedule-grid"]')
     if (gridElement) {
-      const controller = window.Stimulus.getControllerForElementAndIdentifier(gridElement, 'schedule-grid')
-      if (controller) controller.refreshTimeSlot($timeSlot[0])
+      const controller = this.application.getControllerForElementAndIdentifier(gridElement, 'schedule-grid')
+      if (controller) controller.refreshTimeSlot(timeSlot)
     }
 
     const sessionsElement = document.querySelector('[data-controller~="draggable-sessions"]')
-    if (sessionsElement && $draggableSession.length) {
-      const sessionsController = window.Stimulus.getControllerForElementAndIdentifier(sessionsElement, 'draggable-sessions')
-      if (sessionsController) sessionsController.initDraggableSession($draggableSession[0])
+    if (sessionsElement && draggableSession) {
+      const sessionsController = this.application.getControllerForElementAndIdentifier(sessionsElement, 'draggable-sessions')
+      if (sessionsController) sessionsController.initDraggableSession(draggableSession)
     }
 
     this.element.remove()

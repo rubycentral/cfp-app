@@ -4,22 +4,27 @@ import { Modal } from "bootstrap"
 export default class extends Controller {
   connect() {
     const modalElement = document.getElementById('bulk-time-slot-create-dialog')
-    const $modal = $(modalElement)
+    const dialog = modalElement.querySelector('.modal-dialog')
+    const formatSelect = dialog.querySelector('select.session-format')
+    const durationInput = dialog.querySelector('.time-slot-duration')
 
-    // Re-initialize the dialog form handlers
-    const $dialog = $modal.find('.modal-dialog')
-    const $format = $dialog.find('select.session-format')
-    const $duration = $dialog.find('.time-slot-duration')
+    if (formatSelect && durationInput) {
+      // Clone and replace to remove old event listeners
+      const newFormat = formatSelect.cloneNode(true)
+      const newDuration = durationInput.cloneNode(true)
+      formatSelect.parentNode.replaceChild(newFormat, formatSelect)
+      durationInput.parentNode.replaceChild(newDuration, durationInput)
 
-    $format.off('change').on('change', function(ev) {
-      $duration.val($format.val())
-    })
+      newFormat.addEventListener('change', () => {
+        newDuration.value = newFormat.value
+      })
 
-    $duration.off('keyup').on('keyup', function(ev) {
-      if ($duration.is(':focus')) {
-        $format.val('')
-      }
-    })
+      newDuration.addEventListener('keyup', () => {
+        if (document.activeElement === newDuration) {
+          newFormat.value = ''
+        }
+      })
+    }
 
     const modal = Modal.getOrCreateInstance(modalElement)
     modal.show()

@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
+import DataTable from 'datatables.net-bs5'
 
 export default class extends Controller {
-  static targets = ['row']
   static values = {
     action: String,
     rowId: String,
@@ -9,31 +9,42 @@ export default class extends Controller {
   }
 
   connect() {
-    const table = $('#organizer-time-slots.datatable').dataTable()
+    const tableElement = document.querySelector('#organizer-time-slots.datatable')
+    if (!tableElement || !DataTable.isDataTable(tableElement)) {
+      this.element.remove()
+      return
+    }
+
+    const table = new DataTable(tableElement)
 
     switch(this.actionValue) {
       case 'add':
         const template = this.element.querySelector('template')
         if (template) {
-          const row = $(template.innerHTML).filter('tr')[0]
+          const tempDiv = document.createElement('div')
+          tempDiv.innerHTML = template.innerHTML
+          const row = tempDiv.querySelector('tr')
           if (row) {
-            window.Schedule.TimeSlots.addRow(row)
+            table.row.add(row).draw()
           }
         }
         break
       case 'update':
-        const row = $(`table#organizer-time-slots #time_slot_${this.rowIdValue}`)[0]
-        if (row && this.rowDataValue) {
+        const existingRow = document.querySelector(`table#organizer-time-slots #time_slot_${this.rowIdValue}`)
+        if (existingRow && this.rowDataValue) {
+          const dtRow = table.row(existingRow)
           const data = this.rowDataValue
-          for (let i = 0; i < data.length; ++i) {
-            table.fnUpdate(data[i], row, i)
-          }
+          // Update each cell in the row
+          data.forEach((cellData, i) => {
+            existingRow.cells[i].innerHTML = cellData
+          })
+          dtRow.invalidate().draw()
         }
         break
       case 'delete':
-        const deleteRow = $(`table#organizer-time-slots #time_slot_${this.rowIdValue}`)[0]
+        const deleteRow = document.querySelector(`table#organizer-time-slots #time_slot_${this.rowIdValue}`)
         if (deleteRow) {
-          table.fnDeleteRow(deleteRow)
+          table.row(deleteRow).remove().draw()
         }
         break
     }

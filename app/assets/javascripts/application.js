@@ -10,7 +10,6 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery/dist/jquery
 //= require @popperjs/core/dist/umd/popper
 //= require bootstrap/dist/js/bootstrap
 //= require chartkick

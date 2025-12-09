@@ -14,6 +14,7 @@ gem 'rexml'
 gem 'matrix'
 
 gem 'propshaft'
+gem 'cssbundling-rails'
 gem 'shakapacker', '~> 6.6'
 
 gem 'honeybadger', '~> 6.1'

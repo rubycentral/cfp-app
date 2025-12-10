@@ -103,7 +103,7 @@ class EventDecorator < ApplicationDecorator
 
   def line_chart
     h.line_chart object.proposals.group_by_day(:created_at, range: proposal_date_range).count,
-      library: {pointSize: 0, lineWidth: 2, series: [{color: '#9ACFEA'}]}
+      colors: ['#9ACFEA'], library: {elements: {point: {radius: 0}, line: {borderWidth: 2}}}
   end
 
   def conference_day_in_words(day)

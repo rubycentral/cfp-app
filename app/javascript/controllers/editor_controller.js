@@ -1,9 +1,9 @@
 import { Controller } from '@hotwired/stimulus'
-import CodeMirror from 'codemirror/lib/codemirror.js'
-import 'codemirror/mode/htmlmixed/htmlmixed.js'
 
 const TINYMCE_VERSION = '6.8.0'
 const TINYMCE_CDN_URL = `https://cdn.jsdelivr.net/npm/tinymce@${TINYMCE_VERSION}/tinymce.min.js`
+const CODEMIRROR_VERSION = '5.65.16'
+const CODEMIRROR_CDN_BASE = `https://cdn.jsdelivr.net/npm/codemirror@${CODEMIRROR_VERSION}`
 
 export default class extends Controller {
   static targets = ['htmlContent', 'wysiwygContent', 'wysiwyg', 'html']
@@ -11,6 +11,7 @@ export default class extends Controller {
 
   initialize () {
     this.tinyMCELoaded = this.loadTinyMCE()
+    this.codeMirrorLoaded = this.loadCodeMirror()
     this.tinyMCEDefaults = {
       height: 500,
       menubar: false,
@@ -150,8 +151,59 @@ export default class extends Controller {
     })
   }
 
+  loadCodeMirror() {
+    if (window.CodeMirror) {
+      return Promise.resolve()
+    }
+
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = `${CODEMIRROR_CDN_BASE}/lib/codemirror.min.js`
+      script.onload = () => {
+        // Load htmlmixed mode after core is loaded
+        const modeScript = document.createElement('script')
+        modeScript.src = `${CODEMIRROR_CDN_BASE}/mode/htmlmixed/htmlmixed.min.js`
+        modeScript.onload = () => {
+          // htmlmixed depends on xml, javascript, and css modes
+          const xmlScript = document.createElement('script')
+          xmlScript.src = `${CODEMIRROR_CDN_BASE}/mode/xml/xml.min.js`
+          const jsScript = document.createElement('script')
+          jsScript.src = `${CODEMIRROR_CDN_BASE}/mode/javascript/javascript.min.js`
+          const cssScript = document.createElement('script')
+          cssScript.src = `${CODEMIRROR_CDN_BASE}/mode/css/css.min.js`
+
+          let loaded = 0
+          const onLoad = () => {
+            loaded++
+            if (loaded === 3) resolve()
+          }
+          xmlScript.onload = onLoad
+          jsScript.onload = onLoad
+          cssScript.onload = onLoad
+          xmlScript.onerror = reject
+          jsScript.onerror = reject
+          cssScript.onerror = reject
+
+          document.head.appendChild(xmlScript)
+          document.head.appendChild(jsScript)
+          document.head.appendChild(cssScript)
+        }
+        modeScript.onerror = reject
+        document.head.appendChild(modeScript)
+      }
+      script.onerror = reject
+      document.head.appendChild(script)
+
+      // Load CSS
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = `${CODEMIRROR_CDN_BASE}/lib/codemirror.min.css`
+      document.head.appendChild(link)
+    })
+  }
+
   async connect () {
-    await this.tinyMCELoaded
+    await Promise.all([this.tinyMCELoaded, this.codeMirrorLoaded])
     let config = Object.assign({ target: this.wysiwygContentTarget }, this.tinyMCEDefaults)
     tinyMCE.init(config)
     this.initializeCodeMirror();

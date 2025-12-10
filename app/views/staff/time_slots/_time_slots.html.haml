@@ -7,7 +7,7 @@
             %span.bi.bi-download
             Download as CSV
 
-        %h3.float-start Time Slots
+        %h2.float-start Time Slots
         = link_to "Add Time Slot",
             new_event_staff_schedule_time_slot_path,
             class: "btn float-start btn-primary btn-sm float-start " + (has_missing_requirements?(event) ? 'disabled' : ''),

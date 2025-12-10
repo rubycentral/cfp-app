@@ -1,5 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 import { Modal } from "bootstrap"
+import moment from 'moment'
 
 export default class extends Controller {
   static targets = ['proposals', 'supplementalFields', 'sessionInfo', 'startTime', 'endTime', 'length',

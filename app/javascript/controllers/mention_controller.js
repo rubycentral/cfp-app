@@ -1,4 +1,5 @@
 import { Controller } from '@hotwired/stimulus'
+import Tribute from 'tributejs'
 
 export default class extends Controller {
   connect() {

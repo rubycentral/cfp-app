@@ -1,13 +1,45 @@
 import { Controller } from '@hotwired/stimulus'
-import CodeMirror from 'codemirror/lib/codemirror.js'
-import 'codemirror/mode/htmlmixed/htmlmixed.js'
+
+const CODEMIRROR_VERSION = '5.65.16'
+const CODEMIRROR_CDN_BASE = `https://cdn.jsdelivr.net/npm/codemirror@${CODEMIRROR_VERSION}`
 
 export default class extends Controller {
   static targets = ['textArea']
 
+  initialize() {
+    this.codeMirrorLoaded = this.loadCodeMirror()
+  }
+
+  loadCodeMirror() {
+    if (window.CodeMirror) {
+      return Promise.resolve()
+    }
+
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = `${CODEMIRROR_CDN_BASE}/lib/codemirror.min.js`
+      script.onload = () => {
+        // Load css mode after core is loaded
+        const cssScript = document.createElement('script')
+        cssScript.src = `${CODEMIRROR_CDN_BASE}/mode/css/css.min.js`
+        cssScript.onload = resolve
+        cssScript.onerror = reject
+        document.head.appendChild(cssScript)
+      }
+      script.onerror = reject
+      document.head.appendChild(script)
+
+      // Load CSS
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = `${CODEMIRROR_CDN_BASE}/lib/codemirror.min.css`
+      document.head.appendChild(link)
+    })
+  }
+
   initializeCodeMirror() {
     var editor = CodeMirror.fromTextArea(this.textAreaTarget, {
-      mode: "htmlmixed",
+      mode: 'css',
       lineWrapping: true,
     });
     editor.on('drop', (e, event) => {
@@ -39,7 +71,8 @@ export default class extends Controller {
       })
   }
 
-  connect () {
+  async connect () {
+    await this.codeMirrorLoaded
     this.initializeCodeMirror();
   }
 }

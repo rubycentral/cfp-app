@@ -498,11 +498,6 @@ cliui@^8.0.1:
     strip-ansi "^6.0.1"
     wrap-ansi "^7.0.0"
 
-codemirror@^5.65.3:
-  version "5.65.3"
-  resolved "https://registry.npmjs.org/codemirror/-/codemirror-5.65.3.tgz"
-  integrity sha512-kCC0iwGZOVZXHEKW3NDTObvM7pTIyowjty4BUqeREROc/3I6bWbgZDA3fGDwlA+rbgRjvnRnfqs9SfXynel1AQ==
-
 color-convert@^2.0.1:
   version "2.0.1"
   resolved "https://registry.npmjs.org/color-convert/-/color-convert-2.0.1.tgz"
@@ -1056,11 +1051,6 @@ tinyglobby@^0.2.12:
   dependencies:
     fdir "^6.5.0"
     picomatch "^4.0.3"
-
-tinymce@^6.8.0:
-  version "6.8.6"
-  resolved "https://registry.npmjs.org/tinymce/-/tinymce-6.8.6.tgz"
-  integrity sha512-++XYEs8lKWvZxDCjrr8Baiw7KiikraZ5JkLMg6EdnUVNKJui0IsrAADj5MsyUeFkcEryfn2jd3p09H7REvewyg==
 
 to-regex-range@^5.0.1:
   version "5.0.1"

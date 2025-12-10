@@ -28,7 +28,6 @@
     "postcss-cli": "^11.0.1",
     "postcss-import": "^16.1.1",
     "postcss-nesting": "^13.0.2",
-    "tinymce": "^6.8.0",
     "tom-select": "^2.4.3",
     "tributejs": "^5.1.3"
   },

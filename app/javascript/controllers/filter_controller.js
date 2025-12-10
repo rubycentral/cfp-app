@@ -1,5 +1,5 @@
 import { Controller } from '@hotwired/stimulus'
-import FilterContainer from '../packs/filter_container'
+import FilterContainer from '../filter_container'
 
 export default class extends Controller {
   static values = { type: String }

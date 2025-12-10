@@ -1,5 +1,8 @@
 // Entry point for the build script in your package.json
 
+import * as Popper from "@popperjs/core"
+import * as bootstrap from "bootstrap"
+
 // Initialize Bootstrap dropdowns
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(el => {

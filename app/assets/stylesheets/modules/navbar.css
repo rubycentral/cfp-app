@@ -185,6 +185,19 @@ body:has(.subnavbar.fixed-top) {
   }
 }
 
+/* Add extra body padding when fixed program/schedule/website subnav is present */
+body:has(.fixed-top.program-subnav),
+body:has(.fixed-top.schedule-subnav),
+body:has(.fixed-top.website-subnav) {
+  padding-top: calc(var(--navbar-height) * 2);
+
+  /* Reduce top margin on first .page-header since body already has padding */
+  .main .page-header:first-child,
+  .main .row:first-child .page-header {
+    margin-top: 0;
+  }
+}
+
 .fixed-top.program-subnav,
 .fixed-top.schedule-subnav,
 .fixed-top.website-subnav {

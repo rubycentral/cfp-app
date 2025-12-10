@@ -21,7 +21,7 @@
         = smart_return_button
         =link_to "Next Proposal", event_staff_program_proposal_path(uuid: "PLACEHOLDER"), class: "next-proposal btn btn-primary btn-sm", data: {controller: 'next-proposal', proposal_uuid: proposal.uuid}
 
-  .page-header.page-header-slim
+  %header.page-header.page-header-slim
     .row
       .col-md-7
         %h1= proposal.title

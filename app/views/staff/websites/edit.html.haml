@@ -1,8 +1,7 @@
 .row
   .col-md-12
-    .page-header.clearfix
-      .btn-navbar
-        %h1 Edit Website
+    %header.page-header
+      %h1 Edit Website
       - if FastlyService.service
         .float-end
           = button_to "Purge",

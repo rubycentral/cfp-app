@@ -73,6 +73,12 @@
 /* Add extra body padding when fixed subnavbar is present */
 body:has(.subnavbar.fixed-top) {
   padding-top: calc(var(--navbar-height) + 60px);
+
+  /* Reduce top margin on first .page-header since body already has padding */
+  .main .page-header:first-child,
+  .main .row:first-child .page-header {
+    margin-top: 0;
+  }
 }
 
 .subnavbar {

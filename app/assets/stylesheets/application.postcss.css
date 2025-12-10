@@ -45,3 +45,5 @@
 @import "./modules/widgets.css";
 @import "./modules/teammates.css";
 @import "./modules/staff-website-page.css";
+
+@import "tailwindcss/utilities";

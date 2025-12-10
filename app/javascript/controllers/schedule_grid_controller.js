@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus'
 import { Modal } from 'bootstrap'
 import palette from 'google-palette'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 export default class extends Controller {
   static targets = ['grid', 'ruler', 'timeSlot', 'columnHeader']
@@ -245,13 +245,14 @@ export default class extends Controller {
   }
 
   initRuler(ruler) {
-    const m = moment().startOf('day').minutes(this.dayStartValue - this.stepValue)
+    let m = dayjs().startOf('day').add(this.dayStartValue - this.stepValue, 'minute')
 
     ruler.innerHTML = ''
     for (let i = this.dayStartValue; i <= this.dayEndValue; i += this.stepValue) {
+      m = m.add(this.stepValue, 'minute')
       const li = document.createElement('li')
       li.className = 'ruler_tick'
-      li.textContent = m.minutes(this.stepValue).format('hh:mma')
+      li.textContent = m.format('hh:mma')
       ruler.appendChild(li)
     }
   }

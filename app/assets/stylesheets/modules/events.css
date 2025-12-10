@@ -52,7 +52,8 @@
   }
 }
 
-.event-info-bar {
+.event-info-bar,
+.info-bar {
   margin-top: 20px;
 }
 

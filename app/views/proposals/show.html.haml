@@ -1,133 +1,115 @@
-.event-info-bar
-  .row
-    .col-md-4
-      .event-info.event-info-dense
-        %strong.event-title= event.name
-        - if event.start_date? && event.end_date?
-          %span.event-meta
-            %i.fa.fa-fw.fa-calendar
-            = event.date_range
-    .col-md-4
-      .event-info.event-info-dense
-        %span{:class => "event-meta event-status-badge event-status-#{event.status}"}
-          CFP
-          = event.status
-        - if event.open?
-          %span.event-meta
-            CFP closes:
-            %strong= event.closes_at(:month_day_year)
-    .col-md-4.text-end
-      - if proposal.has_speaker?(current_user)
-        .btn-nav.clearfix
-          - if proposal.speaker_can_edit?(current_user)
-            = link_to edit_event_proposal_path(event_slug: event.slug, uuid: proposal), class: 'btn btn-primary' do
-              %span.bi.bi-pencil
-              Edit
-          - if proposal.speaker_can_withdraw?(current_user)
-            = proposal.withdraw_button
-          - if proposal.speaker_can_delete?(current_user)
-            = link_to event_proposal_path(event, uuid: proposal), data: {turbo: true, turbo_method: :delete, turbo_confirm: 'This will delete your talk. Are you sure you want to do this? It can not be undone.'}, class: 'btn btn-warning', id: 'delete' do
-              %span.bi.bi-exclamation-circle
-              Delete Proposal
+= render layout: 'shared/event_info_bar', locals: {event: event, actions: true} do
+  - if proposal.has_speaker?(current_user)
+    .btn-nav.clearfix
+      - if proposal.speaker_can_edit?(current_user)
+        = link_to edit_event_proposal_path(event_slug: event.slug, uuid: proposal), class: 'btn btn-primary' do
+          %span.bi.bi-pencil
+          Edit
+      - if proposal.speaker_can_withdraw?(current_user)
+        = proposal.withdraw_button
+      - if proposal.speaker_can_delete?(current_user)
+        = link_to event_proposal_path(event, uuid: proposal), data: {turbo: true, turbo_method: :delete, turbo_confirm: 'This will delete your talk. Are you sure you want to do this? It can not be undone.'}, class: 'btn btn-warning', id: 'delete' do
+          %span.bi.bi-exclamation-circle
+          Delete Proposal
 
-  .page-header.page-header-slim
-    .row
-      .col-md-8
-        %h1= proposal.title
-      .col-sm-4.text-end
-        .proposal-info-bar
-          .proposal-meta.proposal-description
-            .proposal-meta-item
-              %strong Status:
-              %span #{proposal.speaker_state(small: true)}
-            .proposal-meta-item
-              %strong Updated:
-              %span #{proposal.updated_in_words}
-
-    .row
-      .proposal-info-bar.clearfix
-        .proposal-meta.proposal-description.clearfix
-          .col-sm-4
-            .col-sm-6.no-pad-left
-              .proposal-meta-item
-                .info-item-heading #{ 'Speaker'.pluralize(proposal.speakers.size) }
-                = proposal.speakers.collect { |speaker| speaker.name }.join(', ')
-            .col-sm-6
-              -if proposal.tags.present?
-                .proposal-meta-item
-                  .info-item-heading Tags
-                  #{proposal.tags_labels}
-          .col-sm-4
-            .col-sm-6.no-pad-left
-              .proposal-meta-item.text-start
-                .info-item-heading Format
-                #{proposal.session_format_name}
-            .col-sm-6
-              .proposal-meta-item.text-start
-                .info-item-heading Track
-                #{proposal.track_name}
-
+%header.page-header.page-header-slim
   .row
     .col-md-8
-      = render partial: 'proposals/contents', locals: { proposal: proposal }
+      %h1= proposal.title
+    .col-sm-4.text-end
+      .proposal-info-bar
+        .proposal-meta.proposal-description
+          .proposal-meta-item
+            %strong Status:
+            %span #{proposal.speaker_state(small: true)}
+          .proposal-meta-item
+            %strong Updated:
+            %span #{proposal.updated_in_words}
 
-      .proposal-section
-        %h3.fieldset-legend Speaker Information
-        .row
-          .col-md-8
-            = render proposal.speakers, withdraw: proposal.has_speaker?(current_user)
+  .row
+    .proposal-info-bar.clearfix
+      .proposal-meta.proposal-description.clearfix
+        .col-sm-4
+          .col-sm-6.no-pad-left
+            .proposal-meta-item
+              .info-item-heading #{ 'Speaker'.pluralize(proposal.speakers.size) }
+              = proposal.speakers.collect { |speaker| speaker.name }.join(', ')
+          .col-sm-6
+            - if proposal.tags.present?
+              .proposal-meta-item
+                .info-item-heading Tags
+                #{proposal.tags_labels}
+        .col-sm-4
+          .col-sm-6.no-pad-left
+            .proposal-meta-item.text-start
+              .info-item-heading Format
+              #{proposal.session_format_name}
+          .col-sm-6
+            .proposal-meta-item.text-start
+              .info-item-heading Track
+              #{proposal.track_name}
 
-        .row
-          .col-md-8
-            - if proposal.invitations_enabled?(current_user)
-              - if invitations.any?
-                %h4.control-label Invited Speakers
-                - invitations.each do |invitation|
-                  .clearfix
-                    %ul.invitation
-                      %li
-                        = invitation.state_label
-                        = invitation.email
-                        .float-end
-                          - unless invitation.declined?
-                            = link_to 'Resend',
-                              resend_invitation_path(invitation_slug: invitation.slug, proposal_uuid: proposal.uuid),
-                              class: 'btn btn-sm btn-primary'
-                          = link_to 'Remove',
-                            invitation_path(invitation_slug: invitation.slug, proposal_uuid: proposal.uuid),
-                            class: 'btn btn-sm btn-danger',
-                            data: {turbo: true, turbo_method: :delete, turbo_confirm: 'Are you sure you want to remove this invitation?'}
+.row
+  .col-md-8
+    = render partial: 'proposals/contents', locals: { proposal: proposal }
 
-                %hr
-              .new-speaker-invite
-                = link_to "Invite a Speaker", "#", class: "btn btn-success btn-sm speaker-invite-btn",
-                  data: { bs_toggle: "modal", bs_target: "#new-speaker-invitation" },
-                  id: "invite-new-speaker"
-                %p.help-block You may invite other speakers to your proposal.
+    .proposal-section
+      %h3.fieldset-legend Speaker Information
+      .row
+        .col-md-8
+          = render proposal.speakers, withdraw: proposal.has_speaker?(current_user)
 
-    - if proposal.has_speaker?(current_user)
-      .col-md-4
-        - if proposal.awaiting_confirmation?
-          .widget.widget-card.confirmation
-            .widget-header
-              %h2 Confirm participation in #{proposal.event.name}
-            .widget-content
-              = proposal.confirm_button
-              = proposal.decline_button
-        - elsif proposal.confirmed?
-          .widget.widget-card
-            .widget-content
-              = simple_form_for proposal, url: update_notes_event_proposal_path(slug: proposal.event.slug, uuid: proposal), wrapper: :vertical_form, method: :post do |f|
-                = f.input :confirmation_notes, label: "Notes for the #{event.name} team", input_html: { rows: 6, placeholder: 'Notes' },
-                popover_icon: {content: 'Please note any scheduling conflicts, or any additional information an organizer may need to schedule your talk.', placement: 'left'}
-                %button.btn.btn-success.float-end(type="submit") Update
-        .widget.widget-card
+      .row
+        .col-md-8
+          - if proposal.invitations_enabled?(current_user)
+            - if invitations.any?
+              %h4.control-label Invited Speakers
+              - invitations.each do |invitation|
+                .clearfix
+                  %ul.invitation
+                    %li
+                      = invitation.state_label
+                      = invitation.email
+                      .float-end
+                        - unless invitation.declined?
+                          = link_to 'Resend',
+                            resend_invitation_path(invitation_slug: invitation.slug, proposal_uuid: proposal.uuid),
+                            class: 'btn btn-sm btn-primary'
+                        = link_to 'Remove',
+                          invitation_path(invitation_slug: invitation.slug, proposal_uuid: proposal.uuid),
+                          class: 'btn btn-sm btn-danger',
+                          data: {turbo: true, turbo_method: :delete, turbo_confirm: 'Are you sure you want to remove this invitation?'}
+
+              %hr
+            .new-speaker-invite
+              = link_to "Invite a Speaker", "#", class: "btn btn-success btn-sm speaker-invite-btn",
+                data: { bs_toggle: "modal", bs_target: "#new-speaker-invitation" },
+                id: "invite-new-speaker"
+              %p.help-block You may invite other speakers to your proposal.
+
+  - if proposal.has_speaker?(current_user)
+    .col-md-4
+      - if proposal.awaiting_confirmation?
+        .widget.widget-card.confirmation
           .widget-header
-            %i.fa.fa-comments
-            %h3= pluralize(proposal.public_comments.size, 'comment')
+            %h2 Confirm participation in #{proposal.event.name}
           .widget-content
-            = render partial: 'proposals/comments',
-              locals: { proposal: proposal, comments: proposal.public_comments }
-        %p.help-block Have questions or feedback on your proposal? The comments allow you to anonymously converse with the review committee.
+            = proposal.confirm_button
+            = proposal.decline_button
+      - elsif proposal.confirmed?
+        .widget.widget-card
+          .widget-content
+            = simple_form_for proposal, url: update_notes_event_proposal_path(slug: proposal.event.slug, uuid: proposal), wrapper: :vertical_form, method: :post do |f|
+              = f.input :confirmation_notes, label: "Notes for the #{event.name} team", input_html: { rows: 6, placeholder: 'Notes' },
+                popover_icon: {content: 'Please note any scheduling conflicts, or any additional information an organizer may need to schedule your talk.', placement: 'left'}
+              %button.btn.btn-success.float-end(type="submit") Update
+      .widget.widget-card
+        .widget-header
+          %i.fa.fa-comments
+          %h3= pluralize(proposal.public_comments.size, 'comment')
+        .widget-content
+          = render partial: 'proposals/comments',
+            locals: { proposal: proposal, comments: proposal.public_comments }
+      %p.help-block Have questions or feedback on your proposal? The comments allow you to anonymously converse with the review committee.
 
 = render partial: 'proposals/speaker_invitations/new_dialog', locals: { event: event, proposal: proposal }

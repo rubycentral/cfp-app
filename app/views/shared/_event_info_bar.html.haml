@@ -1,0 +1,31 @@
+-# Renders the event info bar with event name, dates, and CFP status.
+-# Accepts an optional block for action buttons in a third column.
+-#
+-# Usage:
+-#   = render 'shared/event_info_bar', event: @event
+-#   = render layout: 'shared/event_info_bar', locals: {event: @event} do
+-#     .btn-nav
+-#       = link_to 'Back', some_path, class: 'btn btn-primary btn-sm'
+-#
+- has_actions = content_for?(:event_info_bar_actions) || (defined?(actions) && actions)
+.event-info-bar
+  .row
+    %div{class: has_actions ? 'col-md-4' : 'col-md-8'}
+      .event-info.event-info-dense
+        %strong.event-title= event.name
+        - if event.start_date? && event.end_date?
+          %span.event-meta
+            %i.fa.fa-fw.fa-calendar
+            = event.date_range
+    %div{class: ['col-md-4', ('text-end text-end-responsive' unless has_actions)]}
+      .event-info.event-info-dense
+        %span{class: 'event-meta event-status-badge event-status-' + event.status}
+          CFP
+          = event.status
+        - if event.open?
+          %span.event-meta
+            CFP closes:
+            %strong= event.closes_at(:month_day_year)
+    - if has_actions
+      .col-md-4.text-end
+        = yield

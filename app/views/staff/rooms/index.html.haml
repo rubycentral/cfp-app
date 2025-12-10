@@ -1,11 +1,10 @@
 #rooms-partial
   .row
     .col-md-12
-      %header
-        %h3.float-start Rooms
+      %header.page-header
+        %h2.float-start Rooms
         = link_to "Add Room", "#", class: "btn btn-primary btn-sm float-start",
           data: { bs_toggle: "modal", bs_target: "#room-new-dialog" }
-        .clearfix
   .row
     .col-md-12
       %table.table.table-striped#organizer-rooms

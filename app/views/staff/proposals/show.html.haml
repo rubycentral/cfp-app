@@ -1,109 +1,91 @@
-.event-info-bar
-  .row
-    .col-md-4
-      .event-info.event-info-dense
-        %strong.event-title= event.name
-        - if event.start_date? && event.end_date?
-          %span.event-meta
-            %i.fa.fa-fw.fa-calendar
-            = event.date_range
-    .col-md-4
-      .event-info.event-info-dense
-        %span{:class => "event-meta event-status-badge event-status-#{event.status}"}
-          CFP
-          = event.status
-        - if event.open?
-          %span.event-meta
-            CFP closes:
-            %strong= event.closes_at(:month_day_year)
-    .col-md-4.text-end.clearfix
-      .btn-nav.float-end
-        = smart_return_button
-        =link_to "Next Proposal", event_staff_program_proposal_path(uuid: "PLACEHOLDER"), class: "next-proposal btn btn-primary btn-sm", data: {controller: 'next-proposal', proposal_uuid: proposal.uuid}
+= render layout: 'shared/event_info_bar', locals: {event: event, actions: true} do
+  .btn-nav.float-end
+    = smart_return_button
+    = link_to "Next Proposal", event_staff_program_proposal_path(uuid: "PLACEHOLDER"), class: "next-proposal btn btn-primary btn-sm", data: {controller: 'next-proposal', proposal_uuid: proposal.uuid}
 
-  .page-header.page-header-slim
-    .row
-      .col-md-7
-        %h1= proposal.title
-      .col-md-5.text-end
-        .proposal-info-bar
-          .proposal-meta.proposal-description
+%header.page-header.page-header-slim
+  .row
+    .col-md-7
+      %h1= proposal.title
+    .col-md-5.text-end
+      .proposal-info-bar
+        .proposal-meta.proposal-description
+          .proposal-meta-item
+            %strong Status:
+            = render 'staff/proposals/proposal_status', proposal: proposal, context: 'show', small: true, show_confirmed: false
+          = render 'staff/proposals/proposal_state_buttons', proposal: proposal, context: 'show', buttons: proposal.state_buttons(show_hard_reset: true)
+  .row
+    .proposal-info-bar.clearfix
+      .proposal-meta.proposal-description.clearfix
+        .col-sm-4
+          .col-sm-6.no-pad-left
             .proposal-meta-item
-              %strong Status:
-              = render 'staff/proposals/proposal_status', proposal: proposal, context: 'show', small: true, show_confirmed: false
-            = render 'staff/proposals/proposal_state_buttons', proposal: proposal, context: 'show', buttons: proposal.state_buttons(show_hard_reset: true)
-    .row
-      .proposal-info-bar.clearfix
-        .proposal-meta.proposal-description.clearfix
-          .col-sm-4
-            .col-sm-6.no-pad-left
+              .info-item-heading #{ 'Speaker'.pluralize(proposal.speakers.count) }
+              = proposal.speakers.collect { |speaker| speaker.name }.join(', ')
+          .col-sm-6
+            - if proposal.tags.present?
               .proposal-meta-item
-                .info-item-heading #{ 'Speaker'.pluralize(proposal.speakers.count) }
-                = proposal.speakers.collect { |speaker| speaker.name }.join(', ')
-            .col-sm-6
-              -if proposal.tags.present?
-                .proposal-meta-item
-                  .info-item-heading Tags
-                  #{proposal.tags_labels}
-          .col-sm-4
-            .col-sm-6.no-pad-left
-              .proposal-meta-item.full-width{data: {controller: 'inline-edit'}}
-                #current-format{data: {inline_edit_target: 'display'}}
-                  .info-item-heading Format
-                  #format-name.float-start
-                    #{proposal.session_format_name}
-                  %i.fa.fa-pencil.inline-edit-icon{data: {action: 'click->inline-edit#show'}}
-                #edit-format-wrapper{data: {inline_edit_target: 'edit'}}
-                  %span
-                    = render 'shared/proposals/inline_format_edit', proposal: proposal
-                  %i.fa.fa-undo.inline-edit-icon{data: {action: 'click->inline-edit#cancel'}}
-            .col-sm-6
-              .proposal-meta-item.full-width{data: {controller: 'inline-edit'}}
-                #current-track{data: {inline_edit_target: 'display'}}
-                  .info-item-heading Track
-                  #track-name.float-start
-                    #{proposal.track_name}
-                  %i.fa.fa-pencil.inline-edit-icon{data: {action: 'click->inline-edit#show'}}
-                #edit-track-wrapper{data: {inline_edit_target: 'edit'}}
-                  %span
-                    = render 'shared/proposals/inline_track_edit', proposal: proposal
-                  %i.fa.fa-undo.inline-edit-icon{data: {action: 'click->inline-edit#cancel'}}
-          .col-sm-4
-            .proposal-meta-item.col-sm-12.no-pad-left
-              .info-item-heading Reviewer Tags
-              = render 'shared/proposals/reviewer_tags', event: event, proposal: proposal
+                .info-item-heading Tags
+                #{proposal.tags_labels}
+        .col-sm-4
+          .col-sm-6.no-pad-left
+            .proposal-meta-item.full-width{data: {controller: 'inline-edit'}}
+              #current-format{data: {inline_edit_target: 'display'}}
+                .info-item-heading Format
+                #format-name.float-start
+                  #{proposal.session_format_name}
+                %i.fa.fa-pencil.inline-edit-icon{data: {action: 'click->inline-edit#show'}}
+              #edit-format-wrapper{data: {inline_edit_target: 'edit'}}
+                %span
+                  = render 'shared/proposals/inline_format_edit', proposal: proposal
+                %i.fa.fa-undo.inline-edit-icon{data: {action: 'click->inline-edit#cancel'}}
+          .col-sm-6
+            .proposal-meta-item.full-width{data: {controller: 'inline-edit'}}
+              #current-track{data: {inline_edit_target: 'display'}}
+                .info-item-heading Track
+                #track-name.float-start
+                  #{proposal.track_name}
+                %i.fa.fa-pencil.inline-edit-icon{data: {action: 'click->inline-edit#show'}}
+              #edit-track-wrapper{data: {inline_edit_target: 'edit'}}
+                %span
+                  = render 'shared/proposals/inline_track_edit', proposal: proposal
+                %i.fa.fa-undo.inline-edit-icon{data: {action: 'click->inline-edit#cancel'}}
+        .col-sm-4
+          .proposal-meta-item.col-sm-12.no-pad-left
+            .info-item-heading Reviewer Tags
+            = render 'shared/proposals/reviewer_tags', event: event, proposal: proposal
 
-  .row
-    .col-md-4
-      = render partial: 'proposals/contents', locals: { proposal: proposal }
+.row
+  .col-md-4
+    = render partial: 'proposals/contents', locals: { proposal: proposal }
 
-    .col-md-4
-      .widget.widget-card.flush-top
-        .widget-header
-          %h3 Other Proposals
-        .widget-content
-          = render partial: 'other_proposals', locals: { event: event, other_proposals: @other_proposals }
+  .col-md-4
+    .widget.widget-card.flush-top
+      .widget-header
+        %h3 Other Proposals
+      .widget-content
+        = render partial: 'other_proposals', locals: { event: event, other_proposals: @other_proposals }
 
-        .widget-header
-          %h3 Speakers
-        .widget-content
-          = render partial: 'staff/proposals/speakers', locals: { speakers: proposal.speakers }
+      .widget-header
+        %h3 Speakers
+      .widget-content
+        = render partial: 'staff/proposals/speakers', locals: { speakers: proposal.speakers }
 
-      .widget.widget-card.flush-top
-        .widget-header
-          %i.fa.fa-comments
-          %h3.comments-heading= pluralize(proposal.public_comments.count, 'Public Comment')
-        .widget-content
-          = render partial: 'proposals/comments', locals: { proposal: proposal, comments: proposal.public_comments }
+    .widget.widget-card.flush-top
+      .widget-header
+        %i.fa.fa-comments
+        %h3.comments-heading= pluralize(proposal.public_comments.count, 'Public Comment')
+      .widget-content
+        = render partial: 'proposals/comments', locals: { proposal: proposal, comments: proposal.public_comments }
 
-          - if proposal.accepted?
-            .widget-header
-              %h3 Confirmation Notes
-            .widget-content
-              = render partial: 'proposals/confirmation_notes', locals: {proposal: proposal, notes: proposal.confirmation_notes}
+        - if proposal.accepted?
+          .widget-header
+            %h3 Confirmation Notes
+          .widget-content
+            = render partial: 'proposals/confirmation_notes', locals: {proposal: proposal, notes: proposal.confirmation_notes}
 
-    .col-md-4
-      .widget.widget-card.widget-card-alt.flush-top
-        .widget-header
-          %h3 Review
-        = render partial: 'shared/proposals/rating_widget', locals: { event: event, proposal: proposal, rating: @rating }
+  .col-md-4
+    .widget.widget-card.widget-card-alt.flush-top
+      .widget-header
+        %h3 Review
+      = render partial: 'shared/proposals/rating_widget', locals: { event: event, proposal: proposal, rating: @rating }

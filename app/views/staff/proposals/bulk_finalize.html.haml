@@ -1,14 +1,16 @@
+= render 'shared/event_info_bar', event: current_event
+
+.row
+  .col-md-8
+    %h1 Bulk Finalize
+    .info-bar
+      = finalize_info
+      %span.text-warning Make sure the Heroku worker is running.
+
 .event{data: {controller: 'notifications-channel'}}
   .row
     .col-md-6.col-md-offset-3
-      .page-header.clearfix
-        %h1 Bulk Finalize
-        .event-info-bar
-          = finalize_info
-          %span.text-warning Make sure the Heroku worker is running.
-  .row
-    .col-md-6.col-md-offset-3
-      .event-info-bar
+      .info-bar
         %div#notifications.text-info
   .row
     .col-md-6.col-md-offset-3

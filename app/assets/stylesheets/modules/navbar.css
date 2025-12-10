@@ -70,6 +70,11 @@
 [3. Subnavbar / .subnavbar]
 */
 
+/* Add extra body padding when fixed subnavbar is present */
+body:has(.subnavbar.fixed-top) {
+  padding-top: calc(var(--navbar-height) + 60px);
+}
+
 .subnavbar {
   margin: 0 0;
   padding-top: var(--navbar-height);
@@ -171,6 +176,18 @@
   }
   .dropdown.open .caret {
     display: none;
+  }
+}
+
+/* Add extra body padding when fixed program/schedule/website subnav is present */
+body:has(.fixed-top.program-subnav),
+body:has(.fixed-top.schedule-subnav),
+body:has(.fixed-top.website-subnav) {
+  padding-top: calc(var(--navbar-height) * 2);
+
+  /* Reduce default page-header margin (40px) since body already has padding */
+  .main .page-header {
+    margin-top: 20px;
   }
 }
 

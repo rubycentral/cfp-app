@@ -5,12 +5,16 @@ export default class extends Controller {
 
   connect() {
     this.showRating()
-    this.boundHandleChange = this.handleChange.bind(this)
-    this.formTarget.addEventListener('change', this.boundHandleChange)
+    if (this.hasFormTarget) {
+      this.boundHandleChange = this.handleChange.bind(this)
+      this.formTarget.addEventListener('change', this.boundHandleChange)
+    }
   }
 
   disconnect() {
-    this.formTarget.removeEventListener('change', this.boundHandleChange)
+    if (this.hasFormTarget && this.boundHandleChange) {
+      this.formTarget.removeEventListener('change', this.boundHandleChange)
+    }
   }
 
   handleChange(event) {

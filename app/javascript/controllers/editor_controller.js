@@ -2,11 +2,15 @@ import { Controller } from '@hotwired/stimulus'
 import CodeMirror from 'codemirror/lib/codemirror.js'
 import 'codemirror/mode/htmlmixed/htmlmixed.js'
 
+const TINYMCE_VERSION = '6.8.0'
+const TINYMCE_CDN_URL = `https://cdn.jsdelivr.net/npm/tinymce@${TINYMCE_VERSION}/tinymce.min.js`
+
 export default class extends Controller {
   static targets = ['htmlContent', 'wysiwygContent', 'wysiwyg', 'html']
   static values = { changed: { type: Boolean, default: false } }
 
   initialize () {
+    this.tinyMCELoaded = this.loadTinyMCE()
     this.tinyMCEDefaults = {
       height: 500,
       menubar: false,
@@ -132,7 +136,22 @@ export default class extends Controller {
     this.changedValue = false;
   }
 
-  connect () {
+  loadTinyMCE() {
+    if (window.tinyMCE) {
+      return Promise.resolve()
+    }
+
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = TINYMCE_CDN_URL
+      script.onload = resolve
+      script.onerror = reject
+      document.head.appendChild(script)
+    })
+  }
+
+  async connect () {
+    await this.tinyMCELoaded
     let config = Object.assign({ target: this.wysiwygContentTarget }, this.tinyMCEDefaults)
     tinyMCE.init(config)
     this.initializeCodeMirror();

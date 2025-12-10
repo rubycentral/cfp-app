@@ -1,4 +1,4 @@
-import { Controller } from 'stimulus'
+import { Controller } from '@hotwired/stimulus'
 import CodeMirror from 'codemirror/lib/codemirror.js'
 import 'codemirror/mode/htmlmixed/htmlmixed.js'
 

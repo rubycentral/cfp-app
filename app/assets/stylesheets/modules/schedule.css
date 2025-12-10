@@ -111,6 +111,12 @@
   max-height: 200vh;
   overflow-y: scroll;
   min-height: 100vh;
+  padding: 1em;
+
+  &.draggable-hover {
+    background-color: #e0e0e0;
+    border: 2px dashed #999;
+  }
 
   .draggable-session-card {
     margin: 1em auto;
@@ -349,7 +355,8 @@ body .custom-session-card {
     border-width: 1px .5px .5px 0;
 
     &.draggable-hover {
-      background: var(--beige);
+      background: #e0e0e0;
+      border: 2px dashed #999;
     }
 
     &.preview {

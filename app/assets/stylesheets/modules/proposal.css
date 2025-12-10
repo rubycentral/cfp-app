@@ -72,7 +72,7 @@
 }
 
 .proposal-list {
-  .actions { width: 180px; }
+  .actions { white-space: nowrap; }
   .date_range_filter, .text_filter { width: 100px !important; }
 }
 

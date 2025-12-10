@@ -2,7 +2,7 @@ import CfpDatatableController from './cfp_datatable_controller'
 
 export default class extends CfpDatatableController {
   get columnTypes() {
-    return ['number', 'date', 'date', 'text', 'text', 'text', 'text']
+    return ['number', 'date', 'date', 'text', 'text', 'text', 'text', 'text', null]
   }
 
   get options() {

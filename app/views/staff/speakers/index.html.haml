@@ -25,7 +25,9 @@
 
 .row
   .col-md-12
-    %table#organizer-speakers.datatable.table.table-striped{data: {controller: 'cfp-datatable', cfp_column_types: '["text", "text", "text", null, "text"]'}}
+    - is_organizer = current_user.organizer_for_event?(current_event)
+    - column_types = is_organizer ? '["text", "text", "text", "text", "text", null]' : '["text", "text", "text", "text", "text"]'
+    %table#organizer-speakers.datatable.table.table-striped{data: {controller: 'cfp-datatable', cfp_column_types: column_types}}
       %thead
         %tr
           %th
@@ -33,13 +35,15 @@
           %th
           %th
           %th
+          - if is_organizer
+            %th
         %tr
           %th Name
           %th Email
           %th Session
           %th Track
           %th Format
-          - if current_user.organizer_for_event?(current_event)
+          - if is_organizer
             %th Actions
       %tbody
         - is_organizer = current_user.organizer_for_event?(current_event)

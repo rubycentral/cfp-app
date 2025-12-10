@@ -1,4 +1,4 @@
-import { Controller } from 'stimulus'
+import { Controller } from '@hotwired/stimulus'
 import palette from 'google-palette'
 
 export default class extends Controller {
@@ -86,8 +86,19 @@ export default class extends Controller {
   setupDropZone() {
     if (!this.hasWidgetTarget) return
 
-    this.widgetTarget.addEventListener('dragover', this.handleDragOver.bind(this))
-    this.widgetTarget.addEventListener('drop', this.handleDrop.bind(this))
+    const widget = this.widgetTarget
+
+    widget.addEventListener('dragover', this.handleDragOver.bind(this))
+    widget.addEventListener('dragenter', (e) => {
+      e.preventDefault()
+      widget.classList.add('draggable-hover')
+    })
+    widget.addEventListener('dragleave', (e) => {
+      if (e.target === widget || !widget.contains(e.relatedTarget)) {
+        widget.classList.remove('draggable-hover')
+      }
+    })
+    widget.addEventListener('drop', this.handleDrop.bind(this))
   }
 
   handleDragOver(e) {
@@ -99,23 +110,30 @@ export default class extends Controller {
   }
 
   handleDrop(e) {
-    if (e.stopPropagation) {
-      e.stopPropagation()
-    }
+    e.stopPropagation()
     e.preventDefault()
 
+    this.widgetTarget.classList.remove('draggable-hover')
+
     const sessionId = e.dataTransfer.getData('text/plain')
-    const sessionCard = document.querySelector(`[data-id="${sessionId}"].draggable-session-card`)
+    if (!sessionId) {
+      console.warn('No session ID in dataTransfer')
+      return false
+    }
 
-    if (sessionCard) {
-      // Remove inline styles and move to widget
-      sessionCard.removeAttribute('style')
-      sessionCard.classList.remove('small', 'medium', 'large')
-      this.widgetTarget.prepend(sessionCard)
+    const sessionCard = document.querySelector(`.draggable-session-card[data-id="${sessionId}"]`)
+    if (!sessionCard) {
+      console.warn('Session card not found:', sessionId)
+      return false
+    }
 
-      if (sessionCard.dataset.scheduled) {
-        this.unschedule(sessionCard)
-      }
+    // Remove inline styles and move to widget
+    sessionCard.removeAttribute('style')
+    sessionCard.classList.remove('small', 'medium', 'large')
+    this.widgetTarget.prepend(sessionCard)
+
+    if (sessionCard.dataset.scheduled) {
+      this.unschedule(sessionCard)
     }
 
     return false

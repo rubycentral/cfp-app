@@ -1,4 +1,4 @@
-import { Controller } from 'stimulus'
+import { Controller } from '@hotwired/stimulus'
 import palette from 'google-palette'
 
 export default class extends Controller {

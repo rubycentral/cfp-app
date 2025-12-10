@@ -1,4 +1,4 @@
-import { Controller } from 'stimulus'
+import { Controller } from '@hotwired/stimulus'
 import FilterContainer from '../packs/filter_container'
 
 export default class extends Controller {

@@ -67,19 +67,21 @@ export default class extends Controller {
       this.assignTrackColor(card)
     })
 
-    // Setup draggable for session cards in this slot
-    const sessionCards = slot.querySelectorAll('.draggable-session-card')
-    sessionCards.forEach(card => this.makeDraggable(card))
-
+    let activeSlot = slot
     if (!slot.classList.contains('preview')) {
       // Remove old listener by cloning (simpler than tracking handlers)
       const newSlot = slot.cloneNode(true)
       slot.parentNode.replaceChild(newSlot, slot)
       newSlot.addEventListener('click', (e) => this.onTimeSlotClick(e, newSlot))
       this.setupDropZone(newSlot)
+      activeSlot = newSlot
     } else {
       this.setupDropZone(slot)
     }
+
+    // Setup draggable for session cards AFTER cloning to preserve event listeners
+    const sessionCards = activeSlot.querySelectorAll('.draggable-session-card')
+    sessionCards.forEach(card => this.makeDraggable(card))
   }
 
   makeDraggable(sessionCard) {
@@ -118,7 +120,7 @@ export default class extends Controller {
 
   handleDragLeave(e) {
     const slot = e.currentTarget
-    if (e.target === slot) {
+    if (!slot.contains(e.relatedTarget)) {
       slot.classList.remove('draggable-hover')
     }
   }
@@ -167,6 +169,9 @@ export default class extends Controller {
     } else {
       sessionCard.dataset.scheduled = 'true'
     }
+
+    // Update the unschedule path to point to the new slot
+    sessionCard.dataset.unscheduleTimeSlotPath = slot.dataset.updatePath
 
     this.updateTimeSlot(slot, sessionCard)
   }

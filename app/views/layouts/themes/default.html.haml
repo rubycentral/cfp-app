@@ -21,11 +21,11 @@
     %meta{property: "twitter:image", content: current_website.meta_image_url}
 
     = stylesheet_link_tag current_website.theme, media: 'all'
-    = append_javascript_pack_tag "application"
+    = stylesheet_link_tag 'application', media: 'all'
+    = javascript_include_tag 'application', 'data-turbo-track': 'reload', type: 'module'
     :css
       #{current_website.font_faces_css}
       #{current_website.font_root_css}
-    = stylesheet_pack_tag "tailwind_styles"
     = current_website.head_content
 
   %body

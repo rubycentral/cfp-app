@@ -19,7 +19,6 @@ import ContentController from "./content_controller"
 import CopySpeakerEmailsController from "./copy_speaker_emails_controller"
 import DatatableController from "./datatable_controller"
 import DraggableSessionsController from "./draggable_sessions_controller"
-import DropdownController from "./dropdown_controller"
 import EditorController from "./editor_controller"
 import FilterController from "./filter_controller"
 import FixedSubnavController from "./fixed_subnav_controller"
@@ -71,7 +70,6 @@ application.register("content", ContentController)
 application.register("copy-speaker-emails", CopySpeakerEmailsController)
 application.register("datatable", DatatableController)
 application.register("draggable-sessions", DraggableSessionsController)
-application.register("dropdown", DropdownController)
 application.register("editor", EditorController)
 application.register("filter", FilterController)
 application.register("fixed-subnav", FixedSubnavController)

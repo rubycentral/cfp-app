@@ -1,5 +1,5 @@
 %li.nav-item.dropdown
-  %a.nav-link.dropdown-toggle.gravatar-container{href: '#', role: 'button', data: {controller: 'dropdown', action: 'click->dropdown#toggle', bs_toggle: 'dropdown'}, aria: {expanded: 'false'}}
+  %a.nav-link.dropdown-toggle.gravatar-container{href: '#', role: 'button', data: {bs_toggle: 'dropdown'}, aria: {expanded: 'false'}}
     = image_tag("https://www.gravatar.com/avatar/#{current_user.gravatar_hash}?s=25", class: 'user-dropdown-gravatar', alt: '')
     &nbsp; #{current_user.name}
   %ul.dropdown-menu.dropdown-menu-end

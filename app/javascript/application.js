@@ -2,6 +2,7 @@
 
 import * as Popper from "@popperjs/core"
 import * as bootstrap from "bootstrap"
+import "chartkick/chart.js"
 
 // Initialize Bootstrap dropdowns
 document.addEventListener('DOMContentLoaded', () => {

@@ -1,4 +1,4 @@
-class UserDecorator < ApplicationDecorator
+class UserDecorator < Draper::Decorator
   delegate_all
 
   def proposal_notification_url(proposal)

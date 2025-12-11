@@ -1,4 +1,4 @@
-class SpeakerDecorator < ApplicationDecorator
+class SpeakerDecorator < Draper::Decorator
   delegate_all
   decorates_association :proposals
   decorates_association :program_sessions

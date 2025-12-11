@@ -67,8 +67,4 @@ class EventDecorator < Draper::Decorator
       (now..(now + 3.months))
     end
   end
-
-  def format_date(date)
-      date.to_fs(:long) if date.present?
-  end
 end

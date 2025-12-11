@@ -1,4 +1,4 @@
-class TeammateDecorator < ApplicationDecorator
+class TeammateDecorator < Draper::Decorator
   delegate_all
 
   def notification_preference

@@ -1,4 +1,4 @@
-class Staff::ProgramSessionDecorator < ApplicationDecorator
+class Staff::ProgramSessionDecorator < Draper::Decorator
   decorates_association :speakers
   delegate_all
 

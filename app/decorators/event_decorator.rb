@@ -1,4 +1,4 @@
-class EventDecorator < ApplicationDecorator
+class EventDecorator < Draper::Decorator
   delegate_all
 
   def proposals_rated_overall_message

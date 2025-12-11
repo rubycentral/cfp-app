@@ -31,11 +31,6 @@ class EventDecorator < Draper::Decorator
     end
   end
 
-  def days_for
-    # Add 1 because we include both the start date and end date
-    1..((object.end_date.to_date - object.start_date.to_date) + 1)
-  end
-
   def reviewed_percent
     if proposals.count > 1
       "#{((object.proposals.rated.count.to_f/object.proposals.count)*100).round(1)}%"

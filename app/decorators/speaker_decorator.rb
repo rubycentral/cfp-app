@@ -10,10 +10,6 @@ class SpeakerDecorator < Draper::Decorator
     h.image_tag(image_url, class: 'pull-left speaker-image')
   end
 
-  def name_and_email
-    "#{object.name} (#{object.email})"
-  end
-
   def bio
     object.bio.present? ? object.bio : object.user.try(:bio)
   end

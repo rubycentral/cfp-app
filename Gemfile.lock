@@ -479,7 +479,6 @@ DEPENDENCIES
   fastly
   foreman
   groupdate
-  haml
   haml-rails
   honeybadger (~> 6.1)
   image_processing (~> 1.14)

@@ -3,11 +3,11 @@ class TimeSlotSerializer < ActiveModel::Serializer
     :room, :track, :description
 
   def start_time
-    object.start_time.try(:to_fs, :time)
+    object.start_time&.to_fs(:time)
   end
 
   def end_time
-    object.end_time.try(:to_fs, :time)
+    object.end_time&.to_fs(:time)
   end
 
   def room

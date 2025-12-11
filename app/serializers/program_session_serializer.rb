@@ -3,14 +3,14 @@ class ProgramSessionSerializer < ActiveModel::Serializer
   has_many :speakers
 
   def tags
-    object.proposal.try(:review_tags)
+    object.proposal&.review_tags
   end
 
   def format
-    object.session_format.try(:name)
+    object.session_format&.name
   end
 
   def track
-    object.track.try(:name)
+    object.track&.name
   end
 end

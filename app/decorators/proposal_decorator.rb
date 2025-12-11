@@ -39,10 +39,6 @@ class ProposalDecorator < Draper::Decorator
     h.number_with_precision(object.average_rating, precision: 1) || ''
   end
 
-  def score_for(user)
-    user.rating_for(object).score
-  end
-
   def session_format_name
     object.session_format.try(:name)
   end

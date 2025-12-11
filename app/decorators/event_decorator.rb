@@ -23,20 +23,12 @@ class EventDecorator < Draper::Decorator
     h.link_to h.pluralize(object.proposals.count, 'proposal'), path
   end
 
-  def cfp_days_remaining
-    ((object.closes_at - Time.current).to_i / 1.day) if object.closes_at && (object.closes_at - Time.current).to_i / 1.day > 1
-  end
-
   def closes_at(format = nil)
     if format && object.closes_at
       object.closes_at.to_fs(format)
     else
       object.closes_at
     end
-  end
-
-  def track_count
-    Track.count_by_track(object)
   end
 
   def days_for
@@ -59,14 +51,6 @@ class EventDecorator < Draper::Decorator
       object.start_date.strftime("%b %d, %Y")
     else
       object.start_date.strftime("%b %d") + object.end_date.strftime(" \- %b %d, %Y")
-    end
-  end
-
-  def confirmed_percent
-    if (accepted_confirmed_count = proposals.accepted.confirmed.count) > 0
-      "#{((accepted_confirmed_count.to_f / object.proposals.accepted.count) * 100).round(1)}%"
-    else
-      "0%"
     end
   end
 

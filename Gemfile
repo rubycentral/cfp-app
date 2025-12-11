@@ -34,7 +34,6 @@ gem 'actionview-encoded_mail_to'
 gem 'active_model_serializers', '~> 0.10.16'
 gem 'bootsnap', '~> 1.19', require: false
 gem 'chartkick'
-gem 'country_select', '~> 11.0'
 gem 'draper', '~> 4.0'
 gem 'faker'
 gem 'fastly'

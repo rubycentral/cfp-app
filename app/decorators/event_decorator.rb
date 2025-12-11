@@ -31,14 +31,6 @@ class EventDecorator < Draper::Decorator
     end
   end
 
-  def reviewed_percent
-    if proposals.count > 1
-      "#{((object.proposals.rated.count.to_f/object.proposals.count)*100).round(1)}%"
-    else
-      "0%"
-    end
-  end
-
   def date_range
     if (object.start_date.month == object.end_date.month) && (event.start_date.day != event.end_date.day)
       object.start_date.strftime("%b %d") + object.end_date.strftime(" \- %d, %Y")
@@ -46,29 +38,6 @@ class EventDecorator < Draper::Decorator
       object.start_date.strftime("%b %d, %Y")
     else
       object.start_date.strftime("%b %d") + object.end_date.strftime(" \- %b %d, %Y")
-    end
-  end
-
-  def scheduled_count
-    tot = object.proposals.accepted.count
-    tot - object.program_sessions.unscheduled.count
-  end
-
-  def scheduled_percent
-    if scheduled_count > 0
-      tot = object.proposals.accepted.count.to_f
-      sched = tot - object.program_sessions.unscheduled.count.to_f
-      "#{((sched/tot)*100).round(1)}%"
-    else
-      "0%"
-    end
-  end
-
-  def waitlisted_percent
-    if (waitlisted_confirmed_count = proposals.waitlisted.confirmed.count) > 0
-      "#{((waitlisted_confirmed_count.to_f / object.proposals.waitlisted.count) * 100).round(1)}%"
-    else
-      "0%"
     end
   end
 

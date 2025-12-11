@@ -23,14 +23,6 @@ class EventDecorator < Draper::Decorator
     h.link_to h.pluralize(object.proposals.count, 'proposal'), path
   end
 
-  def event_path_for
-    if object.url?
-      h.link_to object.name, object.url, target: 'blank', class: 'event-title'
-    else
-      object.name
-    end
-  end
-
   def cfp_days_remaining
     ((object.closes_at - Time.current).to_i / 1.day) if object.closes_at && (object.closes_at - Time.current).to_i / 1.day > 1
   end

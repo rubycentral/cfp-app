@@ -23,7 +23,7 @@ gem 'csv'
 
 gem 'pg'
 
-gem 'haml'
+gem 'haml-rails'
 
 gem 'devise', '~> 4.9'
 gem 'omniauth-github'
@@ -60,7 +60,6 @@ group :development do
   gem 'annotate'
   gem 'binding_of_caller'
   gem 'foreman'
-  gem 'haml-rails'
   gem 'launchy'
   gem 'rack-mini-profiler'
 end

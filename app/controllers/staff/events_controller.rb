@@ -29,16 +29,6 @@ class Staff::EventsController < Staff::ApplicationController
   def configuration
   end
 
-  def custom_fields
-    render partial: 'custom_fields_form'
-  end
-
-  def update_custom_fields
-    authorize_update
-    @event.update(event_params)
-    render partial: 'custom_fields', locals: {event: @event}
-  end
-
   def reviewer_tags
     render partial: 'reviewer_tags_form'
   end
@@ -89,7 +79,7 @@ class Staff::EventsController < Staff::ApplicationController
   def event_params
     params.require(:event).permit(
         :name, :contact_email, :slug, :url, :valid_proposal_tags,
-        :valid_review_tags, :custom_fields_string, :state, :guidelines,
+        :valid_review_tags, :state, :guidelines,
         :closes_at, :speaker_notification_emails, :accept, :reject,
         :waitlist, :opens_at, :start_date, :end_date)
   end

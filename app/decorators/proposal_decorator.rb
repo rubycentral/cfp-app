@@ -162,10 +162,6 @@ class ProposalDecorator < Draper::Decorator
     hint: "Publicly viewable title. Ideally catchy, interesting, essence of the talk. Limited to 60 characters."
   end
 
-  def speaker_input(form)
-    form.input :speaker
-  end
-
   def invitations_enabled?(user)
     object.has_speaker?(user) && !object.finalized?
   end

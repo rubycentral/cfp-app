@@ -4,10 +4,13 @@ import * as Popper from "@popperjs/core"
 import * as bootstrap from "bootstrap"
 import "chartkick/chart.js"
 
-// Initialize Bootstrap dropdowns
+// Initialize Bootstrap components
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(el => {
     new bootstrap.Dropdown(el)
+  })
+  document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+    new bootstrap.Tooltip(el)
   })
 })
 

@@ -166,10 +166,6 @@ class ProposalDecorator < Draper::Decorator
     form.input :speaker
   end
 
-  def format_options
-    @format_options ||= object.event.session_formats.map { |sf| [sf.name, sf.id] }.sort
-  end
-
   def invitations_enabled?(user)
     object.has_speaker?(user) && !object.finalized?
   end

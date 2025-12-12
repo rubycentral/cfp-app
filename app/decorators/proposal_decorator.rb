@@ -166,10 +166,6 @@ class ProposalDecorator < Draper::Decorator
     form.input :speaker
   end
 
-  def track_options
-    @track_options ||= object.event.tracks.map { |t| [t.name, t.id] }.sort
-  end
-
   def format_options
     @format_options ||= object.event.session_formats.map { |sf| [sf.name, sf.id] }.sort
   end

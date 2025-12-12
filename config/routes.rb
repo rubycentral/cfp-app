@@ -48,8 +48,7 @@ Rails.application.routes.draw do
       patch :open_cfp
 
       get '/config' => 'events#configuration', as: :config
-      get 'custom-fields', as: :custom_fields
-      put :update_custom_fields
+      resource :custom_fields, only: [:edit, :update]
       get 'reviewer-tags', as: :reviewer_tags
       put :update_reviewer_tags
       get 'proposal-tags', as: :proposal_tags

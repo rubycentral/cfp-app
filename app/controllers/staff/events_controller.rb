@@ -29,16 +29,6 @@ class Staff::EventsController < Staff::ApplicationController
   def configuration
   end
 
-  def custom_fields
-    render partial: 'custom_fields_form'
-  end
-
-  def update_custom_fields
-    authorize_update
-    @event.update(event_params)
-    render partial: 'custom_fields', locals: {event: @event}
-  end
-
   def reviewer_tags
     render partial: 'reviewer_tags_form'
   end

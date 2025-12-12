@@ -9,7 +9,7 @@
         %span.badge.badge-info= "#{event.stats.rated_proposals}/#{event.stats.total_proposals}"
       %span
         You've rated:
-        %span.badge.badge-info=event.proposals_you_rated_message
+        %span.badge.badge-info= "#{event.stats.user_rated_proposals(current_user)}/#{event.stats.user_ratable_proposals(current_user)}"
   .col-sm-6.text-end
     %small.text-end <em>Hint:</em> Hold <kbd>shift</kbd> to sort by multiple columns
 .row{data: {controller: 'proposals-table'}}

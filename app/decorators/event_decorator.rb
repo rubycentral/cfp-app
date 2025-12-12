@@ -1,10 +1,6 @@
 class EventDecorator < Draper::Decorator
   delegate_all
 
-  def proposals_you_rated_message
-    "#{event.stats.user_rated_proposals(h.current_user)}/#{event.stats.user_ratable_proposals(h.current_user)}"
-  end
-
   def path_for(user)
     path = if user && user.organizer_for_event?(object)
       h.event_staff_proposals_path(object)

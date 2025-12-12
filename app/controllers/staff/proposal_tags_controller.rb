@@ -6,7 +6,7 @@ class Staff::ProposalTagsController < Staff::ApplicationController
 
   def update
     authorize @event, :update?
-    @event.update(proposal_tags_params)
+    @event.update!(proposal_tags_params)
     render :show
   end
 

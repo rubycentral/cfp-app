@@ -155,13 +155,6 @@ class ProposalDecorator < Draper::Decorator
     "#{h.time_ago_in_words(object.created_at)} ago"
   end
 
-  def title_input(form)
-    form.input :title,
-    autofocus: true,
-    maxlength: :lookup, input_html: { class: 'watched js-maxlength-alert' },
-    hint: "Publicly viewable title. Ideally catchy, interesting, essence of the talk. Limited to 60 characters."
-  end
-
   def invitations_enabled?(user)
     object.has_speaker?(user) && !object.finalized?
   end

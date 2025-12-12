@@ -1,5 +1,5 @@
 %fieldset.margin-top
-  = proposal.title_input(f)
+  = f.input :title, autofocus: true, maxlength: :lookup, input_html: {class: 'watched js-maxlength-alert'}, hint: 'Publicly viewable title. Ideally catchy, interesting, essence of the talk. Limited to 60 characters.'
 
   - opts_session_formats = event.session_formats.publicly_viewable.map {|st| [st.name, st.id]}
   - if !proposal.has_reviewer_activity?

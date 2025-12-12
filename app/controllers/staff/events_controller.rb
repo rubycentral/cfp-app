@@ -29,16 +29,6 @@ class Staff::EventsController < Staff::ApplicationController
   def configuration
   end
 
-  def reviewer_tags
-    render partial: 'reviewer_tags_form'
-  end
-
-  def update_reviewer_tags
-    authorize_update
-    @event.update(params.require(:event).permit(:valid_review_tags))
-    render partial: 'reviewer_tags', locals: {event: @event}
-  end
-
   def proposal_tags
     render partial: 'proposal_tags_form'
   end

@@ -1,7 +1,7 @@
-= form_for proposal, url: event_staff_proposal_path(event, proposal), data: {turbo_frame: dom_id(proposal, :reviewer_tags), controller: 'review-tags', review_tags_options_value: (event.review_tags | proposal.review_tags).to_json} do |f|
+= form_for proposal, url: event_staff_proposal_path(event, proposal), data: {turbo_frame: dom_id(proposal, :reviewer_tags), controller: 'tom-select', tom_select_options_value: (event.review_tags | proposal.review_tags).to_json, tom_select_delimiter_value: ','} do |f|
   .form-group.col-sm-8.no-pad-left
     .tag-list
-      = f.text_field :review_tags, value: proposal.review_tags.join(','), tabindex: '-1', data: {review_tags_target: 'input'}
+      = f.text_field :review_tags, value: proposal.review_tags.join(','), tabindex: '-1', data: {tom_select_target: 'input'}
       = program_tracker
   .form-group.col-sm-4
     %button.btn.btn-success.btn-sm(type="submit")

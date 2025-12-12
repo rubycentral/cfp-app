@@ -32,7 +32,6 @@ import MaxlengthAlertController from "./maxlength_alert_controller"
 import MentionController from "./mention_controller"
 import ModalAutofocusController from "./modal_autofocus_controller"
 import ModalFormController from "./modal_form_controller"
-import MultiselectController from "./multiselect_controller"
 import NestedFormController from "./nested_form_controller"
 import NextProposalController from "./next_proposal_controller"
 import NotificationsChannelController from "./notifications_channel_controller"
@@ -42,7 +41,6 @@ import ProposalSelectController from "./proposal_select_controller"
 import ProposalsTableController from "./proposals_table_controller"
 import RatingController from "./rating_controller"
 import RemoteModalController from "./remote_modal_controller"
-import ReviewTagsController from "./review_tags_controller"
 import ReviewerTagsController from "./reviewer_tags_controller"
 import ScheduleGridController from "./schedule_grid_controller"
 import ScheduleTabsController from "./schedule_tabs_controller"
@@ -81,7 +79,6 @@ application.register("maxlength-alert", MaxlengthAlertController)
 application.register("mention", MentionController)
 application.register("modal-autofocus", ModalAutofocusController)
 application.register("modal-form", ModalFormController)
-application.register("multiselect", MultiselectController)
 application.register("nested-form", NestedFormController)
 application.register("next-proposal", NextProposalController)
 application.register("notifications-channel", NotificationsChannelController)
@@ -91,7 +88,6 @@ application.register("proposal-select", ProposalSelectController)
 application.register("proposals-table", ProposalsTableController)
 application.register("rating", RatingController)
 application.register("remote-modal", RemoteModalController)
-application.register("review-tags", ReviewTagsController)
 application.register("reviewer-tags", ReviewerTagsController)
 application.register("schedule-grid", ScheduleGridController)
 application.register("schedule-tabs", ScheduleTabsController)

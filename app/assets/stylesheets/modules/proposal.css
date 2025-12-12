@@ -171,7 +171,6 @@ div.col-md-4 {
 }
 
 #review-tags-form-wrapper {
-  display: none;
   padding: 0;
   text-align: left;
   #autocomplete-options {

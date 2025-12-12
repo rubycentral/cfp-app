@@ -29,16 +29,6 @@ class Staff::EventsController < Staff::ApplicationController
   def configuration
   end
 
-  def proposal_tags
-    render partial: 'proposal_tags_form'
-  end
-
-  def update_proposal_tags
-    authorize_update
-    @event.update(params.require(:event).permit(:valid_proposal_tags))
-    render partial: 'proposal_tags', locals: {event: @event}
-  end
-
   def update
     authorize_update
     if @event.update(event_params)

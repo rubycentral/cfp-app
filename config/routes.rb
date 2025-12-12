@@ -50,8 +50,7 @@ Rails.application.routes.draw do
       get '/config' => 'events#configuration', as: :config
       resource :custom_fields, only: [:edit, :update]
       resource :reviewer_tags, only: [:edit, :update]
-      get 'proposal-tags', as: :proposal_tags
-      put :update_proposal_tags
+      resource :proposal_tags, only: [:edit, :update]
 
       resource :guidelines, only: [:show, :edit, :update]
 

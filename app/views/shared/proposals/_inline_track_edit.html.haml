@@ -1,4 +1,13 @@
 - if proposal.event.multiple_tracks?
-  = proposal.standalone_track_select(track_tooltip)
+  = simple_form_for :proposal, html: {data: {controller: 'proposal-select'}} do |f|
+    = f.input :track,
+      required: false,
+      label_html: {class: 'info-item-heading'},
+      collection: proposal.track_options,
+      include_blank: Track::NO_TRACK,
+      selected: proposal.track_id,
+      id: 'track',
+      popover_icon: {content: track_tooltip},
+      input_html: {class: 'proposal-track-select form-control select', data: {target_path: event_staff_program_proposal_update_track_path(proposal.event, proposal), select_type: 'track', action: 'change->proposal-select#change'}}
 - else
   = proposal.track_name

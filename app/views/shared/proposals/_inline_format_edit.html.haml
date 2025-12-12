@@ -1,1 +1,9 @@
-= proposal.standalone_format_select(session_format_tooltip)
+= simple_form_for :proposal, html: {data: {controller: 'proposal-select'}} do |f|
+    = f.input :format,
+      required: false,
+      label_html: {class: 'info-item-heading'},
+      collection: proposal.format_options,
+      selected: proposal.session_format_id,
+      id: 'track',
+      input_html: {class: 'proposal-format-select form-control select', data: {target_path: event_staff_program_proposal_update_session_format_path(proposal.event, proposal), select_type: 'format', action: 'change->proposal-select#change'}},
+      popover_icon: {content: session_format_tooltip}

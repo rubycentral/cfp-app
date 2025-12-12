@@ -166,47 +166,6 @@ class ProposalDecorator < Draper::Decorator
     form.input :speaker
   end
 
-  def standalone_track_select(tooltip)
-    h.simple_form_for :proposal, html: {data: {controller: 'proposal-select'}} do |f|
-      f.input :track,
-        required: false,
-        label_html: { class: 'info-item-heading' },
-        collection: track_options,
-        include_blank: Track::NO_TRACK,
-        selected: object.track_id,
-        id: 'track',
-        input_html: {
-          class: 'proposal-track-select form-control select',
-          data: {
-            target_path: h.event_staff_program_proposal_update_track_path(object.event, object),
-            select_type: 'track',
-            action: 'change->proposal-select#change'
-          },
-        },
-        popover_icon: { content: tooltip }
-    end
-  end
-
-  def standalone_format_select(tooltip)
-    h.simple_form_for :proposal, html: {data: {controller: 'proposal-select'}} do |f|
-      f.input :format,
-        required: false,
-        label_html: { class: 'info-item-heading' },
-        collection: format_options,
-        selected: object.session_format_id,
-        id: 'track',
-        input_html: {
-          class: 'proposal-format-select form-control select',
-          data: {
-            target_path: h.event_staff_program_proposal_update_session_format_path(object.event, object),
-            select_type: 'format',
-            action: 'change->proposal-select#change'
-          },
-        },
-        popover_icon: { content: tooltip }
-    end
-  end
-
   def track_options
     @track_options ||= object.event.tracks.map { |t| [t.name, t.id] }.sort
   end
@@ -247,5 +206,4 @@ class ProposalDecorator < Draper::Decorator
       'label-default'
     end
   end
-
 end

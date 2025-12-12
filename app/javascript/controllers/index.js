@@ -13,7 +13,6 @@ import AlertAutodismissController from "./alert_autodismiss_controller"
 import AlertController from "./alert_controller"
 import BannerAdsController from "./banner_ads_controller"
 import BulkDialogController from "./bulk_dialog_controller"
-import BulkDialogShowController from "./bulk_dialog_show_controller"
 import CfpDatatableController from "./cfp_datatable_controller"
 import ContentController from "./content_controller"
 import CopySpeakerEmailsController from "./copy_speaker_emails_controller"
@@ -60,7 +59,6 @@ application.register("alert-autodismiss", AlertAutodismissController)
 application.register("alert", AlertController)
 application.register("banner-ads", BannerAdsController)
 application.register("bulk-dialog", BulkDialogController)
-application.register("bulk-dialog-show", BulkDialogShowController)
 application.register("cfp-datatable", CfpDatatableController)
 application.register("content", ContentController)
 application.register("copy-speaker-emails", CopySpeakerEmailsController)

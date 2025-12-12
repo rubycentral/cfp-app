@@ -31,7 +31,7 @@
               = render partial: 'staff/grids/unscheduled_sessions', locals: {day: day}
 
   / Modals
-  #bulk-time-slot-create-dialog.modal.fade{role: "dialog"}
+  #bulk-time-slot-create-dialog.modal.fade{role: "dialog", data: {controller: 'bulk-dialog'}}
     = turbo_frame_tag 'bulk-time-slot-dialog'
   #grid-time-slot-edit-dialog.modal.fade{role: "dialog", data: {controller: 'modal-form', modal_form_target: 'modal'}}
   #program-session-show-dialog.modal.fade{role: "dialog"}

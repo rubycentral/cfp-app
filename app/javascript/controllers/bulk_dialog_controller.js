@@ -3,7 +3,10 @@ import { Modal } from "bootstrap"
 
 export default class extends Controller {
   connect() {
-    const modalElement = this.element.closest('.modal')
+    this.element.addEventListener('turbo:frame-load', () => this.open())
+  }
+
+  open() {
     const formatSelect = this.element.querySelector('select.session-format')
     const durationInput = this.element.querySelector('.time-slot-duration')
 
@@ -19,9 +22,6 @@ export default class extends Controller {
       })
     }
 
-    if (!modalElement.classList.contains('show')) {
-      const modal = Modal.getOrCreateInstance(modalElement)
-      modal.show()
-    }
+    Modal.getOrCreateInstance(this.element).show()
   }
 }

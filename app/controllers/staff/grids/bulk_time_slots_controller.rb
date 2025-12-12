@@ -31,9 +31,7 @@ class Staff::Grids::BulkTimeSlotsController < Staff::ApplicationController
 
   def edit
     @bulk = BulkTimeSlot.new(bulk_time_slot_params)
-    respond_to do |format|
-      format.turbo_stream
-    end
+    render partial: 'create_dialog', locals: {bulk: @bulk}
   end
 
   def create

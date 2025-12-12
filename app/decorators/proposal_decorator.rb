@@ -89,13 +89,6 @@ class ProposalDecorator < Draper::Decorator
     speaker ? speaker.bio : ''
   end
 
-  def confirm_button
-    h.link_to 'Confirm',
-              h.confirm_event_proposal_path(uuid: object, event_slug: object.event.slug),
-              data: {turbo: true, turbo_method: :post},
-              class: 'btn btn-success'
-  end
-
   def decline_button
     h.link_to h.bang('Decline'),
               h.decline_event_proposal_path(uuid: object, event_slug: object.event.slug),

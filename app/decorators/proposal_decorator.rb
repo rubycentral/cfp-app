@@ -89,10 +89,6 @@ class ProposalDecorator < Draper::Decorator
     speaker ? speaker.bio : ''
   end
 
-  def pitch_markdown
-    h.markdown(object.pitch)
-  end
-
   def details_markdown
     h.markdown(object.details)
   end

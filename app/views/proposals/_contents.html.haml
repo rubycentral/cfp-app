@@ -13,7 +13,7 @@
 .proposal-section
   %h3.control-label Pitch
   .markdown{ data: { 'field-name' => 'proposal[pitch]' } }
-    =proposal.pitch_markdown
+    = markdown proposal.pitch
 
 - if proposal.custom_fields.any?
   - proposal.proposal_data[:custom_fields].select do |key,value|

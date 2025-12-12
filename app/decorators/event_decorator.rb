@@ -1,10 +1,6 @@
 class EventDecorator < Draper::Decorator
   delegate_all
 
-  def proposals_rated_overall_message
-    "#{event.stats.rated_proposals}/#{event.stats.total_proposals}"
-  end
-
   def proposals_you_rated_message
     "#{event.stats.user_rated_proposals(h.current_user)}/#{event.stats.user_ratable_proposals(h.current_user)}"
   end

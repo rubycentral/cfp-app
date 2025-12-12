@@ -6,7 +6,7 @@
     .event-info.event-info-dense
       %span
         Total Rated:
-        %span.badge.badge-info=event.proposals_rated_overall_message
+        %span.badge.badge-info= "#{event.stats.rated_proposals}/#{event.stats.total_proposals}"
       %span
         You've rated:
         %span.badge.badge-info=event.proposals_you_rated_message

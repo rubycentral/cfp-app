@@ -6,7 +6,7 @@ class Staff::CustomFieldsController < Staff::ApplicationController
 
   def update
     authorize @event, :update?
-    @event.update(custom_fields_params)
+    @event.update!(custom_fields_params)
     render partial: 'show', locals: {event: @event}
   end
 

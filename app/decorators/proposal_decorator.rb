@@ -166,26 +166,6 @@ class ProposalDecorator < Draper::Decorator
     form.input :speaker
   end
 
-  def standalone_format_select(tooltip)
-    h.simple_form_for :proposal, html: {data: {controller: 'proposal-select'}} do |f|
-      f.input :format,
-        required: false,
-        label_html: { class: 'info-item-heading' },
-        collection: format_options,
-        selected: object.session_format_id,
-        id: 'track',
-        input_html: {
-          class: 'proposal-format-select form-control select',
-          data: {
-            target_path: h.event_staff_program_proposal_update_session_format_path(object.event, object),
-            select_type: 'format',
-            action: 'change->proposal-select#change'
-          },
-        },
-        popover_icon: { content: tooltip }
-    end
-  end
-
   def track_options
     @track_options ||= object.event.tracks.map { |t| [t.name, t.id] }.sort
   end

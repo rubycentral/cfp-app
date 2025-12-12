@@ -89,48 +89,6 @@ class ProposalDecorator < Draper::Decorator
     speaker ? speaker.bio : ''
   end
 
-  def pitch_markdown
-    h.markdown(object.pitch)
-  end
-
-  def details_markdown
-    h.markdown(object.details)
-  end
-
-  def abstract_markdown
-    h.markdown(object.abstract)
-  end
-
-  def withdraw_button
-    h.link_to h.bang('Withdraw Proposal'),
-      h.withdraw_event_proposal_path(uuid: object, event_slug: object.event.slug),
-      data: {
-        turbo: true,
-        turbo_method: :post,
-        turbo_confirm: 'This will remove your talk from consideration and send an email to the event coordinator. Are you sure you want to do this?'
-      },
-      class: 'btn btn-warning',
-      id: 'withdraw'
-  end
-
-  def confirm_button
-    h.link_to 'Confirm',
-              h.confirm_event_proposal_path(uuid: object, event_slug: object.event.slug),
-              data: {turbo: true, turbo_method: :post},
-              class: 'btn btn-success'
-  end
-
-  def decline_button
-    h.link_to h.bang('Decline'),
-              h.decline_event_proposal_path(uuid: object, event_slug: object.event.slug),
-              data: {
-                turbo: true,
-                turbo_method: :post,
-                turbo_confirm: 'This will remove your talk from consideration and notify the event staff. Are you sure you want to do this?'
-              },
-              class: 'btn btn-warning'
-  end
-
   def confirm_link
     h.link_to 'confirmation page',
       h.event_proposal_url(object.event, object, protocol: 'https')
@@ -153,25 +111,6 @@ class ProposalDecorator < Draper::Decorator
 
   def created_in_words
     "#{h.time_ago_in_words(object.created_at)} ago"
-  end
-
-  def title_input(form)
-    form.input :title,
-    autofocus: true,
-    maxlength: :lookup, input_html: { class: 'watched js-maxlength-alert' },
-    hint: "Publicly viewable title. Ideally catchy, interesting, essence of the talk. Limited to 60 characters."
-  end
-
-  def speaker_input(form)
-    form.input :speaker
-  end
-
-  def track_options
-    @track_options ||= object.event.tracks.map { |t| [t.name, t.id] }.sort
-  end
-
-  def format_options
-    @format_options ||= object.event.session_formats.map { |sf| [sf.name, sf.id] }.sort
   end
 
   def invitations_enabled?(user)

@@ -89,18 +89,6 @@ class ProposalDecorator < Draper::Decorator
     speaker ? speaker.bio : ''
   end
 
-  def withdraw_button
-    h.link_to h.bang('Withdraw Proposal'),
-      h.withdraw_event_proposal_path(uuid: object, event_slug: object.event.slug),
-      data: {
-        turbo: true,
-        turbo_method: :post,
-        turbo_confirm: 'This will remove your talk from consideration and send an email to the event coordinator. Are you sure you want to do this?'
-      },
-      class: 'btn btn-warning',
-      id: 'withdraw'
-  end
-
   def confirm_button
     h.link_to 'Confirm',
               h.confirm_event_proposal_path(uuid: object, event_slug: object.event.slug),

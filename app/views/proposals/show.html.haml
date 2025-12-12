@@ -6,7 +6,7 @@
           %span.bi.bi-pencil
           Edit
       - if proposal.speaker_can_withdraw?(current_user)
-        = proposal.withdraw_button
+        = link_to bang('Withdraw Proposal'), withdraw_event_proposal_path(event, uuid: proposal), data: {turbo: true, turbo_method: :post, turbo_confirm: 'This will remove your talk from consideration and send an email to the event coordinator. Are you sure you want to do this?'}, class: 'btn btn-warning', id: 'withdraw'
       - if proposal.speaker_can_delete?(current_user)
         = link_to event_proposal_path(event, uuid: proposal), data: {turbo: true, turbo_method: :delete, turbo_confirm: 'This will delete your talk. Are you sure you want to do this? It can not be undone.'}, class: 'btn btn-warning', id: 'delete' do
           %span.bi.bi-exclamation-circle

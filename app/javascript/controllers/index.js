@@ -36,7 +36,6 @@ import MultiselectController from "./multiselect_controller"
 import NestedFormController from "./nested_form_controller"
 import NextProposalController from "./next_proposal_controller"
 import NotificationsChannelController from "./notifications_channel_controller"
-import PopoverController from "./popover_controller"
 import ProgramSessionsController from "./program_sessions_controller"
 import ProposalPreviewController from "./proposal_preview_controller"
 import ProposalSelectController from "./proposal_select_controller"
@@ -86,7 +85,6 @@ application.register("multiselect", MultiselectController)
 application.register("nested-form", NestedFormController)
 application.register("next-proposal", NextProposalController)
 application.register("notifications-channel", NotificationsChannelController)
-application.register("popover", PopoverController)
 application.register("program-sessions", ProgramSessionsController)
 application.register("proposal-preview", ProposalPreviewController)
 application.register("proposal-select", ProposalSelectController)

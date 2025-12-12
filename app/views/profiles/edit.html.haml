@@ -72,7 +72,7 @@
             %i.fa.fa-envelope
             %h3
               Notifications
-              %span.ms-2{role: 'button', data: {controller: 'popover', bs_toggle: 'popover', bs_placement: 'left', bs_content: notification_preferences_tooltip, bs_html: 'true'}}
+              %span.ms-2{role: 'button', data: {bs_toggle: 'popover', bs_placement: 'left', bs_content: notification_preferences_tooltip, bs_html: 'true'}}
                 %i.fa.fa-question-circle
           .widget-content
             = f.simple_fields_for :teammates do |fields|

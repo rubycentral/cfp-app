@@ -89,10 +89,6 @@ class ProposalDecorator < Draper::Decorator
     speaker ? speaker.bio : ''
   end
 
-  def abstract_markdown
-    h.markdown(object.abstract)
-  end
-
   def withdraw_button
     h.link_to h.bang('Withdraw Proposal'),
       h.withdraw_event_proposal_path(uuid: object, event_slug: object.event.slug),

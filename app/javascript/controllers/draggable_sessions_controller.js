@@ -68,18 +68,11 @@ export default class extends Controller {
     const scheduled = session.dataset.scheduled
 
     if (url && !scheduled) {
-      fetch(url, {
-        headers: {
-          'Accept': 'text/html',
-          'Turbo-Frame': 'program-session-show-dialog'
-        }
-      }).then(response => response.text())
-        .then(html => {
-          const frame = document.querySelector('#program-session-show-dialog turbo-frame')
-          if (frame) {
-            frame.innerHTML = html
-          }
-        })
+      const frame = document.getElementById('grid-modal-content')
+      if (frame) {
+        frame.innerHTML = ''
+        frame.src = url
+      }
     }
   }
 

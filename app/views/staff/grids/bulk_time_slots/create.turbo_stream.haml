@@ -7,8 +7,5 @@
 
   = turbo_stream.update "bulk_preview_bar_day_#{@bulk.day}", ''
 
-  = turbo_stream.append 'grid-time-slot-actions' do
-    %div{data: {controller: 'grid-day-refresh', grid_day_refresh_day_value: @bulk.day}}
-
 = turbo_stream.update 'flash' do
   = show_flash

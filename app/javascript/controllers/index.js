@@ -12,7 +12,7 @@ window.Stimulus = application
 import AlertAutodismissController from "./alert_autodismiss_controller"
 import AlertController from "./alert_controller"
 import BannerAdsController from "./banner_ads_controller"
-import BulkDialogController from "./bulk_dialog_controller"
+import GridModalController from "./grid_modal_controller"
 import CfpDatatableController from "./cfp_datatable_controller"
 import ContentController from "./content_controller"
 import CopySpeakerEmailsController from "./copy_speaker_emails_controller"
@@ -22,15 +22,12 @@ import EditorController from "./editor_controller"
 import FilterController from "./filter_controller"
 import FixedSubnavController from "./fixed_subnav_controller"
 import FlyOutController from "./fly_out_controller"
-import GridDayRefreshController from "./grid_day_refresh_controller"
-import GridShowModalController from "./grid_show_modal_controller"
 import GridTimeSlotRefreshController from "./grid_time_slot_refresh_controller"
 import HighlightController from "./highlight_controller"
 import InlineEditController from "./inline_edit_controller"
 import MaxlengthAlertController from "./maxlength_alert_controller"
 import MentionController from "./mention_controller"
 import ModalAutofocusController from "./modal_autofocus_controller"
-import ModalFormController from "./modal_form_controller"
 import NestedFormController from "./nested_form_controller"
 import NextProposalController from "./next_proposal_controller"
 import NotificationsChannelController from "./notifications_channel_controller"
@@ -58,7 +55,7 @@ import TrackFilterController from "./track_filter_controller"
 application.register("alert-autodismiss", AlertAutodismissController)
 application.register("alert", AlertController)
 application.register("banner-ads", BannerAdsController)
-application.register("bulk-dialog", BulkDialogController)
+application.register("grid-modal", GridModalController)
 application.register("cfp-datatable", CfpDatatableController)
 application.register("content", ContentController)
 application.register("copy-speaker-emails", CopySpeakerEmailsController)
@@ -68,15 +65,12 @@ application.register("editor", EditorController)
 application.register("filter", FilterController)
 application.register("fixed-subnav", FixedSubnavController)
 application.register("fly-out", FlyOutController)
-application.register("grid-day-refresh", GridDayRefreshController)
-application.register("grid-show-modal", GridShowModalController)
 application.register("grid-time-slot-refresh", GridTimeSlotRefreshController)
 application.register("highlight", HighlightController)
 application.register("inline-edit", InlineEditController)
 application.register("maxlength-alert", MaxlengthAlertController)
 application.register("mention", MentionController)
 application.register("modal-autofocus", ModalAutofocusController)
-application.register("modal-form", ModalFormController)
 application.register("nested-form", NestedFormController)
 application.register("next-proposal", NextProposalController)
 application.register("notifications-channel", NotificationsChannelController)

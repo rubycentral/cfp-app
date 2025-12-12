@@ -1,18 +1,19 @@
-.modal-dialog
-  .modal-content
-    = simple_form_for [event, :staff, :schedule, :grid, time_slot], data: {turbo: true, action: 'turbo:submit-end->modal-form#submitEnd'}, html: {role: 'form'} do |f|
-      .modal-header
-        .col-6
-          %h3 Edit Time Slot
-        .col-6.text-end
-          .time-slot-info
-            = "Day #{time_slot.conference_day}, "
-            = "#{time_slot.start_time} - #{time_slot.end_time}, "
-            = time_slot.room_name
-      .errors
-      .modal-body
-        = render partial: 'staff/grids/time_slots/form',
-            locals: {f: f, time_slot: time_slot }
-      .modal-footer
-        %button.btn.btn-secondary{type: 'button', 'data-bs-dismiss' => 'modal'} Cancel
-        %button.btn.btn-primary{:type => "submit"} Save
+= turbo_frame_tag 'grid-modal-content' do
+  .modal-dialog
+    .modal-content
+      = simple_form_for [event, :staff, :schedule, :grid, time_slot], data: {turbo: true}, html: {role: 'form'} do |f|
+        .modal-header
+          .col-6
+            %h3 Edit Time Slot
+          .col-6.text-end
+            .time-slot-info
+              = "Day #{time_slot.conference_day}, "
+              = "#{time_slot.start_time} - #{time_slot.end_time}, "
+              = time_slot.room_name
+        #time-slot-errors.errors
+        .modal-body
+          = render partial: 'staff/grids/time_slots/form',
+              locals: {f: f, time_slot: time_slot }
+        .modal-footer
+          %button.btn.btn-secondary{type: 'button', 'data-bs-dismiss' => 'modal'} Cancel
+          %button.btn.btn-primary{:type => "submit"} Save

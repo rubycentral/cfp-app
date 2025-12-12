@@ -1,3 +1,5 @@
+= turbo_stream.update 'grid-modal-content', ''
+
 = turbo_stream.replace "time_slot_#{dom_id(@time_slot)}" do
   = render partial: 'time_slot', locals: {ts: time_slot_decorated}
 

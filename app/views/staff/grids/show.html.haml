@@ -18,7 +18,7 @@
             %span.badge{data: {schedule_tabs_target: "badge", day: day}}= "#{scheduled_count}/#{total_count}"
 
       .generate_btn
-        = link_to "Generate Grid", new_event_staff_schedule_grid_bulk_time_slot_path(@event, day: 1), class: "btn btn-primary", data: {turbo: true, turbo_frame: 'bulk-time-slot-dialog'}
+        = link_to "Generate Grid", new_event_staff_schedule_grid_bulk_time_slot_path(@event, day: 1), class: "btn btn-primary", data: {turbo: true, turbo_frame: 'grid-modal-content'}
 
     / Tab content - One grid per day
     - @schedule.each_day do |day, slots|
@@ -30,12 +30,9 @@
             .unscheduled_area
               = render partial: 'staff/grids/unscheduled_sessions', locals: {day: day}
 
-  / Modals
-  #bulk-time-slot-create-dialog.modal.fade{role: "dialog", data: {controller: 'bulk-dialog'}}
-    = turbo_frame_tag 'bulk-time-slot-dialog'
-  #grid-time-slot-edit-dialog.modal.fade{role: "dialog", data: {controller: 'modal-form', modal_form_target: 'modal'}}
-  #program-session-show-dialog.modal.fade{role: "dialog"}
-    = turbo_frame_tag 'program-session-show-dialog'
+  / Modal
+  #grid-modal.modal.fade{role: "dialog", data: {controller: 'grid-modal'}}
+    = turbo_frame_tag 'grid-modal-content'
 
   / Turbo Stream action targets
   #grid-time-slot-actions

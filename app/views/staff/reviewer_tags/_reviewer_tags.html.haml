@@ -1,0 +1,10 @@
+#show-reviewer-tags
+  = turbo_frame_tag 'reviewer-tags' do
+    - if @event.valid_review_tags.empty? && current_user.organizer_for_event?(@event)
+      = link_to 'Add', edit_event_staff_reviewer_tags_path(@event),
+        data: {turbo: true, turbo_frame: 'reviewer-tags'}, class: 'btn btn-success btn-sm float-end add-reviewer-tags'
+    - else
+      %p= @event.valid_review_tags
+      - if current_user.organizer_for_event?(@event)
+        = link_to 'Edit', edit_event_staff_reviewer_tags_path(@event),
+          data: {turbo: true, turbo_frame: 'reviewer-tags'}, class: 'btn btn-primary btn-sm float-end edit-reviewer-tags'

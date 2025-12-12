@@ -95,7 +95,7 @@
             %h2 Confirm participation in #{proposal.event.name}
           .widget-content
             = link_to 'Confirm', confirm_event_proposal_path(event, uuid: proposal), data: {turbo: true, turbo_method: :post}, class: 'btn btn-success'
-            = proposal.decline_button
+            = link_to bang('Decline'), decline_event_proposal_path(event, uuid: proposal), data: {turbo: true, turbo_method: :post, turbo_confirm: 'This will remove your talk from consideration and notify the event staff. Are you sure you want to do this?'}, class: 'btn btn-warning'
       - elsif proposal.confirmed?
         .widget.widget-card
           .widget-content

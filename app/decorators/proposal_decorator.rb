@@ -89,17 +89,6 @@ class ProposalDecorator < Draper::Decorator
     speaker ? speaker.bio : ''
   end
 
-  def decline_button
-    h.link_to h.bang('Decline'),
-              h.decline_event_proposal_path(uuid: object, event_slug: object.event.slug),
-              data: {
-                turbo: true,
-                turbo_method: :post,
-                turbo_confirm: 'This will remove your talk from consideration and notify the event staff. Are you sure you want to do this?'
-              },
-              class: 'btn btn-warning'
-  end
-
   def confirm_link
     h.link_to 'confirmation page',
       h.event_proposal_url(object.event, object, protocol: 'https')

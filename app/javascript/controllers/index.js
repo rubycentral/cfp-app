@@ -57,7 +57,6 @@ import TimeSlotFormResetController from "./time_slot_form_reset_controller"
 import TimeSlotsController from "./time_slots_controller"
 import ToggleVisibilityController from "./toggle_visibility_controller"
 import TomSelectController from "./tom_select_controller"
-import TooltipController from "./tooltip_controller"
 import TrackFilterController from "./track_filter_controller"
 
 application.register("alert-autodismiss", AlertAutodismissController)
@@ -108,5 +107,4 @@ application.register("time-slot-form-reset", TimeSlotFormResetController)
 application.register("time-slots", TimeSlotsController)
 application.register("toggle-visibility", ToggleVisibilityController)
 application.register("tom-select", TomSelectController)
-application.register("tooltip", TooltipController)
 application.register("track-filter", TrackFilterController)

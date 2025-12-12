@@ -2,7 +2,6 @@ class Staff::CustomFieldsController < Staff::ApplicationController
   before_action :enable_staff_event_subnav
 
   def edit
-    render partial: 'form'
   end
 
   def update

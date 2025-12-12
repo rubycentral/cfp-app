@@ -1,9 +1,0 @@
-#show-proposal-tags
-  = turbo_frame_tag 'proposal-tags' do
-    - if !event.public_tags? && current_user.organizer_for_event?(event)
-      = link_to "Add", event_staff_proposal_tags_path(event),
-        data: {turbo: true, turbo_frame: 'proposal-tags'}, class: "btn btn-success btn-sm float-end add-proposal-tags"
-    - else
-      %p= event.valid_proposal_tags
-      = link_to "Edit", event_staff_proposal_tags_path(event),
-        data: {turbo: true, turbo_frame: 'proposal-tags'}, class: "btn btn-primary btn-sm float-end edit-proposal-tags" unless !current_user.organizer_for_event?(event)

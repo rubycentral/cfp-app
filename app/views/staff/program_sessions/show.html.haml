@@ -24,7 +24,7 @@
     .program-session-item
       %h3.control-label Abstract
       .markdown{ data: { 'field-id' => 'program_session_abstract' } }
-        = program_session.abstract_markdown
+        = markdown program_session.abstract
     .program-session-item
       %h3.control-label Video URL
       = link_to program_session.video_url, program_session.complete_video_url if program_session.video_url

@@ -65,10 +65,6 @@ class Staff::ProgramSessionDecorator < Draper::Decorator
     data
   end
 
-  def abstract_markdown
-    h.markdown(object.abstract)
-  end
-
   def scheduled_for
     if object.time_slot
       ts = object.time_slot

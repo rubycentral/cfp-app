@@ -6,7 +6,7 @@ class Staff::ReviewerTagsController < Staff::ApplicationController
 
   def update
     authorize @event, :update?
-    @event.update(reviewer_tags_params)
+    @event.update!(reviewer_tags_params)
     render :show
   end
 

@@ -34,7 +34,6 @@ import NextProposalController from "./next_proposal_controller"
 import NotificationsChannelController from "./notifications_channel_controller"
 import ProgramSessionsController from "./program_sessions_controller"
 import ProposalPreviewController from "./proposal_preview_controller"
-import ProposalSelectController from "./proposal_select_controller"
 import ProposalsTableController from "./proposals_table_controller"
 import RatingController from "./rating_controller"
 import RemoteModalController from "./remote_modal_controller"
@@ -77,7 +76,6 @@ application.register("next-proposal", NextProposalController)
 application.register("notifications-channel", NotificationsChannelController)
 application.register("program-sessions", ProgramSessionsController)
 application.register("proposal-preview", ProposalPreviewController)
-application.register("proposal-select", ProposalSelectController)
 application.register("proposals-table", ProposalsTableController)
 application.register("rating", RatingController)
 application.register("remote-modal", RemoteModalController)

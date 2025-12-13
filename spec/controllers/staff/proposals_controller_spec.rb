@@ -32,16 +32,22 @@ describe Staff::ProposalsController, type: :controller do
     end
   end
 
-  describe "POST 'update_session_format'" do
-    render_views
+  describe "PATCH 'update'" do
     let(:session_format) { create :session_format }
+    let(:track) { create :track, event: event }
 
-    it 'updates the format and renders the inline edit partial' do
-      post :update_session_format, params: {event_slug: event, proposal_uuid: proposal.uuid, session_format_id: session_format.id}
+    it 'updates the session_format' do
+      patch :update, params: {event_slug: event, uuid: proposal.uuid, proposal: {session_format_id: session_format.id}}, as: :turbo_stream
       proposal.reload
 
-      expect(response.body).to include(/select class=".*?proposal-format-select.*?"/)
       expect(proposal.session_format_id).to eq session_format.id
+    end
+
+    it 'updates the track' do
+      patch :update, params: {event_slug: event, uuid: proposal.uuid, proposal: {track_id: track.id}}, as: :turbo_stream
+      proposal.reload
+
+      expect(proposal.track_id).to eq track.id
     end
   end
 

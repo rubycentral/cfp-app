@@ -1,5 +1,4 @@
 import { Controller } from '@hotwired/stimulus'
-import { Modal } from 'bootstrap'
 import palette from 'google-palette'
 import dayjs from 'dayjs'
 
@@ -288,18 +287,10 @@ export default class extends Controller {
     const url = slot.dataset.editPath
     if (!url || url.length === 0) return
 
-    fetch(url, {
-      headers: {
-        'Accept': 'text/vnd.turbo-stream.html, text/html',
-        'Turbo-Frame': 'grid-time-slot-edit-dialog'
-      }
-    }).then(response => response.text())
-      .then(html => {
-        const dialog = document.getElementById('grid-time-slot-edit-dialog')
-        dialog.innerHTML = html
-        const modal = Modal.getOrCreateInstance(dialog)
-        modal.show()
-      })
+    const frame = document.getElementById('grid-modal-content')
+    if (frame) {
+      frame.src = url
+    }
   }
 
   setupScrollHandlers() {

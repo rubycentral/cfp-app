@@ -4,6 +4,3 @@
   = render partial: 'staff/grids/grid', locals: {schedule: @schedule, day: day}
 
 = turbo_stream.update "bulk_preview_bar_day_#{day}", ''
-
-= turbo_stream.append 'grid-time-slot-actions' do
-  %div{data: {controller: 'grid-day-refresh', grid_day_refresh_day_value: day}}

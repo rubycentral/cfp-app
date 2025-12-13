@@ -104,9 +104,7 @@ class Staff::TimeSlotDecorator < Draper::Decorator
     if ts.persisted?
       data.merge!({
         edit_path: h.edit_event_staff_schedule_grid_time_slot_path(object.event, object),
-        update_path: h.event_staff_schedule_grid_time_slot_url(object.event, object),
-        toggle: 'modal',
-        target: '#grid-time-slot-edit-dialog'
+        update_path: h.event_staff_schedule_grid_time_slot_url(object.event, object)
       })
     end
     data

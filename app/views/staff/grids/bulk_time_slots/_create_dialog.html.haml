@@ -1,10 +1,10 @@
-= turbo_frame_tag 'bulk-time-slot-dialog' do
-  .modal-dialog{data: {controller: 'bulk-dialog'}}
+= turbo_frame_tag 'grid-modal-content' do
+  .modal-dialog
     .modal-content
       = simple_form_for bulk, url: preview_event_staff_schedule_grid_bulk_time_slot_path, data: {turbo: true}, html: {role: 'form'} do |f|
         .modal-header
           %h3 Bulk Generate Time Slots
-        .errors
+        #bulk-errors.errors
         .modal-body
           = render partial: 'staff/grids/bulk_time_slots/form', locals: {f: f, bulk: bulk}
         .modal-footer

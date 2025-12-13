@@ -46,7 +46,6 @@ import SubNavController from "./sub_nav_controller"
 import TimeSelectController from "./time_select_controller"
 import TimeSlotDialogController from "./time_slot_dialog_controller"
 import TimeSlotErrorController from "./time_slot_error_controller"
-import TimeSlotFormResetController from "./time_slot_form_reset_controller"
 import TimeSlotsController from "./time_slots_controller"
 import ToggleVisibilityController from "./toggle_visibility_controller"
 import TomSelectController from "./tom_select_controller"
@@ -89,7 +88,6 @@ application.register("sub-nav", SubNavController)
 application.register("time-select", TimeSelectController)
 application.register("time-slot-dialog", TimeSlotDialogController)
 application.register("time-slot-error", TimeSlotErrorController)
-application.register("time-slot-form-reset", TimeSlotFormResetController)
 application.register("time-slots", TimeSlotsController)
 application.register("toggle-visibility", ToggleVisibilityController)
 application.register("tom-select", TomSelectController)

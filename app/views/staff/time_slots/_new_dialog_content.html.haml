@@ -1,0 +1,17 @@
+.modal-dialog{data: {controller: 'time-slot-dialog'}}
+  .modal-content
+    = simple_form_for [current_event, :staff, :schedule, time_slot], data: {turbo_frame: 'time-slot-new-dialog', action: 'turbo:submit-end->modal-form#submitEnd'}, html: {role: 'form'} do |f|
+      .modal-header
+        %h3 New Time Slot
+        .errors
+      .modal-body
+        = render partial: 'staff/time_slots/form',
+            locals: {f: f, time_slot: time_slot}
+      .modal-footer
+        %ul#form-flash.float-start
+          - flash.map do |key, value|
+            %li{class: "alert alert-#{key}"}= value
+
+        %button.btn.btn-secondary{type: 'button', 'data-bs-dismiss' => 'modal'} Cancel
+        %button.btn.btn-primary{type: 'submit', name: 'button', value: 'save'} Save
+        %button.btn.btn-primary{type: 'submit', name: 'button', value: 'save_and_add'} Save and Add

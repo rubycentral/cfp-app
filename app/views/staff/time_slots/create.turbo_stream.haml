@@ -9,5 +9,6 @@
   = show_flash
 
 - if @save_and_add
-  = turbo_stream.append 'time_slots' do
-    %div{data: {controller: 'time-slot-form-reset'}}
+  - next_time_slot = current_event.time_slots.build(session[:sticky_time_slot])
+  = turbo_stream.update 'time-slot-new-dialog' do
+    = render partial: 'new_dialog_content', locals: {time_slot: Staff::TimeSlotDecorator.decorate(next_time_slot)}

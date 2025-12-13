@@ -1,13 +1,12 @@
 - if proposal.event.multiple_tracks?
-  = simple_form_for :proposal, html: {data: {controller: 'proposal-select'}} do |f|
-    = f.input :track,
+  = simple_form_for :proposal, url: event_staff_program_proposal_update_track_path(proposal.event, proposal), method: :post do |f|
+    = f.input :track_id,
+      as: :select,
       required: false,
-      label_html: {class: 'info-item-heading'},
+      label: false,
       collection: proposal.event.tracks.map { |t| [t.name, t.id] }.sort,
       include_blank: Track::NO_TRACK,
       selected: proposal.track_id,
-      id: 'track',
-      popover_icon: {content: track_tooltip},
-      input_html: {class: 'proposal-track-select form-control select', data: {target_path: event_staff_program_proposal_update_track_path(proposal.event, proposal), select_type: 'track', action: 'change->proposal-select#change'}}
+      input_html: {class: 'proposal-track-select form-control select', data: {action: 'change->inline-edit#submitAndClose'}}
 - else
   = proposal.track_name

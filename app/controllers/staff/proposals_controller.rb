@@ -44,17 +44,23 @@ class Staff::ProposalsController < Staff::ApplicationController
   def update_track
     authorize @proposal
 
-    @proposal.update(track_id: params[:track_id])
+    @proposal.update(track_id: params[:proposal][:track_id])
 
-    render partial: '/shared/proposals/inline_track_edit'
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to event_staff_program_proposal_path(@event, @proposal), status: :see_other }
+    end
   end
 
   def update_session_format
     authorize @proposal
 
-    @proposal.update(session_format_id: params[:session_format_id])
+    @proposal.update(session_format_id: params[:proposal][:session_format_id])
 
-    render partial: '/shared/proposals/inline_format_edit'
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to event_staff_program_proposal_path(@event, @proposal), status: :see_other }
+    end
   end
 
   def selection

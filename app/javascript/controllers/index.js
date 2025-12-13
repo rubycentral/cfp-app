@@ -28,6 +28,7 @@ import InlineEditController from "./inline_edit_controller"
 import MaxlengthAlertController from "./maxlength_alert_controller"
 import MentionController from "./mention_controller"
 import ModalAutofocusController from "./modal_autofocus_controller"
+import ModalFormController from "./modal_form_controller"
 import NestedFormController from "./nested_form_controller"
 import NextProposalController from "./next_proposal_controller"
 import NotificationsChannelController from "./notifications_channel_controller"
@@ -70,6 +71,7 @@ application.register("inline-edit", InlineEditController)
 application.register("maxlength-alert", MaxlengthAlertController)
 application.register("mention", MentionController)
 application.register("modal-autofocus", ModalAutofocusController)
+application.register("modal-form", ModalFormController)
 application.register("nested-form", NestedFormController)
 application.register("next-proposal", NextProposalController)
 application.register("notifications-channel", NotificationsChannelController)

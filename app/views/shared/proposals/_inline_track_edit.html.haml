@@ -1,5 +1,5 @@
 - if proposal.event.multiple_tracks?
-  = simple_form_for :proposal, url: event_staff_program_proposal_update_track_path(proposal.event, proposal), method: :post do |f|
+  = simple_form_for :proposal, url: event_staff_program_proposal_path(proposal.event, proposal), method: :patch do |f|
     = f.input :track_id,
       as: :select,
       required: false,

@@ -77,8 +77,6 @@ Rails.application.routes.draw do
           end
           post :finalize
           post :update_state
-          post :update_track
-          post :update_session_format
         end
 
         resources :speakers, only: [:index, :show, :edit, :update, :destroy]

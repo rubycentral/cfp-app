@@ -13,7 +13,7 @@ RSpec.describe ProposalPolicy do
     CurrentEventContext.new(user, speaker.event)
   end
 
-  permissions :update_track?, :update_session_format? do
+  permissions :update? do
     it 'allows program_team users' do
       expect(subject).to permit(pundit_user(program_team), speaker)
     end

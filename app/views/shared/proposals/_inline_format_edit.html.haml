@@ -1,4 +1,4 @@
-= simple_form_for :proposal, url: event_staff_program_proposal_update_session_format_path(proposal.event, proposal), method: :post do |f|
+= simple_form_for :proposal, url: event_staff_program_proposal_path(proposal.event, proposal), method: :patch do |f|
   = f.input :session_format_id,
     as: :select,
     required: false,

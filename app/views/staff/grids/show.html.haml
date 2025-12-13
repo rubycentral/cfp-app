@@ -27,7 +27,7 @@
           .bulk-preview-bar{id: "bulk_preview_bar_day_#{day}"}
           .grid_container
             = render partial: 'staff/grids/grid', locals: {schedule: @schedule, day: day}
-            .unscheduled_area
+            .unscheduled_area{data: {controller: 'draggable-sessions', draggable_sessions_tracks_css_value: @event.tracks.pluck(:name).map(&:parameterize).to_json}}
               = render partial: 'staff/grids/unscheduled_sessions', locals: {day: day}
 
   / Modal

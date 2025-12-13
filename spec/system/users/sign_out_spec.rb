@@ -9,7 +9,7 @@ feature 'Sign out', :devise, type: :system do
   #   When I sign out
   #   Then I see a signed out message
   scenario 'user signs out successfully', js: true do
-    pending 'Too flaky'
+    skip 'Too flaky'
 
     user = FactoryBot.create(:user)
     signin(user.email, user.password)

@@ -1,6 +1,10 @@
 class ProfilesController < ApplicationController
   before_action :require_user
 
+  def show
+    redirect_to edit_profile_path
+  end
+
   def edit
     current_user.valid?
     flash.now[:warning] = incomplete_profile_msg unless current_user.complete?

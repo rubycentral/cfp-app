@@ -81,7 +81,6 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
   end
 
   def confirm_for_speaker
-    debugger
     @program_session = current_event.program_sessions.find(params[:id])
     authorize @program_session
     @program_session.proposal.confirm

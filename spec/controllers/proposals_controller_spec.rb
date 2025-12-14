@@ -26,7 +26,7 @@ describe ProposalsController, type: :controller do
 
     context 'user profile is incomplete' do
       let(:lead_in_msg) { 'Before submitting a proposal your profile needs completing. Please correct the following:' }
-      let(:trailing_msg) { ". Visit <a href=\"/profile\">My Profile</a> to update." }
+      let(:trailing_msg) { ". Visit <a href=\"/profile/edit\">My Profile</a> to update." }
 
       it_behaves_like 'an incomplete profile notifier'
     end

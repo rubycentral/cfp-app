@@ -81,7 +81,7 @@ class ProposalsController < ApplicationController
     if @proposal.save
       current_user.update_bio
       flash[:confirm] = setup_flash_message
-      redirect_to event_proposal_url(event_slug: @event.slug, uuid: @proposal)
+      redirect_to [@event, @proposal]
     else
       flash[:danger] = "There was a problem saving your proposal."
       render :new
@@ -105,7 +105,7 @@ class ProposalsController < ApplicationController
       @proposal.update(confirmed_at: Time.current)
       redirect_to event_event_proposals_url(slug: @event.slug, uuid: @proposal), flash: { success: "Thank you for confirming your participation" }
     elsif @proposal.speaker_update_and_notify(proposal_params)
-      redirect_to event_proposal_url(event_slug: @event.slug, uuid: @proposal)
+      redirect_to [@event, @proposal]
     else
       flash[:danger] = "There was a problem saving your proposal."
       render :edit

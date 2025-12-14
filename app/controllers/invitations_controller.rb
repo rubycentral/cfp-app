@@ -16,8 +16,7 @@ class InvitationsController < ApplicationController
       clear_session_invite
 
       flash[:info] = "You have accepted your invitation! Before continuing, please take a moment to make sure your profile is complete."
-      session[:target] = event_proposal_path(event_slug: @invitation.proposal.event.slug,
-                                            uuid: @invitation.proposal)
+      session[:target] = event_proposal_path(@invitation.proposal.event, @invitation.proposal)
       redirect_to edit_profile_path
 
     else

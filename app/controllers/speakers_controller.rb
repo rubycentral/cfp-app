@@ -12,7 +12,7 @@ class SpeakersController < ApplicationController
       redirect_to root_path, status: :see_other
     else
       flash[:info] = "#{speaker.email} has been withdrawn from #{proposal.title}."
-      redirect_to event_proposal_path(event_slug: proposal.event.slug, uuid: proposal), status: :see_other
+      redirect_to [proposal.event, proposal], status: :see_other
     end
   end
 end

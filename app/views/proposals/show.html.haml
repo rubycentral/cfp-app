@@ -2,7 +2,7 @@
   - if proposal.has_speaker?(current_user)
     .btn-nav.clearfix
       - if proposal.speaker_can_edit?(current_user)
-        = link_to edit_event_proposal_path(event_slug: event.slug, uuid: proposal), class: 'btn btn-primary' do
+        = link_to edit_event_proposal_path(event, proposal), class: 'btn btn-primary' do
           %span.bi.bi-pencil
           Edit
       - if proposal.speaker_can_withdraw?(current_user)

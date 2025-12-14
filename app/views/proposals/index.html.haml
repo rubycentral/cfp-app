@@ -69,7 +69,7 @@
                     .flex-item.flex-item-fixed.flex-item-padded.proposal-icon
                       %i.fa.fa-fw.fa-file-text
                     .flex-item.flex-item-padded
-                      %h4.proposal-title= link_to proposal.title, event_proposal_path(event_slug: proposal.event.slug, uuid: proposal)
+                      %h4.proposal-title= link_to proposal.title, [proposal.event, proposal]
                       .proposal-meta.proposal-description
                         .proposal-meta-item
                           %strong #{ 'Speaker'.pluralize(proposal.speakers.count) }:

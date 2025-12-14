@@ -7,7 +7,7 @@ feature "Proposals", type: :system do
   let!(:session_format) { create(:session_format, name: 'Only format')}
   let(:session_format2) { create(:session_format, name: '2nd format')}
 
-  let(:go_to_new_proposal) { visit new_event_proposal_path(event_slug: event.slug) }
+  let(:go_to_new_proposal) { visit new_event_proposal_path(event) }
 
   let(:create_proposal) do
     fill_in 'Title', with: "General Principles Derived by Magic from My Personal Experience"
@@ -32,7 +32,7 @@ feature "Proposals", type: :system do
   context "when navigating to new proposal page" do
     context "after closing time" do
       it "redirects and displays flash" do
-        visit new_event_proposal_path(event_slug: closed_event.slug)
+        visit new_event_proposal_path(closed_event)
 
         expect(current_path).to eq event_path(closed_event)
         expect(page).to have_text("The CFP is closed for proposal submissions.")
@@ -187,7 +187,7 @@ feature "Proposals", type: :system do
       let!(:speaker) { create(:speaker, proposal: proposal, user: user) }
 
       before do
-        visit event_proposal_path(event_slug: proposal.event.slug, uuid: proposal)
+        visit event_proposal_path(proposal.event, proposal)
         click_link "Confirm"
       end
 
@@ -196,7 +196,7 @@ feature "Proposals", type: :system do
       end
 
       it "redirects the user to the proposal page" do
-        expect(current_path).to eq(event_proposal_path(event_slug: proposal.event.slug, uuid: proposal))
+        expect(current_path).to eq(event_proposal_path(proposal.event, proposal))
         expect(page).to have_text(proposal.title)
         expect(page).to have_text("You have confirmed your participation in #{proposal.event.name}.")
       end
@@ -207,7 +207,7 @@ feature "Proposals", type: :system do
 
       before do
         proposal.update(confirmed_at: Time.current)
-        visit event_proposal_path(event_slug: proposal.event.slug, uuid: proposal)
+        visit event_proposal_path(proposal.event, proposal)
       end
 
       it "does not show the confirmation link" do
@@ -222,7 +222,7 @@ feature "Proposals", type: :system do
     let!(:speaker) { create(:speaker, proposal: proposal, user: user) }
 
     before do
-      visit event_proposal_path(event_slug: event.slug, uuid: proposal)
+      visit event_proposal_path(event, proposal)
       click_link 'delete'
     end
 
@@ -236,7 +236,7 @@ feature "Proposals", type: :system do
     let!(:speaker) { create(:speaker, proposal: proposal, user: user) }
 
     before do
-      visit event_proposal_path(event_slug: event.slug, uuid: proposal)
+      visit event_proposal_path(event, proposal)
       click_link 'Withdraw'
       expect(page).to have_content("As requested, your talk has been removed for consideration.")
     end
@@ -257,7 +257,7 @@ feature "Proposals", type: :system do
       speaker = create(:speaker, proposal: @proposal, user: user)
       @proposal.speakers << speaker
       ProgramSession.create_from_proposal(@proposal)
-      visit event_proposal_path(event_slug: @proposal.event.slug, uuid: @proposal)
+      visit event_proposal_path(@proposal.event, @proposal)
       click_link "Decline"
     end
 
@@ -270,7 +270,7 @@ feature "Proposals", type: :system do
     end
 
     it "redirects the user to the proposal page" do
-      expect(current_path).to eq(event_proposal_path(event_slug: @proposal.event.slug, uuid: @proposal))
+      expect(current_path).to eq(event_proposal_path(@proposal.event, @proposal))
       expect(page).to have_text(@proposal.title)
       expect(page).to have_text("As requested, your talk has been removed for consideration.")
     end

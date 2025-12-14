@@ -15,7 +15,7 @@ class Staff::ApplicationController < ApplicationController
   def prevent_self_review
     if !program_mode? && @proposal.has_speaker?(current_user)
       flash[:notice] = "Can't review your own proposal!"
-      redirect_to event_staff_proposals_url(event_slug: @proposal.event.slug)
+      redirect_to event_staff_proposals_url(@proposal.event)
     end
   end
 

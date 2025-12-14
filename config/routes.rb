@@ -14,11 +14,15 @@ Rails.application.routes.draw do
     get '/' => 'events#show', as: :event
 
     resources :proposals, param: :uuid do
-      member { post :confirm }
-      member { post :withdraw }
-      member { post :decline }
-      member { post :update_notes }
-      collection { post :preview }
+      member do
+        post :confirm
+        post :withdraw
+        post :decline
+        post :update_notes
+      end
+      collection do
+        post :preview
+      end
     end
 
     #Staff URLS

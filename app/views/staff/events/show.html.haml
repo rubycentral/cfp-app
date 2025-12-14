@@ -32,60 +32,60 @@
                   %td.text-primary
                     %strong Event Url:
                   - if event.url.present?
-                    %td.set= link_to "Set", event_staff_edit_path
+                    %td.set= link_to "Set", edit_event_staff_path
                   - else
-                    %td.missing= link_to "Missing", event_staff_edit_path
+                    %td.missing= link_to "Missing", edit_event_staff_path
                 %tr
                   %td.text-primary
                     %strong Event Dates:
                   - if event.start_date.present? && event.end_date.present?
-                    %td.set= link_to "Set", event_staff_edit_path
+                    %td.set= link_to "Set", edit_event_staff_path
                   - else
-                    %td.missing= link_to "Missing", event_staff_edit_path
+                    %td.missing= link_to "Missing", edit_event_staff_path
                 %tr
                   %td.text-primary
                     %strong Contact Email:
                   - if event.contact_email.present?
-                    %td.set= link_to "Set", event_staff_edit_path
+                    %td.set= link_to "Set", edit_event_staff_path
                   - else
-                    %td.missing= link_to "Missing", event_staff_edit_path
+                    %td.missing= link_to "Missing", edit_event_staff_path
                 %tr
                   %td.text-primary
                     %strong CFP Closes Date:
                   - if event.closes_at && (event.closes_at > Time.current)
-                    %td.set= link_to "Set", event_staff_edit_path
+                    %td.set= link_to "Set", edit_event_staff_path
                   -elsif event.closes_at && (event.closes_at <= Time.current)
-                    %td.missing= link_to "Date has Passed", event_staff_edit_path
+                    %td.missing= link_to "Date has Passed", edit_event_staff_path
                   - else
-                    %td.missing= link_to "Missing", event_staff_edit_path
+                    %td.missing= link_to "Missing", edit_event_staff_path
                 %tr
                   %td.text-primary
                     %strong Public Session Formats:
                   - if event.public_session_formats.present?
-                    %td.set= link_to event.public_session_formats.length, event_staff_config_path
+                    %td.set= link_to event.public_session_formats.length, config_event_staff_path
                   - else
-                    %td.missing= link_to "No Public Session Formats", event_staff_config_path
+                    %td.missing= link_to "No Public Session Formats", config_event_staff_path
                 %tr
                   %td.text-primary
                     %strong Tracks:
                   - if event.tracks.present?
-                    %td.set= link_to event.tracks.count, event_staff_config_path
+                    %td.set= link_to event.tracks.count, config_event_staff_path
                   - else
-                    %td.optional= link_to "None (optional)", event_staff_config_path
+                    %td.optional= link_to "None (optional)", config_event_staff_path
                 %tr
                   %td.text-primary
                     %strong Proposal Tags:
                   - if event.proposal_tags.present?
-                    %td.set= link_to event.proposal_tags.count, event_staff_config_path
+                    %td.set= link_to event.proposal_tags.count, config_event_staff_path
                   - else
-                    %td.optional= link_to "None (optional)", event_staff_config_path
+                    %td.optional= link_to "None (optional)", config_event_staff_path
                 %tr
                   %td.text-primary
                     %strong Review Tags:
                   - if event.review_tags.present?
-                    %td.set= link_to event.review_tags.count, event_staff_config_path
+                    %td.set= link_to event.review_tags.count, config_event_staff_path
                   - else
-                    %td.optional= link_to "None (optional)", event_staff_config_path
+                    %td.optional= link_to "None (optional)", config_event_staff_path
                 %tr
                   %td.text-primary
                     %strong Guidelines:
@@ -104,7 +104,7 @@
             %strong.text-primary No CFP Statistics
             - if event.checklist_complete?
               - if current_user.organizer_for_event?(current_event)
-                = link_to "Open CFP", event_staff_open_cfp_path(current_event),
+                = link_to "Open CFP", open_cfp_event_staff_path(current_event),
                   class: "btn btn-success btn-lg cfp-button",
                   data: {turbo: true, turbo_method: :patch, turbo_confirm: "Are you sure you'd like to open the CFP?"}
               - else

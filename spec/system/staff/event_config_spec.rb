@@ -19,7 +19,7 @@ feature "Event Config", type: :system do
     end
 
     it "can add a new session format" do
-      visit event_staff_config_path(event)
+      visit config_event_staff_path(event)
       click_on "Add Session Format"
 
       fill_in "Name", with: "Best Session"
@@ -32,7 +32,7 @@ feature "Event Config", type: :system do
 
     it "can edit a session format" do
       session_format = create(:session_format)
-      visit event_staff_config_path(event)
+      visit config_event_staff_path(event)
 
       within("#session_format_#{session_format.id}") do
         click_on "Edit"
@@ -48,7 +48,7 @@ feature "Event Config", type: :system do
 
     it "can't edit a session format to have no name" do
       session_format = create(:session_format)
-      visit event_staff_config_path(event)
+      visit config_event_staff_path(event)
 
       within("#session_format_#{session_format.id}") do
         click_on "Edit"
@@ -62,7 +62,7 @@ feature "Event Config", type: :system do
 
     it "can delete a session format" do
       session_format = create(:session_format)
-      visit event_staff_config_path(event)
+      visit config_event_staff_path(event)
       expect(page).to have_content session_format.name
       expect(page).to have_content session_format.description
 
@@ -77,7 +77,7 @@ feature "Event Config", type: :system do
     end
 
     it "can add a new track" do
-      visit event_staff_config_path(event)
+      visit config_event_staff_path(event)
       click_on "Add Track"
 
       fill_in "Name", with: "Best Track"
@@ -89,7 +89,7 @@ feature "Event Config", type: :system do
     end
 
     it "can't add a track with a description longer than 250 characters" do
-      visit event_staff_config_path(event)
+      visit config_event_staff_path(event)
       find_link("Add Track").click
 
       find("#track_name")
@@ -104,7 +104,7 @@ feature "Event Config", type: :system do
 
     it "can edit a track" do
       track = create(:track, event: event)
-      visit event_staff_config_path(event)
+      visit config_event_staff_path(event)
 
       within("#track_#{track.id}") do
         find_link("Edit").click
@@ -120,7 +120,7 @@ feature "Event Config", type: :system do
 
     it "can't edit a track to have no name" do
       track = create(:track, event: event)
-      visit event_staff_config_path(event)
+      visit config_event_staff_path(event)
 
       within("#track_#{track.id}") do
         find_link("Edit").click
@@ -135,7 +135,7 @@ feature "Event Config", type: :system do
 
     it "can't edit description to be longer than 250 characters" do
       track = create(:track, event: event)
-      visit event_staff_config_path(event)
+      visit config_event_staff_path(event)
 
       within("#track_#{track.id}") do
         find_link("Edit").click
@@ -153,7 +153,7 @@ feature "Event Config", type: :system do
 
     it "can delete a track" do
       track = create(:track, event: event)
-      visit event_staff_config_path(event)
+      visit config_event_staff_path(event)
       expect(page).to have_content track.name
       expect(page).to have_content track.description
 
@@ -168,7 +168,7 @@ feature "Event Config", type: :system do
     end
 
     it "can edit reviewer tags" do
-      visit event_staff_config_path(event)
+      visit config_event_staff_path(event)
 
       within("#show-reviewer-tags") do
         expect(page).to have_content "intro, advanced"
@@ -184,7 +184,7 @@ feature "Event Config", type: :system do
     end
 
     it "can add and edit proposal tags" do
-      visit event_staff_config_path(event)
+      visit config_event_staff_path(event)
 
       within("#show-proposal-tags") do
         expect(page).to have_link "Add"
@@ -208,7 +208,7 @@ feature "Event Config", type: :system do
     end
 
     it "can add and edit custom fields" do
-      visit event_staff_config_path(event)
+      visit config_event_staff_path(event)
 
       within("#show-custom-fields") do
         expect(page).to have_link "Add"
@@ -239,14 +239,14 @@ feature "Event Config", type: :system do
     end
 
     it "cannot view link to add new session format" do
-      visit event_staff_config_path(event)
+      visit config_event_staff_path(event)
 
       expect(page).to_not have_content("Add Session Format")
     end
 
     it "cannot view link to edit or remove a session format" do
       session_format = create(:session_format)
-      visit event_staff_config_path(event)
+      visit config_event_staff_path(event)
 
       within("#session_format_#{session_format.id}") do
         expect(page).to_not have_content("Edit")
@@ -255,14 +255,14 @@ feature "Event Config", type: :system do
     end
 
     it "cannot view link to add new track" do
-      visit event_staff_config_path(event)
+      visit config_event_staff_path(event)
 
       expect(page).to_not have_content("Add Track")
     end
 
     it "cannot view link to edit or remove a track" do
       track = create(:track, event: event)
-      visit event_staff_config_path(event)
+      visit config_event_staff_path(event)
 
       within("#track_#{track.id}") do
         expect(page).to_not have_content("Edit")
@@ -271,7 +271,7 @@ feature "Event Config", type: :system do
     end
 
     it "cannot add or edit reviewer tags" do
-      visit event_staff_config_path(event)
+      visit config_event_staff_path(event)
 
       within("#show-reviewer-tags") do
         expect(page).to_not have_link("Add")
@@ -280,7 +280,7 @@ feature "Event Config", type: :system do
     end
 
     it "cannot add or edit proposal tags" do
-      visit event_staff_config_path(event)
+      visit config_event_staff_path(event)
 
       within("#show-proposal-tags") do
         expect(page).to_not have_link("Add")
@@ -289,7 +289,7 @@ feature "Event Config", type: :system do
     end
 
     it "cannot add or edit custom fields" do
-      visit event_staff_config_path(event)
+      visit config_event_staff_path(event)
 
       within("#show-custom-fields") do
         expect(page).to_not have_link("Add")
@@ -305,14 +305,14 @@ feature "Event Config", type: :system do
     end
 
     it "cannot view link to add new session format" do
-      visit event_staff_config_path(event)
+      visit config_event_staff_path(event)
 
       expect(page).to_not have_content("Add Session Format")
     end
 
     it "cannot view link to edit or remove a session format" do
       session_format = create(:session_format)
-      visit event_staff_config_path(event)
+      visit config_event_staff_path(event)
 
       within("#session_format_#{session_format.id}") do
         expect(page).to_not have_content("Edit")
@@ -321,14 +321,14 @@ feature "Event Config", type: :system do
     end
 
     it "cannot view link to add new track" do
-      visit event_staff_config_path(event)
+      visit config_event_staff_path(event)
 
       expect(page).to_not have_content("Add Track")
     end
 
     it "cannot view link to edit or remove a track" do
       track = create(:track, event: event)
-      visit event_staff_config_path(event)
+      visit config_event_staff_path(event)
 
       within("#track_#{track.id}") do
         expect(page).to_not have_content("Edit")
@@ -337,7 +337,7 @@ feature "Event Config", type: :system do
     end
 
     it "cannot add or edit reviewer tags" do
-      visit event_staff_config_path(event)
+      visit config_event_staff_path(event)
 
       within("#show-reviewer-tags") do
         expect(page).to_not have_link("Add")
@@ -346,7 +346,7 @@ feature "Event Config", type: :system do
     end
 
     it "cannot add or edit proposal tags" do
-      visit event_staff_config_path(event)
+      visit config_event_staff_path(event)
 
       within("#show-proposal-tags") do
         expect(page).to_not have_link("Add")
@@ -355,7 +355,7 @@ feature "Event Config", type: :system do
     end
 
     it "cannot add or edit custom fields" do
-      visit event_staff_config_path(event)
+      visit config_event_staff_path(event)
 
       within("#show-custom-fields") do
         expect(page).to_not have_link("Add")

@@ -38,16 +38,13 @@ Rails.application.routes.draw do
 
     #Staff URLS
     namespace 'staff' do
-      get '/' => 'events#show'
-      get :show
+      resource :event, only: [:show, :edit, :update], path: '', as: '' do
+        get :info
+        get :configuration, path: 'config', as: :config
+        patch :update_status, path: 'update-status'
+        patch :open_cfp
+      end
 
-      get :info
-      get :edit
-      patch :update
-      patch 'update-status' => 'events#update_status'
-      patch :open_cfp
-
-      get '/config' => 'events#configuration', as: :config
       resource :custom_fields, only: [:edit, :update]
       resource :reviewer_tags, only: [:edit, :update]
       resource :proposal_tags, only: [:edit, :update]
@@ -128,8 +125,8 @@ Rails.application.routes.draw do
   end
 
   resources :image_uploads, only: :create
-  resource :public_comments, only: [:create], controller: :comments, type: 'PublicComment'
-  resource :internal_comments, only: [:create], controller: :comments, type: 'InternalComment'
+  resources :public_comments, only: [:create], controller: :comments, type: 'PublicComment'
+  resources :internal_comments, only: [:create], controller: :comments, type: 'InternalComment'
 
   resources :speakers, only: [:destroy]
   resources :events, only: [:index]

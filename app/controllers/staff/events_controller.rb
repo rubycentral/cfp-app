@@ -15,7 +15,7 @@ class Staff::EventsController < Staff::ApplicationController
   def update_status
     authorize_update
     if @event.update(params.require(:event).permit(:state))
-      redirect_to event_staff_info_path(@event), notice: "Event status was successfully updated."
+      redirect_to info_event_staff_path(@event), notice: "Event status was successfully updated."
     else
       flash[:danger] = "There was a problem updating the event status. Please try again."
       flash[:danger] += @event.errors.messages.values.flatten.map do |m|
@@ -36,7 +36,7 @@ class Staff::EventsController < Staff::ApplicationController
         redirect_to session[:target]
         session[:target].clear
       else
-        redirect_to event_staff_info_path(@event)
+        redirect_to info_event_staff_path(@event)
       end
     else
       flash[:danger] = "There was a problem saving your event; please review the form for issues and try again."

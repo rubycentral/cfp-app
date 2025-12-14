@@ -32,7 +32,7 @@ feature "Event Dashboard", type: :system do
     end
 
     it "can edit events" do
-      visit event_staff_info_path(organizer_teammate.event)
+      visit info_event_staff_path(organizer_teammate.event)
       expect(page).to have_content organizer_teammate.event.name
       expect(page).to have_link "Edit Info"
       expect(page).not_to have_link "Change Status"
@@ -42,15 +42,15 @@ feature "Event Dashboard", type: :system do
       fill_in "Name", with: "Blef"
       click_button "Save"
       expect(page).to have_text("Blef")
-      expect(current_path).to eq(event_staff_info_path(organizer_teammate.event))
+      expect(current_path).to eq(info_event_staff_path(organizer_teammate.event))
     end
 
     it "can change event status if checklist complete" do
       event = organizer_teammate.event
-      visit event_staff_info_path(event)
+      visit info_event_staff_path(event)
       expect(page).not_to have_link "Change Status"
       create(:program_session_with_proposal, event: event)
-      visit event_staff_info_path(event)
+      visit info_event_staff_path(event)
 
       within('.page-header') do
         expect(page).to have_content("Event Status: Draft")
@@ -78,12 +78,12 @@ feature "Event Dashboard", type: :system do
     end
 
     it "cannot vist event edit pages" do
-      visit event_staff_edit_path(reviewer_teammate.event)
+      visit edit_event_staff_path(reviewer_teammate.event)
       expect(page).to have_content "You are not authorized to perform this action."
     end
 
     it "cannot see event edit buttons" do
-      visit event_staff_info_path(reviewer_teammate.event)
+      visit info_event_staff_path(reviewer_teammate.event)
       expect(page).not_to have_link "Edit Info"
       expect(page).not_to have_link "Change Status"
     end
@@ -96,12 +96,12 @@ feature "Event Dashboard", type: :system do
     end
 
     it "cannot vist event edit pages" do
-      visit event_staff_edit_path(program_team_teammate.event)
+      visit edit_event_staff_path(program_team_teammate.event)
       expect(page).to have_content "You are not authorized to perform this action."
     end
 
     it "cannot see event edit buttons" do
-      visit event_staff_info_path(program_team_teammate.event)
+      visit info_event_staff_path(program_team_teammate.event)
       expect(page).not_to have_link "Edit Info"
       expect(page).not_to have_link "Change Status"
     end

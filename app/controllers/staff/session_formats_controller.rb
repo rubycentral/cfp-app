@@ -19,7 +19,7 @@ class Staff::SessionFormatsController < Staff::ApplicationController
     if @session_format.save
       respond_to do |format|
         format.turbo_stream
-        format.html { redirect_to event_staff_config_path(current_event) }
+        format.html { redirect_to config_event_staff_path(current_event) }
       end
     else
       flash.now[:danger] = "There was a problem saving your session format, #{@session_format.errors.full_messages.join(", ")}."
@@ -34,7 +34,7 @@ class Staff::SessionFormatsController < Staff::ApplicationController
     if @session_format.update(session_format_params)
       respond_to do |format|
         format.turbo_stream
-        format.html { redirect_to event_staff_config_path(current_event) }
+        format.html { redirect_to config_event_staff_path(current_event) }
       end
     else
       flash.now[:danger] = "There was a problem updating your session format, #{@session_format.errors.full_messages.join(", ")}."
@@ -49,7 +49,7 @@ class Staff::SessionFormatsController < Staff::ApplicationController
     @session_format.destroy
     respond_to do |format|
       format.turbo_stream
-      format.html { redirect_to event_staff_config_path(current_event), status: :see_other }
+      format.html { redirect_to config_event_staff_path(current_event), status: :see_other }
     end
   end
 

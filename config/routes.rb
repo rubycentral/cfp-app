@@ -97,12 +97,12 @@ Rails.application.routes.draw do
       draw :staff_website  # => config/routes/staff_website.rb
     end
   end
+  resources :events, only: [:index]
 
   resources :public_comments, only: [:create], controller: :comments, type: 'PublicComment'
   resources :internal_comments, only: [:create], controller: :comments, type: 'InternalComment'
 
   resources :speakers, only: [:destroy]
-  resources :events, only: [:index]
 
   get 'teammates/:token/accept', :to => 'teammates#accept', as: :accept_teammate
   get 'teammates/:token/decline', :to => 'teammates#decline', as: :decline_teammate

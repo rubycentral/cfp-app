@@ -64,7 +64,6 @@ Rails.application.routes.draw do
         resources :speakers, only: [:index, :show, :edit, :update, :destroy]
         resources :program_sessions, as: 'sessions', path: 'sessions' do
           resources :speakers, only: [:new, :create]
-          post :update_state
           member do
             post :confirm_for_speaker
             patch :promote

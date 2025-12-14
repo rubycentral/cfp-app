@@ -14,6 +14,8 @@ unless ENV['DISABLE_WEBSITE']
   end
 end
 
+resources :image_uploads, only: :create
+
 get '/current-styleguide', :to => 'pages#current_styleguide'
 
 get '/(:slug)', to: 'pages#show', as: :landing

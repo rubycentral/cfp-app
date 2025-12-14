@@ -45,7 +45,7 @@
           %p= "Confirmed at: #{program_session.proposal.confirmed_at.to_fs(:month_day_year)}"
         - else
           - if program_session.proposal.awaiting_confirmation?
-            = link_to 'Confirm for Speaker', confirm_for_speaker_event_staff_program_session_path(slug: program_session.proposal.event.slug, uuid: program_session.proposal),
+            = link_to 'Confirm for Speaker', confirm_for_speaker_event_staff_program_session_path(program_session.proposal.event, uuid: program_session.proposal),
               class: "btn btn-primary btn-sm",
               data: {turbo: true, turbo_method: :post}
     .program-session-item

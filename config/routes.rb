@@ -10,15 +10,17 @@ Rails.application.routes.draw do
     post :mark_all_as_read, on: :collection
   end
 
-  resources :events, param: :slug do
-    get '/' => 'events#show', as: :event
-
+  resources :events, param: :slug, only: [:index, :show] do
     resources :proposals, param: :uuid do
-      member { post :confirm }
-      member { post :withdraw }
-      member { post :decline }
-      member { post :update_notes }
-      collection { post :preview }
+      member do
+        post :confirm
+        post :withdraw
+        post :decline
+        post :update_notes
+      end
+      collection do
+        post :preview
+      end
     end
 
     #Staff URLS
@@ -77,13 +79,12 @@ Rails.application.routes.draw do
         resource :grid do
           resources :time_slots, module: 'grids', only: [:new, :create, :edit, :update]
           resources :program_sessions, module: 'grids', only: [:show]
-          resource :bulk_time_slot, module: 'grids', only: [] do
+          resource :bulk_time_slot, module: 'grids', only: [:create] do
             collection do
               get 'new/:day', to: 'bulk_time_slots#new', as: 'new', constraints: { day: /\d+/ }
               get 'cancel/:day', to: 'bulk_time_slots#cancel', as: 'cancel', constraints: { day: /\d+/ }
               post :preview
               post :edit
-              post :create
             end
           end
         end
@@ -94,13 +95,12 @@ Rails.application.routes.draw do
       draw :staff_website  # => config/routes/staff_website.rb
     end
   end
+  resources :events, only: [:index]
 
-  resources :image_uploads, only: :create
   resources :public_comments, only: [:create], controller: :comments, type: 'PublicComment'
   resources :internal_comments, only: [:create], controller: :comments, type: 'InternalComment'
 
   resources :speakers, only: [:destroy]
-  resources :events, only: [:index]
 
   get 'teammates/:token/accept', :to => 'teammates#accept', as: :accept_teammate
   get 'teammates/:token/decline', :to => 'teammates#decline', as: :decline_teammate

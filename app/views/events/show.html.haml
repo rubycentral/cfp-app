@@ -41,7 +41,7 @@
             %strong= time_ago_in_words(event.closes_at)
             left to submit your proposal
           %div
-            = link_to "Submit a proposal", new_event_proposal_path, class: "btn btn-primary"
+            = link_to "Submit a proposal", new_event_proposal_path(event), class: "btn btn-primary"
       - elsif event.closed?
         .panel-body
           %p

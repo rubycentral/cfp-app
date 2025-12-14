@@ -18,7 +18,6 @@ Rails.application.routes.draw do
       member { post :withdraw }
       member { post :decline }
       member { post :update_notes }
-      member { delete :destroy }
       collection { post :preview }
     end
 

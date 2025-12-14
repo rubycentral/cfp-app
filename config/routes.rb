@@ -1,17 +1,4 @@
 Rails.application.routes.draw do
-  unless ENV['DISABLE_WEBSITE']
-    constraints DomainConstraint.new do
-      get '/', to: 'pages#show'
-      get '/(:slug)/program', to: 'programs#show'
-      get '/(:slug)/schedule', to: 'schedule#show'
-      get '/(:slug)/sponsors', to: 'sponsors#show'
-      get '/(:slug)/banner_ads', to: 'sponsors#banner_ads'
-      get '/(:slug)/sponsors_footer', to: 'sponsors#sponsors_footer'
-      get '/:domain_page_or_slug', to: 'pages#show'
-      get '/:slug/:page', to: 'pages#show'
-    end
-  end
-
   root 'home#show'
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   mount ActionCable.server => '/cable'
@@ -106,20 +93,7 @@ Rails.application.routes.draw do
 
       resources :session_formats, except: :show
       resources :tracks, except: [:show]
-      resource :website, only: [:new, :create, :edit, :update] do
-        member do
-          post :purge
-        end
-      end
-      resources :pages do
-        member do
-          get :preview
-          post :show
-          patch :publish
-          patch :promote
-        end
-      end
-      resources :sponsors, only: [:index, :new, :create, :edit, :update, :destroy]
+      draw :staff_website  # => config/routes/staff_website.rb
     end
   end
 
@@ -150,14 +124,9 @@ Rails.application.routes.draw do
     resources :users
   end
 
-  get '/current-styleguide', :to => 'pages#current_styleguide'
+  draw :website # => config/routes/website.rb
+
   get '/404', :to => 'errors#not_found', as: :not_found
   get '/422', :to => 'errors#unacceptable'
   get '/500', :to => 'errors#internal_error'
-
-  get '/(:slug)', to: 'pages#show', as: :landing
-  get '/(:slug)/program', to: 'programs#show', as: :program
-  get '/(:slug)/schedule', to: 'schedule#show', as: :schedule
-  get '/(:slug)/sponsors', to: 'sponsors#show', as: :sponsors
-  get '/(:slug)/:page', to: 'pages#show', as: :page
 end

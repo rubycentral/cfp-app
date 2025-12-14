@@ -24,7 +24,7 @@ class ProposalsController < ApplicationController
 
   def new
     if @event.closed?
-      redirect_to event_path (@event)
+      redirect_to @event
       flash[:danger] = "The CFP is closed for proposal submissions."
       return
     end
@@ -69,7 +69,7 @@ class ProposalsController < ApplicationController
 
   def create
     if @event.closed? && @event.closes_at < 1.hour.ago
-      redirect_to event_path (@event)
+      redirect_to @event
       flash[:danger] = "The CFP is closed for proposal submissions."
       return
     end
@@ -165,7 +165,7 @@ class ProposalsController < ApplicationController
 
   def require_waitlisted_or_accepted_state
     unless @proposal.waitlisted? || @proposal.accepted?
-      redirect_to event_url(@event.slug)
+      redirect_to @event
     end
   end
 

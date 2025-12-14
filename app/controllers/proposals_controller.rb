@@ -64,7 +64,7 @@ class ProposalsController < ApplicationController
   def destroy
     @proposal.destroy
     flash[:info] = "Your proposal has been deleted."
-    redirect_to event_proposals_url, status: :see_other
+    redirect_to event_proposals_url(@event), status: :see_other
   end
 
   def create

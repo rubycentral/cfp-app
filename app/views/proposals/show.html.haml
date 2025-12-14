@@ -99,7 +99,7 @@
       - elsif proposal.confirmed?
         .widget.widget-card
           .widget-content
-            = simple_form_for proposal, url: update_notes_event_proposal_path(slug: proposal.event.slug, uuid: proposal), wrapper: :vertical_form, method: :post do |f|
+            = simple_form_for proposal, url: update_notes_event_proposal_path(proposal.event, proposal), wrapper: :vertical_form, method: :post do |f|
               = f.input :confirmation_notes, label: "Notes for the #{event.name} team", input_html: { rows: 6, placeholder: 'Notes' },
                 popover_icon: {content: 'Please note any scheduling conflicts, or any additional information an organizer may need to schedule your talk.', placement: 'left'}
               %button.btn.btn-success.float-end(type="submit") Update

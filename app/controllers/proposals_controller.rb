@@ -36,7 +36,7 @@ class ProposalsController < ApplicationController
   def update_notes
     if @proposal.update(confirmation_notes: notes_params[:confirmation_notes])
       flash[:success] = "Confirmation notes successfully updated."
-      redirect_to event_proposal_path(slug: @proposal.event.slug, uuid: @proposal)
+      redirect_to [@proposal.event, @proposal]
     else
       flash[:danger] = "There was a problem updating confirmation notes."
       render :show
@@ -46,19 +46,19 @@ class ProposalsController < ApplicationController
   def confirm
     @proposal.confirm
     flash[:success] = "You have confirmed your participation in #{@proposal.event.name}."
-    redirect_to event_proposal_path(slug: @proposal.event.slug, uuid: @proposal), status: :see_other
+    redirect_to [@proposal.event, @proposal], status: :see_other
   end
 
   def withdraw
     @proposal.withdraw unless @proposal.confirmed?
     flash[:info] = "As requested, your talk has been removed for consideration."
-    redirect_to event_proposal_url(slug: @proposal.event.slug, uuid: @proposal), status: :see_other
+    redirect_to [@proposal.event, @proposal], status: :see_other
   end
 
   def decline
     @proposal.decline
     flash[:info] = "As requested, your talk has been removed for consideration."
-    redirect_to event_proposal_url(slug: @proposal.event.slug, uuid: @proposal), status: :see_other
+    redirect_to [@proposal.event, @proposal], status: :see_other
   end
 
   def destroy
@@ -103,7 +103,7 @@ class ProposalsController < ApplicationController
   def update
     if params[:confirm]
       @proposal.update(confirmed_at: Time.current)
-      redirect_to event_event_proposals_url(slug: @event.slug, uuid: @proposal), flash: { success: "Thank you for confirming your participation" }
+      redirect_to [@event, @proposal], flash: {success: 'Thank you for confirming your participation'}
     elsif @proposal.speaker_update_and_notify(proposal_params)
       redirect_to [@event, @proposal]
     else

@@ -56,7 +56,7 @@ feature "Staff Organizers can manage teammates", type: :system do
       click_button "Invite"
 
       expect(page).to have_content "You must set a contact email for this event before inviting teammates."
-      expect(current_path).to eq(event_staff_edit_path(incomplete_event))
+      expect(current_path).to eq(edit_event_staff_path(incomplete_event))
     end
   end
 

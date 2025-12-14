@@ -7,5 +7,5 @@
 .row
   .col-md-12
     %span.required_notification * Required
-    = simple_form_for event, url: event_staff_update_path(event), html: {role: 'form'} do |f|
+    = simple_form_for event, url: event_staff_path(event), html: {role: 'form'} do |f|
       = render partial: 'staff/events/form', locals: {f: f}

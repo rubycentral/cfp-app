@@ -38,7 +38,7 @@ feature "Event Dashboard", type: :system do
     end
 
     it "can edit an event" do
-      visit event_staff_edit_path(event)
+      visit edit_event_staff_path(event)
       fill_in "Name", with: "My Finest Event Evar For Realz"
       click_button "Save"
       expect(page).to have_text("My Finest Event Evar For Realz")
@@ -46,7 +46,7 @@ feature "Event Dashboard", type: :system do
 
     it "can delete events" do
       skip "pending admin delete permissions discussion"
-      visit event_staff_edit_path(event)
+      visit edit_event_staff_path(event)
       click_link "Delete Event"
       expect(page).not_to have_text("My Event")
     end

@@ -69,11 +69,11 @@ module ActivateNavigation
     @event_subnav_item_map ||= {
         'event-staff-dashboard-link' => exact_path(current_event, :staff),
         'event-staff-info-link' => [
-            exact_path(current_event, :staff, :info),
-            exact_path(current_event, :staff, :edit)
+            exact_path(:info, current_event, :staff),
+            exact_path(:edit, current_event, :staff)
         ],
         'event-staff-teammates-link' => exact_path(current_event, :staff, Teammate),
-        'event-staff-config-link' => exact_path(current_event, :staff, :config),
+        'event-staff-config-link' => exact_path(:config, current_event, :staff),
         'event-staff-guidelines-link' => exact_path(current_event, :staff, :guidelines),
         'event-staff-speaker-emails-link' => starts_with_path(current_event, :staff, :speaker_email_templates),
     }

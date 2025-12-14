@@ -81,13 +81,12 @@ Rails.application.routes.draw do
         resource :grid do
           resources :time_slots, module: 'grids', only: [:new, :create, :edit, :update]
           resources :program_sessions, module: 'grids', only: [:show]
-          resource :bulk_time_slot, module: 'grids', only: [] do
+          resource :bulk_time_slot, module: 'grids', only: [:create] do
             collection do
               get 'new/:day', to: 'bulk_time_slots#new', as: 'new', constraints: { day: /\d+/ }
               get 'cancel/:day', to: 'bulk_time_slots#cancel', as: 'cancel', constraints: { day: /\d+/ }
               post :preview
               post :edit
-              post :create
             end
           end
         end

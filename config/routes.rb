@@ -10,9 +10,7 @@ Rails.application.routes.draw do
     post :mark_all_as_read, on: :collection
   end
 
-  resources :events, param: :slug do
-    get '/' => 'events#show', as: :event
-
+  resources :events, param: :slug, only: [:index, :show] do
     resources :proposals, param: :uuid do
       member do
         post :confirm

@@ -105,7 +105,7 @@
               %button.btn.btn-success.float-end(type="submit") Update
       .widget.widget-card
         .widget-header
-          %i.fa.fa-comments
+          %i.bi.bi-chat-dots
           %h3= pluralize(proposal.public_comments.size, 'comment')
         .widget-content
           = render partial: 'proposals/comments',

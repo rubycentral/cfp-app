@@ -9,7 +9,7 @@
               - if current_event.contact_email?
                 %span.event-meta
                   Contact:
-                  %i.bi.bi-envelope
+                  %i.bi.bi-envelope-fill
                   = mail_to(current_event.contact_email, current_event.contact_email, encode: "javascript")
           - else
             = link_to "#{Rails.application.class.module_parent_name}", events_path

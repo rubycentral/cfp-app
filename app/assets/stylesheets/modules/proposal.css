@@ -148,6 +148,10 @@ div.col-md-4 {
   font-size: var(--font-size-large);
   margin-left: 5px;
   padding: 0;
+
+  &.bi-pencil-fill {
+    font-size: 14px;
+  }
 }
 
 .proposal-track-select, .proposal-format-select {
@@ -194,7 +198,8 @@ div.col-md-4 {
 .proposal-info-bar {
   padding-bottom: var(--padding-large-vertical);
 
-  i.fa {
+  i.fa,
+  i.bi {
     position:relative;
     margin-top: -0.1em;
   }
@@ -231,6 +236,7 @@ div.col-md-4 {
       .proposal-reviewer-tags {
         float: left;
         max-width: 80%;
+        margin-right: 5px;
       }
     }
 

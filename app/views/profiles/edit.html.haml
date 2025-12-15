@@ -30,7 +30,7 @@
     %fieldset.col-md-6
       .widget
         .widget-header
-          %i.fa.fa-lock
+          %i.bi.bi-lock
           - if current_user.provider.present?
             %i.fa{class: "fa-#{current_user.provider.downcase}"}
           %h3 Identity Services
@@ -52,7 +52,7 @@
     %fieldset.col-md-6
       .widget
         .widget-header
-          %i.fa.fa-lock
+          %i.bi.bi-lock
           %h3 Profile Icon Image
         .widget-content
           %p
@@ -69,11 +69,11 @@
       - if current_user.teammates.present?
         .widget
           .widget-header
-            %i.bi.bi-envelope
+            %i.bi.bi-envelope-fill
             %h3
               Notifications
               %span.ms-2{role: 'button', data: {bs_toggle: 'popover', bs_placement: 'left', bs_content: notification_preferences_tooltip, bs_html: 'true'}}
-                %i.fa.fa-question-circle
+                %i.bi.bi-question-circle
           .widget-content
             = f.simple_fields_for :teammates do |fields|
               - teammate = fields.object

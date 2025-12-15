@@ -50,7 +50,7 @@
       transform: translateX(-50%);
     }
 
-    .fa-star {
+    .bi-star-fill {
       transition: opacity 0.2s;
       opacity: 0;
       &.starred {

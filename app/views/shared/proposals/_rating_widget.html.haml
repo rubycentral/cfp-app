@@ -4,7 +4,7 @@
 
   .internal-comments{class: !rating.persisted? ? 'hidden' : nil}
     .widget-header
-      %i.fa.fa-comments
+      %i.bi.bi-chat-dots
       %h3.comments-heading= pluralize(proposal.internal_comments.count, 'Internal Comment')
     .widget-content
       = render partial: 'proposals/comments', locals: {proposal: proposal, comments: proposal.internal_comments}

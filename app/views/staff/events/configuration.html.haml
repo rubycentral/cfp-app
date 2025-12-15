@@ -7,7 +7,7 @@
     .col-md-12
       .widget.widget-table
         .widget-header
-          %i.fa.fa-comments-o
+          %i.bi.bi-chat
           %h3 Session Formats
           = link_to "Add Session Format", new_event_staff_session_format_path(event), data: {action: 'remote-modal#open'},
             class: "btn btn-success btn-sm float-end" unless !current_user.organizer_for_event?(event)
@@ -26,7 +26,7 @@
 
       .widget.widget-table
         .widget-header
-          %i.fa.fa-exchange
+          %i.bi.bi-arrow-left-right
           %h3 Tracks
           = link_to "Add Track", new_event_staff_track_path(event), data: {action: 'remote-modal#open'},
             class: "btn btn-success btn-sm float-end" unless !current_user.organizer_for_event?(event)

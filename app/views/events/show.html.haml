@@ -13,7 +13,7 @@
             = link_to(event.url, event.url, target: "_blank")
         - if event.contact_email?
           %span.event-meta
-            %i.bi.bi-envelope
+            %i.bi.bi-envelope-fill
             = mail_to(current_event.contact_email, current_event.contact_email, encode: "javascript")
 
 .row

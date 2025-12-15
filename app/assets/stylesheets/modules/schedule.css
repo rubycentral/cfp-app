@@ -1,36 +1,102 @@
-#schedule {
+.schedule-page {
+  width: fit-content;
   margin-top: 20px;
+}
 
-  .active {
-    .nav-tab-content {
-      .day {
-        color: var(--ruby-central-red);
-      }
+.schedule-page > .tab-pane {
+  position: relative;
+  display: none;
+  margin: 85px auto 0;
+}
+
+.schedule-page > .tab-pane.active {
+  display: block;
+}
+
+.grid-content {
+  display: flex;
+}
+
+nav.schedule-nav {
+  border-bottom: 1px solid #efefef;
+  padding: 0 0 0 6%;
+  position: fixed;
+  padding-top: 50px;
+  top: 77.8px;
+  left: 0px;
+  width: 100%;
+  background: #fff;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+
+  ul {
+    display: inline-block;
+    margin-bottom: 0px;
+    padding-left: 0;
+    list-style: none;
+  }
+
+  li {
+    display: inline-block;
+    color: #b2afaa;
+    padding: 5px 10px;
+
+    &:hover {
+      background-color: #ededed;
+      border-radius: 2px 2px 0px 0px;
+      cursor: pointer;
     }
-  }
 
-  .tab-pane {
-    position: relative;
-  }
+    &.active {
+      color: #91181C;
+      border: 1px solid #efefef;
+      border-bottom: 1px solid #fff;
+      border-radius: 2px 2px 0px 0px;
+    }
 
-  .tab-content {
-    margin-top: 50px;
-  }
+    &.active:hover {
+      background-color: #fff;
+      cursor: default;
+    }
 
-  .nav-tab-content {
-    display: flex;
-    align-items: center;
-
-    .day {
+    span {
+      padding: 0px 10px;
+      font-size: 16px;
       font-weight: bold;
-      font-size: 1.25em;
     }
 
-    .counts-container {
-      text-align: right;
-      margin-left: 2em;
-      color: var(--text-color);
+    .badge {
+      display: inline-block;
+      min-width: 10px;
+      padding: 3px 7px;
+      font-size: 12px;
+      font-weight: bold;
+      color: #fff;
+      line-height: 1;
+      vertical-align: middle;
+      white-space: nowrap;
+      text-align: center;
+      background-color: #b2afaa;
+      border-radius: 10px;
     }
+  }
+
+  .btn {
+    margin-left: auto;
+    margin-right: 20px;
+  }
+}
+
+.bulk-preview-bar {
+  .bar {
+    padding: 1.5em;
+    margin-left: 1em;
+    z-index: 1080;
+  }
+
+  form {
+    display: inline-block;
   }
 }
 
@@ -92,11 +158,13 @@ body .custom-session-card {
 body .custom-session-card {
   cursor: pointer;
 }
+
 /* in the unscheduled sessions widget */
 .unscheduled-sessions-widget .draggable-session-card {
   opacity: 1;
   width: 220px;
 }
+
 /* in the grid */
 .schedule-grid .draggable-session-card,
 .schedule-grid .custom-session-card {
@@ -135,31 +203,13 @@ body .custom-session-card {
   }
 }
 
-.grid-wrapper {
-  display: inline-block;
-  margin-top: 25px;
-
-  .bulk-preview-bar {
-    .bar {
-      padding: 1.5em;
-      margin-left: 1em;
-      z-index: 1080;
-    }
-
-    form {
-      display: inline-block;
-    }
-  }
-}
-
 .schedule-grid {
   display: flex;
   height: 100%;
-  width: 100%;
   flex-flow: row nowrap;
   align-items: stretch;
   overflow-x: scroll;
-  overflow-y:hidden;
+  overflow-y: hidden;
   margin-bottom: 20px;
   border-collapse: collapse;
 
@@ -205,7 +255,7 @@ body .custom-session-card {
     margin-top: 4px;
     border-width: 0 1px 0 0;
     display: flex;
-    justify-content:center;
+    justify-content: center;
   }
 
   .room-column:first-of-type .time-slots {
@@ -245,10 +295,10 @@ body .custom-session-card {
 
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
 }
 
 #staff_grids_show .page-footer {
@@ -256,90 +306,8 @@ input[type=number]::-webkit-outer-spin-button {
   z-index: 1000;
 }
 
-.schedule-wrapper {
-  width: fit-content;
-
-  .nav_wrapper {
-    border-bottom: 1px solid #efefef;
-    padding: 0 0 0 6%;
-    position: fixed;
-    padding-top: 50px;
-    top: 77.8px;
-    left: 0px;
-    width: 100%;
-    background: #fff;
-    z-index: 1000;
-
-    .generate_btn {
-      float: right;
-      margin-right: 20px;
-      position: relative;
-      bottom: 10px;
-    }
-
-    .schedule-nav {
-      display: inline-block;
-      margin-bottom: 0px;
-      
-      li {
-        display: inline-block;
-        color: #b2afaa;
-        padding: 5px 10px;
-
-        &:hover {
-          background-color: #ededed;
-          border-radius: 2px 2px 0px 0px;
-          cursor: pointer;
-        }
-        
-        &.active {
-          color: #91181C;
-          border: 1px solid #efefef;
-          border-bottom: 1px solid #fff;
-          border-radius: 2px 2px 0px 0px;
-        }
-
-        &.active:hover {
-          background-color: #fff;
-          cursor: default;
-        }
-
-        span {
-          padding: 0px 10px;
-          font-size: 16px;
-          font-weight: bold;
-        }
-
-        .badge {
-          display: inline-block;
-          min-width: 10px;
-          padding: 3px 7px;
-          font-size: 12px;
-          font-weight: bold;
-          color: #fff;
-          line-height: 1;
-          vertical-align: middle;
-          white-space: nowrap;
-          text-align: center;
-          background-color: #b2afaa;
-          border-radius: 10px;
-        }
-      }
-    }
-  }
-}
-
-.grid-container {
-  margin: 85px auto 0;
-  display: flex;
-}
-
 .schedule-ruler {
   position: sticky;
-  position: -webkit-sticky;
-  position: -moz-sticky;
-  position: -ms-sticky;
-  position: -o-sticky;
   border-right: 1px solid rgba(204, 204, 204, 0.5);
   color: #000;
   font-size: 11px;
@@ -364,25 +332,21 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .unscheduled-area {
-    position: sticky;
-    position: -webkit-sticky;
-    position: -moz-sticky;
-    position: -ms-sticky;
-    position: -o-sticky;
-    display: inline-block;
-    box-sizing: border-box;
-    width: 300px;
-    min-width: 300px;
-    padding: 0px 20px;
-    top: 150px;
-    right: -2px;
-    height: calc(100vh - 150px);
-    margin-top: -40px;
-    margin-left: 0px;
-    background: #fff;
-    border-left: 1px solid rgba(204, 204, 204, 0.5);
-    z-index: 500;
-    overflow: auto;
+  position: sticky;
+  display: inline-block;
+  box-sizing: border-box;
+  width: 300px;
+  min-width: 300px;
+  padding: 0px 20px;
+  top: 150px;
+  right: -2px;
+  height: calc(100vh - 150px);
+  margin-top: -40px;
+  margin-left: 0px;
+  background: #fff;
+  border-left: 1px solid rgba(204, 204, 204, 0.5);
+  z-index: 500;
+  overflow: auto;
 
   .header-wrapper {
     cursor: pointer;
@@ -400,7 +364,7 @@ input[type=number]::-webkit-outer-spin-button {
 
     &:hover {
       h3 {
-        color:#126799;
+        color: #126799;
       }
       .badge {
         background-color: #126799;
@@ -429,32 +393,32 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .generate-confirm {
-    position: fixed;
-    padding: 10px;
-    background-color: #1A95DD;
-    top: 110px;
-    right: 160px;
-    width: 400px;
-    justify-content: space-evenly;
-    display: flex;
-    z-index: 3000;
-    border-radius: 5px;
+  position: fixed;
+  padding: 10px;
+  background-color: #1A95DD;
+  top: 110px;
+  right: 160px;
+  width: 400px;
+  justify-content: space-evenly;
+  display: flex;
+  z-index: 3000;
+  border-radius: 5px;
 
-    span {
-      color: #fff;
-      font-size: .9em;
+  span {
+    color: #fff;
+    font-size: .9em;
+    margin-top: 5px;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: space-evenly;
+    width: 200px;
+
+    .btn {
+      height: 20px;
+      padding: 2px 5px;
       margin-top: 5px;
     }
-
-    .button-container {
-      display: flex;
-      justify-content: space-evenly;
-      width: 200px;
-
-      .btn {
-        height: 20px;
-        padding: 2px 5px;
-        margin-top: 5px;
-      }
-    }
+  }
 }

@@ -9,7 +9,7 @@
             = event.date_range
         - if event.url?
           %span.event-meta
-            %i.fa.fa-fw.fa-external-link-square
+            %i.bi.bi-box-arrow-up-right
             = link_to(event.url, event.url, target: "_blank")
         - if event.contact_email?
           %span.event-meta

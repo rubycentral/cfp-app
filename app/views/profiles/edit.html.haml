@@ -32,7 +32,7 @@
         .widget-header
           %i.bi.bi-lock
           - if current_user.provider.present?
-            %i.fa{class: "fa-#{current_user.provider.downcase}"}
+            %i.bi{class: "bi-#{current_user.provider.downcase}"}
           %h3 Identity Services
         .widget-content
           %p
@@ -62,7 +62,7 @@
           - if current_user.provider.present?
             .service
               %button.btn.btn-secondary.disabled{class: "btn-#{current_user.provider.downcase}-alt"}
-                %i{class: "fa fa-#{current_user.provider.downcase}"}
+                %i{class: "bi bi-#{current_user.provider.downcase}"}
                 | Connected via
                 = current_user.provider
 

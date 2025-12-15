@@ -17,7 +17,8 @@
             .form-group.col-sm-12
               = f.button :submit, "Log in", class: "btn btn-primary"
 
-            .form-group= render "devise/shared/links"
+  .col-sm-5.col-centered
+    .form-group= render "devise/shared/links"
 
 - unless Rails.env.production?
   .col-sm-5.col-centered.mt-3

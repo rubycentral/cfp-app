@@ -148,6 +148,10 @@ div.col-md-4 {
   font-size: var(--font-size-large);
   margin-left: 5px;
   padding: 0;
+
+  &.bi-pencil-fill {
+    font-size: 14px;
+  }
 }
 
 .proposal-track-select, .proposal-format-select {

@@ -32,7 +32,7 @@ feature "Teammate Invitation received", type: :system do
           known_user.uid = OmniAuth.config.mock_auth[:twitter][:uid]
           known_user.save
 
-          click_link "Sign in with Twitter"
+          click_on "Sign in with Twitter"
           expect(page).to have_content("Congrats! You are now an official team member of My Event!")
         end
 
@@ -41,7 +41,7 @@ feature "Teammate Invitation received", type: :system do
           known_user.uid = OmniAuth.config.mock_auth[:github][:uid]
           known_user.save
 
-          click_link "Sign in with GitHub"
+          click_on "Sign in with GitHub"
           expect(page).to have_content("Congrats! You are now an official team member of My Event!")
         end
 
@@ -65,13 +65,13 @@ feature "Teammate Invitation received", type: :system do
 
         it "can use a twitter oauth account" do
           click_link "Sign up"
-          click_link "Sign in with Twitter"
+          click_on "Sign in with Twitter"
           expect(page).to have_content("Congrats! You are now an official team member of My Event!")
         end
 
         it "can use a github oauth account" do
           click_link "Sign up"
-          click_link "Sign in with GitHub"
+          click_on "Sign in with GitHub"
           expect(page).to have_content("Congrats! You are now an official team member of My Event!")
         end
 
@@ -84,7 +84,7 @@ feature "Teammate Invitation received", type: :system do
 
         it "must complete profile if name missing from oauth hash" do
           OmniAuth.config.mock_auth[:twitter][:info].delete(:name)
-          click_link "Sign in with Twitter"
+          click_on "Sign in with Twitter"
           expect(page).to have_content("Before continuing, please take a moment to make sure your profile is complete.")
           expect(current_path).to eq(edit_profile_path)
         end

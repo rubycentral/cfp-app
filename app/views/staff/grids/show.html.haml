@@ -1,5 +1,5 @@
 #schedule{data: {tracks_css: @event.tracks.pluck(:name).map(&:parameterize).to_json}}
-  .schedule_grid{data: {controller: "schedule-tabs", schedule_tabs_active_day_value: 1}}
+  .schedule-wrapper{data: {controller: "schedule-tabs", schedule_tabs_active_day_value: 1}}
     / Alert area
     .alert.alert-danger{style: "display: none;", data: {controller: "alert"}}
       %button.btn-close{type: "button", data: {action: "click->alert#close"}}
@@ -8,7 +8,7 @@
 
     / Day navigation
     .nav_wrapper
-      %ul.schedule_nav
+      %ul.schedule-nav
         - (1..@event.days).each do |day|
           - day_slots = @event.time_slots.where(conference_day: day)
           - scheduled_count = day_slots.where.not(program_session_id: nil).count
@@ -25,9 +25,9 @@
       .tab-pane{id: "grid_day_#{day}", class: (day == 1 ? 'active' : ''), data: {schedule_tabs_target: "panel", day: day}}
         .grid-wrapper
           .bulk-preview-bar{id: "bulk_preview_bar_day_#{day}"}
-          .grid_container
+          .grid-container
             = render partial: 'staff/grids/grid', locals: {schedule: @schedule, day: day}
-            .unscheduled_area{data: {controller: 'draggable-sessions', draggable_sessions_tracks_css_value: @event.tracks.pluck(:name).map(&:parameterize).to_json}}
+            .unscheduled-area{data: {controller: 'draggable-sessions', draggable_sessions_tracks_css_value: @event.tracks.pluck(:name).map(&:parameterize).to_json}}
               = render partial: 'staff/grids/unscheduled_sessions', locals: {day: day}
 
   / Modal

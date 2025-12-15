@@ -32,7 +32,7 @@ export default class extends Controller {
   }
 
   addGridLineStyle() {
-    // No longer adding horizontal grid lines - using schedule_ruler without :after pseudo-element
+    // No longer adding horizontal grid lines - using schedule-ruler without :after pseudo-element
   }
 
   updateDayRange() {
@@ -201,7 +201,7 @@ export default class extends Controller {
       })
         .then(response => response.json())
         .then(data => {
-          const headerBadge = document.querySelector('.header_wrapper .badge')
+          const headerBadge = document.querySelector('.header-wrapper .badge')
           if (headerBadge) {
             headerBadge.textContent = data.unscheduled_count + '/' + data.total_count
           }
@@ -250,7 +250,7 @@ export default class extends Controller {
     for (let i = this.dayStartValue; i <= this.dayEndValue; i += this.stepValue) {
       m = m.add(this.stepValue, 'minute')
       const li = document.createElement('li')
-      li.className = 'ruler_tick'
+      li.className = 'ruler-tick'
       li.textContent = m.format('hh:mma')
       ruler.appendChild(li)
     }
@@ -272,7 +272,7 @@ export default class extends Controller {
     })
       .then(response => response.json())
       .then(data => {
-        const headerBadge = document.querySelector('.header_wrapper .badge')
+        const headerBadge = document.querySelector('.header-wrapper .badge')
         if (headerBadge) {
           headerBadge.textContent = data.unscheduled_count + '/' + data.total_count
         }

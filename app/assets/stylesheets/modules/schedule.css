@@ -256,7 +256,7 @@ input[type=number]::-webkit-outer-spin-button {
   z-index: 1000;
 }
 
-.schedule_grid {
+.schedule-wrapper {
   width: fit-content;
 
   .nav_wrapper {
@@ -277,7 +277,7 @@ input[type=number]::-webkit-outer-spin-button {
       bottom: 10px;
     }
 
-    .schedule_nav {
+    .schedule-nav {
       display: inline-block;
       margin-bottom: 0px;
       
@@ -329,12 +329,12 @@ input[type=number]::-webkit-outer-spin-button {
   }
 }
 
-.grid_container {
+.grid-container {
   margin: 85px auto 0;
   display: flex;
 }
 
-.schedule_ruler {
+.schedule-ruler {
   position: sticky;
   position: -webkit-sticky;
   position: -moz-sticky;
@@ -356,14 +356,14 @@ input[type=number]::-webkit-outer-spin-button {
   }
 }
 
-.ruler_tick {
+.ruler-tick {
   height: 90px;
   text-align: right;
   position: relative;
   width: 48px;
 }
 
-.unscheduled_area {
+.unscheduled-area {
     position: sticky;
     position: -webkit-sticky;
     position: -moz-sticky;
@@ -384,7 +384,7 @@ input[type=number]::-webkit-outer-spin-button {
     z-index: 500;
     overflow: auto;
 
-  .header_wrapper {
+  .header-wrapper {
     cursor: pointer;
 
     h3 {

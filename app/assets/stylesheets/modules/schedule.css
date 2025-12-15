@@ -495,91 +495,6 @@ input[type=number]::-webkit-outer-spin-button {
   width: 48px;
 }
 
-.grid_headers_wrapper {
-  position: sticky;
-  position: -webkit-sticky;
-  position: -moz-sticky;
-  position: -ms-sticky;
-  position: -o-sticky;
-  top: 163px;
-  background: #fff;
-  z-index: 100;
-  margin-left: 55px;
-
-  .schedule_column_head {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 240px;
-    height: 40px;
-    font-size: 14px;
-    line-height: 1.42857;
-    text-align: center;
-    color: #FFF;
-    background: #6d6b6b;
-    border-right: 1px solid #FFF;
-    border-bottom: 4px solid rgba(204, 204, 204, 0.5);
-  }
-}
-
-.schedule_column {
-  display: inline-block;
-  min-width: 240px;
-  background: gainsboro;
-
-  .schedule_time_slots {
-    display: flex;
-    justify-content: center;
-    border-style: solid;
-    border-width: 0 1px 0px 1px;
-    border-color: rgba(204, 204, 204, 0.5);
-    background: #f0f0f0;
-    height: 100%;
-    position: relative;
-
-    .preview_slot {
-      background-color: #1A95DD;
-      border: .5px solid rgba(204, 204, 204, 0.5);
-      position: absolute;
-      width: 98%;
-      margin: auto;
-    }
-
-    .schedule_slot {
-      background: #fff;
-      border: .5px solid rgba(204, 204, 204, 0.5);
-      position: absolute;
-      width: 98%;
-      margin: auto;
-      overflow: hidden;
-
-      .program_session_card, .slot_info_card {
-        height: 95%;
-        width: 95%;
-        box-shadow: none;
-        margin: 2px auto;
-        box-sizing: border-box;
-        font-size: .8em;
-        text-align: center;
-
-        .card_header {
-          padding: .3em;
-          max-height: 35%;
-          min-height: 22px;
-          overflow: hidden;
-        }
-
-        .card_body {
-          align-items: unset;
-          max-height: 65%;
-          padding: 2px;
-        }
-      }
-    }
-  }
-}
-
 .unscheduled_area {
     position: sticky;
     position: -webkit-sticky;
@@ -643,33 +558,6 @@ input[type=number]::-webkit-outer-spin-button {
       color: #000
     }
   }
-}
-
-.program_session_card, .slot_info_card {
-  width: 95%;
-  margin: 1em auto;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
-  height: 90px;
-  text-align: center;
-  cursor: move;
-  background: #fff;
-
-  .card_header{
-    width: 100%;
-    color: #fff;
-    padding: .5em;
-  }
-
-  .card_body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-}
-
-.slot_info_card {
-  cursor: default;
-  background: transparent;
 }
 
 .modal-container {

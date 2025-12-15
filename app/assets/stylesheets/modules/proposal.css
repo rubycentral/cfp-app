@@ -198,7 +198,8 @@ div.col-md-4 {
 .proposal-info-bar {
   padding-bottom: var(--padding-large-vertical);
 
-  i.fa {
+  i.fa,
+  i.bi {
     position:relative;
     margin-top: -0.1em;
   }

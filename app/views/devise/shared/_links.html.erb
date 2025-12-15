@@ -23,11 +23,11 @@
 
   <%- if devise_mapping.omniauthable? %>
 
-    <%= button_to user_twitter_omniauth_authorize_path, method: :post, data: {turbo: false}, class: "btn btn-twitter" do %>
+    <%= link_to user_twitter_omniauth_authorize_path, data: {turbo: false, method: :post}, class: "btn btn-twitter" do %>
       <i class="icon-twitter"></i>
       <span class="btn-text-middle">Sign in with Twitter</span>
     <% end %>
-    <%= button_to user_github_omniauth_authorize_path, method: :post, data: {turbo: false}, class: "btn btn-github" do %>
+    <%= link_to user_github_omniauth_authorize_path, data: {turbo: false, method: :post}, class: "btn btn-github" do %>
       <i class="icon-github"></i>
       <span class="btn-text-middle">Sign in with GitHub</span>
     <% end %>

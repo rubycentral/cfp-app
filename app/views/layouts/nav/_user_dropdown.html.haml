@@ -5,9 +5,9 @@
   %ul.dropdown-menu.dropdown-menu-end
     %li
       = link_to edit_profile_path, class: 'dropdown-item' do
-        %i.fa.fa-user
+        %i.bi.bi-person
         %span My Profile
     %li
       = link_to destroy_user_session_path, data: {turbo: true, turbo_method: :delete}, class: 'dropdown-item' do
-        %i.fa.fa-sign-out
+        %i.bi.bi-box-arrow-right
         %span Sign Out

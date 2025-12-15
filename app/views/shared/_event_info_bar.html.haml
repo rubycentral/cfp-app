@@ -15,7 +15,7 @@
         %strong.event-title= event.name
         - if event.start_date? && event.end_date?
           %span.event-meta
-            %i.fa.fa-fw.fa-calendar
+            %i.bi.bi-calendar
             = event.date_range
     %div{class: ['col-md-4', ('text-end text-end-responsive' unless has_actions)]}
       .event-info.event-info-dense

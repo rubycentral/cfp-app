@@ -9,7 +9,7 @@
     %fieldset.col-md-6
       .widget
         .widget-header
-          %i.fa.fa-user
+          %i.bi.bi-person
           %h3 Your Profile
         .widget-content
           - unless current_user.complete?
@@ -69,7 +69,7 @@
       - if current_user.teammates.present?
         .widget
           .widget-header
-            %i.fa.fa-envelope
+            %i.bi.bi-envelope
             %h3
               Notifications
               %span.ms-2{role: 'button', data: {bs_toggle: 'popover', bs_placement: 'left', bs_content: notification_preferences_tooltip, bs_html: 'true'}}

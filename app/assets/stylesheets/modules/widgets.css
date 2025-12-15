@@ -52,13 +52,14 @@
       margin: 5px 5px 0 0;
     }
 
-    > [class^="fa-"], > [class*=" fa-"],
-    > [class^="bi-"], > [class*=" bi-"] {
+    > .fa,
+    > .bi {
       color: #555;
-      display: inline-block;
       font-size: 16px;
-      margin: -8px -2px 0 10px;
-      vertical-align: text-top;
+      margin-left: 10px;
+      margin-right: -2px;
+      position: relative;
+      top: -8px;
     }
   }
 

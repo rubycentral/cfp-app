@@ -4,9 +4,9 @@
   %ul.dropdown-menu.dropdown-menu-end
     %li
       = link_to admin_users_path, class: "dropdown-item #{'active' if request.path == admin_users_path}" do
-        %i.fa.fa-users
+        %i.bi.bi-people
         %span Users
     %li
       = link_to admin_events_path, class: "dropdown-item #{'active' if request.path == admin_events_path}" do
-        %i.fa.fa-calendar
+        %i.bi.bi-calendar
         %span Events

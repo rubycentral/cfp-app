@@ -235,6 +235,7 @@ div.col-md-4 {
       .proposal-reviewer-tags {
         float: left;
         max-width: 80%;
+        margin-right: 5px;
       }
     }
 

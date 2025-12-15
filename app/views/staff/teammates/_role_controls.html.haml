@@ -1,7 +1,7 @@
 = teammate.role
 - if current_user.organizer_for_event?(current_event)
   = link_to '#', class: 'change-role', data: { bs_toggle: 'modal', bs_target: "#teammate-change-role-#{teammate.id}" } do
-    .bi.bi-pencil-fill
+    %i.bi.bi-pencil-fill
   %div{ id: "teammate-change-role-#{teammate.id}", class: 'modal fade' }
     .modal-dialog
       .modal-content

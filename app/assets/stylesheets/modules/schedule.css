@@ -1,97 +1,102 @@
-#schedule {
+.schedule-page {
+  width: fit-content;
   margin-top: 20px;
+}
 
-  .active {
-    .nav-tab-content {
-      .day {
-        color: var(--ruby-central-red);
-      }
-    }
+.schedule-page > .tab-pane {
+  position: relative;
+  display: none;
+  margin: 85px auto 0;
+}
+
+.schedule-page > .tab-pane.active {
+  display: block;
+}
+
+.grid-content {
+  display: flex;
+}
+
+nav.schedule-nav {
+  border-bottom: 1px solid #efefef;
+  padding: 0 0 0 6%;
+  position: fixed;
+  padding-top: 50px;
+  top: 77.8px;
+  left: 0px;
+  width: 100%;
+  background: #fff;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+
+  ul {
+    display: inline-block;
+    margin-bottom: 0px;
+    padding-left: 0;
+    list-style: none;
   }
 
-  .navbar-fixed-top.nav-tabs {
-    padding-top: calc(var(--navbar-height) * 2 + 10px);
-    margin-left: 2%;
-    z-index: 1000;
-    background: #fff;
-  }
-
-  .tab-pane {
-    position: relative;
-  }
-  
-  .tab-content {
-    margin-top: 50px;
-  }
-  
-  .generate-grid-wrapper {
-    position: absolute;
-    right: 5px;
-    top: -50px;
-    z-index: 1100;
-  }
-
-  .row.contained {
-    overflow: hidden;
-    position: relative;
-
-    .scroll-panel-margin {
-      position: absolute;
-      z-index: 16;
-      top: 0;
-      left: -2px;
-      bottom: 0;
-      width: 58px;
-/* border: 1px solid black; */
-      background-color: #FFF;
-      height: 100%;
-    }
-  }
-
-  .nav-tab-content {
-    display: flex;
-    align-items: center;
-
-    .day {
-      font-weight: bold;
-      font-size: 1.25em;
-    }
-
-    .counts-container {
-      text-align: right;
-      margin-left: 2em;
-      color: var(--text-color);
-    }
-  }
-
-  .generate-grid {
-    margin: 0 0.5em 1em 0;
-  }
-
-
-  .unscheduled-sessions-toggle {
-    font-size: 1.25em;
-    display: block;
-
-    .badge {
-      background-color: var(--bright-blue);
-      font-size: .75em;
-    }
-
-    &:hover, &:visited, &:focus {
-      text-decoration: none;
-    }
-
-    &:visited, &:focus {
-      color: var(--bright-blue);
-    }
+  li {
+    display: inline-block;
+    color: #b2afaa;
+    padding: 5px 10px;
 
     &:hover {
-      color: var(--link-hover-color);
-      .badge {
-        background-color: var(--link-hover-color);
-      }
+      background-color: #ededed;
+      border-radius: 2px 2px 0px 0px;
+      cursor: pointer;
     }
+
+    &.active {
+      color: #91181C;
+      border: 1px solid #efefef;
+      border-bottom: 1px solid #fff;
+      border-radius: 2px 2px 0px 0px;
+    }
+
+    &.active:hover {
+      background-color: #fff;
+      cursor: default;
+    }
+
+    span {
+      padding: 0px 10px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .badge {
+      display: inline-block;
+      min-width: 10px;
+      padding: 3px 7px;
+      font-size: 12px;
+      font-weight: bold;
+      color: #fff;
+      line-height: 1;
+      vertical-align: middle;
+      white-space: nowrap;
+      text-align: center;
+      background-color: #b2afaa;
+      border-radius: 10px;
+    }
+  }
+
+  .btn {
+    margin-left: auto;
+    margin-right: 20px;
+  }
+}
+
+.bulk-preview-bar {
+  .bar {
+    padding: 1.5em;
+    margin-left: 1em;
+    z-index: 1080;
+  }
+
+  form {
+    display: inline-block;
   }
 }
 
@@ -144,28 +149,22 @@ body .custom-session-card {
     font-size: .75em;
   }
 
-  .format {
-    font-size: .75em
-  }
-
   .title {
     font-weight: bold;
     font-size: 1.1em;
   }
 }
 
-body .ui-draggable-dragging {
-  z-index: 1000;
-}
-
 body .custom-session-card {
   cursor: pointer;
 }
+
 /* in the unscheduled sessions widget */
 .unscheduled-sessions-widget .draggable-session-card {
   opacity: 1;
   width: 220px;
 }
+
 /* in the grid */
 .schedule-grid .draggable-session-card,
 .schedule-grid .custom-session-card {
@@ -184,7 +183,6 @@ body .custom-session-card {
   }
 
   &.medium {
-    .format,
     .presenter {
       display: none;
     }
@@ -205,85 +203,15 @@ body .custom-session-card {
   }
 }
 
-.grid-wrapper {
-  display: inline-block;
-  margin-top: 25px;
-
-  .bulk-preview-bar {
-    .bar {
-      padding: 1.5em;
-      margin-left: 1em;
-      z-index: 1080;
-    }
-
-    form {
-      display: inline-block;
-    }
-  }
-
-  h3.clearfix {
-    margin-top: 30px;
-  }
-
-  .schedule-widget {
-    width: 100vw;
-    display: flex;
-
-    .unscheduled-sessions-column {
-      padding: 0 2em;
-      background: #fff;
-      z-index: 950;
-    }
-
-    .grid-column {
-      max-width: 75%;
-    }
-  }
-}
-
 .schedule-grid {
   display: flex;
   height: 100%;
-  width: 100%;
   flex-flow: row nowrap;
   align-items: stretch;
   overflow-x: scroll;
-  overflow-y:hidden;
+  overflow-y: hidden;
   margin-bottom: 20px;
   border-collapse: collapse;
-
-  .ruler, .ruler li {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .ruler {
-    width: 45px;
-    border-radius: 2px;
-    color: #000;
-    font-size: var(--font-size-xs);
-    margin: 37px 5px 0 0;
-    white-space: nowrap;
-    background-color: #FFF;
-    z-index: 14;
-  }
-
-  .ruler li {
-    height: 90px;
-    text-align: center;
-    position: relative;
-
-    &:after {
-      content: '';
-      position: absolute;
-      border-bottom: 1px solid rgba(204,204,204, .5);
-      width: 10px;
-      top: .6em;
-      left: 60px;
-      z-index: 9;
-    }
-  }
 
   .room-column {
     width: 240px;
@@ -312,10 +240,6 @@ body .custom-session-card {
     color: #FFF;
     background: #6d6b6b;
     border-right: 1px solid #FFF;
-
-    .room-number {
-      font-style: italic;
-    }
   }
 
   .time-slots, .time-slots .time-slot {
@@ -331,7 +255,7 @@ body .custom-session-card {
     margin-top: 4px;
     border-width: 0 1px 0 0;
     display: flex;
-    justify-content:center;
+    justify-content: center;
   }
 
   .room-column:first-of-type .time-slots {
@@ -371,10 +295,10 @@ body .custom-session-card {
 
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
 }
 
 #staff_grids_show .page-footer {
@@ -382,96 +306,8 @@ input[type=number]::-webkit-outer-spin-button {
   z-index: 1000;
 }
 
-.schedule_grid {
-  width: fit-content;
-
-  .scheduling-error.alert.alert-danger {
-    position: fixed;
-    margin: 60px auto 0;
-    top: 0;
-  }
-
-  .nav_wrapper {
-    border-bottom: 1px solid #efefef;
-    padding: 0 0 0 6%;
-    position: fixed;
-    padding-top: 50px;
-    top: 77.8px;
-    left: 0px;
-    width: 100%;
-    background: #fff;
-    z-index: 1000;
-
-    .generate_btn {
-      float: right;
-      margin-right: 20px;
-      position: relative;
-      bottom: 10px;
-    }
-
-    .schedule_nav {
-      display: inline-block;
-      margin-bottom: 0px;
-      
-      li {
-        display: inline-block;
-        color: #b2afaa;
-        padding: 5px 10px;
-
-        &:hover {
-          background-color: #ededed;
-          border-radius: 2px 2px 0px 0px;
-          cursor: pointer;
-        }
-        
-        &.active {
-          color: #91181C;
-          border: 1px solid #efefef;
-          border-bottom: 1px solid #fff;
-          border-radius: 2px 2px 0px 0px;
-        }
-
-        &.active:hover {
-          background-color: #fff;
-          cursor: default;
-        }
-
-        span {
-          padding: 0px 10px;
-          font-size: 16px;
-          font-weight: bold;
-        }
-
-        .badge {
-          display: inline-block;
-          min-width: 10px;
-          padding: 3px 7px;
-          font-size: 12px;
-          font-weight: bold;
-          color: #fff;
-          line-height: 1;
-          vertical-align: middle;
-          white-space: nowrap;
-          text-align: center;
-          background-color: #b2afaa;
-          border-radius: 10px;
-        }
-      }
-    }
-  }
-}
-
-.grid_container {
-  margin: 85px auto 0;
-  display: flex;
-}
-
-.schedule_ruler {
+.schedule-ruler {
   position: sticky;
-  position: -webkit-sticky;
-  position: -moz-sticky;
-  position: -ms-sticky;
-  position: -o-sticky;
   border-right: 1px solid rgba(204, 204, 204, 0.5);
   color: #000;
   font-size: 11px;
@@ -488,120 +324,31 @@ input[type=number]::-webkit-outer-spin-button {
   }
 }
 
-.ruler_tick {
+.ruler-tick {
   height: 90px;
   text-align: right;
   position: relative;
   width: 48px;
 }
 
-.grid_headers_wrapper {
+.unscheduled-area {
   position: sticky;
-  position: -webkit-sticky;
-  position: -moz-sticky;
-  position: -ms-sticky;
-  position: -o-sticky;
-  top: 163px;
-  background: #fff;
-  z-index: 100;
-  margin-left: 55px;
-
-  .schedule_column_head {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 240px;
-    height: 40px;
-    font-size: 14px;
-    line-height: 1.42857;
-    text-align: center;
-    color: #FFF;
-    background: #6d6b6b;
-    border-right: 1px solid #FFF;
-    border-bottom: 4px solid rgba(204, 204, 204, 0.5);
-  }
-}
-
-.schedule_column {
   display: inline-block;
-  min-width: 240px;
-  background: gainsboro;
+  box-sizing: border-box;
+  width: 300px;
+  min-width: 300px;
+  padding: 0px 20px;
+  top: 150px;
+  right: -2px;
+  height: calc(100vh - 150px);
+  margin-top: -40px;
+  margin-left: 0px;
+  background: #fff;
+  border-left: 1px solid rgba(204, 204, 204, 0.5);
+  z-index: 500;
+  overflow: auto;
 
-  .schedule_time_slots {
-    display: flex;
-    justify-content: center;
-    border-style: solid;
-    border-width: 0 1px 0px 1px;
-    border-color: rgba(204, 204, 204, 0.5);
-    background: #f0f0f0;
-    height: 100%;
-    position: relative;
-
-    .preview_slot {
-      background-color: #1A95DD;
-      border: .5px solid rgba(204, 204, 204, 0.5);
-      position: absolute;
-      width: 98%;
-      margin: auto;
-    }
-
-    .schedule_slot {
-      background: #fff;
-      border: .5px solid rgba(204, 204, 204, 0.5);
-      position: absolute;
-      width: 98%;
-      margin: auto;
-      overflow: hidden;
-
-      .program_session_card, .slot_info_card {
-        height: 95%;
-        width: 95%;
-        box-shadow: none;
-        margin: 2px auto;
-        box-sizing: border-box;
-        font-size: .8em;
-        text-align: center;
-
-        .card_header {
-          padding: .3em;
-          max-height: 35%;
-          min-height: 22px;
-          overflow: hidden;
-        }
-
-        .card_body {
-          align-items: unset;
-          max-height: 65%;
-          padding: 2px;
-        }
-      }
-    }
-  }
-}
-
-.unscheduled_area {
-    position: sticky;
-    position: -webkit-sticky;
-    position: -moz-sticky;
-    position: -ms-sticky;
-    position: -o-sticky;
-    display: inline-block;
-    box-sizing: border-box;
-    width: 300px;
-    min-width: 300px;
-    padding: 0px 20px;
-    top: 150px;
-    right: -2px;
-    height: calc(100vh - 150px);
-    margin-top: -40px;
-    margin-left: 0px;
-    background: #fff;
-    border-left: 1px solid rgba(204, 204, 204, 0.5);
-    z-index: 500;
-    overflow: auto;
-
-  .header_wrapper {
+  .header-wrapper {
     cursor: pointer;
 
     h3 {
@@ -617,7 +364,7 @@ input[type=number]::-webkit-outer-spin-button {
 
     &:hover {
       h3 {
-        color:#126799;
+        color: #126799;
       }
       .badge {
         background-color: #126799;
@@ -645,166 +392,33 @@ input[type=number]::-webkit-outer-spin-button {
   }
 }
 
-.program_session_card, .slot_info_card {
-  width: 95%;
-  margin: 1em auto;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
-  height: 90px;
-  text-align: center;
-  cursor: move;
-  background: #fff;
-
-  .card_header{
-    width: 100%;
-    color: #fff;
-    padding: .5em;
-  }
-
-  .card_body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-}
-
-.slot_info_card {
-  cursor: default;
-  background: transparent;
-}
-
-.modal-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1001;
-  background-color: #00000080;
-
-  .bulk-modal {
-    width: 800px;
-    max-width: 100%;
-    max-height: 100%;
-    min-height: 200px;
-    background-color: #fff;
-    border: 1px solid #6d6b6b;
-    margin: 125px auto;
-    border-radius: 5px;
-    box-shadow: 1px 1px 4px #6d6b6b;
-
-    .modal-header {
-      h3 {
-        display: inline-block;
-      }
-
-      .room-data {
-        float: right;
-        max-width: 500px;
-        margin-top: 25px;
-        margin-right: -15px;
-      }
-
-      .bi {
-        float: right;
-        cursor: pointer;
-      }
-    }
-
-    .modal-body {
-      width: 95%;
-      margin: auto;
-      display: inherit;
-      
-      label {
-        width: 100%;
-        margin: 10px auto 0px;
-
-        p {
-          font-weight: normal;
-        }
-
-        .required, .error {
-          color: #751317
-        }
-
-        select {
-          display: block;
-          width: 100%;
-          height: 30px;
-          margin: 0px;
-        }
-
-        input, textarea {
-          width: 100%;
-          display: block;
-          border: 1px solid #A6A6A6;
-          padding: 5px;
-        }
-
-        .bulk-checkbox {
-          display: inline-block;
-          width: unset;
-        }
-      }
-
-      .start-times {
-        height: 30px;
-        border-radius: 4px;
-        padding: 6px 12px;
-        border: 1px solid #ccc;
-      }
-      
-      .minutes-input {
-        display: inline-block;
-        width: 50px;
-        height: 30px;
-        padding: 6px 12px;
-        font-size: 14px;
-        line-height: 1.42857;
-        color: #555555;
-        background-color: #fff;
-        background-image: none;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-      }
-
-      .session-select {
-        display: inline-block;
-        width: 380px;
-        height: 30px;
-        margin: 10px 0px 0px 20px;
-      }
-    }
-  }
-}
-
 .generate-confirm {
-    position: fixed;
-    padding: 10px;
-    background-color: #1A95DD;
-    top: 110px;
-    right: 160px;
-    width: 400px;
-    justify-content: space-evenly;
-    display: flex;
-    z-index: 3000;
-    border-radius: 5px;
+  position: fixed;
+  padding: 10px;
+  background-color: #1A95DD;
+  top: 110px;
+  right: 160px;
+  width: 400px;
+  justify-content: space-evenly;
+  display: flex;
+  z-index: 3000;
+  border-radius: 5px;
 
-    span {
-      color: #fff;
-      font-size: .9em;
+  span {
+    color: #fff;
+    font-size: .9em;
+    margin-top: 5px;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: space-evenly;
+    width: 200px;
+
+    .btn {
+      height: 20px;
+      padding: 2px 5px;
       margin-top: 5px;
     }
-
-    .button-container {
-      display: flex;
-      justify-content: space-evenly;
-      width: 200px;
-
-      .btn {
-        height: 20px;
-        padding: 2px 5px;
-        margin-top: 5px;
-      }
-    }
+  }
 }

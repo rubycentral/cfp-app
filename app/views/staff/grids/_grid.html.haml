@@ -1,5 +1,5 @@
 .schedule-grid{id: "schedule_day_#{day}", data: { controller: "schedule-grid", schedule_grid_tracks_css_value: schedule.event.tracks.pluck(:name).map(&:parameterize).to_json }}
-  %ul.schedule_ruler{data: { schedule_grid_target: "ruler" }}
+  %ul.schedule-ruler{data: { schedule_grid_target: "ruler" }}
   - schedule.each_room(day) do |room, slots|
     .room-column{class: grid_position_css(room)}
       .column-header{data: { schedule_grid_target: "columnHeader" }}

@@ -25,6 +25,10 @@ export default class extends Controller {
           checkbox.checked = false
         }
       })
+      // Ensure the clicked checkbox is checked (unless it's the delete button)
+      if (!event.target.classList.contains('delete')) {
+        event.target.checked = true
+      }
       this.formTarget.requestSubmit()
     }
   }

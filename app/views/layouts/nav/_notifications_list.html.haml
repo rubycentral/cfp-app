@@ -1,7 +1,7 @@
 %li.nav-item.dropdown
   - unread_notifications = current_user.notifications.recent_unread.records
   %a.nav-link.dropdown-toggle{title: 'Notifications Toggle', href: '#', role: 'button', data: {bs_toggle: 'dropdown'}, aria: {expanded: 'false'}}
-    %i.bi.bi-envelope
+    %i.bi.bi-envelope-fill
     %span.badge.bg-secondary= unread_notifications.length if unread_notifications.any?
 
   %ul.dropdown-menu.dropdown-menu-end

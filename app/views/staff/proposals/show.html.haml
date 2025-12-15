@@ -34,22 +34,22 @@
                 .info-item-heading Format
                 #format-name.float-start
                   #{proposal.session_format_name}
-                %i.fa.fa-pencil.inline-edit-icon{data: {action: 'click->inline-edit#show'}}
+                %i.bi.bi-pencil-fill.inline-edit-icon{data: {action: 'click->inline-edit#show'}}
               #edit-format-wrapper{data: {inline_edit_target: 'edit'}}
                 %span
                   = render 'shared/proposals/inline_format_edit', proposal: proposal
-                %i.fa.fa-undo.inline-edit-icon{data: {action: 'click->inline-edit#cancel'}}
+                %i.bi.bi-arrow-counterclockwise.inline-edit-icon{data: {action: 'click->inline-edit#cancel'}}
           .col-sm-6
             .proposal-meta-item.full-width{data: {controller: 'inline-edit'}}
               #current-track{data: {inline_edit_target: 'display'}}
                 .info-item-heading Track
                 #track-name.float-start
                   #{proposal.track_name}
-                %i.fa.fa-pencil.inline-edit-icon{data: {action: 'click->inline-edit#show'}}
+                %i.bi.bi-pencil-fill.inline-edit-icon{data: {action: 'click->inline-edit#show'}}
               #edit-track-wrapper{data: {inline_edit_target: 'edit'}}
                 %span
                   = render 'shared/proposals/inline_track_edit', proposal: proposal
-                %i.fa.fa-undo.inline-edit-icon{data: {action: 'click->inline-edit#cancel'}}
+                %i.bi.bi-arrow-counterclockwise.inline-edit-icon{data: {action: 'click->inline-edit#cancel'}}
         .col-sm-4
           .proposal-meta-item.col-sm-12.no-pad-left
             .info-item-heading Reviewer Tags
@@ -73,7 +73,7 @@
 
     .widget.widget-card.flush-top
       .widget-header
-        %i.fa.fa-comments
+        %i.bi.bi-chat-dots
         %h3.comments-heading= pluralize(proposal.public_comments.count, 'Public Comment')
       .widget-content
         = render partial: 'proposals/comments', locals: { proposal: proposal, comments: proposal.public_comments }

@@ -4,6 +4,6 @@
       = proposal.review_tags_labels
     - else
       %em None
-  #edit-tags-icon.fa.fa-pencil{data: {reviewer_tags_target: 'icon', action: 'click->reviewer-tags#toggle'}}
+  #edit-tags-icon.bi.bi-pencil-fill{data: {reviewer_tags_target: 'icon', action: 'click->reviewer-tags#toggle'}}
   #review-tags-form-wrapper.hidden{data: {reviewer_tags_target: 'form'}}
     = render 'shared/proposals/tags_form', event: event, proposal: proposal

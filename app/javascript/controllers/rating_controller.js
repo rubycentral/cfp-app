@@ -38,7 +38,7 @@ export default class extends Controller {
     const allWrappers = this.element.querySelectorAll('.star-wrapper')
 
     allWrappers.forEach((w, index) => {
-      const star = w.querySelector('.star .fa-star')
+      const star = w.querySelector('.star .bi-star-fill')
       if (star) {
         if (w === wrapper || this.isPreviousWrapper(allWrappers, wrapper, w)) {
           star.classList.add('starred')
@@ -61,7 +61,7 @@ export default class extends Controller {
       const allWrappers = Array.from(this.element.querySelectorAll('.star-wrapper'))
       const checkedIndex = allWrappers.indexOf(checkedWrapper)
       allWrappers.forEach((wrapper, index) => {
-        const star = wrapper.querySelector('.star .fa-star')
+        const star = wrapper.querySelector('.star .bi-star-fill')
         if (star) {
           if (index <= checkedIndex) {
             star.classList.add('starred')
@@ -71,7 +71,7 @@ export default class extends Controller {
         }
       })
     } else {
-      this.element.querySelectorAll('.star .fa-star').forEach(star => {
+      this.element.querySelectorAll('.star .bi-star-fill').forEach(star => {
         star.classList.remove('starred')
       })
     }

@@ -38,3 +38,6 @@
 !/app/assets/builds/.keep
 
 /node_modules
+
+# Ignore Heroku DB dump files.
+latest.dump*

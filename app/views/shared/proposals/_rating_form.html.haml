@@ -17,7 +17,7 @@
                     %i.bi.bi-star
                     %i.bi.bi-star-fill
                   = f.check_box :score, {class: 'star-rating-select', disabled: disabled}, score, nil
-            - if show_ratings_toggle?(proposal, rating) || true
+            - if show_ratings_toggle?(proposal, rating)
               %li.abstain-wrapper
                 = link_to "#", class: 'abstain', data: {action: 'click->rating#toggleCommentsAndRatings'} do
                   %i.bi.bi-chat-dots

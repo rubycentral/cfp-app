@@ -1,5 +1,3 @@
-require 'digest/sha1'
-
 class Invitation < ApplicationRecord
   include Invitable
 

@@ -3,7 +3,7 @@
   background-color: #f2dede;
 }
 
-#rooms-partial {
+.rooms-partial {
   margin-top: 20px;
   header {
     .btn {

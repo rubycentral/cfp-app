@@ -20,18 +20,10 @@
   padding: 3px 0 3px 0;
 }
 
-#proposal {
-  p.count {
-    font-style: italic;
-    font-weight: bold;
-    margin-bottom: 1.5em;
-  }
-
-  ul.invitation {
-    padding: 0;
-    .label {
-      margin-right: 10px;
-    }
+ul.invitation {
+  padding: 0;
+  .label {
+    margin-right: 10px;
   }
 }
 

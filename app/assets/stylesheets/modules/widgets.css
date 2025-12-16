@@ -70,16 +70,7 @@
     border: 1px solid #D5D5D5;
     padding: 20px 15px 15px;
     border-radius: 5px;
-    /* Widget Content Clearfix */
-    &:before,
-    &:after {
-      content:"";
-      display:table;
-    }
-
-    &:after {
-      clear:both;
-    }
+    display: flow-root;
   }
 
   .widget-header +.widget-content {

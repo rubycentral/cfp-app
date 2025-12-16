@@ -16,7 +16,6 @@ import GridModalController from "./grid_modal_controller"
 import CfpDatatableController from "./cfp_datatable_controller"
 import ContentController from "./content_controller"
 import CopySpeakerEmailsController from "./copy_speaker_emails_controller"
-import DatatableController from "./datatable_controller"
 import DraggableSessionsController from "./draggable_sessions_controller"
 import EditorController from "./editor_controller"
 import FilterController from "./filter_controller"
@@ -45,7 +44,6 @@ import StatusToggleController from "./status_toggle_controller"
 import SubNavController from "./sub_nav_controller"
 import TimeSelectController from "./time_select_controller"
 import TimeSlotDialogController from "./time_slot_dialog_controller"
-import TimeSlotErrorController from "./time_slot_error_controller"
 import TimeSlotsController from "./time_slots_controller"
 import ToggleVisibilityController from "./toggle_visibility_controller"
 import TomSelectController from "./tom_select_controller"
@@ -58,7 +56,6 @@ application.register("grid-modal", GridModalController)
 application.register("cfp-datatable", CfpDatatableController)
 application.register("content", ContentController)
 application.register("copy-speaker-emails", CopySpeakerEmailsController)
-application.register("datatable", DatatableController)
 application.register("draggable-sessions", DraggableSessionsController)
 application.register("editor", EditorController)
 application.register("filter", FilterController)
@@ -87,7 +84,6 @@ application.register("status-toggle", StatusToggleController)
 application.register("sub-nav", SubNavController)
 application.register("time-select", TimeSelectController)
 application.register("time-slot-dialog", TimeSlotDialogController)
-application.register("time-slot-error", TimeSlotErrorController)
 application.register("time-slots", TimeSlotsController)
 application.register("toggle-visibility", ToggleVisibilityController)
 application.register("tom-select", TomSelectController)

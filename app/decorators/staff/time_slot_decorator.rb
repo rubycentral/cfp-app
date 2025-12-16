@@ -18,17 +18,6 @@ class Staff::TimeSlotDecorator < Draper::Decorator
     object.id
   end
 
- def row_data_time_sortable
-   row = [object.conference_day, object.start_time, object.end_time, linked_title,
-     display_presenter, object.room_name, display_sponsor_star, display_track_name]
-     row << action_links
-     row
- end
-
-  def row
-    {id: object.id, values: row_data_time_sortable}
-  end
-
   def action_links
     links = [
       h.link_to('Edit',

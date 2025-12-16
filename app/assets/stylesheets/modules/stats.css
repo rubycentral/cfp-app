@@ -39,11 +39,6 @@
   font-size: 40px;
 }
 
-.stats #donut-chart {
-  height: 100px;
-  margin-left: -20px;
-}
-
 #big_stats {
   width: 100%;
   display: table;
@@ -150,10 +145,6 @@ margin-bottom: 26px;}
     display: block;
     float: left;
     margin-bottom: 0;
-  }
-
-  #chart-stats {
-    margin: 2em 0 1em;
   }
 }
 

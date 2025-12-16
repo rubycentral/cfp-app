@@ -63,14 +63,6 @@
   margin-bottom: 7px;
 }
 
-#copy-emails {
-  margin: 10px;
-}
-
-#emails-for-copy {
-  display: none;
-}
-
 .proposal-list {
   .actions { white-space: nowrap; }
   .date_range_filter, .text_filter { width: 100px !important; }
@@ -177,9 +169,6 @@ div.col-md-4 {
 #review-tags-form-wrapper {
   padding: 0;
   text-align: left;
-  #autocomplete-options {
-    display: none;
-  }
   .selectize-input.items .item {
     background: var(--state-success-bg);
     border: 1px solid hsl(from var(--state-success-bg) h s calc(l - 30));

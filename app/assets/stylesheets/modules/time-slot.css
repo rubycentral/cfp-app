@@ -3,17 +3,8 @@
   background-color: #f2dede;
 }
 
-#staff_time_slots_index {
-  .form-inline {
-    margin-bottom: 15px;
-  }
-
-  .alert {
-    top: 40px;
-  }
-}
-
-#time-slot, #rooms-partial, #tracks-partial {
+#rooms-partial {
+  margin-top: 20px;
   header {
     .btn {
       margin: 21px 0 0 15px;
@@ -26,10 +17,6 @@
       margin-bottom: 5px;
     }
   }
-}
-
-#rooms-partial {
-  margin-top: 20px;
 }
 
 #organizer-time-slots {

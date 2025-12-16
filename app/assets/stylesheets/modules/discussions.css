@@ -7,23 +7,12 @@
   li {
     list-style: none;
     position: relative;
-
-    &:before,
-    &:after {
-      content: "";
-      display: table;
-    }
-
-    &:after {
-      clear: both;
-    }
+    display: flow-root;
   }
 
   .text li {
     list-style: disc outside;
-    &:before, &:after {
-      content: none;
-    }
+    display: list-item;
   }
 }
 
@@ -52,16 +41,7 @@ textarea.mention {
     width: 100%;
     border-bottom: 1px solid #fff;
     line-height: 23px;
-
-    &:before,
-    &:after {
-      content: "";
-      display: table;
-    }
-
-    &:after {
-      clear: both;
-    }
+    display: flow-root;
   }
 
   .name {

@@ -21,7 +21,6 @@
     height: 40px;
     line-height: 40px;
     background: linear-gradient(to bottom, var(--beige) 0%, #f2efea 100%);
-    -webkit-background-clip: padding-box;
     background-clip: padding-box;
 
     h3 {
@@ -70,8 +69,6 @@
     background: #FFF;
     border: 1px solid #D5D5D5;
     padding: 20px 15px 15px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
     border-radius: 5px;
     /* Widget Content Clearfix */
     &:before,
@@ -87,10 +84,6 @@
 
   .widget-header +.widget-content {
     border-top: none;
-    -webkit-border-top-left-radius: 0;
-    -webkit-border-top-right-radius: 0;
-    -moz-border-radius-topleft: 0;
-    -moz-border-radius-topright: 0;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
   }

@@ -14,7 +14,6 @@
   vertical-align: top;
   text-decoration: none;
   width: 22.50%;
-  -webkit-border-radius: 5px;
   border-radius: 5px;
   transition: all ease-in-out .15s;
 }

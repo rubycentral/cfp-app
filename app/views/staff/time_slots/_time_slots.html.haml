@@ -2,10 +2,7 @@
   .col-md-12
     %header.page-header.d-flex.align-items-end.gap-4
       %h2.mb-0 Time Slots
-      = link_to "Add Time Slot",
-          new_event_staff_schedule_time_slot_path,
-          class: "btn btn-primary btn-sm " + (has_missing_requirements?(event) ? 'disabled' : ''),
-          data: {turbo: true, turbo_frame: 'time-slot-new-dialog'}
+      = link_to 'Add Time Slot', new_event_staff_schedule_time_slot_path, class: "btn btn-primary btn-sm#{' disabled' if has_missing_requirements?(event)}", data: {turbo: true, turbo_frame: 'time-slot-new-dialog'}
       .ms-auto
         = link_to event_staff_schedule_time_slots_path(format: :csv), class: "btn btn-info" do
           %span.bi.bi-download

@@ -36,6 +36,7 @@ class Staff::TimeSlotsController < Staff::ApplicationController
     @time_slot = current_event.time_slots.build(time_slot_params)
 
     if @time_slot.save
+      flash.now[:info] = 'Time slot added.'
       session[:sticky_time_slot] = {
         conference_day: @time_slot.conference_day,
         start_time: @time_slot.start_time,

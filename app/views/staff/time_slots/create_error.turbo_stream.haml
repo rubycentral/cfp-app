@@ -1,5 +1,5 @@
-= turbo_stream.append 'time_slots' do
-  %div{data: {controller: 'time-slot-error', time_slot_error_message_value: @time_slot.errors.full_messages.join(', ')}}
+= turbo_stream.update 'time-slot-new-dialog' do
+  = render partial: 'new_dialog_content', locals: {time_slot: time_slot_decorated}
 
 = turbo_stream.update 'flash' do
   = show_flash

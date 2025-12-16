@@ -119,15 +119,15 @@ describe Proposal do
     end
 
     it "doesn't promote from other states" do
-      create(:proposal_with_track, state: Proposal::ACCEPTED)
-      create(:proposal_with_track, state: Proposal::REJECTED)
-      create(:proposal_with_track, state: Proposal::WITHDRAWN)
-      create(:proposal_with_track, state: Proposal::NOT_ACCEPTED)
-      create(:proposal_with_track, state: Proposal::SUBMITTED)
-      create(:proposal_with_track, state: Proposal::SOFT_ACCEPTED)
-      create(:proposal_with_track, state: Proposal::SOFT_WAITLISTED)
-      create(:proposal_with_track, state: Proposal::SOFT_REJECTED)
-
+      event, track = create(:event), create(:track)
+      create(:proposal_with_track, state: Proposal::ACCEPTED, event: event, track: track)
+      create(:proposal_with_track, state: Proposal::REJECTED, event: event, track: track)
+      create(:proposal_with_track, state: Proposal::WITHDRAWN, event: event, track: track)
+      create(:proposal_with_track, state: Proposal::NOT_ACCEPTED, event: event, track: track)
+      create(:proposal_with_track, state: Proposal::SUBMITTED, event: event, track: track)
+      create(:proposal_with_track, state: Proposal::SOFT_ACCEPTED, event: event, track: track)
+      create(:proposal_with_track, state: Proposal::SOFT_WAITLISTED, event: event, track: track)
+      create(:proposal_with_track, state: Proposal::SOFT_REJECTED, event: event, track: track)
 
       Proposal.all.each do |prop|
         expect{ prop.promote }.not_to change(prop, :state)

@@ -1,17 +1,16 @@
 .row
   .col-md-12
-    %header.page-header
-      .btn-nav.float-end
+    %header.page-header.d-flex.align-items-end.gap-4
+      %h2.mb-0 Time Slots
+      = link_to "Add Time Slot",
+          new_event_staff_schedule_time_slot_path,
+          class: "btn btn-primary btn-sm " + (has_missing_requirements?(event) ? 'disabled' : ''),
+          data: {turbo: true, turbo_frame: 'time-slot-new-dialog'},
+          id: 'add-time-slot'
+      .ms-auto
         = link_to event_staff_schedule_time_slots_path(format: :csv), class: "btn btn-info" do
           %span.bi.bi-download
           Download as CSV
-
-      %h2.float-start Time Slots
-      = link_to "Add Time Slot",
-          new_event_staff_schedule_time_slot_path,
-          class: "btn btn-primary btn-sm float-start " + (has_missing_requirements?(event) ? 'disabled' : ''),
-          data: {turbo: true, turbo_frame: 'time-slot-new-dialog'},
-          id: 'add-time-slot'
 
     #time-slot-prereqs.clearfix{ class: has_missing_requirements?(event) ? '' : 'hidden' }
       %h5.text-danger The following must be resolved before adding a new time slot:

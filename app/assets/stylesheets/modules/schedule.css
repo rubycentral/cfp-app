@@ -208,7 +208,7 @@ body .custom-session-card {
   height: 100%;
   flex-flow: row nowrap;
   align-items: stretch;
-  overflow-x: scroll;
+  overflow-x: auto;
   overflow-y: hidden;
   margin-bottom: 20px;
   border-collapse: collapse;

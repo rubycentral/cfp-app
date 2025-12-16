@@ -12,16 +12,15 @@
           class: "btn btn-primary btn-sm float-start " + (has_missing_requirements?(event) ? 'disabled' : ''),
           data: {turbo: true, turbo_frame: 'time-slot-new-dialog'},
           id: 'add-time-slot'
-.row
-  .col-md-12
+
     #time-slot-prereqs.clearfix{ class: has_missing_requirements?(event) ? '' : 'hidden' }
-      %h5.text-danger{ id: 'missing-prereq-head' }
-        The following must be resolved before adding a new time slot:
+      %h5.text-danger The following must be resolved before adding a new time slot:
       %ul#missing-prereq-messages.list-group
         = unmet_requirements(event)
 
 %hr
-.row.margin-top
+
+.row
   .col-md-12
     %table#organizer-time-slots.datatable.table.table-striped{data: {controller: 'time-slots', time_slots_target: 'table'}}
       %thead

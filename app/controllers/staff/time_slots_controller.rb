@@ -79,6 +79,7 @@ class Staff::TimeSlotsController < Staff::ApplicationController
 
   def destroy
     @time_slot.destroy
+    flash.now[:info] = 'Time slot removed.'
     respond_to do |format|
       format.turbo_stream
       format.html { redirect_to event_staff_schedule_time_slots_path(current_event) }

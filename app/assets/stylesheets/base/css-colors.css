@@ -92,4 +92,25 @@
 /* Buttons */
   --btn-gray-color: #000;
   --btn-gray-border: #bfbfbf;
+
+/* Social buttons */
+  --btn-twitter-bg: #1c95d0;
+  --btn-twitter-bg-light: #2daddc;
+  --btn-twitter-bg-dark: #0271bf;
+  --btn-twitter-bg-active: #01538d;
+  --btn-github-bg: #f2f2f2;
+  --btn-github-bg-light: #fafafa;
+  --btn-github-bg-dark: #e6e6e6;
+  --btn-github-bg-active: #cdcdcd;
+
+/* Form error states */
+  --form-error-bg: #edd1d1;
+  --form-error-text: hsl(from var(--form-error-bg) h s calc(l - 50));
+
+/* Schedule */
+  --schedule-header-bg: #6d6b6b;
+  --schedule-accent: var(--bright-blue);
+  --schedule-accent-hover: #126799;
+  --schedule-border: rgba(204, 204, 204, 0.5);
+  --schedule-tab-inactive: var(--gray-light);
 }

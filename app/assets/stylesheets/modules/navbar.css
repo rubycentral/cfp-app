@@ -137,10 +137,6 @@ body:has(.subnavbar.fixed-top) {
   .dropdown {
     .dropdown-menu {
       text-align: left;
-      -webkit-border-top-left-radius: 0;
-      -webkit-border-top-right-radius: 0;
-      -moz-border-radius-topleft: 0;
-      -moz-border-radius-topright: 0;
       border-top-left-radius: 0;
       border-top-right-radius: 0;
       a {

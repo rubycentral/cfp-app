@@ -50,3 +50,11 @@
 .bg-brand-warning { background-color: var(--brand-warning); }
 .bg-brand-danger { background-color: var(--brand-danger); }
 .bg-brand-accent { background-color: var(--brand-accent); }
+
+/* z-index overrides */
+.ui-front { z-index: 1060 !important; }
+
+/* tooltip overrides */
+.tooltip {
+  min-width: 160px;
+}

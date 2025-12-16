@@ -35,3 +35,13 @@
     text-align: left;
   }
 }
+
+/* Markdown display */
+.markdown {
+  h1:first-child, h2:first-child {
+    margin-top: 0;
+  }
+  ul {
+    list-style-type: disc;
+  }
+}

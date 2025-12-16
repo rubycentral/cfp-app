@@ -13,10 +13,8 @@
 @import "./base/helper_classes.css";
 @import "./base/typography.css";
 
-@import "./modules/badge.css";
 @import "./modules/buttons.css";
 @import "./modules/code-mirror.css";
-@import "./modules/dashboard.css";
 @import "./modules/data_tables.css";
 @import "./modules/discussions.css";
 @import "./modules/events.css";
@@ -24,9 +22,7 @@
 @import "./modules/icons.css";
 @import "./modules/labels.css";
 @import "./modules/navbar.css";
-@import "./modules/markdown.css";
 @import "./modules/news.css";
-@import "./modules/event-teammate-invitations.css";
 @import "./modules/program-session.css";
 @import "./modules/proposal.css";
 @import "./modules/ratings.css";
@@ -36,9 +32,7 @@
 @import "./modules/social-buttons.css";
 @import "./modules/shortcuts.css";
 @import "./modules/stats.css";
-@import "./modules/tooltips.css";
 @import "./modules/widgets.css";
-@import "./modules/teammates.css";
 @import "./modules/staff-website-page.css";
 
 @import "tailwindcss/utilities";

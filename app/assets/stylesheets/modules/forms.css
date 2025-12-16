@@ -1,5 +1,5 @@
 ._notification {
-  border-bottom: 1px solid hsl(from #edd1d1 h s calc(l - 50));
+  border-bottom: 1px solid var(--form-error-text);
   color: var(--brand-warning);
   font-weight: 700;
   margin-bottom: 10px;
@@ -8,10 +8,10 @@
 
 .field_with_errors {
   .form-control {
-    background-color: #edd1d1;
+    background-color: var(--form-error-bg);
   }
   label, .help-block {
-    color: hsl(from #edd1d1 h s calc(l - 50));
+    color: var(--form-error-text);
   }
 }
 
@@ -22,13 +22,13 @@
 }
 
 .required_notification {
-  color: hsl(from #edd1d1 h s calc(l - 50));
+  color: var(--form-error-text);
   font-style: italic;
-  float:right;
+  float: right;
 }
 
 span[title="required"] {
-  color: hsl(from #edd1d1 h s calc(l - 50));
+  color: var(--form-error-text);
 }
 
 .control-label {

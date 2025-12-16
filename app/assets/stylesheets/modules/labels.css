@@ -66,7 +66,6 @@
 
 .label-compact {
   font-size: var(--font-size-compact);
-  display: inline-block;
   padding: .2em .6em .35em;
 }
 
@@ -78,4 +77,13 @@
 
 .session-status .label-large {
   padding: 0 5px 0;
+}
+
+/* Badges */
+.badge {
+  font-weight: bold;
+}
+
+.badge.badge-important {
+  background-color: red;
 }

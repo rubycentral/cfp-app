@@ -39,24 +39,24 @@ nav.schedule-nav {
 
   li {
     display: inline-block;
-    color: #b2afaa;
+    color: var(--schedule-tab-inactive);
     padding: 5px 10px;
 
     &:hover {
-      background-color: #ededed;
+      background-color: var(--gray-lighter);
       border-radius: 2px 2px 0px 0px;
       cursor: pointer;
     }
 
     &.active {
-      color: #91181C;
+      color: var(--ruby-central-red);
       border: 1px solid #efefef;
-      border-bottom: 1px solid #fff;
+      border-bottom: 1px solid var(--white);
       border-radius: 2px 2px 0px 0px;
     }
 
     &.active:hover {
-      background-color: #fff;
+      background-color: var(--white);
       cursor: default;
     }
 
@@ -72,12 +72,12 @@ nav.schedule-nav {
       padding: 3px 7px;
       font-size: 12px;
       font-weight: bold;
-      color: #fff;
+      color: var(--white);
       line-height: 1;
       vertical-align: middle;
       white-space: nowrap;
       text-align: center;
-      background-color: #b2afaa;
+      background-color: var(--schedule-tab-inactive);
       border-radius: 10px;
     }
   }
@@ -237,14 +237,14 @@ body .custom-session-card {
     font-size: var(--font-size-base);
     line-height: var(--line-height-base);
     text-align: center;
-    color: #FFF;
-    background: #6d6b6b;
-    border-right: 1px solid #FFF;
+    color: var(--white);
+    background: var(--schedule-header-bg);
+    border-right: 1px solid var(--white);
   }
 
   .time-slots, .time-slots .time-slot {
     border-style: solid;
-    border-color: rgba(204,204,204, .5);
+    border-color: var(--schedule-border);
   }
 
   .time-slots {
@@ -289,16 +289,14 @@ body .custom-session-card {
 
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
   margin: 0;
 }
 
 .schedule-ruler {
   position: sticky;
-  border-right: 1px solid rgba(204, 204, 204, 0.5);
-  color: #000;
+  border-right: 1px solid var(--schedule-border);
+  color: var(--black);
   font-size: 11px;
   margin: -3px 0 0 -3px;
   white-space: nowrap;
@@ -332,8 +330,8 @@ input[type=number]::-webkit-outer-spin-button {
   height: calc(100vh - 150px);
   margin-top: -40px;
   margin-left: 0px;
-  background: #fff;
-  border-left: 1px solid rgba(204, 204, 204, 0.5);
+  background: var(--white);
+  border-left: 1px solid var(--schedule-border);
   z-index: 500;
   overflow: auto;
 
@@ -341,22 +339,22 @@ input[type=number]::-webkit-outer-spin-button {
     cursor: pointer;
 
     h3 {
-      color: #1A95DD;
+      color: var(--schedule-accent);
       font-size: 17.5px;
       display: inline-block;
       margin-right: 10px;
     }
 
     .badge {
-      background-color: #1A95DD;
+      background-color: var(--schedule-accent);
     }
 
     &:hover {
       h3 {
-        color: #126799;
+        color: var(--schedule-accent-hover);
       }
       .badge {
-        background-color: #126799;
+        background-color: var(--schedule-accent-hover);
       }
     }
   }
@@ -384,7 +382,7 @@ input[type=number]::-webkit-outer-spin-button {
 .generate-confirm {
   position: fixed;
   padding: 10px;
-  background-color: #1A95DD;
+  background-color: var(--schedule-accent);
   top: 110px;
   right: 160px;
   width: 400px;
@@ -394,7 +392,7 @@ input[type=number]::-webkit-outer-spin-button {
   border-radius: 5px;
 
   span {
-    color: #fff;
+    color: var(--white);
     font-size: .9em;
     margin-top: 5px;
   }

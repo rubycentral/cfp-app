@@ -1,13 +1,12 @@
 /*!
  * Social Buttons for Bootstrap
- * Modernized - removed IE8/9 legacy code
  */
 
 .btn-twitter {
-  color: #ffffff;
+  color: var(--white);
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-color: #1c95d0;
-  background-image: linear-gradient(to bottom, #2daddc, #0271bf);
+  background-color: var(--btn-twitter-bg);
+  background-image: linear-gradient(to bottom, var(--btn-twitter-bg-light), var(--btn-twitter-bg-dark));
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
@@ -17,20 +16,20 @@
 .btn-twitter.active,
 .btn-twitter.disabled,
 .btn-twitter[disabled] {
-  color: #ffffff;
-  background-color: #0271bf;
+  color: var(--white);
+  background-color: var(--btn-twitter-bg-dark);
 }
 
 .btn-twitter:active,
 .btn-twitter.active {
-  background-color: #01538d;
+  background-color: var(--btn-twitter-bg-active);
 }
 
 .btn-github {
-  color: #000000;
+  color: var(--black);
   text-shadow: 0 0.7px 0 rgba(0, 0, 0, 0.1);
-  background-color: #f2f2f2;
-  background-image: linear-gradient(to bottom, #fafafa, #e6e6e6);
+  background-color: var(--btn-github-bg);
+  background-image: linear-gradient(to bottom, var(--btn-github-bg-light), var(--btn-github-bg-dark));
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   margin-left: 10px;
 }
@@ -41,11 +40,11 @@
 .btn-github.active,
 .btn-github.disabled,
 .btn-github[disabled] {
-  color: #000000;
-  background-color: #e6e6e6;
+  color: var(--black);
+  background-color: var(--btn-github-bg-dark);
 }
 
 .btn-github:active,
 .btn-github.active {
-  background-color: #cdcdcd;
+  background-color: var(--btn-github-bg-active);
 }

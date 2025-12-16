@@ -15,7 +15,7 @@
                 %span.star
                   %i.bi.bi-star
                   %i.bi.bi-star-fill
-                = f.check_box :score, {class: 'star-rating-select', disabled: disabled}, score, nil
+                = f.check_box :score, {id: false, class: 'star-rating-select', disabled: disabled}, score, nil
             - if show_ratings_toggle?(proposal, rating)
               %li.abstain-wrapper
                 = link_to "#", class: 'abstain', data: {action: 'click->rating#toggleCommentsAndRatings'} do
@@ -25,7 +25,7 @@
               %li.trash-wrapper{data: {action: 'mouseenter->rating#previewDelete mouseleave->rating#cancelPreviewDelete'}}
                 %span.trash
                   %i.bi.bi-trash
-                = f.check_box :score, { class: "star-rating-select delete" }, "", nil
+                = f.check_box :score, {id: false, class: "star-rating-select delete"}, "", nil
   #show-ratings{ class: !show_ratings?(proposal, rating) ? "hidden" : nil }
     .col-lg-7
       - if proposal.ratings.any?

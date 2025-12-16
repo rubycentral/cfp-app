@@ -287,23 +287,12 @@ body .custom-session-card {
   }
 }
 
-#bulk-time-slot-create-dialog {
-  input.time-slot-duration {
-    width: 80px;
-  }
-}
-
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   margin: 0;
-}
-
-#staff_grids_show .page-footer {
-  background-color: white;
-  z-index: 1000;
 }
 
 .schedule-ruler {

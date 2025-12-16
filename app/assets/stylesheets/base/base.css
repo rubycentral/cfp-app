@@ -39,16 +39,6 @@ h3.tags {
   margin: 0 0 0.75em 0;
 }
 
-#columns {
-  float: left;
-
-  li {
-    display: block;
-    &:first-child { padding-left: 5px; }
-    padding-bottom: 3px;
-  }
-}
-
 /* datepicker */
 .ui-datepicker {
   z-index: 10000 !important;

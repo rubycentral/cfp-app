@@ -23,18 +23,6 @@
     display: none;
   }
 
-  #event_state {
-    width: 100%;
-    display: block;
-    margin-bottom:.25em;
-  }
-
-  #session_format_public {
-    height: 2em;
-    width: 2em;
-    display: inline-block;
-  }
-
   .cfp-button {
     display: block;
     margin: .5em auto 0;
@@ -108,7 +96,7 @@
   }
 }
 
-#review-stats-table, #program-stats-table, #team-activity-table {
+.stats-table {
   thead > tr > th:not(:first-of-type) {
     text-align: center;
   }
@@ -117,15 +105,15 @@
       text-align: center;
     }
   }
-}
 
-#review-stats-table, #program-stats-table {
-  tbody {
-    > tr:first-of-type {
-      font-weight: bold;
-      --bs-table-striped-bg: var(--state-success-bg);
-      --bs-table-bg: var(--state-success-bg);
-      background-color: var(--state-success-bg);
+  &.stats-table-highlight-first {
+    tbody {
+      > tr:first-of-type {
+        font-weight: bold;
+        --bs-table-striped-bg: var(--state-success-bg);
+        --bs-table-bg: var(--state-success-bg);
+        background-color: var(--state-success-bg);
+      }
     }
   }
 }

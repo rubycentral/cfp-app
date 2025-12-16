@@ -20,18 +20,10 @@
   padding: 3px 0 3px 0;
 }
 
-#proposal {
-  p.count {
-    font-style: italic;
-    font-weight: bold;
-    margin-bottom: 1.5em;
-  }
-
-  ul.invitation {
-    padding: 0;
-    .label {
-      margin-right: 10px;
-    }
+ul.invitation {
+  padding: 0;
+  .label {
+    margin-right: 10px;
   }
 }
 
@@ -61,14 +53,6 @@
 .other_proposal_tags {
   padding-left: 10px;
   margin-bottom: 7px;
-}
-
-#copy-emails {
-  margin: 10px;
-}
-
-#emails-for-copy {
-  display: none;
 }
 
 .proposal-list {
@@ -177,9 +161,6 @@ div.col-md-4 {
 #review-tags-form-wrapper {
   padding: 0;
   text-align: left;
-  #autocomplete-options {
-    display: none;
-  }
   .selectize-input.items .item {
     background: var(--state-success-bg);
     border: 1px solid hsl(from var(--state-success-bg) h s calc(l - 30));
@@ -198,7 +179,6 @@ div.col-md-4 {
 .proposal-info-bar {
   padding-bottom: var(--padding-large-vertical);
 
-  i.fa,
   i.bi {
     position:relative;
     margin-top: -0.1em;

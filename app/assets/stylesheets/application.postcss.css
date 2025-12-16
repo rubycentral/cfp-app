@@ -15,7 +15,6 @@
 
 @import "./modules/badge.css";
 @import "./modules/buttons.css";
-@import "./modules/calendar.css";
 @import "./modules/code-mirror.css";
 @import "./modules/dashboard.css";
 @import "./modules/data_tables.css";
@@ -27,18 +26,15 @@
 @import "./modules/navbar.css";
 @import "./modules/markdown.css";
 @import "./modules/news.css";
-@import "./modules/notification.css";
 @import "./modules/event-teammate-invitations.css";
 @import "./modules/program-session.css";
 @import "./modules/proposal.css";
-@import "./modules/profile.css";
 @import "./modules/ratings.css";
 @import "./modules/schedule.css";
 @import "./modules/selection.css";
 @import "./modules/time-slot.css";
 @import "./modules/social-buttons.css";
 @import "./modules/shortcuts.css";
-@import "./modules/speaker.css";
 @import "./modules/stats.css";
 @import "./modules/tooltips.css";
 @import "./modules/widgets.css";

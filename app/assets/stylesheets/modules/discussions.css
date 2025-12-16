@@ -40,11 +40,7 @@ textarea.mention {
   margin-bottom: 20px;
   padding: 10px;
   position: relative;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
   border-radius: 3px;
-  -webkit-box-shadow: rgba(0,0,0,0.1) 0 1px 0px;
-  -moz-box-shadow: rgba(0,0,0,0.1) 0 1px 0px;
   box-shadow: rgba(0,0,0,0.1) 0 1px 0px;
 
   .speaker-comment &    { border-color: var(--bright-blue); }

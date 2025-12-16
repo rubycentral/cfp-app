@@ -3,22 +3,6 @@
   background-color: #f2dede;
 }
 
-.rooms-partial {
-  margin-top: 20px;
-  header {
-    .btn {
-      margin: 21px 0 0 15px;
-    }
-  }
-  dl {
-    dt {
-      font-weight: normal;
-      text-align: left;
-      margin-bottom: 5px;
-    }
-  }
-}
-
 #organizer-time-slots {
   td:last-child {
     white-space: nowrap;

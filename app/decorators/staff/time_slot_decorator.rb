@@ -18,40 +18,6 @@ class Staff::TimeSlotDecorator < Draper::Decorator
     object.id
   end
 
- def row_data_time_sortable(buttons: false)
-   row = [object.conference_day, object.start_time, object.end_time, linked_title,
-     display_presenter, object.room_name, display_sponsor_star, display_track_name]
-     row << action_links if buttons
-     row
- end
-
-  def row_data(buttons: false)
-    row = [object.conference_day, start_time, end_time, linked_title,
-           display_presenter, object.room_name, display_sponsor_star, display_track_name]
-
-    row << action_links if buttons
-    row
-  end
-
-  def row
-    {id: object.id, values: row_data_time_sortable(buttons: true)}
-  end
-
-  def action_links
-    links = [
-      h.link_to('Edit',
-                h.edit_event_staff_schedule_time_slot_path(object.event, object),
-                class: 'btn btn-primary btn-sm',
-                data: {turbo: true, turbo_frame: 'time-slot-edit-dialog'}),
-
-      h.link_to('Remove',
-                h.event_staff_schedule_time_slot_path(object.event, object),
-                data: {turbo: true, turbo_method: :delete, turbo_confirm: 'Are you sure you want to remove this time slot?'},
-                class: 'btn btn-danger btn-sm')
-    ]
-    h.safe_join(links, "\n")
-  end
-
   def unscheduled_program_sessions
     program_sessions = object.event.program_sessions.unscheduled.sorted_by_title.to_a
 

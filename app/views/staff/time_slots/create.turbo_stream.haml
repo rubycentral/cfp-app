@@ -1,9 +1,9 @@
 - unless @save_and_add
   = turbo_stream.update 'time-slot-new-dialog', ''
 
-= turbo_stream.append 'time_slots' do
-  %div{data: {controller: 'datatable', datatable_action_value: 'add'}}
-    %template= render(time_slot_decorated)
+%turbo-stream{action: 'datatable-add', target: 'organizer-time-slots'}
+  %template
+    = render(time_slot_decorated)
 
 = turbo_stream.update 'flash' do
   = show_flash

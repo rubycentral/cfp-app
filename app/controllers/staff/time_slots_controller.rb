@@ -36,6 +36,7 @@ class Staff::TimeSlotsController < Staff::ApplicationController
     @time_slot = current_event.time_slots.build(time_slot_params)
 
     if @time_slot.save
+      flash.now[:info] = 'Time slot added.'
       session[:sticky_time_slot] = {
         conference_day: @time_slot.conference_day,
         start_time: @time_slot.start_time,
@@ -78,6 +79,7 @@ class Staff::TimeSlotsController < Staff::ApplicationController
 
   def destroy
     @time_slot.destroy
+    flash.now[:info] = 'Time slot removed.'
     respond_to do |format|
       format.turbo_stream
       format.html { redirect_to event_staff_schedule_time_slots_path(current_event) }

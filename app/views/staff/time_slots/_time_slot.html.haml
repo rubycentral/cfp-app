@@ -18,4 +18,6 @@
   %td= time_slot.display_track_name
 
   %td.actions
-    = time_slot.action_links
+    = link_to 'Edit', edit_event_staff_schedule_time_slot_path(time_slot.event, time_slot), class: 'btn btn-primary btn-sm', data: {turbo: true, turbo_frame: 'time-slot-edit-dialog'}
+
+    = link_to 'Remove', event_staff_schedule_time_slot_path(time_slot.event, time_slot), data: {turbo: true, turbo_method: :delete, turbo_confirm: 'Are you sure you want to remove this time slot?'}, class: 'btn btn-danger btn-sm'

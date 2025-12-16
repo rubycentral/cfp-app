@@ -1,7 +1,8 @@
 = turbo_stream.update 'time-slot-edit-dialog', ''
 
-= turbo_stream.append 'time_slots' do
-  %div{data: {controller: 'datatable', datatable_action_value: 'update', datatable_row_id_value: @time_slot.id, datatable_row_data_value: time_slot_decorated.row_data.to_json}}
+%turbo-stream{action: 'datatable-update', target: 'organizer-time-slots', 'row-id': @time_slot.id}
+  %template
+    = render(time_slot_decorated)
 
 = turbo_stream.update 'flash' do
   = show_flash

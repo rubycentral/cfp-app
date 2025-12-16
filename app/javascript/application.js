@@ -23,4 +23,7 @@ import { Turbo } from "@hotwired/turbo-rails"
 // Disable Turbo Drive globally - opt-in instead of opt-out for existing app
 Turbo.session.drive = false
 
+// Custom Turbo Stream actions for DataTables
+import "./turbo_stream_actions"
+
 import "./controllers"

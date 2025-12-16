@@ -52,7 +52,6 @@
       margin: 5px 5px 0 0;
     }
 
-    > .fa,
     > .bi {
       color: #555;
       font-size: 16px;
@@ -150,7 +149,6 @@
     height: auto;
     line-height: 1;
 
-    > [class^="fa-"], > [class*=" fa-"],
     > [class^="bi-"], > [class*=" bi-"] {
       margin: 0;
     }

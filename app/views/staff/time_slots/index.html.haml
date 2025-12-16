@@ -1,13 +1,5 @@
-.time-slots-page
-  .row
-    .col-md-12
-      %header.page-header
-        .tab-content
-          .tab-pane.active
-            .row
-              .col-md-12
-                = render partial: 'time_slots'
+= render partial: 'time_slots'
 
-        = turbo_frame_tag 'time-slot-edit-dialog', class: 'modal fade', data: {controller: 'modal-form', modal_form_target: 'modal'}
+= turbo_frame_tag 'time-slot-edit-dialog', class: 'modal fade', data: {controller: 'modal-form', modal_form_target: 'modal'}
 
-        = turbo_frame_tag 'time-slot-new-dialog', class: 'modal fade', data: {controller: 'modal-form', modal_form_target: 'modal'}
+= turbo_frame_tag 'time-slot-new-dialog', class: 'modal fade', data: {controller: 'modal-form', modal_form_target: 'modal'}

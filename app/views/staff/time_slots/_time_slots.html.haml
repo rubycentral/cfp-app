@@ -5,8 +5,7 @@
       = link_to "Add Time Slot",
           new_event_staff_schedule_time_slot_path,
           class: "btn btn-primary btn-sm " + (has_missing_requirements?(event) ? 'disabled' : ''),
-          data: {turbo: true, turbo_frame: 'time-slot-new-dialog'},
-          id: 'add-time-slot'
+          data: {turbo: true, turbo_frame: 'time-slot-new-dialog'}
       .ms-auto
         = link_to event_staff_schedule_time_slots_path(format: :csv), class: "btn btn-info" do
           %span.bi.bi-download

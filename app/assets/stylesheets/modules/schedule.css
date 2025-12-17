@@ -3,14 +3,19 @@
   margin-top: 20px;
 }
 
-.schedule-page > .tab-pane {
-  position: relative;
-  display: none;
-  margin: 85px auto 0;
-}
+.grid-with-unscheduled {
+  display: flex;
+  margin-top: 85px;
 
-.schedule-page > .tab-pane.active {
-  display: block;
+  .tab-pane {
+    position: absolute;
+    visibility: hidden;
+  }
+
+  .tab-pane.active {
+    position: relative;
+    visibility: visible;
+  }
 }
 
 .grid-content {
@@ -111,6 +116,8 @@ nav.schedule-nav {
 }
 
 .unscheduled-sessions-widget {
+  min-height: 500px;
+
   &.draggable-hover {
     background-color: #e0e0e0;
     border: 2px dashed #999;

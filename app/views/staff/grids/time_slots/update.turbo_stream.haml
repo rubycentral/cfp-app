@@ -1,10 +1,22 @@
 = turbo_stream.update 'grid-modal-content', ''
 
-= turbo_stream.replace "time_slot_#{dom_id(@time_slot)}" do
-  = render partial: 'time_slot', locals: {ts: time_slot_decorated}
+- unless @session_assignment_only
+  = turbo_stream.replace "time_slot_#{dom_id(@time_slot)}" do
+    = render partial: 'time_slot', locals: {ts: time_slot_decorated}
 
-= turbo_stream.append 'grid-time-slot-actions' do
-  %div{data: {controller: 'grid-time-slot-refresh', grid_time_slot_refresh_time_slot_id_value: dom_id(@time_slot)}}
+- unscheduled_sessions = current_event.program_sessions.unscheduled
+- total_count = current_event.program_sessions.count
+
+= turbo_stream.update 'unscheduled-sessions-widget' do
+  - unscheduled_sessions.each do |unscheduled_session|
+    - ps = Staff::ProgramSessionDecorator.decorate(unscheduled_session)
+    = render partial: 'staff/grids/draggable_session', locals: {ps: ps}
+
+= turbo_stream.update 'unscheduled-sessions-badge', "#{unscheduled_sessions.length}/#{total_count}"
+
+- day_counts = EventStats.new(current_event).schedule_counts
+- day_counts.each do |day, counts|
+  = turbo_stream.update "schedule-day-#{day}-badge", "#{counts[:scheduled]}/#{counts[:total]}"
 
 = turbo_stream.update 'flash' do
   = show_flash

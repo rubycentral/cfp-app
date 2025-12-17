@@ -330,30 +330,7 @@ export default class extends Controller {
     })
   }
 
-  // Public methods for external use
-  refreshDay() {
-    this.updateDayRange()
-    this.initGrid()
-  }
-
   refreshTimeSlot(slot) {
     this.initTimeSlot(slot)
-  }
-
-  initBulkDialog(dialog) {
-    const formatSelect = dialog.querySelector('select.session-format')
-    const durationInput = dialog.querySelector('.time-slot-duration')
-
-    if (formatSelect && durationInput) {
-      formatSelect.addEventListener('change', () => {
-        durationInput.value = formatSelect.value
-      })
-
-      durationInput.addEventListener('keyup', () => {
-        if (document.activeElement === durationInput) {
-          formatSelect.value = ''
-        }
-      })
-    }
   }
 }

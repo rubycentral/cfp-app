@@ -172,6 +172,7 @@ export default class extends Controller {
     })
     this.assignSizeClass(sessionCard, slot)
     this.assignTrackColor(sessionCard)
+    this.highlightCard(sessionCard)
 
     if (sessionCard.dataset.scheduled) {
       this.unscheduleSession(sessionCard)
@@ -194,6 +195,13 @@ export default class extends Controller {
       widget.prepend(sessionCard)
       delete sessionCard.dataset.scheduled
     }
+  }
+
+  highlightCard(card) {
+    card.classList.remove('highlight')
+    // Force reflow to restart animation
+    void card.offsetWidth
+    card.classList.add('highlight')
   }
 
   unscheduleSession(sessionCard) {

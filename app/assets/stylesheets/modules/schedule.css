@@ -128,6 +128,16 @@ nav.schedule-nav {
   }
 }
 
+/* Highlight animation for moved session cards */
+@keyframes session-highlight {
+  0% { box-shadow: 0 0 0 4px var(--ruby-central-red); }
+  100% { box-shadow: 0 1px 2px rgba(0,0,0,.6); }
+}
+
+.draggable-session-card.highlight {
+  animation: session-highlight 5s ease-out forwards;
+}
+
 /* the draggable session card has a different appearance depending on context: */
 
 /* in the body (as it's being dragged) and global */

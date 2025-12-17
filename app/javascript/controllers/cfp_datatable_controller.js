@@ -31,7 +31,7 @@ export default class extends Controller {
       orderCellsTop: false,
       layout: {
         topStart: null,
-        topEnd: null,
+        topEnd: () => this.createResetSortButton(),
         bottomStart: 'info',
         bottomEnd: null
       },

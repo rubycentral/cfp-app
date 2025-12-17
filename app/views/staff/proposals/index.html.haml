@@ -23,7 +23,15 @@
 -#                = count
 
 .row
-  .col-sm-offset-6.col-sm-6.text-end
+  .col-sm-8.text-start
+    %ul.selection-counts
+      %li
+        %span Accepted (Not Confirmed)
+        %span.badge.text-bg-warning= @accepted_not_confirmed_count
+      %li
+        %span Accepted (Confirmed)
+        %span.badge.text-bg-success= @accepted_confirmed_count
+  .col-sm-4.text-end
     %small.text-end <em>Hint:</em> Hold <kbd>shift</kbd> to sort by multiple columns
 
 .row{data: {controller: 'proposals-table'}}

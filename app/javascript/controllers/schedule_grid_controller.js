@@ -324,8 +324,4 @@ export default class extends Controller {
       }
     })
   }
-
-  refreshTimeSlot(slot) {
-    this.initTimeSlot(slot)
-  }
 }

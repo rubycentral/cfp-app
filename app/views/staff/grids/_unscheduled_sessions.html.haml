@@ -1,6 +1,6 @@
 .header-wrapper{data: { action: "click->draggable-sessions#toggleWidget" }}
   %h3 Unscheduled Sessions
-  %span.badge#unscheduled-sessions-badge{data: {draggable_sessions_target: 'badge'}}= "#{@unscheduled_sessions.count}/#{@sessions.count}"
+  %span.badge#unscheduled-sessions-badge= "#{@unscheduled_sessions.count}/#{@sessions.count}"
 = text_field_tag(:session_search, nil, id: nil, placeholder: "Search", data: { draggable_sessions_target: "searchInput", action: "keyup->draggable-sessions#filterSessions" })
 %span.bi.bi-x{data: { action: "click->draggable-sessions#clearSearch" }}
 .unscheduled-sessions-widget#unscheduled-sessions-widget{data: {draggable_sessions_target: 'widget'}}

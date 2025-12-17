@@ -106,11 +106,8 @@ export default class extends Controller {
   }
 
   handleDragOver(e) {
-    if (e.preventDefault) {
-      e.preventDefault()
-    }
+    e.preventDefault()
     e.dataTransfer.dropEffect = 'move'
-    return false
   }
 
   handleDragEnter(e) {
@@ -128,9 +125,7 @@ export default class extends Controller {
   }
 
   handleNativeDrop(e) {
-    if (e.stopPropagation) {
-      e.stopPropagation()
-    }
+    e.stopPropagation()
     e.preventDefault()
 
     const slot = e.currentTarget
@@ -142,8 +137,6 @@ export default class extends Controller {
     if (sessionCard && slot.classList.contains('time-slot')) {
       this.handleDrop(sessionCard, slot)
     }
-
-    return false
   }
 
   handleDrop(sessionCard, slot) {

@@ -3,7 +3,7 @@ import { Turbo } from '@hotwired/turbo-rails'
 import palette from 'google-palette'
 
 export default class extends Controller {
-  static targets = ['widget', 'session', 'toggle', 'badge', 'searchInput']
+  static targets = ['widget', 'session', 'searchInput']
   static values = {
     tracksCss: Array
   }

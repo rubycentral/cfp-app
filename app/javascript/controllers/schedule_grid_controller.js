@@ -4,7 +4,7 @@ import palette from 'google-palette'
 import dayjs from 'dayjs'
 
 export default class extends Controller {
-  static targets = ['grid', 'ruler', 'timeSlot', 'columnHeader']
+  static targets = ['ruler', 'timeSlot', 'columnHeader']
   static values = {
     dayStart: { type: Number, default: 60 * 9 },  // minutes
     dayEnd: { type: Number, default: 60 * 19 },

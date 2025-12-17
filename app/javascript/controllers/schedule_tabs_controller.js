@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static targets = ['tab', 'panel', 'badge']
+  static targets = ['tab', 'panel']
   static values = {
     activeDay: { type: Number, default: 1 }
   }

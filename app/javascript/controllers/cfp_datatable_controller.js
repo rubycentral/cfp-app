@@ -31,7 +31,7 @@ export default class extends Controller {
       orderCellsTop: false,
       layout: {
         topStart: null,
-        topEnd: null,
+        topEnd: () => this.createResetSortButton(),
         bottomStart: 'info',
         bottomEnd: null
       },
@@ -72,5 +72,18 @@ export default class extends Controller {
     }
 
     this.dataTable = new DataTable(this.tableElement, {...defaultOptions, ...this.options})
+  }
+
+  createResetSortButton() {
+    const btn = document.createElement('button')
+    btn.type = 'button'
+    btn.className = 'btn btn-primary btn-sm'
+    btn.textContent = 'Reset Sort Order'
+    btn.addEventListener('click', () => this.resetSort())
+    return btn
+  }
+
+  resetSort() {
+    this.dataTable.order([]).draw()
   }
 }

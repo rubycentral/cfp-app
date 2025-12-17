@@ -10,14 +10,10 @@ export default class extends CfpDatatableController {
       },
       layout: {
         topStart: 'info',
-        topEnd: null,
+        topEnd: () => this.createResetSortButton(),
         bottomStart: 'pageLength',
         bottomEnd: 'paging'
       }
     }
-  }
-
-  resetSort() {
-    this.dataTable.order([]).draw()
   }
 }

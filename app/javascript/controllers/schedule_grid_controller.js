@@ -16,7 +16,6 @@ export default class extends Controller {
   connect() {
     this.trackColors = []
     this.initTrackColors()
-    this.addGridLineStyle()
     this.updateDayRange()
     this.initGrid()
     this.setupScrollHandlers()
@@ -40,10 +39,6 @@ export default class extends Controller {
     if (this.hasTracksCssValue) {
       this.trackColors = palette('tol-rainbow', this.tracksCssValue.length)
     }
-  }
-
-  addGridLineStyle() {
-    // No longer adding horizontal grid lines - using schedule-ruler without :after pseudo-element
   }
 
   updateDayRange() {

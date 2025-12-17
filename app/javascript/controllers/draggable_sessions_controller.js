@@ -1,6 +1,6 @@
 import { Controller } from '@hotwired/stimulus'
-import { Turbo } from '@hotwired/turbo-rails'
 import palette from 'google-palette'
+import { turboStreamFetch } from '../helpers/turbo_fetch'
 
 export default class extends Controller {
   static targets = ['widget', 'session', 'searchInput']
@@ -142,22 +142,9 @@ export default class extends Controller {
 
   unschedule(sessionCard) {
     const unschedulePath = sessionCard.dataset.unscheduleTimeSlotPath
-    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
-
     if (unschedulePath) {
-      fetch(unschedulePath, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Accept': 'text/vnd.turbo-stream.html',
-          'X-CSRF-Token': csrfToken
-        },
-        body: 'time_slot[program_session_id]='
-      })
-        .then(response => response.text())
-        .then(html => Turbo.renderStreamMessage(html))
+      turboStreamFetch(unschedulePath, { body: 'time_slot[program_session_id]=' })
     }
-
     delete sessionCard.dataset.scheduled
   }
 

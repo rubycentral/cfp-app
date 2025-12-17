@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus'
-import { Turbo } from '@hotwired/turbo-rails'
 import palette from 'google-palette'
 import dayjs from 'dayjs'
+import { turboStreamFetch } from '../helpers/turbo_fetch'
 
 export default class extends Controller {
   static targets = ['ruler', 'timeSlot', 'columnHeader']
@@ -201,22 +201,9 @@ export default class extends Controller {
 
   unscheduleSession(sessionCard) {
     const unschedulePath = sessionCard.dataset.unscheduleTimeSlotPath
-    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
-
     if (unschedulePath) {
-      fetch(unschedulePath, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Accept': 'text/vnd.turbo-stream.html',
-          'X-CSRF-Token': csrfToken
-        },
-        body: 'time_slot[program_session_id]='
-      })
-        .then(response => response.text())
-        .then(html => Turbo.renderStreamMessage(html))
+      turboStreamFetch(unschedulePath, { body: 'time_slot[program_session_id]=' })
     }
-
     delete sessionCard.dataset.scheduled
   }
 
@@ -265,19 +252,9 @@ export default class extends Controller {
     const updatePath = slot.dataset.updatePath
     if (!updatePath) return
 
-    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
-
-    fetch(updatePath, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Accept': 'text/vnd.turbo-stream.html',
-        'X-CSRF-Token': csrfToken
-      },
+    turboStreamFetch(updatePath, {
       body: `time_slot[program_session_id]=${draggedSession.dataset.id}`
     })
-      .then(response => response.text())
-      .then(html => Turbo.renderStreamMessage(html))
   }
 
   onTimeSlotClick(ev, slot) {

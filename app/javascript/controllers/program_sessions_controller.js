@@ -7,7 +7,7 @@ export default class extends CfpDatatableController {
     return {
       layout: {
         topStart: null,
-        topEnd: null,
+        topEnd: () => this.createResetSortButton(),
         bottomStart: 'pageLength',
         bottomEnd: 'paging'
       }

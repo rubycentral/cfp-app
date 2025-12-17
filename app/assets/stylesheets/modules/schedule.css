@@ -116,6 +116,8 @@ nav.schedule-nav {
 }
 
 .unscheduled-sessions-widget {
+  min-height: 500px;
+
   &.draggable-hover {
     background-color: #e0e0e0;
     border: 2px dashed #999;

@@ -14,7 +14,7 @@
         - total_count = day_slots.count
         %li{data: {schedule_tabs_target: "tab", day: day, action: "click->schedule-tabs#switchDay"}, class: (day == 1 ? 'active' : '')}
           %span Day #{day}
-          %span.badge{data: {schedule_tabs_target: "badge", day: day}}= "#{scheduled_count}/#{total_count}"
+          %span.badge{id: "schedule-day-#{day}-badge", data: {schedule_tabs_target: 'badge', day: day}}= "#{scheduled_count}/#{total_count}"
     = link_to "Generate Grid", new_event_staff_schedule_grid_bulk_time_slot_path(@event, day: 1), class: "btn btn-primary", data: {turbo: true, turbo_frame: 'grid-modal-content'}
 
   / Tab content - One grid per day

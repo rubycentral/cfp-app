@@ -1,4 +1,5 @@
 import { Controller } from '@hotwired/stimulus'
+import { Turbo } from '@hotwired/turbo-rails'
 import palette from 'google-palette'
 import dayjs from 'dayjs'
 
@@ -19,10 +20,20 @@ export default class extends Controller {
     this.updateDayRange()
     this.initGrid()
     this.setupScrollHandlers()
+    this.initialized = true
   }
 
   disconnect() {
     this.teardownScrollHandlers()
+  }
+
+  timeSlotTargetConnected(slot) {
+    // Re-initialize time slot when it's added or replaced (e.g., after Turbo Stream replace)
+    // Skip during initial connect() - initGrid() handles those
+    // Also skipped if already initialized (via data-initialized attribute)
+    if (this.initialized) {
+      this.initTimeSlot(slot)
+    }
   }
 
   initTrackColors() {
@@ -54,6 +65,10 @@ export default class extends Controller {
   }
 
   initTimeSlot(slot) {
+    // Skip if already initialized
+    if (slot.dataset.initialized) return
+    slot.dataset.initialized = 'true'
+
     const duration = parseInt(slot.dataset.duration)
     const starts = parseInt(slot.dataset.starts)
 
@@ -66,20 +81,15 @@ export default class extends Controller {
       this.assignTrackColor(card)
     })
 
-    let activeSlot = slot
     if (!slot.classList.contains('preview')) {
-      // Remove old listener by cloning (simpler than tracking handlers)
-      const newSlot = slot.cloneNode(true)
-      slot.parentNode.replaceChild(newSlot, slot)
-      newSlot.addEventListener('click', (e) => this.onTimeSlotClick(e, newSlot))
-      this.setupDropZone(newSlot)
-      activeSlot = newSlot
+      slot.addEventListener('click', (e) => this.onTimeSlotClick(e, slot))
+      this.setupDropZone(slot)
     } else {
       this.setupDropZone(slot)
     }
 
-    // Setup draggable for session cards AFTER cloning to preserve event listeners
-    const sessionCards = activeSlot.querySelectorAll('.draggable-session-card')
+    // Setup draggable for session cards
+    const sessionCards = slot.querySelectorAll('.draggable-session-card')
     sessionCards.forEach(card => this.makeDraggable(card))
   }
 
@@ -195,21 +205,13 @@ export default class extends Controller {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'text/vnd.turbo-stream.html',
           'X-CSRF-Token': csrfToken
         },
         body: 'time_slot[program_session_id]='
       })
-        .then(response => response.json())
-        .then(data => {
-          const headerBadge = document.querySelector('.header-wrapper .badge')
-          if (headerBadge) {
-            headerBadge.textContent = data.unscheduled_count + '/' + data.total_count
-          }
-          document.querySelectorAll('.total.time-slots .badge').forEach((badge, i) => {
-            const counts = data.day_counts[i + 1]
-            if (counts) badge.textContent = counts.scheduled + '/' + counts.total
-          })
-        })
+        .then(response => response.text())
+        .then(html => Turbo.renderStreamMessage(html))
     }
 
     delete sessionCard.dataset.scheduled
@@ -266,24 +268,18 @@ export default class extends Controller {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'text/vnd.turbo-stream.html',
         'X-CSRF-Token': csrfToken
       },
       body: `time_slot[program_session_id]=${draggedSession.dataset.id}`
     })
-      .then(response => response.json())
-      .then(data => {
-        const headerBadge = document.querySelector('.header-wrapper .badge')
-        if (headerBadge) {
-          headerBadge.textContent = data.unscheduled_count + '/' + data.total_count
-        }
-        document.querySelectorAll('.total.time-slots .badge').forEach((badge, i) => {
-          const counts = data.day_counts[i + 1]
-          if (counts) badge.textContent = counts.scheduled + '/' + counts.total
-        })
-      })
+      .then(response => response.text())
+      .then(html => Turbo.renderStreamMessage(html))
   }
 
   onTimeSlotClick(ev, slot) {
+    ev.stopPropagation()
+
     const url = slot.dataset.editPath
     if (!url || url.length === 0) return
 

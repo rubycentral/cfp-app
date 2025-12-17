@@ -1,4 +1,5 @@
 import { Controller } from '@hotwired/stimulus'
+import { Turbo } from '@hotwired/turbo-rails'
 import palette from 'google-palette'
 
 export default class extends Controller {
@@ -12,6 +13,13 @@ export default class extends Controller {
     this.initTrackColors()
     this.initDraggableSessions()
     this.setupDropZone()
+    this.initialized = true
+  }
+
+  sessionTargetConnected(session) {
+    if (this.initialized) {
+      this.initDraggableSession(session)
+    }
   }
 
   initTrackColors() {
@@ -141,20 +149,13 @@ export default class extends Controller {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'text/vnd.turbo-stream.html',
           'X-CSRF-Token': csrfToken
         },
         body: 'time_slot[program_session_id]='
       })
-        .then(response => response.json())
-        .then(data => {
-          if (this.hasBadgeTarget) {
-            this.badgeTarget.textContent = data.unscheduled_count + '/' + data.total_count
-          }
-          document.querySelectorAll('.total.time-slots .badge').forEach((badge, i) => {
-            const counts = data.day_counts[i + 1]
-            if (counts) badge.textContent = counts.scheduled + '/' + counts.total
-          })
-        })
+        .then(response => response.text())
+        .then(html => Turbo.renderStreamMessage(html))
     }
 
     delete sessionCard.dataset.scheduled

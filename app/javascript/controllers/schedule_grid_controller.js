@@ -76,11 +76,9 @@ export default class extends Controller {
       this.assignTrackColor(card)
     })
 
+    this.setupDropZone(slot)
     if (!slot.classList.contains('preview')) {
       slot.addEventListener('click', (e) => this.onTimeSlotClick(e, slot))
-      this.setupDropZone(slot)
-    } else {
-      this.setupDropZone(slot)
     }
 
     // Setup draggable for session cards

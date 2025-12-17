@@ -41,11 +41,4 @@ export default class extends Controller {
       }
     })
   }
-
-  updateBadge(day, scheduled, total) {
-    const badge = this.badgeTargets.find(b => parseInt(b.dataset.day) === day)
-    if (badge) {
-      badge.textContent = `${scheduled}/${total}`
-    }
-  }
 }

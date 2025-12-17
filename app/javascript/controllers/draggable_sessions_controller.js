@@ -1,9 +1,9 @@
 import { Controller } from '@hotwired/stimulus'
-import { Turbo } from '@hotwired/turbo-rails'
 import palette from 'google-palette'
+import { turboStreamFetch } from '../helpers/turbo_fetch'
 
 export default class extends Controller {
-  static targets = ['widget', 'session', 'toggle', 'badge', 'searchInput']
+  static targets = ['widget', 'session', 'searchInput']
   static values = {
     tracksCss: Array
   }
@@ -103,11 +103,8 @@ export default class extends Controller {
   }
 
   handleDragOver(e) {
-    if (e.preventDefault) {
-      e.preventDefault()
-    }
+    e.preventDefault()
     e.dataTransfer.dropEffect = 'move'
-    return false
   }
 
   handleDrop(e) {
@@ -117,16 +114,10 @@ export default class extends Controller {
     this.widgetTarget.classList.remove('draggable-hover')
 
     const sessionId = e.dataTransfer.getData('text/plain')
-    if (!sessionId) {
-      console.warn('No session ID in dataTransfer')
-      return false
-    }
+    if (!sessionId) return
 
     const sessionCard = document.querySelector(`.draggable-session-card[data-id="${sessionId}"]`)
-    if (!sessionCard) {
-      console.warn('Session card not found:', sessionId)
-      return false
-    }
+    if (!sessionCard) return
 
     // Remove inline styles and move to widget
     sessionCard.removeAttribute('style')
@@ -136,28 +127,13 @@ export default class extends Controller {
     if (sessionCard.dataset.scheduled) {
       this.unschedule(sessionCard)
     }
-
-    return false
   }
 
   unschedule(sessionCard) {
     const unschedulePath = sessionCard.dataset.unscheduleTimeSlotPath
-    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
-
     if (unschedulePath) {
-      fetch(unschedulePath, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Accept': 'text/vnd.turbo-stream.html',
-          'X-CSRF-Token': csrfToken
-        },
-        body: 'time_slot[program_session_id]='
-      })
-        .then(response => response.text())
-        .then(html => Turbo.renderStreamMessage(html))
+      turboStreamFetch(unschedulePath, { body: 'time_slot[program_session_id]=' })
     }
-
     delete sessionCard.dataset.scheduled
   }
 

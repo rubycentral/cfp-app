@@ -21,7 +21,6 @@ import EditorController from "./editor_controller"
 import FilterController from "./filter_controller"
 import FixedSubnavController from "./fixed_subnav_controller"
 import FlyOutController from "./fly_out_controller"
-import GridTimeSlotRefreshController from "./grid_time_slot_refresh_controller"
 import HighlightController from "./highlight_controller"
 import InlineEditController from "./inline_edit_controller"
 import MaxlengthAlertController from "./maxlength_alert_controller"
@@ -61,7 +60,6 @@ application.register("editor", EditorController)
 application.register("filter", FilterController)
 application.register("fixed-subnav", FixedSubnavController)
 application.register("fly-out", FlyOutController)
-application.register("grid-time-slot-refresh", GridTimeSlotRefreshController)
 application.register("highlight", HighlightController)
 application.register("inline-edit", InlineEditController)
 application.register("maxlength-alert", MaxlengthAlertController)

@@ -1,10 +1,10 @@
 import { Controller } from '@hotwired/stimulus'
-import { Turbo } from '@hotwired/turbo-rails'
 import palette from 'google-palette'
 import dayjs from 'dayjs'
+import { turboStreamFetch } from '../helpers/turbo_fetch'
 
 export default class extends Controller {
-  static targets = ['grid', 'ruler', 'timeSlot', 'columnHeader']
+  static targets = ['ruler', 'timeSlot', 'columnHeader']
   static values = {
     dayStart: { type: Number, default: 60 * 9 },  // minutes
     dayEnd: { type: Number, default: 60 * 19 },
@@ -16,7 +16,6 @@ export default class extends Controller {
   connect() {
     this.trackColors = []
     this.initTrackColors()
-    this.addGridLineStyle()
     this.updateDayRange()
     this.initGrid()
     this.setupScrollHandlers()
@@ -40,10 +39,6 @@ export default class extends Controller {
     if (this.hasTracksCssValue) {
       this.trackColors = palette('tol-rainbow', this.tracksCssValue.length)
     }
-  }
-
-  addGridLineStyle() {
-    // No longer adding horizontal grid lines - using schedule-ruler without :after pseudo-element
   }
 
   updateDayRange() {
@@ -81,11 +76,9 @@ export default class extends Controller {
       this.assignTrackColor(card)
     })
 
+    this.setupDropZone(slot)
     if (!slot.classList.contains('preview')) {
       slot.addEventListener('click', (e) => this.onTimeSlotClick(e, slot))
-      this.setupDropZone(slot)
-    } else {
-      this.setupDropZone(slot)
     }
 
     // Setup draggable for session cards
@@ -113,11 +106,8 @@ export default class extends Controller {
   }
 
   handleDragOver(e) {
-    if (e.preventDefault) {
-      e.preventDefault()
-    }
+    e.preventDefault()
     e.dataTransfer.dropEffect = 'move'
-    return false
   }
 
   handleDragEnter(e) {
@@ -135,9 +125,7 @@ export default class extends Controller {
   }
 
   handleNativeDrop(e) {
-    if (e.stopPropagation) {
-      e.stopPropagation()
-    }
+    e.stopPropagation()
     e.preventDefault()
 
     const slot = e.currentTarget
@@ -149,8 +137,6 @@ export default class extends Controller {
     if (sessionCard && slot.classList.contains('time-slot')) {
       this.handleDrop(sessionCard, slot)
     }
-
-    return false
   }
 
   handleDrop(sessionCard, slot) {
@@ -206,22 +192,9 @@ export default class extends Controller {
 
   unscheduleSession(sessionCard) {
     const unschedulePath = sessionCard.dataset.unscheduleTimeSlotPath
-    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
-
     if (unschedulePath) {
-      fetch(unschedulePath, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Accept': 'text/vnd.turbo-stream.html',
-          'X-CSRF-Token': csrfToken
-        },
-        body: 'time_slot[program_session_id]='
-      })
-        .then(response => response.text())
-        .then(html => Turbo.renderStreamMessage(html))
+      turboStreamFetch(unschedulePath, { body: 'time_slot[program_session_id]=' })
     }
-
     delete sessionCard.dataset.scheduled
   }
 
@@ -270,19 +243,9 @@ export default class extends Controller {
     const updatePath = slot.dataset.updatePath
     if (!updatePath) return
 
-    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
-
-    fetch(updatePath, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Accept': 'text/vnd.turbo-stream.html',
-        'X-CSRF-Token': csrfToken
-      },
+    turboStreamFetch(updatePath, {
       body: `time_slot[program_session_id]=${draggedSession.dataset.id}`
     })
-      .then(response => response.text())
-      .then(html => Turbo.renderStreamMessage(html))
   }
 
   onTimeSlotClick(ev, slot) {
@@ -328,32 +291,5 @@ export default class extends Controller {
         Object.assign(header.style, { position: 'static', width: '100%', zIndex: '10' })
       }
     })
-  }
-
-  // Public methods for external use
-  refreshDay() {
-    this.updateDayRange()
-    this.initGrid()
-  }
-
-  refreshTimeSlot(slot) {
-    this.initTimeSlot(slot)
-  }
-
-  initBulkDialog(dialog) {
-    const formatSelect = dialog.querySelector('select.session-format')
-    const durationInput = dialog.querySelector('.time-slot-duration')
-
-    if (formatSelect && durationInput) {
-      formatSelect.addEventListener('change', () => {
-        durationInput.value = formatSelect.value
-      })
-
-      durationInput.addEventListener('keyup', () => {
-        if (document.activeElement === durationInput) {
-          formatSelect.value = ''
-        }
-      })
-    }
   }
 }

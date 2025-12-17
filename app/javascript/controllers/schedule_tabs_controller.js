@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
-  static targets = ['tab', 'panel', 'badge']
+  static targets = ['tab', 'panel']
   static values = {
     activeDay: { type: Number, default: 1 }
   }
@@ -19,33 +19,16 @@ export default class extends Controller {
   showDay(day) {
     this.activeDayValue = day
 
-    // Update tab active states
     this.tabTargets.forEach(tab => {
       const tabDay = parseInt(tab.dataset.day)
-      if (tabDay === day) {
-        tab.classList.add('active')
-      } else {
-        tab.classList.remove('active')
-      }
+      tab.classList.toggle('active', tabDay === day)
     })
 
-    // Update panel visibility
     this.panelTargets.forEach(panel => {
       const panelDay = parseInt(panel.dataset.day)
-      if (panelDay === day) {
-        panel.classList.add('active')
-        panel.style.display = 'block'
-      } else {
-        panel.classList.remove('active')
-        panel.style.display = 'none'
-      }
+      const isActive = panelDay === day
+      panel.classList.toggle('active', isActive)
+      panel.style.display = isActive ? 'block' : 'none'
     })
-  }
-
-  updateBadge(day, scheduled, total) {
-    const badge = this.badgeTargets.find(b => parseInt(b.dataset.day) === day)
-    if (badge) {
-      badge.textContent = `${scheduled}/${total}`
-    }
   }
 }

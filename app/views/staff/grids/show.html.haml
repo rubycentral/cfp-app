@@ -17,14 +17,17 @@
           %span.badge{id: "schedule-day-#{day}-badge", data: {schedule_tabs_target: 'badge', day: day}}= "#{scheduled_count}/#{total_count}"
     = link_to "Generate Grid", new_event_staff_schedule_grid_bulk_time_slot_path(@event, day: 1), class: "btn btn-primary", data: {turbo: true, turbo_frame: 'grid-modal-content'}
 
-  / Tab content - One grid per day
-  - @schedule.each_day do |day, slots|
-    .tab-pane{id: "grid_day_#{day}", class: (day == 1 ? 'active' : ''), data: {schedule_tabs_target: "panel", day: day}}
-      .bulk-preview-bar{id: "bulk_preview_bar_day_#{day}"}
-      .grid-content
-        = render partial: 'staff/grids/grid', locals: {schedule: @schedule, day: day}
-        .unscheduled-area{data: {controller: 'draggable-sessions', draggable_sessions_tracks_css_value: @event.tracks.pluck(:name).map(&:parameterize).to_json}}
-          = render partial: 'staff/grids/unscheduled_sessions', locals: {day: day}
+  .grid-with-unscheduled
+    / Tab content - One grid per day
+    - @schedule.each_day do |day, slots|
+      .tab-pane{id: "grid_day_#{day}", class: (day == 1 ? 'active' : ''), data: {schedule_tabs_target: "panel", day: day}}
+        .bulk-preview-bar{id: "bulk_preview_bar_day_#{day}"}
+        .grid-content
+          = render partial: 'staff/grids/grid', locals: {schedule: @schedule, day: day}
+
+    / Unscheduled sessions pool
+    .unscheduled-area{data: {controller: 'draggable-sessions', draggable_sessions_tracks_css_value: @event.tracks.pluck(:name).map(&:parameterize).to_json}}
+      = render partial: 'staff/grids/unscheduled_sessions'
 
   / Modal
   #grid-modal.modal.fade{role: "dialog", data: {controller: 'grid-modal'}}

@@ -23,6 +23,11 @@ import { Turbo } from "@hotwired/turbo-rails"
 // Disable Turbo Drive globally - opt-in instead of opt-out for existing app
 Turbo.session.drive = false
 
+// Disable browser's automatic scroll restoration on page reload
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual'
+}
+
 // Custom Turbo Stream actions for DataTables
 import "./turbo_stream_actions"
 

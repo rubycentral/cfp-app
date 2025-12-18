@@ -22,47 +22,48 @@
 -#                = name
 -#                = count
 
-.row
-  .col-sm-8.text-start
-    %ul.selection-counts
-      %li
-        %span Accepted (Not Confirmed)
-        %span.badge.text-bg-warning= @accepted_not_confirmed_count
-      %li
-        %span Accepted (Confirmed)
-        %span.badge.text-bg-success= @accepted_confirmed_count
-  .col-sm-4.text-end
-    %small.text-end <em>Hint:</em> Hold <kbd>shift</kbd> to sort by multiple columns
+%div{data: {controller: 'proposals-table'}}
+  .row
+    .col-sm-8.text-start
+      %ul.selection-counts
+        %li
+          %a{data: {action: 'click->proposals-table#filterByStatus', status_filter: 'accepted'}, role: 'button'} Accepted (Not Confirmed)
+          %span.badge.text-bg-warning= @accepted_not_confirmed_count
+        %li
+          %a{data: {action: 'click->proposals-table#filterByStatus', status_filter: 'accepted_confirmed'}, role: 'button'} Accepted (Confirmed)
+          %span.badge.text-bg-success= @accepted_confirmed_count
+    .col-sm-4.text-end
+      %small.text-end <em>Hint:</em> Hold <kbd>shift</kbd> to sort by multiple columns
 
-.row{data: {controller: 'proposals-table'}}
-  .col-md-12
-    %table.datatable.table.table-striped.proposal-list{data: {proposals_table_target: 'table', cfp_column_types: '["number", "number", "number", "text", "text", null, "text", "text", "text", "text", null]'}}
-      %thead
-        %tr
-          %th
-          %th
-          %th
-          %th
-          %th
-          %th
-          %th
-          - if event.public_tags?
+  .row
+    .col-md-12
+      %table.datatable.table.table-striped.proposal-list{data: {proposals_table_target: 'table', cfp_column_types: '["number", "number", "number", "text", "text", null, "text", "text", "select", null]'}}
+        %thead
+          %tr
             %th
-          %th
-          %th
-          %th.actions
-        %tr
-          %th Score
-          %th Ratings
-          %th Standard Deviation
-          %th Speakers
-          %th Talk Title
-          %th Track
-          %th Session Format
-          - if event.public_tags?
-            %th Proposal Tags
-          %th Reviewer Tags
-          %th Status
-          %th.actions Soft Actions (Internal)
-      %tbody
-        = render @proposals
+            %th
+            %th
+            %th
+            %th
+            %th
+            %th
+            - if event.public_tags?
+              %th
+            %th
+            %th
+            %th.actions
+          %tr
+            %th Score
+            %th Ratings
+            %th Standard Deviation
+            %th Speakers
+            %th Talk Title
+            %th Track
+            %th Session Format
+            - if event.public_tags?
+              %th Proposal Tags
+            %th Reviewer Tags
+            %th Status
+            %th.actions Soft Actions (Internal)
+        %tbody
+          = render @proposals

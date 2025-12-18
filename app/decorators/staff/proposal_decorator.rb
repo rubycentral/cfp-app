@@ -73,6 +73,12 @@ class Staff::ProposalDecorator < ProposalDecorator
     proposal.internal_comments.size + proposal.public_comments.size
   end
 
+  def status_for_search
+    status = object.state
+    status += '_confirmed' if object.confirmed?
+    status
+  end
+
   private
 
   def state_button(text, path, opts = {})

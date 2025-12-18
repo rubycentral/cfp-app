@@ -59,21 +59,54 @@ export default class extends Controller {
           const headerText = labelRow?.children[index]?.textContent?.trim() || `column_${index}`
           const inputName = headerText.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '')
 
-          const input = document.createElement('input')
-          input.type = 'text'
-          input.className = 'form-control form-control-sm'
-          input.name = `filter_${inputName}`
-          input.placeholder = ''
-          cell.appendChild(input)
+          if (type === 'select') {
+            // Create dropdown populated with unique column values
+            const select = document.createElement('select')
+            select.className = 'form-select form-select-sm'
+            select.name = `filter_${inputName}`
+            select.innerHTML = '<option value=""></option>'
 
-          input.addEventListener('keyup', () => {
-            if (column.search() !== input.value) {
-              column.search(input.value).draw()
-            }
-          })
+            // Collect unique values (use data-search attribute if available, otherwise text content)
+            const uniqueValues = new Map()
+            column.nodes().each(function(node) {
+              const searchValue = node.dataset.search || node.textContent.trim()
+              if (searchValue && !uniqueValues.has(searchValue)) {
+                uniqueValues.set(searchValue, node.textContent.trim())
+              }
+            })
 
-          // Prevent sorting when clicking on input
-          input.addEventListener('click', (e) => e.stopPropagation())
+            // Sort and add options
+            Array.from(uniqueValues.entries()).sort((a, b) => a[1].localeCompare(b[1])).forEach(([value, label]) => {
+              const option = document.createElement('option')
+              option.value = value
+              option.textContent = label
+              select.appendChild(option)
+            })
+
+            cell.appendChild(select)
+
+            select.addEventListener('change', () => {
+              const val = select.value
+              column.search(val ? `^${val.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$` : '', true, false).draw()
+            })
+          } else {
+            // Create text input for other column types
+            const input = document.createElement('input')
+            input.type = 'text'
+            input.className = 'form-control form-control-sm'
+            input.name = `filter_${inputName}`
+            input.placeholder = ''
+            cell.appendChild(input)
+
+            input.addEventListener('keyup', () => {
+              if (column.search() !== input.value) {
+                column.search(input.value).draw()
+              }
+            })
+
+            // Prevent sorting when clicking on input
+            input.addEventListener('click', (e) => e.stopPropagation())
+          }
         })
       }
     }

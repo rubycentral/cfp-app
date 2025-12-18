@@ -16,4 +16,12 @@ export default class extends CfpDatatableController {
       }
     }
   }
+
+  filterByStatus(event) {
+    const statusSelect = this.tableElement.querySelector('select[name="filter_status"]')
+    if (!statusSelect) return
+
+    statusSelect.value = event.currentTarget.dataset.statusFilter
+    statusSelect.dispatchEvent(new Event('change'))
+  }
 }

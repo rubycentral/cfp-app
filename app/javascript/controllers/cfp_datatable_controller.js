@@ -37,7 +37,9 @@ export default class extends Controller {
       },
       initComplete: function() {
         const api = this.api()
-        const filterRow = api.table().header().querySelectorAll('tr')[0]
+        const headerRows = api.table().header().querySelectorAll('tr')
+        const filterRow = headerRows[0]
+        const labelRow = headerRows[1]
 
         api.columns().every(function(index) {
           const column = this
@@ -53,9 +55,14 @@ export default class extends Controller {
           // Skip adding filter input for null columns
           if (type === null) return
 
+          // Get column name from header row for input name attribute
+          const headerText = labelRow?.children[index]?.textContent?.trim() || `column_${index}`
+          const inputName = headerText.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '')
+
           const input = document.createElement('input')
           input.type = 'text'
           input.className = 'form-control form-control-sm'
+          input.name = `filter_${inputName}`
           input.placeholder = ''
           cell.appendChild(input)
 

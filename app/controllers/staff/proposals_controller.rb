@@ -14,6 +14,10 @@ class Staff::ProposalsController < Staff::ApplicationController
     @proposals = @event.proposals
                    .includes(:event, :review_taggings, :proposal_taggings, :ratings, :session_format, {speakers: :user}).load
     @proposals = Staff::ProposalsDecorator.decorate(@proposals)
+
+    accepted_proposals = @event.proposals.accepted
+    @accepted_not_confirmed_count = accepted_proposals.where(confirmed_at: nil).count
+    @accepted_confirmed_count = accepted_proposals.where.not(confirmed_at: nil).count
   end
 
   def show

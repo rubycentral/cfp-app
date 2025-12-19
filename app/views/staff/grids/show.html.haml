@@ -1,4 +1,4 @@
-.schedule-page{data: {controller: "schedule-tabs", schedule_tabs_active_day_value: 1}}
+.schedule-page{data: {controller: 'schedule-tabs card-display-toggle', schedule_tabs_active_day_value: 1}}
   / Alert area
   .alert.alert-danger{style: "display: none;", data: {controller: "alert"}}
     %button.btn-close{type: "button", data: {action: "click->alert#close"}}
@@ -15,7 +15,9 @@
         %li{data: {schedule_tabs_target: "tab", day: day, action: "click->schedule-tabs#switchDay"}, class: (day == 1 ? 'active' : '')}
           %span Day #{day}
           %span.badge{id: "schedule-day-#{day}-badge"}= "#{scheduled_count}/#{total_count}"
-    = link_to "Generate Grid", new_event_staff_schedule_grid_bulk_time_slot_path(@event, day: 1), class: "btn btn-primary", data: {turbo: true, turbo_frame: 'grid-modal-content'}
+    .schedule-nav-actions
+      %button.btn.btn-warning.btn-sm{type: 'button', data: {card_display_toggle_target: 'button', action: 'click->card-display-toggle#toggle'}} Show Speakers
+      = link_to 'Generate Grid', new_event_staff_schedule_grid_bulk_time_slot_path(@event, day: 1), class: 'btn btn-primary btn-sm', data: {turbo: true, turbo_frame: 'grid-modal-content'}
 
   .grid-with-unscheduled
     / Tab content - One grid per day

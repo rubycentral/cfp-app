@@ -1,6 +1,20 @@
 .schedule-page {
   width: fit-content;
   margin-top: 20px;
+
+  /* Card display toggle - default shows title, hides speakers */
+  .card-speakers {
+    display: none;
+  }
+
+  &.show-speakers {
+    .card-title {
+      display: none;
+    }
+    .card-speakers {
+      display: block;
+    }
+  }
 }
 
 .grid-with-unscheduled {
@@ -87,9 +101,11 @@ nav.schedule-nav {
     }
   }
 
-  .btn {
+  .schedule-nav-actions {
     margin-left: auto;
     margin-right: 20px;
+    display: flex;
+    gap: 10px;
   }
 }
 

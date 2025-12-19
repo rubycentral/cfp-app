@@ -12,6 +12,7 @@ window.Stimulus = application
 import AlertAutodismissController from "./alert_autodismiss_controller"
 import AlertController from "./alert_controller"
 import BannerAdsController from "./banner_ads_controller"
+import CardDisplayToggleController from "./card_display_toggle_controller"
 import GridModalController from "./grid_modal_controller"
 import CfpDatatableController from "./cfp_datatable_controller"
 import ContentController from "./content_controller"
@@ -51,6 +52,7 @@ import TrackFilterController from "./track_filter_controller"
 application.register("alert-autodismiss", AlertAutodismissController)
 application.register("alert", AlertController)
 application.register("banner-ads", BannerAdsController)
+application.register("card-display-toggle", CardDisplayToggleController)
 application.register("grid-modal", GridModalController)
 application.register("cfp-datatable", CfpDatatableController)
 application.register("content", ContentController)

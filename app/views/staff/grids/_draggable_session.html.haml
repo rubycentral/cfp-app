@@ -2,4 +2,5 @@
   .track
     %span=truncate(ps.track_name, length: 18)
   .session-card-body
-    %p=truncate(ps.title, length: 40, separator: ' ')
+    %p.card-title= truncate(ps.title, length: 40, separator: ' ')
+    %p.card-speakers= truncate(ps.display_speakers, length: 40, separator: ' ')

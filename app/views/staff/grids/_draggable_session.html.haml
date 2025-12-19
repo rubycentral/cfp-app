@@ -1,4 +1,4 @@
-.draggable-session-card{data: ps.ps_data.merge({ draggable_sessions_target: "session" })}
+.draggable-session-card{data: ps.ps_data.merge({draggable_sessions_target: 'session', title: ps.title, speakers: ps.display_speakers})}
   .track
     %span=truncate(ps.track_name, length: 18)
   .session-card-body

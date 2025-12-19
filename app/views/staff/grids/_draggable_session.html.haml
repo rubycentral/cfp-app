@@ -1,5 +1,8 @@
-.draggable-session-card{data: ps.ps_data.merge({ draggable_sessions_target: "session" })}
+.draggable-session-card{data: ps.ps_data.merge({draggable_sessions_target: 'session'})}
   .track
-    %span=truncate(ps.track_name, length: 18)
+    %span= truncate(ps.track_name, length: 18)
   .session-card-body
-    %p=truncate(ps.title, length: 40, separator: ' ')
+    %p.card-title= truncate(ps.title, length: 40, separator: ' ')
+    %p.card-speakers= truncate(ps.display_speakers, length: 40, separator: ' ')
+  .card-tooltip.tooltip-title= ps.title
+  .card-tooltip.tooltip-speakers= ps.display_speakers

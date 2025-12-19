@@ -95,7 +95,7 @@ export default class extends Controller {
             input.type = 'text'
             input.className = 'form-control form-control-sm'
             input.name = `filter_${inputName}`
-            input.placeholder = ''
+            input.placeholder = headerText
             cell.appendChild(input)
 
             input.addEventListener('keyup', () => {

@@ -197,16 +197,16 @@ end
 # Table name: program_sessions
 #
 #  id                :integer          not null, primary key
-#  event_id          :integer
-#  proposal_id       :integer
-#  title             :text
 #  abstract          :text
-#  track_id          :integer
-#  session_format_id :integer
-#  state             :text             default("active")
 #  created_at        :datetime         not null
-#  updated_at        :datetime         not null
+#  event_id          :integer
 #  info              :text
+#  proposal_id       :integer
+#  session_format_id :integer
+#  state             :text             default("draft")
+#  title             :text
+#  track_id          :integer
+#  updated_at        :datetime         not null
 #
 # Indexes
 #

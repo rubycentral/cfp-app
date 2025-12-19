@@ -242,25 +242,25 @@ end
 # Table name: events
 #
 #  id                          :integer          not null, primary key
-#  name                        :string
-#  slug                        :string
-#  url                         :string
-#  contact_email               :string
-#  state                       :string           default("draft")
 #  archived                    :boolean          default(FALSE)
-#  opens_at                    :datetime
 #  closes_at                   :datetime
-#  start_date                  :datetime
+#  contact_email               :string
+#  created_at                  :datetime
+#  custom_fields               :text
 #  end_date                    :datetime
-#  info                        :text
 #  guidelines                  :text
-#  settings                    :text
+#  info                        :text
+#  name                        :string
+#  opens_at                    :datetime
 #  proposal_tags               :text
 #  review_tags                 :text
-#  custom_fields               :text
-#  speaker_notification_emails :text             default({:accept=>"", :reject=>"", :waitlist=>""})
-#  created_at                  :datetime
+#  settings                    :text
+#  slug                        :string
+#  speaker_notification_emails :text
+#  start_date                  :datetime
+#  state                       :string           default("draft")
 #  updated_at                  :datetime
+#  url                         :string
 #
 # Indexes
 #

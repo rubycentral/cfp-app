@@ -3,6 +3,8 @@
   %td= user.email
   %td= user.role_names
   %td= user.provider
+  %td= user.proposals.size
+  %td= user.proposals.count(&:accepted?)
   %td= user.created_at.to_fs(:long_with_zone)
   %td.actions
     = link_to 'Edit', edit_admin_user_path(user), class: 'btn btn-primary btn-sm'

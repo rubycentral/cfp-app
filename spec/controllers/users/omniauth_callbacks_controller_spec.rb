@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 describe Users::OmniauthCallbacksController, type: :controller do
+  before do
+    Rails.application.reload_routes_unless_loaded
+  end
 
   describe '#twitter' do
     let(:twitter_auth_hash) { OmniAuth.config.mock_auth[:twitter] }

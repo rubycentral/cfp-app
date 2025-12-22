@@ -1,4 +1,14 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  class AuthHash < SimpleDelegator
+    def account_name
+      dig('info', 'nickname') || dig('extra', 'raw_info', 'screen_name')
+    end
+
+    def provider_name
+      Identity::PROVIDER_NAMES[provider]
+    end
+  end
+
   before_action :link_identity_to_current_user, only: [:twitter, :github, :developer], if: -> { current_user }
   skip_forgery_protection only: :developer
 
@@ -25,9 +35,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def link_identity_to_current_user
     if (identity = Identity.find_by(provider: auth_hash.provider, uid: auth_hash.uid))
       if identity.user_id == current_user.id
-        flash[:info] = "#{provider_name} is already connected to your account."
+        flash[:info] = "#{auth_hash.provider_name} is already connected to your account."
       else
-        flash[:danger] = "This #{provider_name} account is already connected to another user."
+        flash[:danger] = "This #{auth_hash.provider_name} account is already connected to another user."
       end
       redirect_to edit_profile_path
     elsif (legacy_user = User.find_by(provider: auth_hash.provider, uid: auth_hash.uid))
@@ -35,11 +45,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       session[:pending_merge_user_id] = legacy_user.id
       session[:pending_merge_provider] = auth_hash.provider
       session[:pending_merge_uid] = auth_hash.uid
-      session[:pending_merge_account_name] = auth_hash['info']['nickname']
+      session[:pending_merge_account_name] = auth_hash.account_name
       redirect_to merge_profile_path
     else
-      current_user.identities.create!(provider: auth_hash.provider, uid: auth_hash.uid, account_name: auth_hash['info']['nickname'])
-      flash[:info] = "Successfully connected #{provider_name} to your account."
+      current_user.identities.create!(provider: auth_hash.provider, uid: auth_hash.uid, account_name: auth_hash.account_name)
+      flash[:info] = "Successfully connected #{auth_hash.provider_name} to your account."
       redirect_to edit_profile_path
     end
   end
@@ -49,7 +59,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = user || User.from_omniauth(auth_hash, session[:pending_invite_email])
 
     if @user.persisted?
-      flash.now[:info] = "You have signed in with #{provider_name}."
+      flash.now[:info] = "You have signed in with #{auth_hash.provider_name}."
       logger.info "Signing in user #{@user.inspect}"
 
       @user.skip_confirmation!
@@ -62,10 +72,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def auth_hash
-    request.env['omniauth.auth']
-  end
-
-  def provider_name
-    Identity::PROVIDER_NAMES[auth_hash.provider]
+    @auth_hash ||= AuthHash.new(request.env['omniauth.auth'])
   end
 end

@@ -29,8 +29,9 @@ feature 'User Profile', type: :system do
 
   scenario "A user attempts to save their bio without email", js: true do
     visit(edit_profile_path)
-    fill_in('Email', with: '')
-    click_button 'Save'
+    fill_in('Email', with: '', fill_options: {clear: :backspace})
+    # Submit form via JavaScript to bypass any browser validation
+    page.execute_script("document.querySelector('form').submit()")
     expect(page).to have_content("Unable to save profile. Please correct the following: Email can't be blank")
   end
 

@@ -93,7 +93,7 @@ feature "Teammate Invitation received", type: :system do
           click_link "Sign up"
           sign_up_with("new@per.son", "apples", "apples")
           fill_in "Name", with: "A. Paul"
-          click_button "Save"
+          click_button "Save", match: :first
           expect(current_path).to eq(event_staff_path(event))
         end
 
@@ -115,7 +115,7 @@ feature "Teammate Invitation received", type: :system do
           expect(current_path).to eq(edit_profile_path)
 
           fill_in "Name", with: "A. Paul"
-          click_button "Save"
+          click_button "Save", match: :first
           expect(current_path).to eq(event_staff_path(event))
         end
 

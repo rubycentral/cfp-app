@@ -57,7 +57,7 @@
                     = "Connected via #{name}"
               - else
                 .service.mb-2
-                  = button_to send("user_#{provider}_omniauth_authorize_path"), data: {turbo: false}, class: "btn btn-#{provider}", form: {style: 'display: inline-block'} do
+                  = link_to send("user_#{provider}_omniauth_authorize_path"), data: {turbo: false}, class: "btn btn-#{provider}" do
                     %i{class: "bi bi-#{provider}"}
                     = "Connect #{name}"
 

@@ -23,7 +23,10 @@
             = f.label :name
             = f.text_field :name, class: 'form-control', placeholder: 'Your name', autofocus: true
           = f.input :bio, as: :text, input_html: {rows: 7, maxlength: 500, placeholder: 'Enter your bio'}, hint: 'Bio is limited to 500 characters.'
+          .mt-3
+            %button.float-end.btn.btn-success{type: 'submit'} Save
 
+    = simple_form_for current_user, url: profile_path, html: {role: 'form'} do |f|
       .widget
         .widget-header
           %i.bi.bi-lock
@@ -42,9 +45,8 @@
           .form-group
             = f.label :password_confirmation
             = f.password_field :password_confirmation, class: 'form-control', placeholder: 'Confirm password'
-
-      .form-submit
-        %button.float-end.btn.btn-success.btn-lg{type: "submit"} Save
+          .mt-3
+            %button.float-end.btn.btn-success{type: 'submit'} Save
 
   .col-md-6
     .widget

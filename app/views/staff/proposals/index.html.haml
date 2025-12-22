@@ -1,26 +1,8 @@
 = render 'shared/event_info_bar', event: event
 .row
   &nbsp;
-
--#.row
--#  .col-sm-offset-6.col-sm-6
--#    .btn-nav.text-end
--#      = link_to event_staff_proposals_path(format: "csv"), id: "download_link", class: "btn btn-info btn-sm" do
--#        %span.bi.bi-download
--#        Download CSV
 .row
   &nbsp;
-
--#- if event.public_tags? && @taggings_count.present?
--#  .row
--#    .col-sm-7
--#      - @taggings_count.sort_by{|k,v| v}.reverse.each_slice(6).to_a.each do |row|
--#        %ul#columns.list-inline
--#          -row.each do |name, count|
--#            %li
--#              .label.badge text-bg-success
--#                = name
--#                = count
 
 %div{data: {controller: 'proposals-table'}}
   .row

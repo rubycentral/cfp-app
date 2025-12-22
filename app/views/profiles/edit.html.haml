@@ -57,7 +57,15 @@
         %p Connect your social accounts to enable sign-in via these providers.
         .connected-accounts
           - Identity::PROVIDER_NAMES.each do |provider, name|
-            - if current_user.connected?(provider)
+            - if (identity = current_user.identities.find_by(provider: provider))
+              .service.mb-2
+                %button.btn.btn-secondary.disabled{class: "btn-#{provider}-alt"}
+                  %i{class: "bi bi-#{provider}"}
+                  - if identity.account_name.present?
+                    = "@#{identity.account_name}"
+                  - else
+                    = "Connected via #{name}"
+            - elsif current_user.provider == provider
               .service.mb-2
                 %button.btn.btn-secondary.disabled{class: "btn-#{provider}-alt"}
                   %i{class: "bi bi-#{provider}"}

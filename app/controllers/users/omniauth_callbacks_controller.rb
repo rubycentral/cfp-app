@@ -35,6 +35,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       session[:pending_merge_user_id] = legacy_user.id
       session[:pending_merge_provider] = auth_hash.provider
       session[:pending_merge_uid] = auth_hash.uid
+      session[:pending_merge_account_name] = auth_hash['info']['nickname']
       redirect_to merge_profile_path
     else
       current_user.identities.create!(provider: auth_hash.provider, uid: auth_hash.uid, account_name: auth_hash['info']['nickname'])

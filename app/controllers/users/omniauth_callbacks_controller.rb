@@ -29,12 +29,18 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       else
         flash[:danger] = "This #{provider_name} account is already connected to another user."
       end
+      redirect_to edit_profile_path
+    elsif (legacy_user = User.find_by(provider: auth_hash.provider, uid: auth_hash.uid))
+      # Found a legacy user - need to merge
+      session[:pending_merge_user_id] = legacy_user.id
+      session[:pending_merge_provider] = auth_hash.provider
+      session[:pending_merge_uid] = auth_hash.uid
+      redirect_to merge_profile_path
     else
       current_user.identities.create!(provider: auth_hash.provider, uid: auth_hash.uid)
       flash[:info] = "Successfully connected #{provider_name} to your account."
+      redirect_to edit_profile_path
     end
-
-    redirect_to edit_profile_path
   end
 
   def authenticate_with_hash(user = nil)

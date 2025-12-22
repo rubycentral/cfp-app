@@ -94,5 +94,20 @@ describe Users::OmniauthCallbacksController, type: :controller do
         expect(flash[:danger]).to eq('This GitHub account is already connected to another user.')
       end
     end
+
+    context 'when legacy user exists with same provider/uid' do
+      it 'redirects to merge page' do
+        legacy_user = create(:user, provider: 'github', uid: github_auth_hash.uid)
+        user = create(:user)
+        sign_in(user)
+
+        get :github
+
+        expect(response).to redirect_to(merge_profile_path)
+        expect(session[:pending_merge_user_id]).to eq(legacy_user.id)
+        expect(session[:pending_merge_provider]).to eq('github')
+        expect(session[:pending_merge_uid]).to eq(github_auth_hash.uid)
+      end
+    end
   end
 end

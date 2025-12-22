@@ -156,6 +156,21 @@ class User < ApplicationRecord
     end
     profile_errors
   end
+
+  # Merge another user's associations into this user
+  def merge_from!(other_user)
+    transaction do
+      other_user.invitations.update_all(user_id: id)
+      other_user.teammates.update_all(user_id: id)
+      other_user.speakers.update_all(user_id: id)
+      other_user.ratings.update_all(user_id: id)
+      other_user.comments.update_all(user_id: id)
+      other_user.notifications.update_all(user_id: id)
+
+      # Clear legacy OAuth fields so the old user can't be found via from_omniauth
+      other_user.update_columns(provider: nil, uid: nil)
+    end
+  end
 end
 
 # == Schema Information

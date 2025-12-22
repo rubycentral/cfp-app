@@ -259,4 +259,33 @@ describe User do
       expect(user.profile_errors.messages[:email][0]).to eq unconfirmed_email_err_msg
     end
   end
+
+  describe '#merge_from!' do
+    let(:current_user) { create(:user) }
+    let(:legacy_user) { create(:user, provider: 'twitter', uid: '12345') }
+    let(:event) { create(:event) }
+    let(:proposal) { create(:proposal, event: event) }
+
+    it 'transfers all associations and clears legacy OAuth fields' do
+      invitation = create(:invitation, user: legacy_user, email: 'test@example.com', proposal: proposal)
+      teammate = create(:teammate, user: legacy_user, event: event, role: 'reviewer')
+      speaker = create(:speaker, user: legacy_user, proposal: proposal)
+      rating = create(:rating, user: legacy_user, proposal: proposal)
+      comment = create(:comment, user: legacy_user, proposal: proposal)
+      notification = create(:notification, user: legacy_user)
+
+      current_user.merge_from!(legacy_user)
+
+      expect(invitation.reload.user_id).to eq(current_user.id)
+      expect(teammate.reload.user_id).to eq(current_user.id)
+      expect(speaker.reload.user_id).to eq(current_user.id)
+      expect(rating.reload.user_id).to eq(current_user.id)
+      expect(comment.reload.user_id).to eq(current_user.id)
+      expect(notification.reload.user_id).to eq(current_user.id)
+
+      legacy_user.reload
+      expect(legacy_user.provider).to be_nil
+      expect(legacy_user.uid).to be_nil
+    end
+  end
 end

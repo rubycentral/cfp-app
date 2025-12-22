@@ -41,8 +41,14 @@ class User < ApplicationRecord
     return identity.user if identity
 
     # Fall back to legacy lookup in users table
-    user = find_by(provider: auth.provider, uid: auth.uid)
-    return user if user
+    if (user = find_by(provider: auth.provider, uid: auth.uid))
+      # Migrate legacy user to identities table
+      transaction do
+        user.identities.create!(provider: auth.provider, uid: auth.uid)
+        user.update_columns(provider: nil, uid: nil)
+      end
+      return user
+    end
 
     # Create new user with identity
     create_from_omniauth!(auth, invitation_email)

@@ -37,7 +37,7 @@ feature 'User Profile', type: :system do
   scenario 'A user updates their event email preference' do
     teammate = create(:teammate, role: 'organizer', user: user, state: Teammate::ACCEPTED)
     visit(event_path(teammate.event))
-    visit(edit_profile_path)
+    visit(notifications_profile_path)
     choose(Teammate::NOTIFICATION_PREFERENCES[Teammate::MENTIONS])
     click_button 'Save'
     click_link 'Dashboard'

@@ -22,10 +22,16 @@
           .form-group
             = f.label :name
             = f.text_field :name, class: 'form-control', placeholder: 'Your name', autofocus: true
+          = f.input :bio, as: :text, input_html: {rows: 7, maxlength: 500, placeholder: 'Enter your bio'}, hint: 'Bio is limited to 500 characters.'
+
+      .widget
+        .widget-header
+          %i.bi.bi-image
+          %h3 Profile Icon Image
+        .widget-content
           %p
-            = f.label :bio
-            = f.text_area :bio, class: 'form-control', placeholder: 'Enter your bio', rows: 7, maxlength: 500
-            %p.help-block Bio is limited to 500 characters.
+            Add or change your profile icon image by visiting
+            = link_to('Gravatar', 'https://en.gravatar.com/connect/', target: "_blank")
 
     %fieldset.col-md-6
       .widget
@@ -61,31 +67,14 @@
                     %i{class: "bi bi-#{provider}"}
                     = "Connect #{name}"
 
-    %fieldset.col-md-6
-      .widget
-        .widget-header
-          %i.bi.bi-lock
-          %h3 Profile Icon Image
-        .widget-content
-          %p
-            Add or change your profile icon image by visiting
-            = link_to('Gravatar', 'https://en.gravatar.com/connect/', target: "_blank")
-
-      - if current_user.teammates.present?
+      - if current_user.teammates.loaded? ? current_user.teammates.any? : current_user.teammates.exists?
         .widget
           .widget-header
             %i.bi.bi-envelope-fill
-            %h3
-              Notifications
-              %span.ms-2{role: 'button', data: {bs_toggle: 'popover', bs_placement: 'left', bs_content: notification_preferences_tooltip, bs_html: 'true'}}
-                %i.bi.bi-question-circle
+            %h3 Notifications
           .widget-content
-            = f.simple_fields_for :teammates do |fields|
-              - teammate = fields.object
-              %b= teammate.event.name
-              = fields.input :notification_preference,
-                collection: Teammate::NOTIFICATION_PREFERENCES.invert,
-                as: :radio_buttons, wrapper: 'horizontal_radio_and_checkboxes', label: false
+            %p
+              = link_to 'Manage notification preferences', notifications_profile_path
 
   .row
     .col-md-12.form-submit

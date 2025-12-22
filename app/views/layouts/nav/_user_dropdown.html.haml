@@ -7,6 +7,11 @@
       = link_to edit_profile_path, class: 'dropdown-item' do
         %i.bi.bi-person-fill
         %span My Profile
+    - if current_user.teammates.loaded? ? current_user.teammates.any? : current_user.teammates.exists?
+      %li
+        = link_to notifications_profile_path, class: 'dropdown-item' do
+          %i.bi.bi-bell-fill
+          %span Notifications
     %li
       = link_to destroy_user_session_path, data: {turbo: true, turbo_method: :delete}, class: 'dropdown-item' do
         %i.bi.bi-box-arrow-right

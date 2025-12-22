@@ -90,3 +90,7 @@ input[type="checkbox"].boolean {
   gap: 10px;
   align-items: center;
 }
+
+.form-group span.radio {
+  margin-right: 1rem;
+}

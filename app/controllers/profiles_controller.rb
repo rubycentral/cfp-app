@@ -26,12 +26,27 @@ class ProfilesController < ApplicationController
     end
   end
 
+  def notifications
+  end
+
+  def update_notifications
+    if current_user.update(notifications_params)
+      flash[:info] = 'Notification preferences updated.'
+      redirect_to notifications_profile_path
+    else
+      render :notifications, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def user_params
     params.require(:user).permit(:bio, :gender, :ethnicity, :country, :name,
-                                 :email, :password, :password_confirmation,
-                                 teammates_attributes: [:id, :notification_preference])
+                                 :email, :password, :password_confirmation)
+  end
+
+  def notifications_params
+    params.require(:user).permit(teammates_attributes: [:id, :notification_preference])
   end
 
   def incomplete_profile_msg

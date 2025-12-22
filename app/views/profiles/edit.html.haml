@@ -6,7 +6,7 @@
 
 .row
   .col-md-6
-    = simple_form_for current_user, url: profile_path, html: {role: 'form'} do |f|
+    = simple_form_for current_user, url: profile_path, html: {role: 'form', id: nil} do |f|
       .widget
         .widget-header
           %i.bi.bi-person
@@ -26,7 +26,7 @@
           .mt-3
             %button.float-end.btn.btn-success{type: 'submit'} Save
 
-    = simple_form_for current_user, url: profile_path, html: {role: 'form'} do |f|
+    = simple_form_for current_user, url: profile_path, html: {role: 'form', id: nil} do |f|
       .widget
         .widget-header
           %i.bi.bi-lock

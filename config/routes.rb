@@ -3,7 +3,10 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   mount ActionCable.server => '/cable'
 
-  resource :profile, only: [:show, :edit, :update]
+  resource :profile, only: [:show, :edit, :update] do
+    get :notifications
+    patch :notifications, action: :update_notifications
+  end
   get '/my-proposals' => 'proposals#index', as: :proposals
 
   resources :notifications, only: [:index, :show] do

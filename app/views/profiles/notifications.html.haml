@@ -1,0 +1,30 @@
+.row
+  .col-md-12
+    %header.page-header
+      %h1 Notification Preferences
+
+= simple_form_for current_user, url: notifications_profile_path, method: :patch, html: {role: 'form'} do |f|
+  .row
+    %fieldset.col-md-8
+      .widget
+        .widget-header
+          %i.bi.bi-envelope-fill
+          %h3
+            Notifications
+            %span.ms-2{role: 'button', data: {bs_toggle: 'popover', bs_placement: 'left', bs_content: notification_preferences_tooltip, bs_html: 'true'}}
+              %i.bi.bi-question-circle
+        .widget-content
+          - if current_user.teammates.loaded? ? current_user.teammates.any? : current_user.teammates.exists?
+            = f.simple_fields_for :teammates do |fields|
+              - teammate = fields.object
+              %b= teammate.event.name
+              = fields.input :notification_preference,
+                collection: Teammate::NOTIFICATION_PREFERENCES.invert,
+                as: :radio_buttons, wrapper: 'horizontal_radio_and_checkboxes', label: false
+          - else
+            %p You are not a member of any event teams.
+
+  .row
+    .col-md-12.form-submit
+      = link_to 'Back to Profile', edit_profile_path, class: 'btn btn-secondary'
+      %button.float-end.btn.btn-success.btn-lg{type: "submit"} Save

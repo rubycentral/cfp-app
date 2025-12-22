@@ -12,57 +12,57 @@
         %span.badge.badge-info= "#{event.stats.user_rated_proposals(current_user)}/#{event.stats.user_ratable_proposals(current_user)}"
   .col-sm-6.text-end
     %small.text-end <em>Hint:</em> Hold <kbd>shift</kbd> to sort by multiple columns
-.row{data: {controller: 'proposals-table'}}
-  .col-md-12
-    %table.datatable.table.table-striped{data: {proposals_table_target: 'table', cfp_column_types: '["number", null, "number", "text", "text", "text", "text", "text", "number", "text", "text"]'}}
-      %thead
-        %tr
-          %th
-          %th
-          %th
-          %th
-          %th
-          %th
-          %th
-          %th
-          %th
-          %th
-          %th
-        %tr
-          %th Score
-          %th Your<br/>Score
-          %th Ratings
-          %th Title
-          %th Session Format
-          %th Track
-          %th Proposal<br/>Tags
-          %th Reviewer<br/>Tags
-          %th Comments
-          %th Submitted On
-          %th Updated At
-      %tbody
-        - proposals.each do |proposal|
-          %tr{ class: "proposal-#{proposal.id}", data: { 'proposal-id' => proposal.id, 'proposal-uuid' => proposal.uuid } }
-            %td.average-rating
-              = number_with_precision(proposal.avg_rating, precision: 1) if proposal.your_score
-            %td.my-rating
-              = proposal.your_score
-            %td.ratings-count
-              = proposal.ratings_count
-            %td.title
-              = proposal.title_link_for_review
-              = state_label(small: true) if proposal.withdrawn?
-            %td.session-format
-              = proposal.session_format_name
-            %td.track
-              = proposal.track_name
-            %td.tags
-              = proposal.tags_labels
-            %td.review-tags
-              = proposal.review_tags_labels
-            %td.comment-count
-              = proposal.comments_count
-            %td.created-at
-              = proposal.created_at
-            %td.updated-at
-              = proposal.updated_by_speaker_at
+
+%div{data: {controller: 'proposals-table'}}
+  %table.datatable.table.table-striped{data: {proposals_table_target: 'table', cfp_column_types: '["number", null, "number", "text", "text", "text", "text", "text", "number", "text", "text"]'}}
+    %thead
+      %tr
+        %th
+        %th
+        %th
+        %th
+        %th
+        %th
+        %th
+        %th
+        %th
+        %th
+        %th
+      %tr
+        %th Score
+        %th Your<br/>Score
+        %th Ratings
+        %th Title
+        %th Session Format
+        %th Track
+        %th Proposal<br/>Tags
+        %th Reviewer<br/>Tags
+        %th Comments
+        %th Submitted On
+        %th Updated At
+    %tbody
+      - proposals.each do |proposal|
+        %tr{ class: "proposal-#{proposal.id}", data: { 'proposal-id' => proposal.id, 'proposal-uuid' => proposal.uuid } }
+          %td.average-rating
+            = number_with_precision(proposal.avg_rating, precision: 1) if proposal.your_score
+          %td.my-rating
+            = proposal.your_score
+          %td.ratings-count
+            = proposal.ratings_count
+          %td.title
+            = proposal.title_link_for_review
+            = state_label(small: true) if proposal.withdrawn?
+          %td.session-format
+            = proposal.session_format_name
+          %td.track
+            = proposal.track_name
+          %td.tags
+            = proposal.tags_labels
+          %td.review-tags
+            = proposal.review_tags_labels
+          %td.comment-count
+            = proposal.comments_count
+          %td.created-at
+            = proposal.created_at
+          %td.updated-at
+            = proposal.updated_by_speaker_at

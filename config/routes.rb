@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   resource :profile, only: [:show, :edit, :update] do
     get :notifications
     patch :notifications, action: :update_notifications
+    get :merge
+    post :merge, action: :confirm_merge
   end
   get '/my-proposals' => 'proposals#index', as: :proposals
 

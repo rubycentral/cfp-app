@@ -38,6 +38,36 @@ class ProfilesController < ApplicationController
     end
   end
 
+  def merge
+    @legacy_user = User.find_by(id: session[:pending_merge_user_id])
+    @provider = session[:pending_merge_provider]
+
+    unless @legacy_user && @provider
+      redirect_to edit_profile_path
+    end
+  end
+
+  def confirm_merge
+    legacy_user = User.find_by(id: session[:pending_merge_user_id])
+    provider = session[:pending_merge_provider]
+    uid = session[:pending_merge_uid]
+
+    unless legacy_user && provider && uid
+      flash[:danger] = 'Merge session expired. Please try again.'
+      redirect_to edit_profile_path and return
+    end
+
+    current_user.merge_from!(legacy_user)
+    current_user.identities.create!(provider: provider, uid: uid)
+
+    session.delete(:pending_merge_user_id)
+    session.delete(:pending_merge_provider)
+    session.delete(:pending_merge_uid)
+
+    flash[:info] = "Successfully merged accounts and connected #{Identity::PROVIDER_NAMES[provider]}."
+    redirect_to edit_profile_path
+  end
+
   private
 
   def user_params

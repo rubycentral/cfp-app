@@ -111,6 +111,28 @@ describe User do
     end
   end
 
+  describe '#oauth_providers' do
+    it 'returns providers from identities and legacy provider column' do
+      user = create(:user, provider: 'twitter')
+      user.identities.create!(provider: 'github', uid: '12345')
+
+      expect(user.oauth_providers).to contain_exactly('twitter', 'github')
+    end
+
+    it 'returns unique providers' do
+      user = create(:user, provider: 'github')
+      user.identities.create!(provider: 'github', uid: '12345')
+
+      expect(user.oauth_providers).to eq(['github'])
+    end
+
+    it 'returns empty array when no providers' do
+      user = create(:user, provider: nil)
+
+      expect(user.oauth_providers).to be_empty
+    end
+  end
+
   describe "#complete?" do
     it "returns true if name and email are present, and unconfirmed_email is blank" do
       user = build(:user, name: 'Harry', email: 'harry@hogwarts.edu', unconfirmed_email: nil)

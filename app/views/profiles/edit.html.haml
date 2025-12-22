@@ -22,10 +22,7 @@
           .form-group
             = f.label :name
             = f.text_field :name, class: 'form-control', placeholder: 'Your name', autofocus: true
-          %p
-            = f.label :bio
-            = f.text_area :bio, class: 'form-control', placeholder: 'Enter your bio', rows: 7, maxlength: 500
-            %p.help-block Bio is limited to 500 characters.
+          = f.input :bio, as: :text, input_html: {rows: 7, maxlength: 500, placeholder: 'Enter your bio'}, hint: 'Bio is limited to 500 characters.'
 
       .widget
         .widget-header

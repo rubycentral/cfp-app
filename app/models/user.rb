@@ -44,7 +44,7 @@ class User < ApplicationRecord
     if (user = find_by(provider: auth.provider, uid: auth.uid))
       # Migrate legacy user to identities table
       transaction do
-        user.identities.create!(provider: auth.provider, uid: auth.uid, account_name: auth['info']['nickname'])
+        user.identities.create!(provider: auth.provider, uid: auth.uid, account_name: account_name_from_auth(auth))
         user.update_columns(provider: nil, uid: nil)
       end
       return user
@@ -61,13 +61,17 @@ class User < ApplicationRecord
       password: (password = Devise.friendly_token[0, 20]),
       password_confirmation: password
     )
-    user.identities.build(provider: auth.provider, uid: auth.uid, account_name: auth['info']['nickname'])
+    user.identities.build(provider: auth.provider, uid: auth.uid, account_name: account_name_from_auth(auth))
 
     if invitation_email.present? && (user.email == invitation_email)
       user.skip_confirmation!
     end
 
     user.tap(&:save!)
+  end
+
+  def self.account_name_from_auth(auth)
+    auth.dig('info', 'nickname') || auth.dig('extra', 'raw_info', 'screen_name')
   end
 
   def check_pending_invite_email

@@ -11,15 +11,25 @@ describe User do
     let(:email) { 'test@omniuser.com' }
     let(:account_name) { 'testuser' }
 
-    context "User already exists" do
-      let!(:user) { create(:user, email: email, name: OmniAuth.config.mock_auth[:github].info.name, uid: OmniAuth.config.mock_auth[:github].uid, provider: "github") }
+    context 'User already exists with legacy provider/uid' do
+      let!(:user) { create(:user, email: email, name: OmniAuth.config.mock_auth[:github].info.name, uid: OmniAuth.config.mock_auth[:github].uid, provider: 'github') }
 
-      it "doesn't create a new user from github auth hash when user exists" do
+      it 'does not create a new user' do
         expect {
           User.from_omniauth(github_auth_hash)
         }.to_not change { User.count }
       end
 
+      it 'migrates legacy user to identities table' do
+        expect {
+          User.from_omniauth(github_auth_hash)
+        }.to change { Identity.count }.by(1)
+
+        user.reload
+        expect(user.identities.find_by(provider: 'github', uid: github_auth_hash.uid)).to be_present
+        expect(user.provider).to be_nil
+        expect(user.uid).to be_nil
+      end
     end
 
     context "User doesn't yet exist" do

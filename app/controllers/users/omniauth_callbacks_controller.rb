@@ -37,7 +37,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       session[:pending_merge_uid] = auth_hash.uid
       redirect_to merge_profile_path
     else
-      current_user.identities.create!(provider: auth_hash.provider, uid: auth_hash.uid)
+      current_user.identities.create!(provider: auth_hash.provider, uid: auth_hash.uid, account_name: auth_hash['info']['nickname'])
       flash[:info] = "Successfully connected #{provider_name} to your account."
       redirect_to edit_profile_path
     end

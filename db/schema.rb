@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_02_15_111232) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_19_061613) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -75,6 +75,16 @@ ActiveRecord::Schema[8.1].define(version: 2025_02_15_111232) do
     t.datetime "updated_at", precision: nil
     t.string "url"
     t.index ["slug"], name: "index_events_on_slug"
+  end
+
+  create_table "identities", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "provider", null: false
+    t.string "uid", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["provider", "uid"], name: "index_identities_on_provider_and_uid", unique: true
+    t.index ["user_id"], name: "index_identities_on_user_id"
   end
 
   create_table "invitations", force: :cascade do |t|
@@ -392,6 +402,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_02_15_111232) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "identities", "users"
   add_foreign_key "pages", "websites"
   add_foreign_key "session_format_configs", "session_formats"
   add_foreign_key "session_format_configs", "websites"

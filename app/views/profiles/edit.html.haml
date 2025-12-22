@@ -31,8 +31,6 @@
       .widget
         .widget-header
           %i.bi.bi-lock
-          - if current_user.provider.present?
-            %i.bi{class: "bi-#{current_user.provider.downcase}"}
           %h3 Identity Services
         .widget-content
           %p
@@ -48,6 +46,20 @@
           .form-group
             = f.label :password_confirmation
             = f.password_field :password_confirmation, class: 'form-control', placeholder: 'Confirm password'
+          %hr
+          %p Connect your social accounts to enable sign-in via these providers.
+          .connected-accounts
+            - %w[github twitter].each do |provider|
+              - if current_user.connected?(provider)
+                .service.mb-2
+                  %button.btn.btn-secondary.disabled{class: "btn-#{provider}-alt"}
+                    %i{class: "bi bi-#{provider}"}
+                    = "Connected via #{provider.capitalize}"
+              - else
+                .service.mb-2
+                  = button_to send("user_#{provider}_omniauth_authorize_path"), data: {turbo: false}, class: "btn btn-#{provider}", form: {style: 'display: inline-block'} do
+                    %i{class: "bi bi-#{provider}"}
+                    = "Connect #{provider.capitalize}"
 
     %fieldset.col-md-6
       .widget
@@ -58,13 +70,6 @@
           %p
             Add or change your profile icon image by visiting
             = link_to('Gravatar', 'https://en.gravatar.com/connect/', target: "_blank")
-
-          - if current_user.provider.present?
-            .service
-              %button.btn.btn-secondary.disabled{class: "btn-#{current_user.provider.downcase}-alt"}
-                %i{class: "bi bi-#{current_user.provider.downcase}"}
-                | Connected via
-                = current_user.provider
 
       - if current_user.teammates.present?
         .widget

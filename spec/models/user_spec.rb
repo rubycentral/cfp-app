@@ -48,13 +48,14 @@ describe User do
         }.to_not raise_error
       end
 
-      it "creates a new user and sets provider for user" do
+      it "creates a new user with identity" do
         user = nil
         expect {
           user = User.from_omniauth(twitter_auth_hash)
         }.to change { User.count }.by(1)
-        expect(user.provider).to eq("twitter")
-        expect(user.uid).to eq(twitter_auth_hash.uid)
+        expect(user.identities.count).to eq(1)
+        expect(user.identities.first.provider).to eq('twitter')
+        expect(user.identities.first.uid).to eq(twitter_auth_hash.uid)
       end
     end
 

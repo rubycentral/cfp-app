@@ -4,9 +4,9 @@
       %h1
         Edit Your Profile
 
-= simple_form_for current_user, url: profile_path, html: {role: 'form'} do |f|
-  .row
-    %fieldset.col-md-6
+.row
+  .col-md-6
+    = simple_form_for current_user, url: profile_path, html: {role: 'form'} do |f|
       .widget
         .widget-header
           %i.bi.bi-person
@@ -23,21 +23,14 @@
             = f.label :name
             = f.text_field :name, class: 'form-control', placeholder: 'Your name', autofocus: true
           = f.input :bio, as: :text, input_html: {rows: 7, maxlength: 500, placeholder: 'Enter your bio'}, hint: 'Bio is limited to 500 characters.'
+          .mt-3
+            %button.float-end.btn.btn-success{type: 'submit'} Save
 
-      .widget
-        .widget-header
-          %i.bi.bi-image
-          %h3 Profile Icon Image
-        .widget-content
-          %p
-            Add or change your profile icon image by visiting
-            = link_to('Gravatar', 'https://en.gravatar.com/connect/', target: "_blank")
-
-    %fieldset.col-md-6
+    = simple_form_for current_user, url: profile_path, html: {role: 'form'} do |f|
       .widget
         .widget-header
           %i.bi.bi-lock
-          %h3 Identity Services
+          %h3 Email & Password
         .widget-content
           %p
             Email is only used for notifications on proposal feedback and acceptance into the program.
@@ -52,30 +45,43 @@
           .form-group
             = f.label :password_confirmation
             = f.password_field :password_confirmation, class: 'form-control', placeholder: 'Confirm password'
-          %hr
-          %p Connect your social accounts to enable sign-in via these providers.
-          .connected-accounts
-            - Identity::PROVIDER_NAMES.each do |provider, name|
-              - if current_user.connected?(provider)
-                .service.mb-2
-                  %button.btn.btn-secondary.disabled{class: "btn-#{provider}-alt"}
-                    %i{class: "bi bi-#{provider}"}
-                    = "Connected via #{name}"
-              - else
-                .service.mb-2
-                  = link_to send("user_#{provider}_omniauth_authorize_path"), data: {turbo: false, method: :post}, class: "btn btn-#{provider}" do
-                    %i{class: "bi bi-#{provider}"}
-                    = "Connect #{name}"
+          .mt-3
+            %button.float-end.btn.btn-success{type: 'submit'} Save
 
-      - if current_user.teammates.loaded? ? current_user.teammates.any? : current_user.teammates.exists?
-        .widget
-          .widget-header
-            %i.bi.bi-envelope-fill
-            %h3 Notifications
-          .widget-content
-            %p
-              = link_to 'Manage notification preferences', notifications_profile_path
+  .col-md-6
+    .widget
+      .widget-header
+        %i.bi.bi-link-45deg
+        %h3 Connected Accounts
+      .widget-content
+        %p Connect your social accounts to enable sign-in via these providers.
+        .connected-accounts
+          - Identity::PROVIDER_NAMES.each do |provider, name|
+            - if current_user.connected?(provider)
+              .service.mb-2
+                %button.btn.btn-secondary.disabled{class: "btn-#{provider}-alt"}
+                  %i{class: "bi bi-#{provider}"}
+                  = "Connected via #{name}"
+            - else
+              .service.mb-2
+                = button_to send("user_#{provider}_omniauth_authorize_path"), data: {turbo: false}, class: "btn btn-#{provider}", form: {style: 'display: inline-block'} do
+                  %i{class: "bi bi-#{provider}"}
+                  = "Connect #{name}"
 
-  .row
-    .col-md-12.form-submit
-      %button.float-end.btn.btn-success.btn-lg{type: "submit"} Save
+    .widget
+      .widget-header
+        %i.bi.bi-image
+        %h3 Profile Icon Image
+      .widget-content
+        %p
+          Add or change your profile icon image by visiting
+          = link_to('Gravatar', 'https://en.gravatar.com/connect/', target: "_blank")
+
+    - if current_user.teammates.loaded? ? current_user.teammates.any? : current_user.teammates.exists?
+      .widget
+        .widget-header
+          %i.bi.bi-envelope-fill
+          %h3 Notifications
+        .widget-content
+          %p
+            = link_to 'Manage notification preferences', notifications_profile_path

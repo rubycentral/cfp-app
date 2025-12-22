@@ -8,7 +8,7 @@ feature 'User Profile', type: :system do
   scenario "A user can save their bio" do
     visit(edit_profile_path)
     fill_in('Bio', with: 'I am awesome')
-    click_button 'Save'
+    click_button 'Save', match: :first
 
     user.reload
     expect(user.bio).to eq('I am awesome')
@@ -17,11 +17,11 @@ feature 'User Profile', type: :system do
   scenario "A user can edit their bio" do
     visit(edit_profile_path)
     fill_in('Bio', with: 'I am awesome')
-    click_button 'Save'
+    click_button 'Save', match: :first
 
     visit(edit_profile_path)
     fill_in('Bio', with: 'I am even more awesome')
-    click_button 'Save'
+    click_button 'Save', match: :first
 
     user.reload
     expect(user.bio).to eq('I am even more awesome')
@@ -30,7 +30,7 @@ feature 'User Profile', type: :system do
   scenario "A user attempts to save their bio without email", js: true do
     visit(edit_profile_path)
     fill_in('Email', with: '')
-    click_button 'Save'
+    all('button', text: 'Save').last.click
     expect(page).to have_content("Unable to save profile. Please correct the following: Email can't be blank")
   end
 

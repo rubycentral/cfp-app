@@ -123,7 +123,7 @@ feature 'Speaker Invitation received', type: :system do
           click_link "Sign up"
           sign_up_with("newguy@speak.er", "apples", "apples")
           fill_in "Name", with: "A. Paul"
-          click_button "Save"
+          click_button "Save", match: :first
           expect(current_path).to eq(event_proposal_path(event.slug, proposal))
         end
 
@@ -145,7 +145,7 @@ feature 'Speaker Invitation received', type: :system do
           expect(current_path).to eq(edit_profile_path)
 
           fill_in "Name", with: "A. Paul"
-          click_button "Save"
+          click_button "Save", match: :first
           expect(current_path).to eq(event_proposal_path(event.slug, proposal))
         end
 

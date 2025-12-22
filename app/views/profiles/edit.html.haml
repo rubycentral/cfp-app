@@ -81,6 +81,8 @@
         %i.bi.bi-image
         %h3 Profile Icon Image
       .widget-content
+        .mb-3
+          = image_tag("https://www.gravatar.com/avatar/#{current_user.gravatar_hash}?s=64&d=mp", alt: 'Profile icon')
         %p
           Add or change your profile icon image by visiting
           = link_to('Gravatar', 'https://en.gravatar.com/connect/', target: "_blank")

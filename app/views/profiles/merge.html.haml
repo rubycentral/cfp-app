@@ -34,6 +34,6 @@
         %p.text-muted
           The old account's profile information (name, email, bio) will not be transferred.
 
-        .mt-4
+        .mt-4.d-flex.justify-content-between
+          = link_to 'Cancel', edit_profile_path, class: 'btn btn-secondary'
           = button_to 'Merge Accounts', merge_profile_path, class: 'btn btn-primary', data: {turbo_confirm: 'Are you sure you want to merge these accounts? This cannot be undone.'}
-          = link_to 'Cancel', edit_profile_path, class: 'btn btn-secondary ms-2'

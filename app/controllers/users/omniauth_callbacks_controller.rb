@@ -59,6 +59,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def provider_name
-    {'github' => 'GitHub', 'twitter' => 'Twitter'}[auth_hash.provider]
+    Identity::PROVIDER_NAMES[auth_hash.provider]
   end
 end

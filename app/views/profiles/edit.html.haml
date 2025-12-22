@@ -49,17 +49,17 @@
           %hr
           %p Connect your social accounts to enable sign-in via these providers.
           .connected-accounts
-            - %w[github twitter].each do |provider|
+            - Identity::PROVIDER_NAMES.each do |provider, name|
               - if current_user.connected?(provider)
                 .service.mb-2
                   %button.btn.btn-secondary.disabled{class: "btn-#{provider}-alt"}
                     %i{class: "bi bi-#{provider}"}
-                    = "Connected via #{provider.capitalize}"
+                    = "Connected via #{name}"
               - else
                 .service.mb-2
                   = button_to send("user_#{provider}_omniauth_authorize_path"), data: {turbo: false}, class: "btn btn-#{provider}", form: {style: 'display: inline-block'} do
                     %i{class: "bi bi-#{provider}"}
-                    = "Connect #{provider.capitalize}"
+                    = "Connect #{name}"
 
     %fieldset.col-md-6
       .widget

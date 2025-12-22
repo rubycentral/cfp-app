@@ -17,7 +17,7 @@
       %h2 User Logged In with
       %p
         - if user.provider.present?
-          = user.provider.capitalize
+          = Identity::PROVIDER_NAMES[user.provider] || user.provider
         - else
           Email
 

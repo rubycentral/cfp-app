@@ -1,4 +1,6 @@
 class Identity < ApplicationRecord
+  PROVIDER_NAMES = {'github' => 'GitHub', 'twitter' => 'Twitter'}.freeze
+
   belongs_to :user
 
   validates :provider, presence: true

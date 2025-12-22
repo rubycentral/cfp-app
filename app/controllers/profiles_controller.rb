@@ -22,7 +22,7 @@ class ProfilesController < ApplicationController
       redirect_to (session.delete(:target) || root_url)
     else
       flash.now[:danger] = "Unable to save profile. Please correct the following: #{current_user.errors.full_messages.join(', ')}."
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 

@@ -23,7 +23,7 @@ class User < ApplicationRecord
   validates :name, presence: true, allow_nil: true
   validates_uniqueness_of :email, allow_blank: true
   validates_format_of :email, with: Devise.email_regexp, allow_blank: true, if: :email_changed?
-  validates_presence_of :email, on: :create, if: -> { provider.blank? }
+  validates_presence_of :email, on: :create, if: -> { provider.blank? && identities.blank? }
   validates_presence_of :email, on: :update, if: -> { provider.blank? || unconfirmed_email.blank? }
   validates_presence_of :password, on: :create
   validates_confirmation_of :password, on: :create
@@ -35,17 +35,33 @@ class User < ApplicationRecord
 
   attr_accessor :pending_invite_email
 
-  def self.from_omniauth(auth, invitation_email=nil)
-    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      password = Devise.friendly_token[0,20]
-      user.name = auth['info']['name'] if user.name.blank?
-      user.email = invitation_email || auth['info']['email'] || '' if user.email.blank?
-      user.password = password
-      user.password_confirmation = password
-      if !user.confirmed? && invitation_email.present? && user.email == invitation_email
-        user.skip_confirmation!
-      end
+  def self.from_omniauth(auth, invitation_email = nil)
+    # First, lookup in identities table
+    identity = Identity.find_by(provider: auth.provider, uid: auth.uid)
+    return identity.user if identity
+
+    # Fall back to legacy lookup in users table
+    user = find_by(provider: auth.provider, uid: auth.uid)
+    return user if user
+
+    # Create new user with identity
+    create_from_omniauth!(auth, invitation_email)
+  end
+
+  def self.create_from_omniauth!(auth, invitation_email = nil)
+    user = new(
+      name: auth['info']['name'],
+      email: invitation_email || auth['info']['email'] || '',
+      password: (password = Devise.friendly_token[0, 20]),
+      password_confirmation: password
+    )
+    user.identities.build(provider: auth.provider, uid: auth.uid)
+
+    if invitation_email.present? && (user.email == invitation_email)
+      user.skip_confirmation!
     end
+
+    user.tap(&:save!)
   end
 
   def check_pending_invite_email
@@ -67,7 +83,7 @@ class User < ApplicationRecord
   end
 
   def connected?(provider)
-    self.provider == provider
+    identities.exists?(provider: provider) || (self.provider == provider)
   end
 
   def complete?

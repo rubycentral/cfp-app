@@ -1,5 +1,5 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  before_action :check_current_user, only: [:twitter, :github, :developer]
+  before_action :link_identity_to_current_user, only: [:twitter, :github, :developer], if: -> { current_user }
   skip_forgery_protection only: :developer
 
   def twitter
@@ -21,11 +21,20 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   private
 
-  def check_current_user
-    if current_user.present?
-      flash[:info] = I18n.t("devise.failure.already_authenticated")
-      redirect_to(events_url)
+  # If an already logged in user tries to connect with another provider, integrate with the current_user's identity
+  def link_identity_to_current_user
+    if (identity = Identity.find_by(provider: auth_hash.provider, uid: auth_hash.uid))
+      if identity.user_id == current_user.id
+        flash[:info] = "#{provider_name} is already connected to your account."
+      else
+        flash[:danger] = "This #{provider_name} account is already connected to another user."
+      end
+    else
+      current_user.identities.create!(provider: auth_hash.provider, uid: auth_hash.uid)
+      flash[:info] = "Successfully connected #{provider_name} to your account."
     end
+
+    redirect_to edit_profile_path
   end
 
   def authenticate_with_hash(user = nil)
@@ -33,14 +42,13 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = user || User.from_omniauth(auth_hash, session[:pending_invite_email])
 
     if @user.persisted?
-      flash.now[:info] = "You have signed in with #{auth_hash['provider'].capitalize}."
+      flash.now[:info] = "You have signed in with #{provider_name}."
       logger.info "Signing in user #{@user.inspect}"
 
       @user.skip_confirmation!
       sign_in @user
 
       redirect_to after_sign_in_path_for(@user)
-
     else
       redirect_to new_user_session_url, danger: "There was an error authenticating via Auth provider: #{params[:provider]}."
     end
@@ -50,4 +58,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     request.env['omniauth.auth']
   end
 
+  def provider_name
+    {'github' => 'GitHub', 'twitter' => 'Twitter'}[auth_hash.provider]
+  end
 end

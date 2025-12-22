@@ -92,6 +92,12 @@ class User < ApplicationRecord
     identities.exists?(provider: provider) || (self.provider == provider)
   end
 
+  def oauth_providers
+    providers = identities.map(&:provider)
+    providers << provider if provider.present?
+    providers.uniq
+  end
+
   def complete?
     name.present? && email.present? && unconfirmed_email.blank?
   end

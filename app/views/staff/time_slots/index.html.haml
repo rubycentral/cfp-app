@@ -1,46 +1,40 @@
-.row
-  .col-md-12
-    %header.page-header.d-flex.align-items-end.gap-4
-      %h2.mb-0 Time Slots
-      = link_to 'Add Time Slot', new_event_staff_schedule_time_slot_path, class: "btn btn-primary btn-sm#{' disabled' if has_missing_requirements?(event)}", data: {turbo: true, turbo_frame: 'time-slot-new-dialog'}
-      .ms-auto
-        = link_to event_staff_schedule_time_slots_path(format: :csv), class: "btn btn-info" do
-          %span.bi.bi-download
-          Download as CSV
+%header.page-header.d-flex.align-items-end.gap-4
+  %h2.mb-0 Time Slots
+  = link_to 'Add Time Slot', new_event_staff_schedule_time_slot_path, class: "btn btn-primary btn-sm#{' disabled' if has_missing_requirements?(event)}", data: {turbo: true, turbo_frame: 'time-slot-new-dialog'}
+  .ms-auto
+    = link_to event_staff_schedule_time_slots_path(format: :csv), class: "btn btn-info" do
+      %span.bi.bi-download
+      Download as CSV
 
-    #time-slot-prereqs.clearfix{class: has_missing_requirements?(event) ? '' : 'hidden'}
-      %h5.text-danger The following must be resolved before adding a new time slot:
-      %ul#missing-prereq-messages.list-group
-        = unmet_requirements(event)
+#time-slot-prereqs.clearfix{class: has_missing_requirements?(event) ? '' : 'hidden'}
+  %h5.text-danger The following must be resolved before adding a new time slot:
+  %ul#missing-prereq-messages.list-group
+    = unmet_requirements(event)
 
-%hr
-
-.row
-  .col-md-12
-    %table#organizer-time-slots.datatable.table.table-striped{data: {controller: 'time-slots', time_slots_target: 'table'}}
-      %thead
-        %tr
-          %th
-          %th
-          %th
-          %th
-          %th
-          %th
-          %th
-          %th
-          %th
-        %tr
-          %th Conference Day
-          %th Start Time
-          %th End Time
-          %th Title
-          %th Presenter
-          %th Room
-          %th Sponsor
-          %th Track
-          %th.actions Actions
-      %tbody
-        = render time_slots
+%table#organizer-time-slots.datatable.table.table-striped{data: {controller: 'time-slots'}}
+  %thead
+    %tr
+      %th
+      %th
+      %th
+      %th
+      %th
+      %th
+      %th
+      %th
+      %th
+    %tr
+      %th Conference Day
+      %th Start Time
+      %th End Time
+      %th Title
+      %th Presenter
+      %th Room
+      %th Sponsor
+      %th Track
+      %th.actions Actions
+  %tbody
+    = render time_slots
 
 = turbo_frame_tag 'time-slot-edit-dialog', class: 'modal fade', data: {controller: 'modal-form', modal_form_target: 'modal'}
 

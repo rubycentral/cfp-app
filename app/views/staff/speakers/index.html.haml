@@ -1,43 +1,39 @@
 = render 'shared/event_info_bar', event: current_event
-.row
-  .col-md-12
-    %header.page-header
-      %h1
-        = current_event
-        Speakers
 
-.row
-  .col-md-12
-    - is_organizer = current_user.organizer_for_event?(current_event)
-    - column_types = is_organizer ? '["text", "text", "text", "text", "text", null]' : '["text", "text", "text", "text", "text"]'
-    %table#organizer-speakers.datatable.table.table-striped{data: {controller: 'cfp-datatable', cfp_column_types: column_types}}
-      %thead
-        %tr
-          %th
-          %th
-          %th
-          %th
-          %th
-          - if is_organizer
-            %th
-        %tr
-          %th Name
-          %th Email
-          %th Session
-          %th Track
-          %th Format
-          - if is_organizer
-            %th Actions
-      %tbody
-        - is_organizer = current_user.organizer_for_event?(current_event)
-        - @program_speakers.each do |speaker|
-          %tr{ id: "speaker-#{speaker.id}" }
-            %td= link_to speaker.name, event_staff_program_speaker_path(current_event, speaker)
-            %td= speaker.email
-            %td= link_to speaker.program_session.title, event_staff_program_session_path(current_event, speaker.program_session)
-            %td= speaker.program_session.track.try(:name)
-            %td= speaker.program_session.session_format.name
-            - if is_organizer
-              %td{ id: "speaker-action-buttons-#{speaker.id}" }
-                %span>
-                  = link_to "Edit", edit_event_staff_program_speaker_path(current_event, speaker), class: "btn btn-primary btn-sm"
+%header.page-header
+  %h1
+    = current_event
+    Speakers
+
+- is_organizer = current_user.organizer_for_event?(current_event)
+- column_types = is_organizer ? '["text", "text", "text", "text", "text", null]' : '["text", "text", "text", "text", "text"]'
+%table.datatable.table.table-striped{data: {controller: 'cfp-datatable', cfp_column_types: column_types}}
+  %thead
+    %tr
+      %th
+      %th
+      %th
+      %th
+      %th
+      - if is_organizer
+        %th
+    %tr
+      %th Name
+      %th Email
+      %th Session
+      %th Track
+      %th Format
+      - if is_organizer
+        %th Actions
+  %tbody
+    - @program_speakers.each do |speaker|
+      %tr{ id: "speaker-#{speaker.id}" }
+        %td= link_to speaker.name, event_staff_program_speaker_path(current_event, speaker)
+        %td= speaker.email
+        %td= link_to speaker.program_session.title, event_staff_program_session_path(current_event, speaker.program_session)
+        %td= speaker.program_session.track.try(:name)
+        %td= speaker.program_session.session_format.name
+        - if is_organizer
+          %td{ id: "speaker-action-buttons-#{speaker.id}" }
+            %span>
+              = link_to "Edit", edit_event_staff_program_speaker_path(current_event, speaker), class: "btn btn-primary btn-sm"

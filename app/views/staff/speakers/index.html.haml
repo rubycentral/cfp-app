@@ -10,7 +10,7 @@
   .col-md-12
     - is_organizer = current_user.organizer_for_event?(current_event)
     - column_types = is_organizer ? '["text", "text", "text", "text", "text", null]' : '["text", "text", "text", "text", "text"]'
-    %table#organizer-speakers.datatable.table.table-striped{data: {controller: 'cfp-datatable', cfp_column_types: column_types}}
+    %table.datatable.table.table-striped{data: {controller: 'cfp-datatable', cfp_column_types: column_types}}
       %thead
         %tr
           %th

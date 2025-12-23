@@ -4,6 +4,7 @@ class Invitation < ApplicationRecord
     PENDING = 'pending'
     ACCEPTED = 'accepted'
   end
+  enum :state, {pending: 'pending', accepted: 'accepted', declined: 'declined'}
 
   belongs_to :proposal
   belongs_to :user, optional: true

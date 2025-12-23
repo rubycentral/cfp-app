@@ -6,14 +6,6 @@ class ProgramSession < ApplicationRecord
   CONFIRMED_WAITLISTED = 'confirmed waitlisted'
   DECLINED = 'declined'
 
-  STATES = [
-    LIVE,
-    DRAFT,
-    UNCONFIRMED_ACCEPTED,
-    UNCONFIRMED_WAITLISTED,
-    CONFIRMED_WAITLISTED,
-    DECLINED
-  ]
   enum :state, {
     live: 'live',
     draft: 'draft',

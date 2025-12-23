@@ -1,8 +1,22 @@
 class Invitation < ApplicationRecord
-  include Invitable
+  module State
+    DECLINED = 'declined'
+    PENDING = 'pending'
+    ACCEPTED = 'accepted'
+  end
 
   belongs_to :proposal
   belongs_to :user, optional: true
+
+  scope :pending, -> { where(state: State::PENDING) }
+  scope :declined, -> { where(state: State::DECLINED) }
+  scope :not_accepted, -> { where(state: [State::DECLINED, State::PENDING]) }
+
+  before_create :set_default_state
+  before_create :set_slug
+
+  validates :email, presence: true
+  validates_format_of :email, with: /@/
 
   def accept(user)
     transaction do
@@ -11,6 +25,28 @@ class Invitation < ApplicationRecord
       proposal.speakers.create(user: user, event: proposal.event, skip_name_email_validation: true)
       save
     end
+  end
+
+  def decline
+    update(state: State::DECLINED)
+  end
+
+  def pending?
+    state == State::PENDING
+  end
+
+  def declined?
+    state == State::DECLINED
+  end
+
+  private
+
+  def set_slug
+    self.slug = Digest::SHA1.hexdigest([email, rand(1000)].map(&:to_s).join('-'))[0, 10]
+  end
+
+  def set_default_state
+    self.state = State::PENDING if state.nil?
   end
 end
 

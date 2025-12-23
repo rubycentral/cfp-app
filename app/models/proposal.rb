@@ -20,7 +20,6 @@ class Proposal < ApplicationRecord
   validates :title, :abstract, :session_format, presence: true
   validate :abstract_length
   validates :title, length: { maximum: 60 }
-  validates_inclusion_of :state, in: valid_states, allow_nil: true, message: "'%{value}' not a valid state."
   validates_inclusion_of :state, in: FINAL_STATES, allow_nil: false, message: "'%{value}' not a confirmable state.",
                                  if: :confirmed_at_changed?
 
@@ -39,20 +38,12 @@ class Proposal < ApplicationRecord
   before_update :save_attr_history
   after_save :save_tags, :save_review_tags
 
-  scope :accepted, -> { where(state: ACCEPTED) }
-  scope :waitlisted, -> { where(state: WAITLISTED) }
-  scope :submitted, -> { where(state: SUBMITTED) }
   scope :confirmed, -> { where.not(confirmed_at: nil) }
-
-  scope :soft_accepted, -> { where(state: SOFT_ACCEPTED) }
-  scope :soft_waitlisted, -> { where(state: SOFT_WAITLISTED) }
-  scope :soft_rejected, -> { where(state: SOFT_REJECTED) }
   scope :soft_states, -> { where(state: SOFT_STATES) }
   scope :working_program, -> { where(state: [:soft_accepted, :soft_waitlisted, :accepted, :waitlisted]) }
 
   scope :unrated, -> { where.not(id: Rating.select(:proposal_id)) }
   scope :rated, -> { where(id: Rating.select(:proposal_id)) }
-  scope :not_withdrawn, -> { where.not(state: WITHDRAWN) }
   scope :not_owned_by, ->(user) { where.not(id: user.proposals) }
   scope :for_state, lambda { |state|
     where(state: state).order(:title).includes(:event, { speakers: :user }, :review_taggings)
@@ -131,7 +122,7 @@ class Proposal < ApplicationRecord
   end
 
   def withdraw
-    update(state: WITHDRAWN)
+    withdrawn!
     reviewers.each do |reviewer|
       Notification.create_for(reviewer, proposal: self,
                                         message: "Proposal, #{title}, withdrawn")
@@ -144,16 +135,12 @@ class Proposal < ApplicationRecord
   end
 
   def promote
-    update(state: ACCEPTED) if state == WAITLISTED
+    accepted! if waitlisted?
   end
 
   def decline
     update(state: :withdrawn, confirmed_at: Time.current)
     program_session.update(state: :declined)
-  end
-
-  def draft?
-    state == SUBMITTED
   end
 
   def finalized?

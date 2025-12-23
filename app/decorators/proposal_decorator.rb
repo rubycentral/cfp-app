@@ -27,8 +27,7 @@ class ProposalDecorator < Draper::Decorator
   end
 
   def state
-    current_state = object.state
-    if current_state == REJECTED
+    if object.rejected?
       Proposal.states[:not_accepted]
     else
       Proposal.states[object.state.to_sym]

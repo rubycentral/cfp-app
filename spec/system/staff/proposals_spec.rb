@@ -28,7 +28,7 @@ feature "Organizers can manage proposals", type: :system do
         updated_by_speaker_at = proposal.updated_by_speaker_at
         click_link 'Accept'
 
-        expect(proposal.reload.state).to eql(Proposal::State::SOFT_ACCEPTED)
+        expect(proposal.reload).to be_soft_accepted
         expect(ActionMailer::Base.deliveries).to be_empty
         expect(proposal.reload.updated_by_speaker_at).to be_within(1.second).of(updated_by_speaker_at)
       end
@@ -39,7 +39,7 @@ feature "Organizers can manage proposals", type: :system do
         updated_by_speaker_at = proposal.updated_by_speaker_at
         click_link 'Reject'
 
-        expect(proposal.reload.state).to eql(Proposal::State::SOFT_REJECTED)
+        expect(proposal.reload).to be_soft_rejected
         expect(ActionMailer::Base.deliveries).to be_empty
         expect(proposal.reload.updated_by_speaker_at).to be_within(1.second).of(updated_by_speaker_at)
       end
@@ -50,7 +50,7 @@ feature "Organizers can manage proposals", type: :system do
         updated_by_speaker_at = proposal.updated_by_speaker_at
         click_link 'Waitlist'
 
-        expect(proposal.reload.state).to eql(Proposal::State::SOFT_WAITLISTED)
+        expect(proposal.reload).to be_soft_waitlisted
         expect(ActionMailer::Base.deliveries).to be_empty
         expect(proposal.reload.updated_by_speaker_at).to be_within(1.second).of(updated_by_speaker_at)
       end
@@ -77,7 +77,7 @@ feature "Organizers can manage proposals", type: :system do
       end
 
       it "sets proposal state to accepted" do
-        expect(proposal.reload.state).to eql(Proposal::State::ACCEPTED)
+        expect(proposal.reload).to be_accepted
       end
 
       it "sends an email notification to the speaker" do
@@ -93,7 +93,7 @@ feature "Organizers can manage proposals", type: :system do
       end
 
       it "sets proposal state to rejected" do
-        expect(proposal.reload.state).to eql(Proposal::State::REJECTED)
+        expect(proposal.reload).to be_rejected
       end
 
       it "sends an email notification to the speaker" do
@@ -109,7 +109,7 @@ feature "Organizers can manage proposals", type: :system do
       end
 
       it "sets proposal state to waitlisted" do
-        expect(proposal.reload.state).to eql(Proposal::State::WAITLISTED)
+        expect(proposal.reload).to be_waitlisted
       end
 
       it "sends an email notification to the speaker" do

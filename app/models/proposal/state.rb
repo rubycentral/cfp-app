@@ -25,17 +25,10 @@ module Proposal::State
       withdrawn: 'withdrawn',
       not_accepted: 'not accepted'
     }, default: :submitted
-    def self.valid_states
-      @valid_states ||= Proposal::State.constants.map{|c| const_get(c) if const_get(c).is_a?(String)}.compact!
-    end
 
-    # Create all state accessor methods like (accepted?, waitlisted?, etc...)
-    Proposal::State.constants.each do |constant|
-      next unless const_get(constant).is_a?(String)
-      method_name = constant.to_s.downcase + '?'
-      define_method(method_name) do
-        Proposal::State.const_get(constant) == self.state
-      end
+    # draft? is an alias for submitted?
+    def draft?
+      submitted?
     end
   end
 end

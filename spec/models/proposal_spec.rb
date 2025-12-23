@@ -179,7 +179,7 @@ describe Proposal do
       it "changes a submitted proposal to rejected" do
         proposal = create(:proposal_with_track, state: :submitted)
         expect(proposal.finalize).to be_truthy
-        expect(proposal.reload.state).to eq(Proposal::REJECTED)
+        expect(proposal.reload).to be_rejected
       end
 
       it "creates a draft program session for waitlisted and accepted proposals, but not for rejected or submitted" do
@@ -203,7 +203,7 @@ describe Proposal do
       it "updates the state" do
         proposal = create(:proposal_with_track, state: :accepted)
         proposal.update_state(:waitlisted)
-        expect(proposal.state).to eq(Proposal::WAITLISTED)
+        expect(proposal).to be_waitlisted
       end
 
       it "rejects invalid states" do

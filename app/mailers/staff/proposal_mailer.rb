@@ -4,13 +4,12 @@ class Staff::ProposalMailer < ApplicationMailer
   attr_accessor :test_mode
 
   def send_email(proposal)
-    case proposal.state
-      when Proposal::State::ACCEPTED
-        accept_email(proposal.event, proposal)
-      when Proposal::State::REJECTED
-        reject_email(proposal.event, proposal)
-      when Proposal::State::WAITLISTED
-        waitlist_email(proposal.event, proposal)
+    if proposal.accepted?
+      accept_email(proposal.event, proposal)
+    elsif proposal.rejected?
+      reject_email(proposal.event, proposal)
+    elsif proposal.waitlisted?
+      waitlist_email(proposal.event, proposal)
     end
   end
 

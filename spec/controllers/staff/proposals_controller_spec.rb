@@ -67,7 +67,7 @@ describe Staff::ProposalsController, type: :controller do
     it "finalizes the state" do
       proposal = create(:proposal_with_track, event: event, state: :soft_accepted)
       post :finalize, params: {event_slug: event, proposal_uuid: proposal.uuid}
-      expect(proposal.reload.state).to eq(Proposal::State::ACCEPTED)
+      expect(proposal.reload).to be_accepted
     end
 
     it "creates a draft program session" do

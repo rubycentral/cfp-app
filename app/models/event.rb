@@ -48,8 +48,7 @@ class Event < ApplicationRecord
     slug
   end
 
-  validate :checklist_complete?, on: :update,
-    if: Proc.new { |e| e.state == STATUSES[:open] }
+  validate :checklist_complete?, on: :update, if: -> { state == Event.states[:open] }
 
   def initialize_speaker_emails
     SpeakerEmailTemplate::TYPES.each do |type|
@@ -125,7 +124,7 @@ class Event < ApplicationRecord
   end
 
   def open?
-    state == STATUSES[:open] && (closes_at.nil? || closes_at > Time.current)
+    state == Event.states[:open] && (closes_at.nil? || closes_at > Time.current)
   end
 
   def closed?
@@ -133,16 +132,16 @@ class Event < ApplicationRecord
   end
 
   def past_open?
-    state == STATUSES[:open] && closes_at < Time.current
+    state == Event.states[:open] && closes_at < Time.current
   end
 
   def status
     if open?
-      STATUSES[:open]
+      Event.states[:open]
     elsif draft?
-      STATUSES[:draft]
+      Event.states[:draft]
     else
-      STATUSES[:closed]
+      Event.states[:closed]
     end
   end
 
@@ -231,7 +230,7 @@ class Event < ApplicationRecord
   private
 
   def update_closes_at_if_manually_closed
-    if changes.key?(:state) && changes[:state] == [STATUSES[:open], STATUSES[:closed]]
+    if changes.key?(:state) && changes[:state] == [Event.states[:open], Event.states[:closed]]
       self.closes_at = Time.current
     end
   end

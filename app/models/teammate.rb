@@ -17,6 +17,8 @@ class Teammate < ApplicationRecord
     IN_APP_ONLY => 'In App Only'
   }
 
+  enum :state, {pending: 'pending', accepted: 'accepted', declined: 'declined'}
+
   belongs_to :event
   belongs_to :user, optional: true
 

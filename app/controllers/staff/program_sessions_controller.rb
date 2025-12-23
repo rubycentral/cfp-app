@@ -50,7 +50,7 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
   def create
     @program_session = current_event.program_sessions.build(program_session_params)
     authorize @program_session
-    @program_session.state = ProgramSession::DRAFT
+    @program_session.state = :draft
     @program_session.speakers.each { |speaker| speaker.event_id = current_event.id }
     if @program_session.save
       redirect_to event_staff_program_session_path(current_event,  @program_session)

@@ -1,39 +1,32 @@
 class ProgramSession < ApplicationRecord
-  LIVE = 'live' # confirmed accepted
-  DRAFT = 'draft' # created by organizer, not ready to be published (live)
-  UNCONFIRMED_ACCEPTED = 'unconfirmed accepted' # accepted, to be confirmed by speaker
-  UNCONFIRMED_WAITLISTED = 'unconfirmed waitlisted'
-  CONFIRMED_WAITLISTED = 'confirmed waitlisted'
-  DECLINED = 'declined'
-
-  STATES = [
-    LIVE,
-    DRAFT,
-    UNCONFIRMED_ACCEPTED,
-    UNCONFIRMED_WAITLISTED,
-    CONFIRMED_WAITLISTED,
-    DECLINED
-  ]
+  enum :state, {
+    live: 'live',
+    draft: 'draft',
+    unconfirmed_accepted: 'unconfirmed accepted',
+    unconfirmed_waitlisted: 'unconfirmed waitlisted',
+    confirmed_waitlisted: 'confirmed waitlisted',
+    declined: 'declined'
+  }, default: :draft
 
   STATE_GROUPS = {
-    LIVE => "program",
-    DRAFT => "program",
-    UNCONFIRMED_ACCEPTED => "program",
-    UNCONFIRMED_WAITLISTED => "waitlist",
-    CONFIRMED_WAITLISTED => "waitlist",
-    DECLINED => "declined"
-  }
+    live: 'program',
+    draft: 'program',
+    unconfirmed_accepted: 'program',
+    unconfirmed_waitlisted: 'waitlist',
+    confirmed_waitlisted: 'waitlist',
+    declined: 'declined'
+  }.with_indifferent_access
 
   PROMOTIONS = {
-    DRAFT => LIVE,
-    UNCONFIRMED_WAITLISTED => UNCONFIRMED_ACCEPTED,
-    CONFIRMED_WAITLISTED => LIVE
-  }
+    draft: :live,
+    unconfirmed_waitlisted: :unconfirmed_accepted,
+    confirmed_waitlisted: :live
+  }.with_indifferent_access
 
   CONFIRMATIONS = {
-    UNCONFIRMED_WAITLISTED => CONFIRMED_WAITLISTED,
-    UNCONFIRMED_ACCEPTED => LIVE
-  }
+    unconfirmed_waitlisted: :confirmed_waitlisted,
+    unconfirmed_accepted: :live
+  }.with_indifferent_access
 
   belongs_to :event
   belongs_to :proposal, optional: true
@@ -47,21 +40,14 @@ class ProgramSession < ApplicationRecord
 
   validates :event, :session_format, :title, :state, presence: true
 
-  validates_inclusion_of :state, in: STATES
-
   serialize :info, type: Hash, coder: YAML
 
   after_destroy :destroy_speakers
 
-  scope :unscheduled, -> do
-    where(state: LIVE).where.not(id: TimeSlot.pluck(:program_session_id))
-  end
-  scope :sorted_by_title, -> { order(:title)}
-  scope :live, -> { where(state: LIVE) }
-  scope :draft, -> { where(state: DRAFT) }
-  scope :waitlisted, -> { where(state: [CONFIRMED_WAITLISTED, UNCONFIRMED_WAITLISTED]) }
-  scope :program, -> { where(state: [LIVE, DRAFT, UNCONFIRMED_ACCEPTED]) }
-  scope :declined, -> { where(state: DECLINED) }
+  scope :unscheduled, -> { live.where.not(id: TimeSlot.pluck(:program_session_id)) }
+  scope :sorted_by_title, -> { order(:title) }
+  scope :waitlisted, -> { where(state: [:confirmed_waitlisted, :unconfirmed_waitlisted]) }
+  scope :program, -> { where(state: [:live, :draft, :unconfirmed_accepted]) }
   scope :without_proposal, -> { where(proposal: nil) }
   scope :in_track, ->(track) do
     track = nil if track.try(:strip).blank?
@@ -81,7 +67,7 @@ class ProgramSession < ApplicationRecord
                                   abstract: proposal.abstract,
                                   track_id: proposal.track_id,
                                   session_format_id: proposal.session_format_id,
-                                  state: proposal.waitlisted? ? UNCONFIRMED_WAITLISTED : UNCONFIRMED_ACCEPTED
+                                  state: proposal.waitlisted? ? :unconfirmed_waitlisted : :unconfirmed_accepted
       )
 
       #attach proposal speakers to new program session
@@ -97,7 +83,7 @@ class ProgramSession < ApplicationRecord
   end
 
   def can_confirm?
-    CONFIRMATIONS.keys.include?(state)
+    CONFIRMATIONS.key?(state)
   end
 
   def confirm
@@ -105,7 +91,7 @@ class ProgramSession < ApplicationRecord
   end
 
   def can_promote?
-    PROMOTIONS.keys.include?(state)
+    PROMOTIONS.key?(state)
   end
 
   def promote
@@ -113,10 +99,6 @@ class ProgramSession < ApplicationRecord
       proposal.promote
     end
     update(state: PROMOTIONS[state])
-  end
-
-  def live?
-    state == LIVE
   end
 
   def multiple_speakers?

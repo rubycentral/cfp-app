@@ -14,12 +14,12 @@ feature "Organizers can manage program sessions", type: :system do
   end
 
   context "organizer can promote a waitlisted program session" do
-    let!(:waitlisted_session) { create(:program_session_with_proposal, event: event, session_format: session_format, state: ProgramSession::CONFIRMED_WAITLISTED) }
+    let!(:waitlisted_session) { create(:program_session_with_proposal, event: event, session_format: session_format, state: :confirmed_waitlisted) }
 
     scenario "from program session index", js: true do
       visit event_staff_program_sessions_path(event)
       within("##{ActionView::RecordIdentifier.dom_id(waitlisted_session)}") do
-        expect(page).to have_content ProgramSession::CONFIRMED_WAITLISTED.upcase
+        expect(page).to have_content 'CONFIRMED WAITLISTED'
       end
 
       page.accept_confirm do
@@ -28,33 +28,33 @@ feature "Organizers can manage program sessions", type: :system do
       end
 
       within("##{ActionView::RecordIdentifier.dom_id(waitlisted_session)}") do
-        expect(page).to have_content ProgramSession::LIVE.upcase
+        expect(page).to have_content 'LIVE'
       end
       expect(page).to_not have_css(".alert-danger")
-      expect(waitlisted_session.reload.state).to eq(ProgramSession::LIVE)
+      expect(waitlisted_session.reload).to be_live
     end
 
     scenario "from program session show page", js: true do
       visit event_staff_program_session_path(event, waitlisted_session)
-      expect(page).to have_content ProgramSession::CONFIRMED_WAITLISTED.upcase
+      expect(page).to have_content 'CONFIRMED WAITLISTED'
 
       page.accept_confirm do
         click_link("Promote")
       end
 
-      expect(page).to have_content ProgramSession::LIVE.upcase
+      expect(page).to have_content 'LIVE'
       expect(page).to_not have_css(".alert-danger")
-      expect(waitlisted_session.reload.state).to eq(ProgramSession::LIVE)
+      expect(waitlisted_session.reload).to be_live
     end
   end
 
   context "organizer can promote a draft program session" do
-    let!(:draft_session) { create(:program_session_with_proposal, event: event, session_format: session_format, state: ProgramSession::DRAFT) }
+    let!(:draft_session) { create(:program_session_with_proposal, event: event, session_format: session_format, state: :draft) }
 
     scenario "from program session index", js: true do
       visit event_staff_program_sessions_path(event)
       within("##{ActionView::RecordIdentifier.dom_id(draft_session)}") do
-        expect(page).to have_content ProgramSession::DRAFT.upcase
+        expect(page).to have_content 'DRAFT'
       end
 
       page.accept_confirm do
@@ -62,23 +62,23 @@ feature "Organizers can manage program sessions", type: :system do
       end
 
       within("##{ActionView::RecordIdentifier.dom_id(draft_session)}") do
-        expect(page).to have_content ProgramSession::LIVE.upcase
+        expect(page).to have_content 'LIVE'
       end
       expect(page).to_not have_css(".alert-danger")
-      expect(draft_session.reload.state).to eq(ProgramSession::LIVE)
+      expect(draft_session.reload).to be_live
     end
 
     scenario "from program session show page", js: true do
       visit event_staff_program_session_path(event, draft_session)
-      expect(page).to have_content ProgramSession::DRAFT.upcase
+      expect(page).to have_content 'DRAFT'
 
       page.accept_confirm do
         click_link("Promote")
       end
 
-      expect(page).to have_content ProgramSession::LIVE.upcase
+      expect(page).to have_content 'LIVE'
       expect(page).to_not have_css(".alert-danger")
-      expect(draft_session.reload.state).to eq(ProgramSession::LIVE)
+      expect(draft_session.reload).to be_live
     end
   end
 

@@ -8,7 +8,7 @@ class Staff::ProgramSessionDecorator < Draper::Decorator
     classes = "label #{state_class(state)}"
     classes += ' label-large' if large
 
-    h.content_tag :span, state, class: classes
+    h.content_tag :span, object.state_before_type_cast, class: classes
   end
 
   def confirmation_notes_link
@@ -19,23 +19,17 @@ class Staff::ProgramSessionDecorator < Draper::Decorator
     end
   end
 
+  STATE_CLASSES = {
+    live: 'label-success',
+    draft: 'label-default',
+    unconfirmed_accepted: 'label-info',
+    unconfirmed_waitlisted: 'label-warning',
+    confirmed_waitlisted: 'label-warning',
+    declined: 'label-danger'
+  }.with_indifferent_access
+
   def state_class(state)
-    case state
-    when ProgramSession::LIVE
-      'label-success'
-    when ProgramSession::DRAFT
-      'label-default'
-    when ProgramSession::UNCONFIRMED_ACCEPTED
-      'label-info'
-    when ProgramSession::UNCONFIRMED_WAITLISTED
-      'label-warning'
-    when ProgramSession::CONFIRMED_WAITLISTED
-      'label-warning'
-    when ProgramSession::DECLINED
-      'label-danger'
-    else
-      'label-default'
-    end
+    STATE_CLASSES[state] || 'label-default'
   end
 
   def track_name

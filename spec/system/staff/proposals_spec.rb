@@ -117,7 +117,7 @@ feature "Organizers can manage proposals", type: :system do
       end
 
       it "creates a draft program session" do
-        expect(proposal.program_session.state).to eq(ProgramSession::UNCONFIRMED_WAITLISTED)
+        expect(proposal.program_session).to be_unconfirmed_waitlisted
       end
     end
 

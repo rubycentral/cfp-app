@@ -48,7 +48,7 @@ class Proposal < ApplicationRecord
   scope :soft_waitlisted, -> { where(state: SOFT_WAITLISTED) }
   scope :soft_rejected, -> { where(state: SOFT_REJECTED) }
   scope :soft_states, -> { where(state: SOFT_STATES) }
-  scope :working_program, -> { where(state: [SOFT_ACCEPTED, SOFT_WAITLISTED, ACCEPTED, WAITLISTED]) }
+  scope :working_program, -> { where(state: [:soft_accepted, :soft_waitlisted, :accepted, :waitlisted]) }
 
   scope :unrated, -> { where.not(id: Rating.select(:proposal_id)) }
   scope :rated, -> { where(id: Rating.select(:proposal_id)) }
@@ -148,7 +148,7 @@ class Proposal < ApplicationRecord
   end
 
   def decline
-    update(state: WITHDRAWN, confirmed_at: Time.current)
+    update(state: :withdrawn, confirmed_at: Time.current)
     program_session.update(state: :declined)
   end
 

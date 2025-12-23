@@ -1,36 +1,17 @@
 module Proposal::State
   extend ActiveSupport::Concern
 
-  # TODO: Currently a defect exists in the rake db:migrate task that is
-  # causing our files to be loaded more than once. Because our files are being
-  # loaded more than once, we are receiving errors stating that these
-  # constants have already been defined. Therefore, until this defect is
-  # fixed, we need to check to ensure that the constants are not already
-  # defined prior to defining them.
-  unless const_defined?(:ACCEPTED)
-    SOFT_ACCEPTED = 'soft accepted'
-    SOFT_WAITLISTED = 'soft waitlisted'
-    SOFT_REJECTED = 'soft rejected'
+  SOFT_STATES = [:soft_accepted, :soft_waitlisted, :soft_rejected, :submitted].freeze
+  FINAL_STATES = [:accepted, :waitlisted, :rejected, :withdrawn, :not_accepted].freeze
 
-    ACCEPTED = 'accepted'
-    WAITLISTED = 'waitlisted'
-    REJECTED = 'rejected'
-    WITHDRAWN = 'withdrawn'
-    NOT_ACCEPTED = 'not accepted'
-    SUBMITTED = 'submitted'
+  SOFT_TO_FINAL = {
+    soft_accepted: :accepted,
+    soft_rejected: :rejected,
+    soft_waitlisted: :waitlisted,
+    submitted: :rejected
+  }.with_indifferent_access.freeze
 
-    SOFT_STATES = [ SOFT_ACCEPTED, SOFT_WAITLISTED, SOFT_REJECTED, SUBMITTED ]
-    FINAL_STATES = [ ACCEPTED, WAITLISTED, REJECTED, WITHDRAWN, NOT_ACCEPTED ]
-
-    SOFT_TO_FINAL = {
-      SOFT_ACCEPTED => ACCEPTED,
-      SOFT_REJECTED => REJECTED,
-      SOFT_WAITLISTED => WAITLISTED,
-      SUBMITTED => REJECTED
-    }
-
-    BECOMES_PROGRAM_SESSION = [ ACCEPTED, WAITLISTED ]
-  end
+  BECOMES_PROGRAM_SESSION = [:accepted, :waitlisted].freeze
 
   included do
     enum :state, {

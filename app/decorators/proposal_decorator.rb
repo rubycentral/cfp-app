@@ -8,7 +8,7 @@ class ProposalDecorator < Draper::Decorator
     speaker_state = if object.awaiting_confirmation?
       'Waiting for speaker confirmation'
     elsif state.include?('soft')
-      SUBMITTED
+      Proposal.states[:submitted]
     else
       state
     end
@@ -18,7 +18,7 @@ class ProposalDecorator < Draper::Decorator
 
   def reviewer_state(small: false)
     reviewer_state = if state.include?('soft')
-      SUBMITTED
+      Proposal.states[:submitted]
     else
       state
     end
@@ -29,9 +29,9 @@ class ProposalDecorator < Draper::Decorator
   def state
     current_state = object.state
     if current_state == REJECTED
-      NOT_ACCEPTED
+      Proposal.states[:not_accepted]
     else
-      current_state
+      Proposal.states[object.state.to_sym]
     end
   end
 
@@ -125,21 +125,13 @@ class ProposalDecorator < Draper::Decorator
 
   def state_class(state)
     case state
-    when NOT_ACCEPTED
-      if h.current_user.reviewer_for_event?(object.event)
-        'label-danger'
-      else
-        'label-info'
-      end
-    when SOFT_REJECTED
+    when Proposal.states[:not_accepted]
+      h.current_user.reviewer_for_event?(object.event) ? 'label-danger' : 'label-info'
+    when Proposal.states[:soft_rejected]
       'label-danger'
-    when SOFT_WAITLISTED
+    when Proposal.states[:soft_waitlisted], Proposal.states[:withdrawn]
       'label-warning'
-    when WITHDRAWN
-      'label-warning'
-    when ACCEPTED
-      'label-success'
-    when SOFT_ACCEPTED
+    when Proposal.states[:accepted], Proposal.states[:soft_accepted]
       'label-success'
     else
       'label-default'

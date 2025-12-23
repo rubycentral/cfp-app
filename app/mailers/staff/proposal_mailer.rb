@@ -29,7 +29,7 @@ class Staff::ProposalMailer < ApplicationMailer
     @proposal      = proposal.decorate
     @event         = event
     @template_name = 'accept_email'
-    subject        = subject_for(proposal: @proposal, type: Proposal::State::ACCEPTED)
+    subject        = subject_for(proposal: @proposal, type: :accepted)
     mail_to_speakers(event, proposal, subject)
   end
 
@@ -37,7 +37,7 @@ class Staff::ProposalMailer < ApplicationMailer
     @proposal      = proposal
     @event         = event
     @template_name = 'reject_email'
-    subject        = subject_for(proposal: @proposal, type: Proposal::State::REJECTED)
+    subject        = subject_for(proposal: @proposal, type: :rejected)
     mail_to_speakers(event, proposal, subject)
   end
 
@@ -45,7 +45,7 @@ class Staff::ProposalMailer < ApplicationMailer
     @proposal      = proposal.decorate
     @event         = event
     @template_name = 'waitlist_email'
-    subject        = subject_for(proposal: proposal, type: Proposal::State::WAITLISTED)
+    subject        = subject_for(proposal: proposal, type: :waitlisted)
     mail_to_speakers(event, proposal, subject)
   end
 

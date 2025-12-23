@@ -46,10 +46,10 @@ describe Proposal do
   describe "state methods" do
     let(:state_method_map) do
       {
-        Proposal::SUBMITTED => :draft?,
-        Proposal::WITHDRAWN => :withdrawn?,
-        Proposal::ACCEPTED => :accepted?,
-        Proposal::WAITLISTED => :waitlisted?
+        submitted: :draft?,
+        withdrawn: :withdrawn?,
+        accepted: :accepted?,
+        waitlisted: :waitlisted?
       }
     end
 
@@ -64,8 +64,7 @@ describe Proposal do
       state_method_map.each do |state, method|
         diff_state = state
         while diff_state == state
-          # Get a random state
-          diff_state = Proposal::State.const_get(Proposal::State.constants.sample)
+          diff_state = Proposal.states.keys.sample.to_sym
         end
 
         proposal = create(:proposal_with_track, state: state)
@@ -76,7 +75,7 @@ describe Proposal do
 
   describe "#confirmed?" do
     it "returns true if proposal has been confirmed" do
-      proposal = create(:proposal_with_track, state: Proposal::ACCEPTED, confirmed_at: Time.current)
+      proposal = create(:proposal_with_track, state: :accepted, confirmed_at: Time.current)
       expect(proposal).to be_confirmed
     end
 
@@ -88,7 +87,7 @@ describe Proposal do
 
   describe "#confirm" do
     it "confirms the proposal" do
-      proposal = create(:proposal_with_track, state: Proposal::ACCEPTED)
+      proposal = create(:proposal_with_track, state: :accepted)
 
       proposal.confirm
 
@@ -96,10 +95,10 @@ describe Proposal do
     end
 
     it "updates the state of it's program session" do
-      create(:proposal_with_track, state: Proposal::WAITLISTED, confirmed_at: Time.current)
-      create(:proposal_with_track, state: Proposal::WAITLISTED)
-      create(:proposal_with_track, state: Proposal::ACCEPTED)
-      create(:proposal_with_track, state: Proposal::ACCEPTED, confirmed_at: Time.current)
+      create(:proposal_with_track, state: :waitlisted, confirmed_at: Time.current)
+      create(:proposal_with_track, state: :waitlisted)
+      create(:proposal_with_track, state: :accepted)
+      create(:proposal_with_track, state: :accepted, confirmed_at: Time.current)
 
       Proposal.all.each do |prop|
         create(:program_session, proposal: prop, track: prop.track)
@@ -111,23 +110,23 @@ describe Proposal do
 
   describe "#promote" do
     it "promotes from waitlisted to accepted" do
-      waitlisted = create(:proposal_with_track, state: Proposal::WAITLISTED)
+      waitlisted = create(:proposal_with_track, state: :waitlisted)
 
       waitlisted.promote
 
-      expect(waitlisted.reload.state).to eq("accepted")
+      expect(waitlisted.reload).to be_accepted
     end
 
     it "doesn't promote from other states" do
       event, track = create(:event), create(:track)
-      create(:proposal_with_track, state: Proposal::ACCEPTED, event: event, track: track)
-      create(:proposal_with_track, state: Proposal::REJECTED, event: event, track: track)
-      create(:proposal_with_track, state: Proposal::WITHDRAWN, event: event, track: track)
-      create(:proposal_with_track, state: Proposal::NOT_ACCEPTED, event: event, track: track)
-      create(:proposal_with_track, state: Proposal::SUBMITTED, event: event, track: track)
-      create(:proposal_with_track, state: Proposal::SOFT_ACCEPTED, event: event, track: track)
-      create(:proposal_with_track, state: Proposal::SOFT_WAITLISTED, event: event, track: track)
-      create(:proposal_with_track, state: Proposal::SOFT_REJECTED, event: event, track: track)
+      create(:proposal_with_track, state: :accepted, event: event, track: track)
+      create(:proposal_with_track, state: :rejected, event: event, track: track)
+      create(:proposal_with_track, state: :withdrawn, event: event, track: track)
+      create(:proposal_with_track, state: :not_accepted, event: event, track: track)
+      create(:proposal_with_track, state: :submitted, event: event, track: track)
+      create(:proposal_with_track, state: :soft_accepted, event: event, track: track)
+      create(:proposal_with_track, state: :soft_waitlisted, event: event, track: track)
+      create(:proposal_with_track, state: :soft_rejected, event: event, track: track)
 
       Proposal.all.each do |prop|
         expect{ prop.promote }.not_to change(prop, :state)
@@ -138,18 +137,14 @@ describe Proposal do
   describe "state changing" do
     describe "#finalized?" do
       it "returns false for all soft states" do
-        soft_states = [ Proposal::SOFT_ACCEPTED, Proposal::SOFT_WAITLISTED, Proposal::SOFT_REJECTED, Proposal::SUBMITTED ]
-
-        soft_states.each do |state|
+        Proposal::SOFT_STATES.each do |state|
           proposal = create(:proposal_with_track, state: state)
           expect(proposal).to_not be_finalized
         end
       end
 
       it "returns true for all finalized states" do
-        finalized_states = Proposal::FINAL_STATES
-
-        finalized_states.each do |state|
+        Proposal::FINAL_STATES.each do |state|
           proposal = create(:proposal_with_track, state: state)
           expect(proposal).to be_finalized
         end
@@ -157,19 +152,15 @@ describe Proposal do
     end
 
     describe "#becomes_program_session?" do
-      it "returns true for WAITLISTED and  ACCEPTED" do
-        states = [ Proposal::ACCEPTED, Proposal::WAITLISTED ]
-
-        states.each do |state|
+      it "returns true for waitlisted and accepted" do
+        [:accepted, :waitlisted].each do |state|
           proposal = create(:proposal_with_track, state: state)
           expect(proposal).to be_becomes_program_session
         end
       end
 
-      it "returns false for SUBMITTED and REJECTED" do
-        states = [ Proposal::SUBMITTED, Proposal::REJECTED ]
-
-        states.each do |state|
+      it "returns false for submitted and rejected" do
+        [:submitted, :rejected].each do |state|
           proposal = create(:proposal_with_track, state: state)
           expect(proposal).to_not be_becomes_program_session
         end
@@ -181,21 +172,21 @@ describe Proposal do
         Proposal::SOFT_TO_FINAL.each do |key, val|
           proposal = create(:proposal_with_track, state: key)
           proposal.finalize
-          expect(proposal.state).to eq(val)
+          expect(proposal.state.to_sym).to eq(val)
         end
       end
 
-      it "changes a SUBMITTED proposal to REJECTED" do
-        proposal = create(:proposal_with_track, state: Proposal::SUBMITTED)
+      it "changes a submitted proposal to rejected" do
+        proposal = create(:proposal_with_track, state: :submitted)
         expect(proposal.finalize).to be_truthy
         expect(proposal.reload.state).to eq(Proposal::REJECTED)
       end
 
-      it "creates a draft program session for WAITLISTED and ACCEPTED proposals, but not for REJECTED or SUBMITTED" do
-        waitlisted_proposal = create(:proposal_with_track, state: Proposal::SOFT_WAITLISTED)
-        accepted_proposal = create(:proposal_with_track, state: Proposal::SOFT_ACCEPTED)
-        rejected_proposal = create(:proposal_with_track, state: Proposal::SOFT_REJECTED)
-        submitted_proposal = create(:proposal_with_track, state: Proposal::SUBMITTED)
+      it "creates a draft program session for waitlisted and accepted proposals, but not for rejected or submitted" do
+        waitlisted_proposal = create(:proposal_with_track, state: :soft_waitlisted)
+        accepted_proposal = create(:proposal_with_track, state: :soft_accepted)
+        rejected_proposal = create(:proposal_with_track, state: :soft_rejected)
+        submitted_proposal = create(:proposal_with_track, state: :submitted)
 
         Proposal.all.each do |prop|
           prop.finalize
@@ -210,13 +201,13 @@ describe Proposal do
 
     describe "#update_state" do
       it "updates the state" do
-        proposal = create(:proposal_with_track, state: Proposal::ACCEPTED)
-        proposal.update_state(Proposal::WAITLISTED)
+        proposal = create(:proposal_with_track, state: :accepted)
+        proposal.update_state(:waitlisted)
         expect(proposal.state).to eq(Proposal::WAITLISTED)
       end
 
       it "rejects invalid states" do
-        proposal = create(:proposal_with_track, state: Proposal::ACCEPTED)
+        proposal = create(:proposal_with_track, state: :accepted)
         proposal.update_state('almonds!')
         expect(proposal.errors.messages[:state][0]).to eq("'almonds!' not a valid state.")
       end
@@ -500,14 +491,14 @@ describe Proposal do
 
   describe "#withdraw" do
     it "sets proposal's state to withdrawn" do
-      proposal = create(:proposal_with_track, state: Proposal::SUBMITTED)
+      proposal = create(:proposal_with_track, state: :submitted)
       proposal.withdraw
 
-      expect(proposal.state).to eq(Proposal::WITHDRAWN)
+      expect(proposal).to be_withdrawn
     end
 
     it "sends a notification to reviewers" do
-      proposal = create(:proposal_with_track, :with_reviewer_public_comment, state: Proposal::SUBMITTED)
+      proposal = create(:proposal_with_track, :with_reviewer_public_comment, state: :submitted)
       expect {
         proposal.withdraw
       }.to change { Notification.count }.by(1)

@@ -1,11 +1,11 @@
 RSpec.shared_examples_for 'an open event' do
   let(:event) { create :event, name: 'Best Event', state: :open }
 
-  let(:withdrawn) { Proposal::State::WITHDRAWN }
-  let(:accepted) { Proposal::State::ACCEPTED }
-  let(:soft_accepted) { Proposal::State::SOFT_ACCEPTED }
-  let(:waitlisted) { Proposal::State::WAITLISTED }
-  let(:soft_waitlisted) { Proposal::State::SOFT_WAITLISTED }
+  let(:withdrawn) { :withdrawn }
+  let(:accepted) { :accepted }
+  let(:soft_accepted) { :soft_accepted }
+  let(:waitlisted) { :waitlisted }
+  let(:soft_waitlisted) { :soft_waitlisted }
 
   let(:user1) { create :user, :program_team }
   let(:user2) { create :user, :reviewer }

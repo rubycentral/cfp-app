@@ -25,24 +25,16 @@ describe ProposalDecorator do
 
   describe "#state" do
     it "returns 'not accepted' for a rejected state" do
-      proposal = create(:proposal_with_track, state: ProposalDecorator::REJECTED)
-      expect(proposal.decorate.state).to eq(ProposalDecorator::NOT_ACCEPTED)
+      proposal = create(:proposal_with_track, state: :rejected)
+      expect(proposal.decorate.state).to eq(Proposal.states[:not_accepted])
     end
 
     it "returns the current state for non-rejected states" do
-      states = [
-        ProposalDecorator::ACCEPTED,
-        ProposalDecorator::WAITLISTED,
-        ProposalDecorator::WITHDRAWN,
-        ProposalDecorator::SUBMITTED,
-        ProposalDecorator::SOFT_ACCEPTED,
-        ProposalDecorator::SOFT_WAITLISTED,
-        ProposalDecorator::SOFT_REJECTED
-      ]
+      states = [:accepted, :waitlisted, :withdrawn, :submitted, :soft_accepted, :soft_waitlisted, :soft_rejected]
 
       states.each do |state|
         proposal = create(:proposal_with_track, state: state)
-        expect(proposal.decorate.state).to eq(state)
+        expect(proposal.decorate.state).to eq(Proposal.states[state])
       end
     end
   end

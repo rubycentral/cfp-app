@@ -30,8 +30,7 @@ class Event < ApplicationRecord
   store_accessor :speaker_notification_emails, :waitlist
 
   scope :a_to_z, -> { order('name ASC') }
-  scope :live, -> { where("state = 'open' and (closes_at is null or closes_at > ?)", Time.current) }
-  scope :not_draft, -> { where "state != 'draft'"}
+  scope :live, -> { open.where('closes_at is null or closes_at > ?', Time.current) }
 
   validates :name, presence: true
   validates :slug, presence: true, uniqueness: true
@@ -117,10 +116,6 @@ class Event < ApplicationRecord
 
   def to_s
     name
-  end
-
-  def draft?
-    state == STATUSES[:draft]
   end
 
   def open?

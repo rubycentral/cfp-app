@@ -1,9 +1,4 @@
 class Teammate < ApplicationRecord
-  PENDING = "pending"
-  ACCEPTED = "accepted"
-  DECLINED = "declined"
-  STATES = ["pending", "accepted", "declined"]
-
   STAFF_ROLES = ['reviewer', 'program team', 'organizer']
   PROGRAM_TEAM_ROLES = ['program team', 'organizer']
 

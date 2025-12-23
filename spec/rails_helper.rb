@@ -112,5 +112,10 @@ RSpec.configure do |config|
     driven_by :headless_chrome
   end
 
+  config.after type: :system, js: true do
+    # Force a fresh browser session for each test to prevent state bleeding
+    Capybara.send(:session_pool).delete_if { |k, _v| k.include?('headless_chrome') }
+  end
+
   Capybara.disable_animation = true
 end

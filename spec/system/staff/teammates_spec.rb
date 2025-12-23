@@ -4,13 +4,13 @@ feature "Staff Organizers can manage teammates", type: :system do
   let(:invitation) { create(:teammate, :has_been_invited) }
 
   let!(:organizer_user) { create(:user) }
-  let!(:organizer_teammate) { create(:teammate, :organizer, user: organizer_user, event: invitation.event, state: Teammate::ACCEPTED) }
+  let!(:organizer_teammate) { create(:teammate, :organizer, user: organizer_user, event: invitation.event, state: :accepted) }
 
   let!(:reviewer_user) { create(:user) }
-  let!(:reviewer_teammate) { create(:teammate, :reviewer, user: reviewer_user, event: invitation.event, state: Teammate::ACCEPTED) }
+  let!(:reviewer_teammate) { create(:teammate, :reviewer, user: reviewer_user, event: invitation.event, state: :accepted) }
 
   let!(:program_team_user) { create(:user) }
-  let!(:program_team_teammate) { create(:teammate, :program_team, user: program_team_user, event: invitation.event, state: Teammate::ACCEPTED) }
+  let!(:program_team_teammate) { create(:teammate, :program_team, user: program_team_user, event: invitation.event, state: :accepted) }
 
   before { login_as(organizer_user) }
 

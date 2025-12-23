@@ -133,34 +133,34 @@ If your talk is about seed data in Rails apps, we want to hear about it!
     email: admin.email,
     role: "organizer",
     mention_name: "admin",
-    state: Teammate::ACCEPTED
+    state: :accepted
   ).first_or_create
   seed_event.teammates.where(
     user: organizer,
     email: organizer.email,
     role: "organizer",
     mention_name: "organizer",
-    state: Teammate::ACCEPTED
+    state: :accepted
   ).first_or_create
   seed_event.teammates.where(
     user: track_director,
     email: track_director.email,
     role: "program team",
     mention_name: "track_director",
-    state: Teammate::ACCEPTED
+    state: :accepted
   ).first_or_create
   seed_event.teammates.where(
     user: reviewer,
     email: reviewer.email,
     role: "reviewer",
     mention_name: "reviewer",
-    state: Teammate::ACCEPTED
+    state: :accepted
   ).first_or_create
   seed_event.teammates.where(
     user: speaker_reviewer,
     email: speaker_reviewer.email,
     role: "reviewer",
-    state: Teammate::ACCEPTED
+    state: :accepted
   ).first_or_create # can't be mentioned
 
   # Proposals - there are no proposals that are either fully "accepted" or offically "not accepted"
@@ -430,8 +430,8 @@ If you are on the cutting edge with savvy Sapphire skills, we want you!
   end
 
   # Event Team
-  sapphire_event.teammates.where(user: admin, email: admin.email, role: "organizer", state: Teammate::ACCEPTED).first_or_create
-  sapphire_event.teammates.where(user: organizer, email: organizer.email, role: "organizer", state: Teammate::ACCEPTED).first_or_create
+  sapphire_event.teammates.where(user: admin, email: admin.email, role: "organizer", state: :accepted).first_or_create
+  sapphire_event.teammates.where(user: organizer, email: organizer.email, role: "organizer", state: :accepted).first_or_create
 
   ### ScheduleConf -- this is an event that is ready to be scheduled
   schedule_conf_open_date = Date.yesterday
@@ -466,8 +466,8 @@ If you are on the cutting edge with savvy scheduling skills, we want you!
   end
 
   # Event Team
-  schedule_event.teammates.where(user: admin, email: admin.email, role: "organizer", state: Teammate::ACCEPTED).first_or_create
-  schedule_event.teammates.where(user: organizer, email: organizer.email, role: "organizer", state: Teammate::ACCEPTED).first_or_create
+  schedule_event.teammates.where(user: admin, email: admin.email, role: "organizer", state: :accepted).first_or_create
+  schedule_event.teammates.where(user: organizer, email: organizer.email, role: "organizer", state: :accepted).first_or_create
 
   # Session Formats
   schedule_conf_formats = {}

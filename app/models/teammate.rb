@@ -47,13 +47,13 @@ class Teammate < ApplicationRecord
   def accept(user)
     self.user = user
     self.accepted_at = Time.current
-    self.state = ACCEPTED
+    self.state = :accepted
     save
   end
 
   def decline
     self.declined_at = Time.current
-    self.state = DECLINED
+    self.state = :declined
     save
   end
 
@@ -71,7 +71,7 @@ class Teammate < ApplicationRecord
 
   def invite
     self.token = Digest::SHA1.hexdigest(Time.current.to_s + email + rand(1000).to_s)
-    self.state = PENDING
+    self.state = :pending
     self.invited_at = Time.current
     save
   end

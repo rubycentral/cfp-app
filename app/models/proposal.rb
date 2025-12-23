@@ -149,7 +149,7 @@ class Proposal < ApplicationRecord
 
   def decline
     update(state: WITHDRAWN, confirmed_at: Time.current)
-    program_session.update(state: ProgramSession::DECLINED)
+    program_session.update(state: :declined)
   end
 
   def draft?

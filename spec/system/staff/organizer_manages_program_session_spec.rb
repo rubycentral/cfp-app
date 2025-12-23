@@ -14,7 +14,7 @@ feature "Organizers can manage program sessions", type: :system do
   end
 
   context "organizer can promote a waitlisted program session" do
-    let!(:waitlisted_session) { create(:program_session_with_proposal, event: event, session_format: session_format, state: ProgramSession::CONFIRMED_WAITLISTED) }
+    let!(:waitlisted_session) { create(:program_session_with_proposal, event: event, session_format: session_format, state: :confirmed_waitlisted) }
 
     scenario "from program session index", js: true do
       visit event_staff_program_sessions_path(event)
@@ -49,7 +49,7 @@ feature "Organizers can manage program sessions", type: :system do
   end
 
   context "organizer can promote a draft program session" do
-    let!(:draft_session) { create(:program_session_with_proposal, event: event, session_format: session_format, state: ProgramSession::DRAFT) }
+    let!(:draft_session) { create(:program_session_with_proposal, event: event, session_format: session_format, state: :draft) }
 
     scenario "from program session index", js: true do
       visit event_staff_program_sessions_path(event)

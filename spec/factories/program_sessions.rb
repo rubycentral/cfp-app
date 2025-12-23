@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :program_session do
     sequence(:title) { |i| "Default Session #{i}" }
     abstract { "Just some abstract" }
-    state { ProgramSession::LIVE }
+    state { :live }
     session_format
     event
 

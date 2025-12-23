@@ -168,21 +168,21 @@ describe ProgramSession do
 
   describe "#promote" do
     it "promotes a draft to accepted_confirmed" do
-      ps = create(:program_session, state: "draft", proposal: proposal, track: proposal.track)
+      ps = create(:program_session, state: :draft, proposal: proposal, track: proposal.track)
       ps.promote
 
       expect(ps.reload.state).to eq("live")
     end
 
     it "promotes an unconfirmed waitlisted to unconfirmed_accepted" do
-      ps = create(:program_session, state: "unconfirmed waitlisted", proposal: proposal, track: proposal.track)
+      ps = create(:program_session, state: :unconfirmed_waitlisted, proposal: proposal, track: proposal.track)
       ps.promote
 
       expect(ps.reload.state).to eq("unconfirmed accepted")
     end
 
     it "promotes a confirmed_waitlisted to live" do
-      ps = create(:program_session, state: "confirmed waitlisted", proposal: proposal, track: proposal.track)
+      ps = create(:program_session, state: :confirmed_waitlisted, proposal: proposal, track: proposal.track)
       ps.promote
 
       expect(ps.reload.state).to eq("live")
@@ -220,7 +220,7 @@ describe ProgramSession do
 
   describe "#confirm" do
     it "confirms an unconfirmed_waitlisted session" do
-      ps = create(:program_session, state: "unconfirmed waitlisted", proposal: proposal, track: proposal.track)
+      ps = create(:program_session, state: :unconfirmed_waitlisted, proposal: proposal, track: proposal.track)
 
       ps.confirm
 
@@ -228,7 +228,7 @@ describe ProgramSession do
     end
 
     it "confirms an unconfirmed_accepted session" do
-      ps = create(:program_session, state: "unconfirmed accepted", proposal: proposal, track: proposal.track)
+      ps = create(:program_session, state: :unconfirmed_accepted, proposal: proposal, track: proposal.track)
 
       ps.confirm
 

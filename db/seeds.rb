@@ -339,7 +339,7 @@ If your talk is about seed data in Rails apps, we want to hear about it!
   program_session_1 = seed_event.program_sessions.where(
     event: seed_event,
     proposal: accepted_proposal_1,
-    state: ProgramSession::LIVE,
+    state: :live,
     title: accepted_proposal_1.title,
     abstract: accepted_proposal_1.abstract,
     track: accepted_proposal_1.track,
@@ -349,7 +349,7 @@ If your talk is about seed data in Rails apps, we want to hear about it!
   program_session_2 = seed_event.program_sessions.where(
     event: seed_event,
     proposal: accepted_proposal_2,
-    state: ProgramSession::LIVE,
+    state: :live,
     title: accepted_proposal_2.title,
     abstract: accepted_proposal_2.abstract,
     track: accepted_proposal_2.track,
@@ -358,7 +358,7 @@ If your talk is about seed data in Rails apps, we want to hear about it!
 
   program_session_3 = seed_event.program_sessions.where(
     event: seed_event,
-    state: ProgramSession::LIVE,
+    state: :live,
     title: "Keynote Session",
     abstract: "The keynote session will kick off the conference for all attendees.",
     session_format: internal_session
@@ -510,7 +510,7 @@ If you are on the cutting edge with savvy scheduling skills, we want you!
 
       program_session = schedule_event.program_sessions.create!({
         proposal: accepted_proposal,
-        state: ProgramSession::LIVE,
+        state: :live,
         title: accepted_proposal.title,
         abstract: accepted_proposal.abstract,
         track: accepted_proposal.track,

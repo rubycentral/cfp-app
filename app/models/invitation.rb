@@ -11,7 +11,7 @@ class Invitation < ApplicationRecord
 
   scope :pending, -> { where(state: State::PENDING) }
   scope :declined, -> { where(state: State::DECLINED) }
-  scope :not_accepted, -> { where(state: [State::DECLINED, State::PENDING]) }
+  scope :not_accepted, -> { where(state: [:pending, :declined]) }
 
   before_create :set_default_state
   before_create :set_slug
@@ -22,14 +22,14 @@ class Invitation < ApplicationRecord
   def accept(user)
     transaction do
       self.user = user
-      self.state = State::ACCEPTED
+      self.state = :accepted
       proposal.speakers.create(user: user, event: proposal.event, skip_name_email_validation: true)
       save
     end
   end
 
   def decline
-    update(state: State::DECLINED)
+    update(state: :declined)
   end
 
   def pending?
@@ -47,7 +47,7 @@ class Invitation < ApplicationRecord
   end
 
   def set_default_state
-    self.state = State::PENDING if state.nil?
+    self.state = :pending if state.nil?
   end
 end
 

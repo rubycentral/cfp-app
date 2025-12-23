@@ -42,24 +42,24 @@ describe Invitation do
 
   describe "#pending?" do
     it "returns true if invitation is pending" do
-      invitation = create(:invitation, state: Invitation::State::PENDING, proposal: proposal, user: user)
+      invitation = create(:invitation, state: :pending, proposal: proposal, user: user)
       expect(invitation).to be_pending
     end
 
     it "returns false if invitation is not pending" do
-      invitation = create(:invitation, state: Invitation::State::ACCEPTED, proposal: proposal, user: user)
+      invitation = create(:invitation, state: :accepted, proposal: proposal, user: user)
       expect(invitation).to_not be_pending
     end
   end
 
   describe "#declined?" do
     it "returns true if invitation was declined" do
-      invitation = create(:invitation, state: Invitation::State::DECLINED, proposal: proposal, user: user)
+      invitation = create(:invitation, state: :declined, proposal: proposal, user: user)
       expect(invitation).to be_declined
     end
 
     it "returns false if invitation was not declined" do
-      invitation = create(:invitation, state: Invitation::State::ACCEPTED, proposal: proposal, user: user)
+      invitation = create(:invitation, state: :accepted, proposal: proposal, user: user)
       expect(invitation).to_not be_declined
     end
   end

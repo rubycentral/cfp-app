@@ -14,6 +14,14 @@ class ProgramSession < ApplicationRecord
     CONFIRMED_WAITLISTED,
     DECLINED
   ]
+  enum :state, {
+    live: 'live',
+    draft: 'draft',
+    unconfirmed_accepted: 'unconfirmed accepted',
+    unconfirmed_waitlisted: 'unconfirmed waitlisted',
+    confirmed_waitlisted: 'confirmed waitlisted',
+    declined: 'declined'
+  }, default: :draft
 
   STATE_GROUPS = {
     LIVE => "program",

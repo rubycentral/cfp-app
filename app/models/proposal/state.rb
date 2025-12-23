@@ -33,6 +33,17 @@ module Proposal::State
   end
 
   included do
+    enum :state, {
+      submitted: 'submitted',
+      soft_accepted: 'soft accepted',
+      soft_waitlisted: 'soft waitlisted',
+      soft_rejected: 'soft rejected',
+      accepted: 'accepted',
+      waitlisted: 'waitlisted',
+      rejected: 'rejected',
+      withdrawn: 'withdrawn',
+      not_accepted: 'not accepted'
+    }, default: :submitted
     def self.valid_states
       @valid_states ||= Proposal::State.constants.map{|c| const_get(c) if const_get(c).is_a?(String)}.compact!
     end

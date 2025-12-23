@@ -1,9 +1,4 @@
 class Invitation < ApplicationRecord
-  module State
-    DECLINED = 'declined'
-    PENDING = 'pending'
-    ACCEPTED = 'accepted'
-  end
   enum :state, {pending: 'pending', accepted: 'accepted', declined: 'declined'}
 
   belongs_to :proposal

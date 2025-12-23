@@ -19,7 +19,7 @@ feature "Organizers can manage program sessions", type: :system do
     scenario "from program session index", js: true do
       visit event_staff_program_sessions_path(event)
       within("##{ActionView::RecordIdentifier.dom_id(waitlisted_session)}") do
-        expect(page).to have_content ProgramSession::CONFIRMED_WAITLISTED.upcase
+        expect(page).to have_content 'CONFIRMED WAITLISTED'
       end
 
       page.accept_confirm do
@@ -28,7 +28,7 @@ feature "Organizers can manage program sessions", type: :system do
       end
 
       within("##{ActionView::RecordIdentifier.dom_id(waitlisted_session)}") do
-        expect(page).to have_content ProgramSession::LIVE.upcase
+        expect(page).to have_content 'LIVE'
       end
       expect(page).to_not have_css(".alert-danger")
       expect(waitlisted_session.reload).to be_live
@@ -36,13 +36,13 @@ feature "Organizers can manage program sessions", type: :system do
 
     scenario "from program session show page", js: true do
       visit event_staff_program_session_path(event, waitlisted_session)
-      expect(page).to have_content ProgramSession::CONFIRMED_WAITLISTED.upcase
+      expect(page).to have_content 'CONFIRMED WAITLISTED'
 
       page.accept_confirm do
         click_link("Promote")
       end
 
-      expect(page).to have_content ProgramSession::LIVE.upcase
+      expect(page).to have_content 'LIVE'
       expect(page).to_not have_css(".alert-danger")
       expect(waitlisted_session.reload).to be_live
     end
@@ -54,7 +54,7 @@ feature "Organizers can manage program sessions", type: :system do
     scenario "from program session index", js: true do
       visit event_staff_program_sessions_path(event)
       within("##{ActionView::RecordIdentifier.dom_id(draft_session)}") do
-        expect(page).to have_content ProgramSession::DRAFT.upcase
+        expect(page).to have_content 'DRAFT'
       end
 
       page.accept_confirm do
@@ -62,7 +62,7 @@ feature "Organizers can manage program sessions", type: :system do
       end
 
       within("##{ActionView::RecordIdentifier.dom_id(draft_session)}") do
-        expect(page).to have_content ProgramSession::LIVE.upcase
+        expect(page).to have_content 'LIVE'
       end
       expect(page).to_not have_css(".alert-danger")
       expect(draft_session.reload).to be_live
@@ -70,13 +70,13 @@ feature "Organizers can manage program sessions", type: :system do
 
     scenario "from program session show page", js: true do
       visit event_staff_program_session_path(event, draft_session)
-      expect(page).to have_content ProgramSession::DRAFT.upcase
+      expect(page).to have_content 'DRAFT'
 
       page.accept_confirm do
         click_link("Promote")
       end
 
-      expect(page).to have_content ProgramSession::LIVE.upcase
+      expect(page).to have_content 'LIVE'
       expect(page).to_not have_css(".alert-danger")
       expect(draft_session.reload).to be_live
     end

@@ -88,13 +88,6 @@ RSpec.configure do |config|
     FactoryBot.reload
   end
 
-  config.after(:each, js: true) do |example|
-    if example.exception
-      screenshot_path = Rails.root.join("tmp/screenshots", "#{method_name}-#{Time.zone.now.strftime("%Y_%m_%d-%H_%M_%S")}.png")
-      Capybara.page.save_screenshot(screenshot_path)
-    end
-  end
-
   config.around(:each, caching: true) do |example|
     Rails.configuration.action_controller.perform_caching = true
     example.run
@@ -105,8 +98,23 @@ RSpec.configure do |config|
     driven_by :rack_test
   end
 
+  Capybara.register_driver :headless_chrome do |app|
+    options = Selenium::WebDriver::Chrome::Options.new
+    options.add_argument('--headless=new')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--window-size=1400,1400')
+    Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+  end
+
   config.before type: :system, js: true do
-    driven_by :selenium, using: :headless_chrome, screen_size: [1400, 1400]
+    driven_by :headless_chrome
+  end
+
+  config.after type: :system, js: true do
+    # Force a fresh browser session for each test to prevent state bleeding
+    Capybara.send(:session_pool).delete_if { |k, _v| k.include?('headless_chrome') }
   end
 
   Capybara.disable_animation = true

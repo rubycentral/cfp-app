@@ -13,7 +13,7 @@ FactoryBot.define do
     trait :has_been_invited do
       token { "token" }
       role { "reviewer" }
-      state { Teammate::PENDING }
+      state { :pending }
     end
 
     trait :reviewer do

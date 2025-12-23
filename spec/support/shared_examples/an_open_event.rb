@@ -12,9 +12,9 @@ RSpec.shared_examples_for 'an open event' do
   let(:no_reviews_user) { create :user }
   let(:invited_user) { create :user }
 
-  let(:teammate1) { create :teammate, :program_team, event: event, user: user1, state: Teammate::ACCEPTED }
-  let(:teammate2) { create :teammate, :reviewer, event: event, user: user2, state: Teammate::ACCEPTED }
-  let(:no_reviews_teammate) { create :teammate, :reviewer, event: event, user: no_reviews_user, state: Teammate::ACCEPTED }
+  let(:teammate1) { create :teammate, :program_team, event: event, user: user1, state: :accepted }
+  let(:teammate2) { create :teammate, :reviewer, event: event, user: user2, state: :accepted }
+  let(:no_reviews_teammate) { create :teammate, :reviewer, event: event, user: no_reviews_user, state: :accepted }
   let(:invited_teammate) { create :teammate, :has_been_invited, event: event, user: invited_user }
 
   let(:track1) { create :track, name: 'Open-source', event: event }

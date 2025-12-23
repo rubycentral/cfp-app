@@ -39,10 +39,6 @@ class Event < ApplicationRecord
   before_validation :generate_slug
   before_save :update_closes_at_if_manually_closed
 
-  STATUSES = { draft: 'draft',
-               open: 'open',
-               closed: 'closed' }
-
   def to_param
     slug
   end

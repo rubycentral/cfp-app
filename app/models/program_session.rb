@@ -1,11 +1,4 @@
 class ProgramSession < ApplicationRecord
-  LIVE = 'live' # confirmed accepted
-  DRAFT = 'draft' # created by organizer, not ready to be published (live)
-  UNCONFIRMED_ACCEPTED = 'unconfirmed accepted' # accepted, to be confirmed by speaker
-  UNCONFIRMED_WAITLISTED = 'unconfirmed waitlisted'
-  CONFIRMED_WAITLISTED = 'confirmed waitlisted'
-  DECLINED = 'declined'
-
   enum :state, {
     live: 'live',
     draft: 'draft',

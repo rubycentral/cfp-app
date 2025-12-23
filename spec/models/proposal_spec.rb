@@ -201,8 +201,8 @@ describe Proposal do
           prop.finalize
         end
 
-        expect(waitlisted_proposal.reload.program_session.state).to eq('unconfirmed waitlisted')
-        expect(accepted_proposal.reload.program_session.state).to eq('unconfirmed accepted')
+        expect(waitlisted_proposal.reload.program_session).to be_unconfirmed_waitlisted
+        expect(accepted_proposal.reload.program_session).to be_unconfirmed_accepted
         expect(rejected_proposal.reload.program_session).to be_nil
         expect(submitted_proposal.reload.program_session).to be_nil
       end

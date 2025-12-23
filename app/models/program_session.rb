@@ -51,15 +51,10 @@ class ProgramSession < ApplicationRecord
 
   after_destroy :destroy_speakers
 
-  scope :unscheduled, -> do
-    where(state: LIVE).where.not(id: TimeSlot.pluck(:program_session_id))
-  end
-  scope :sorted_by_title, -> { order(:title)}
-  scope :live, -> { where(state: LIVE) }
-  scope :draft, -> { where(state: DRAFT) }
+  scope :unscheduled, -> { live.where.not(id: TimeSlot.pluck(:program_session_id)) }
+  scope :sorted_by_title, -> { order(:title) }
   scope :waitlisted, -> { where(state: [:confirmed_waitlisted, :unconfirmed_waitlisted]) }
   scope :program, -> { where(state: [:live, :draft, :unconfirmed_accepted]) }
-  scope :declined, -> { where(state: DECLINED) }
   scope :without_proposal, -> { where(proposal: nil) }
   scope :in_track, ->(track) do
     track = nil if track.try(:strip).blank?
@@ -111,10 +106,6 @@ class ProgramSession < ApplicationRecord
       proposal.promote
     end
     update(state: PROMOTIONS[state])
-  end
-
-  def live?
-    state == LIVE
   end
 
   def multiple_speakers?

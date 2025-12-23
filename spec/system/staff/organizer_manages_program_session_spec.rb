@@ -31,7 +31,7 @@ feature "Organizers can manage program sessions", type: :system do
         expect(page).to have_content ProgramSession::LIVE.upcase
       end
       expect(page).to_not have_css(".alert-danger")
-      expect(waitlisted_session.reload.state).to eq(ProgramSession::LIVE)
+      expect(waitlisted_session.reload).to be_live
     end
 
     scenario "from program session show page", js: true do
@@ -44,7 +44,7 @@ feature "Organizers can manage program sessions", type: :system do
 
       expect(page).to have_content ProgramSession::LIVE.upcase
       expect(page).to_not have_css(".alert-danger")
-      expect(waitlisted_session.reload.state).to eq(ProgramSession::LIVE)
+      expect(waitlisted_session.reload).to be_live
     end
   end
 
@@ -65,7 +65,7 @@ feature "Organizers can manage program sessions", type: :system do
         expect(page).to have_content ProgramSession::LIVE.upcase
       end
       expect(page).to_not have_css(".alert-danger")
-      expect(draft_session.reload.state).to eq(ProgramSession::LIVE)
+      expect(draft_session.reload).to be_live
     end
 
     scenario "from program session show page", js: true do
@@ -78,7 +78,7 @@ feature "Organizers can manage program sessions", type: :system do
 
       expect(page).to have_content ProgramSession::LIVE.upcase
       expect(page).to_not have_css(".alert-danger")
-      expect(draft_session.reload.state).to eq(ProgramSession::LIVE)
+      expect(draft_session.reload).to be_live
     end
   end
 

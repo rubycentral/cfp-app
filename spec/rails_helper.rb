@@ -88,13 +88,6 @@ RSpec.configure do |config|
     FactoryBot.reload
   end
 
-  config.after(:each, js: true) do |example|
-    if example.exception
-      screenshot_path = Rails.root.join("tmp/screenshots", "#{method_name}-#{Time.zone.now.strftime("%Y_%m_%d-%H_%M_%S")}.png")
-      Capybara.page.save_screenshot(screenshot_path)
-    end
-  end
-
   config.around(:each, caching: true) do |example|
     Rails.configuration.action_controller.perform_caching = true
     example.run

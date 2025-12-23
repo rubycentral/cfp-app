@@ -36,11 +36,8 @@ class Teammate < ApplicationRecord
   scope :program_team, -> { where(role: PROGRAM_TEAM_ROLES) }
   scope :reviewer, -> { where(role: STAFF_ROLES) }
 
-  scope :pending, -> { where(state: PENDING) }
-  scope :accepted, -> { where(state: ACCEPTED) }
-  scope :active, -> { where(state: ACCEPTED) }
-  scope :declined, -> { where(state: DECLINED) }
-  scope :invitations, -> { where(state: [PENDING, DECLINED]) }
+  scope :active, -> { accepted }
+  scope :invitations, -> { where(state: [:pending, :declined]) }
 
   scope :all_emails, -> { where(notification_preference: ALL) }
 
@@ -63,10 +60,6 @@ class Teammate < ApplicationRecord
 
   def ratings_count(current_event)
     self.user.ratings.not_withdrawn.for_event(current_event).size
-  end
-
-  def pending?
-    state == PENDING
   end
 
   def invite

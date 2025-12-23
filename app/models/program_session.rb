@@ -105,7 +105,7 @@ class ProgramSession < ApplicationRecord
   end
 
   def can_confirm?
-    CONFIRMATIONS.keys.include?(state)
+    CONFIRMATIONS.key?(state)
   end
 
   def confirm
@@ -113,7 +113,7 @@ class ProgramSession < ApplicationRecord
   end
 
   def can_promote?
-    PROMOTIONS.keys.include?(state)
+    PROMOTIONS.key?(state)
   end
 
   def promote

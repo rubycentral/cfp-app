@@ -3,9 +3,9 @@ class InvitationDecorator < Draper::Decorator
   decorates_association :proposal
 
   STATE_LABEL_MAP = {
-    Invitation::State::PENDING => 'label-default',
-    Invitation::State::DECLINED => 'label-danger',
-    Invitation::State::ACCEPTED => 'label-success'
+    Invitation.states[:pending] => 'label-default',
+    Invitation.states[:declined] => 'label-danger',
+    Invitation.states[:accepted] => 'label-success'
   }
 
   def decline_button(small: false)

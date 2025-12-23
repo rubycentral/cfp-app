@@ -19,14 +19,14 @@ describe Invitation do
     it "sets state as declined" do
       invitation = create(:invitation, state: nil, proposal: proposal, user: user)
       invitation.decline
-      expect(invitation.state).to eq(Invitation::State::DECLINED)
+      expect(invitation).to be_declined
     end
   end
 
   describe "#accept" do
     it "sets state as accepted" do
       invitation.accept(user)
-      expect(invitation.state).to eq(Invitation::State::ACCEPTED)
+      expect(invitation).to be_accepted
     end
 
     it "sets the user on the invitation" do

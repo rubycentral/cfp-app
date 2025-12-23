@@ -9,8 +9,6 @@ class Invitation < ApplicationRecord
   belongs_to :proposal
   belongs_to :user, optional: true
 
-  scope :pending, -> { where(state: State::PENDING) }
-  scope :declined, -> { where(state: State::DECLINED) }
   scope :not_accepted, -> { where(state: [:pending, :declined]) }
 
   before_create :set_default_state
@@ -30,14 +28,6 @@ class Invitation < ApplicationRecord
 
   def decline
     update(state: :declined)
-  end
-
-  def pending?
-    state == State::PENDING
-  end
-
-  def declined?
-    state == State::DECLINED
   end
 
   private

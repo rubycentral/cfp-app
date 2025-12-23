@@ -1,5 +1,5 @@
 class Event < ApplicationRecord
-  attribute :state, :string, default: 'draft'
+  enum :state, {draft: 'draft', open: 'open', closed: 'closed'}, default: :draft
 
   has_many :teammates, dependent: :destroy
   has_many :staff, through: :teammates, source: :user

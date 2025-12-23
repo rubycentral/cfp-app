@@ -46,7 +46,7 @@ class Staff::EventsController < Staff::ApplicationController
 
   def open_cfp
     authorize_update
-    if @event.update(state: Event::STATUSES[:open])
+    if @event.update(state: :open)
       flash[:info] = "Your CFP was successfully opened."
     else
       flash['danger alert-confirm'] = "There was a problem opening your CFP: #{@event.errors.full_messages.to_sentence}"

@@ -1,5 +1,5 @@
 RSpec.shared_examples_for 'an open event' do
-  let(:event) { create :event, name: 'Best Event', state: Event::STATUSES[:open] }
+  let(:event) { create :event, name: 'Best Event', state: :open }
 
   let(:withdrawn) { Proposal::State::WITHDRAWN }
   let(:accepted) { Proposal::State::ACCEPTED }

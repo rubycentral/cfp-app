@@ -1,5 +1,5 @@
 class Event < ApplicationRecord
-  attribute :state, :string, default: 'draft'
+  enum :state, {draft: 'draft', open: 'open', closed: 'closed'}, default: :draft
 
   has_many :teammates, dependent: :destroy
   has_many :staff, through: :teammates, source: :user
@@ -30,8 +30,7 @@ class Event < ApplicationRecord
   store_accessor :speaker_notification_emails, :waitlist
 
   scope :a_to_z, -> { order('name ASC') }
-  scope :live, -> { where("state = 'open' and (closes_at is null or closes_at > ?)", Time.current) }
-  scope :not_draft, -> { where "state != 'draft'"}
+  scope :live, -> { open.where('closes_at is null or closes_at > ?', Time.current) }
 
   validates :name, presence: true
   validates :slug, presence: true, uniqueness: true
@@ -40,16 +39,11 @@ class Event < ApplicationRecord
   before_validation :generate_slug
   before_save :update_closes_at_if_manually_closed
 
-  STATUSES = { draft: 'draft',
-               open: 'open',
-               closed: 'closed' }
-
   def to_param
     slug
   end
 
-  validate :checklist_complete?, on: :update,
-    if: Proc.new { |e| e.state == STATUSES[:open] }
+  validate :checklist_complete?, on: :update, if: -> { state == Event.states[:open] }
 
   def initialize_speaker_emails
     SpeakerEmailTemplate::TYPES.each do |type|
@@ -120,12 +114,8 @@ class Event < ApplicationRecord
     name
   end
 
-  def draft?
-    state == STATUSES[:draft]
-  end
-
   def open?
-    state == STATUSES[:open] && (closes_at.nil? || closes_at > Time.current)
+    state == Event.states[:open] && (closes_at.nil? || closes_at > Time.current)
   end
 
   def closed?
@@ -133,16 +123,16 @@ class Event < ApplicationRecord
   end
 
   def past_open?
-    state == STATUSES[:open] && closes_at < Time.current
+    state == Event.states[:open] && closes_at < Time.current
   end
 
   def status
     if open?
-      STATUSES[:open]
+      Event.states[:open]
     elsif draft?
-      STATUSES[:draft]
+      Event.states[:draft]
     else
-      STATUSES[:closed]
+      Event.states[:closed]
     end
   end
 
@@ -231,7 +221,7 @@ class Event < ApplicationRecord
   private
 
   def update_closes_at_if_manually_closed
-    if changes.key?(:state) && changes[:state] == [STATUSES[:open], STATUSES[:closed]]
+    if changes.key?(:state) && changes[:state] == [Event.states[:open], Event.states[:closed]]
       self.closes_at = Time.current
     end
   end

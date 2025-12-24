@@ -19,7 +19,7 @@ module WebsiteHelper
 
   def link_to_docs(anchor)
     link_to(DOCS_PAGE + "##{anchor}", target: "_blank") do
-      content_tag("i", nil, class: "fa fa-fw fa-question-circle")
+      content_tag('i', nil, class: 'bi bi-question-circle')
     end
   end
 end

@@ -15,7 +15,7 @@ class Staff::ProgramSessionDecorator < Draper::Decorator
     return '' unless object.confirmation_notes?
     id = h.dom_id(object, 'notes')
     h.link_to h.event_staff_program_session_path(object.event, object) do
-      h.content_tag(:i, '', class: 'fa fa-file')
+      h.content_tag(:i, '', class: 'bi bi-file-text')
     end
   end
 

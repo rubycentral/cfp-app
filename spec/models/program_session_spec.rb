@@ -189,8 +189,7 @@ describe ProgramSession do
     end
 
     it "promotes it's proposal" do
-      ps = create(:program_session, proposal: proposal, track: proposal.track)
-      proposal = create(:proposal_with_track, program_session: ps)
+      ps = create(:program_session, state: :draft, proposal: proposal, track: proposal.track)
 
       expect(proposal).to receive(:promote)
       ps.promote

@@ -208,8 +208,7 @@ describe Proposal do
 
       it "rejects invalid states" do
         proposal = create(:proposal_with_track, state: :accepted)
-        proposal.update_state('almonds!')
-        expect(proposal.errors.messages[:state][0]).to eq("'almonds!' not a valid state.")
+        expect { proposal.update_state('almonds!') }.to raise_error(ArgumentError)
       end
     end
   end

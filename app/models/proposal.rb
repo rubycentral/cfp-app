@@ -20,8 +20,7 @@ class Proposal < ApplicationRecord
   validates :title, :abstract, :session_format, presence: true
   validate :abstract_length
   validates :title, length: { maximum: 60 }
-  validates_inclusion_of :state, in: FINAL_STATES, allow_nil: false, message: "'%{value}' not a confirmable state.",
-                                 if: :confirmed_at_changed?
+  validate :state_must_be_final_for_confirmation, if: :confirmed_at_changed?
 
   serialize :last_change, coder: YAML
   serialize :proposal_data, type: Hash, coder: YAML
@@ -244,6 +243,10 @@ class Proposal < ApplicationRecord
   end
 
   private
+
+  def state_must_be_final_for_confirmation
+    errors.add(:state, "'#{state}' not a confirmable state.") unless FINAL_STATES.include?(state.to_sym)
+  end
 
   def abstract_length
     return unless abstract_changed? && abstract.gsub(/\r/, '').gsub(/\n/, '').length > 600

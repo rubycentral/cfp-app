@@ -11,6 +11,16 @@ class ProgramSession < ApplicationRecord
       transition :unconfirmed_waitlisted => :confirmed_waitlisted
       transition :unconfirmed_accepted => :live
     end
+
+    event :promote do
+      before do
+        proposal.promote if proposal
+      end
+
+      transition :draft => :live
+      transition :unconfirmed_waitlisted => :unconfirmed_accepted
+      transition :confirmed_waitlisted => :live
+    end
   end
 
   STATE_GROUPS = {
@@ -84,13 +94,6 @@ class ProgramSession < ApplicationRecord
 
   def can_promote?
     PROMOTIONS.key?(state)
-  end
-
-  def promote
-    if proposal.present?
-      proposal.promote
-    end
-    update(state: PROMOTIONS[state])
   end
 
   def multiple_speakers?

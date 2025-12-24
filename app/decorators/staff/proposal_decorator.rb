@@ -28,7 +28,7 @@ class Staff::ProposalDecorator < ProposalDecorator
 
   def small_state_buttons
     state_buttons(
-        states: [ SOFT_ACCEPTED, SOFT_WAITLISTED, SOFT_REJECTED, SUBMITTED ],
+        states: [:soft_accepted, :soft_waitlisted, :soft_rejected, :submitted],
         show_finalize: false,
         small: true
     )
@@ -103,13 +103,13 @@ class Staff::ProposalDecorator < ProposalDecorator
   end
 
   def reset_state_button
-    state_button('Reset Status', update_state_path(SUBMITTED),
+    state_button('Reset Status', update_state_path(:submitted),
                  type: 'btn-default',
                  hidden: reset_button_hidden?)
   end
 
   def hard_reset_button
-    state_button('Hard Reset', update_state_path(SUBMITTED),
+    state_button('Hard Reset', update_state_path(:submitted),
                  data: {
                      turbo_confirm:
                          "This proposal's status has been finalized. Proceed with status reset?"
@@ -125,9 +125,9 @@ class Staff::ProposalDecorator < ProposalDecorator
 
   def buttons
     [
-      [ 'Accept', SOFT_ACCEPTED, 'btn-success', !object.draft?  ],
-      [ 'Waitlist', SOFT_WAITLISTED, 'btn-warning', !object.draft? ],
-      [ 'Reject', SOFT_REJECTED, 'btn-danger', !object.draft? ]
+      ['Accept', :soft_accepted, 'btn-success', !object.draft?],
+      ['Waitlist', :soft_waitlisted, 'btn-warning', !object.draft?],
+      ['Reject', :soft_rejected, 'btn-danger', !object.draft?]
     ]
   end
 

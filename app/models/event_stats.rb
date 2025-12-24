@@ -31,13 +31,13 @@ class EventStats
   end
 
   def all_accepted_proposals(track_id='all')
-    q = event.proposals.where(state: [Proposal::ACCEPTED, Proposal::SOFT_ACCEPTED])
+    q = event.proposals.where(state: [:accepted, :soft_accepted])
     q = filter_by_track(q, track_id)
     q.size + active_custom_sessions(track_id)
   end
 
   def all_waitlisted_proposals(track_id='all')
-    q = event.proposals.where(state: [Proposal::WAITLISTED, Proposal::SOFT_WAITLISTED])
+    q = event.proposals.where(state: [:waitlisted, :soft_waitlisted])
     q = filter_by_track(q, track_id)
     q.size
   end
@@ -78,18 +78,18 @@ class EventStats
     proposals_per_track_and_state = event.proposals.left_joins(:track).group('tracks.name', :state).count
 
     stats = {'Total' => {
-      accepted: proposals_per_track_and_state.select {|k, _v| k[1] == Proposal::State::ACCEPTED }.sum(&:second) || 0,
-      soft_accepted: proposals_per_track_and_state.select {|k, _v| k[1] == Proposal::State::SOFT_ACCEPTED }.sum(&:second) || 0,
-      waitlisted: proposals_per_track_and_state.select {|k, _v| k[1] == Proposal::State::WAITLISTED }.sum(&:second) || 0,
-      soft_waitlisted: proposals_per_track_and_state.select {|k, _v| k[1] == Proposal::State::SOFT_WAITLISTED }.sum(&:second) || 0
+      accepted: proposals_per_track_and_state.select {|k, _v| k[1] == 'accepted' }.sum(&:second) || 0,
+      soft_accepted: proposals_per_track_and_state.select {|k, _v| k[1] == 'soft_accepted' }.sum(&:second) || 0,
+      waitlisted: proposals_per_track_and_state.select {|k, _v| k[1] == 'waitlisted' }.sum(&:second) || 0,
+      soft_waitlisted: proposals_per_track_and_state.select {|k, _v| k[1] == 'soft_waitlisted' }.sum(&:second) || 0
     }}
     # Prepending `nil` for "General" track
     event.tracks.pluck(:name).prepend(nil).each do |track_name|
       stats[track_name || Track::NO_TRACK] = {
-        accepted: proposals_per_track_and_state[[track_name, Proposal::State::ACCEPTED]] || 0,
-        soft_accepted: proposals_per_track_and_state[[track_name, Proposal::State::SOFT_ACCEPTED]] || 0,
-        waitlisted: proposals_per_track_and_state[[track_name, Proposal::State::WAITLISTED]] || 0,
-        soft_waitlisted: proposals_per_track_and_state[[track_name, Proposal::State::SOFT_WAITLISTED]] || 0
+        accepted: proposals_per_track_and_state[[track_name, 'accepted']] || 0,
+        soft_accepted: proposals_per_track_and_state[[track_name, 'soft_accepted']] || 0,
+        waitlisted: proposals_per_track_and_state[[track_name, 'waitlisted']] || 0,
+        soft_waitlisted: proposals_per_track_and_state[[track_name, 'soft_waitlisted']] || 0
       }
     end
     stats

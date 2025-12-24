@@ -27,7 +27,7 @@ feature "Organizers can manage proposals", type: :system do
 
   scenario "organizer can view soft state proposals by state" do
     proposal_two = create(:proposal_with_track, event: event)
-    proposal_two.update(state: Proposal::State::SOFT_ACCEPTED)
+    proposal_two.update(state: :soft_accepted)
     visit bulk_finalize_event_staff_program_proposals_path(event)
 
     expect(page).to have_content("1 submitted proposal")

@@ -65,26 +65,26 @@ describe Staff::ProposalsController, type: :controller do
     end
 
     it "finalizes the state" do
-      proposal = create(:proposal_with_track, event: event, state: Proposal::State::SOFT_ACCEPTED)
+      proposal = create(:proposal_with_track, event: event, state: :soft_accepted)
       post :finalize, params: {event_slug: event, proposal_uuid: proposal.uuid}
-      expect(proposal.reload.state).to eq(Proposal::State::ACCEPTED)
+      expect(proposal.reload).to be_accepted
     end
 
     it "creates a draft program session" do
-      proposal = create(:proposal_with_track, event: event, state: Proposal::State::SOFT_ACCEPTED)
+      proposal = create(:proposal_with_track, event: event, state: :soft_accepted)
       post :finalize, params: {event_slug: event, proposal_uuid: proposal.uuid}
       expect(proposal.program_session).to be_unconfirmed_accepted
     end
 
     it "sends appropriate emails" do
-      proposal = create(:proposal_with_track, event: event, state: Proposal::State::SOFT_ACCEPTED)
+      proposal = create(:proposal_with_track, event: event, state: :soft_accepted)
       mail = double(:mail, deliver_now: nil)
       expect(Staff::ProposalMailer).to receive('send_email').and_return(mail)
       post :finalize, params: {event_slug: event, proposal_uuid: proposal.uuid}
     end
 
     it "creates a notification" do
-      proposal = create(:proposal_with_track, :with_two_speakers, event: event, state: Proposal::State::SOFT_ACCEPTED)
+      proposal = create(:proposal_with_track, :with_two_speakers, event: event, state: :soft_accepted)
       expect {
         post :finalize, params: {event_slug: event, proposal_uuid: proposal.uuid}
       }.to change {

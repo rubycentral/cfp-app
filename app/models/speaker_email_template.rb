@@ -8,9 +8,9 @@ class SpeakerEmailTemplate
   }.with_indifferent_access
 
   TYPES_TO_STATES = {
-      accept: Proposal::ACCEPTED,
-      waitlist: Proposal::WAITLISTED,
-      reject: Proposal::REJECTED
+      accept: :accepted,
+      waitlist: :waitlisted,
+      reject: :rejected
   }.with_indifferent_access
 
   attr_accessor :email, :type_key

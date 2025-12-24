@@ -28,11 +28,6 @@ class ProgramSession < ApplicationRecord
     confirmed_waitlisted: :live
   }.with_indifferent_access
 
-  CONFIRMATIONS = {
-    unconfirmed_waitlisted: :confirmed_waitlisted,
-    unconfirmed_accepted: :live
-  }.with_indifferent_access
-
   belongs_to :event
   belongs_to :proposal, optional: true
   belongs_to :track, optional: true
@@ -85,10 +80,6 @@ class ProgramSession < ApplicationRecord
       end
       ps
     end
-  end
-
-  def can_confirm?
-    CONFIRMATIONS.key?(state)
   end
 
   def can_promote?

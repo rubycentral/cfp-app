@@ -21,7 +21,7 @@ module SimpleForm
         return if popover_content.blank?
         template.capture do
           template.content_tag(:a, class:'btn btn-icon hint-btn popover-trigger', data: { target: popover_selector }) do
-            template.content_tag(:i, '', class: 'fa fa-fw fa-question-circle')
+            template.content_tag(:i, '', class: 'bi bi-question-circle')
           end
         end.html_safe
       end

@@ -6,7 +6,12 @@ class ProgramSession < ApplicationRecord
     unconfirmed_waitlisted: 'unconfirmed waitlisted',
     confirmed_waitlisted: 'confirmed waitlisted',
     declined: 'declined'
-  }, default: :draft
+  }, default: :draft do
+    event :confirm do
+      transition :unconfirmed_waitlisted => :confirmed_waitlisted
+      transition :unconfirmed_accepted => :live
+    end
+  end
 
   STATE_GROUPS = {
     live: 'program',
@@ -84,10 +89,6 @@ class ProgramSession < ApplicationRecord
 
   def can_confirm?
     CONFIRMATIONS.key?(state)
-  end
-
-  def confirm
-    update(state: CONFIRMATIONS[state]) if can_confirm?
   end
 
   def can_promote?

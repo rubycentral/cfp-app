@@ -32,11 +32,6 @@ class ProgramSession < ApplicationRecord
     declined: 'declined'
   }.with_indifferent_access
 
-  PROMOTIONS = {
-    draft: :live,
-    unconfirmed_waitlisted: :unconfirmed_accepted,
-    confirmed_waitlisted: :live
-  }.with_indifferent_access
 
   belongs_to :event
   belongs_to :proposal, optional: true
@@ -90,10 +85,6 @@ class ProgramSession < ApplicationRecord
       end
       ps
     end
-  end
-
-  def can_promote?
-    PROMOTIONS.key?(state)
   end
 
   def multiple_speakers?

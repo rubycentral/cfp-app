@@ -30,6 +30,8 @@ gem 'omniauth-github'
 gem 'omniauth-twitter'
 gem "omniauth-rails_csrf_protection", "~> 2.0"
 
+gem 'stateful_enum'
+
 gem 'actionview-encoded_mail_to'
 gem 'active_model_serializers', '~> 0.10.16'
 gem 'bootsnap', '~> 1.20', require: false

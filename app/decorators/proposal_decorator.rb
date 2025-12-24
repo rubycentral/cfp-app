@@ -1,5 +1,4 @@
 class ProposalDecorator < Draper::Decorator
-  include Proposal::State
   decorates :proposal
   delegate_all
   decorates_association :speakers

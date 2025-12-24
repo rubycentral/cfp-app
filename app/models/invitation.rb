@@ -1,12 +1,9 @@
 class Invitation < ApplicationRecord
-  enum :state, {pending: 'pending', accepted: 'accepted', declined: 'declined'}
+  enum :state, {pending: 'pending', accepted: 'accepted', declined: 'declined'}, default: :pending
 
   belongs_to :proposal
   belongs_to :user, optional: true
 
-  scope :not_accepted, -> { where(state: [:pending, :declined]) }
-
-  before_create :set_default_state
   before_create :set_slug
 
   validates :email, presence: true
@@ -29,10 +26,6 @@ class Invitation < ApplicationRecord
 
   def set_slug
     self.slug = Digest::SHA1.hexdigest([email, rand(1000)].map(&:to_s).join('-'))[0, 10]
-  end
-
-  def set_default_state
-    self.state = :pending if state.nil?
   end
 end
 

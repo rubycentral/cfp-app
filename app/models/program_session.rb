@@ -6,7 +6,22 @@ class ProgramSession < ApplicationRecord
     unconfirmed_waitlisted: 'unconfirmed waitlisted',
     confirmed_waitlisted: 'confirmed waitlisted',
     declined: 'declined'
-  }, default: :draft
+  }, default: :draft do
+    event :confirm do
+      transition :unconfirmed_waitlisted => :confirmed_waitlisted
+      transition :unconfirmed_accepted => :live
+    end
+
+    event :promote do
+      before do
+        proposal.promote if proposal
+      end
+
+      transition :draft => :live
+      transition :unconfirmed_waitlisted => :unconfirmed_accepted
+      transition :confirmed_waitlisted => :live
+    end
+  end
 
   STATE_GROUPS = {
     live: 'program',
@@ -17,16 +32,6 @@ class ProgramSession < ApplicationRecord
     declined: 'declined'
   }.with_indifferent_access
 
-  PROMOTIONS = {
-    draft: :live,
-    unconfirmed_waitlisted: :unconfirmed_accepted,
-    confirmed_waitlisted: :live
-  }.with_indifferent_access
-
-  CONFIRMATIONS = {
-    unconfirmed_waitlisted: :confirmed_waitlisted,
-    unconfirmed_accepted: :live
-  }.with_indifferent_access
 
   belongs_to :event
   belongs_to :proposal, optional: true
@@ -80,25 +85,6 @@ class ProgramSession < ApplicationRecord
       end
       ps
     end
-  end
-
-  def can_confirm?
-    CONFIRMATIONS.key?(state)
-  end
-
-  def confirm
-    update(state: CONFIRMATIONS[state]) if can_confirm?
-  end
-
-  def can_promote?
-    PROMOTIONS.key?(state)
-  end
-
-  def promote
-    if proposal.present?
-      proposal.promote
-    end
-    update(state: PROMOTIONS[state])
   end
 
   def multiple_speakers?

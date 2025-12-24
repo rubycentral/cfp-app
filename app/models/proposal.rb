@@ -143,11 +143,11 @@ class Proposal < ApplicationRecord
   end
 
   def finalized?
-    FINAL_STATES.include?(state)
+    FINAL_STATES.include?(state.to_sym)
   end
 
   def becomes_program_session?
-    BECOMES_PROGRAM_SESSION.include?(state)
+    BECOMES_PROGRAM_SESSION.include?(state.to_sym)
   end
 
   def confirmed?

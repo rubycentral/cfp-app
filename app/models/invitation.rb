@@ -4,8 +4,6 @@ class Invitation < ApplicationRecord
   belongs_to :proposal
   belongs_to :user, optional: true
 
-  scope :not_accepted, -> { where(state: [:pending, :declined]) }
-
   before_create :set_default_state
   before_create :set_slug
 

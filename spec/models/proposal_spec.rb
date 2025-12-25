@@ -523,20 +523,6 @@ describe Proposal do
     end
   end
 
-  describe "#was_rated_by_user?" do
-    let(:proposal) { create(:proposal_with_track) }
-    let(:reviewer) { create(:user, :reviewer) }
-
-    it "returns true if user has rated the proposal" do
-      create(:rating, user: reviewer, proposal: proposal)
-      expect(proposal.was_rated_by_user?(reviewer)).to be_truthy
-    end
-
-    it "returns false if user has not rated the proposal" do
-      expect(proposal.was_rated_by_user?(reviewer)).to be_falsey
-    end
-  end
-
   describe "#has_reviewer_comments?" do
     let(:proposal) { create(:proposal_with_track) }
     let(:reviewer) { create(:user, :reviewer) }

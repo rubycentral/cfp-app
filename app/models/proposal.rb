@@ -246,10 +246,6 @@ class Proposal < ApplicationRecord
     user.pending_invitations.map(&:proposal_id).include?(id)
   end
 
-  def was_rated_by_user?(user)
-    ratings.any? { |r| r.user_id == user.id }
-  end
-
   def tags
     proposal_taggings.to_a.map(&:tag)
   end

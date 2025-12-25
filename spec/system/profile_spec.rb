@@ -38,10 +38,10 @@ feature 'User Profile', type: :system do
     teammate = create(:teammate, role: 'organizer', user: user, state: :accepted)
     visit(event_path(teammate.event))
     visit(notifications_profile_path)
-    choose(Teammate::NOTIFICATION_PREFERENCES[Teammate::MENTIONS])
+    choose(Teammate::NOTIFICATION_PREFERENCE_LABELS['mentions'])
     click_button 'Save'
     click_link 'Dashboard'
     click_link 'Team'
-    expect(page).to have_content(Teammate::NOTIFICATION_PREFERENCES[Teammate::MENTIONS])
+    expect(page).to have_content(Teammate::NOTIFICATION_PREFERENCE_LABELS['mentions'])
   end
 end

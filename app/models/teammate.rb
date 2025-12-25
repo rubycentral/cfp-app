@@ -1,15 +1,12 @@
 class Teammate < ApplicationRecord
-  ALL = 'all'
-  MENTIONS = 'mentions'
-  IN_APP_ONLY = 'in_app_only'
-
-  NOTIFICATION_PREFERENCES =  {
-    ALL => 'All Via Email',
-    MENTIONS => 'Mention Only Via Email',
-    IN_APP_ONLY => 'In App Only'
+  NOTIFICATION_PREFERENCE_LABELS = {
+    'all' => 'All Via Email',
+    'mentions' => 'Mention Only Via Email',
+    'in_app_only' => 'In App Only'
   }
 
   enum :role, {reviewer: 'reviewer', program_team: 'program team', organizer: 'organizer'}, scopes: false
+
   enum :state, {pending: 'pending', accepted: 'accepted', declined: 'declined'}, default: :pending do
     event :accept do
       transition :pending => :accepted
@@ -27,8 +24,9 @@ class Teammate < ApplicationRecord
         self.declined_at = Time.current
       end
     end
-
   end
+
+  enum :notification_preference, {all: 'all', mentions: 'mentions', in_app_only: 'in_app_only'}, default: :all, scopes: false, instance_methods: false
 
   belongs_to :event
   belongs_to :user, optional: true
@@ -50,7 +48,7 @@ class Teammate < ApplicationRecord
   scope :active, -> { accepted }
   scope :invitations, -> { where(state: [:pending, :declined]) }
 
-  scope :all_emails, -> { where(notification_preference: ALL) }
+  scope :all_emails, -> { where(notification_preference: :all) }
 
   def name
     user ? user.name : ""

@@ -29,7 +29,7 @@ class InternalComment < Comment
       mention = "@#{teammate.mention_name}"
       Notification.create_for(mentioned, proposal: proposal, message: "#{user.name} mentioned you in a new internal comment")
       CommentNotificationMailer.mention_notification(proposal, self, mentioned, mention)
-        .deliver_now unless teammate.notification_preference == Teammate::IN_APP_ONLY
+        .deliver_now unless teammate.notification_preference == Teammate.notification_preferences[:in_app_only]
     end
   end
 end

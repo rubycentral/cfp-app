@@ -410,13 +410,13 @@ describe Proposal do
     let!(:proposal) { create(:proposal_with_track) }
     let!(:no_email_reviewer) do
       reviewer = create(:reviewer, event: proposal.event)
-      reviewer.teammates.first.update_attribute(:notification_preference, Teammate::IN_APP_ONLY)
+      reviewer.teammates.first.update_attribute(:notification_preference, Teammate.notification_preferences[:in_app_only])
       create(:rating, user: reviewer, proposal: proposal)
       reviewer
     end
     let!(:mentions_only_reviewer) do
       reviewer = create(:reviewer, event: proposal.event)
-      reviewer.teammates.first.update_attribute(:notification_preference, Teammate::MENTIONS)
+      reviewer.teammates.first.update_attribute(:notification_preference, Teammate.notification_preferences[:mentions])
       create(:rating, user: reviewer, proposal: proposal)
       reviewer
     end

@@ -151,7 +151,7 @@ describe PublicComment do
       end
 
       it 'should not send notification if reviewer has turned off email notifications' do
-        reviewer.teammates.first.update_attribute(:notification_preference, Teammate::IN_APP_ONLY)
+        reviewer.teammates.first.update_attribute(:notification_preference, Teammate.notification_preferences[:in_app_only])
         expect {
           proposal.public_comments.create(attributes_for(:comment, user: speakers.first.user))
         }.to change(ActionMailer::Base.deliveries, :count).by(0)

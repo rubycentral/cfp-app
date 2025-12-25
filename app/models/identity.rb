@@ -1,6 +1,8 @@
 class Identity < ApplicationRecord
   PROVIDER_NAMES = {'github' => 'GitHub', 'twitter' => 'Twitter'}.freeze
 
+  enum :provider, {github: 'github', twitter: 'twitter'}, scopes: false, instance_methods: false
+
   belongs_to :user
 
   validates :provider, presence: true

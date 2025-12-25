@@ -269,7 +269,7 @@ class Proposal < ApplicationRecord
   private
 
   def state_must_be_final_for_confirmation
-    errors.add(:state, "'#{state}' not a confirmable state.") unless FINAL_STATES.include?(state.to_sym)
+    errors.add(:state, "'#{state}' not a confirmable state.") unless finalized?
   end
 
   def abstract_length

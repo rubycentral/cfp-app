@@ -11,7 +11,33 @@ class Proposal < ApplicationRecord
     rejected: 'rejected',
     withdrawn: 'withdrawn',
     not_accepted: 'not accepted'
-  }, default: :submitted
+  }, default: :submitted do
+    event :withdraw do
+      transition all - [:withdrawn] => :withdrawn
+
+      after do
+        reviewers.each do |reviewer|
+          Notification.create_for(reviewer, proposal: self, message: "Proposal, #{title}, withdrawn")
+        end
+      end
+    end
+
+    event :promote do
+      transition :waitlisted => :accepted
+    end
+
+    event :decline do
+      transition [:accepted, :waitlisted] => :withdrawn
+
+      before do
+        self.confirmed_at = Time.current
+      end
+
+      after do
+        program_session.update(state: :declined)
+      end
+    end
+  end
 
   SOFT_STATES = [:soft_accepted, :soft_waitlisted, :soft_rejected, :submitted].freeze
   FINAL_STATES = [:accepted, :waitlisted, :rejected, :withdrawn, :not_accepted].freeze
@@ -142,26 +168,9 @@ class Proposal < ApplicationRecord
     false
   end
 
-  def withdraw
-    withdrawn!
-    reviewers.each do |reviewer|
-      Notification.create_for(reviewer, proposal: self,
-                                        message: "Proposal, #{title}, withdrawn")
-    end
-  end
-
   def confirm
     update(confirmed_at: Time.current)
     program_session.confirm if program_session.present?
-  end
-
-  def promote
-    accepted! if waitlisted?
-  end
-
-  def decline
-    update(state: :withdrawn, confirmed_at: Time.current)
-    program_session.update(state: :declined)
   end
 
   # draft? is an alias for submitted?

@@ -428,7 +428,7 @@ GEM
     snaky_hash (2.0.1)
       hashie
       version_gem (~> 1.1, >= 1.1.1)
-    stateful_enum (0.7.0)
+    stateful_enum (0.8.0)
     stringio (3.2.0)
     temple (0.10.4)
     thor (1.4.0)

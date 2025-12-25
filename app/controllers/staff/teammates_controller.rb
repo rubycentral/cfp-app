@@ -26,8 +26,7 @@ class Staff::TeammatesController < Staff::ApplicationController
 
   def update
     teammate = current_event.teammates.find(params[:id])
-    teammate.update(params.require(:teammate).permit(:role, :notifications, :mention_name))
-    if teammate.save
+    if teammate.update(params.require(:teammate).permit(:role, :notifications, :mention_name))
       redirect_to event_staff_teammates_path(current_event)
     else
       redirect_to event_staff_teammates_path(current_event),

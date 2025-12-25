@@ -1,5 +1,18 @@
 class Invitation < ApplicationRecord
-  enum :state, {pending: 'pending', accepted: 'accepted', declined: 'declined'}, default: :pending
+  enum :state, {pending: 'pending', accepted: 'accepted', declined: 'declined'}, default: :pending do
+    event :accept do
+      transition :pending => :accepted
+
+      before do |user|
+        self.user = user
+        proposal.speakers.create!(user: user, event: proposal.event, skip_name_email_validation: true)
+      end
+    end
+
+    event :decline do
+      transition :pending => :declined
+    end
+  end
 
   belongs_to :proposal
   belongs_to :user, optional: true
@@ -8,19 +21,6 @@ class Invitation < ApplicationRecord
 
   validates :email, presence: true
   validates_format_of :email, with: /@/
-
-  def accept(user)
-    transaction do
-      self.user = user
-      self.state = :accepted
-      proposal.speakers.create(user: user, event: proposal.event, skip_name_email_validation: true)
-      save
-    end
-  end
-
-  def decline
-    update(state: :declined)
-  end
 
   private
 

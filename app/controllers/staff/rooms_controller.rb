@@ -59,5 +59,4 @@ class Staff::RoomsController < Staff::ApplicationController
   def set_room
     @room = current_event.rooms.find(params[:id])
   end
-
 end

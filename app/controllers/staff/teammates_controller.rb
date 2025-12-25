@@ -60,5 +60,4 @@ class Staff::TeammatesController < Staff::ApplicationController
       redirect_to edit_event_staff_path(@event)
     end
   end
-
 end

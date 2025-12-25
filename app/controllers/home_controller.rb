@@ -1,5 +1,4 @@
 class HomeController < ApplicationController
-
   # Go to:
   # - the currently live event guidelines page, or
   # - /events if no current event
@@ -11,5 +10,4 @@ class HomeController < ApplicationController
       redirect_to events_url
     end
   end
-
 end

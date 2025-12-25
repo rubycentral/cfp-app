@@ -1,5 +1,4 @@
 class ProgramSessionPolicy < ApplicationPolicy
-
   def index?
     @user.program_team_for_event?(@current_event)
   end
@@ -28,7 +27,6 @@ class ProgramSessionPolicy < ApplicationPolicy
     @user.organizer_for_event?(@current_event)
   end
 
-
   def confirm_for_speaker?
     @user.organizer_for_event?(@current_event)
   end
@@ -40,5 +38,4 @@ class ProgramSessionPolicy < ApplicationPolicy
   def destroy?
     @user.organizer_for_event?(@current_event)
   end
-
 end

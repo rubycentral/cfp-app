@@ -60,5 +60,4 @@ class TeammatesController < ApplicationController
     session.delete :pending_invite_accept_url
     session.delete :pending_invite_email
   end
-
 end

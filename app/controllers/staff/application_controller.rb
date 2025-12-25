@@ -32,5 +32,4 @@ class Staff::ApplicationController < ApplicationController
       redirect_to event_staff_path(current_event)
     end
   end
-
 end

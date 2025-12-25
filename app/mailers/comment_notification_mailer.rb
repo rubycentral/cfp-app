@@ -1,5 +1,4 @@
 class CommentNotificationMailer < ApplicationMailer
-
   def reviewer_notification(proposal, comment, users)
     @comment = comment
     @proposal = proposal
@@ -41,5 +40,4 @@ class CommentNotificationMailer < ApplicationMailer
                     subject: "#{@proposal.event.name} CFP: #{@comment.user.name} mentioned you on '#{@proposal.title}'")
     end
   end
-
 end

@@ -53,5 +53,4 @@ class Staff::Grids::BulkTimeSlotsController < Staff::ApplicationController
     params.require(:bulk_time_slot).permit(:day, :duration, {rooms: []}, :start_times)
         .merge(event: current_event)
   end
-
 end

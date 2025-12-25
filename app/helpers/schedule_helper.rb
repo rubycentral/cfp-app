@@ -1,5 +1,4 @@
 module ScheduleHelper
-
   def row_time(time_slot)
     if time_slot && time_slot.start_time
       fmt = "%l:%M%p"
@@ -41,5 +40,4 @@ module ScheduleHelper
   def session_format_duration_options
     current_event.session_formats.sort_by_name.map {|sf| ["#{sf.name} (#{sf.duration} min)", sf.duration]}
   end
-
 end

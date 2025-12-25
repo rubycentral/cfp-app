@@ -32,7 +32,6 @@ class ProgramSession < ApplicationRecord
     declined: 'declined'
   }.with_indifferent_access
 
-
   belongs_to :event
   belongs_to :proposal, optional: true
   belongs_to :track, optional: true

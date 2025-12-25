@@ -7,5 +7,4 @@ module ScheduleSupport
     before_action :require_organizer
     before_action :enable_staff_schedule_subnav
   end
-
 end

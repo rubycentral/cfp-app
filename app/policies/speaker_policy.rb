@@ -1,5 +1,4 @@
 class SpeakerPolicy < ApplicationPolicy
-
   def new?
     @user.organizer_for_event?(current_event)
   end
@@ -19,5 +18,4 @@ class SpeakerPolicy < ApplicationPolicy
   def destroy?
     @user.organizer_for_event?(current_event)
   end
-
 end

@@ -10,5 +10,4 @@ class Admin::ApplicationController < ApplicationController
       redirect_to events_path
     end
   end
-
 end

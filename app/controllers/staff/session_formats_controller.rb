@@ -63,5 +63,4 @@ class Staff::SessionFormatsController < Staff::ApplicationController
     params.require(:session_format)
         .permit(:id, :name, :description, :event_id, :duration, :public)
   end
-
 end

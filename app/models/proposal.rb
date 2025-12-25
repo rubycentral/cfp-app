@@ -12,6 +12,18 @@ class Proposal < ApplicationRecord
     withdrawn: 'withdrawn',
     not_accepted: 'not accepted'
   }, default: :submitted do
+    event :soft_accept do
+      transition :submitted => :soft_accepted
+    end
+
+    event :soft_waitlist do
+      transition :submitted => :soft_waitlisted
+    end
+
+    event :soft_reject do
+      transition :submitted => :soft_rejected
+    end
+
     event :withdraw do
       transition all - [:withdrawn] => :withdrawn
 
@@ -47,6 +59,14 @@ class Proposal < ApplicationRecord
       after do
         ProgramSession.create_from_proposal(self) if becomes_program_session?
       end
+    end
+
+    event :reset do
+      transition [:soft_accepted, :soft_waitlisted, :soft_rejected] => :submitted
+    end
+
+    event :hard_reset do
+      transition [:accepted, :waitlisted, :rejected] => :submitted
     end
   end
 

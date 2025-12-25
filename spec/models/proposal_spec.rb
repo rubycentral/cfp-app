@@ -199,18 +199,6 @@ describe Proposal do
       end
     end
 
-    describe "#update_state" do
-      it "updates the state" do
-        proposal = create(:proposal_with_track, state: :accepted)
-        proposal.update_state(:waitlisted)
-        expect(proposal).to be_waitlisted
-      end
-
-      it "rejects invalid states" do
-        proposal = create(:proposal_with_track, state: :accepted)
-        expect { proposal.update_state('almonds!') }.to raise_error(ArgumentError)
-      end
-    end
   end
 
   context "saving tags" do

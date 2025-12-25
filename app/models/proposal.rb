@@ -172,10 +172,6 @@ class Proposal < ApplicationRecord
     proposal_data[:custom_fields] || {}
   end
 
-  def update_state(new_state)
-    update(state: new_state)
-  end
-
   def confirm
     update(confirmed_at: Time.current)
     program_session.confirm if program_session.present?

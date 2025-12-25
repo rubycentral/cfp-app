@@ -54,7 +54,6 @@ class ProgramSession < ApplicationRecord
   scope :program, -> { where(state: [:live, :draft, :unconfirmed_accepted]) }
   scope :without_proposal, -> { where(proposal: nil) }
   scope :in_track, ->(track) { where(track: track.presence) }
-  scope :emails, -> { joins(:speakers).pluck(:speaker_email).uniq }
 
   scope :in_session_format, ->(session_format) do
     where(session_format_id: session_format.id)

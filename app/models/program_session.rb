@@ -8,8 +8,8 @@ class ProgramSession < ApplicationRecord
     declined: 'declined'
   }, default: :draft do
     event :confirm do
-      transition :unconfirmed_waitlisted => :confirmed_waitlisted
       transition :unconfirmed_accepted => :live
+      transition :unconfirmed_waitlisted => :confirmed_waitlisted
     end
 
     event :promote do

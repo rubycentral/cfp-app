@@ -12,6 +12,7 @@ class Teammate < ApplicationRecord
     IN_APP_ONLY => 'In App Only'
   }
 
+  enum :role, {reviewer: 'reviewer', program_team: 'program team', organizer: 'organizer'}, scopes: false
   enum :state, {pending: 'pending', accepted: 'accepted', declined: 'declined'}, default: :pending do
     event :accept do
       transition :pending => :accepted

@@ -63,14 +63,6 @@ class Teammate < ApplicationRecord
     self.invited_at = Time.current
     save
   end
-
-  def comment_notifications
-    if notifications
-      "\u2713"
-    else
-      "X"
-    end
-  end
 end
 
 # == Schema Information

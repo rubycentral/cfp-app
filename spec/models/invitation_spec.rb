@@ -17,7 +17,7 @@ describe Invitation do
 
   describe "#decline" do
     it "sets state as declined" do
-      invitation = create(:invitation, state: nil, proposal: proposal, user: user)
+      invitation = create(:invitation, state: :pending, proposal: proposal, user: user)
       invitation.decline
       expect(invitation).to be_declined
     end

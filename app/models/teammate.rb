@@ -10,6 +10,7 @@ class Teammate < ApplicationRecord
   }
 
   enum :role, {reviewer: 'reviewer', program_team: 'program team', organizer: 'organizer'}, scopes: false
+
   enum :state, {pending: 'pending', accepted: 'accepted', declined: 'declined'}, default: :pending do
     event :accept do
       transition :pending => :accepted
@@ -27,8 +28,9 @@ class Teammate < ApplicationRecord
         self.declined_at = Time.current
       end
     end
-
   end
+
+  enum :notification_preference, {all: 'all', mentions: 'mentions', in_app_only: 'in_app_only'}, default: :all, scopes: false, instance_methods: false
 
   belongs_to :event
   belongs_to :user, optional: true

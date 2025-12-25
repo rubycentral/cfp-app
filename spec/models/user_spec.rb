@@ -162,7 +162,7 @@ describe User do
       expect(user).to be_reviewer
     end
     it 'is false when not reviewer of any event' do
-      user.teammates.map { |p| p.update_attribute(:role, 'not_reviewer') }
+      user.teammates.destroy_all
       expect(user).not_to be_reviewer
     end
   end
@@ -174,7 +174,7 @@ describe User do
       expect(user).to be_organizer
     end
     it 'is false when not organizer of any event' do
-      user.teammates.map { |p| p.update_attribute(:role, 'not_organizer') }
+      user.teammates.each { |p| p.update_attribute(:role, :reviewer) }
       expect(user).not_to be_organizer
     end
   end
@@ -186,8 +186,7 @@ describe User do
 
     describe '#reviewer_for_event?' do
       before do
-        create(:teammate, event: event1, user: user, role: 'reviewer')
-        create(:teammate, event: event2, user: user, role: 'not_reviewer')
+        create(:teammate, event: event1, user: user, role: :reviewer)
       end
 
       it 'is true when reviewer for the event' do
@@ -200,8 +199,8 @@ describe User do
 
     describe '#organizer_for_event?' do
       before do
-        create(:teammate, event: event1, user: user, role: 'organizer')
-        create(:teammate, event: event2, user: user, role: 'not_organizer')
+        create(:teammate, event: event1, user: user, role: :organizer)
+        create(:teammate, event: event2, user: user, role: :reviewer)
       end
 
       it 'is true when organizer for the event' do

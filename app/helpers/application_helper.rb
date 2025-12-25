@@ -99,15 +99,16 @@ module ApplicationHelper
   end
 
   def review_nav?(roles)
-    (roles & Teammate::STAFF_ROLES).any?
+    (roles & Teammate.roles.values).any?
   end
 
   def program_nav?(roles)
-    ((roles & Teammate::PROGRAM_TEAM_ROLES).any? && current_event.closed?) || roles.include?('organizer')
+    program_team_roles = Teammate.roles.values_at(:program_team, :organizer)
+    ((roles & program_team_roles).any? && current_event.closed?) || roles.include?(Teammate.roles[:organizer])
   end
 
   def schedule_nav?(roles)
-    roles.include?('organizer')
+    roles.include?(Teammate.roles[:organizer])
   end
 
   def staff_nav?(roles)

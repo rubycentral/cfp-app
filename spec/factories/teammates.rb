@@ -12,20 +12,20 @@ FactoryBot.define do
 
     trait :has_been_invited do
       token { "token" }
-      role { "reviewer" }
+      role { :reviewer }
       state { :pending }
     end
 
     trait :reviewer do
-      role { "reviewer" }
+      role { :reviewer }
     end
 
     trait :program_team do
-      role { "program team" }
+      role { :program_team }
     end
 
     trait :organizer do
-      role { "organizer" }
+      role { :organizer }
     end
 
   end

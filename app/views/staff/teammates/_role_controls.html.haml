@@ -10,7 +10,7 @@
             %h3 Change #{teammate.name}'s role
           .modal-body
             = f.label :role
-            = f.select :role, Teammate::STAFF_ROLES, class: 'form-control'
+            = f.select :role, Teammate.roles.map { |k, v| [v, k] }, class: 'form-control'
           .modal-footer
             %button.btn.btn-secondary{type: 'button', 'data-bs-dismiss' => 'modal'} Cancel
             %button.float-end.btn.btn-primary{:type => "submit"} Save

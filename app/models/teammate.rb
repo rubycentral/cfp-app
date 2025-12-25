@@ -1,7 +1,4 @@
 class Teammate < ApplicationRecord
-  STAFF_ROLES = ['reviewer', 'program team', 'organizer']
-  PROGRAM_TEAM_ROLES = ['program team', 'organizer']
-
   ALL = 'all'
   MENTIONS = 'mentions'
   IN_APP_ONLY = 'in_app_only'
@@ -12,6 +9,7 @@ class Teammate < ApplicationRecord
     IN_APP_ONLY => 'In App Only'
   }
 
+  enum :role, {reviewer: 'reviewer', program_team: 'program team', organizer: 'organizer'}, scopes: false
   enum :state, {pending: 'pending', accepted: 'accepted', declined: 'declined'}, default: :pending do
     event :accept do
       transition :pending => :accepted
@@ -46,8 +44,8 @@ class Teammate < ApplicationRecord
   scope :notify, -> { where(notifications: true) }
 
   scope :organizer, -> { where(role: "organizer") }
-  scope :program_team, -> { where(role: PROGRAM_TEAM_ROLES) }
-  scope :reviewer, -> { where(role: STAFF_ROLES) }
+  scope :program_team, -> { where(role: [:program_team, :organizer]) }
+  scope :reviewer, -> { where(role: [:reviewer, :program_team, :organizer]) }
 
   scope :active, -> { accepted }
   scope :invitations, -> { where(state: [:pending, :declined]) }
@@ -75,7 +73,6 @@ class Teammate < ApplicationRecord
       "X"
     end
   end
-
 end
 
 # == Schema Information

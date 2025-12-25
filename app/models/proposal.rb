@@ -37,18 +37,21 @@ class Proposal < ApplicationRecord
         program_session.update(state: :declined)
       end
     end
+
+    event :finalize do
+      transition :soft_accepted => :accepted
+      transition :soft_rejected => :rejected
+      transition :soft_waitlisted => :waitlisted
+      transition :submitted => :rejected
+
+      after do
+        ProgramSession.create_from_proposal(self) if becomes_program_session?
+      end
+    end
   end
 
   SOFT_STATES = [:soft_accepted, :soft_waitlisted, :soft_rejected, :submitted].freeze
   FINAL_STATES = [:accepted, :waitlisted, :rejected, :withdrawn, :not_accepted].freeze
-
-  SOFT_TO_FINAL = {
-    soft_accepted: :accepted,
-    soft_rejected: :rejected,
-    soft_waitlisted: :waitlisted,
-    submitted: :rejected
-  }.with_indifferent_access.freeze
-
   BECOMES_PROGRAM_SESSION = [:accepted, :waitlisted].freeze
 
   has_many :public_comments, dependent: :destroy
@@ -152,20 +155,6 @@ class Proposal < ApplicationRecord
 
   def update_state(new_state)
     update(state: new_state)
-  end
-
-  def finalize
-    transaction do
-      update_state(SOFT_TO_FINAL[state]) if SOFT_TO_FINAL.key?(state)
-      if becomes_program_session?
-        ps = ProgramSession.create_from_proposal(self)
-        ps.persisted?
-      else
-        true
-      end
-    end
-  rescue ActiveRecord::RecordInvalid
-    false
   end
 
   def confirm

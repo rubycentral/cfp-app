@@ -52,7 +52,7 @@ class Teammate < ApplicationRecord
   scope :active, -> { accepted }
   scope :invitations, -> { where(state: [:pending, :declined]) }
 
-  scope :all_emails, -> { where(notification_preference: ALL) }
+  scope :all_emails, -> { where(notification_preference: :all) }
 
   def name
     user ? user.name : ""

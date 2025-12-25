@@ -114,9 +114,6 @@ class Proposal < ApplicationRecord
   scope :unrated, -> { where.not(id: Rating.select(:proposal_id)) }
   scope :rated, -> { where(id: Rating.select(:proposal_id)) }
   scope :not_owned_by, ->(user) { where.not(id: user.proposals) }
-  scope :for_state, lambda { |state|
-    where(state: state).order(:title).includes(:event, { speakers: :user }, :review_taggings)
-  }
   scope :in_track, ->(track_id) { where(track_id: track_id.presence) }
 
   scope :emails, -> { joins(speakers: :user).pluck(:email).uniq }

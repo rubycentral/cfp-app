@@ -15,7 +15,7 @@ class Staff::TeammatesController < Staff::ApplicationController
     teammate = current_event.teammates.build(params.require(:teammate).permit(:email, :role, :mention_name))
 
     if teammate.invite
-        TeammateInvitationMailer.create(teammate).deliver_now
+      TeammateInvitationMailer.create(teammate).deliver_now
       redirect_to event_staff_teammates_path(current_event),
         flash: {info: "Invitation to #{teammate.email} was sent."}
     else

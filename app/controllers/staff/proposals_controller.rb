@@ -57,7 +57,7 @@ class Staff::ProposalsController < Staff::ApplicationController
   def update
     authorize @proposal
 
-    @proposal.update(proposal_update_params)
+    @proposal.update!(proposal_update_params)
 
     respond_to do |format|
       format.turbo_stream

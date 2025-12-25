@@ -12,7 +12,25 @@ class Teammate < ApplicationRecord
     IN_APP_ONLY => 'In App Only'
   }
 
-  enum :state, {pending: 'pending', accepted: 'accepted', declined: 'declined'}
+  enum :state, {pending: 'pending', accepted: 'accepted', declined: 'declined'}, default: :pending do
+    event :accept do
+      transition :pending => :accepted
+
+      before do |user|
+        self.user = user
+        self.accepted_at = Time.current
+      end
+    end
+
+    event :decline do
+      transition :pending => :declined
+
+      before do
+        self.declined_at = Time.current
+      end
+    end
+
+  end
 
   belongs_to :event
   belongs_to :user, optional: true
@@ -36,19 +54,6 @@ class Teammate < ApplicationRecord
 
   scope :all_emails, -> { where(notification_preference: ALL) }
 
-  def accept(user)
-    self.user = user
-    self.accepted_at = Time.current
-    self.state = :accepted
-    save
-  end
-
-  def decline
-    self.declined_at = Time.current
-    self.state = :declined
-    save
-  end
-
   def name
     user ? user.name : ""
   end
@@ -59,7 +64,6 @@ class Teammate < ApplicationRecord
 
   def invite
     self.token = Digest::SHA1.hexdigest(Time.current.to_s + email + rand(1000).to_s)
-    self.state = :pending
     self.invited_at = Time.current
     save
   end

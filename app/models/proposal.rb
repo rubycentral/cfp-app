@@ -52,7 +52,6 @@ class Proposal < ApplicationRecord
 
   SOFT_STATES = [:soft_accepted, :soft_waitlisted, :soft_rejected, :submitted].freeze
   FINAL_STATES = [:accepted, :waitlisted, :rejected, :withdrawn, :not_accepted].freeze
-  BECOMES_PROGRAM_SESSION = [:accepted, :waitlisted].freeze
 
   has_many :public_comments, dependent: :destroy
   has_many :internal_comments, dependent: :destroy
@@ -172,7 +171,7 @@ class Proposal < ApplicationRecord
   end
 
   def becomes_program_session?
-    BECOMES_PROGRAM_SESSION.include?(state.to_sym)
+    accepted? || waitlisted?
   end
 
   def confirmed?

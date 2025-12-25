@@ -53,10 +53,7 @@ class ProgramSession < ApplicationRecord
   scope :waitlisted, -> { where(state: [:confirmed_waitlisted, :unconfirmed_waitlisted]) }
   scope :program, -> { where(state: [:live, :draft, :unconfirmed_accepted]) }
   scope :without_proposal, -> { where(proposal: nil) }
-  scope :in_track, ->(track) do
-    track = nil if track.try(:strip).blank?
-    where(track: track)
-  end
+  scope :in_track, ->(track) { where(track: track.presence) }
   scope :emails, -> { joins(:speakers).pluck(:speaker_email).uniq }
 
   scope :in_session_format, ->(session_format) do

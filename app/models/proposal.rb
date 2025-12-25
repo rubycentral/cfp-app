@@ -117,10 +117,7 @@ class Proposal < ApplicationRecord
   scope :for_state, lambda { |state|
     where(state: state).order(:title).includes(:event, { speakers: :user }, :review_taggings)
   }
-  scope :in_track, lambda { |track_id|
-    track_id = nil if track_id.try(:strip) == ''
-    where(track_id: track_id)
-  }
+  scope :in_track, ->(track_id) { where(track_id: track_id.presence) }
 
   scope :emails, -> { joins(speakers: :user).pluck(:email).uniq }
 

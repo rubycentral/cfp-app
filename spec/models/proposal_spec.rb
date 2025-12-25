@@ -1,16 +1,6 @@
 require 'rails_helper'
 
 describe Proposal do
-  describe "scope :unrated" do
-    it "returns all unrated proposals" do
-      rated = create_list(:proposal_with_track, 3)
-      unrated = create_list(:proposal_with_track, 5)
-      rated.each { |proposal| create(:rating, proposal: proposal) }
-
-      expect(Proposal.unrated).to match_array(unrated)
-    end
-  end
-
   describe "scope :rated" do
     it "returns all rated proposals" do
       rated = create_list(:proposal_with_track, 3)

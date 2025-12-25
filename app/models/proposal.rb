@@ -111,7 +111,6 @@ class Proposal < ApplicationRecord
   scope :soft_states, -> { where(state: SOFT_STATES) }
   scope :working_program, -> { where(state: [:soft_accepted, :soft_waitlisted, :accepted, :waitlisted]) }
 
-  scope :unrated, -> { where.not(id: Rating.select(:proposal_id)) }
   scope :rated, -> { where(id: Rating.select(:proposal_id)) }
   scope :not_owned_by, ->(user) { where.not(id: user.proposals) }
   scope :in_track, ->(track_id) { where(track_id: track_id.presence) }

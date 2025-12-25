@@ -48,10 +48,6 @@ class TimeSlot < ApplicationRecord
     end
   end
 
-  def self.track_names
-    pluck(:track_name).uniq
-  end
-
   def clear_fields_if_session
     if program_session
       self.title = ''

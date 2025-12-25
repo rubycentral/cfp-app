@@ -8,9 +8,9 @@ class User < ApplicationRecord
   has_many :identities,   dependent: :destroy
   has_many :invitations,  dependent: :destroy
   has_many :teammates, dependent: :destroy
-  has_many :reviewer_teammates, -> { where(role: ['reviewer', 'program team', 'organizer']) }, class_name: 'Teammate'
+  has_many :reviewer_teammates, -> { where(role: [:reviewer, :program_team, :organizer]) }, class_name: 'Teammate'
   has_many :reviewer_events, through: :reviewer_teammates, source: :event
-  has_many :organizer_teammates, -> { where(role: 'organizer') }, class_name: 'Teammate'
+  has_many :organizer_teammates, -> { where(role: :organizer) }, class_name: 'Teammate'
   has_many :organizer_events, through: :organizer_teammates, source: :event
   has_many :speakers,      dependent: :destroy
   has_many :ratings,       dependent: :destroy

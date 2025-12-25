@@ -11,19 +11,67 @@ class Proposal < ApplicationRecord
     rejected: 'rejected',
     withdrawn: 'withdrawn',
     not_accepted: 'not accepted'
-  }, default: :submitted
+  }, default: :submitted do
+    event :soft_accept do
+      transition :submitted => :soft_accepted
+    end
+
+    event :soft_waitlist do
+      transition :submitted => :soft_waitlisted
+    end
+
+    event :soft_reject do
+      transition :submitted => :soft_rejected
+    end
+
+    event :withdraw do
+      transition all - [:withdrawn] => :withdrawn
+
+      after do
+        reviewers.each do |reviewer|
+          Notification.create_for(reviewer, proposal: self, message: "Proposal, #{title}, withdrawn")
+        end
+      end
+    end
+
+    event :promote do
+      transition :waitlisted => :accepted
+    end
+
+    event :decline do
+      transition [:accepted, :waitlisted] => :withdrawn
+
+      before do
+        self.confirmed_at = Time.current
+      end
+
+      after do
+        program_session.update(state: :declined)
+      end
+    end
+
+    event :finalize do
+      transition :soft_accepted => :accepted
+      transition :soft_rejected => :rejected
+      transition :soft_waitlisted => :waitlisted
+      transition :submitted => :rejected
+
+      after do
+        ProgramSession.create_from_proposal(self) if becomes_program_session?
+      end
+    end
+
+    event :reset do
+      transition [:soft_accepted, :soft_waitlisted, :soft_rejected] => :submitted
+    end
+
+    event :hard_reset do
+      transition [:accepted, :waitlisted, :rejected] => :submitted
+    end
+  end
 
   SOFT_STATES = [:soft_accepted, :soft_waitlisted, :soft_rejected, :submitted].freeze
   FINAL_STATES = [:accepted, :waitlisted, :rejected, :withdrawn, :not_accepted].freeze
-
-  SOFT_TO_FINAL = {
-    soft_accepted: :accepted,
-    soft_rejected: :rejected,
-    soft_waitlisted: :waitlisted,
-    submitted: :rejected
-  }.with_indifferent_access.freeze
-
-  BECOMES_PROGRAM_SESSION = [:accepted, :waitlisted].freeze
 
   has_many :public_comments, dependent: :destroy
   has_many :internal_comments, dependent: :destroy
@@ -124,44 +172,9 @@ class Proposal < ApplicationRecord
     proposal_data[:custom_fields] || {}
   end
 
-  def update_state(new_state)
-    update(state: new_state)
-  end
-
-  def finalize
-    transaction do
-      update_state(SOFT_TO_FINAL[state]) if SOFT_TO_FINAL.key?(state)
-      if becomes_program_session?
-        ps = ProgramSession.create_from_proposal(self)
-        ps.persisted?
-      else
-        true
-      end
-    end
-  rescue ActiveRecord::RecordInvalid
-    false
-  end
-
-  def withdraw
-    withdrawn!
-    reviewers.each do |reviewer|
-      Notification.create_for(reviewer, proposal: self,
-                                        message: "Proposal, #{title}, withdrawn")
-    end
-  end
-
   def confirm
     update(confirmed_at: Time.current)
     program_session.confirm if program_session.present?
-  end
-
-  def promote
-    accepted! if waitlisted?
-  end
-
-  def decline
-    update(state: :withdrawn, confirmed_at: Time.current)
-    program_session.update(state: :declined)
   end
 
   # draft? is an alias for submitted?
@@ -174,7 +187,7 @@ class Proposal < ApplicationRecord
   end
 
   def becomes_program_session?
-    BECOMES_PROGRAM_SESSION.include?(state.to_sym)
+    accepted? || waitlisted?
   end
 
   def confirmed?
@@ -272,7 +285,7 @@ class Proposal < ApplicationRecord
   private
 
   def state_must_be_final_for_confirmation
-    errors.add(:state, "'#{state}' not a confirmable state.") unless FINAL_STATES.include?(state.to_sym)
+    errors.add(:state, "'#{state}' not a confirmable state.") unless finalized?
   end
 
   def abstract_length

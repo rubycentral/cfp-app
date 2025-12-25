@@ -169,10 +169,10 @@ describe Proposal do
 
     describe "#finalize" do
       it "changes a soft state to a finalized state" do
-        Proposal::SOFT_TO_FINAL.each do |key, val|
-          proposal = create(:proposal_with_track, state: key)
+        {soft_accepted: :accepted, soft_rejected: :rejected, soft_waitlisted: :waitlisted, submitted: :rejected}.each do |from, to|
+          proposal = create(:proposal_with_track, state: from)
           proposal.finalize
-          expect(proposal.state.to_sym).to eq(val)
+          expect(proposal.state.to_sym).to eq(to)
         end
       end
 
@@ -199,18 +199,6 @@ describe Proposal do
       end
     end
 
-    describe "#update_state" do
-      it "updates the state" do
-        proposal = create(:proposal_with_track, state: :accepted)
-        proposal.update_state(:waitlisted)
-        expect(proposal).to be_waitlisted
-      end
-
-      it "rejects invalid states" do
-        proposal = create(:proposal_with_track, state: :accepted)
-        expect { proposal.update_state('almonds!') }.to raise_error(ArgumentError)
-      end
-    end
   end
 
   context "saving tags" do

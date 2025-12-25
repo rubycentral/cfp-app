@@ -37,7 +37,16 @@ class Staff::ProposalsController < Staff::ApplicationController
       authorize @proposal, :update_state?
     end
 
-    @proposal.update_state(params[:new_state])
+    case params[:new_state]
+    when 'soft_accepted'
+      @proposal.soft_accept
+    when 'soft_waitlisted'
+      @proposal.soft_waitlist
+    when 'soft_rejected'
+      @proposal.soft_reject
+    when 'submitted'
+      @proposal.finalized? ? @proposal.hard_reset : @proposal.reset
+    end
 
     respond_to do |format|
       format.html { redirect_to event_staff_program_proposals_path(@proposal.event), status: :see_other }

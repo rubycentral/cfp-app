@@ -12,15 +12,15 @@ class Staff::TeammatesController < Staff::ApplicationController
   end
 
   def create #creating an invitation
-    invitation = current_event.teammates.build(params.require(:teammate).permit(:email, :role, :mention_name))
+    teammate = current_event.teammates.build(params.require(:teammate).permit(:email, :role, :mention_name))
 
-    if invitation.invite
-        TeammateInvitationMailer.create(invitation).deliver_now
+    if teammate.invite
+        TeammateInvitationMailer.create(teammate).deliver_now
       redirect_to event_staff_teammates_path(current_event),
-        flash: { info: "Invitation to #{invitation.email} was sent."}
+        flash: {info: "Invitation to #{teammate.email} was sent."}
     else
       redirect_to event_staff_teammates_path(current_event),
-        flash: { danger: "There was a problem sending your invitation. #{invitation.errors.full_messages.to_sentence}" }
+        flash: {danger: "There was a problem sending your invitation. #{teammate.errors.full_messages.to_sentence}"}
     end
   end
 

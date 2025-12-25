@@ -1,5 +1,4 @@
 class Teammate < ApplicationRecord
-  STAFF_ROLES = ['reviewer', 'program team', 'organizer']
   PROGRAM_TEAM_ROLES = ['program team', 'organizer']
 
   ALL = 'all'
@@ -48,7 +47,7 @@ class Teammate < ApplicationRecord
 
   scope :organizer, -> { where(role: "organizer") }
   scope :program_team, -> { where(role: PROGRAM_TEAM_ROLES) }
-  scope :reviewer, -> { where(role: STAFF_ROLES) }
+  scope :reviewer, -> { where(role: [:reviewer, :program_team, :organizer]) }
 
   scope :active, -> { accepted }
   scope :invitations, -> { where(state: [:pending, :declined]) }

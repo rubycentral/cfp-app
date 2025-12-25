@@ -99,7 +99,7 @@ module ApplicationHelper
   end
 
   def review_nav?(roles)
-    (roles & Teammate::STAFF_ROLES).any?
+    (roles & Teammate.roles.values).any?
   end
 
   def program_nav?(roles)

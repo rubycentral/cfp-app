@@ -1,12 +1,8 @@
 class Teammate < ApplicationRecord
-  ALL = 'all'
-  MENTIONS = 'mentions'
-  IN_APP_ONLY = 'in_app_only'
-
-  NOTIFICATION_PREFERENCES =  {
-    ALL => 'All Via Email',
-    MENTIONS => 'Mention Only Via Email',
-    IN_APP_ONLY => 'In App Only'
+  NOTIFICATION_PREFERENCE_LABELS = {
+    'all' => 'All Via Email',
+    'mentions' => 'Mention Only Via Email',
+    'in_app_only' => 'In App Only'
   }
 
   enum :role, {reviewer: 'reviewer', program_team: 'program team', organizer: 'organizer'}, scopes: false

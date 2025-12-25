@@ -19,7 +19,7 @@
               - teammate = fields.object
               %b= teammate.event.name
               = fields.input :notification_preference,
-                collection: Teammate::NOTIFICATION_PREFERENCES.invert,
+                collection: Teammate::NOTIFICATION_PREFERENCE_LABELS.invert,
                 as: :radio_buttons, wrapper: 'horizontal_radio_and_checkboxes', label: false
           - else
             %p You are not a member of any event teams.

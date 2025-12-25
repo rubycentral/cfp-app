@@ -116,8 +116,6 @@ class Proposal < ApplicationRecord
   scope :not_owned_by, ->(user) { where.not(id: user.proposals) }
   scope :in_track, ->(track_id) { where(track_id: track_id.presence) }
 
-  scope :emails, -> { joins(speakers: :user).pluck(:email).uniq }
-
   # Return all reviewers for this proposal.
   # A user is considered a reviewer if they meet the following criteria
   # - They are an teammate for this event

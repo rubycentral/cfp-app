@@ -70,10 +70,6 @@ class Event < ApplicationRecord
     self.proposal_tags = Tagging.tags_string_to_array(tags_string)
   end
 
-  def reviewer_tags?
-    review_tags.any?
-  end
-
   def valid_review_tags
     review_tags.join(', ')
   end

@@ -49,7 +49,7 @@ class Staff::TeammatesController < Staff::ApplicationController
   private
 
   def group_count(group)
-    team_counts = {"organizer" => 0, "program team" => 0, "reviewer" => 0}
+    team_counts = {'organizer' => 0, 'program_team' => 0, 'reviewer' => 0}
     group.each { |t| team_counts[t.role] += 1 }
     team_counts
   end

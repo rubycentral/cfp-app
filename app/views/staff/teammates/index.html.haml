@@ -9,10 +9,10 @@
             %strong= pluralize(@staff_count["organizer"], "organizer")
             %span= "(" + pluralize(@pending_invite_count["organizer"], "pending invitation") + ")"
           .teammate-meta-item
-            %strong= @staff_count["program team"]
+            %strong= @staff_count['program_team']
             %strong
               program team
-            %span= "(" + pluralize(@pending_invite_count["program team"], "pending invitation") + ")"
+            %span= '(' + pluralize(@pending_invite_count['program_team'], 'pending invitation') + ')'
           .teammate-meta-item
             %strong= pluralize(@staff_count["reviewer"], "reviewer")
             %span= "(" + pluralize(@pending_invite_count["reviewer"], "pending invitation") + ")"

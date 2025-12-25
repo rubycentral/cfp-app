@@ -106,10 +106,6 @@ class Event < ApplicationRecord
     session_formats.publicly_viewable.count > 1
   end
 
-  def generate_slug
-    self.slug = name.parameterize if name.present? && slug.blank?
-  end
-
   def to_s
     name
   end
@@ -197,15 +193,6 @@ class Event < ApplicationRecord
     start_date + (conference_day - 1).days
   end
 
-  def url_must_be_valid
-    uri = URI.parse(url)
-    unless uri.kind_of?(URI::HTTP) || uri.kind_of?(URI::HTTPS)
-      errors.add(:url, "must start with http:// or https://")
-    end
-  rescue URI::InvalidURIError
-    errors.add(:url, "must be valid")
-  end
-
   def stats
     @stats ||= EventStats.new(self)
   end
@@ -219,6 +206,19 @@ class Event < ApplicationRecord
   end
 
   private
+
+  def generate_slug
+    self.slug = name.parameterize if name.present? && slug.blank?
+  end
+
+  def url_must_be_valid
+    uri = URI.parse(url)
+    unless uri.kind_of?(URI::HTTP) || uri.kind_of?(URI::HTTPS)
+      errors.add(:url, "must start with http:// or https://")
+    end
+  rescue URI::InvalidURIError
+    errors.add(:url, "must be valid")
+  end
 
   def update_closes_at_if_manually_closed
     if changes.key?(:state) && changes[:state] == [Event.states[:open], Event.states[:closed]]

@@ -50,19 +50,19 @@ class ProposalsController < ApplicationController
   end
 
   def withdraw
-    @proposal.withdraw unless @proposal.confirmed?
+    @proposal.withdraw! unless @proposal.confirmed?
     flash[:info] = "As requested, your talk has been removed for consideration."
     redirect_to [@proposal.event, @proposal], status: :see_other
   end
 
   def decline
-    @proposal.decline
+    @proposal.decline!
     flash[:info] = "As requested, your talk has been removed for consideration."
     redirect_to [@proposal.event, @proposal], status: :see_other
   end
 
   def destroy
-    @proposal.destroy
+    @proposal.destroy!
     flash[:info] = "Your proposal has been deleted."
     redirect_to event_proposals_url(@event), status: :see_other
   end
@@ -102,7 +102,7 @@ class ProposalsController < ApplicationController
 
   def update
     if params[:confirm]
-      @proposal.update(confirmed_at: Time.current)
+      @proposal.update!(confirmed_at: Time.current)
       redirect_to [@event, @proposal], flash: {success: 'Thank you for confirming your participation'}
     elsif @proposal.speaker_update_and_notify(proposal_params)
       redirect_to [@event, @proposal]

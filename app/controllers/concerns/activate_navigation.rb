@@ -43,53 +43,33 @@ module ActivateNavigation
   def nav_item_map
     @nav_item_map ||= {
       my_proposals: [path_prefix(Proposal), path_prefix(current_event, Proposal)],
-      event_website: website_subnav_item_map,
+      event_website: {
+        event_website_configuration: path_prefix(current_event, :staff, :website),
+        event_pages: path_for(current_event, :staff, Page)
+      },
       event_review_proposals: path_prefix(current_event, :staff, Proposal),
-      event_selection: selection_subnav_item_map,
-      event_program: program_subnav_item_map,
-      event_schedule: schedule_subnav_item_map,
-      event_dashboard: event_subnav_item_map
-    }
-  end
-
-  def event_subnav_item_map
-    @event_subnav_item_map ||= {
-      event_staff_dashboard: path_for(current_event, :staff),
-      event_staff_info: [path_for(:info, current_event, :staff), path_for(:edit, current_event, :staff)],
-      event_staff_teammates: path_for(current_event, :staff, Teammate),
-      event_staff_config: path_for(:config, current_event, :staff),
-      event_staff_guidelines: path_for(current_event, :staff, :guidelines),
-      event_staff_speaker_emails: path_prefix(current_event, :staff, :speaker_email_templates)
-    }
-  end
-
-  def website_subnav_item_map
-    @website_subnav_item_map ||= {
-      event_website_configuration: path_prefix(current_event, :staff, :website),
-      event_pages: path_for(current_event, :staff, Page)
-    }
-  end
-
-  def selection_subnav_item_map
-    @selection_subnav_item_map ||= {
-      event_program_proposals_selection: path_prefix(:selection, current_event, :staff, :program, Proposal),
-      event_program_bulk_finalize: path_prefix(:bulk_finalize, current_event, :staff, :program, Proposal),
-      event_program_proposals: path_prefix(current_event, :staff, :program, Proposal)
-    }
-  end
-
-  def program_subnav_item_map
-    @program_subnav_item_map ||= {
-      event_program_sessions: path_prefix(current_event, :staff, ProgramSession),
-      event_program_speakers: path_prefix(current_event, :staff, :program, Speaker)
-    }
-  end
-
-  def schedule_subnav_item_map
-    @schedule_subnav_item_map ||= {
-      event_schedule_time_slots: path_for(current_event, :staff, :schedule, TimeSlot),
-      event_schedule_rooms: path_for(current_event, :staff, :schedule, Room),
-      event_schedule_grid: path_for(current_event, :staff, :schedule, :grid)
+      event_selection: {
+        event_program_proposals_selection: path_prefix(:selection, current_event, :staff, :program, Proposal),
+        event_program_bulk_finalize: path_prefix(:bulk_finalize, current_event, :staff, :program, Proposal),
+        event_program_proposals: path_prefix(current_event, :staff, :program, Proposal)
+      },
+      event_program: {
+        event_program_sessions: path_prefix(current_event, :staff, ProgramSession),
+        event_program_speakers: path_prefix(current_event, :staff, :program, Speaker)
+      },
+      event_schedule: {
+        event_schedule_time_slots: path_for(current_event, :staff, :schedule, TimeSlot),
+        event_schedule_rooms: path_for(current_event, :staff, :schedule, Room),
+        event_schedule_grid: path_for(current_event, :staff, :schedule, :grid)
+      },
+      event_dashboard: {
+        event_staff_dashboard: path_for(current_event, :staff),
+        event_staff_info: [path_for(:info, current_event, :staff), path_for(:edit, current_event, :staff)],
+        event_staff_teammates: path_for(current_event, :staff, Teammate),
+        event_staff_config: path_for(:config, current_event, :staff),
+        event_staff_guidelines: path_for(current_event, :staff, :guidelines),
+        event_staff_speaker_emails: path_prefix(current_event, :staff, :speaker_email_templates)
+      }
     }
   end
 

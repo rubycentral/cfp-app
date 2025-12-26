@@ -70,4 +70,20 @@ module NavbarHelper
   def subnav_item_class(key)
     'active' if @active_subnav_key == key
   end
+
+  def display_staff_event_subnav?
+    @display_staff_subnav
+  end
+
+  def display_staff_selection_subnav?
+    @display_selection_subnav
+  end
+
+  def display_staff_program_subnav?
+    @display_program_subnav
+  end
+
+  def display_website_subnav?
+    @display_website_subnav
+  end
 end

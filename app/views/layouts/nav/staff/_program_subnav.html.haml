@@ -29,9 +29,9 @@
               %span.badge= @all_waitlisted_track_count
 
     %ul.navbar-nav.ms-auto
-      %li.nav-item{class: subnav_item_class("event-program-sessions-link")}
+      %li.nav-item{class: subnav_item_class(:event_program_sessions)}
         = link_to event_staff_program_sessions_path, class: 'nav-link' do
           %span Sessions
-      %li.nav-item{class: subnav_item_class("event-program-speakers-link")}
+      %li.nav-item{class: subnav_item_class(:event_program_speakers)}
         = link_to event_staff_program_speakers_path, class: 'nav-link' do
           %span Speakers

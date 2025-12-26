@@ -1,12 +1,12 @@
 .navbar.navbar-expand-lg.fixed-top.website-subnav
   .container-fluid
     %ul.navbar-nav.ms-auto
-      %li.nav-item{class: subnav_item_class('event-website-configuration-link')}
+      %li.nav-item{class: subnav_item_class(:event_website_configuration)}
         = link_to edit_event_staff_website_path(current_event), class: 'nav-link' do
           %span Configuration
-      %li.nav-item{class: subnav_item_class('event-pages-link')}
+      %li.nav-item{class: subnav_item_class(:event_pages)}
         = link_to event_staff_pages_path(current_event), class: 'nav-link' do
           %span Pages
-      %li.nav-item{class: subnav_item_class('event-sponsor-link')}
+      %li.nav-item{class: subnav_item_class(:event_sponsor)}
         = link_to event_staff_sponsors_path, class: 'nav-link' do
           %span Sponsors

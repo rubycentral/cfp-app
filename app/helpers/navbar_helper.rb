@@ -1,4 +1,12 @@
 module NavbarHelper
+  using Module.new {
+    refine NavbarHelper do
+      def path_for(*args)
+        url_for(args << {only_path: true})
+      end
+    end
+  }
+
   NAV_ITEM_MAP = {
     my_proposals: ->(pp) { [->(p) { p.start_with?(path_for(Proposal)) }, ->(p) { p.start_with?(path_for(current_event, Proposal)) }].any? { it.call(pp) } },
     event_review_proposals: ->(p) { p.start_with?(path_for(current_event, :staff, Proposal)) },
@@ -51,9 +59,5 @@ module NavbarHelper
 
   def subnav_item_class(key)
     'active' if @active_subnav_key == key
-  end
-
-  def path_for(*args)
-    url_for(args << {only_path: true})
   end
 end

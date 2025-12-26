@@ -1,6 +1,4 @@
-require "active_support/concern"
-
-module ActivateNavigation
+module NavbarHelper
   NAV_ITEM_MAP = {
     my_proposals: ->(pp) { [->(p) { p.start_with?(path_for(Proposal)) }, ->(p) { p.start_with?(path_for(current_event, Proposal)) }].any? { it.call(pp) } },
     event_website: {
@@ -31,13 +29,6 @@ module ActivateNavigation
       event_staff_speaker_emails: ->(p) { p.start_with?(path_for(current_event, :staff, :speaker_email_templates)) }
     }
   }.freeze
-
-  extend ActiveSupport::Concern
-
-  included do
-    helper_method :nav_item_class
-    helper_method :subnav_item_class
-  end
 
   def nav_item_class(key)
     unless defined?(@active_nav_key)

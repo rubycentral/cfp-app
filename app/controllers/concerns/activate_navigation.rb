@@ -115,8 +115,8 @@ module ActivateNavigation
     url_for(args << {only_path: true}) unless args.include?(nil) # don't generate the path unless all dependencies are present
   end
 
-  def path_prefix(sym, *deps)
-    starts_with = path_for(sym, *deps)
-    Regexp.new(Regexp.escape(starts_with) + ".*") if starts_with
+  def path_prefix(*args)
+    prefix = path_for(*args)
+    /\A#{Regexp.escape(prefix)}/ if prefix
   end
 end

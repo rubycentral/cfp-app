@@ -60,7 +60,7 @@
                     %i.bi.bi-calendar
                     %span Events
 
-          %li.nav-item.dropdown
+          %li.nav-item.dropdown{class: nav_item_class(:notifications)}
             - unread_notifications = current_user.notifications.recent_unread.records
             %a.nav-link.dropdown-toggle{title: 'Notifications Toggle', href: '#', role: 'button', data: {bs_toggle: 'dropdown'}, aria: {expanded: 'false'}}
               %i.bi.bi-envelope-fill

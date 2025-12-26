@@ -39,7 +39,8 @@ module NavbarHelper
     admin: {
       admin_users: ->(p) { p == path_for(:admin, User) },
       admin_events: ->(p) { p == path_for(:admin, Event) }
-    }
+    },
+    notifications: ->(p) { p == path_for(Notification) }
   }.freeze
 
   private

@@ -65,14 +65,14 @@ module ActivateNavigation
 
   def event_subnav_item_map
     @event_subnav_item_map ||= {
-        'event-staff-dashboard-link' => exact_path(current_event, :staff),
+        'event-staff-dashboard-link' => path_for(current_event, :staff),
         'event-staff-info-link' => [
-            exact_path(:info, current_event, :staff),
-            exact_path(:edit, current_event, :staff)
+            path_for(:info, current_event, :staff),
+            path_for(:edit, current_event, :staff)
         ],
-        'event-staff-teammates-link' => exact_path(current_event, :staff, Teammate),
-        'event-staff-config-link' => exact_path(:config, current_event, :staff),
-        'event-staff-guidelines-link' => exact_path(current_event, :staff, :guidelines),
+        'event-staff-teammates-link' => path_for(current_event, :staff, Teammate),
+        'event-staff-config-link' => path_for(:config, current_event, :staff),
+        'event-staff-guidelines-link' => path_for(current_event, :staff, :guidelines),
         'event-staff-speaker-emails-link' => starts_with_path(current_event, :staff, :speaker_email_templates),
     }
   end
@@ -80,7 +80,7 @@ module ActivateNavigation
   def website_subnav_item_map
     @website_subnav_item_map ||= {
       'event-website-configuration-link' => starts_with_path(current_event, :staff, :website),
-      'event-pages-link' => exact_path(current_event, :staff, Page)
+      'event-pages-link' => path_for(current_event, :staff, Page)
     }
   end
 
@@ -105,18 +105,18 @@ module ActivateNavigation
 
   def schedule_subnav_item_map
     @schedule_subnav_item_map ||= {
-      'event-schedule-time-slots-link' => exact_path(current_event, :staff, :schedule, TimeSlot),
-      'event-schedule-rooms-link' => exact_path(current_event, :staff, :schedule, Room),
-      'event-schedule-grid-link' => exact_path(current_event, :staff, :schedule, :grid)
+      'event-schedule-time-slots-link' => path_for(current_event, :staff, :schedule, TimeSlot),
+      'event-schedule-rooms-link' => path_for(current_event, :staff, :schedule, Room),
+      'event-schedule-grid-link' => path_for(current_event, :staff, :schedule, :grid)
     }
   end
 
-  def exact_path(*args)
+  def path_for(*args)
     url_for(args << {only_path: true}) unless args.include?(nil) # don't generate the path unless all dependencies are present
   end
 
   def starts_with_path(sym, *deps)
-    starts_with = exact_path(sym, *deps)
+    starts_with = path_for(sym, *deps)
     Regexp.new(Regexp.escape(starts_with) + ".*") if starts_with
   end
 end

@@ -23,16 +23,8 @@ module ActivateNavigation
   def initialize_nav
     return if defined?(@active_nav_key)
 
-    @active_nav_key, subnav_map = find_first(nav_item_map)
-    @active_subnav_key, _ = find_first(subnav_map)
-  end
-
-  def find_first(item_map)
-    return unless item_map.is_a?(Hash)
-
-    item_map.find do |key, paths|
-      match?(paths)
-    end
+    @active_nav_key, subnav_map = nav_item_map.find { |_, v| match?(v) }
+    @active_subnav_key, _ = subnav_map.find { |_, v| match?(v) } if subnav_map.is_a?(Hash)
   end
 
   def match?(paths)
@@ -44,7 +36,7 @@ module ActivateNavigation
     when Array
       paths.any? { |p| match?(p) }
     when Hash
-      find_first(paths).present?
+      paths.any? { |_, v| match?(v) }
     end
   end
 

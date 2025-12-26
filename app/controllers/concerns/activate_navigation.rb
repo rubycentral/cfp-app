@@ -36,16 +36,14 @@ module ActivateNavigation
   end
 
   def match?(paths)
-    if paths.is_a?(String)
+    case paths
+    when String
       paths == request.path
-
-    elsif paths.is_a?(Regexp)
+    when Regexp
       paths =~ request.path
-
-    elsif paths.is_a?(Array)
-      paths.any?{|p| match?(p) }
-
-    elsif paths.is_a?(Hash)
+    when Array
+      paths.any? { |p| match?(p) }
+    when Hash
       find_first(paths).present?
     end
   end

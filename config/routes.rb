@@ -64,8 +64,10 @@ Rails.application.routes.draw do
             get 'bulk_finalize'
             post 'finalize_by_state'
           end
-          post :finalize
-          post :update_state
+          member do
+            post :finalize
+            post :update_state
+          end
         end
 
         resources :speakers, only: [:index, :show, :edit, :update, :destroy]

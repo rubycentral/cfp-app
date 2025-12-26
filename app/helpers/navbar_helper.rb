@@ -30,6 +30,8 @@ module NavbarHelper
     }
   }.freeze
 
+  private
+
   def nav_item_class(key)
     unless defined?(@active_nav_key)
       NAV_ITEM_MAP.find do |nav_key, nav_val|
@@ -50,8 +52,6 @@ module NavbarHelper
   def subnav_item_class(key)
     'active' if @active_subnav_key == key
   end
-
-  private
 
   def path_for(*args)
     url_for(args << {only_path: true})

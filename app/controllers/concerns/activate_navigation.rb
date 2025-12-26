@@ -24,7 +24,7 @@ module ActivateNavigation
     },
     event_dashboard: {
       event_staff_dashboard: ->(p) { p == path_for(current_event, :staff) },
-      event_staff_info: [->(p) { p == path_for(:info, current_event, :staff) }, ->(p) { p == path_for(:edit, current_event, :staff) }],
+      event_staff_info: ->(pp) { [->(p) { p == path_for(:info, current_event, :staff) }, ->(p) { p == path_for(:edit, current_event, :staff) }].any? { it.call(pp) } },
       event_staff_teammates: ->(p) { p == path_for(current_event, :staff, Teammate) },
       event_staff_config: ->(p) { p == path_for(:config, current_event, :staff) },
       event_staff_guidelines: ->(p) { p == path_for(current_event, :staff, :guidelines) },
@@ -55,7 +55,7 @@ module ActivateNavigation
     return if defined?(@active_nav_key)
 
     @active_nav_key, subnav_map = NAV_ITEM_MAP.find { |_, v| match?(v) }
-    @active_subnav_key, _ = subnav_map.find { |_, v| match?(v) } if subnav_map.is_a?(Hash)
+    @active_subnav_key, _ = subnav_map.find { |_, v| instance_exec(request.path, &v) } if subnav_map.is_a?(Hash)
   end
 
   def match?(paths)

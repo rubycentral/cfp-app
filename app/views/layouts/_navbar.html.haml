@@ -85,7 +85,24 @@
                   %span
                     = (more_unread_count = current_user.notifications.more_unread_count) > 0 ? "#{more_unread_count} More Unread" : "View all notifications"
 
-          = render partial: "layouts/nav/user_dropdown"
+          %li.nav-item.dropdown
+            %a.nav-link.dropdown-toggle.gravatar-container{href: '#', role: 'button', data: {bs_toggle: 'dropdown'}, aria: {expanded: 'false'}}
+              = image_tag("https://www.gravatar.com/avatar/#{current_user.gravatar_hash}?s=25", class: 'user-dropdown-gravatar', alt: '')
+              &nbsp; #{current_user.name}
+            %ul.dropdown-menu.dropdown-menu-end
+              %li
+                = link_to edit_profile_path, class: 'dropdown-item' do
+                  %i.bi.bi-person-fill
+                  %span My Profile
+              - if current_user.teammates.loaded? ? current_user.teammates.any? : current_user.teammates.exists?
+                %li
+                  = link_to notifications_profile_path, class: 'dropdown-item' do
+                    %i.bi.bi-bell-fill
+                    %span Notifications
+              %li
+                = link_to destroy_user_session_path, data: {turbo: true, turbo_method: :delete}, class: 'dropdown-item' do
+                  %i.bi.bi-box-arrow-right
+                  %span Sign Out
 
       - else
         %ul.navbar-nav.ms-auto

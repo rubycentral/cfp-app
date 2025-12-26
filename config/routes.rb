@@ -57,7 +57,7 @@ Rails.application.routes.draw do
       end
 
       scope :program, as: 'program' do
-        resources :proposals, param: :uuid do
+        resources :proposals, only: [:index, :show, :update], param: :uuid do
           collection do
             get 'selection'
             get 'session_counts'

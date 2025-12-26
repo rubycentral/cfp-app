@@ -83,7 +83,7 @@ class ProposalsController < ApplicationController
       flash[:confirm] = setup_flash_message
       redirect_to [@event, @proposal]
     else
-      flash[:danger] = "There was a problem saving your proposal."
+      flash.now[:danger] = 'There was a problem saving your proposal.'
       render :new
     end
   end
@@ -107,7 +107,7 @@ class ProposalsController < ApplicationController
     elsif @proposal.speaker_update_and_notify(proposal_params)
       redirect_to [@event, @proposal]
     else
-      flash[:danger] = "There was a problem saving your proposal."
+      flash.now[:danger] = 'There was a problem saving your proposal.'
       render :edit
     end
   end

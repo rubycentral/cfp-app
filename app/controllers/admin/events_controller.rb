@@ -15,7 +15,7 @@ class Admin::EventsController < Admin::ApplicationController
       @event.teammates.build(email: current_user.email, role: "organizer").accept(current_user)
       redirect_to event_staff_path(@event)
     else
-      flash[:danger] = "There was a problem saving your event; please review the form for issues and try again."
+      flash.now[:danger] = 'There was a problem saving your event; please review the form for issues and try again.'
       render :new
     end
   end

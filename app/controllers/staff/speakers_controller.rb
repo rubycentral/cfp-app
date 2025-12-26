@@ -21,7 +21,7 @@ class Staff::SpeakersController < Staff::ApplicationController
     if @speaker.save
       redirect_to event_staff_program_session_path(current_event, @program_session)
     else
-      flash[:danger] = "There was a problem saving this speaker: #{@speaker.errors.full_messages.to_sentence}."
+      flash.now[:danger] = "There was a problem saving this speaker: #{@speaker.errors.full_messages.to_sentence}."
       render :new
     end
   end
@@ -42,7 +42,7 @@ class Staff::SpeakersController < Staff::ApplicationController
       flash[:success] = "#{@speaker.name} was successfully updated" # not all edits are visible on the next screen
       redirect_to event_staff_program_speakers_path(current_event)
     else
-      flash[:danger] = "There was a problem updating this speaker."
+      flash.now[:danger] = 'There was a problem updating this speaker.'
       render :edit
     end
   end

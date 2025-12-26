@@ -35,7 +35,7 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
       flash[:success] = "#{@program_session.title} was successfully updated."
       redirect_to event_staff_program_session_path(current_event, @program_session)
     else
-      flash[:danger] = "There was a problem updating this program session."
+      flash.now[:danger] = 'There was a problem updating this program session.'
       render :edit
     end
 
@@ -55,7 +55,7 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
     if @program_session.save
       redirect_to event_staff_program_session_path(current_event,  @program_session)
     else
-      flash[:danger] = "Program session was unable to be saved: #{@program_session.errors.full_messages.to_sentence}"
+      flash.now[:danger] = "Program session was unable to be saved: #{@program_session.errors.full_messages.to_sentence}"
       render :new
     end
   end

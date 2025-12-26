@@ -6,7 +6,7 @@ class Staff::ProposalsController < Staff::ApplicationController
   skip_before_action :require_program_team, only: [:update]
   before_action :require_staff, only: [:update]
 
-  decorates_assigned :proposal, with: Staff::ProposalDecorator
+  private decorates_assigned :proposal, with: Staff::ProposalDecorator
 
   def index
     session[:prev_page] = {name: 'Proposals', path: event_staff_program_proposals_path}

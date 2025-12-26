@@ -5,7 +5,7 @@ class Staff::TimeSlotsController < Staff::ApplicationController
 
   helper_method :time_slot_decorated
 
-  decorates_assigned :time_slots, with: Staff::TimeSlotDecorator
+  private decorates_assigned :time_slots, with: Staff::TimeSlotDecorator
 
   def index
     @time_slots = current_event.time_slots.grid_order

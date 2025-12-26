@@ -7,9 +7,11 @@ feature "Proposals", type: :system do
   let!(:session_format) { create(:session_format, name: 'Only format')}
   let(:session_format2) { create(:session_format, name: '2nd format')}
 
-  let(:go_to_new_proposal) { visit new_event_proposal_path(event) }
+  def go_to_new_proposal
+    visit new_event_proposal_path(event)
+  end
 
-  let(:create_proposal) do
+  def create_proposal
     fill_in 'Title', with: "General Principles Derived by Magic from My Personal Experience"
     fill_in 'Abstract', with: "Because certain things happened to me, they will happen in just the same manner to everyone."
     fill_in 'proposal_speakers_attributes_0_bio', with: "I am awesome."
@@ -19,7 +21,7 @@ feature "Proposals", type: :system do
     click_button 'Submit'
   end
 
-  let(:create_invalid_proposal) do
+  def create_invalid_proposal
     fill_in 'proposal_speakers_attributes_0_bio', with: "I am a great speaker!."
     fill_in 'Pitch', with: "You live but once; you might as well be amusing. - Coco Chanel"
     fill_in 'Details', with: "Plans are nothing; planning is everything. - Dwight D. Eisenhower"

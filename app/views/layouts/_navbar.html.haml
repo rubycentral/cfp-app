@@ -13,35 +13,35 @@
           - roles = current_user.teammates.where(event_id: current_event).pluck(:role)
 
           - if speaker_nav?
-            %li.nav-item{class: nav_item_class("my-proposals-link")}
+            %li.nav-item{class: nav_item_class(:my_proposals)}
               = link_to proposals_path, class: 'nav-link' do
                 %span My Proposals
 
           - if review_nav?(roles)
-            %li.nav-item{class: nav_item_class("event-review-proposals-link")}
+            %li.nav-item{class: nav_item_class(:event_review_proposals)}
               = link_to event_staff_proposals_path(current_event), class: 'nav-link' do
                 %span Review
 
           - if program_nav?(roles)
-            %li.nav-item{class: nav_item_class("event-selection-link")}
+            %li.nav-item{class: nav_item_class(:event_selection)}
               = link_to event_staff_program_proposals_path(current_event), class: 'nav-link' do
                 %span Selection
-            %li.nav-item{class: nav_item_class("event-program-link")}
+            %li.nav-item{class: nav_item_class(:event_program)}
               = link_to event_staff_program_sessions_path(current_event), class: 'nav-link' do
                 %span Program
 
           - if schedule_nav?(roles)
-            %li.nav-item{class: nav_item_class("event-schedule-link")}
+            %li.nav-item{class: nav_item_class(:event_schedule)}
               = link_to event_staff_schedule_grid_path(current_event), class: 'nav-link' do
                 %span Schedule
 
           - if staff_nav?(roles)
-            %li.nav-item{class: nav_item_class("event-dashboard-link")}
+            %li.nav-item{class: nav_item_class(:event_dashboard)}
               = link_to event_staff_path(current_event), class: 'nav-link' do
                 %span Dashboard
 
           - if !ENV['DISABLE_WEBSITE'] && website_nav?
-            %li.nav-item{class: nav_item_class("event-website-link")}
+            %li.nav-item{class: nav_item_class(:event_website)}
               = link_to new_or_edit_website_path, class: 'nav-link' do
                 %span Website
                 %sup Beta

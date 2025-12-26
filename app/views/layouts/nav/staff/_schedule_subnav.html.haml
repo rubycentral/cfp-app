@@ -6,15 +6,15 @@
           %span.bi.bi-download
           %span  Download Schedule JSON
     %ul.navbar-nav.ms-auto
-      %li.nav-item{class: subnav_item_class('event-schedule-grid-link')}
+      %li.nav-item{class: subnav_item_class(:event_schedule_grid)}
         = link_to event_staff_schedule_grid_path, class: 'nav-link' do
           %i.bi.bi-calendar-x
           %span Grid
-      %li.nav-item{class: subnav_item_class('event-schedule-time-slots-link')}
+      %li.nav-item{class: subnav_item_class(:event_schedule_time_slots)}
         = link_to event_staff_schedule_time_slots_path, class: 'nav-link' do
           %i.bi.bi-clock
           %span Time Slots
-      %li.nav-item{class: subnav_item_class('event-schedule-rooms-link')}
+      %li.nav-item{class: subnav_item_class(:event_schedule_rooms)}
         = link_to event_staff_schedule_rooms_path, class: 'nav-link' do
           %i.bi.bi-tag
           %span Rooms

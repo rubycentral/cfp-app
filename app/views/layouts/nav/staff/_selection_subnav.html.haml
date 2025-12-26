@@ -29,12 +29,12 @@
               %span.badge= @all_waitlisted_track_count
 
     %ul.navbar-nav.ms-auto
-      %li.nav-item{class: subnav_item_class("event-program-proposals-link")}
+      %li.nav-item{class: subnav_item_class(:event_program_proposals)}
         = link_to event_staff_program_proposals_path, class: 'nav-link' do
           %span Proposals
-      %li.nav-item{class: subnav_item_class("event-program-proposals-selection-link")}
+      %li.nav-item{class: subnav_item_class(:event_program_proposals_selection)}
         = link_to selection_event_staff_program_proposals_path, class: 'nav-link' do
           %span Selection
-      %li.nav-item{class: subnav_item_class("event-program-bulk-finalize-link")}
+      %li.nav-item{class: subnav_item_class(:event_program_bulk_finalize)}
         = link_to bulk_finalize_event_staff_program_proposals_path, class: 'nav-link' do
           %span Bulk Finalize

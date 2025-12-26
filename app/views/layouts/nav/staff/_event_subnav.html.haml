@@ -2,27 +2,27 @@
   .subnavbar-inner
     .container-fluid
       %ul.mainnav
-        %li{class: subnav_item_class("event-staff-dashboard-link")}
+        %li{class: subnav_item_class(:event_staff_dashboard)}
           = link_to event_staff_path do
             %i.bi.bi-speedometer2
             %span Dashboard
-        %li{class: subnav_item_class("event-staff-info-link")}
+        %li{class: subnav_item_class(:event_staff_info)}
           = link_to info_event_staff_path do
             %i.bi.bi-info-circle
             %span Info
-        %li{class: subnav_item_class("event-staff-teammates-link")}
+        %li{class: subnav_item_class(:event_staff_teammates)}
           = link_to event_staff_teammates_path do
             %i.bi.bi-people
             %span Team
-        %li{class: subnav_item_class("event-staff-config-link")}
+        %li{class: subnav_item_class(:event_staff_config)}
           = link_to config_event_staff_path do
             %i.bi.bi-wrench
             %span Config
-        %li{class: subnav_item_class("event-staff-guidelines-link")}
+        %li{class: subnav_item_class(:event_staff_guidelines)}
           = link_to event_staff_guidelines_path do
             %i.bi.bi-list
             %span Guidelines
-        %li{class: subnav_item_class("event-staff-speaker-emails-link")}
+        %li{class: subnav_item_class(:event_staff_speaker_emails)}
           = link_to event_staff_speaker_email_templates_path do
             %i.bi.bi-envelope
             %span Speaker Emails

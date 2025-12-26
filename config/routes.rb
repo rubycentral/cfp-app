@@ -49,7 +49,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :teammates, path: 'team'
+      resources :teammates, path: 'team', only: [:index, :create, :update, :destroy]
 
       # Reviewer flow for proposals
       resources :proposals, controller: 'proposal_reviews', only: [:index, :show, :update], param: :uuid do
@@ -57,7 +57,7 @@ Rails.application.routes.draw do
       end
 
       scope :program, as: 'program' do
-        resources :proposals, param: :uuid do
+        resources :proposals, only: [:index, :show, :update], param: :uuid do
           collection do
             get 'selection'
             get 'session_counts'
@@ -81,8 +81,8 @@ Rails.application.routes.draw do
       scope :schedule, as: 'schedule' do
         resources :rooms, only: [:index, :create, :update, :destroy]
         resources :time_slots, except: :show
-        resource :grid do
-          resources :time_slots, module: 'grids', only: [:new, :create, :edit, :update]
+        resource :grid, only: :show do
+          resources :time_slots, module: 'grids', only: [:edit, :update]
           resources :program_sessions, module: 'grids', only: [:show]
           resource :bulk_time_slot, module: 'grids', only: [:create] do
             collection do
@@ -124,7 +124,7 @@ Rails.application.routes.draw do
       post :unarchive
     end
 
-    resources :users
+    resources :users, only: [:index, :show, :edit, :update, :destroy]
   end
 
   draw :website # => config/routes/website.rb

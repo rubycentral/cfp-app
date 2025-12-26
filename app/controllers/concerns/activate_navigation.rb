@@ -32,7 +32,7 @@ module ActivateNavigation
     when String
       paths == request.path
     when Regexp
-      paths =~ request.path
+      paths.match?(request.path)
     when Array
       paths.any? { |p| match?(p) }
     when Hash

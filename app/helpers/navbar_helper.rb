@@ -35,7 +35,17 @@ module NavbarHelper
     event_website: {
       event_website_configuration: ->(p) { p.start_with?(path_for(current_event, :staff, :website)) },
       event_pages: ->(p) { p == path_for(current_event, :staff, Page) }
-    }
+    },
+    admin: {
+      admin_users: ->(p) { p == path_for(:admin, User) },
+      admin_events: ->(p) { p == path_for(:admin, Event) }
+    },
+    notifications: ->(p) { p == path_for(Notification) },
+    user: {
+      edit_profile: ->(p) { p == path_for(:edit, :profile) },
+      merge_profile: ->(p) { p == path_for(:merge, :profile) },
+      admin_events: ->(p) { p == path_for(:notifications, :profile) }
+    },
   }.freeze
 
   private
@@ -45,10 +55,10 @@ module NavbarHelper
       NAV_ITEM_MAP.find do |nav_key, nav_val|
         case nav_val
         when Proc
-          @active_nav_key = nav_key if instance_exec(request.path, &nav_val)
+          @active_nav_key = nav_key if instance_exec(request.path, &nav_val) rescue nil
         when Hash
           nav_val.find do |subnav_key, subnav_val|
-            @active_nav_key, @active_subnav_key = nav_key, subnav_key if instance_exec(request.path, &subnav_val)
+            @active_nav_key, @active_subnav_key = nav_key, subnav_key if instance_exec(request.path, &subnav_val) rescue nil
           end
         end
       end

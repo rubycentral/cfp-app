@@ -47,11 +47,62 @@
                 %sup Beta
 
           - if admin_nav?
-            = render partial: "layouts/nav/admin_nav"
+            %li.nav-item.dropdown{class: nav_item_class(:admin)}
+              %a.nav-link.dropdown-toggle{title: 'Admin Toggle', href: '#', role: 'button', data: {bs_toggle: 'dropdown'}, aria: {expanded: 'false'}}
+                Admin
+              %ul.dropdown-menu.dropdown-menu-end
+                %li
+                  = link_to admin_users_path, class: "dropdown-item #{'active' if request.path == admin_users_path}" do
+                    %i.bi.bi-people-fill
+                    %span Users
+                %li
+                  = link_to admin_events_path, class: "dropdown-item #{'active' if request.path == admin_events_path}" do
+                    %i.bi.bi-calendar
+                    %span Events
 
-          = render partial: "layouts/nav/notifications_list"
+          %li.nav-item.dropdown{class: nav_item_class(:notifications)}
+            - unread_notifications = current_user.notifications.recent_unread.records
+            %a.nav-link.dropdown-toggle{title: 'Notifications Toggle', href: '#', role: 'button', data: {bs_toggle: 'dropdown'}, aria: {expanded: 'false'}}
+              %i.bi.bi-envelope-fill
+              %span.badge.bg-secondary= unread_notifications.length if unread_notifications.any?
 
-          = render partial: "layouts/nav/user_dropdown"
+            %ul.dropdown-menu.dropdown-menu-end
+              - if unread_notifications.any?
+                - unread_notifications.each do |notification|
+                  %li
+                    = link_to notification_path(notification), class: 'dropdown-item' do
+                      %i.bi.bi-exclamation
+                      %span= notification.short_message
+                %li
+                  %hr.dropdown-divider
+                %li
+                  = link_to mark_all_as_read_notifications_path, data: {turbo: true, turbo_method: :post}, class: 'dropdown-item text-primary' do
+                    %i.bi.bi-check
+                    Mark all as read
+              %li
+                = link_to notifications_path, class: 'dropdown-item' do
+                  %i.bi.bi-eye
+                  %span
+                    = (more_unread_count = current_user.notifications.more_unread_count) > 0 ? "#{more_unread_count} More Unread" : "View all notifications"
+
+          %li.nav-item.dropdown{class: nav_item_class(:user)}
+            %a.nav-link.dropdown-toggle.gravatar-container{href: '#', role: 'button', data: {bs_toggle: 'dropdown'}, aria: {expanded: 'false'}}
+              = image_tag("https://www.gravatar.com/avatar/#{current_user.gravatar_hash}?s=25", class: 'user-dropdown-gravatar', alt: '')
+              &nbsp; #{current_user.name}
+            %ul.dropdown-menu.dropdown-menu-end
+              %li
+                = link_to edit_profile_path, class: 'dropdown-item' do
+                  %i.bi.bi-person-fill
+                  %span My Profile
+              - if current_user.teammates.loaded? ? current_user.teammates.any? : current_user.teammates.exists?
+                %li
+                  = link_to notifications_profile_path, class: 'dropdown-item' do
+                    %i.bi.bi-bell-fill
+                    %span Notifications
+              %li
+                = link_to destroy_user_session_path, data: {turbo: true, turbo_method: :delete}, class: 'dropdown-item' do
+                  %i.bi.bi-box-arrow-right
+                  %span Sign Out
 
       - else
         %ul.navbar-nav.ms-auto

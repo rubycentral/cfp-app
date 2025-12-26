@@ -47,7 +47,7 @@
                 %sup Beta
 
           - if admin_nav?
-            %li.nav-item.dropdown
+            %li.nav-item.dropdown{class: nav_item_class(:admin)}
               %a.nav-link.dropdown-toggle{title: 'Admin Toggle', href: '#', role: 'button', data: {bs_toggle: 'dropdown'}, aria: {expanded: 'false'}}
                 Admin
               %ul.dropdown-menu.dropdown-menu-end

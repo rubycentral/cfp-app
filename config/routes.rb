@@ -124,7 +124,7 @@ Rails.application.routes.draw do
       post :unarchive
     end
 
-    resources :users
+    resources :users, only: [:index, :show, :edit, :update, :destroy]
   end
 
   draw :website # => config/routes/website.rb

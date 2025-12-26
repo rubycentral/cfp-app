@@ -49,7 +49,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :teammates, path: 'team'
+      resources :teammates, path: 'team', only: [:index, :create, :update, :destroy]
 
       # Reviewer flow for proposals
       resources :proposals, controller: 'proposal_reviews', only: [:index, :show, :update], param: :uuid do

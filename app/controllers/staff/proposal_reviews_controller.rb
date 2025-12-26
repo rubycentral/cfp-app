@@ -3,7 +3,7 @@ class Staff::ProposalReviewsController < Staff::ApplicationController
   before_action :require_proposal, except: [:index]
   before_action :prevent_self_review, except: [:index]
 
-  decorates_assigned :proposal, with: Staff::ProposalDecorator
+  private decorates_assigned :proposal, with: Staff::ProposalDecorator
   respond_to :html
 
   def index

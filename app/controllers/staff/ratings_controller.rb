@@ -3,7 +3,7 @@ class Staff::RatingsController < Staff::ApplicationController
   before_action :require_proposal
   before_action :prevent_self_review
 
-  decorates_assigned :proposal
+  private decorates_assigned :proposal
 
   def create
     authorize @proposal, :rate?

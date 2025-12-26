@@ -6,7 +6,7 @@ class ProposalsController < ApplicationController
   before_action :require_invite_or_speaker, only: [:show]
   before_action :require_speaker, except: [ :index, :create, :new, :preview ]
 
-  decorates_assigned :proposal
+  private decorates_assigned :proposal
 
   def index
     proposals = current_user.proposals.

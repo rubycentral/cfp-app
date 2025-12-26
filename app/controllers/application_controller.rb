@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   layout 'application'
-  decorates_assigned :event
+  private decorates_assigned :event
 
   private
 

@@ -2,7 +2,7 @@ require "active_support/concern"
 
 module ActivateNavigation
   NAV_ITEM_MAP = {
-    my_proposals: [->(p) { p.start_with?(path_for(Proposal)) }, ->(p) { p.start_with?(path_for(current_event, Proposal)) }],
+    my_proposals: ->(pp) { [->(p) { p.start_with?(path_for(Proposal)) }, ->(p) { p.start_with?(path_for(current_event, Proposal)) }].any? { it.call(pp) } },
     event_website: {
       event_website_configuration: ->(p) { p.start_with?(path_for(current_event, :staff, :website)) },
       event_pages: ->(p) { p == path_for(current_event, :staff, Page) }
@@ -62,8 +62,6 @@ module ActivateNavigation
     case paths
     when Proc
       instance_exec(request.path, &paths)
-    when Array
-      paths.any? { |p| match?(p) }
     when Hash
       paths.any? { |_, v| match?(v) }
     end

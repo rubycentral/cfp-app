@@ -21,7 +21,7 @@ module ActivateNavigation
   private
 
   def initialize_nav
-    return if @active_nav_key || @active_subnav_key
+    return if defined?(@active_nav_key)
 
     @active_nav_key, subnav_map = find_first(nav_item_map)
     @active_subnav_key, _ = find_first(subnav_map)

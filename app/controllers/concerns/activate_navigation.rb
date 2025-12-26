@@ -53,11 +53,11 @@ module ActivateNavigation
       end
     end
 
-    return 'active' if @active_nav_key == key
+    'active' if @active_nav_key == key
   end
 
   def subnav_item_class(key)
-    return 'active' if @active_subnav_key == key
+    'active' if @active_subnav_key == key
   end
 
   private

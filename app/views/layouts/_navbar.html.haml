@@ -47,7 +47,18 @@
                 %sup Beta
 
           - if admin_nav?
-            = render partial: "layouts/nav/admin_nav"
+            %li.nav-item.dropdown
+              %a.nav-link.dropdown-toggle{title: 'Admin Toggle', href: '#', role: 'button', data: {bs_toggle: 'dropdown'}, aria: {expanded: 'false'}}
+                Admin
+              %ul.dropdown-menu.dropdown-menu-end
+                %li
+                  = link_to admin_users_path, class: "dropdown-item #{'active' if request.path == admin_users_path}" do
+                    %i.bi.bi-people-fill
+                    %span Users
+                %li
+                  = link_to admin_events_path, class: "dropdown-item #{'active' if request.path == admin_events_path}" do
+                    %i.bi.bi-calendar
+                    %span Events
 
           = render partial: "layouts/nav/notifications_list"
 

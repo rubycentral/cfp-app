@@ -40,31 +40,27 @@ module ActivateNavigation
   end
 
   def nav_item_class(key)
-    initialize_nav
+    unless defined?(@active_nav_key)
+      NAV_ITEM_MAP.find do |nav_key, nav_val|
+        case nav_val
+        when Proc
+          @active_nav_key = nav_key if instance_exec(request.path, &nav_val)
+        when Hash
+          nav_val.find do |subnav_key, subnav_val|
+            @active_nav_key, @active_subnav_key = nav_key, subnav_key if instance_exec(request.path, &subnav_val)
+          end
+        end
+      end
+    end
+
     return 'active' if @active_nav_key == key
   end
 
   def subnav_item_class(key)
-    initialize_nav
     return 'active' if @active_subnav_key == key
   end
 
   private
-
-  def initialize_nav
-    return if defined?(@active_nav_key)
-
-    NAV_ITEM_MAP.find do |nav_key, nav_val|
-      case nav_val
-      when Proc
-        @active_nav_key = nav_key if instance_exec(request.path, &nav_val)
-      when Hash
-        nav_val.find do |subnav_key, subnav_val|
-          @active_nav_key, @active_subnav_key = nav_key, subnav_key if instance_exec(request.path, &subnav_val)
-        end
-      end
-    end
-  end
 
   def path_for(*args)
     url_for(args << {only_path: true})

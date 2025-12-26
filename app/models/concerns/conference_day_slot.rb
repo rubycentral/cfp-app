@@ -1,5 +1,4 @@
 class ConferenceDaySlot
-
   attr_reader :conference_day, :start_time, :event
 
   def initialize(conference_day, start_time, event)
@@ -35,7 +34,6 @@ class ConferenceDaySlot
   def conference_wide_session
     raw_sessions.first
   end
-
 
   private
   def rooms

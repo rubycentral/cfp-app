@@ -52,5 +52,4 @@ class BulkTimeSlot
     end
     errors.blank?
   end
-
 end

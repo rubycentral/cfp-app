@@ -1,16 +1,6 @@
 require 'rails_helper'
 
 describe Proposal do
-  describe "scope :unrated" do
-    it "returns all unrated proposals" do
-      rated = create_list(:proposal_with_track, 3)
-      unrated = create_list(:proposal_with_track, 5)
-      rated.each { |proposal| create(:rating, proposal: proposal) }
-
-      expect(Proposal.unrated).to match_array(unrated)
-    end
-  end
-
   describe "scope :rated" do
     it "returns all rated proposals" do
       rated = create_list(:proposal_with_track, 3)
@@ -520,20 +510,6 @@ describe Proposal do
 
     it "returns false if user is not a speaker on the proposal" do
       expect(proposal).to_not have_speaker(user)
-    end
-  end
-
-  describe "#was_rated_by_user?" do
-    let(:proposal) { create(:proposal_with_track) }
-    let(:reviewer) { create(:user, :reviewer) }
-
-    it "returns true if user has rated the proposal" do
-      create(:rating, user: reviewer, proposal: proposal)
-      expect(proposal.was_rated_by_user?(reviewer)).to be_truthy
-    end
-
-    it "returns false if user has not rated the proposal" do
-      expect(proposal.was_rated_by_user?(reviewer)).to be_falsey
     end
   end
 

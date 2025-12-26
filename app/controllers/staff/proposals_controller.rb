@@ -57,7 +57,7 @@ class Staff::ProposalsController < Staff::ApplicationController
   def update
     authorize @proposal
 
-    @proposal.update(proposal_params)
+    @proposal.update!(proposal_update_params)
 
     respond_to do |format|
       format.turbo_stream
@@ -116,7 +116,7 @@ class Staff::ProposalsController < Staff::ApplicationController
 
   private
 
-  def proposal_params
+  def proposal_update_params
     params.require(:proposal).permit(:track_id, :session_format_id)
   end
 end

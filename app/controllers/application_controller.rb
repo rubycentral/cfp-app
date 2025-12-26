@@ -101,8 +101,7 @@ class ApplicationController < ActionController::Base
   def require_user
     unless user_signed_in?
       session[:target] = request.path
-      flash[:danger] = "You must be signed in to access this page. If you haven't created an account, please create one."
-      redirect_to new_user_session_url
+      redirect_to new_user_session_url, flash: {danger: "You must be signed in to access this page. If you haven't created an account, please create one."}
     end
   end
 
@@ -116,8 +115,7 @@ class ApplicationController < ActionController::Base
     if @event
       set_current_event(@event)
     else
-      flash[:danger] = "Your event could not be found, please check the url."
-      redirect_to events_path
+      redirect_to events_path, flash: {danger: 'Your event could not be found, please check the url.'}
     end
   end
 
@@ -130,8 +128,7 @@ class ApplicationController < ActionController::Base
   end
 
   def user_not_authorized
-    flash[:alert] = "You are not authorized to perform this action."
-    redirect_to(request.referrer || root_path)
+    redirect_to (request.referrer || root_path), flash: {alert: 'You are not authorized to perform this action.'}
   end
 
   def event_params

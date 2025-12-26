@@ -1,5 +1,4 @@
 class EventStats
-
   attr_reader :event
 
   def initialize(event)

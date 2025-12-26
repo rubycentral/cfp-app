@@ -15,15 +15,14 @@ class Admin::EventsController < Admin::ApplicationController
       @event.teammates.build(email: current_user.email, role: "organizer").accept(current_user)
       redirect_to event_staff_path(@event)
     else
-      flash[:danger] = "There was a problem saving your event; please review the form for issues and try again."
+      flash.now[:danger] = 'There was a problem saving your event; please review the form for issues and try again.'
       render :new
     end
   end
 
   def destroy
     @event.destroy
-    flash[:info] = "Your event has been deleted."
-    redirect_to events_path, status: :see_other
+    redirect_to events_path, status: :see_other, flash: {info: 'Your event has been deleted.'}
   end
 
   def archive

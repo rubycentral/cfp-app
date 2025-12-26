@@ -8,8 +8,8 @@ class ProgramSession < ApplicationRecord
     declined: 'declined'
   }, default: :draft do
     event :confirm do
-      transition :unconfirmed_waitlisted => :confirmed_waitlisted
       transition :unconfirmed_accepted => :live
+      transition :unconfirmed_waitlisted => :confirmed_waitlisted
     end
 
     event :promote do
@@ -32,7 +32,6 @@ class ProgramSession < ApplicationRecord
     declined: 'declined'
   }.with_indifferent_access
 
-
   belongs_to :event
   belongs_to :proposal, optional: true
   belongs_to :track, optional: true
@@ -54,11 +53,7 @@ class ProgramSession < ApplicationRecord
   scope :waitlisted, -> { where(state: [:confirmed_waitlisted, :unconfirmed_waitlisted]) }
   scope :program, -> { where(state: [:live, :draft, :unconfirmed_accepted]) }
   scope :without_proposal, -> { where(proposal: nil) }
-  scope :in_track, ->(track) do
-    track = nil if track.try(:strip).blank?
-    where(track: track)
-  end
-  scope :emails, -> { joins(:speakers).pluck(:speaker_email).uniq }
+  scope :in_track, ->(track) { where(track: track.presence) }
 
   scope :in_session_format, ->(session_format) do
     where(session_format_id: session_format.id)

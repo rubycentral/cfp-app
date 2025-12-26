@@ -1,5 +1,4 @@
 class Staff::ProfilesController < Staff::ApplicationController
-
   def edit
     @user = Speaker.find(params[:id]).user
   end

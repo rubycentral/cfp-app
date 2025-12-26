@@ -21,10 +21,6 @@ class Notification < ApplicationRecord
     all.unread.where(target_path: proposal_url).update_all(read_at: Time.current)
   end
 
-  def self.more_unread?
-    unread.count > UNREAD_LIMIT
-  end
-
   def self.more_unread_count
     [unread.count - UNREAD_LIMIT, 0].max
   end

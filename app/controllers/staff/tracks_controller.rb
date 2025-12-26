@@ -1,5 +1,4 @@
 class Staff::TracksController < Staff::ApplicationController
-
   before_action :set_track, only: [:edit, :update, :destroy]
 
   def index
@@ -63,5 +62,4 @@ class Staff::TracksController < Staff::ApplicationController
   def track_params
     params.require(:track).permit(:name, :description, :guidelines)
   end
-
 end

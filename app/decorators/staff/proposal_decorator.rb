@@ -92,7 +92,7 @@ class Staff::ProposalDecorator < ProposalDecorator
 
   def finalize_state_button
     state_button('Finalize State',
-                 h.event_staff_program_proposal_finalize_path(object.event, object),
+                 h.finalize_event_staff_program_proposal_path(object.event, object),
                  data: {
                    turbo_confirm:
                      'Finalizing the state will prevent any additional state changes, and emails will be sent to all speakers. Are you sure you want to continue?'
@@ -120,7 +120,7 @@ class Staff::ProposalDecorator < ProposalDecorator
   end
 
   def update_state_path(state)
-    h.event_staff_program_proposal_update_state_path(object.event, object, new_state: state)
+    h.update_state_event_staff_program_proposal_path(object.event, object, new_state: state)
   end
 
   def buttons

@@ -53,26 +53,26 @@ describe Staff::ProposalsController, type: :controller do
 
   describe "POST 'update_state'" do
     it "returns http redirect" do
-      post :update_state, params: {event_slug: event, proposal_uuid: proposal.uuid}
+      post :update_state, params: {event_slug: event, uuid: proposal.uuid}
       expect(response).to redirect_to(event_staff_program_proposals_path(event))
     end
   end
 
   describe "POST 'finalize'" do
     it "returns http redirect" do
-      post :finalize, params: {event_slug: event, proposal_uuid: proposal.uuid}
+      post :finalize, params: {event_slug: event, uuid: proposal.uuid}
       expect(response).to redirect_to(event_staff_program_proposal_path(event, proposal))
     end
 
     it "finalizes the state" do
       proposal = create(:proposal_with_track, event: event, state: :soft_accepted)
-      post :finalize, params: {event_slug: event, proposal_uuid: proposal.uuid}
+      post :finalize, params: {event_slug: event, uuid: proposal.uuid}
       expect(proposal.reload).to be_accepted
     end
 
     it "creates a draft program session" do
       proposal = create(:proposal_with_track, event: event, state: :soft_accepted)
-      post :finalize, params: {event_slug: event, proposal_uuid: proposal.uuid}
+      post :finalize, params: {event_slug: event, uuid: proposal.uuid}
       expect(proposal.program_session).to be_unconfirmed_accepted
     end
 
@@ -80,13 +80,13 @@ describe Staff::ProposalsController, type: :controller do
       proposal = create(:proposal_with_track, event: event, state: :soft_accepted)
       mail = double(:mail, deliver_now: nil)
       expect(Staff::ProposalMailer).to receive('send_email').and_return(mail)
-      post :finalize, params: {event_slug: event, proposal_uuid: proposal.uuid}
+      post :finalize, params: {event_slug: event, uuid: proposal.uuid}
     end
 
     it "creates a notification" do
       proposal = create(:proposal_with_track, :with_two_speakers, event: event, state: :soft_accepted)
       expect {
-        post :finalize, params: {event_slug: event, proposal_uuid: proposal.uuid}
+        post :finalize, params: {event_slug: event, uuid: proposal.uuid}
       }.to change {
         Notification.count
       }.by(2)

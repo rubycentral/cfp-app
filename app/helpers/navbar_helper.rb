@@ -1,10 +1,6 @@
 module NavbarHelper
   NAV_ITEM_MAP = {
     my_proposals: ->(pp) { [->(p) { p.start_with?(path_for(Proposal)) }, ->(p) { p.start_with?(path_for(current_event, Proposal)) }].any? { it.call(pp) } },
-    event_website: {
-      event_website_configuration: ->(p) { p.start_with?(path_for(current_event, :staff, :website)) },
-      event_pages: ->(p) { p == path_for(current_event, :staff, Page) }
-    },
     event_review_proposals: ->(p) { p.start_with?(path_for(current_event, :staff, Proposal)) },
     event_selection: {
       event_program_proposals_selection: ->(p) { p.start_with?(path_for(:selection, current_event, :staff, :program, Proposal)) },
@@ -27,6 +23,10 @@ module NavbarHelper
       event_staff_config: ->(p) { p == path_for(:config, current_event, :staff) },
       event_staff_guidelines: ->(p) { p == path_for(current_event, :staff, :guidelines) },
       event_staff_speaker_emails: ->(p) { p.start_with?(path_for(current_event, :staff, :speaker_email_templates)) }
+    },
+    event_website: {
+      event_website_configuration: ->(p) { p.start_with?(path_for(current_event, :staff, :website)) },
+      event_pages: ->(p) { p == path_for(current_event, :staff, Page) }
     }
   }.freeze
 

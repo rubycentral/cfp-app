@@ -82,7 +82,7 @@ Rails.application.routes.draw do
         resources :rooms, only: [:index, :create, :update, :destroy]
         resources :time_slots, except: :show
         resource :grid, only: :show do
-          resources :time_slots, module: 'grids', only: [:new, :create, :edit, :update]
+          resources :time_slots, module: 'grids', only: [:edit, :update]
           resources :program_sessions, module: 'grids', only: [:show]
           resource :bulk_time_slot, module: 'grids', only: [:create] do
             collection do

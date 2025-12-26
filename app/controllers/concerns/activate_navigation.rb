@@ -54,16 +54,15 @@ module ActivateNavigation
   def initialize_nav
     return if defined?(@active_nav_key)
 
-    @active_nav_key, subnav_map = NAV_ITEM_MAP.find { |_, v| match?(v) }
-    @active_subnav_key, _ = subnav_map.find { |_, v| instance_exec(request.path, &v) } if subnav_map.is_a?(Hash)
-  end
-
-  def match?(paths)
-    case paths
-    when Proc
-      instance_exec(request.path, &paths)
-    when Hash
-      paths.any? { |_, v| match?(v) }
+    NAV_ITEM_MAP.find do |nav_key, nav_val|
+      case nav_val
+      when Proc
+        @active_nav_key = nav_key if instance_exec(request.path, &nav_val)
+      when Hash
+        nav_val.find do |subnav_key, subnav_val|
+          @active_nav_key, @active_subnav_key = nav_key, subnav_key if instance_exec(request.path, &subnav_val)
+        end
+      end
     end
   end
 

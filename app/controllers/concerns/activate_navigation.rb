@@ -51,11 +51,11 @@ module ActivateNavigation
   def nav_item_map
     @nav_item_map ||= {
         'my-proposals-link' => [
-            starts_with_path(Proposal),
-            starts_with_path(current_event, Proposal)
+            path_prefix(Proposal),
+            path_prefix(current_event, Proposal)
         ],
         'event-website-link' => website_subnav_item_map,
-        'event-review-proposals-link' => starts_with_path(current_event, :staff, Proposal),
+        'event-review-proposals-link' => path_prefix(current_event, :staff, Proposal),
         'event-selection-link' => selection_subnav_item_map,
         'event-program-link' => program_subnav_item_map,
         'event-schedule-link' => schedule_subnav_item_map,
@@ -73,13 +73,13 @@ module ActivateNavigation
         'event-staff-teammates-link' => path_for(current_event, :staff, Teammate),
         'event-staff-config-link' => path_for(:config, current_event, :staff),
         'event-staff-guidelines-link' => path_for(current_event, :staff, :guidelines),
-        'event-staff-speaker-emails-link' => starts_with_path(current_event, :staff, :speaker_email_templates),
+        'event-staff-speaker-emails-link' => path_prefix(current_event, :staff, :speaker_email_templates),
     }
   end
 
   def website_subnav_item_map
     @website_subnav_item_map ||= {
-      'event-website-configuration-link' => starts_with_path(current_event, :staff, :website),
+      'event-website-configuration-link' => path_prefix(current_event, :staff, :website),
       'event-pages-link' => path_for(current_event, :staff, Page)
     }
   end
@@ -87,19 +87,19 @@ module ActivateNavigation
   def selection_subnav_item_map
     @selection_subnav_item_map ||= {
         'event-program-proposals-selection-link' => [
-            starts_with_path(:selection, current_event, :staff, :program, Proposal),
+            path_prefix(:selection, current_event, :staff, :program, Proposal),
         # add_path(:event_staff_program_proposal, current_event, @proposal)
         #How to leverage session[:prev_page] here? Considering lamdas
         ],
-        'event-program-bulk-finalize-link' => starts_with_path(:bulk_finalize, current_event, :staff, :program, Proposal),
-        'event-program-proposals-link' => starts_with_path(current_event, :staff, :program, Proposal)
+        'event-program-bulk-finalize-link' => path_prefix(:bulk_finalize, current_event, :staff, :program, Proposal),
+        'event-program-proposals-link' => path_prefix(current_event, :staff, :program, Proposal)
     }
   end
 
   def program_subnav_item_map
     @program_subnav_item_map ||= {
-        'event-program-sessions-link' => starts_with_path(current_event, :staff, ProgramSession),
-        'event-program-speakers-link' => starts_with_path(current_event, :staff, :program, Speaker)
+        'event-program-sessions-link' => path_prefix(current_event, :staff, ProgramSession),
+        'event-program-speakers-link' => path_prefix(current_event, :staff, :program, Speaker)
     }
   end
 
@@ -115,7 +115,7 @@ module ActivateNavigation
     url_for(args << {only_path: true}) unless args.include?(nil) # don't generate the path unless all dependencies are present
   end
 
-  def starts_with_path(sym, *deps)
+  def path_prefix(sym, *deps)
     starts_with = path_for(sym, *deps)
     Regexp.new(Regexp.escape(starts_with) + ".*") if starts_with
   end

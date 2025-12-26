@@ -85,7 +85,7 @@
                   %span
                     = (more_unread_count = current_user.notifications.more_unread_count) > 0 ? "#{more_unread_count} More Unread" : "View all notifications"
 
-          %li.nav-item.dropdown
+          %li.nav-item.dropdown{class: nav_item_class(:user)}
             %a.nav-link.dropdown-toggle.gravatar-container{href: '#', role: 'button', data: {bs_toggle: 'dropdown'}, aria: {expanded: 'false'}}
               = image_tag("https://www.gravatar.com/avatar/#{current_user.gravatar_hash}?s=25", class: 'user-dropdown-gravatar', alt: '')
               &nbsp; #{current_user.name}

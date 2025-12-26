@@ -40,7 +40,12 @@ module NavbarHelper
       admin_users: ->(p) { p == path_for(:admin, User) },
       admin_events: ->(p) { p == path_for(:admin, Event) }
     },
-    notifications: ->(p) { p == path_for(Notification) }
+    notifications: ->(p) { p == path_for(Notification) },
+    user: {
+      edit_profile: ->(p) { p == path_for(:edit, :profile) },
+      merge_profile: ->(p) { p == path_for(:merge, :profile) },
+      admin_events: ->(p) { p == path_for(:notifications, :profile) }
+    },
   }.freeze
 
   private

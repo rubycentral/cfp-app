@@ -22,8 +22,7 @@ class Admin::EventsController < Admin::ApplicationController
 
   def destroy
     @event.destroy
-    flash[:info] = "Your event has been deleted."
-    redirect_to events_path, status: :see_other
+    redirect_to events_path, status: :see_other, flash: {info: 'Your event has been deleted.'}
   end
 
   def archive

@@ -8,11 +8,9 @@ class SpeakersController < ApplicationController
     speaker.destroy
 
     if current_user.id == speaker.user_id
-      flash[:info] = "You have withdrawn from #{proposal.title}."
-      redirect_to root_path, status: :see_other
+      redirect_to root_path, status: :see_other, flash: {info: "You have withdrawn from #{proposal.title}."}
     else
-      flash[:info] = "#{speaker.email} has been withdrawn from #{proposal.title}."
-      redirect_to [proposal.event, proposal], status: :see_other
+      redirect_to [proposal.event, proposal], status: :see_other, flash: {info: "#{speaker.email} has been withdrawn from #{proposal.title}."}
     end
   end
 end

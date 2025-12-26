@@ -32,8 +32,7 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
     @program_session = current_event.program_sessions.find(params[:id])
     authorize @program_session
     if @program_session.update(program_session_params)
-      flash[:success] = "#{@program_session.title} was successfully updated."
-      redirect_to event_staff_program_session_path(current_event, @program_session)
+      redirect_to event_staff_program_session_path(current_event, @program_session), flash: {success: "#{@program_session.title} was successfully updated."}
     else
       flash.now[:danger] = 'There was a problem updating this program session.'
       render :edit
@@ -53,7 +52,7 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
     @program_session.state = :draft
     @program_session.speakers.each { |speaker| speaker.event_id = current_event.id }
     if @program_session.save
-      redirect_to event_staff_program_session_path(current_event,  @program_session)
+      redirect_to event_staff_program_session_path(current_event, @program_session)
     else
       flash.now[:danger] = "Program session was unable to be saved: #{@program_session.errors.full_messages.to_sentence}"
       render :new
@@ -76,8 +75,7 @@ class Staff::ProgramSessionsController < Staff::ApplicationController
     @program_session = current_event.program_sessions.find(params[:id])
     authorize @program_session
     @program_session.destroy
-    flash[:info] = "Program session was successfully deleted."
-    redirect_to event_staff_program_sessions_path(event), status: :see_other
+    redirect_to event_staff_program_sessions_path(event), status: :see_other, flash: {info: 'Program session was successfully deleted.'}
   end
 
   def confirm_for_speaker

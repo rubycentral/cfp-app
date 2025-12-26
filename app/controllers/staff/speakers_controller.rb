@@ -39,8 +39,7 @@ class Staff::SpeakersController < Staff::ApplicationController
     @speaker = current_event.speakers.find(params[:id])
     authorize @speaker
     if @speaker.update(speaker_params)
-      flash[:success] = "#{@speaker.name} was successfully updated" # not all edits are visible on the next screen
-      redirect_to event_staff_program_speakers_path(current_event)
+      redirect_to event_staff_program_speakers_path(current_event), flash: {success: "#{@speaker.name} was successfully updated"} # not all edits are visible on the next screen
     else
       flash.now[:danger] = 'There was a problem updating this speaker.'
       render :edit
@@ -52,8 +51,7 @@ class Staff::SpeakersController < Staff::ApplicationController
     if @speaker.destroy
       redirect_to event_staff_program_session_path(current_event, @speaker.program_session), status: :see_other
     else
-      flash[:danger] = "There was a problem removing #{@speaker.name}."
-      redirect_to event_staff_program_session_path(current_event, @speaker.program_session), status: :see_other
+      redirect_to event_staff_program_session_path(current_event, @speaker.program_session), status: :see_other, flash: {danger: "There was a problem removing #{@speaker.name}."}
     end
   end
 
@@ -70,8 +68,7 @@ class Staff::SpeakersController < Staff::ApplicationController
   def speaker_count_check
     @speaker = current_event.speakers.find(params[:id])
     unless @speaker.program_session.multiple_speakers?
-      flash[:danger] = "Sorry, you can't remove the only speaker for a program session."
-      redirect_to event_staff_program_speakers_path(current_event)
+      redirect_to event_staff_program_speakers_path(current_event), flash: {danger: "Sorry, you can't remove the only speaker for a program session."}
     end
   end
 end

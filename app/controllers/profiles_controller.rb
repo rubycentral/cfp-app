@@ -31,8 +31,7 @@ class ProfilesController < ApplicationController
 
   def update_notifications
     if current_user.update(notifications_params)
-      flash[:info] = 'Notification preferences updated.'
-      redirect_to notifications_profile_path
+      redirect_to notifications_profile_path, flash: {info: 'Notification preferences updated.'}
     else
       render :notifications, status: :unprocessable_entity
     end
@@ -54,8 +53,7 @@ class ProfilesController < ApplicationController
     account_name = session[:pending_merge_account_name]
 
     unless legacy_user && provider && uid
-      flash[:danger] = 'Merge session expired. Please try again.'
-      redirect_to edit_profile_path and return
+      return redirect_to edit_profile_path, flash: {danger: 'Merge session expired. Please try again.'}
     end
 
     current_user.merge_from!(legacy_user)
@@ -66,8 +64,7 @@ class ProfilesController < ApplicationController
     session.delete(:pending_merge_uid)
     session.delete(:pending_merge_account_name)
 
-    flash[:info] = "Successfully merged accounts and connected #{Identity::PROVIDER_NAMES[provider]}."
-    redirect_to edit_profile_path
+    redirect_to edit_profile_path, flash: {info: "Successfully merged accounts and connected #{Identity::PROVIDER_NAMES[provider]}."}
   end
 
   private

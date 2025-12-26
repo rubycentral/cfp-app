@@ -6,8 +6,7 @@ class Admin::ApplicationController < ApplicationController
 
   def require_admin
     unless current_user.admin?
-      flash[:danger] = "You must be signed in as an administrator to access this page."
-      redirect_to events_path
+      redirect_to events_path, flash: {danger: 'You must be signed in as an administrator to access this page.'}
     end
   end
 end

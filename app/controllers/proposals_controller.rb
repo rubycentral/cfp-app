@@ -24,9 +24,7 @@ class ProposalsController < ApplicationController
 
   def new
     if @event.closed?
-      redirect_to @event
-      flash[:danger] = "The CFP is closed for proposal submissions."
-      return
+      return redirect_to @event, flash: {danger: 'The CFP is closed for proposal submissions.'}
     end
     @proposal = @event.proposals.new
     @proposal.speakers.build(user: current_user)
@@ -35,43 +33,37 @@ class ProposalsController < ApplicationController
 
   def update_notes
     if @proposal.update(confirmation_notes: notes_params[:confirmation_notes])
-      flash[:success] = "Confirmation notes successfully updated."
-      redirect_to [@proposal.event, @proposal]
+      redirect_to [@proposal.event, @proposal], flash: {success: 'Confirmation notes successfully updated.'}
     else
-      flash[:danger] = "There was a problem updating confirmation notes."
+      flash.now[:danger] = 'There was a problem updating confirmation notes.'
       render :show
     end
   end
 
   def confirm
     @proposal.confirm
-    flash[:success] = "You have confirmed your participation in #{@proposal.event.name}."
-    redirect_to [@proposal.event, @proposal], status: :see_other
+    redirect_to [@proposal.event, @proposal], status: :see_other, flash: {success: "You have confirmed your participation in #{@proposal.event.name}."}
   end
 
   def withdraw
     @proposal.withdraw! unless @proposal.confirmed?
-    flash[:info] = "As requested, your talk has been removed for consideration."
-    redirect_to [@proposal.event, @proposal], status: :see_other
+    redirect_to [@proposal.event, @proposal], status: :see_other, flash: {info: 'As requested, your talk has been removed for consideration.'}
   end
 
   def decline
     @proposal.decline!
-    flash[:info] = "As requested, your talk has been removed for consideration."
-    redirect_to [@proposal.event, @proposal], status: :see_other
+    redirect_to [@proposal.event, @proposal], status: :see_other,
+      flash: {info: 'As requested, your talk has been removed for consideration.'}
   end
 
   def destroy
     @proposal.destroy!
-    flash[:info] = "Your proposal has been deleted."
-    redirect_to event_proposals_url(@event), status: :see_other
+    redirect_to event_proposals_url(@event), status: :see_other, flash: {info: 'Your proposal has been deleted.'}
   end
 
   def create
     if @event.closed? && @event.closes_at < 1.hour.ago
-      redirect_to @event
-      flash[:danger] = "The CFP is closed for proposal submissions."
-      return
+      return redirect_to @event, flash: {danger: 'The CFP is closed for proposal submissions.'}
     end
     @proposal = @event.proposals.new(proposal_params)
     speaker = @proposal.speakers[0]
@@ -80,8 +72,7 @@ class ProposalsController < ApplicationController
 
     if @proposal.save
       current_user.update_bio
-      flash[:confirm] = setup_flash_message
-      redirect_to [@event, @proposal]
+      redirect_to [@event, @proposal], flash: {confirm: setup_flash_message}
     else
       flash.now[:danger] = 'There was a problem saving your proposal.'
       render :new
@@ -140,15 +131,13 @@ class ProposalsController < ApplicationController
 
   def require_invite_or_speaker
     unless @proposal.has_speaker?(current_user) || @proposal.has_invited?(current_user)
-      redirect_to root_path
-      flash[:danger] = "You are not an invited speaker for the proposal you are trying to access."
+      redirect_to root_path, flash: {danger: 'You are not an invited speaker for the proposal you are trying to access.'}
     end
   end
 
   def require_speaker
     unless @proposal.has_speaker?(current_user)
-      redirect_to root_path
-      flash[:danger] = "You are not a listed speaker for the proposal you are trying to access."
+      redirect_to root_path, flash: {danger: 'You are not a listed speaker for the proposal you are trying to access.'}
     end
   end
 

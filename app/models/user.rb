@@ -22,12 +22,12 @@ class User < ApplicationRecord
   validates :bio, length: { maximum: 500 }
   validates :name, presence: true, allow_nil: true
   validates_uniqueness_of :email, allow_blank: true
-  validates_format_of :email, with: Devise.email_regexp, allow_blank: true, if: :email_changed?
+  validates_format_of :email, with: /\A[^@\s]+@[^@\s]+\z/, allow_blank: true, if: :email_changed?  # equivalent to Devise.email_regexp
   validates_presence_of :email, on: :create, if: -> { provider.blank? && identities.blank? }
   validates_presence_of :email, on: :update, if: -> { provider.blank? || unconfirmed_email.blank? }
   validates_presence_of :password, on: :create
   validates_confirmation_of :password, on: :create
-  validates_length_of :password, within: Devise.password_length, allow_blank: true
+  validates_length_of :password, within: 6..128, allow_blank: true
 
   before_create :check_pending_invite_email
 
@@ -58,13 +58,13 @@ class User < ApplicationRecord
     user = new(
       name: auth['info']['name'],
       email: invitation_email || auth['info']['email'] || '',
-      password: (password = Devise.friendly_token[0, 20]),
+      password: (password = SecureRandom.hex(10)),
       password_confirmation: password
     )
     user.identities.build(provider: auth.provider, uid: auth.uid, account_name: auth.account_name)
 
     if invitation_email.present? && (user.email == invitation_email)
-      user.skip_confirmation!
+      user.confirmed_at = Time.current
     end
 
     user.tap(&:save!)
@@ -72,7 +72,7 @@ class User < ApplicationRecord
 
   def check_pending_invite_email
     if pending_invite_email.present? && pending_invite_email == email
-      skip_confirmation!
+      self.confirmed_at = Time.current
     end
   end
 

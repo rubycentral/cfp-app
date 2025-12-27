@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
+  # OmniAuth
+  get  '/users/auth/:provider/callback', to: 'users/omniauth_callbacks#callback', as: :omniauth_callback
+  post '/users/auth/:provider', to: 'users/omniauth_callbacks#passthru', as: :omniauth_authorize
+  get  '/users/auth/failure', to: 'users/omniauth_callbacks#failure', as: :omniauth_failure
+
   root 'home#show'
-  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  devise_for :users
   mount ActionCable.server => '/cable'
 
   resource :profile, only: [:show, :edit, :update] do

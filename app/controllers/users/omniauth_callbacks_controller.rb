@@ -1,4 +1,4 @@
-class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+class Users::OmniauthCallbacksController < ApplicationController
   class AuthHash < SimpleDelegator
     def account_name
       dig('info', 'nickname') || dig('extra', 'raw_info', 'screen_name')
@@ -9,20 +9,26 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
 
-  before_action :link_identity_to_current_user, only: [:twitter, :github, :developer], if: -> { current_user }
-  skip_forgery_protection only: :developer
+  before_action :link_identity_to_current_user, only: :callback, if: -> { current_user }
+  skip_forgery_protection only: :callback
+  skip_before_action :current_event
 
-  def twitter
-    authenticate_with_hash
+  def callback
+    case params[:provider]
+    when 'twitter'
+      authenticate_with_hash
+    when 'github'
+      authenticate_with_hash
+    when 'developer'
+      user = User.find_by(email: auth_hash.uid)
+      authenticate_with_hash(user)
+    else
+      failure
+    end
   end
 
-  def github
-    authenticate_with_hash
-  end
-
-  def developer
-    user = User.find_by email: auth_hash.uid
-    authenticate_with_hash user
+  def passthru
+    render plain: 'Not Found', status: :not_found
   end
 
   def failure

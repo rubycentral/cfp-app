@@ -20,7 +20,7 @@ describe Users::OmniauthCallbacksController, type: :controller do
     end
 
     it 'allows twitter login for new user' do
-      get :twitter
+      post :callback, params: {provider: 'twitter'}
       expect(response).to redirect_to(edit_profile_url)
       expect(User.last.identities.find_by(provider: 'twitter')).to be_present
     end
@@ -37,7 +37,7 @@ describe Users::OmniauthCallbacksController, type: :controller do
       let!(:identity) { user.identities.create!(provider: 'github', uid: github_auth_hash.uid) }
 
       it 'finds user via identity and signs in' do
-        expect { get :github }.not_to change { User.count }
+        expect { post :callback, params: {provider: 'github'} }.not_to change { User.count }
         expect(controller.current_user).to eq(user)
       end
     end
@@ -46,7 +46,7 @@ describe Users::OmniauthCallbacksController, type: :controller do
       let!(:user) { create(:user, provider: 'github', uid: github_auth_hash.uid) }
 
       it 'finds user via legacy lookup and signs in' do
-        expect { get :github }.not_to change { User.count }
+        expect { post :callback, params: {provider: 'github'} }.not_to change { User.count }
         expect(controller.current_user).to eq(user)
       end
     end
@@ -63,7 +63,7 @@ describe Users::OmniauthCallbacksController, type: :controller do
         user = create(:user)
         sign_in(user)
 
-        expect { get :github }.to change { user.identities.count }.by(1)
+        expect { post :callback, params: {provider: 'github'} }.to change { user.identities.count }.by(1)
         expect(response).to redirect_to(edit_profile_path)
         expect(flash[:info]).to eq('Successfully connected GitHub to your account.')
       end
@@ -75,7 +75,7 @@ describe Users::OmniauthCallbacksController, type: :controller do
         user.identities.create!(provider: 'github', uid: github_auth_hash.uid)
         sign_in(user)
 
-        expect { get :github }.not_to change { Identity.count }
+        expect { post :callback, params: {provider: 'github'} }.not_to change { Identity.count }
         expect(response).to redirect_to(edit_profile_path)
         expect(flash[:info]).to eq('GitHub is already connected to your account.')
       end
@@ -89,7 +89,7 @@ describe Users::OmniauthCallbacksController, type: :controller do
         user = create(:user)
         sign_in(user)
 
-        expect { get :github }.not_to change { Identity.count }
+        expect { post :callback, params: {provider: 'github'} }.not_to change { Identity.count }
         expect(response).to redirect_to(edit_profile_path)
         expect(flash[:danger]).to eq('This GitHub account is already connected to another user.')
       end
@@ -101,7 +101,7 @@ describe Users::OmniauthCallbacksController, type: :controller do
         user = create(:user)
         sign_in(user)
 
-        get :github
+        post :callback, params: {provider: 'github'}
 
         expect(response).to redirect_to(merge_profile_path)
         expect(session[:pending_merge_user_id]).to eq(legacy_user.id)

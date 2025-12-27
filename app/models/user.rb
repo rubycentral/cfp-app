@@ -58,7 +58,7 @@ class User < ApplicationRecord
     user = new(
       name: auth['info']['name'],
       email: invitation_email || auth['info']['email'] || '',
-      password: (password = Devise.friendly_token[0, 20]),
+      password: (password = SecureRandom.hex(10)),
       password_confirmation: password
     )
     user.identities.build(provider: auth.provider, uid: auth.uid, account_name: auth.account_name)

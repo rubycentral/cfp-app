@@ -59,7 +59,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = user || User.from_omniauth(auth_hash, session[:pending_invite_email])
 
     if @user.persisted?
-      flash.now[:info] = "You have signed in with #{auth_hash.provider_name}."
+      flash[:info] = "You have signed in with #{auth_hash.provider_name}."
       logger.info "Signing in user #{@user.inspect}"
 
       @user.confirmed_at = Time.current

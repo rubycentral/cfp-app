@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resource :session
+  resources :passwords, param: :token
   # OmniAuth
   get  '/users/auth/:provider/callback', to: 'users/omniauth_callbacks#callback', as: :omniauth_callback
   post '/users/auth/:provider', to: 'users/omniauth_callbacks#passthru', as: :omniauth_authorize

@@ -4,6 +4,7 @@ class PasswordsController < ApplicationController
   rate_limit to: 10, within: 3.minutes, only: :create, with: -> { redirect_to new_password_path, alert: "Try again later." }
 
   def new
+    render 'devise/passwords/new'
   end
 
   def create
@@ -15,6 +16,7 @@ class PasswordsController < ApplicationController
   end
 
   def edit
+    render 'devise/passwords/edit'
   end
 
   def update

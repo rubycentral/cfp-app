@@ -27,7 +27,7 @@ class User < ApplicationRecord
   validates_presence_of :email, on: :update, if: -> { provider.blank? || unconfirmed_email.blank? }
   validates_presence_of :password, on: :create
   validates_confirmation_of :password, on: :create
-  validates_length_of :password, within: Devise.password_length, allow_blank: true
+  validates_length_of :password, within: 6..128, allow_blank: true
 
   before_create :check_pending_invite_email
 

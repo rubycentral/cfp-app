@@ -14,9 +14,9 @@ class ProfilesController < ApplicationController
     if current_user.update(user_params)
 
       if current_user.unconfirmed_email.present?
-        flash[:danger] = I18n.t("devise.registrations.update_needs_confirmation")
+        flash[:danger] = 'Your account has been updated, but we need to verify your new email address. Please check your email and follow the confirmation link.'
       else
-        flash[:info] = I18n.t("devise.registrations.updated")
+        flash[:info] = 'Your account has been updated successfully.'
       end
 
       redirect_to (session.delete(:target) || root_url)

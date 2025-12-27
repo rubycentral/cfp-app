@@ -64,7 +64,7 @@ class User < ApplicationRecord
     user.identities.build(provider: auth.provider, uid: auth.uid, account_name: auth.account_name)
 
     if invitation_email.present? && (user.email == invitation_email)
-      user.skip_confirmation!
+      user.confirmed_at = Time.current
     end
 
     user.tap(&:save!)
@@ -72,7 +72,7 @@ class User < ApplicationRecord
 
   def check_pending_invite_email
     if pending_invite_email.present? && pending_invite_email == email
-      skip_confirmation!
+      self.confirmed_at = Time.current
     end
   end
 

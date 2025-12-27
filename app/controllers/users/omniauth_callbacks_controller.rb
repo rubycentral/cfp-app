@@ -62,7 +62,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       flash.now[:info] = "You have signed in with #{auth_hash.provider_name}."
       logger.info "Signing in user #{@user.inspect}"
 
-      @user.skip_confirmation!
+      @user.confirmed_at = Time.current
       sign_in @user
 
       redirect_to after_sign_in_path_for(@user)

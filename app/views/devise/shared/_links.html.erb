@@ -21,16 +21,12 @@
 
   <hr />
 
-  <%- if devise_mapping.omniauthable? %>
-
-    <%= button_to omniauth_authorize_path(provider: :twitter), data: {turbo: false}, class: "btn btn-twitter", form: {style: "display: inline-block"} do %>
-      <i class="bi bi-twitter"></i>
-      <span class="btn-text-middle">Sign in with Twitter</span>
-    <% end %>
-    <%= button_to omniauth_authorize_path(provider: :github), data: {turbo: false}, class: "btn btn-github", form: {style: "display: inline-block"} do %>
-      <i class="bi bi-github"></i>
-      <span class="btn-text-middle">Sign in with GitHub</span>
-    <% end %>
-
+  <%= button_to omniauth_authorize_path(provider: :twitter), data: {turbo: false}, class: "btn btn-twitter", form: {style: "display: inline-block"} do %>
+    <i class="bi bi-twitter"></i>
+    <span class="btn-text-middle">Sign in with Twitter</span>
+  <% end %>
+  <%= button_to omniauth_authorize_path(provider: :github), data: {turbo: false}, class: "btn btn-github", form: {style: "display: inline-block"} do %>
+    <i class="bi bi-github"></i>
+    <span class="btn-text-middle">Sign in with GitHub</span>
   <% end %>
 </div>

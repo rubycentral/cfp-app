@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
       session[:pending_invite_accept_url]
     elsif !user.complete?
       edit_profile_path
-    elsif (referer = request.referer).present? && (URI.parse(referer).host == request.host) && (referer != new_user_session_url) && !referer.start_with?(edit_password_url(current_user)) && (referer != user_developer_omniauth_authorize_url)
+    elsif (referer = request.referer).present? && (URI.parse(referer).host == request.host) && (referer != new_user_session_url) && !referer.start_with?(edit_password_url(current_user)) && (referer != omniauth_authorize_url(provider: :developer))
       referer
     elsif session[:target]
       session.delete(:target)

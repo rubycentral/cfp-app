@@ -1,4 +1,4 @@
-class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+class Users::OmniauthCallbacksController < ApplicationController
   class AuthHash < SimpleDelegator
     def account_name
       dig('info', 'nickname') || dig('extra', 'raw_info', 'screen_name')
@@ -9,24 +9,30 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
 
-  before_action :link_identity_to_current_user, only: [:twitter, :github, :developer], if: -> { current_user }
-  skip_forgery_protection only: :developer
+  before_action :link_identity_to_current_user, only: :callback, if: -> { current_user }
+  skip_forgery_protection only: :callback
+  skip_before_action :current_event
 
-  def twitter
-    authenticate_with_hash
+  def callback
+    case params[:provider]
+    when 'twitter'
+      authenticate_with_hash
+    when 'github'
+      authenticate_with_hash
+    when 'developer'
+      user = User.find_by(email: auth_hash.uid)
+      authenticate_with_hash(user)
+    else
+      failure
+    end
   end
 
-  def github
-    authenticate_with_hash
-  end
-
-  def developer
-    user = User.find_by email: auth_hash.uid
-    authenticate_with_hash user
+  def passthru
+    render plain: 'Not Found', status: :not_found
   end
 
   def failure
-    redirect_to new_user_session_url, danger: "There was an error authenticating you. Please try again."
+    redirect_to new_user_session_path, flash: {danger: 'There was an error authenticating you. Please try again.'}
   end
 
   private
@@ -59,7 +65,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = user || User.from_omniauth(auth_hash, session[:pending_invite_email])
 
     if @user.persisted?
-      flash.now[:info] = "You have signed in with #{auth_hash.provider_name}."
+      flash[:info] = "You have signed in with #{auth_hash.provider_name}."
       logger.info "Signing in user #{@user.inspect}"
 
       @user.confirmed_at = Time.current
@@ -67,7 +73,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
       redirect_to after_sign_in_path_for(@user)
     else
-      redirect_to new_user_session_url, danger: "There was an error authenticating via Auth provider: #{params[:provider]}."
+      redirect_to new_user_session_path, flash: {danger: "There was an error authenticating via Auth provider: #{params[:provider]}."}
     end
   end
 

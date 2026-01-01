@@ -18,6 +18,6 @@
     - else
       = f.text_area :body, class: 'form-control', placeholder: 'Add your comment', rows: 5
   .form-group
-    %button.btn.btn-success.save-comment(type="submit")
+    %button.btn.btn-success.save-comment{type: 'submit', data: {turbo_confirm: internal?(f.object) ? nil : 'Are you sure you want to post a Public comment?'}}
       %span.bi.bi-check
       Comment

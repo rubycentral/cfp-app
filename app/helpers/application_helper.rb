@@ -1,4 +1,21 @@
 module ApplicationHelper
+  class MarkdownRenderer < Redcarpet::Render::HTML
+    def block_code(code, language)
+      language ||= 'ruby'
+      %(<pre><code class="language-#{language}">#{ERB::Util.html_escape(code)}</code></pre>)
+    end
+  end
+
+  MARKDOWN_RENDERER = Redcarpet::Markdown.new(
+    MarkdownRenderer.new(filter_html: true, hard_wrap: true),
+    fenced_code_blocks: true,
+    no_intra_emphasis: true,
+    autolink: true,
+    strikethrough: true,
+    lax_html_blocks: true,
+    superscript: true
+  ).freeze
+
   def title
     if @title.blank?
       "CFPApp"
@@ -11,27 +28,10 @@ module ApplicationHelper
     value ? "Yes" : "No"
   end
 
-  class MarkdownRenderer < Redcarpet::Render::HTML
-    def block_code(code, language)
-      language ||= 'ruby'
-      %(<pre><code class="language-#{language}">#{ERB::Util.html_escape(code)}</code></pre>)
-    end
-  end
-
   def markdown(text)
     return unless text
 
-    rndr = MarkdownRenderer.new(:filter_html => true, :hard_wrap => true)
-    options = {
-      :fenced_code_blocks => true,
-      :no_intra_emphasis => true,
-      :autolink => true,
-      :strikethrough => true,
-      :lax_html_blocks => true,
-      :superscript => true
-    }
-    markdown_to_html = Redcarpet::Markdown.new(rndr, options)
-    content_tag(:div, markdown_to_html.render(text).html_safe, data: {controller: 'highlight'})
+    content_tag(:div, MARKDOWN_RENDERER.render(text).html_safe, data: {controller: 'highlight'})
   end
 
   def smart_return_button

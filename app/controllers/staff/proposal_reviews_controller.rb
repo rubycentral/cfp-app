@@ -4,7 +4,6 @@ class Staff::ProposalReviewsController < Staff::ApplicationController
   before_action :prevent_self_review, except: [:index]
 
   private decorates_assigned :proposal, with: Staff::ProposalDecorator
-  respond_to :html
 
   def index
     authorize Proposal, :reviewer?

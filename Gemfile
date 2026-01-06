@@ -7,6 +7,8 @@ ruby file: '.ruby-version'
 gem 'puma'
 gem 'rails', '~> 8.1.1'
 gem 'turbo-rails'
+gem 'solid_queue'
+
 gem 'mimemagic'
 gem 'mime-types-data'
 gem 'mime-types'
@@ -43,8 +45,6 @@ gem 'pundit'
 gem 'redcarpet', '~> 3.6'
 gem 'simple_form'
 gem 'image_processing', '~> 1.14'
-
-gem 'sidekiq'
 
 gem 'diffy'
 gem 'paper_trail'

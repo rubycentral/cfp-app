@@ -163,6 +163,8 @@ GEM
     drb (2.2.3)
     erb (6.0.1)
     erubi (1.13.1)
+    et-orbi (1.4.0)
+      tzinfo
     ethon (0.18.0)
       ffi (>= 1.15.0)
       logger
@@ -182,6 +184,9 @@ GEM
     ffi (1.17.2)
     foreman (0.90.0)
       thor (~> 1.4)
+    fugit (1.12.1)
+      et-orbi (~> 1.4)
+      raabro (~> 1.4)
     globalid (1.3.0)
       activesupport (>= 6.1)
     groupdate (6.7.0)
@@ -316,6 +321,7 @@ GEM
       nio4r (~> 2.0)
     pundit (2.5.2)
       activesupport (>= 3.0.0)
+    raabro (1.4.0)
     racc (1.8.1)
     rack (3.2.4)
     rack-mini-profiler (4.0.1)
@@ -368,8 +374,6 @@ GEM
       psych (>= 4.0.0)
       tsort
     redcarpet (3.6.1)
-    redis-client (0.26.2)
-      connection_pool
     regexp_parser (2.7.0)
     reline (0.6.3)
       io-console (~> 0.5)
@@ -415,18 +419,19 @@ GEM
       websocket (~> 1.0)
     sendgrid-ruby (6.7.0)
       ruby_http_client (~> 3.4)
-    sidekiq (8.1.0)
-      connection_pool (>= 3.0.0)
-      json (>= 2.16.0)
-      logger (>= 1.7.0)
-      rack (>= 3.2.0)
-      redis-client (>= 0.26.0)
     simple_form (5.4.1)
       actionpack (>= 7.0)
       activemodel (>= 7.0)
     snaky_hash (2.0.1)
       hashie
       version_gem (~> 1.1, >= 1.1.1)
+    solid_queue (1.2.4)
+      activejob (>= 7.1)
+      activerecord (>= 7.1)
+      concurrent-ruby (>= 1.3.1)
+      fugit (~> 1.11)
+      railties (>= 7.1)
+      thor (>= 1.3.1)
     stateful_enum (0.9.0)
     stringio (3.2.0)
     temple (0.10.4)
@@ -505,8 +510,8 @@ DEPENDENCIES
   rspec-rails
   selenium-webdriver
   sendgrid-ruby
-  sidekiq
   simple_form
+  solid_queue
   stateful_enum
   turbo-rails
 

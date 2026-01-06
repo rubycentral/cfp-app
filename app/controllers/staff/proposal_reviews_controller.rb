@@ -20,9 +20,7 @@ class Staff::ProposalReviewsController < Staff::ApplicationController
     proposals.to_a.sort_by! { |p| [p.ratings_count > 0 ? 1 : 0, p.created_at] }
     proposals = Staff::ProposalDecorator.decorate_collection(proposals)
 
-    render locals: {
-             proposals: proposals
-           }
+    render locals: {proposals: proposals}
   end
 
   def show

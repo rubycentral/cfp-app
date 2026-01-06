@@ -13,13 +13,13 @@ feature 'Sign out', :devise, type: :system do
 
     user = FactoryBot.create(:user)
     signin(user.email, user.password)
-    expect(page).to have_content I18n.t 'devise.sessions.signed_in'
+    expect(page).to have_content 'Signed in successfully.'
 
     find('.gravatar-container').click
 
     find('.dropdown-menu').find('a', text: 'Sign Out').click
 
-    expect(page).to have_no_content I18n.t('devise.sessions.signed_in')
-    expect(page).to have_content I18n.t 'devise.sessions.signed_out'
+    expect(page).to have_no_content 'Signed in successfully.'
+    expect(page).to have_content 'Signed out successfully.'
   end
 end

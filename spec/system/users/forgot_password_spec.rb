@@ -11,7 +11,7 @@ feature 'Forgot Password', :devise, type: :system do
   #   Then I see an invalid credentials message
   scenario 'user cannot forgot password if not registered', js: true do
     forgot_password('test@example.com')
-    expect(page).to have_content "Email *\n" + I18n.t('errors.messages.not_found')
+    expect(page).to have_content "Email *\nnot found"
   end
 
   # Scenario: User can forgot password with valid credentials
@@ -22,7 +22,7 @@ feature 'Forgot Password', :devise, type: :system do
   scenario 'user can forgot password with valid credentials', js: true do
     user = FactoryBot.create(:user)
     forgot_password(user.email)
-    expect(page).to have_content I18n.t 'devise.passwords.send_instructions'
+    expect(page).to have_content 'You will receive an email with instructions on how to reset your password in a few minutes.'
   end
 
   # Scenario: User cannot forgot password with wrong email
@@ -32,7 +32,7 @@ feature 'Forgot Password', :devise, type: :system do
   #   Then I see an invalid email message
   scenario 'user cannot forgot password with wrong email', js: true do
     forgot_password('invalid@email.com')
-    expect(page).to have_content "Email *\n" + I18n.t('errors.messages.not_found')
+    expect(page).to have_content "Email *\nnot found"
   end
 
 end

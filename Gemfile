@@ -37,7 +37,6 @@ gem 'active_model_serializers', '~> 0.10.16'
 gem 'bootsnap', '~> 1.20', require: false
 gem 'chartkick'
 gem 'draper', '~> 4.0'
-gem 'faker'
 gem 'fastly'
 gem 'groupdate'
 gem 'nokogiri'
@@ -74,4 +73,5 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'selenium-webdriver'
   gem 'debug'
+  gem 'faker'
 end

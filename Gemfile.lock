@@ -374,8 +374,6 @@ GEM
       psych (>= 4.0.0)
       tsort
     redcarpet (3.6.1)
-    redis-client (0.26.2)
-      connection_pool
     regexp_parser (2.7.0)
     reline (0.6.3)
       io-console (~> 0.5)
@@ -421,12 +419,6 @@ GEM
       websocket (~> 1.0)
     sendgrid-ruby (6.7.0)
       ruby_http_client (~> 3.4)
-    sidekiq (8.1.0)
-      connection_pool (>= 3.0.0)
-      json (>= 2.16.0)
-      logger (>= 1.7.0)
-      rack (>= 3.2.0)
-      redis-client (>= 0.26.0)
     simple_form (5.4.1)
       actionpack (>= 7.0)
       activemodel (>= 7.0)
@@ -518,7 +510,6 @@ DEPENDENCIES
   rspec-rails
   selenium-webdriver
   sendgrid-ruby
-  sidekiq
   simple_form
   solid_queue
   stateful_enum

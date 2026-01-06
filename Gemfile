@@ -46,8 +46,6 @@ gem 'redcarpet', '~> 3.6'
 gem 'simple_form'
 gem 'image_processing', '~> 1.14'
 
-gem 'sidekiq'
-
 gem 'diffy'
 gem 'paper_trail'
 

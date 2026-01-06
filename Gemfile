@@ -11,7 +11,6 @@ gem 'mimemagic'
 gem 'mime-types-data'
 gem 'mime-types'
 gem 'rexml'
-gem 'matrix'
 
 gem 'propshaft'
 gem 'jsbundling-rails'
@@ -67,6 +66,7 @@ end
 
 group :development, :test do
   gem 'capybara', '~> 3.37'
+  gem 'matrix'
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
   gem 'rspec'

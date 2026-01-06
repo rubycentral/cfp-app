@@ -236,13 +236,6 @@ GEM
       net-smtp
     marcel (1.1.0)
     matrix (0.4.3)
-    mime-types (3.7.0)
-      logger
-      mime-types-data (~> 3.2025, >= 3.2025.0507)
-    mime-types-data (3.2025.0924)
-    mimemagic (0.4.3)
-      nokogiri (~> 1)
-      rake
     mini_magick (5.1.2)
       benchmark
       logger
@@ -489,9 +482,6 @@ DEPENDENCIES
   jsbundling-rails
   launchy
   matrix
-  mime-types
-  mime-types-data
-  mimemagic
   nokogiri
   omniauth-github
   omniauth-rails_csrf_protection (~> 2.0)

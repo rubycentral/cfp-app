@@ -11,7 +11,6 @@ gem 'mimemagic'
 gem 'mime-types-data'
 gem 'mime-types'
 gem 'rexml'
-gem 'matrix'
 
 gem 'propshaft'
 gem 'jsbundling-rails'
@@ -65,13 +64,17 @@ group :development do
   gem 'rack-mini-profiler'
 end
 
-group :development, :test do
+group :test do
   gem 'capybara', '~> 3.37'
+  gem 'matrix'
+  gem 'selenium-webdriver'
+end
+
+group :development, :test do
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
   gem 'rspec'
   gem 'rspec-rails'
-  gem 'selenium-webdriver'
   gem 'debug'
   gem 'faker'
 end

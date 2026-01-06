@@ -58,7 +58,6 @@ end
 
 group :development do
   gem 'annotate'
-  gem 'binding_of_caller'
   gem 'foreman'
   gem 'launchy'
   gem 'rack-mini-profiler'

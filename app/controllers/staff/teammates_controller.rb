@@ -1,7 +1,6 @@
 class Staff::TeammatesController < Staff::ApplicationController
   before_action :enable_staff_event_subnav
   before_action :require_contact_email, only: [:create]
-  respond_to :html
 
   def index
     @staff = TeammateDecorator.decorate_collection(current_event.teammates.accepted.alphabetize)

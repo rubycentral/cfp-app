@@ -9,7 +9,11 @@ class User < ApplicationRecord
   has_secure_password
 
   # Map password_digest to encrypted_password for has_secure_password compatibility
+  undef_method :password_digest
   alias_attribute :password_digest, :encrypted_password
+  def password_digest
+    encrypted_password
+  end
 
   has_many :identities,   dependent: :destroy
   has_many :invitations,  dependent: :destroy

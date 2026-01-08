@@ -1,4 +1,6 @@
 class PasswordsController < ApplicationController
+  include Authentication
+
   allow_unauthenticated_access
   before_action :set_user_by_token, only: %i[ edit update ]
   rate_limit to: 10, within: 3.minutes, only: :create, with: -> { redirect_to new_password_path, alert: "Try again later." }
@@ -8,11 +10,11 @@ class PasswordsController < ApplicationController
   end
 
   def create
-    if user = User.find_by(email: params[:email])
+    if (user = User.find_by(email: params[:user][:email]))
       PasswordsMailer.reset(user).deliver_later
     end
 
-    redirect_to new_session_path, notice: "Password reset instructions sent (if user with that email address exists)."
+    redirect_to new_user_session_path, notice: 'Password reset instructions sent (if user with that email address exists).'
   end
 
   def edit
@@ -20,9 +22,8 @@ class PasswordsController < ApplicationController
   end
 
   def update
-    if @user.update(params.permit(:password, :password_confirmation))
-      @user.sessions.destroy_all
-      redirect_to new_session_path, notice: "Password has been reset."
+    if @user.update(params.require(:user).permit(:password, :password_confirmation))
+      redirect_to new_user_session_path, notice: 'Password has been reset.'
     else
       redirect_to edit_password_path(params[:token]), alert: "Passwords did not match."
     end

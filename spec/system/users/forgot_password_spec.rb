@@ -22,7 +22,7 @@ feature 'Forgot Password', :devise, type: :system do
   scenario 'user can forgot password with valid credentials', js: true do
     user = FactoryBot.create(:user)
     forgot_password(user.email)
-    expect(page).to have_content 'You will receive an email with instructions on how to reset your password in a few minutes.'
+    expect(page).to have_content 'Password reset instructions sent'
   end
 
   # Scenario: User cannot forgot password with wrong email

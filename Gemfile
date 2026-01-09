@@ -74,3 +74,5 @@ group :development, :test do
   gem 'debug'
   gem 'faker'
 end
+
+gem "bcrypt", "~> 3.1"

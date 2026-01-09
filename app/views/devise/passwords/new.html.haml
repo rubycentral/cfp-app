@@ -3,7 +3,7 @@
     %h2 Forgot your password?
 
 .row
-  = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+  = simple_form_for(@user || :user, url: passwords_path, html: {method: :post}) do |f|
 
     .form-inputs
       .col-sm-5.col-centered

@@ -12,9 +12,13 @@ class PasswordsController < ApplicationController
   def create
     if (user = User.find_by(email: params[:user][:email]))
       PasswordsMailer.reset(user).deliver_later
-    end
 
-    redirect_to new_user_session_path, notice: 'Password reset instructions sent (if user with that email address exists).'
+      redirect_to new_user_session_path, notice: 'Password reset instructions sent (if user with that email address exists).'
+    else
+      @user = User.new.tap { it.errors.add(:email, :not_found) }
+
+      render 'devise/passwords/new'
+    end
   end
 
   def edit

@@ -31,7 +31,7 @@
     "tributejs": "^5.1.3"
   },
   "devDependencies": {
-    "esbuild": "^0.27.1"
+    "esbuild": "^0.27.2"
   },
   "browserslist": [
     "defaults"

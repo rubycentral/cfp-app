@@ -12,7 +12,7 @@
     "@hotwired/turbo-rails": "^8.0.23",
     "@popperjs/core": "^2.11.8",
     "@rails/actioncable": "^8.1.200",
-    "@tailwindcss/postcss": "^4.1.17",
+    "@tailwindcss/postcss": "^4.1.18",
     "autoprefixer": "^10.4.24",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",

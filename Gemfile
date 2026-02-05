@@ -23,7 +23,7 @@ gem 'pg'
 
 gem 'haml-rails'
 
-gem 'devise', '~> 4.9'
+gem 'devise', '~> 5.0'
 gem 'omniauth-github'
 gem 'omniauth-twitter'
 gem "omniauth-rails_csrf_protection", "~> 2.0"

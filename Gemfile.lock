@@ -201,7 +201,7 @@ GEM
       haml (>= 4.0.6)
       railties (>= 5.1)
     hashie (5.0.0)
-    honeybadger (6.4.1)
+    honeybadger (6.5.0)
       logger
       ostruct
     i18n (1.14.8)
@@ -479,7 +479,7 @@ DEPENDENCIES
   foreman
   groupdate
   haml-rails
-  honeybadger (~> 6.4)
+  honeybadger (~> 6.5)
   image_processing (~> 1.14)
   jsbundling-rails
   launchy

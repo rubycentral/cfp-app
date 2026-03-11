@@ -189,7 +189,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_11_191326) do
     t.string "name"
     t.string "room_number"
     t.datetime "updated_at", precision: nil
-    t.index ["event_id"], name: "index_rooms_on_event_id"
+    t.index ["event_id", "grid_position"], name: "index_rooms_on_event_id_and_grid_position"
   end
 
   create_table "session_format_configs", force: :cascade do |t|

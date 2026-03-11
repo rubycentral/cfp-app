@@ -24,5 +24,5 @@ end
 #
 # Indexes
 #
-#  index_rooms_on_event_id  (event_id)
+#  index_rooms_on_event_id_and_grid_position  (event_id,grid_position)
 #

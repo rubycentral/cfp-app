@@ -72,7 +72,7 @@
       .widget.widget-card.flush-top
         .widget-header
           %i.bi.bi-chat-dots
-          %h3.comments-heading= pluralize(proposal.public_comments.count, 'Public Comment')
+          %h3.comments-heading= pluralize(proposal.public_comments.length, 'Public Comment')
         .widget-content
           = render partial: 'proposals/comments',
             locals: { proposal: proposal, comments: proposal.public_comments }

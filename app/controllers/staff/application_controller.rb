@@ -12,7 +12,7 @@ class Staff::ApplicationController < ApplicationController
   end
 
   def prevent_self_review
-    if !program_mode? && @proposal.has_speaker?(current_user)
+    if !program_mode? && @proposal.speakers.load && @proposal.has_speaker?(current_user)
       redirect_to event_staff_proposals_url(@proposal.event), flash: {notice: "Can't review your own proposal!"}
     end
   end

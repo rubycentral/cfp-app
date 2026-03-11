@@ -238,11 +238,11 @@ class Proposal < ApplicationRecord
   end
 
   def tags
-    proposal_taggings.to_a.map(&:tag)
+    proposal_taggings.records.map(&:tag)
   end
 
   def review_tags
-    review_taggings.to_a.map(&:tag)
+    review_taggings.records.map(&:tag)
   end
 
   def has_reviewer_comments?

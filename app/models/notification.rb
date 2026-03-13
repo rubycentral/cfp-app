@@ -23,10 +23,6 @@ class Notification < ApplicationRecord
     end
   end
 
-  def self.more_unread_count
-    [unread.count - UNREAD_LIMIT, 0].max
-  end
-
   def mark_as_read
     update(read_at: Time.current)
   end

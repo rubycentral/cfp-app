@@ -27,7 +27,11 @@ class User < ApplicationRecord
   has_many :speakers,      dependent: :destroy
   has_many :ratings,       dependent: :destroy
   has_many :comments,      dependent: :destroy
-  has_many :notifications, dependent: :destroy
+  has_many :notifications, dependent: :destroy do
+    def more_unread_count
+      [unread.count - Notification::UNREAD_LIMIT, 0].max
+    end
+  end
   has_many :proposals, through: :speakers, source: :proposal
   has_many :program_sessions, through: :speakers, source: :program_session
 

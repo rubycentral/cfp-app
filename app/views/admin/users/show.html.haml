@@ -24,7 +24,7 @@
           - talks.each do |proposal|
             %tr
               %td= link_to event.name, event
-              %td= link_to proposal.title, [proposal.event, proposal]
+              %td= link_to proposal.title, [proposal.event, :staff, proposal]
               %td= proposal.state
               %td= truncate(proposal.abstract, length: 80)
 

@@ -56,7 +56,7 @@
             .widget-header
               - if current_user.organizer_for_event?(current_event)
                 .float-end
-                  = link_to "Invite New Teammate", "#", class: "btn btn-primary btn-sm invite-btn invite-new-teammate",
+                  = link_to "Invite New Teammate", "#", class: "btn btn-primary btn-sm invite-new-teammate",
                     data: { bs_toggle: "modal", bs_target: "#new-teammate-invitation" }
               %i.bi.bi-envelope
               %h3 Team Invitations

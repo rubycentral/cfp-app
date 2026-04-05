@@ -10,7 +10,7 @@
         .text
           =markdown(comment.body)
 
-= form_for comments.new do |f|
+= form_for comments.new, html: {data: {turbo: true}} do |f|
   = f.hidden_field :proposal_id
   .form-group
     - if internal?(f.object)

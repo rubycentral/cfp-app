@@ -194,8 +194,16 @@
 }
 
 /* Teammates */
-.invite-new-teammate {
-  margin: 5px 0;
+.widget .widget-header:has(.invite-new-teammate) {
+  position: relative;
+}
+.widget .widget-header .invite-new-teammate {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 26px;
+  margin: auto 0;
+  height: fit-content;
 }
 
 .pending {

@@ -13,7 +13,7 @@
     "@popperjs/core": "^2.11.8",
     "@rails/actioncable": "^8.1.300",
     "@tailwindcss/postcss": "^4.2.2",
-    "autoprefixer": "^10.4.27",
+    "autoprefixer": "^10.5.0",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
     "chart.js": "^4.5.1",

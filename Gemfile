@@ -15,7 +15,7 @@ gem 'propshaft'
 gem 'jsbundling-rails'
 gem 'cssbundling-rails'
 
-gem 'honeybadger', '~> 6.5'
+gem 'honeybadger', '~> 6.6'
 
 gem 'csv'
 

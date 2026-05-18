@@ -35,7 +35,7 @@ RSpec.describe EventStats do
   end
 
   context 'closed event' do
-    before { event.update(state: Event::STATUSES[:closed]) }
+    before { event.update(state: :closed) }
 
     it 'includes no track stats' do
       expect(subject.program).to have_key Track::NO_TRACK

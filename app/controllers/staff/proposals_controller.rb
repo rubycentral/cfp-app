@@ -1,12 +1,12 @@
 class Staff::ProposalsController < Staff::ApplicationController
   include ProgramSupport
 
-  before_action :require_proposal, only: [:show, :update_state, :update_track, :update_session_format, :finalize]
+  before_action :require_proposal, only: [:show, :update_state, :update, :finalize]
   before_action :enable_staff_selection_subnav
-  skip_before_action :require_program_team, only: [:update_track, :update_session_format]
-  before_action :require_staff, only: [:update_track, :update_session_format]
+  skip_before_action :require_program_team, only: [:update]
+  before_action :require_staff, only: [:update]
 
-  decorates_assigned :proposal, with: Staff::ProposalDecorator
+  private decorates_assigned :proposal, with: Staff::ProposalDecorator
 
   def index
     session[:prev_page] = {name: 'Proposals', path: event_staff_program_proposals_path}
@@ -14,6 +14,10 @@ class Staff::ProposalsController < Staff::ApplicationController
     @proposals = @event.proposals
                    .includes(:event, :review_taggings, :proposal_taggings, :ratings, :session_format, {speakers: :user}).load
     @proposals = Staff::ProposalsDecorator.decorate(@proposals)
+
+    accepted_proposals = @event.proposals.accepted
+    @accepted_not_confirmed_count = accepted_proposals.where(confirmed_at: nil).count
+    @accepted_confirmed_count = accepted_proposals.where.not(confirmed_at: nil).count
   end
 
   def show
@@ -33,28 +37,32 @@ class Staff::ProposalsController < Staff::ApplicationController
       authorize @proposal, :update_state?
     end
 
-    @proposal.update_state(params[:new_state])
+    case params[:new_state]
+    when 'soft_accepted'
+      @proposal.soft_accept
+    when 'soft_waitlisted'
+      @proposal.soft_waitlist
+    when 'soft_rejected'
+      @proposal.soft_reject
+    when 'submitted'
+      @proposal.finalized? ? @proposal.hard_reset : @proposal.reset
+    end
 
     respond_to do |format|
-      format.html { redirect_to event_staff_program_proposals_path(@proposal.event) }
-      format.js
+      format.html { redirect_to event_staff_program_proposals_path(@proposal.event), status: :see_other }
+      format.turbo_stream
     end
   end
 
-  def update_track
+  def update
     authorize @proposal
 
-    @proposal.update(track_id: params[:track_id])
+    @proposal.update!(proposal_update_params)
 
-    render partial: '/shared/proposals/inline_track_edit'
-  end
-
-  def update_session_format
-    authorize @proposal
-
-    @proposal.update(session_format_id: params[:session_format_id])
-
-    render partial: '/shared/proposals/inline_format_edit'
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to event_staff_program_proposal_path(@event, @proposal), status: :see_other }
+    end
   end
 
   def selection
@@ -84,7 +92,7 @@ class Staff::ProposalsController < Staff::ApplicationController
     else
       flash[:danger] = "There was a problem finalizing the proposal: #{@proposal.errors.full_messages.join(', ')}"
     end
-    redirect_to event_staff_program_proposal_path(@proposal.event, @proposal)
+    redirect_to event_staff_program_proposal_path(@proposal.event, @proposal), status: :see_other
   end
 
   def bulk_finalize
@@ -104,5 +112,11 @@ class Staff::ProposalsController < Staff::ApplicationController
       message: "#{state} queued for finalization"
     }
     head :no_content
+  end
+
+  private
+
+  def proposal_update_params
+    params.require(:proposal).permit(:track_id, :session_format_id)
   end
 end

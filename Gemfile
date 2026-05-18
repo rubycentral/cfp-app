@@ -2,64 +2,50 @@
 
 source 'https://rubygems.org'
 
-# https://andycroll.com/ruby/read-ruby-version-in-your-gemfile/
-ruby File.read(".ruby-version").strip
+ruby file: '.ruby-version'
 
 gem 'puma'
-gem 'rails', '~> 8.0.2'
-gem 'mimemagic'
-gem 'mime-types-data'
-gem 'mime-types'
+gem 'rails', '~> 8.1.3'
+gem 'turbo-rails'
+gem 'solid_queue'
+
 gem 'rexml'
-gem 'matrix'
 gem "sentry-ruby"
 gem "sentry-rails"
-gem 'honeybadger', '~> 5.27'
+
+gem 'propshaft'
+gem 'jsbundling-rails'
+gem 'cssbundling-rails'
+
+gem 'honeybadger', '~> 6.5'
 
 gem 'csv'
 
 gem 'pg'
 
-gem 'bootstrap-sass', '~> 3.4.1'
-gem 'haml'
-gem 'jbuilder'
-gem 'jquery-datatables-rails'
-gem 'jquery-rails'
-gem 'jquery-ui-rails'
-gem 'rails-assets-momentjs', source: 'https://rails-assets.org'
-gem 'sassc-rails'
-gem 'selectize-rails'
-gem 'uglifier', '>= 1.3.0'
-gem 'underscore-rails'
+gem 'haml-rails'
 
 gem 'devise', '~> 4.9'
 gem 'omniauth-github'
 gem 'omniauth-twitter'
-gem "omniauth-rails_csrf_protection", "~> 1.0"
+gem "omniauth-rails_csrf_protection", "~> 2.0"
+
+gem 'stateful_enum'
 
 gem 'actionview-encoded_mail_to'
-gem 'active_model_serializers', '~> 0.10.15'
-gem 'bootsnap', '~> 1.18', require: false
-gem 'bootstrap-multiselect-rails', '~> 0.9.9'
+gem 'active_model_serializers', '~> 0.10.16'
+gem 'bootsnap', '~> 1.23', require: false
 gem 'chartkick'
-gem 'coderay', '~> 1.0'
-gem 'country_select', '~> 10.0'
 gem 'draper', '~> 4.0'
-gem 'faker'
 gem 'fastly'
 gem 'groupdate'
 gem 'nokogiri'
 gem 'pundit'
 gem 'redcarpet', '~> 3.6'
 gem 'simple_form'
-gem 'tinymce-rails'
 gem 'rails-i18n', '~> 8.0'
 gem 'image_processing', '~> 1.14'
-gem 'react-rails'
-gem 'shakapacker', '~> 6.6'
 
-gem 'sidekiq'
-gem 'redis', "~> 4.0"
 
 gem 'diffy'
 gem 'paper_trail'
@@ -73,27 +59,24 @@ end
 
 group :development do
   gem 'annotate'
-  gem 'better_errors'
-  gem 'binding_of_caller'
   gem 'foreman'
-  gem 'haml-rails'
   gem 'launchy'
   gem 'rack-mini-profiler'
-  gem 'web-console'
+end
+
+group :test do
+  gem 'capybara', '~> 3.37'
+  gem 'matrix'
+  gem 'selenium-webdriver'
 end
 
 group :development, :test do
-  gem 'capybara', '~> 3.37'
-  gem 'database_cleaner', '~> 2.1'
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
-  gem 'growl'
-  gem 'guard'
-  gem 'guard-livereload', '~> 2.1'
-  gem 'guard-rspec'
-  gem 'rails-controller-testing'
   gem 'rspec'
   gem 'rspec-rails'
-  gem 'selenium-webdriver'
-  gem 'timecop'
+  gem 'debug'
+  gem 'faker'
 end
+
+gem "bcrypt", "~> 3.1"

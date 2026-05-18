@@ -23,7 +23,7 @@
             input_html: { data: { "editor-target": :htmlContent } }
           = link_to("WYSIWYG", '#', { data: { action: "click->editor#wysiwyg" } })
     .resize
-      #page-preview-wrapper
+      .page-preview-wrapper
         %h4 Preview Page
         %iframe{ src: "#{event_staff_page_path(current_event, @page, params.to_unsafe_hash)}",
                  id: "page-preview", name: "page-preview" }

@@ -1,5 +1,4 @@
 class SpeakerInvitationMailer < ApplicationMailer
-
   def create(invitation, speaker)
     @invitation = invitation
     @proposal   = invitation.proposal
@@ -9,5 +8,4 @@ class SpeakerInvitationMailer < ApplicationMailer
                   from: @proposal.event.contact_email,
                   subject: "You've been invited to join the \"#{@proposal.title}\" proposal for #{@proposal.event}"
   end
-
 end

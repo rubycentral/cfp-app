@@ -1,4 +1,4 @@
-%div{ id: "new-teammate-invitation", class: "modal fade" }
+%div{id: "new-teammate-invitation", class: "modal fade", data: {controller: 'modal-autofocus'}}
   .modal-dialog
     .modal-content
       = simple_form_for(:teammate, url: event_staff_teammates_path(event)) do |f|
@@ -8,8 +8,8 @@
           = f.error_notification
           = f.input :email, class: "form-control", autofocus: true
           = f.input :mention_name, label: "Mention Name", class: "form-control", autofocus: true
-          = f.input :role, as: :select, collection: Teammate::STAFF_ROLES, class: "form-control"
+          = f.input :role, as: :select, collection: Teammate.roles.map { |k, v| [v, k] }, class: 'form-control'
 
         .modal-footer
-          %button.pull-right.btn.btn-success{type: "submit"} Invite
-          %button.btn.btn-default{"data-dismiss" => "modal"} Cancel
+          %button.float-end.btn.btn-success{type: "submit"} Invite
+          %button.btn.btn-secondary{type: 'button', 'data-bs-dismiss' => 'modal'} Cancel

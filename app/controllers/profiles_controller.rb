@@ -1,6 +1,10 @@
 class ProfilesController < ApplicationController
   before_action :require_user
 
+  def show
+    redirect_to edit_profile_path
+  end
+
   def edit
     current_user.valid?
     flash.now[:warning] = incomplete_profile_msg unless current_user.complete?
@@ -10,9 +14,9 @@ class ProfilesController < ApplicationController
     if current_user.update(user_params)
 
       if current_user.unconfirmed_email.present?
-        flash[:danger] = I18n.t("devise.registrations.update_needs_confirmation")
+        flash[:danger] = 'Your account has been updated, but we need to verify your new email address. Please check your email and follow the confirmation link.'
       else
-        flash[:info] = I18n.t("devise.registrations.updated")
+        flash[:info] = 'Your account has been updated successfully.'
       end
 
       current_user.speakers.where(event: current_event).update_all(
@@ -22,8 +26,49 @@ class ProfilesController < ApplicationController
       redirect_to (session.delete(:target) || root_url)
     else
       flash.now[:danger] = "Unable to save profile. Please correct the following: #{current_user.errors.full_messages.join(', ')}."
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
+  end
+
+  def notifications
+  end
+
+  def update_notifications
+    if current_user.update(notifications_params)
+      redirect_to notifications_profile_path, flash: {info: 'Notification preferences updated.'}
+    else
+      render :notifications, status: :unprocessable_entity
+    end
+  end
+
+  def merge
+    @legacy_user = User.find_by(id: session[:pending_merge_user_id])
+    @provider = session[:pending_merge_provider]
+
+    unless @legacy_user && @provider
+      redirect_to edit_profile_path
+    end
+  end
+
+  def confirm_merge
+    legacy_user = User.find_by(id: session[:pending_merge_user_id])
+    provider = session[:pending_merge_provider]
+    uid = session[:pending_merge_uid]
+    account_name = session[:pending_merge_account_name]
+
+    unless legacy_user && provider && uid
+      return redirect_to edit_profile_path, flash: {danger: 'Merge session expired. Please try again.'}
+    end
+
+    current_user.merge_from!(legacy_user)
+    current_user.identities.create!(provider: provider, uid: uid, account_name: account_name)
+
+    session.delete(:pending_merge_user_id)
+    session.delete(:pending_merge_provider)
+    session.delete(:pending_merge_uid)
+    session.delete(:pending_merge_account_name)
+
+    redirect_to edit_profile_path, flash: {info: "Successfully merged accounts and connected #{Identity::PROVIDER_NAMES[provider]}."}
   end
 
   private
@@ -31,8 +76,11 @@ class ProfilesController < ApplicationController
   def user_params
     params.require(:user).permit(:bio, :gender, :ethnicity, :country, :name,
                                  :email, :password, :password_confirmation,
-                                 :github_account, :twitter_account,
-                                 teammates_attributes: [:id, :notification_preference])
+                                 :github_account, :twitter_account)
+  end
+
+  def notifications_params
+    params.require(:user).permit(teammates_attributes: [:id, :notification_preference])
   end
 
   def incomplete_profile_msg

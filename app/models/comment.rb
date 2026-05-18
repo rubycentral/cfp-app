@@ -1,5 +1,4 @@
 class Comment < ApplicationRecord
-
   belongs_to :proposal
   belongs_to :user
 
@@ -9,7 +8,6 @@ class Comment < ApplicationRecord
   def public?
     type == "PublicComment"
   end
-
 end
 
 # == Schema Information

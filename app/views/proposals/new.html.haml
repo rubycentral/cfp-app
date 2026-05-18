@@ -1,39 +1,18 @@
-.event-info-bar
-  .row.margin-bottom
-    .col-md-8
-      .event-info.event-info-dense
-        %strong.event-title= event.name
-        - if event.start_date? && event.end_date?
-          %span.event-meta
-            %i.fa.fa-fw.fa-calendar
-            = event.date_range
-    .col-md-4.text-right.text-right-responsive
-      .event-info.event-info-dense
-        %span{:class => "event-meta event-status-badge event-status-#{event.status}"}
-          CFP
-          = event.status
-        - if event.open?
-          %span.event-meta
-            = t("proposal.new.closes")
-            %strong= l(event.closes_at, format: :short)
-  .row
-    .col-md-4.col-md-push-8.text-right.test-right-responsive
-      %a{class: "btn btn-default", href: @switch_locale_path}
-        = t("proposal.new.change_locale")
+= render 'shared/event_info_bar', event: event
 
 .page-header.page-header-slim
   .row
     .col-md-12
       %h1= t "proposal.new.title"
 
-.row
+.row{'data-controller' => 'proposal-preview', 'data-proposal-preview-url-value' => preview_event_proposals_path(event)}
   .col-md-12
     .tabbable
       %ul.nav.nav-tabs
-        %li.active
-          %a{"data-toggle" => "tab", :href => "#create-proposal"}= t("proposal.new.form")
-        %li
-          %a{"data-toggle" => "tab", :href => "#preview"}= t("proposal.new.preview")
+        %li.nav-item
+          %a.nav-link.active{"data-bs-toggle" => "tab", :href => "#create-proposal"}= t("proposal.new.form")
+        %li.nav-item
+          %a.nav-link{"data-bs-toggle" => "tab", :href => "#preview", "data-action" => "click->proposal-preview#refresh"}= t("proposal.new.preview")
       .tab-content
         #create-proposal.tab-pane.active
           .row
@@ -41,7 +20,7 @@
               %p= raw t("proposal.new.instruction", guideline: link_to(t("proposal.new.guidelines"), event_path(event.slug)))
               %p= t("proposal.new.gfm_html")
 
-              = simple_form_for proposal, url: event_proposals_path(event) do |f|
+              = simple_form_for proposal, url: event_proposals_path(event), html: {'data-proposal-preview-target' => 'form'} do |f|
                 = render partial: 'form', locals: {f: f}
         #preview.tab-pane
           = render partial: 'preview', locals: { proposal: proposal }

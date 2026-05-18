@@ -71,21 +71,6 @@ describe Notification do
     end
   end
 
-  describe ".more_unread?" do
-    let(:user) { create(:user) }
-
-    before :each do
-      create_count = Notification::UNREAD_LIMIT + 2
-      create_count.times do |i|
-        create(:notification, read_at: nil, message: "Notification #{i}", user: user)
-      end
-    end
-
-    it "tells you there are more than the Notification::UNREAD_LIMIT of #{Notification::UNREAD_LIMIT} notifications for user" do
-      expect(user.notifications.more_unread?).to eq(true)
-    end
-  end
-
   describe ".more_unread_count" do
     let(:user) { create(:user) }
 

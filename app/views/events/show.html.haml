@@ -5,20 +5,20 @@
         %strong.event-title= event.name
         - if event.start_date? && event.end_date?
           %span.event-meta
-            %i.fa.fa-fw.fa-calendar
+            %i.bi.bi-calendar
             = event.date_range
         - if event.url?
           %span.event-meta
-            %i.fa.fa-fw.fa-external-link-square
+            %i.bi.bi-box-arrow-up-right
             = link_to(event.url, event.url, target: "_blank")
         - if event.contact_email?
           %span.event-meta
-            %i.fa.fa-fw.fa-envelope
+            %i.bi.bi-envelope-fill
             = mail_to(current_event.contact_email, current_event.contact_email, encode: "javascript")
 
 .row
   .col-md-12
-    .page-header
+    %header.page-header
       %h1
         = event.name
         CFP
@@ -27,7 +27,7 @@
   .col-md-4.col-md-push-8
     .event-info.event-info-block.callout
       .call-header
-        .label.label-success.label-large.inline-block
+        .label.badge.text-bg-success.label-large.inline-block
           CFP
           = event.status
 
@@ -41,7 +41,7 @@
             %strong= time_ago_in_words(event.closes_at)
             left to submit your proposal
           %div
-            = link_to "Submit a proposal", new_event_proposal_path, class: "btn btn-primary"
+            = link_to "Submit a proposal", new_event_proposal_path(event), class: "btn btn-primary"
       - elsif event.closed?
         .panel-body
           %p

@@ -1,13 +1,13 @@
 class ProposalsController < ApplicationController
   before_action :require_event, except: :index
   before_action :require_user
-  before_action :require_proposal, except: [ :index, :create, :new, :parse_edit_field ]
+  before_action :require_proposal, except: [ :index, :create, :new, :preview ]
   before_action :load_proposal_associations, only: :show
   before_action :require_invite_or_speaker, only: [:show]
-  before_action :require_speaker, except: [ :index, :create, :new, :parse_edit_field ]
+  before_action :require_speaker, except: [ :index, :create, :new, :preview ]
   around_action :set_locale
 
-  decorates_assigned :proposal
+  private decorates_assigned :proposal
 
   def index
     proposals = current_user.proposals.
@@ -27,9 +27,7 @@ class ProposalsController < ApplicationController
     @switch_locale_path = new_event_proposal_path(@event, locale: (I18n.locale == :ja ? :en : :ja))
 
     if @event.closed?
-      redirect_to event_path (@event)
-      flash[:danger] = "The CFP is closed for proposal submissions."
-      return
+      return redirect_to @event, flash: {danger: 'The CFP is closed for proposal submissions.'}
     end
     @proposal = @event.proposals.new
     @proposal.speakers.build(user: current_user)
@@ -38,43 +36,37 @@ class ProposalsController < ApplicationController
 
   def update_notes
     if @proposal.update(confirmation_notes: notes_params[:confirmation_notes])
-      flash[:success] = "Confirmation notes successfully updated."
-      redirect_to event_proposal_path(slug: @proposal.event.slug, uuid: @proposal)
+      redirect_to [@proposal.event, @proposal], flash: {success: 'Confirmation notes successfully updated.'}
     else
-      flash[:danger] = "There was a problem updating confirmation notes."
+      flash.now[:danger] = 'There was a problem updating confirmation notes.'
       render :show
     end
   end
 
   def confirm
     @proposal.confirm
-    flash[:success] = "You have confirmed your participation in #{@proposal.event.name}."
-    redirect_to event_proposal_path(slug: @proposal.event.slug, uuid: @proposal)
+    redirect_to [@proposal.event, @proposal], status: :see_other, flash: {success: "You have confirmed your participation in #{@proposal.event.name}."}
   end
 
   def withdraw
-    @proposal.withdraw unless @proposal.confirmed?
-    flash[:info] = "As requested, your talk has been removed for consideration."
-    redirect_to event_proposal_url(slug: @proposal.event.slug, uuid: @proposal)
+    @proposal.withdraw! unless @proposal.confirmed?
+    redirect_to [@proposal.event, @proposal], status: :see_other, flash: {info: 'As requested, your talk has been removed for consideration.'}
   end
 
   def decline
-    @proposal.decline
-    flash[:info] = "As requested, your talk has been removed for consideration."
-    redirect_to event_proposal_url(slug: @proposal.event.slug, uuid: @proposal)
+    @proposal.decline!
+    redirect_to [@proposal.event, @proposal], status: :see_other,
+      flash: {info: 'As requested, your talk has been removed for consideration.'}
   end
 
   def destroy
-    @proposal.destroy
-    flash[:info] = "Your proposal has been deleted."
-    redirect_to event_proposals_url
+    @proposal.destroy!
+    redirect_to event_proposals_url(@event), status: :see_other, flash: {info: 'Your proposal has been deleted.'}
   end
 
   def create
     if @event.closed? && @event.closes_at < 1.hour.ago
-      redirect_to event_path (@event)
-      flash[:danger] = "The CFP is closed for proposal submissions."
-      return
+      return redirect_to @event, flash: {danger: 'The CFP is closed for proposal submissions.'}
     end
     @proposal = @event.proposals.new(proposal_params)
     speaker = @proposal.speakers[0]
@@ -83,13 +75,12 @@ class ProposalsController < ApplicationController
 
     if @proposal.save
       current_user.update_bio
-      flash[:confirm] = setup_flash_message
       if (slack_url = ENV['SLACK_WEBHOOK_URL'])
-        Net::HTTP.post_form URI(slack_url), payload: {text: %(:new: Someone submitted a new proposal! "#{proposal.title}")}.to_json rescue nil
+        Net::HTTP.post_form URI(slack_url), payload: {text: %(:new: Someone submitted a new proposal! "#{@proposal.title}")}.to_json rescue nil
       end
-      redirect_to event_proposal_url(event_slug: @event.slug, uuid: @proposal)
+      redirect_to [@event, @proposal], flash: {confirm: setup_flash_message}
     else
-      flash[:danger] = "There was a problem saving your proposal."
+      flash.now[:danger] = 'There was a problem saving your proposal.'
       render :new
     end
   end
@@ -108,25 +99,19 @@ class ProposalsController < ApplicationController
 
   def update
     if params[:confirm]
-      @proposal.update(confirmed_at: Time.current)
-      redirect_to event_event_proposals_url(slug: @event.slug, uuid: @proposal), flash: { success: "Thank you for confirming your participation" }
+      @proposal.update!(confirmed_at: Time.current)
+      redirect_to [@event, @proposal], flash: {success: 'Thank you for confirming your participation'}
     elsif @proposal.speaker_update_and_notify(proposal_params)
-      redirect_to event_proposal_url(event_slug: @event.slug, uuid: @proposal)
+      redirect_to [@event, @proposal]
     else
-      flash[:danger] = "There was a problem saving your proposal."
+      flash.now[:danger] = 'There was a problem saving your proposal.'
       render :edit
     end
   end
 
-  def parse_edit_field
-    respond_to do |format|
-      format.js do
-        render locals: {
-          field_name: params[:name],
-          text: params[:text]
-        }
-      end
-    end
+  def preview
+    @proposal = @event.proposals.new(preview_params).decorate
+    render partial: 'preview', locals: { proposal: @proposal }
   end
 
   private
@@ -135,6 +120,10 @@ class ProposalsController < ApplicationController
     params.require(:proposal).permit(:title, {tags: []}, :session_format_id, :track_id, :abstract, :details, :pitch, custom_fields: @event.custom_fields,
                                      comments_attributes: [:body, :proposal_id, :user_id],
                                      speakers_attributes: [:bio, :id])
+  end
+
+  def preview_params
+    params.fetch(:proposal, {}).permit(:title, {tags: []}, :session_format_id, :track_id, :abstract, :details, :pitch, custom_fields: @event.custom_fields)
   end
 
   def notes_params
@@ -148,15 +137,13 @@ class ProposalsController < ApplicationController
 
   def require_invite_or_speaker
     unless @proposal.has_speaker?(current_user) || @proposal.has_invited?(current_user)
-      redirect_to root_path
-      flash[:danger] = "You are not an invited speaker for the proposal you are trying to access."
+      redirect_to root_path, flash: {danger: 'You are not an invited speaker for the proposal you are trying to access.'}
     end
   end
 
   def require_speaker
     unless @proposal.has_speaker?(current_user)
-      redirect_to root_path
-      flash[:danger] = "You are not a listed speaker for the proposal you are trying to access."
+      redirect_to root_path, flash: {danger: 'You are not a listed speaker for the proposal you are trying to access.'}
     end
   end
 
@@ -173,7 +160,7 @@ class ProposalsController < ApplicationController
 
   def require_waitlisted_or_accepted_state
     unless @proposal.waitlisted? || @proposal.accepted?
-      redirect_to event_url(@event.slug)
+      redirect_to @event
     end
   end
 

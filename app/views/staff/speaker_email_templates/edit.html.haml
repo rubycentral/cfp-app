@@ -1,0 +1,11 @@
+= turbo_frame_tag dom_id(@event, @type_key) do
+  %section.template-section
+    %h3.template-title= "#{@type_text} template"
+    = form_for @event, url: event_staff_speaker_email_template_path(@event, @type_key), method: :patch, html: {role: 'form'} do |f|
+      .form-group.template-actions
+        %button.btn.btn-sm.btn-success{type: 'submit'} Save
+        = link_to "Remove", event_staff_speaker_email_template_path(@event, @type_key), class: "btn btn-sm btn-danger",
+          data: {turbo_method: :delete, turbo_confirm: 'This template will be erased and the default template will be used instead. Proceed?'}
+        = link_to "Cancel", event_staff_speaker_email_template_path(@event, @type_key), class: "btn btn-sm btn-gray"
+      .form-group
+        = f.text_area @type_key, class: 'form-control', rows: 20, placeholder: "Please enter some text", value: @text, autofocus: true

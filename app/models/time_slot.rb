@@ -12,7 +12,6 @@ class TimeSlot < ApplicationRecord
   before_save :clear_fields_if_session
 
   scope :day, -> (num) { where(conference_day: num).order(:start_time).order(room_name: :asc) }
-  scope :start_times_by_day, -> (num) { day(num+1).pluck(:start_time).uniq }
   scope :by_room, -> do
     joins(:room).where.not(rooms: {grid_position: nil}).sort_by { |slot| slot.room.grid_position }
   end
@@ -46,13 +45,6 @@ class TimeSlot < ApplicationRecord
       slot.delete("desc")
       self.create!(slot)
     end
-  end
-
-  def self.bulk_build(params)
-  end
-
-  def self.track_names
-    pluck(:track_name).uniq
   end
 
   def clear_fields_if_session

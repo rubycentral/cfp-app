@@ -1,16 +1,6 @@
-.navbar.navbar-fixed-top.program-subnav
+.navbar.navbar-expand-lg.fixed-top.program-subnav
   .container-fluid
-    %ul.nav.navbar-nav.navbar-right
-      %li{class: subnav_item_class("event-program-proposals-link")}
-        = link_to event_staff_program_proposals_path do
-          %span Proposals
-      %li{class: subnav_item_class("event-program-proposals-selection-link")}
-        = link_to selection_event_staff_program_proposals_path do
-          %span Selection
-      %li{class: subnav_item_class("event-program-bulk-finalize-link")}
-        = link_to bulk_finalize_event_staff_program_proposals_path do
-          %span Bulk Finalize
-    %ul.nav.navbar-nav.session-counts
+    %ul.navbar-nav.session-counts
       %li.static
         %span.title Sessions:
         %div.counts-container
@@ -24,8 +14,8 @@
       - if program_tracks.any?
         %li.static
           %span.title By Track:
-          %form.track-select{data: {event: current_event.slug}}
-            %select{id: 'track-select', name: 'track'}
+          %form.track-select{data: {controller: 'track-filter', event: current_event.slug}}
+            %select{name: 'track', data: {track_filter_target: 'select', action: 'change->track-filter#filter'}}
               %option{value: 'all', selected: sticky_selected_track.blank?} All
               %option{value: ' '} General
               - program_tracks.each do |track|
@@ -37,3 +27,14 @@
             .by-track.all-waitlisted
               %span Waitlisted
               %span.badge= @all_waitlisted_track_count
+
+    %ul.navbar-nav.ms-auto
+      %li.nav-item{class: subnav_item_class(:event_program_proposals)}
+        = link_to event_staff_program_proposals_path, class: 'nav-link' do
+          %span Proposals
+      %li.nav-item{class: subnav_item_class(:event_program_proposals_selection)}
+        = link_to selection_event_staff_program_proposals_path, class: 'nav-link' do
+          %span Selection
+      %li.nav-item{class: subnav_item_class(:event_program_bulk_finalize)}
+        = link_to bulk_finalize_event_staff_program_proposals_path, class: 'nav-link' do
+          %span Bulk Finalize

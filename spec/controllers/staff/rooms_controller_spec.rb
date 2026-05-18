@@ -5,10 +5,10 @@ describe Staff::RoomsController, type: :controller do
   before { sign_in(create(:organizer, event: event)) }
 
   describe "DELETE 'destroy'" do
-    it "destroys the room with ajax" do
+    it "destroys the room with turbo_stream" do
       room = create(:room, event: event)
       expect {
-        delete :destroy, xhr: true, params: {id: room, event_slug: event}
+        delete :destroy, params: {id: room, event_slug: event}, as: :turbo_stream
       }.to change(Room, :count).by(-1)
       expect(response).to be_successful
     end

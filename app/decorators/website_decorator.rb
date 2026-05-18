@@ -1,4 +1,4 @@
-class WebsiteDecorator < ApplicationDecorator
+class WebsiteDecorator < Draper::Decorator
   delegate_all
   delegate :title, :author, :description, to: :meta_data
 

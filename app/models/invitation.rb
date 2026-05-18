@@ -1,18 +1,31 @@
-require 'digest/sha1'
-
 class Invitation < ApplicationRecord
-  include Invitable
+  enum :state, {pending: 'pending', accepted: 'accepted', declined: 'declined'}, default: :pending do
+    event :accept do
+      transition :pending => :accepted
+
+      before do |user|
+        self.user = user
+        proposal.speakers.create!(user: user, event: proposal.event, skip_name_email_validation: true)
+      end
+    end
+
+    event :decline do
+      transition :pending => :declined
+    end
+  end
 
   belongs_to :proposal
   belongs_to :user, optional: true
 
-  def accept(user)
-    transaction do
-      self.user = user
-      self.state = State::ACCEPTED
-      proposal.speakers.create(user: user, event: proposal.event, skip_name_email_validation: true)
-      save
-    end
+  before_create :set_slug
+
+  validates :email, presence: true
+  validates_format_of :email, with: /@/
+
+  private
+
+  def set_slug
+    self.slug = Digest::SHA1.hexdigest([email, rand(1000)].map(&:to_s).join('-'))[0, 10]
   end
 end
 

@@ -1,0 +1,10 @@
+#show-custom-fields
+  = turbo_frame_tag 'custom-fields' do
+    - if @event.custom_fields_string.empty? && current_user.organizer_for_event?(@event)
+      = link_to 'Add', edit_event_staff_custom_fields_path(@event),
+        data: {turbo: true, turbo_frame: 'custom-fields'}, class: 'btn btn-success btn-sm float-end add-custom-fields'
+    - else
+      %p= @event.custom_fields_string
+      - if current_user.organizer_for_event?(@event)
+        = link_to 'Edit', edit_event_staff_custom_fields_path(@event),
+          data: {turbo: true, turbo_frame: 'custom-fields'}, class: 'btn btn-primary btn-sm float-end edit-custom-fields'

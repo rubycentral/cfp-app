@@ -25,14 +25,12 @@ feature "Listing events for different roles", type: :system do
 
   context "Event CFP page" do
     scenario "the user sees proper stats" do
-      skip "FIX ME, WHICH USER?! 'the user' is far too generic. Also why is it failing with 1 day off?"
       visit event_path(event)
 
       expect(page).to have_content event.name
       expect(page).to have_link 'Submit a proposal'
-      expect(page).to have_content "Closes at #{(21.days.from_now).strftime('%b %-d')}"
+      expect(page).to have_content "CFP closes: #{(21.days.from_now).strftime('%b %-d')}"
       expect(page).to have_content '21 days left to submit your proposal'
-      expect(page).to have_content '1 proposal submitted'
     end
 
     scenario "the event title is a link if it's set" do

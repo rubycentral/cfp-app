@@ -34,7 +34,7 @@ jobs:
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres@localhost:5432/cfp_app_test
-        run: bundle e rails db:setup assets:precompile spec
+        run: bundle e rails db:create db:schema:load assets:precompile spec
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v4

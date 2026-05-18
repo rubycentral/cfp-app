@@ -2,7 +2,7 @@ class ScheduleController < ApplicationController
   include WebsiteScheduleHelper
   after_action :set_cache_headers, only: :show
 
-  decorates_assigned :schedule, with: Staff::TimeSlotDecorator
+  private decorates_assigned :schedule, with: Staff::TimeSlotDecorator
 
   def show
     @schedule = current_website.time_slots.grid_order

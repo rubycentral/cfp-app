@@ -58,7 +58,7 @@ feature "A user sees correct information for the current event and their role", 
     expect(current_path).to eq(events_path)
 
     within ".navbar" do
-      expect(page).to have_link("Kaigi on Rails CFPApp") # https://github.com/kaigionrails/cfp-app/commit/e745df4da883
+      expect(page).to have_link("Kaigi on Rails CFP App") # https://github.com/kaigionrails/cfp-app/commit/e745df4da883
       expect(page).to_not have_link("My Proposals")
       expect(page).to have_link("", href: "/notifications")
       expect(page).to have_link(normal_user.name)
@@ -113,7 +113,7 @@ feature "A user sees correct information for the current event and their role", 
     signin(normal_user.email, normal_user.password)
 
     within ".navbar" do
-      expect(page).to have_content("Kaigi on Rails CFPApp") # https://github.com/kaigionrails/cfp-app/commit/e745df4da883
+      expect(page).to have_content("Kaigi on Rails CFP App") # https://github.com/kaigionrails/cfp-app/commit/e745df4da883
       expect(page).to have_link("", href: "/notifications")
       expect(page).to have_link(normal_user.name)
     end

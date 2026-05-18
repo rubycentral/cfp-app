@@ -1,4 +1,4 @@
-class Staff::ProgramSessionDecorator < ApplicationDecorator
+class Staff::ProgramSessionDecorator < Draper::Decorator
   decorates_association :speakers
   delegate_all
 
@@ -8,34 +8,28 @@ class Staff::ProgramSessionDecorator < ApplicationDecorator
     classes = "label #{state_class(state)}"
     classes += ' label-large' if large
 
-    h.content_tag :span, state, class: classes
+    h.content_tag :span, object.state_before_type_cast, class: classes
   end
 
   def confirmation_notes_link
     return '' unless object.confirmation_notes?
-    id = h.dom_id(object, 'notes')
+
     h.link_to h.event_staff_program_session_path(object.event, object) do
-      h.content_tag(:i, '', class: 'fa fa-file')
+      h.content_tag(:i, '', class: 'bi bi-file-text')
     end
   end
 
+  STATE_CLASSES = {
+    live: 'label-success',
+    draft: 'label-default',
+    unconfirmed_accepted: 'label-info',
+    unconfirmed_waitlisted: 'label-warning',
+    confirmed_waitlisted: 'label-warning',
+    declined: 'label-danger'
+  }.with_indifferent_access
+
   def state_class(state)
-    case state
-    when ProgramSession::LIVE
-      'label-success'
-    when ProgramSession::DRAFT
-      'label-default'
-    when ProgramSession::UNCONFIRMED_ACCEPTED
-      'label-info'
-    when ProgramSession::UNCONFIRMED_WAITLISTED
-      'label-warning'
-    when ProgramSession::CONFIRMED_WAITLISTED
-      'label-warning'
-    when ProgramSession::DECLINED
-      'label-danger'
-    else
-      'label-default'
-    end
+    STATE_CLASSES[state] || 'label-default'
   end
 
   def track_name
@@ -63,10 +57,6 @@ class Staff::ProgramSessionDecorator < ApplicationDecorator
       })
     end
     data
-  end
-
-  def abstract_markdown
-    h.markdown(object.abstract)
   end
 
   def scheduled_for

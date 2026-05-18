@@ -1,0 +1,5 @@
+= turbo_stream.append 'tracks-table-body' do
+  = render @track, event: current_event
+
+= turbo_stream.update 'config-modal-content' do
+  %div{data: {hide_modal: true}}

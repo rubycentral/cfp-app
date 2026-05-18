@@ -1,8 +1,24 @@
 module ApplicationHelper
+  class MarkdownRenderer < Redcarpet::Render::HTML
+    def block_code(code, language)
+      language ||= 'ruby'
+      %(<pre><code class="language-#{language}">#{ERB::Util.html_escape(code)}</code></pre>)
+    end
+  end
+
+  MARKDOWN_RENDERER = Redcarpet::Markdown.new(
+    MarkdownRenderer.new(filter_html: true, hard_wrap: true),
+    fenced_code_blocks: true,
+    no_intra_emphasis: true,
+    autolink: true,
+    strikethrough: true,
+    lax_html_blocks: true,
+    superscript: true
+  ).freeze
 
   def title
     if @title.blank?
-      "Kaigi on Rails CFPApp"
+      "Kaigi on Rails CFP App"
     else
       @title
     end
@@ -17,35 +33,10 @@ module ApplicationHelper
     end
   end
 
-  class MarkdownRenderer < Redcarpet::Render::HTML
-    def block_code(code, language)
-      language ||= :ruby
-      CodeRay.highlight(code, language)
-    rescue
-      <<~HTML
-        <div class="CodeRay">
-          <div class="code">
-            <pre>#{ERB::Util.html_escape(code)}</pre>
-          </div>
-        </div>
-      HTML
-    end
-  end
-
   def markdown(text)
     return unless text
 
-    rndr = MarkdownRenderer.new(:filter_html => true, :hard_wrap => true)
-    options = {
-      :fenced_code_blocks => true,
-      :no_intra_emphasis => true,
-      :autolink => true,
-      :strikethrough => true,
-      :lax_html_blocks => true,
-      :superscript => true
-    }
-    markdown_to_html = Redcarpet::Markdown.new(rndr, options)
-    markdown_to_html.render(text).html_safe
+    content_tag(:div, MARKDOWN_RENDERER.render(text).html_safe, data: {controller: 'highlight'})
   end
 
   def smart_return_button
@@ -63,11 +54,11 @@ module ApplicationHelper
   def show_flash
     safe_join(
       flash.map do |key, value|
+        autodismiss = key != 'confirm'
         key += " alert-info" if key == "notice" || key == 'confirm'
         key = "danger" if key == "alert"
-        content_tag(:div, class: "container alert alert-dismissable alert-#{key}") do
-          content_tag(:button, content_tag(:span, '', class: 'glyphicon glyphicon-remove'),
-                      class: 'close', data: {dismiss: 'alert'}) +
+        content_tag(:div, class: "container alert alert-dismissible alert-#{key}", data: autodismiss ? {controller: 'alert-autodismiss'} : {}) do
+          content_tag(:button, '', class: 'btn-close', type: 'button', data: {bs_dismiss: 'alert'}, aria: {label: 'Close'}) +
             simple_format(value)
         end
       end
@@ -75,14 +66,14 @@ module ApplicationHelper
   end
 
   def copy_email_btn
-    link_to "<i class='fa fa-files-o'></i> Copy Speaker Emails".html_safe, '#',
-            class: "btn btn-primary btn-sm",
-            id: 'copy-filtered-speaker-emails'
+    link_to "#", class: "btn btn-primary btn-sm", data: {controller: 'copy-speaker-emails', action: 'click->copy-speaker-emails#copy'} do
+      '<span class="bi bi-clipboard"></span> Copy Speaker Emails'.html_safe
+    end
   end
 
   def promote_button(program_session)
     if program_session.can_promote?
-      link_to 'Promote', promote_event_staff_program_session_path(program_session.event, program_session), method: :patch, data: { confirm: "Are you sure you want to promote #{program_session.title}?" }, class: 'btn btn-warning'
+      link_to 'Promote', promote_event_staff_program_session_path(program_session.event, program_session), data: {turbo: true, turbo_method: :patch, turbo_confirm: "Are you sure you want to promote #{program_session.title}?"}, class: 'btn btn-warning'
     end
   end
 
@@ -95,8 +86,7 @@ module ApplicationHelper
   end
 
   def bang(label)
-    content_tag(:span, '',
-                class: 'glyphicon glyphicon-exclamation-sign') + ' ' + label
+    content_tag(:i, '', class: 'bi bi-exclamation-circle') + ' ' + label
   end
 
   def modal(identifier, title = '')
@@ -113,15 +103,16 @@ module ApplicationHelper
   end
 
   def review_nav?(roles)
-    (roles & Teammate::STAFF_ROLES).any?
+    (roles & Teammate.roles.values).any?
   end
 
   def program_nav?(roles)
-    ((roles & Teammate::PROGRAM_TEAM_ROLES).any? && current_event.closed?) || roles.include?('organizer')
+    program_team_roles = Teammate.roles.values_at(:program_team, :organizer)
+    ((roles & program_team_roles).any? && current_event.closed?) || roles.include?(Teammate.roles[:organizer])
   end
 
   def schedule_nav?(roles)
-    roles.include?('organizer')
+    roles.include?(Teammate.roles[:organizer])
   end
 
   def staff_nav?(roles)
@@ -134,6 +125,19 @@ module ApplicationHelper
 
   def admin_nav?
     current_user.admin?
+  end
+
+  def event_status_class(state)
+    case state
+    when 'open'
+      'bg-success'
+    when 'draft'
+      'bg-info'
+    when 'closed'
+      'bg-secondary'
+    else
+      'bg-secondary'
+    end
   end
 
   def new_or_edit_website_path

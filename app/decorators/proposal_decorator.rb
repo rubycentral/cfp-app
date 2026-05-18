@@ -1,5 +1,4 @@
-class ProposalDecorator < ApplicationDecorator
-  include Proposal::State
+class ProposalDecorator < Draper::Decorator
   decorates :proposal
   delegate_all
   decorates_association :speakers
@@ -8,7 +7,7 @@ class ProposalDecorator < ApplicationDecorator
     speaker_state = if object.awaiting_confirmation?
       'Waiting for speaker confirmation'
     elsif state.include?('soft')
-      SUBMITTED
+      Proposal.states[:submitted]
     else
       state
     end
@@ -18,7 +17,7 @@ class ProposalDecorator < ApplicationDecorator
 
   def reviewer_state(small: false)
     reviewer_state = if state.include?('soft')
-      SUBMITTED
+      Proposal.states[:submitted]
     else
       state
     end
@@ -27,20 +26,15 @@ class ProposalDecorator < ApplicationDecorator
   end
 
   def state
-    current_state = object.state
-    if current_state == REJECTED
-      NOT_ACCEPTED
+    if object.rejected?
+      Proposal.states[:not_accepted]
     else
-      current_state
+      Proposal.states[object.state.to_sym]
     end
   end
 
   def average_rating
     h.number_with_precision(object.average_rating, precision: 1) || ''
-  end
-
-  def score_for(user)
-    user.rating_for(object).score
   end
 
   def session_format_name
@@ -93,46 +87,6 @@ class ProposalDecorator < ApplicationDecorator
     speaker ? speaker.bio : ''
   end
 
-  def pitch_markdown
-    h.markdown(object.pitch)
-  end
-
-  def details_markdown
-    h.markdown(object.details)
-  end
-
-  def abstract_markdown
-    h.markdown(object.abstract)
-  end
-
-  def withdraw_button
-    h.link_to h.bang('Withdraw Proposal'),
-      h.withdraw_event_proposal_path(uuid: object, event_slug: object.event.slug),
-      method: :post,
-      data: {
-        confirm: 'This will remove your talk from consideration and send an email to the event coordinator. Are you sure you want to do this?'
-      },
-      class: 'btn btn-warning',
-      id: 'withdraw'
-  end
-
-  def confirm_button
-    h.link_to 'Confirm',
-              h.confirm_event_proposal_path(uuid: object, event_slug: object.event.slug),
-              method: :post,
-              class: 'btn btn-success'
-  end
-
-  def decline_button
-    h.link_to h.bang('Decline'),
-              h.decline_event_proposal_path(uuid: object, event_slug: object.event.slug),
-              method: :post,
-              data: {
-                  confirm: 'This will remove your talk from consideration and notify the event staff. Are you sure you want to do this?'
-              },
-              class: 'btn btn-warning'
-  end
-
   def confirm_link
     h.link_to 'confirmation page',
       h.event_proposal_url(object.event, object, protocol: 'https')
@@ -157,67 +111,6 @@ class ProposalDecorator < ApplicationDecorator
     "#{h.time_ago_in_words(object.created_at)} ago"
   end
 
-  def title_input(form)
-    form.input :title,
-    autofocus: true,
-    maxlength: :lookup, input_html: { class: 'watched js-maxlength-alert' }
-  end
-
-  def speaker_input(form)
-    form.input :speaker
-  end
-
-  def abstract_input(form, tooltip = "Proposal Abstract")
-    form.input :abstract,
-      maxlength: 1005, input_html: { class: 'watched js-maxlength-alert', rows: 5 }, popover_icon: { content: tooltip }
-  end
-
-  def standalone_track_select(tooltip)
-    h.simple_form_for :proposal, remote: true do |f|
-      f.input :track,
-        required: false,
-        label_html: { class: 'info-item-heading' },
-        collection: track_options,
-        include_blank: Track::NO_TRACK,
-        selected: object.track_id,
-        id: 'track',
-        input_html: {
-          class: 'proposal-track-select form-control select',
-          data: {
-            target_path: h.event_staff_program_proposal_update_track_path(object.event, object)
-          },
-        },
-        popover_icon: { content: tooltip }
-    end
-  end
-
-  def standalone_format_select(tooltip)
-    h.simple_form_for :proposal, remote: true do |f|
-      f.input :format,
-        required: false,
-        label_html: { class: 'info-item-heading' },
-        collection: format_options,
-        include_blank: Track::NO_TRACK,
-        selected: object.session_format_id,
-        id: 'track',
-        input_html: {
-          class: 'proposal-format-select form-control select',
-          data: {
-            target_path: h.event_staff_program_proposal_update_session_format_path(object.event, object)
-          },
-        },
-        popover_icon: { content: tooltip }
-    end
-  end
-
-  def track_options
-    @track_options ||= object.event.tracks.map { |t| [t.name, t.id] }.sort
-  end
-
-  def format_options
-    @format_options ||= object.event.session_formats.map { |sf| [sf.name, sf.id] }.sort
-  end
-
   def invitations_enabled?(user)
     object.has_speaker?(user) && !object.finalized?
   end
@@ -230,25 +123,16 @@ class ProposalDecorator < ApplicationDecorator
 
   def state_class(state)
     case state
-    when NOT_ACCEPTED
-      if h.current_user.reviewer_for_event?(object.event)
-        'label-danger'
-      else
-        'label-info'
-      end
-    when SOFT_REJECTED
+    when Proposal.states[:not_accepted]
+      h.current_user.reviewer_for_event?(object.event) ? 'label-danger' : 'label-info'
+    when Proposal.states[:soft_rejected]
       'label-danger'
-    when SOFT_WAITLISTED
+    when Proposal.states[:soft_waitlisted], Proposal.states[:withdrawn]
       'label-warning'
-    when WITHDRAWN
-      'label-warning'
-    when ACCEPTED
-      'label-success'
-    when SOFT_ACCEPTED
+    when Proposal.states[:accepted], Proposal.states[:soft_accepted]
       'label-success'
     else
       'label-default'
     end
   end
-
 end

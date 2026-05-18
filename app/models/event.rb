@@ -1,4 +1,6 @@
 class Event < ApplicationRecord
+  enum :state, {draft: 'draft', open: 'open', closed: 'closed'}, default: :draft
+
   has_many :teammates, dependent: :destroy
   has_many :staff, through: :teammates, source: :user
   has_many :proposals, dependent: :destroy
@@ -28,8 +30,7 @@ class Event < ApplicationRecord
   store_accessor :speaker_notification_emails, :waitlist
 
   scope :a_to_z, -> { order('name ASC') }
-  scope :live, -> { where("state = 'open' and (closes_at is null or closes_at > ?)", Time.current) }
-  scope :not_draft, -> { where "state != 'draft'"}
+  scope :live, -> { open.where('closes_at is null or closes_at > ?', Time.current) }
 
   validates :name, presence: true
   validates :slug, presence: true, uniqueness: true
@@ -38,16 +39,11 @@ class Event < ApplicationRecord
   before_validation :generate_slug
   before_save :update_closes_at_if_manually_closed
 
-  STATUSES = { draft: 'draft',
-               open: 'open',
-               closed: 'closed' }
-
   def to_param
     slug
   end
 
-  validate :checklist_complete?, on: :update,
-    if: Proc.new { |e| e.state == STATUSES[:open] }
+  validate :checklist_complete?, on: :update, if: -> { state == Event.states[:open] }
 
   def initialize_speaker_emails
     SpeakerEmailTemplate::TYPES.each do |type|
@@ -72,10 +68,6 @@ class Event < ApplicationRecord
 
   def valid_proposal_tags=(tags_string)
     self.proposal_tags = Tagging.tags_string_to_array(tags_string)
-  end
-
-  def reviewer_tags?
-    review_tags.any?
   end
 
   def valid_review_tags
@@ -110,20 +102,12 @@ class Event < ApplicationRecord
     session_formats.publicly_viewable.count > 1
   end
 
-  def generate_slug
-    self.slug = name.parameterize if name.present? && slug.blank?
-  end
-
   def to_s
     name
   end
 
-  def draft?
-    state == STATUSES[:draft]
-  end
-
   def open?
-    state == STATUSES[:open] && (closes_at.nil? || closes_at > Time.current)
+    state == Event.states[:open] && (closes_at.nil? || closes_at > Time.current)
   end
 
   def closed?
@@ -131,16 +115,16 @@ class Event < ApplicationRecord
   end
 
   def past_open?
-    state == STATUSES[:open] && closes_at < Time.current
+    state == Event.states[:open] && closes_at < Time.current
   end
 
   def status
     if open?
-      STATUSES[:open]
+      Event.states[:open]
     elsif draft?
-      STATUSES[:draft]
+      Event.states[:draft]
     else
-      STATUSES[:closed]
+      Event.states[:closed]
     end
   end
 
@@ -205,15 +189,6 @@ class Event < ApplicationRecord
     start_date + (conference_day - 1).days
   end
 
-  def url_must_be_valid
-    uri = URI.parse(url)
-    unless uri.kind_of?(URI::HTTP) || uri.kind_of?(URI::HTTPS)
-      errors.add(:url, "must start with http:// or https://")
-    end
-  rescue URI::InvalidURIError
-    errors.add(:url, "must be valid")
-  end
-
   def stats
     @stats ||= EventStats.new(self)
   end
@@ -228,8 +203,21 @@ class Event < ApplicationRecord
 
   private
 
+  def generate_slug
+    self.slug = name.parameterize if name.present? && slug.blank?
+  end
+
+  def url_must_be_valid
+    uri = URI.parse(url)
+    unless uri.kind_of?(URI::HTTP) || uri.kind_of?(URI::HTTPS)
+      errors.add(:url, "must start with http:// or https://")
+    end
+  rescue URI::InvalidURIError
+    errors.add(:url, "must be valid")
+  end
+
   def update_closes_at_if_manually_closed
-    if changes.key?(:state) && changes[:state] == [STATUSES[:open], STATUSES[:closed]]
+    if changes.key?(:state) && changes[:state] == [Event.states[:open], Event.states[:closed]]
       self.closes_at = Time.current
     end
   end
@@ -240,25 +228,25 @@ end
 # Table name: events
 #
 #  id                          :integer          not null, primary key
-#  name                        :string
-#  slug                        :string
-#  url                         :string
-#  contact_email               :string
-#  state                       :string           default("draft")
 #  archived                    :boolean          default(FALSE)
-#  opens_at                    :datetime
 #  closes_at                   :datetime
-#  start_date                  :datetime
+#  contact_email               :string
+#  created_at                  :datetime
+#  custom_fields               :text
 #  end_date                    :datetime
-#  info                        :text
 #  guidelines                  :text
-#  settings                    :text
+#  info                        :text
+#  name                        :string
+#  opens_at                    :datetime
 #  proposal_tags               :text
 #  review_tags                 :text
-#  custom_fields               :text
-#  speaker_notification_emails :text             default({:accept=>"", :reject=>"", :waitlist=>""})
-#  created_at                  :datetime
+#  settings                    :text
+#  slug                        :string
+#  speaker_notification_emails :text
+#  start_date                  :datetime
+#  state                       :string           default("draft")
 #  updated_at                  :datetime
+#  url                         :string
 #
 # Indexes
 #

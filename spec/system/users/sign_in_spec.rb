@@ -11,7 +11,7 @@ feature 'Sign In', :devise, type: :system do
   #   Then I see an invalid credentials message
   scenario 'user cannot sign in if not registered' do
     signin('test@example.com', 'please123')
-    expect(page).to have_content I18n.t 'devise.failure.not_found_in_database', authentication_keys: 'Email'
+    expect(page).to have_content 'Invalid Email or password.'
   end
 
   # Scenario: User can sign in with valid credentials
@@ -22,7 +22,7 @@ feature 'Sign In', :devise, type: :system do
   scenario 'user can sign in with valid credentials' do
     user = FactoryBot.create(:user)
     signin(user.email, user.password)
-    expect(page).to have_content I18n.t 'devise.sessions.signed_in'
+    expect(page).to have_content 'Signed in successfully.'
   end
 
   # Scenario: User cannot sign in with wrong email
@@ -33,7 +33,7 @@ feature 'Sign In', :devise, type: :system do
   scenario 'user cannot sign in with wrong email' do
     user = FactoryBot.create(:user)
     signin('invalid@email.com', user.password)
-    expect(page).to have_content I18n.t 'devise.failure.not_found_in_database', authentication_keys: 'Email'
+    expect(page).to have_content 'Invalid Email or password.'
   end
 
   # Scenario: User cannot sign in with wrong password
@@ -44,7 +44,7 @@ feature 'Sign In', :devise, type: :system do
   scenario 'user cannot sign in with wrong password' do
     user = FactoryBot.create(:user)
     signin(user.email, 'invalidpass')
-    expect(page).to have_content I18n.t 'devise.failure.invalid', authentication_keys: 'Email', normalize_ws: true
+    expect(page).to have_content 'Invalid Email or password.'
   end
 
   # Scenario: Organizer User gets redirected to the events_path

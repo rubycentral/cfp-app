@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
-  include ActivateNavigation
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   # Prevent CSRF attacks by raising an exception.
@@ -9,10 +8,6 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_event
   helper_method :current_website
-  helper_method :display_staff_event_subnav?
-  helper_method :display_staff_selection_subnav?
-  helper_method :display_staff_program_subnav?
-  helper_method :display_website_subnav?
   helper_method :program_mode?
   helper_method :schedule_mode?
   helper_method :program_tracks
@@ -22,7 +17,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   layout 'application'
-  decorates_assigned :event
+  private decorates_assigned :event
 
   private
 
@@ -31,8 +26,8 @@ class ApplicationController < ActionController::Base
       session[:pending_invite_accept_url]
     elsif !user.complete?
       edit_profile_path
-    elsif request.referrer.present? && (request.referrer != new_user_session_url) && (request.referrer != user_developer_omniauth_authorize_url)
-      request.referrer
+    elsif (referer = request.referer).present? && (URI.parse(referer).host == request.host) && (referer != new_user_session_url) && !referer.start_with?(edit_password_url(current_user)) && (referer != omniauth_authorize_url(provider: :developer))
+      referer
     elsif session[:target]
       session.delete(:target)
     elsif user.staff_for?(current_event)
@@ -101,8 +96,7 @@ class ApplicationController < ActionController::Base
   def require_user
     unless user_signed_in?
       session[:target] = request.path
-      flash[:danger] = "You must be signed in to access this page. If you haven't created an account, please create one."
-      redirect_to new_user_session_url
+      redirect_to new_user_session_url, flash: {danger: "You must be signed in to access this page. If you haven't created an account, please create one."}
     end
   end
 
@@ -116,8 +110,7 @@ class ApplicationController < ActionController::Base
     if @event
       set_current_event(@event)
     else
-      flash[:danger] = "Your event could not be found, please check the url."
-      redirect_to events_path
+      redirect_to events_path, flash: {danger: 'Your event could not be found, please check the url.'}
     end
   end
 
@@ -130,8 +123,7 @@ class ApplicationController < ActionController::Base
   end
 
   def user_not_authorized
-    flash[:alert] = "You are not authorized to perform this action."
-    redirect_to(request.referrer || root_path)
+    redirect_to (request.referrer || root_path), flash: {alert: 'You are not authorized to perform this action.'}
   end
 
   def event_params
@@ -154,32 +146,16 @@ class ApplicationController < ActionController::Base
     @display_staff_subnav = true
   end
 
-  def display_staff_event_subnav?
-    @display_staff_subnav
-  end
-
   def enable_staff_selection_subnav
     @display_selection_subnav = true
-  end
-
-  def display_staff_selection_subnav?
-    @display_selection_subnav
   end
 
   def enable_staff_program_subnav
     @display_program_subnav = true
   end
 
-  def display_staff_program_subnav?
-    @display_program_subnav
-  end
-
   def enable_staff_schedule_subnav
     @display_schedule_subnav = true
-  end
-
-  def display_website_subnav?
-    @display_website_subnav
   end
 
   def enable_website_subnav

@@ -13,13 +13,13 @@ end
 #
 # Table name: website_contents
 #
-#  id         :bigint(8)        not null, primary key
-#  html       :text
-#  placement  :string           default("head"), not null
-#  name       :string
-#  website_id :bigint(8)
+#  id         :integer          not null, primary key
 #  created_at :datetime         not null
+#  html       :text
+#  name       :string
+#  placement  :string           default("head"), not null
 #  updated_at :datetime         not null
+#  website_id :integer
 #
 # Indexes
 #

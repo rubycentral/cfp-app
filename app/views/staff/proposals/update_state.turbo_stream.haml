@@ -1,0 +1,12 @@
+- proposal = Staff::ProposalDecorator.decorate(@proposal)
+= turbo_stream.replace dom_id(@proposal, 'status_index') do
+  = render 'staff/proposals/proposal_status', proposal: proposal, context: 'index', small: true, show_confirmed: true
+
+= turbo_stream.replace dom_id(@proposal, 'state_buttons_index') do
+  = render 'staff/proposals/proposal_state_buttons', proposal: proposal, context: 'index', buttons: proposal.small_state_buttons
+
+= turbo_stream.replace dom_id(@proposal, 'status_show') do
+  = render 'staff/proposals/proposal_status', proposal: proposal, context: 'show', small: true, show_confirmed: false
+
+= turbo_stream.replace dom_id(@proposal, 'state_buttons_show') do
+  = render 'staff/proposals/proposal_state_buttons', proposal: proposal, context: 'show', buttons: proposal.state_buttons(show_hard_reset: true)

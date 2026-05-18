@@ -1,5 +1,4 @@
 module ScheduleHelper
-
   def row_time(time_slot)
     if time_slot && time_slot.start_time
       fmt = "%l:%M%p"
@@ -26,21 +25,19 @@ module ScheduleHelper
     link_to('Generate Grid',
             new_event_staff_schedule_grid_bulk_time_slot_path(current_event, day),
             class: 'btn btn-primary btn-sm generate-grid',
-            remote: true,
-            data: {toggle: 'modal', target: '#bulk-time-slot-create-dialog'}
+            data: {turbo: true, turbo_frame: 'grid-modal-content'}
     )
   end
 
   def cancel_bulk_preview_button(day)
     link_to('Cancel',
-            cancel_event_staff_schedule_grid_bulk_time_slot_path(current_event, day),
+            cancel_event_staff_schedule_grid_bulk_time_slot_path(current_event, day: day),
             class: 'btn btn-default btn-sm bulk-cancel',
-            remote: true
+            data: {turbo: true, turbo_method: :get}
     )
   end
 
   def session_format_duration_options
     current_event.session_formats.sort_by_name.map {|sf| ["#{sf.name} (#{sf.duration} min)", sf.duration]}
   end
-
 end

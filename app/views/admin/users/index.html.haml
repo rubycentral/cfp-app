@@ -1,18 +1,20 @@
 .row
   .col-md-12
-    .page-header.clearfix
+    %header.page-header
       %h1 Users Admin
 
 .row
   .col-sm-12
     .widget.widget-table
       .widget-header
-        %i.fa.fa-users
+        %i.bi.bi-people-fill
         %h3 Users
       .widget-content
-        %table.users.datatable.table.table-striped.table-bordered
+        %table.datatable.table.table-striped{data: {controller: 'cfp-datatable', cfp_column_types: '["text", "text"]'}}
           %thead
             %tr
+              %th
+              %th
               %th
               %th
               %th
@@ -23,7 +25,9 @@
               %th Name
               %th Email
               %th Role
-              %th OAuth Type
+              %th OAuth Types
+              %th Proposals
+              %th Accepted
               %th Created At
               %th.actions Actions
           %tbody

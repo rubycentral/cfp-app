@@ -1,4 +1,4 @@
-FROM public.ecr.aws/docker/library/ruby:4.0.0-slim-bookworm as builder
+FROM public.ecr.aws/docker/library/ruby:4.0.2-slim-bookworm as builder
 WORKDIR /app
 
 RUN apt-get update \

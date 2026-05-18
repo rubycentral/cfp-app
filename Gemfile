@@ -17,7 +17,7 @@ gem 'propshaft'
 gem 'jsbundling-rails'
 gem 'cssbundling-rails'
 
-gem 'honeybadger', '~> 6.5'
+gem 'honeybadger', '~> 6.6'
 
 gem 'csv'
 
@@ -34,7 +34,7 @@ gem 'stateful_enum'
 
 gem 'actionview-encoded_mail_to'
 gem 'active_model_serializers', '~> 0.10.16'
-gem 'bootsnap', '~> 1.23', require: false
+gem 'bootsnap', '~> 1.24', require: false
 gem 'chartkick'
 gem 'draper', '~> 4.0'
 gem 'fastly'

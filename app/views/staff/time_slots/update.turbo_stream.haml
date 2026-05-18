@@ -2,7 +2,7 @@
 
 %turbo-stream{action: 'datatable-update', target: 'organizer-time-slots', 'row-id': @time_slot.id}
   %template
-    = render(time_slot_decorated)
+    = render(partial: 'staff/time_slots/time_slot', formats: [:html], object: time_slot_decorated)
 
 = turbo_stream.update 'flash' do
   = show_flash

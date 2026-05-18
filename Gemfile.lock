@@ -92,8 +92,8 @@ GEM
       activerecord (>= 2.3.0)
       rake (>= 0.8.7)
     aws-eventstream (1.4.0)
-    aws-partitions (1.1233.0)
-    aws-sdk-core (3.244.0)
+    aws-partitions (1.1247.0)
+    aws-sdk-core (3.247.0)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.992.0)
       aws-sigv4 (~> 1.9)
@@ -101,11 +101,11 @@ GEM
       bigdecimal
       jmespath (~> 1, >= 1.6.1)
       logger
-    aws-sdk-kms (1.123.0)
-      aws-sdk-core (~> 3, >= 3.244.0)
+    aws-sdk-kms (1.125.0)
+      aws-sdk-core (~> 3, >= 3.247.0)
       aws-sigv4 (~> 1.5)
-    aws-sdk-s3 (1.218.0)
-      aws-sdk-core (~> 3, >= 3.244.0)
+    aws-sdk-s3 (1.222.0)
+      aws-sdk-core (~> 3, >= 3.247.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.5)
     aws-sigv4 (1.12.1)
@@ -113,8 +113,8 @@ GEM
     base64 (0.3.0)
     bcrypt (3.1.22)
     benchmark (0.5.0)
-    bigdecimal (4.1.0)
-    bootsnap (1.23.0)
+    bigdecimal (4.1.2)
+    bootsnap (1.24.4)
       msgpack (~> 1.2)
     builder (3.3.0)
     capybara (3.40.0)
@@ -173,7 +173,7 @@ GEM
     factory_bot_rails (6.5.1)
       factory_bot (~> 6.5)
       railties (>= 6.1.0)
-    faker (3.6.1)
+    faker (3.8.0)
       i18n (>= 1.8.11, < 2)
     faraday (2.7.4)
       faraday-net_http (>= 2.0, < 3.1)
@@ -189,8 +189,8 @@ GEM
       raabro (~> 1.4)
     globalid (1.3.0)
       activesupport (>= 6.1)
-    groupdate (6.7.0)
-      activesupport (>= 7.1)
+    groupdate (6.8.0)
+      activesupport (>= 7.2)
     haml (7.0.2)
       temple (>= 0.8.2)
       thor
@@ -201,7 +201,7 @@ GEM
       haml (>= 4.0.6)
       railties (>= 5.1)
     hashie (5.0.0)
-    honeybadger (6.5.3)
+    honeybadger (6.6.0)
       logger
       ostruct
     i18n (1.14.8)
@@ -218,7 +218,7 @@ GEM
     jmespath (1.6.2)
     jsbundling-rails (1.3.1)
       railties (>= 6.0.0)
-    json (2.19.3)
+    json (2.19.4)
     jsonapi-renderer (0.2.2)
     jwt (2.7.0)
     launchy (3.1.1)
@@ -242,7 +242,7 @@ GEM
       logger
     mini_mime (1.1.5)
     mini_portile2 (2.8.9)
-    minitest (6.0.2)
+    minitest (6.0.5)
       drb (~> 2.0)
       prism (~> 1.5)
     msgpack (1.8.0)
@@ -257,7 +257,7 @@ GEM
     net-smtp (0.5.1)
       net-protocol
     nio4r (2.7.5)
-    nokogiri (1.19.2)
+    nokogiri (1.19.3)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     oauth (1.1.0)
@@ -304,7 +304,7 @@ GEM
       prettyprint
     prettyprint (0.2.0)
     prism (1.9.0)
-    propshaft (1.3.1)
+    propshaft (1.3.2)
       actionpack (>= 7.0.0)
       activesupport (>= 7.0.0)
       rack
@@ -312,20 +312,20 @@ GEM
       date
       stringio
     public_suffix (6.0.1)
-    puma (7.2.0)
+    puma (8.0.1)
       nio4r (~> 2.0)
     pundit (2.5.2)
       activesupport (>= 3.0.0)
     raabro (1.4.0)
     racc (1.8.1)
-    rack (3.2.5)
+    rack (3.2.6)
     rack-mini-profiler (4.0.1)
       rack (>= 1.2.0)
     rack-protection (4.2.1)
       base64 (>= 0.1.0)
       logger (>= 1.6.0)
       rack (>= 3.0.0, < 4)
-    rack-session (2.1.1)
+    rack-session (2.1.2)
       base64 (>= 0.1.0)
       rack (>= 3.0.0)
     rack-test (2.2.0)
@@ -407,9 +407,9 @@ GEM
       logger
     ruby2_keywords (0.0.5)
     ruby_http_client (3.5.5)
-    rubyzip (3.2.2)
+    rubyzip (3.3.0)
     securerandom (0.4.1)
-    selenium-webdriver (4.41.0)
+    selenium-webdriver (4.44.0)
       base64 (~> 0.2)
       logger (~> 1.4)
       rexml (~> 3.2, >= 3.2.5)
@@ -474,7 +474,7 @@ DEPENDENCIES
   annotate
   aws-sdk-s3
   bcrypt (~> 3.1)
-  bootsnap (~> 1.23)
+  bootsnap (~> 1.24)
   capybara (~> 3.37)
   chartkick
   cssbundling-rails
@@ -490,7 +490,7 @@ DEPENDENCIES
   foreman
   groupdate
   haml-rails
-  honeybadger (~> 6.5)
+  honeybadger (~> 6.6)
   image_processing (~> 1.14)
   jsbundling-rails
   launchy
@@ -522,7 +522,7 @@ DEPENDENCIES
   turbo-rails
 
 RUBY VERSION
-  ruby 4.0.0
+  ruby 4.0.2
 
 BUNDLED WITH
-  4.0.3
+  4.0.9

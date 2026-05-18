@@ -2,3 +2,7 @@
 .github/
 .circleci/
 .log/
+tmp/
+vendor/bundle/
+node_modules/
+.env*

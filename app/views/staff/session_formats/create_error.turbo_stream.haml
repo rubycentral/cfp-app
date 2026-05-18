@@ -1,0 +1,5 @@
+= turbo_stream.update 'config-modal-content' do
+  = render partial: 'form_modal', locals: {session_format: @session_format, title: 'New Session Format'}
+
+= turbo_stream.update 'flash' do
+  = show_flash

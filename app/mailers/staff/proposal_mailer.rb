@@ -4,13 +4,12 @@ class Staff::ProposalMailer < ApplicationMailer
   attr_accessor :test_mode
 
   def send_email(proposal)
-    case proposal.state
-      when Proposal::State::ACCEPTED
-        accept_email(proposal.event, proposal)
-      when Proposal::State::REJECTED
-        reject_email(proposal.event, proposal)
-      when Proposal::State::WAITLISTED
-        waitlist_email(proposal.event, proposal)
+    if proposal.accepted?
+      accept_email(proposal.event, proposal)
+    elsif proposal.rejected?
+      reject_email(proposal.event, proposal)
+    elsif proposal.waitlisted?
+      waitlist_email(proposal.event, proposal)
     end
   end
 
@@ -29,7 +28,7 @@ class Staff::ProposalMailer < ApplicationMailer
     @proposal      = proposal.decorate
     @event         = event
     @template_name = 'accept_email'
-    subject        = subject_for(proposal: @proposal, type: Proposal::State::ACCEPTED)
+    subject        = subject_for(proposal: @proposal, type: :accepted)
     mail_to_speakers(event, proposal, subject)
   end
 
@@ -37,7 +36,7 @@ class Staff::ProposalMailer < ApplicationMailer
     @proposal      = proposal
     @event         = event
     @template_name = 'reject_email'
-    subject        = subject_for(proposal: @proposal, type: Proposal::State::REJECTED)
+    subject        = subject_for(proposal: @proposal, type: :rejected)
     mail_to_speakers(event, proposal, subject)
   end
 
@@ -45,7 +44,7 @@ class Staff::ProposalMailer < ApplicationMailer
     @proposal      = proposal.decorate
     @event         = event
     @template_name = 'waitlist_email'
-    subject        = subject_for(proposal: proposal, type: Proposal::State::WAITLISTED)
+    subject        = subject_for(proposal: proposal, type: :waitlisted)
     mail_to_speakers(event, proposal, subject)
   end
 

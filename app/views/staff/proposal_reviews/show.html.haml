@@ -1,34 +1,16 @@
-.event-info-bar
-  .row
-    .col-md-4
-      .event-info.event-info-dense
-        %strong.event-title= event.name
-        - if event.start_date? && event.end_date?
-          %span.event-meta
-            %i.fa.fa-fw.fa-calendar
-            = event.date_range
-    .col-md-4
-      .event-info.event-info-dense
-        %span{:class => "event-meta event-status-badge event-status-#{event.status}"}
-          CFP
-          = event.status
-        - if event.open?
-          %span.event-meta
-            CFP closes:
-            %strong= event.closes_at(:month_day_year)
-    .col-md-4.text-right
-      .btn-nav
-        = link_to(event_staff_proposals_path, class: "btn btn-primary btn-sm") do
-          &laquo; Return to Proposals
-        = link_to "Next Proposal", event_staff_proposal_path(uuid: "PLACEHOLDER"), class: "next-proposal btn btn-primary btn-sm", data: {"proposal-uuid" => proposal.uuid }
+= render layout: 'shared/event_info_bar', locals: {event: event, actions: true} do
+  .btn-nav
+    = link_to(event_staff_proposals_path, class: 'btn btn-primary btn-sm') do
+      &laquo; Return to Proposals
+    = link_to 'Next Proposal', event_staff_proposal_path(uuid: 'PLACEHOLDER'), class: 'next-proposal btn btn-primary btn-sm', data: {controller: 'next-proposal', proposal_uuid: proposal.uuid}
 
 #proposal
-  .page-header.page-header-slim
+  %header.page-header.page-header-slim
     .row
       .col-md-8
         %h1
           = proposal.title
-      .col-sm-4.text-right
+      .col-sm-4.text-end
         .proposal-info-bar
           .proposal-meta.proposal-description
             .proposal-meta-item
@@ -52,40 +34,33 @@
                   #{proposal.tags_labels}
           .col-sm-4
             .col-sm-6.no-pad-left
-              .proposal-meta-item.full-width
-                #current-format
+              .proposal-meta-item.full-width{data: {controller: 'inline-edit'}}
+                #current-format{data: {inline_edit_target: 'display'}}
                   .info-item-heading Format
-                  #format-name.pull-left
+                  #format-name.float-start
                     #{proposal.session_format_name}
                   - if track_and_format_edit
-                    #edit-format-icon.fa.fa-pencil
-                #edit-format-wrapper
+                    %i.bi.bi-pencil-fill.inline-edit-icon{data: {action: 'click->inline-edit#show'}}
+                #edit-format-wrapper{data: {inline_edit_target: 'edit'}}
                   %span
                     = render 'shared/proposals/inline_format_edit', proposal: proposal
-                  #cancel-format-editing.fa.fa-undo
+                  %i.bi.bi-arrow-counterclockwise.inline-edit-icon{data: {action: 'click->inline-edit#cancel'}}
             .col-sm-6
-              .proposal-meta-item.full-width
-                #current-track
+              .proposal-meta-item.full-width{data: {controller: 'inline-edit'}}
+                #current-track{data: {inline_edit_target: 'display'}}
                   .info-item-heading Track
-                  #track-name.pull-left
+                  #track-name.float-start
                     #{proposal.track_name}
                   - if track_and_format_edit
-                    #edit-track-icon.fa.fa-pencil
-                #edit-track-wrapper
+                    %i.bi.bi-pencil-fill.inline-edit-icon{data: {action: 'click->inline-edit#show'}}
+                #edit-track-wrapper{data: {inline_edit_target: 'edit'}}
                   %span
                     = render 'shared/proposals/inline_track_edit', proposal: proposal
-                  #cancel-track-editing.btn.fa.fa-undo
+                  %i.bi.bi-arrow-counterclockwise.inline-edit-icon{data: {action: 'click->inline-edit#cancel'}}
           .col-sm-4
             .proposal-meta-item.col-sm-8
               .info-item-heading Reviewer Tags
-              .proposal-reviewer-tags
-                -if proposal.review_tags.present?
-                  #{proposal.review_tags_labels}
-                -else
-                  %em None
-              #edit-tags-icon.fa.fa-pencil
-              #review-tags-form-wrapper
-                = render 'shared/proposals/tags_form', locals: { event: event, proposal: proposal }
+              = render 'shared/proposals/reviewer_tags', event: event, proposal: proposal
             .proposal-meta-item.col-sm-3
               .info-item-heading Updated
               .proposal-updated=  proposal.updated_in_words
@@ -96,7 +71,7 @@
     .col-md-4
       .widget.widget-card.flush-top
         .widget-header
-          %i.fa.fa-comments
+          %i.bi.bi-chat-dots
           %h3.comments-heading= pluralize(proposal.public_comments.count, 'Public Comment')
         .widget-content
           = render partial: 'proposals/comments',
@@ -111,13 +86,4 @@
             %p
               %em Ratings are closed
 
-        .widget-content
-          = render partial: 'shared/proposals/rating_form', locals: { event: event, proposal: proposal, rating: rating }
-
-        .internal-comments{ class: !rating.persisted? ? "hidden" : nil }
-          .widget-header
-            %i.fa.fa-comments
-            %h3.comments-heading= pluralize(proposal.internal_comments.count, 'Internal Comment')
-          .widget-content
-            = render partial: 'proposals/comments',
-                locals: { proposal: proposal, comments: proposal.internal_comments }
+        = render partial: 'shared/proposals/rating_widget', locals: { event: event, proposal: proposal, rating: rating }

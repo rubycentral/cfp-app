@@ -1,16 +1,16 @@
-class InvitationDecorator < ApplicationDecorator
+class InvitationDecorator < Draper::Decorator
   delegate_all
   decorates_association :proposal
 
   STATE_LABEL_MAP = {
-    Invitation::State::PENDING => 'label-default',
-    Invitation::State::DECLINED => 'label-danger',
-    Invitation::State::ACCEPTED => 'label-success'
+    Invitation.states[:pending] => 'label-default',
+    Invitation.states[:declined] => 'label-danger',
+    Invitation.states[:accepted] => 'label-success'
   }
 
   def decline_button(small: false)
     classes = 'btn btn-danger'
-    classes += ' btn-xs' if small
+    classes += ' btn-sm' if small
 
     h.link_to 'Decline',
       h.decline_invitation_path(object.slug),
@@ -20,7 +20,7 @@ class InvitationDecorator < ApplicationDecorator
 
   def accept_button(small: false)
     classes = 'btn btn-success'
-    classes += ' btn-xs' if small
+    classes += ' btn-sm' if small
 
     h.link_to 'Accept',
       h.accept_invitation_path(object.slug),

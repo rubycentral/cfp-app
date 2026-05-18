@@ -1,6 +1,6 @@
 module ProgramSessionHelper
   def session_states_collection
-    ProgramSession::STATES.map { |state| [state.titleize, state] }
+    ProgramSession.states.values.map { |state| [state.titleize, state] }
   end
 
   def speakers_emails(session)

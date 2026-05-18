@@ -17,7 +17,7 @@ feature 'Managing Speaker Invitations', type: :system do
 
   let(:go_to_proposal) {
     login_as(user)
-    visit(event_proposal_path(event_slug: proposal.event.slug, uuid: proposal))
+    visit(event_proposal_path(proposal.event, proposal))
   }
 
   context "Creating an invitation" do

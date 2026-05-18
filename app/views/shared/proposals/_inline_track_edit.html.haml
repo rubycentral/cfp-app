@@ -1,4 +1,12 @@
 - if proposal.event.multiple_tracks?
-  = proposal.standalone_track_select(track_tooltip)
+  = simple_form_for :proposal, url: event_staff_program_proposal_path(proposal.event, proposal), method: :patch do |f|
+    = f.input :track_id,
+      as: :select,
+      required: false,
+      label: false,
+      collection: proposal.event.tracks.map { |t| [t.name, t.id] }.sort,
+      include_blank: Track::NO_TRACK,
+      selected: proposal.track_id,
+      input_html: {class: 'proposal-track-select form-control select', data: {action: 'change->inline-edit#submitAndClose'}}
 - else
   = proposal.track_name

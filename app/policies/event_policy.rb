@@ -36,9 +36,7 @@ class EventPolicy < ApplicationPolicy
   def staff?
     @user.reviewer_events.where(slug: @record.slug).present?
   end
-
 end
-
 
   # def index?
   #   false

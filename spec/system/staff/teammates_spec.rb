@@ -4,13 +4,13 @@ feature "Staff Organizers can manage teammates", type: :system do
   let(:invitation) { create(:teammate, :has_been_invited) }
 
   let!(:organizer_user) { create(:user) }
-  let!(:organizer_teammate) { create(:teammate, :organizer, user: organizer_user, event: invitation.event, state: Teammate::ACCEPTED) }
+  let!(:organizer_teammate) { create(:teammate, :organizer, user: organizer_user, event: invitation.event, state: :accepted) }
 
   let!(:reviewer_user) { create(:user) }
-  let!(:reviewer_teammate) { create(:teammate, :reviewer, user: reviewer_user, event: invitation.event, state: Teammate::ACCEPTED) }
+  let!(:reviewer_teammate) { create(:teammate, :reviewer, user: reviewer_user, event: invitation.event, state: :accepted) }
 
   let!(:program_team_user) { create(:user) }
-  let!(:program_team_teammate) { create(:teammate, :program_team, user: program_team_user, event: invitation.event, state: Teammate::ACCEPTED) }
+  let!(:program_team_teammate) { create(:teammate, :program_team, user: program_team_user, event: invitation.event, state: :accepted) }
 
   before { login_as(organizer_user) }
 
@@ -56,7 +56,7 @@ feature "Staff Organizers can manage teammates", type: :system do
       click_button "Invite"
 
       expect(page).to have_content "You must set a contact email for this event before inviting teammates."
-      expect(current_path).to eq(event_staff_edit_path(incomplete_event))
+      expect(current_path).to eq(edit_event_staff_path(incomplete_event))
     end
   end
 
@@ -65,7 +65,7 @@ feature "Staff Organizers can manage teammates", type: :system do
       visit event_staff_teammates_path(invitation.event)
       row = find("tr#teammate-#{program_team_teammate.id}")
 
-      page.execute_script("$('#teammate-#{program_team_teammate.id} .change-role').click()")
+      within(row) { find('.change-role').click }
       select "reviewer", from: "Role"
 
       click_button "Save"
@@ -78,7 +78,7 @@ feature "Staff Organizers can manage teammates", type: :system do
       visit event_staff_teammates_path(invitation.event)
       row = find("tr#teammate-#{program_team_teammate.id}")
 
-      page.execute_script("$('#teammate-#{program_team_teammate.id} .edit-mention-name').click()")
+      within(row) { find('.edit-mention-name').click }
       fill_in "Mention Name", with: "new_mention_name"
 
       click_button "Save"

@@ -1,1 +1,8 @@
-= proposal.standalone_format_select(session_format_tooltip)
+= simple_form_for :proposal, url: event_staff_program_proposal_path(proposal.event, proposal), method: :patch do |f|
+  = f.input :session_format_id,
+    as: :select,
+    required: false,
+    label: false,
+    collection: proposal.event.session_formats.map { |sf| [sf.name, sf.id] }.sort,
+    selected: proposal.session_format_id,
+    input_html: {class: 'proposal-format-select form-control select', data: {action: 'change->inline-edit#submitAndClose'}}

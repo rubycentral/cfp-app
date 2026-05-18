@@ -1,0 +1,50 @@
+/*!
+ * Social Buttons for Bootstrap
+ */
+
+.btn-twitter {
+  color: var(--white);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: var(--btn-twitter-bg);
+  background-image: linear-gradient(to bottom, var(--btn-twitter-bg-light), var(--btn-twitter-bg-dark));
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.btn-twitter:hover,
+.btn-twitter:focus,
+.btn-twitter:active,
+.btn-twitter.active,
+.btn-twitter.disabled,
+.btn-twitter[disabled] {
+  color: var(--white);
+  background-color: var(--btn-twitter-bg-dark);
+}
+
+.btn-twitter:active,
+.btn-twitter.active {
+  background-color: var(--btn-twitter-bg-active);
+}
+
+.btn-github {
+  color: var(--black);
+  text-shadow: 0 0.7px 0 rgba(0, 0, 0, 0.1);
+  background-color: var(--btn-github-bg);
+  background-image: linear-gradient(to bottom, var(--btn-github-bg-light), var(--btn-github-bg-dark));
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  margin-left: 10px;
+}
+
+.btn-github:hover,
+.btn-github:focus,
+.btn-github:active,
+.btn-github.active,
+.btn-github.disabled,
+.btn-github[disabled] {
+  color: var(--black);
+  background-color: var(--btn-github-bg-dark);
+}
+
+.btn-github:active,
+.btn-github.active {
+  background-color: var(--btn-github-bg-active);
+}

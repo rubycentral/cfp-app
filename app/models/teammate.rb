@@ -1,21 +1,32 @@
 class Teammate < ApplicationRecord
-  PENDING = "pending"
-  ACCEPTED = "accepted"
-  DECLINED = "declined"
-  STATES = ["pending", "accepted", "declined"]
-
-  STAFF_ROLES = ['reviewer', 'program team', 'organizer']
-  PROGRAM_TEAM_ROLES = ['program team', 'organizer']
-
-  ALL = 'all'
-  MENTIONS = 'mentions'
-  IN_APP_ONLY = 'in_app_only'
-
-  NOTIFICATION_PREFERENCES =  {
-    ALL => 'All Via Email',
-    MENTIONS => 'Mention Only Via Email',
-    IN_APP_ONLY => 'In App Only'
+  NOTIFICATION_PREFERENCE_LABELS = {
+    'all' => 'All Via Email',
+    'mentions' => 'Mention Only Via Email',
+    'in_app_only' => 'In App Only'
   }
+
+  enum :role, {reviewer: 'reviewer', program_team: 'program team', organizer: 'organizer'}, scopes: false
+
+  enum :state, {pending: 'pending', accepted: 'accepted', declined: 'declined'}, default: :pending do
+    event :accept do
+      transition :pending => :accepted
+
+      before do |user|
+        self.user = user
+        self.accepted_at = Time.current
+      end
+    end
+
+    event :decline do
+      transition :pending => :declined
+
+      before do
+        self.declined_at = Time.current
+      end
+    end
+  end
+
+  enum :notification_preference, {all: 'all', mentions: 'mentions', in_app_only: 'in_app_only'}, default: :all, scopes: false, instance_methods: false
 
   belongs_to :event
   belongs_to :user, optional: true
@@ -31,29 +42,13 @@ class Teammate < ApplicationRecord
   scope :notify, -> { where(notifications: true) }
 
   scope :organizer, -> { where(role: "organizer") }
-  scope :program_team, -> { where(role: PROGRAM_TEAM_ROLES) }
-  scope :reviewer, -> { where(role: STAFF_ROLES) }
+  scope :program_team, -> { where(role: [:program_team, :organizer]) }
+  scope :reviewer, -> { where(role: [:reviewer, :program_team, :organizer]) }
 
-  scope :pending, -> { where(state: PENDING) }
-  scope :accepted, -> { where(state: ACCEPTED) }
-  scope :active, -> { where(state: ACCEPTED) }
-  scope :declined, -> { where(state: DECLINED) }
-  scope :invitations, -> { where(state: [PENDING, DECLINED]) }
+  scope :active, -> { accepted }
+  scope :invitations, -> { where(state: [:pending, :declined]) }
 
-  scope :all_emails, -> { where(notification_preference: ALL) }
-
-  def accept(user)
-    self.user = user
-    self.accepted_at = Time.current
-    self.state = ACCEPTED
-    save
-  end
-
-  def decline
-    self.declined_at = Time.current
-    self.state = DECLINED
-    save
-  end
+  scope :all_emails, -> { where(notification_preference: :all) }
 
   def name
     user ? user.name : ""
@@ -63,25 +58,11 @@ class Teammate < ApplicationRecord
     self.user.ratings.not_withdrawn.for_event(current_event).size
   end
 
-  def pending?
-    state == PENDING
-  end
-
   def invite
     self.token = Digest::SHA1.hexdigest(Time.current.to_s + email + rand(1000).to_s)
-    self.state = PENDING
     self.invited_at = Time.current
     save
   end
-
-  def comment_notifications
-    if notifications
-      "\u2713"
-    else
-      "X"
-    end
-  end
-
 end
 
 # == Schema Information

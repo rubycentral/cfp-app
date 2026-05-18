@@ -1,5 +1,4 @@
 module ProfilesHelper
-
   def notification_preferences_tooltip
     <<-HTML
      <p><strong>Notification Preferences</strong></p>
@@ -8,5 +7,4 @@ module ProfilesHelper
      <p><b>In App Only</b> - You will not receive any email notifications and only receive in-app notifications for all public and internal comments.</p>
     HTML
   end
-
 end

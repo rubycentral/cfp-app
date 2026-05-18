@@ -1,17 +1,26 @@
-require 'digest/md5'
-
 class User < ApplicationRecord
+  normalizes :email, with: ->(e) { e.strip.downcase }
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :confirmable, #:validatable,
-         :omniauthable, omniauth_providers: [:twitter, :github, :developer]
+         :rememberable, :trackable, :confirmable #:validatable,
 
+  has_secure_password
+
+  # Map password_digest to encrypted_password for has_secure_password compatibility
+  undef_method :password_digest
+  alias_attribute :password_digest, :encrypted_password
+  def password_digest
+    encrypted_password
+  end
+
+  has_many :identities,   dependent: :destroy
   has_many :invitations,  dependent: :destroy
   has_many :teammates, dependent: :destroy
-  has_many :reviewer_teammates, -> { where(role: ['reviewer', 'program team', 'organizer']) }, class_name: 'Teammate'
+  has_many :reviewer_teammates, -> { where(role: [:reviewer, :program_team, :organizer]) }, class_name: 'Teammate'
   has_many :reviewer_events, through: :reviewer_teammates, source: :event
-  has_many :organizer_teammates, -> { where(role: 'organizer') }, class_name: 'Teammate'
+  has_many :organizer_teammates, -> { where(role: :organizer) }, class_name: 'Teammate'
   has_many :organizer_events, through: :organizer_teammates, source: :event
   has_many :speakers,      dependent: :destroy
   has_many :ratings,       dependent: :destroy
@@ -23,12 +32,12 @@ class User < ApplicationRecord
   validates :bio, length: { maximum: 500 }
   validates :name, presence: true, allow_nil: true
   validates_uniqueness_of :email, allow_blank: true
-  validates_format_of :email, with: Devise.email_regexp, allow_blank: true, if: :email_changed?
-  validates_presence_of :email, on: :create, if: -> { provider.blank? }
+  validates_format_of :email, with: /\A[^@\s]+@[^@\s]+\z/, allow_blank: true, if: :email_changed?  # equivalent to Devise.email_regexp
+  validates_presence_of :email, on: :create, if: -> { provider.blank? && identities.blank? }
   validates_presence_of :email, on: :update, if: -> { provider.blank? || unconfirmed_email.blank? }
   validates_presence_of :password, on: :create
   validates_confirmation_of :password, on: :create
-  validates_length_of :password, within: Devise.password_length, allow_blank: true
+  validates_length_of :password, within: 6..128, allow_blank: true
 
   before_create :check_pending_invite_email
 
@@ -36,22 +45,44 @@ class User < ApplicationRecord
 
   attr_accessor :pending_invite_email
 
-  def self.from_omniauth(auth, invitation_email=nil)
-    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      password = Devise.friendly_token[0,20]
-      user.name = auth['info']['name'] if user.name.blank?
-      user.email = invitation_email || auth['info']['email'] || '' if user.email.blank?
-      user.password = password
-      user.password_confirmation = password
-      if !user.confirmed? && invitation_email.present? && user.email == invitation_email
-        user.skip_confirmation!
+  def self.from_omniauth(auth, invitation_email = nil)
+    # First, lookup in identities table
+    identity = Identity.find_by(provider: auth.provider, uid: auth.uid)
+    return identity.user if identity
+
+    # Fall back to legacy lookup in users table
+    if (user = find_by(provider: auth.provider, uid: auth.uid))
+      # Migrate legacy user to identities table
+      transaction do
+        user.identities.create!(provider: auth.provider, uid: auth.uid, account_name: auth.account_name)
+        user.update_columns(provider: nil, uid: nil)
       end
+      return user
     end
+
+    # Create new user with identity
+    create_from_omniauth!(auth, invitation_email)
+  end
+
+  def self.create_from_omniauth!(auth, invitation_email = nil)
+    user = new(
+      name: auth['info']['name'],
+      email: invitation_email || auth['info']['email'] || '',
+      password: (password = SecureRandom.hex(10)),
+      password_confirmation: password
+    )
+    user.identities.build(provider: auth.provider, uid: auth.uid, account_name: auth.account_name)
+
+    if invitation_email.present? && (user.email == invitation_email)
+      user.confirmed_at = Time.current
+    end
+
+    user.tap(&:save!)
   end
 
   def check_pending_invite_email
     if pending_invite_email.present? && pending_invite_email == email
-      skip_confirmation!
+      self.confirmed_at = Time.current
     end
   end
 
@@ -68,7 +99,13 @@ class User < ApplicationRecord
   end
 
   def connected?(provider)
-    self.provider == provider
+    identities.exists?(provider: provider) || (self.provider == provider)
+  end
+
+  def oauth_providers
+    providers = identities.map(&:provider)
+    providers << provider if provider.present?
+    providers.uniq
   end
 
   def complete?
@@ -140,6 +177,21 @@ class User < ApplicationRecord
       profile_errors.add(:email, :blank, message: "can't be blank") if email.blank?
     end
     profile_errors
+  end
+
+  # Merge another user's associations into this user
+  def merge_from!(other_user)
+    transaction do
+      other_user.invitations.update_all(user_id: id)
+      other_user.teammates.update_all(user_id: id)
+      other_user.speakers.update_all(user_id: id)
+      other_user.ratings.update_all(user_id: id)
+      other_user.comments.update_all(user_id: id)
+      other_user.notifications.update_all(user_id: id)
+
+      # Clear legacy OAuth fields so the old user can't be found via from_omniauth
+      other_user.update_columns(provider: nil, uid: nil)
+    end
   end
 end
 

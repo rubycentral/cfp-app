@@ -1,21 +1,4 @@
-.event-info-bar
-  .row
-    .col-md-8
-      .event-info.event-info-dense
-        %strong.event-title= event.name
-        - if event.start_date? && event.end_date?
-          %span.event-meta
-            %i.fa.fa-fw.fa-calendar
-            = event.date_range
-    .col-md-4.text-right.text-right-responsive
-      .event-info.event-info-dense
-        %span{:class => "event-meta event-status-badge event-status-#{event.status}"}
-          CFP
-          = event.status
-        - if event.open?
-          %span.event-meta
-            CFP closes:
-            %strong= event.closes_at(:month_day_year)
+= render 'shared/event_info_bar', event: event
 .row
   .col-md-8
     %h1 Program Selection
@@ -23,7 +6,7 @@
   &nbsp;
 
 .row
-  .col-sm-8.text-left
+  .col-sm-8.text-start
     %ul.selection-counts
       %li.total.soft-accepted
         %span Accepted
@@ -31,12 +14,12 @@
       %li.total.soft-waitlisted
         %span Waitlisted
         %span.badge= @all_waitlisted_count
-  .col-sm-4.text-right
-    %small.text-right <em>Hint:</em> Hold <kbd>shift</kbd> to sort by multiple columns
+  .col-sm-4.text-end
+    %small.text-end <em>Hint:</em> Hold <kbd>shift</kbd> to sort by multiple columns
 
 .row
   .col-md-12
-    %table#organizer-proposals-selection.datatable.table.table-striped.proposal-list
+    %table.datatable.table.table-striped.proposal-list{data: {controller: 'cfp-datatable', cfp_column_types: '["text", "text", "text", null, "text", "text", "text", "text"]'}}
       %thead
         %tr
           %th
@@ -66,6 +49,6 @@
             %td= proposal.session_format_name
             %td= proposal.review_tags_labels
             %td
-              %span.proposal-status= proposal.state_label(small: true, show_confirmed: true)
+              = render 'staff/proposals/proposal_status', proposal: proposal, context: 'index', small: true, show_confirmed: true
             %td
-              %span.state-buttons= proposal.small_state_buttons
+              = render 'staff/proposals/proposal_state_buttons', proposal: proposal, context: 'index', buttons: proposal.small_state_buttons

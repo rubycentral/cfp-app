@@ -49,6 +49,6 @@ feature 'Sign Up', :devise, type: :system do
   scenario 'user can sign up with valid credentials' do
     user = build(:user)
     sign_up_with(user.email, user.password, user.password)
-    expect(page).to have_content I18n.t('devise.registrations.signed_up_but_unconfirmed')
+    expect(page).to have_content 'A message with a confirmation link has been sent to your email address. Please follow the link to activate your account.'
   end
 end

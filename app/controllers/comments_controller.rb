@@ -16,7 +16,7 @@ class CommentsController < ApplicationController
 
     # this action is used by the proposal show page for both speaker
     # and reviewer, so we reload the page they commented from
-    redirect_back fallback_location: event_proposal_path(@proposal.event, uuid: @proposal)
+    redirect_back fallback_location: event_proposal_path(@proposal.event, @proposal)
   end
 
   private

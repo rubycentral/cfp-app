@@ -1,4 +1,4 @@
-class SpeakerDecorator < ApplicationDecorator
+class SpeakerDecorator < Draper::Decorator
   delegate_all
   decorates_association :proposals
   decorates_association :program_sessions
@@ -15,11 +15,11 @@ class SpeakerDecorator < ApplicationDecorator
   end
 
   def github_account
-    user.github_account.presence || (user.github_uid.presence && github_uid_to_uname(user.github_uid))
+    user.github_account
   end
 
   def twitter_account
-    user.twitter_account.presence || (user.twitter_uid.presence && twitter_uid_to_uname(user.twitter_uid))
+    user.twitter_account
   end
 
   def social_account

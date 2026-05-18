@@ -26,7 +26,7 @@ describe ProposalsController, type: :controller do
 
     context 'user profile is incomplete' do
       let(:lead_in_msg) { 'Before submitting a proposal your profile needs completing. Please correct the following:' }
-      let(:trailing_msg) { ". Visit <a href=\"/profile\">My Profile</a> to update." }
+      let(:trailing_msg) { ". Visit <a href=\"/profile/edit\">My Profile</a> to update." }
 
       it_behaves_like 'an incomplete profile notifier'
     end
@@ -64,7 +64,7 @@ describe ProposalsController, type: :controller do
 
   describe "POST #confirm" do
     it "confirms a proposal" do
-      proposal = create(:proposal_with_track, state: Proposal::ACCEPTED, confirmed_at: nil)
+      proposal = create(:proposal_with_track, state: :accepted, confirmed_at: nil)
       ProgramSession.create_from_proposal(proposal)
       allow_any_instance_of(ProposalsController).to receive(:current_user) { create(:speaker) }
       allow(controller).to receive(:require_speaker).and_return(nil)
@@ -111,7 +111,7 @@ describe ProposalsController, type: :controller do
   end
 
   describe 'POST #decline' do
-    let!(:proposal) { create(:proposal_with_track, state: Proposal::ACCEPTED, confirmed_at: nil) }
+    let!(:proposal) { create(:proposal_with_track, state: :accepted, confirmed_at: nil) }
     before { ProgramSession.create_from_proposal(proposal) }
     before { allow_any_instance_of(ProposalsController).to receive(:current_user) { create(:speaker) } }
     before { allow(controller).to receive(:require_speaker).and_return(nil) }
@@ -128,8 +128,9 @@ describe ProposalsController, type: :controller do
     end
 
     it "changes the proposal program session state to declined" do
-      post :decline, params: {event_slug: proposal.event.slug, uuid: proposal.uuid}
-      expect(assigns(:proposal).program_session.state).to eq('declined')
+      expect {
+        post :decline, params: {event_slug: proposal.event.slug, uuid: proposal.uuid}
+      }.to change { proposal.program_session.reload.state }.to eq('declined')
     end
   end
 
@@ -142,13 +143,12 @@ describe ProposalsController, type: :controller do
     it "updates a proposals attributes" do
       proposal.update(title: 'orig_title', pitch: 'orig_pitch')
 
-      put :update, params: {event_slug: proposal.event.slug, uuid: proposal,
-        proposal: { title: 'new_title', pitch: 'new_pitch' }}
+        put :update, params: {event_slug: proposal.event.slug, uuid: proposal,
+          proposal: { title: 'new_title', pitch: 'new_pitch' }}
 
-      expect(assigns(:proposal).title).to eq('new_title')
-      expect(assigns(:proposal).pitch).to eq('new_pitch')
-      expect(assigns(:proposal).abstract).to_not match('<p>')
-      expect(assigns(:proposal).abstract).to_not match('</p>')
+       expect(proposal.reload).to have_attributes({title: 'new_title', pitch: 'new_pitch'})
+       expect(proposal.abstract).to_not include('<p>')
+       expect(proposal.abstract).to_not include('</p>')
     end
 
     it "sends a notifications to an organizer" do

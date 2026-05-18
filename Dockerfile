@@ -1,14 +1,17 @@
-FROM public.ecr.aws/docker/library/ruby:3.4.2-slim-bookworm as builder
+FROM public.ecr.aws/docker/library/ruby:4.0.2-slim-bookworm as builder
 WORKDIR /app
 
 RUN apt-get update \
     && apt-get install -y curl git libpq-dev build-essential imagemagick libyaml-dev \
-    && curl -sL https://deb.nodesource.com/setup_18.x | bash - \
+    && curl -sL https://deb.nodesource.com/setup_24.x | bash - \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
 COPY Gemfile Gemfile.lock .ruby-version /app/
-RUN bundle install --jobs=10 --path=vendor/bundle --deployment --without test
+RUN bundle config set deployment true \
+	&& bundle config set without test \
+	&& bundle config set path vendor/bundle
+RUN bundle install
 COPY package.json yarn.lock /app/
 RUN npm install -g yarn \
     && yarn install --frozen-lockfile

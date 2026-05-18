@@ -47,29 +47,27 @@ end
 #
 # Table name: websites
 #
-#  id                   :bigint(8)        not null, primary key
-#  event_id             :bigint(8)
-#  created_at           :datetime         not null
-#  updated_at           :datetime         not null
-#  theme                :string           default("default")
-#  domains              :string
+#  id                   :integer          not null, primary key
+#  caching              :string           default("off"), not null
 #  city                 :string
-#  location             :text
-#  prospectus_link      :string
-#  twitter_handle       :string
+#  created_at           :datetime         not null
 #  directions           :string
-#  footer_categories    :string           default([]), is an Array
-#  footer_about_content :text
-#  footer_copyright     :string
+#  domains              :string
+#  event_id             :integer
 #  facebook_url         :string
+#  footer_about_content :text
+#  footer_categories    :string           default("{}"), is an Array
+#  footer_copyright     :string
 #  instagram_url        :string
-#  navigation_links     :string           default([]), is an Array
+#  location             :text
+#  navigation_links     :string           default("{}"), is an Array
+#  prospectus_link      :string
+#  purged_at            :datetime
+#  theme                :string           default("default"), not null
+#  twitter_handle       :string
+#  updated_at           :datetime         not null
 #
 # Indexes
 #
 #  index_websites_on_event_id  (event_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (event_id => events.id)
 #

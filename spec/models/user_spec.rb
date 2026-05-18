@@ -11,15 +11,25 @@ describe User do
     let(:email) { 'test@omniuser.com' }
     let(:account_name) { 'testuser' }
 
-    context "User already exists" do
-      let!(:user) { create(:user, email: email, name: OmniAuth.config.mock_auth[:github].info.name, uid: OmniAuth.config.mock_auth[:github].uid, provider: "github") }
+    context 'User already exists with legacy provider/uid' do
+      let!(:user) { create(:user, email: email, name: OmniAuth.config.mock_auth[:github].info.name, uid: OmniAuth.config.mock_auth[:github].uid, provider: 'github') }
 
-      it "doesn't create a new user from github auth hash when user exists" do
+      it 'does not create a new user' do
         expect {
           User.from_omniauth(github_auth_hash)
         }.to_not change { User.count }
       end
 
+      it 'migrates legacy user to identities table' do
+        expect {
+          User.from_omniauth(github_auth_hash)
+        }.to change { Identity.count }.by(1)
+
+        user.reload
+        expect(user.identities.find_by(provider: 'github', uid: github_auth_hash.uid)).to be_present
+        expect(user.provider).to be_nil
+        expect(user.uid).to be_nil
+      end
     end
 
     context "User doesn't yet exist" do
@@ -48,13 +58,14 @@ describe User do
         }.to_not raise_error
       end
 
-      it "creates a new user and sets provider for user" do
+      it "creates a new user with identity" do
         user = nil
         expect {
           user = User.from_omniauth(twitter_auth_hash)
         }.to change { User.count }.by(1)
-        expect(user.provider).to eq("twitter")
-        expect(user.uid).to eq(twitter_auth_hash.uid)
+        expect(user.identities.count).to eq(1)
+        expect(user.identities.first.provider).to eq('twitter')
+        expect(user.identities.first.uid).to eq(twitter_auth_hash.uid)
       end
     end
 
@@ -100,6 +111,28 @@ describe User do
     end
   end
 
+  describe '#oauth_providers' do
+    it 'returns providers from identities and legacy provider column' do
+      user = create(:user, provider: 'twitter')
+      user.identities.create!(provider: 'github', uid: '12345')
+
+      expect(user.oauth_providers).to contain_exactly('twitter', 'github')
+    end
+
+    it 'returns unique providers' do
+      user = create(:user, provider: 'github')
+      user.identities.create!(provider: 'github', uid: '12345')
+
+      expect(user.oauth_providers).to eq(['github'])
+    end
+
+    it 'returns empty array when no providers' do
+      user = create(:user, provider: nil)
+
+      expect(user.oauth_providers).to be_empty
+    end
+  end
+
   describe "#complete?" do
     it "returns true if name and email are present, and unconfirmed_email is blank" do
       user = build(:user, name: 'Harry', email: 'harry@hogwarts.edu', unconfirmed_email: nil)
@@ -129,7 +162,7 @@ describe User do
       expect(user).to be_reviewer
     end
     it 'is false when not reviewer of any event' do
-      user.teammates.map { |p| p.update_attribute(:role, 'not_reviewer') }
+      user.teammates.destroy_all
       expect(user).not_to be_reviewer
     end
   end
@@ -141,7 +174,7 @@ describe User do
       expect(user).to be_organizer
     end
     it 'is false when not organizer of any event' do
-      user.teammates.map { |p| p.update_attribute(:role, 'not_organizer') }
+      user.teammates.each { |p| p.update_attribute(:role, :reviewer) }
       expect(user).not_to be_organizer
     end
   end
@@ -153,8 +186,7 @@ describe User do
 
     describe '#reviewer_for_event?' do
       before do
-        create(:teammate, event: event1, user: user, role: 'reviewer')
-        create(:teammate, event: event2, user: user, role: 'not_reviewer')
+        create(:teammate, event: event1, user: user, role: :reviewer)
       end
 
       it 'is true when reviewer for the event' do
@@ -167,8 +199,8 @@ describe User do
 
     describe '#organizer_for_event?' do
       before do
-        create(:teammate, event: event1, user: user, role: 'organizer')
-        create(:teammate, event: event2, user: user, role: 'not_organizer')
+        create(:teammate, event: event1, user: user, role: :organizer)
+        create(:teammate, event: event2, user: user, role: :reviewer)
       end
 
       it 'is true when organizer for the event' do
@@ -256,6 +288,35 @@ describe User do
     it "returns unconfirmed email error when email is blank and unconfirmed_email is present" do
       user = build(:user, name: 'Ron', email: '', unconfirmed_email: unconfirmed_email)
       expect(user.profile_errors.messages[:email][0]).to eq unconfirmed_email_err_msg
+    end
+  end
+
+  describe '#merge_from!' do
+    let(:current_user) { create(:user) }
+    let(:legacy_user) { create(:user, provider: 'twitter', uid: '12345') }
+    let(:event) { create(:event) }
+    let(:proposal) { create(:proposal, event: event) }
+
+    it 'transfers all associations and clears legacy OAuth fields' do
+      invitation = create(:invitation, user: legacy_user, email: 'test@example.com', proposal: proposal)
+      teammate = create(:teammate, user: legacy_user, event: event, role: 'reviewer')
+      speaker = create(:speaker, user: legacy_user, proposal: proposal)
+      rating = create(:rating, user: legacy_user, proposal: proposal)
+      comment = create(:comment, user: legacy_user, proposal: proposal)
+      notification = create(:notification, user: legacy_user)
+
+      current_user.merge_from!(legacy_user)
+
+      expect(invitation.reload.user_id).to eq(current_user.id)
+      expect(teammate.reload.user_id).to eq(current_user.id)
+      expect(speaker.reload.user_id).to eq(current_user.id)
+      expect(rating.reload.user_id).to eq(current_user.id)
+      expect(comment.reload.user_id).to eq(current_user.id)
+      expect(notification.reload.user_id).to eq(current_user.id)
+
+      legacy_user.reload
+      expect(legacy_user.provider).to be_nil
+      expect(legacy_user.uid).to be_nil
     end
   end
 end

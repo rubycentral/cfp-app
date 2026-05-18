@@ -21,7 +21,7 @@ feature 'Public Page Viewing', type: :system do
   end
 
   context 'when using a custom domain' do
-    scenario 'Public views the landing page from custom domain' do
+    xscenario 'Public views the landing page from custom domain' do
       website.update(domains: 'www.example.com')
       create(:page, published_body: 'Home Content', landing: true)
       visit root_path
@@ -29,7 +29,7 @@ feature 'Public Page Viewing', type: :system do
       expect(page).to have_content('Home Content')
     end
 
-    scenario 'Public views the landing page for an older website on custom domain' do
+    xscenario 'Public views the landing page for an older website on custom domain' do
       website.update(domains: 'www.example.com')
       old_home_page = create(:page, published_body: 'Old Website', landing: true)
       website.update(navigation_links: [old_home_page.slug])

@@ -1,17 +1,11 @@
 # Be sure to restart your server when you modify this file.
 
-# Version of your assets, change this if you want to expire all your assets.
-Rails.application.config.assets.version = "1.0"
+# Note: node_modules is NOT added to asset paths.
+# JS is bundled by esbuild (jsbundling-rails) to app/assets/builds/
+# CSS is bundled by postcss (cssbundling-rails) to app/assets/builds/
 
-# Add additional assets to the asset load path.
-# Rails.application.config.assets.paths << Emoji.images_path
-# Add Yarn node_modules folder to the asset load path.
-Rails.application.config.assets.paths << Rails.root.join('node_modules')
-
-# Precompile additional assets.
-# application.js, application.css, and all non-JS/CSS in the app/assets
-# folder are already added.
-# Rails.application.config.assets.precompile += %w( admin.js admin.css )
-
-# Add node_modules folder to the asset load path.
-Rails.application.config.assets.paths << Rails.root.join("node_modules")
+# Exclude rails-ujs from actionview since we use Turbo instead
+# Exclude chartkick gem assets since we bundle it via esbuild
+Rails.application.config.after_initialize do
+  Rails.application.config.assets.paths.reject! { |p| p.to_s.include?('actionview') || p.to_s.include?('chartkick') }
+end

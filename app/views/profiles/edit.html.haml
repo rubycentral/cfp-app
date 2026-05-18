@@ -1,15 +1,15 @@
 .row
   .col-md-12
-    .page-header
+    %header.page-header
       %h1
         Edit Your Profile
 
-= simple_form_for current_user, url: profile_path, html: {role: 'form'} do |f|
-  .row
-    %fieldset.col-md-6
+.row
+  .col-md-6
+    = simple_form_for current_user, url: profile_path, html: {role: 'form', id: nil} do |f|
       .widget
         .widget-header
-          %i.fa.fa-user
+          %i.bi.bi-person
           %h3 Your Profile
         .widget-content
           - unless current_user.complete?
@@ -22,24 +22,21 @@
           .form-group
             = f.label :name
             = f.text_field :name, class: 'form-control', placeholder: 'Your name', autofocus: true
-          %p
-            = f.label :bio
-            = f.text_area :bio, class: 'form-control', placeholder: 'Enter your bio', rows: 7, maxlength: 500
-            %p.help-block Bio is limited to 500 characters.
-          %p
+          = f.input :bio, as: :text, input_html: {rows: 7, maxlength: 500, placeholder: 'Enter your bio'}, hint: 'Bio is limited to 500 characters.'
+          .form-group
             = f.label :github_account, 'GitHub Account'
             = f.text_field :github_account, class: 'form-control', placeholder: 'Your GitHub account name', autofocus: true
-          %p
+          .form-group
             = f.label :twitter_account
             = f.text_field :twitter_account, class: 'form-control', placeholder: 'Your Twitter account name', autofocus: true
+          .mt-3
+            %button.float-end.btn.btn-success{type: 'submit'} Save
 
-    %fieldset.col-md-6
+    = simple_form_for current_user, url: profile_path, html: {role: 'form', id: nil} do |f|
       .widget
         .widget-header
-          %i.fa.fa-lock
-          - if current_user.provider.present?
-            %i.fa{class: "fa-#{current_user.provider.downcase}"}
-          %h3 Identity Services
+          %i.bi.bi-lock
+          %h3 Email & Password
         .widget-content
           %p
             Email is only used for notifications on proposal feedback and acceptance into the program.
@@ -54,42 +51,53 @@
           .form-group
             = f.label :password_confirmation
             = f.password_field :password_confirmation, class: 'form-control', placeholder: 'Confirm password'
+          .mt-3
+            %button.float-end.btn.btn-success{type: 'submit'} Save
 
-    %fieldset.col-md-6
+  .col-md-6
+    .widget
+      .widget-header
+        %i.bi.bi-link-45deg
+        %h3 Connected Accounts
+      .widget-content
+        %p Connect your social accounts to enable sign-in via these providers.
+        .connected-accounts
+          - Identity::PROVIDER_NAMES.each do |provider, name|
+            - if (identity = current_user.identities.find_by(provider: provider))
+              .service.mb-2
+                %button.btn.btn-secondary.disabled{class: "btn-#{provider}-alt"}
+                  %i{class: "bi bi-#{provider}"}
+                  - if identity.account_name.present?
+                    = "@#{identity.account_name}"
+                  - else
+                    = "Connected via #{name}"
+            - elsif current_user.provider == provider
+              .service.mb-2
+                %button.btn.btn-secondary.disabled{class: "btn-#{provider}-alt"}
+                  %i{class: "bi bi-#{provider}"}
+                  = "Connected via #{name}"
+            - else
+              .service.mb-2
+                = button_to omniauth_authorize_path(provider: provider), data: {turbo: false}, class: "btn btn-#{provider}", form: {style: 'display: inline-block'} do
+                  %i{class: "bi bi-#{provider}"}
+                  = "Connect #{name}"
+
+    .widget
+      .widget-header
+        %i.bi.bi-image
+        %h3 Profile Icon Image
+      .widget-content
+        .mb-3
+          = image_tag("https://www.gravatar.com/avatar/#{current_user.gravatar_hash}?s=64&d=mp", alt: 'Profile icon')
+        %p
+          Add or change your profile icon image by visiting
+          = link_to('Gravatar', 'https://en.gravatar.com/connect/', target: "_blank")
+
+    - if current_user.teammates.loaded? ? current_user.teammates.any? : current_user.teammates.exists?
       .widget
         .widget-header
-          %i.fa.fa-lock
-          %h3 Profile Icon Image
+          %i.bi.bi-envelope-fill
+          %h3 Notifications
         .widget-content
           %p
-            Add or change your profile icon image by visiting
-            = link_to('Gravatar', 'https://en.gravatar.com/connect/', target: "_blank")
-
-          - if current_user.provider.present?
-            .service
-              %button.btn.btn-default.disabled{class: "btn-#{current_user.provider.downcase}-alt"}
-                %i{class: "fa fa-#{current_user.provider.downcase}"}
-                | Connected via
-                = current_user.provider
-
-      - if current_user.teammates.present?
-        .widget
-          .widget-header
-            %i.fa.fa-envelope
-            %h3
-              Notifications
-              = link_to "#", id: "notification-preferences-toggle",
-                data: { container: 'body', toggle: 'popover', placement: "left",
-                        content: notification_preferences_tooltip, html: true } do
-                %i.fa.fa-question-circle
-          .widget-content
-            = f.simple_fields_for :teammates do |fields|
-              - teammate = fields.object
-              %b= teammate.event.name
-              = fields.input :notification_preference,
-                collection: Teammate::NOTIFICATION_PREFERENCES.invert,
-                as: :radio_buttons, wrapper: 'horizontal_radio_and_checkboxes', label: false
-
-  .row
-    .col-md-12.form-submit
-      %button.pull-right.btn.btn-success.btn-lg{type: "submit"} Save
+            = link_to 'Manage notification preferences', notifications_profile_path

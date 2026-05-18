@@ -17,11 +17,11 @@
       %h2 User Logged In with
       %p
         - if user.provider.present?
-          = user.provider.capitalize
+          = Identity::PROVIDER_NAMES[user.provider] || user.provider
         - else
           Email
 
   .row.col-md-12.form-submit
     .btn-toolbar
-      = link_to "Cancel", admin_users_path, class: "button btn btn-danger pull-right"
-      %button.pull-right.btn.btn-success{:type => "submit"} Save
+      = link_to "Cancel", admin_users_path, class: "button btn btn-danger float-end"
+      %button.float-end.btn.btn-success{:type => "submit"} Save

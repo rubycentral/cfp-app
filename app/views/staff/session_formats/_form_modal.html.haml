@@ -1,0 +1,5 @@
+.modal-header
+  %h3= title
+= simple_form_for [current_event, :staff, session_format], data: {turbo: true} do |f|
+  .modal-body
+    = render partial: 'form', locals: {f: f}

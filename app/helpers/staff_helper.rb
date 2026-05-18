@@ -1,5 +1,4 @@
 module StaffHelper
-
   def show_rating_form?(proposal, rating)
     !proposal.has_speaker?(current_user) && !ratings_closed?(proposal, rating)
   end
@@ -38,5 +37,4 @@ module StaffHelper
       hidden_field_tag(:program, true)
     end
   end
-
 end

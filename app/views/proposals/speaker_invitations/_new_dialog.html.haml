@@ -1,4 +1,4 @@
-%div{ id: "new-speaker-invitation", class: 'modal fade' }
+%div{id: "new-speaker-invitation", class: 'modal fade', data: {controller: 'modal-autofocus'}}
   .modal-dialog
     .modal-content
       = simple_form_for(:speaker, url: invitations_path(proposal_uuid: proposal.uuid)) do |f|
@@ -10,5 +10,5 @@
 
         .modal-footer
           .btn-toolbar
-            %button.pull-right.btn.btn-success{type: "submit"} Invite
-            %button.btn.btn-default{'data-dismiss' => "modal"} Cancel
+            %button.float-end.btn.btn-success{type: "submit"} Invite
+            %button.btn.btn-secondary{type: 'button', 'data-bs-dismiss' => 'modal'} Cancel

@@ -1,9 +1,77 @@
 # frozen_string_literal: true
 
-require 'digest/sha1'
-
 class Proposal < ApplicationRecord
-  include Proposal::State
+  enum :state, {
+    submitted: 'submitted',
+    soft_accepted: 'soft accepted',
+    soft_waitlisted: 'soft waitlisted',
+    soft_rejected: 'soft rejected',
+    accepted: 'accepted',
+    waitlisted: 'waitlisted',
+    rejected: 'rejected',
+    withdrawn: 'withdrawn',
+    not_accepted: 'not accepted'
+  }, default: :submitted do
+    event :soft_accept do
+      transition :submitted => :soft_accepted
+    end
+
+    event :soft_waitlist do
+      transition :submitted => :soft_waitlisted
+    end
+
+    event :soft_reject do
+      transition :submitted => :soft_rejected
+    end
+
+    event :withdraw do
+      transition all - [:withdrawn] => :withdrawn
+
+      after do
+        reviewers.each do |reviewer|
+          Notification.create_for(reviewer, proposal: self, message: "Proposal, #{title}, withdrawn")
+        end
+      end
+    end
+
+    event :promote do
+      transition :waitlisted => :accepted
+    end
+
+    event :decline do
+      transition [:accepted, :waitlisted] => :withdrawn
+
+      before do
+        self.confirmed_at = Time.current
+      end
+
+      after do
+        program_session.update(state: :declined)
+      end
+    end
+
+    event :finalize do
+      transition :soft_accepted => :accepted
+      transition :soft_rejected => :rejected
+      transition :soft_waitlisted => :waitlisted
+      transition :submitted => :rejected
+
+      after do
+        ProgramSession.create_from_proposal(self) if becomes_program_session?
+      end
+    end
+
+    event :reset do
+      transition [:soft_accepted, :soft_waitlisted, :soft_rejected] => :submitted
+    end
+
+    event :hard_reset do
+      transition [:accepted, :waitlisted, :rejected] => :submitted
+    end
+  end
+
+  SOFT_STATES = [:soft_accepted, :soft_waitlisted, :soft_rejected, :submitted].freeze
+  FINAL_STATES = [:accepted, :waitlisted, :rejected, :withdrawn, :not_accepted].freeze
 
   has_many :public_comments, dependent: :destroy
   has_many :internal_comments, dependent: :destroy
@@ -22,9 +90,7 @@ class Proposal < ApplicationRecord
   validates :title, :abstract, :session_format, presence: true
   validate :abstract_length
   validates :title, length: { maximum: 60 }
-  validates_inclusion_of :state, in: valid_states, allow_nil: true, message: "'%{value}' not a valid state."
-  validates_inclusion_of :state, in: FINAL_STATES, allow_nil: false, message: "'%{value}' not a confirmable state.",
-                                 if: :confirmed_at_changed?
+  validate :state_must_be_final_for_confirmation, if: :confirmed_at_changed?
 
   serialize :last_change, coder: YAML
   serialize :proposal_data, type: Hash, coder: YAML
@@ -41,30 +107,13 @@ class Proposal < ApplicationRecord
   before_update :save_attr_history
   after_save :save_tags, :save_review_tags
 
-  scope :accepted, -> { where(state: ACCEPTED) }
-  scope :waitlisted, -> { where(state: WAITLISTED) }
-  scope :submitted, -> { where(state: SUBMITTED) }
   scope :confirmed, -> { where.not(confirmed_at: nil) }
-
-  scope :soft_accepted, -> { where(state: SOFT_ACCEPTED) }
-  scope :soft_waitlisted, -> { where(state: SOFT_WAITLISTED) }
-  scope :soft_rejected, -> { where(state: SOFT_REJECTED) }
   scope :soft_states, -> { where(state: SOFT_STATES) }
-  scope :working_program, -> { where(state: [SOFT_ACCEPTED, SOFT_WAITLISTED, ACCEPTED, WAITLISTED]) }
+  scope :working_program, -> { where(state: [:soft_accepted, :soft_waitlisted, :accepted, :waitlisted]) }
 
-  scope :unrated, -> { where.not(id: Rating.select(:proposal_id)) }
   scope :rated, -> { where(id: Rating.select(:proposal_id)) }
-  scope :not_withdrawn, -> { where.not(state: WITHDRAWN) }
   scope :not_owned_by, ->(user) { where.not(id: user.proposals) }
-  scope :for_state, lambda { |state|
-    where(state: state).order(:title).includes(:event, { speakers: :user }, :review_taggings)
-  }
-  scope :in_track, lambda { |track_id|
-    track_id = nil if track_id.try(:strip) == ''
-    where(track_id: track_id)
-  }
-
-  scope :emails, -> { joins(speakers: :user).pluck(:email).uniq }
+  scope :in_track, ->(track_id) { where(track_id: track_id.presence) }
 
   # Return all reviewers for this proposal.
   # A user is considered a reviewer if they meet the following criteria
@@ -114,56 +163,22 @@ class Proposal < ApplicationRecord
     proposal_data[:custom_fields] || {}
   end
 
-  def update_state(new_state)
-    update(state: new_state)
-  end
-
-  def finalize
-    transaction do
-      update_state(SOFT_TO_FINAL[state]) if SOFT_TO_FINAL.key?(state)
-      if becomes_program_session?
-        ps = ProgramSession.create_from_proposal(self)
-        ps.persisted?
-      else
-        true
-      end
-    end
-  rescue ActiveRecord::RecordInvalid
-    false
-  end
-
-  def withdraw
-    update(state: WITHDRAWN)
-    reviewers.each do |reviewer|
-      Notification.create_for(reviewer, proposal: self,
-                                        message: "Proposal, #{title}, withdrawn")
-    end
-  end
-
   def confirm
     update(confirmed_at: Time.current)
     program_session.confirm if program_session.present?
   end
 
-  def promote
-    update(state: ACCEPTED) if state == WAITLISTED
-  end
-
-  def decline
-    update(state: WITHDRAWN, confirmed_at: Time.current)
-    program_session.update(state: ProgramSession::DECLINED)
-  end
-
+  # draft? is an alias for submitted?
   def draft?
-    state == SUBMITTED
+    submitted?
   end
 
   def finalized?
-    FINAL_STATES.include?(state)
+    FINAL_STATES.include?(state.to_sym)
   end
 
   def becomes_program_session?
-    BECOMES_PROGRAM_SESSION.include?(state)
+    accepted? || waitlisted?
   end
 
   def confirmed?
@@ -222,10 +237,6 @@ class Proposal < ApplicationRecord
     user.pending_invitations.map(&:proposal_id).include?(id)
   end
 
-  def was_rated_by_user?(user)
-    ratings.any? { |r| r.user_id == user.id }
-  end
-
   def tags
     proposal_taggings.to_a.map(&:tag)
   end
@@ -259,6 +270,10 @@ class Proposal < ApplicationRecord
   end
 
   private
+
+  def state_must_be_final_for_confirmation
+    errors.add(:state, "'#{state}' not a confirmable state.") unless finalized?
+  end
 
   def abstract_length
     return unless abstract_changed? && abstract.gsub(/\r/, '').gsub(/\n/, '').length > 600

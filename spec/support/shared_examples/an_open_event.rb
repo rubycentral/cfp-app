@@ -1,20 +1,20 @@
 RSpec.shared_examples_for 'an open event' do
-  let(:event) { create :event, name: 'Best Event', state: Event::STATUSES[:open] }
+  let(:event) { create :event, name: 'Best Event', state: :open }
 
-  let(:withdrawn) { Proposal::State::WITHDRAWN }
-  let(:accepted) { Proposal::State::ACCEPTED }
-  let(:soft_accepted) { Proposal::State::SOFT_ACCEPTED }
-  let(:waitlisted) { Proposal::State::WAITLISTED }
-  let(:soft_waitlisted) { Proposal::State::SOFT_WAITLISTED }
+  let(:withdrawn) { :withdrawn }
+  let(:accepted) { :accepted }
+  let(:soft_accepted) { :soft_accepted }
+  let(:waitlisted) { :waitlisted }
+  let(:soft_waitlisted) { :soft_waitlisted }
 
   let(:user1) { create :user, :program_team }
   let(:user2) { create :user, :reviewer }
   let(:no_reviews_user) { create :user }
   let(:invited_user) { create :user }
 
-  let(:teammate1) { create :teammate, :program_team, event: event, user: user1, state: Teammate::ACCEPTED }
-  let(:teammate2) { create :teammate, :reviewer, event: event, user: user2, state: Teammate::ACCEPTED }
-  let(:no_reviews_teammate) { create :teammate, :reviewer, event: event, user: no_reviews_user, state: Teammate::ACCEPTED }
+  let(:teammate1) { create :teammate, :program_team, event: event, user: user1, state: :accepted }
+  let(:teammate2) { create :teammate, :reviewer, event: event, user: user2, state: :accepted }
+  let(:no_reviews_teammate) { create :teammate, :reviewer, event: event, user: no_reviews_user, state: :accepted }
   let(:invited_teammate) { create :teammate, :has_been_invited, event: event, user: invited_user }
 
   let(:track1) { create :track, name: 'Open-source', event: event }

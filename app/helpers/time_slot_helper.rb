@@ -9,4 +9,12 @@ module TimeSlotHelper
   def has_missing_requirements?(event)
     @_has_missing_requirements ||= unmet_requirements(event).present?
   end
+
+  def time_select_options(step_minutes: 5)
+    (0..23).flat_map do |hour|
+      (0..59).step(step_minutes).map do |minute|
+        format('%02d:%02d', hour, minute)
+      end
+    end
+  end
 end

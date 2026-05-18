@@ -1,5 +1,4 @@
 class PublicComment < Comment
-
   after_create :notify
 
   private

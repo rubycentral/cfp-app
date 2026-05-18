@@ -4,7 +4,7 @@ describe CommentsController, type: :controller do
   describe "POST #create" do
     let(:proposal) { create(:proposal_with_track, uuid: 'abc123') }
     let(:user) { create(:user) }
-    let(:referer_path) { event_proposal_path(event_slug: proposal.event.slug, uuid: proposal) }
+    let(:referer_path) { event_proposal_path(proposal.event, proposal) }
     let(:mailer) { double("CommentNotificationMailer.speaker_notification") }
 
     before do

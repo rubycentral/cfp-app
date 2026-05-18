@@ -1,6 +1,18 @@
 require_relative "boot"
 
-require "rails/all"
+require 'active_record/railtie'
+require 'active_storage/engine'
+require 'action_controller/railtie'
+require 'action_view/railtie'
+require 'action_mailer/railtie'
+require 'active_job/railtie'
+require 'action_cable/engine'
+# require 'action_mailbox/engine'
+# require 'action_text/engine'
+require 'rails/test_unit/railtie'
+
+require 'digest/sha1'
+require 'digest/md5'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -9,7 +21,7 @@ Bundler.require(*Rails.groups)
 module CfpApp
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 8.0
+    config.load_defaults 8.1
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
@@ -32,10 +44,9 @@ module CfpApp
 
     config.active_record.time_zone_aware_types = [:datetime]
 
-    config.active_job.queue_adapter = :sidekiq
-
     config.i18n.available_locales = [:en, :ja]
     config.i18n.default_locale = :ja
+    config.active_job.queue_adapter = :solid_queue
     config.active_record.yaml_column_permitted_classes =
       [Symbol, Hash, Array, ActiveSupport::HashWithIndifferentAccess, ActionController::Parameters]
   end

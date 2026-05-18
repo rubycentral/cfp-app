@@ -1,95 +1,84 @@
 Rails.application.routes.draw do
-  unless ENV['DISABLE_WEBSITE']
-    constraints DomainConstraint.new do
-      get '/', to: 'pages#show'
-      get '/(:slug)/program', to: 'programs#show'
-      get '/(:slug)/schedule', to: 'schedule#show'
-      get '/(:slug)/sponsors', to: 'sponsors#show'
-      get '/(:slug)/banner_ads', to: 'sponsors#banner_ads'
-      get '/(:slug)/sponsors_footer', to: 'sponsors#sponsors_footer'
-      get '/:domain_page_or_slug', to: 'pages#show'
-      get '/:slug/:page', to: 'pages#show'
-    end
-  end
+  resources :passwords, param: :token
+  # OmniAuth
+  get  '/users/auth/:provider/callback', to: 'users/omniauth_callbacks#callback', as: :omniauth_callback
+  post '/users/auth/:provider', to: 'users/omniauth_callbacks#passthru', as: :omniauth_authorize
+  get  '/users/auth/failure', to: 'users/omniauth_callbacks#failure', as: :omniauth_failure
 
   root 'home#show'
-  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  devise_for :users
   mount ActionCable.server => '/cable'
 
-  get '/profile' => 'profiles#edit', as: :edit_profile
-  patch '/profile' => 'profiles#update'
+  resource :profile, only: [:show, :edit, :update] do
+    get :notifications
+    patch :notifications, action: :update_notifications
+    get :merge
+    post :merge, action: :confirm_merge
+  end
   get '/my-proposals' => 'proposals#index', as: :proposals
 
   resources :notifications, only: [:index, :show] do
     post :mark_all_as_read, on: :collection
   end
 
-  resources :events, param: :slug do
-    get '/' => 'events#show', as: :event
-
+  resources :events, param: :slug, only: [:index, :show] do
     resources :proposals, param: :uuid do
-      member { post :confirm }
-      member { post :withdraw }
-      member { post :decline }
-      member { post :update_notes }
-      member { delete :destroy }
+      member do
+        post :confirm
+        post :withdraw
+        post :decline
+        post :update_notes
+      end
+      collection do
+        post :preview
+      end
     end
-
-    get 'parse_edit_field' => 'proposals#parse_edit_field', as: :parse_edit_field_proposal
 
     #Staff URLS
     namespace 'staff' do
-      get '/' => 'events#show'
-      get :show
+      resource :event, only: [:show, :edit, :update], path: '', as: '' do
+        get :info
+        get :configuration, path: 'config', as: :config
+        patch :update_status, path: 'update-status'
+        patch :open_cfp
+      end
 
-      get :info
-      get :edit
-      patch :update
-      patch 'update-status' => 'events#update_status'
-      patch :open_cfp
+      resource :custom_fields, only: [:edit, :update]
+      resource :reviewer_tags, only: [:edit, :update]
+      resource :proposal_tags, only: [:edit, :update]
 
-      get '/config' => 'events#configuration', as: :config
-      get 'custom-fields', as: :custom_fields
-      put :update_custom_fields
-      get 'reviewer-tags', as: :reviewer_tags
-      put :update_reviewer_tags
-      get 'proposal-tags', as: :proposal_tags
-      put :update_proposal_tags
+      resource :guidelines, only: [:show, :edit, :update]
 
-      get :guidelines
-      patch :update_guidelines
+      resources :speaker_email_templates, only: [:index, :show, :edit, :update, :destroy] do
+        member do
+          post :test
+        end
+      end
 
-      post :test_speaker_template
-
-      get '/speaker-emails' => 'events#speaker_emails', as: :speaker_email_notifications
-      patch :update_speaker_emails
-      patch '/remove_speaker_email_template/:type' => 'events#remove_speaker_email_template', as: :remove_speaker_email_template
-
-      resources :teammates, path: 'team'
+      resources :teammates, path: 'team', only: [:index, :create, :update, :destroy]
 
       # Reviewer flow for proposals
       resources :proposals, controller: 'proposal_reviews', only: [:index, :show, :update], param: :uuid do
-        resources :ratings, only: [:create, :update], defaults: {format: :js}
+        resources :ratings, only: [:create, :update]
       end
 
       scope :program, as: 'program' do
-        resources :proposals, param: :uuid do
+        resources :proposals, only: [:index, :show, :update], param: :uuid do
           collection do
             get 'selection'
             get 'session_counts'
             get 'bulk_finalize'
             post 'finalize_by_state'
           end
-          post :finalize
-          post :update_state
-          post :update_track
-          post :update_session_format
+          member do
+            post :finalize
+            post :update_state
+          end
         end
 
         resources :speakers, only: [:index, :show, :edit, :update, :destroy]
         resources :program_sessions, as: 'sessions', path: 'sessions' do
           resources :speakers, only: [:new, :create]
-          post :update_state
           member do
             post :confirm_for_speaker
             patch :promote
@@ -100,16 +89,15 @@ Rails.application.routes.draw do
       scope :schedule, as: 'schedule' do
         resources :rooms, only: [:index, :create, :update, :destroy]
         resources :time_slots, except: :show
-        resource :grid do
-          resources :time_slots, module: 'grids', only: [:new, :create, :edit, :update]
+        resource :grid, only: :show do
+          resources :time_slots, module: 'grids', only: [:edit, :update]
           resources :program_sessions, module: 'grids', only: [:show]
-          resource :bulk_time_slot, module: 'grids', only: [] do
+          resource :bulk_time_slot, module: 'grids', only: [:create] do
             collection do
               get 'new/:day', to: 'bulk_time_slots#new', as: 'new', constraints: { day: /\d+/ }
               get 'cancel/:day', to: 'bulk_time_slots#cancel', as: 'cancel', constraints: { day: /\d+/ }
               post :preview
               post :edit
-              post :create
             end
           end
         end
@@ -117,29 +105,15 @@ Rails.application.routes.draw do
 
       resources :session_formats, except: :show
       resources :tracks, except: [:show]
-      resource :website, only: [:new, :create, :edit, :update] do
-        member do
-          post :purge
-        end
-      end
-      resources :pages do
-        member do
-          get :preview
-          post :show
-          patch :publish
-          patch :promote
-        end
-      end
-      resources :sponsors, only: [:index, :new, :create, :edit, :update, :destroy]
+      draw :staff_website  # => config/routes/staff_website.rb
     end
   end
+  resources :events, only: [:index]
 
-  resources :image_uploads, only: :create
-  resource :public_comments, only: [:create], controller: :comments, type: 'PublicComment'
-  resource :internal_comments, only: [:create], controller: :comments, type: 'InternalComment'
+  resources :public_comments, only: [:create], controller: :comments, type: 'PublicComment'
+  resources :internal_comments, only: [:create], controller: :comments, type: 'InternalComment'
 
   resources :speakers, only: [:destroy]
-  resources :events, only: [:index]
 
   get 'teammates/:token/accept', :to => 'teammates#accept', as: :accept_teammate
   get 'teammates/:token/decline', :to => 'teammates#decline', as: :decline_teammate
@@ -158,17 +132,12 @@ Rails.application.routes.draw do
       post :unarchive
     end
 
-    resources :users
+    resources :users, only: [:index, :show, :edit, :update, :destroy]
   end
 
-  get '/current-styleguide', :to => 'pages#current_styleguide'
+  draw :website # => config/routes/website.rb
+
   get '/404', :to => 'errors#not_found', as: :not_found
   get '/422', :to => 'errors#unacceptable'
   get '/500', :to => 'errors#internal_error'
-
-  get '/(:slug)', to: 'pages#show', as: :landing
-  get '/(:slug)/program', to: 'programs#show', as: :program
-  get '/(:slug)/schedule', to: 'schedule#show', as: :schedule
-  get '/(:slug)/sponsors', to: 'sponsors#show', as: :sponsors
-  get '/(:slug)/:page', to: 'pages#show', as: :page
 end

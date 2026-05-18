@@ -1,0 +1,28 @@
+.custom-list-group-item-danger {
+  color: #a94442;
+  background-color: #f2dede;
+}
+
+#organizer-time-slots {
+  td:last-child {
+    white-space: nowrap;
+  }
+}
+
+.modal-dialog {
+  .errors {
+    background-color: #edd1d1;
+    color: hsl(from #edd1d1 h s calc(l - 50));
+    border-radius: .25em;
+    padding-left: .25em;
+  }
+
+  .length-label {
+    margin-bottom: 1em;
+    .bold {
+      font-weight: bold;
+    }
+  }
+}
+
+.tab-content { margin-top: 20px; }

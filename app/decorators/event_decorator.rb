@@ -1,17 +1,5 @@
-class EventDecorator < ApplicationDecorator
+class EventDecorator < Draper::Decorator
   delegate_all
-
-  def proposals_rated_overall_message
-    overall_rated_count = event.stats.rated_proposals
-    total_proposals_count = event.stats.total_proposals
-    "#{overall_rated_count}/#{total_proposals_count}"
-  end
-
-  def proposals_you_rated_message
-    rated_count = event.stats.user_rated_proposals(h.current_user)
-    proposals_count = event.stats.user_ratable_proposals(h.current_user)
-    "#{rated_count}/#{proposals_count}"
-  end
 
   def path_for(user)
     path = if user && user.organizer_for_event?(object)
@@ -23,45 +11,12 @@ class EventDecorator < ApplicationDecorator
     h.link_to h.pluralize(object.proposals.count, 'proposal'), path
   end
 
-  def event_path_for
-    if object.url?
-      h.link_to object.name, object.url, target: 'blank', class: 'event-title'
-    else
-      object.name
-    end
-  end
-
-  def cfp_days_remaining
-    ((object.closes_at - Time.current).to_i / 1.day) if object.closes_at && (object.closes_at - Time.current).to_i / 1.day > 1
-  end
-
   def closes_at(format = nil)
     if format && object.closes_at
       object.closes_at.to_fs(format)
     else
       object.closes_at
     end
-  end
-
-  def track_count
-    Track.count_by_track(object)
-  end
-
-  def days_for
-    # Add 1 because we include both the start date and end date
-    1..((object.end_date.to_date - object.start_date.to_date) + 1)
-  end
-
-  def reviewed_percent
-    if proposals.count > 1
-      "#{((object.proposals.rated.count.to_f/object.proposals.count)*100).round(1)}%"
-    else
-      "0%"
-    end
-  end
-
-  def tweet_button
-    twitter_button("Check out the CFP for #{object}!")
   end
 
   def date_range
@@ -74,40 +29,9 @@ class EventDecorator < ApplicationDecorator
     end
   end
 
-  def confirmed_percent
-    if (accepted_confirmed_count = proposals.accepted.confirmed.count) > 0
-      "#{((accepted_confirmed_count.to_f / object.proposals.accepted.count) * 100).round(1)}%"
-    else
-      "0%"
-    end
-  end
-
-  def scheduled_count
-    tot = object.proposals.accepted.count
-    tot - object.program_sessions.unscheduled.count
-  end
-
-  def scheduled_percent
-    if scheduled_count > 0
-      tot = object.proposals.accepted.count.to_f
-      sched = tot - object.program_sessions.unscheduled.count.to_f
-      "#{((sched/tot)*100).round(1)}%"
-    else
-      "0%"
-    end
-  end
-
-  def waitlisted_percent
-    if (waitlisted_confirmed_count = proposals.waitlisted.confirmed.count) > 0
-      "#{((waitlisted_confirmed_count.to_f / object.proposals.waitlisted.count) * 100).round(1)}%"
-    else
-      "0%"
-    end
-  end
-
   def line_chart
     h.line_chart object.proposals.group_by_day(:created_at, range: proposal_date_range).count,
-      library: {pointSize: 0, lineWidth: 2, series: [{color: '#9ACFEA'}]}
+      colors: ['#9ACFEA'], library: {elements: {point: {radius: 0}, line: {borderWidth: 2}}}
   end
 
   def conference_day_in_words(day)
@@ -130,9 +54,5 @@ class EventDecorator < ApplicationDecorator
     else
       (now..(now + 3.months))
     end
-  end
-
-  def format_date(date)
-      date.to_fs(:long) if date.present?
   end
 end

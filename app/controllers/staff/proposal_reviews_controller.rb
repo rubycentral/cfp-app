@@ -3,8 +3,7 @@ class Staff::ProposalReviewsController < Staff::ApplicationController
   before_action :require_proposal, except: [:index]
   before_action :prevent_self_review, except: [:index]
 
-  decorates_assigned :proposal, with: Staff::ProposalDecorator
-  respond_to :html, :js
+  private decorates_assigned :proposal, with: Staff::ProposalDecorator
 
   def index
     authorize Proposal, :reviewer?
@@ -21,9 +20,7 @@ class Staff::ProposalReviewsController < Staff::ApplicationController
     proposals.to_a.sort_by! { |p| [p.ratings_count > 0 ? 1 : 0, p.created_at] }
     proposals = Staff::ProposalDecorator.decorate_collection(proposals)
 
-    render locals: {
-             proposals: proposals
-           }
+    render locals: {proposals: proposals}
   end
 
   def show
@@ -60,6 +57,7 @@ class Staff::ProposalReviewsController < Staff::ApplicationController
     else
       @proposal.reload
     end
+    render partial: 'shared/proposals/reviewer_tags', locals: {event: current_event, proposal: @proposal.decorate}
   end
 
   private

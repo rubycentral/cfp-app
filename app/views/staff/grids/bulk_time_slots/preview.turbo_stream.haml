@@ -1,0 +1,7 @@
+= turbo_stream.replace "schedule_day_#{@bulk.day}" do
+  = render partial: 'staff/grids/grid', locals: {schedule: @schedule, day: @bulk.day}
+
+= turbo_stream.update "bulk_preview_bar_day_#{@bulk.day}" do
+  = render partial: 'preview_bar', locals: {bulk: @bulk}
+
+= turbo_stream.update 'bulk-time-slot-dialog', ''

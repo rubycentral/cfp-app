@@ -1,0 +1,26 @@
+/* datatables */
+table.datatable {
+  thead {
+    > tr {
+      > th {
+        font-size: 12px;
+        line-height: 1.2;
+        vertical-align: top;
+      }
+    }
+    /* Hide sort indicators on the first (filter) row */
+    > tr:first-child > th {
+      cursor: default;
+      &::before, &::after {
+        display: none !important;
+      }
+    }
+  }
+  tr.updated td {
+    background-color: hsl(from #dff0d8 h s calc(l + 5));
+  }
+  .form-control {
+    width: 100%;
+  }
+  td, th { text-align: center; }
+}

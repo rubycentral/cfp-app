@@ -88,15 +88,15 @@ describe Staff::ProposalMailer do
 
   describe "send_email" do
     it "selects the appropriate template to use based on proposal state" do
-      proposal.state = Proposal::ACCEPTED
+      proposal.state = :accepted
       Staff::ProposalMailer.send_email(proposal).deliver_now
       expect(ActionMailer::Base.deliveries.last.subject).to eq("Your proposal for #{event} has been accepted")
 
-      proposal.state = Proposal::REJECTED
+      proposal.state = :rejected
       Staff::ProposalMailer.send_email(proposal).deliver_now
       expect(ActionMailer::Base.deliveries.last.subject).to eq("Your proposal for #{event} has not been accepted")
 
-      proposal.state = Proposal::WAITLISTED
+      proposal.state = :waitlisted
       Staff::ProposalMailer.send_email(proposal).deliver_now
       expect(ActionMailer::Base.deliveries.last.subject).to eq("Your proposal for #{event} has been added to the waitlist")
     end

@@ -20,8 +20,4 @@ class Staff::TimeSlotsDecorator < Draper::CollectionDecorator
       end
     end
   end
-
-  def rows
-    map(&:row)
-  end
 end

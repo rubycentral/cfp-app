@@ -19,4 +19,5 @@ COPY . /app/
 RUN RAILS_ENV=production SECRET_KEY_BASE=sample bin/rails assets:precompile
 
 ENV PORT 3000
+ENTRYPOINT ["bin/docker-entrypoint"]
 CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]

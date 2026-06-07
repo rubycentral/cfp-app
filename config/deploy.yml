@@ -1,9 +1,9 @@
 # Deploy configuration for kamal.
 # See docs/kamal-lightsail-migration-plan.md for the full design.
 #
-# Replace <STATIC_IP> / <PRIVATE_IP> with the Lightsail instance addresses
-# once it is provisioned. servers.*.hosts use the public static IP (SSH
-# target); REDIS_URL uses the private IP (container-to-host traffic).
+# KAMAL_WEB_SERVER_ADDRESS holds the Lightsail static IP (SSH target) and
+# KAMAL_WEB_SERVER_PRIVATE_ADDRESS the instance private IP (REDIS_URL is
+# container-to-host traffic).
 
 service: cfp-app
 image: cfp-app
@@ -11,10 +11,10 @@ image: cfp-app
 servers:
   web:
     hosts:
-      - <STATIC_IP>
+      - <%= ENV.fetch("KAMAL_WEB_SERVER_ADDRESS") %>
   job:
     hosts:
-      - <STATIC_IP>
+      - <%= ENV.fetch("KAMAL_WEB_SERVER_ADDRESS") %>
     cmd: bin/jobs
 
 proxy:
@@ -49,7 +49,7 @@ env:
     ORIGIN_HOST: origin-cfp.kaigionrails.org
     AWS_REGION: us-east-1
     AWS_S3_BUCKET: <S3_BUCKET>
-    REDIS_URL: redis://<PRIVATE_IP>:6379/1
+    REDIS_URL: redis://<%= ENV.fetch("KAMAL_WEB_SERVER_PRIVATE_ADDRESS") %>:6379/1
   secret:
     - DATABASE_URL
     - SECRET_KEY_BASE
@@ -68,7 +68,7 @@ env:
 accessories:
   redis:
     image: public.ecr.aws/docker/library/redis:7
-    host: <STATIC_IP>
+    host: <%= ENV.fetch("KAMAL_WEB_SERVER_ADDRESS") %>
     port: 6379
     cmd: redis-server --maxmemory 64mb
 

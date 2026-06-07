@@ -66,3 +66,6 @@ jobs:
           KAMAL_SSH_PRIVATE_KEY: ${{ secrets.KAMAL_SSH_PRIVATE_KEY }}
           KAMAL_KNOWN_HOSTS: ${{ secrets.KAMAL_KNOWN_HOSTS }}
       - run: bundle exec kamal deploy --skip-push --version=${{ github.sha }}
+        env:
+          KAMAL_WEB_SERVER_ADDRESS: ${{ secrets.KAMAL_WEB_SERVER_ADDRESS }}
+          KAMAL_WEB_SERVER_PRIVATE_ADDRESS: ${{ secrets.KAMAL_WEB_SERVER_PRIVATE_ADDRESS }}

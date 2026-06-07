@@ -33,6 +33,15 @@ registry:
 builder:
   arch: amd64
 
+logging:
+  driver: awslogs
+  options:
+    awslogs-region: ap-northeast-1
+    awslogs-endpoint: https://logs.ap-northeast-1.api.aws
+    awslogs-group: /lightsail/cfp-app
+    awslogs-create-group: "true"
+    tag: "{{.Name}}-{{.ID}}"
+
 ssh:
   user: ubuntu
 

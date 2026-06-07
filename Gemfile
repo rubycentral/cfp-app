@@ -44,8 +44,7 @@ gem 'pundit'
 gem 'redcarpet', '~> 3.6'
 gem 'simple_form'
 gem 'rails-i18n', '~> 8.0'
-gem 'image_processing', '~> 1.14'
-
+gem 'image_processing', '~> 2.0'
 
 gem 'diffy'
 gem 'paper_trail'

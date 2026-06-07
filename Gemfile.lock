@@ -92,8 +92,8 @@ GEM
       activerecord (>= 2.3.0)
       rake (>= 0.8.7)
     aws-eventstream (1.4.0)
-    aws-partitions (1.1247.0)
-    aws-sdk-core (3.247.0)
+    aws-partitions (1.1257.0)
+    aws-sdk-core (3.251.0)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.992.0)
       aws-sigv4 (~> 1.9)
@@ -101,20 +101,19 @@ GEM
       bigdecimal
       jmespath (~> 1, >= 1.6.1)
       logger
-    aws-sdk-kms (1.125.0)
-      aws-sdk-core (~> 3, >= 3.247.0)
+    aws-sdk-kms (1.129.0)
+      aws-sdk-core (~> 3, >= 3.248.0)
       aws-sigv4 (~> 1.5)
-    aws-sdk-s3 (1.222.0)
-      aws-sdk-core (~> 3, >= 3.247.0)
+    aws-sdk-s3 (1.225.0)
+      aws-sdk-core (~> 3, >= 3.248.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.5)
     aws-sigv4 (1.12.1)
       aws-eventstream (~> 1, >= 1.0.2)
     base64 (0.3.0)
     bcrypt (3.1.22)
-    benchmark (0.5.0)
     bigdecimal (4.1.2)
-    bootsnap (1.24.4)
+    bootsnap (1.24.6)
       msgpack (~> 1.2)
     builder (3.3.0)
     capybara (3.40.0)
@@ -201,14 +200,12 @@ GEM
       haml (>= 4.0.6)
       railties (>= 5.1)
     hashie (5.0.0)
-    honeybadger (6.6.0)
+    honeybadger (6.6.2)
       logger
       ostruct
     i18n (1.14.8)
       concurrent-ruby (~> 1.0)
-    image_processing (1.14.0)
-      mini_magick (>= 4.9.5, < 6)
-      ruby-vips (>= 2.0.17, < 3)
+    image_processing (2.0.2)
     io-console (0.8.2)
     irb (1.17.0)
       pp (>= 0.6.0)
@@ -237,15 +234,12 @@ GEM
       net-smtp
     marcel (1.1.0)
     matrix (0.4.3)
-    mini_magick (5.1.2)
-      benchmark
-      logger
     mini_mime (1.1.5)
     mini_portile2 (2.8.9)
     minitest (6.0.5)
       drb (~> 2.0)
       prism (~> 1.5)
-    msgpack (1.8.0)
+    msgpack (1.8.1)
     multi_xml (0.6.0)
     net-imap (0.6.3)
       date
@@ -312,7 +306,7 @@ GEM
       date
       stringio
     public_suffix (6.0.1)
-    puma (8.0.1)
+    puma (8.0.2)
       nio4r (~> 2.0)
     pundit (2.5.2)
       activesupport (>= 3.0.0)
@@ -402,9 +396,6 @@ GEM
       rspec-mocks (>= 3.13.0, < 5.0.0)
       rspec-support (>= 3.13.0, < 5.0.0)
     rspec-support (3.13.7)
-    ruby-vips (2.2.3)
-      ffi (~> 1.12)
-      logger
     ruby2_keywords (0.0.5)
     ruby_http_client (3.5.5)
     rubyzip (3.3.0)
@@ -491,7 +482,7 @@ DEPENDENCIES
   groupdate
   haml-rails
   honeybadger (~> 6.6)
-  image_processing (~> 1.14)
+  image_processing (~> 2.0)
   jsbundling-rails
   launchy
   matrix

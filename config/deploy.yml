@@ -25,7 +25,7 @@ proxy:
     path: /up
 
 registry:
-  server: 861452569180.dkr.ecr.ap-northeast-1.amazonaws.com
+  server: 861452569180.dkr-ecr.ap-northeast-1.on.aws
   username: AWS
   password:
     - KAMAL_REGISTRY_PASSWORD

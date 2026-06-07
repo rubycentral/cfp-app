@@ -1,0 +1,76 @@
+# Deploy configuration for kamal.
+# See docs/kamal-lightsail-migration-plan.md for the full design.
+#
+# Replace <STATIC_IP> / <PRIVATE_IP> with the Lightsail instance addresses
+# once it is provisioned. servers.*.hosts use the public static IP (SSH
+# target); REDIS_URL uses the private IP (container-to-host traffic).
+
+service: cfp-app
+image: cfp-app
+
+servers:
+  web:
+    hosts:
+      - <STATIC_IP>
+  job:
+    hosts:
+      - <STATIC_IP>
+    cmd: bin/jobs
+
+proxy:
+  ssl: true
+  host: origin-cfp.kaigionrails.org
+  app_port: 3000
+  healthcheck:
+    path: /up
+
+registry:
+  server: 861452569180.dkr.ecr.ap-northeast-1.amazonaws.com
+  username: AWS
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+builder:
+  arch: amd64
+
+ssh:
+  user: ubuntu
+
+env:
+  clear:
+    RAILS_ENV: production
+    RACK_ENV: production
+    LANG: en_US.UTF-8
+    RAILS_LOG_TO_STDOUT: enabled
+    SENTRY_ENV: production
+    MAIL_FROM: noreply@kaigionrails.org
+    MAIL_HOST: cfp.kaigionrails.org
+    APP_HOST: cfp.kaigionrails.org
+    ORIGIN_HOST: origin-cfp.kaigionrails.org
+    AWS_REGION: us-east-1
+    AWS_S3_BUCKET: <S3_BUCKET>
+    REDIS_URL: redis://<PRIVATE_IP>:6379/1
+  secret:
+    - DATABASE_URL
+    - SECRET_KEY_BASE
+    - GITHUB_KEY
+    - GITHUB_SECRET
+    - TWITTER_KEY
+    - TWITTER_SECRET
+    - SMTP_ADDRESS
+    - SMTP_DOMAIN
+    - SMTP_USERNAME
+    - SMTP_PASSWORD
+    - SENTRY_DSN
+    - SLACK_WEBHOOK_URL
+    - CLOUDFRONT_ORIGIN_SECRET
+
+accessories:
+  redis:
+    image: public.ecr.aws/docker/library/redis:7
+    host: <STATIC_IP>
+    port: 6379
+    cmd: redis-server --maxmemory 64mb
+
+# Serve assets from the previous version during rolling deploys (Propshaft).
+asset_path: /app/public/assets

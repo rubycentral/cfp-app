@@ -51,6 +51,9 @@ gem 'paper_trail'
 
 gem 'sendgrid-ruby'
 
+# Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
+gem 'kamal', require: false
+
 group :production do
   gem 'aws-sdk-s3'
   gem 'rack-timeout', '~> 0.7'

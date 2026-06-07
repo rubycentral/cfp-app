@@ -1,8 +1,7 @@
 on:
   push:
     branches:
-      # - kaigionrails
-      - "kaigionrails2025"
+      - kaigionrails
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,7 +14,7 @@ jobs:
       - uses: docker/setup-buildx-action@4d04d5d9486b7bd6fa91e7baf45bbb4f8b9deedd # v4.0.0
       - uses: aws-actions/configure-aws-credentials@d979d5b3a71173a29b74b5b88418bfda9437d885 # v6.1.1
         with:
-          aws-region: us-west-2
+          aws-region: ap-northeast-1
           role-skip-session-tagging: false
           role-to-assume: "arn:aws:iam::861452569180:role/GhaDockerPushToEcr"
       - id: login-ecr
@@ -38,6 +37,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    environment: production
     concurrency:
       group: "deploy"
       cancel-in-progress: false
@@ -45,20 +45,24 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    env:
-      AWS_REGION: us-west-2
     steps:
-      - run: sudo apt-get update && sudo apt-get install jsonnet
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: ruby/setup-ruby@afeafc3d1ab54a631816aba4c914a0081c12ff2f # v1.310.0
+        with:
+          bundler-cache: true
       - uses: aws-actions/configure-aws-credentials@d979d5b3a71173a29b74b5b88418bfda9437d885 # v6.1.1
         with:
-          aws-region: us-west-2
+          aws-region: ap-northeast-1
           role-skip-session-tagging: false
           role-to-assume: "arn:aws:iam::861452569180:role/CfpAppDeployer"
-      - uses: kayac/ecspresso@3d47a637a1f8f2dd5c91bb616ac4b7a0e55b18ca # v2.8.4
-        with:
-          version: latest
-      - run: ecspresso run --config deploy/ecspresso.jsonnet --ext-str IMAGE_SHA=${{ github.sha }} --overrides-file deploy/runtask-db-migrate.jsonnet
-      - run: ecspresso deploy --config deploy/ecspresso.jsonnet --ext-str IMAGE_SHA=${{ github.sha }}
-      - run: jsonnet deploy/apprunner.jsonnet --ext-str IMAGE_SHA=${{ github.sha }} > deploy/apprunner.json
-      - run: aws apprunner update-service --cli-input-json file://deploy/apprunner.json
+      - name: Set up SSH key and known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          echo "$KAMAL_SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          echo "$KAMAL_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+        env:
+          KAMAL_SSH_PRIVATE_KEY: ${{ secrets.KAMAL_SSH_PRIVATE_KEY }}
+          KAMAL_KNOWN_HOSTS: ${{ secrets.KAMAL_KNOWN_HOSTS }}
+      - run: bundle exec kamal deploy --skip-push --version=${{ github.sha }}

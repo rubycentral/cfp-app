@@ -1,0 +1,87 @@
+# Deploy configuration for kamal.
+# See docs/kamal-lightsail-migration-plan.md for the full design.
+#
+# KAMAL_WEB_SERVER_ADDRESS holds the Lightsail static IP (SSH target) and
+# KAMAL_WEB_SERVER_PRIVATE_ADDRESS the instance private IP (REDIS_URL is
+# container-to-host traffic).
+
+service: cfp-app
+image: cfp-app
+
+servers:
+  web:
+    hosts:
+      - <%= ENV.fetch("KAMAL_WEB_SERVER_ADDRESS") %>
+  job:
+    hosts:
+      - <%= ENV.fetch("KAMAL_WEB_SERVER_ADDRESS") %>
+    cmd: bin/jobs
+
+proxy:
+  ssl: true
+  host: origin-cfp.kaigionrails.org
+  app_port: 3000
+  forward_headers: true
+  healthcheck:
+    path: /up
+
+registry:
+  server: 861452569180.dkr-ecr.ap-northeast-1.on.aws
+  username: AWS
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+builder:
+  arch: amd64
+
+logging:
+  driver: awslogs
+  options:
+    awslogs-region: ap-northeast-1
+    awslogs-endpoint: https://logs.ap-northeast-1.api.aws
+    awslogs-group: /lightsail/cfp-app
+    awslogs-create-group: "true"
+    tag: "{{.Name}}-{{.ID}}"
+
+ssh:
+  user: ubuntu
+  port: 9922
+
+env:
+  clear:
+    RAILS_ENV: production
+    RACK_ENV: production
+    LANG: en_US.UTF-8
+    RAILS_LOG_TO_STDOUT: enabled
+    SENTRY_ENV: production
+    MAIL_FROM: noreply@kaigionrails.org
+    MAIL_HOST: cfp.kaigionrails.org
+    APP_HOST: cfp.kaigionrails.org
+    ORIGIN_HOST: origin-cfp.kaigionrails.org
+    AWS_REGION: ap-northeast-1
+    AWS_S3_BUCKET: sample
+    REDIS_URL: redis://<%= ENV.fetch("KAMAL_WEB_SERVER_PRIVATE_ADDRESS") %>:6379/1
+  secret:
+    - DATABASE_URL
+    - SECRET_KEY_BASE
+    - GITHUB_KEY
+    - GITHUB_SECRET
+    - TWITTER_KEY
+    - TWITTER_SECRET
+    - SMTP_ADDRESS
+    - SMTP_DOMAIN
+    - SMTP_USERNAME
+    - SMTP_PASSWORD
+    - SENTRY_DSN
+    - SLACK_WEBHOOK_URL
+    - CLOUDFRONT_ORIGIN_SECRET
+
+accessories:
+  redis:
+    image: public.ecr.aws/docker/library/redis:7
+    host: <%= ENV.fetch("KAMAL_WEB_SERVER_ADDRESS") %>
+    port: 6379
+    cmd: redis-server --maxmemory 64mb
+
+# Serve assets from the previous version during rolling deploys (Propshaft).
+asset_path: /app/public/assets

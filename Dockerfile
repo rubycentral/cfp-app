@@ -16,7 +16,10 @@ COPY package.json yarn.lock /app/
 RUN npm install -g yarn \
     && yarn install --frozen-lockfile
 COPY . /app/
-RUN RAILS_ENV=production SECRET_KEY_BASE=sample bin/rails assets:precompile
+RUN RAILS_ENV=production SECRET_KEY_BASE=sample APP_HOST=localhost bin/rails assets:precompile
+
+LABEL service="cfp-app"
 
 ENV PORT 3000
+ENTRYPOINT ["bin/docker-entrypoint"]
 CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]

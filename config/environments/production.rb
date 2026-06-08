@@ -1,8 +1,14 @@
 # frozen_string_literal: true
 
 require "active_support/core_ext/integer/time"
+# Loaded explicitly because environment files are evaluated before the
+# autoloaders are set up.
+require_relative "../../lib/origin_verification"
 
 Rails.application.configure do
+  # Reject requests that bypass CloudFront (see lib/origin_verification.rb).
+  config.middleware.insert_before 0, OriginVerification
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
@@ -28,11 +34,7 @@ Rails.application.configure do
 
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
-  config.action_cable.url = "wss://#{ENV['HEROKU_APP_NAME']}.herokuapp.com/cable"
-  config.action_cable.allowed_request_origins = [
-    "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com",
-    "http://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
-  ]
+  config.action_cable.allowed_request_origins = ["https://#{ENV.fetch('APP_HOST')}"]
 
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
   config.assume_ssl = true
@@ -41,7 +43,7 @@ Rails.application.configure do
   config.force_ssl = true
 
   # Skip http-to-https redirect for the default health check endpoint.
-  # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
+  config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
 
   # Log to STDOUT with the current request id as a default log tag.
   config.log_tags = [ :request_id ]
@@ -92,13 +94,13 @@ Rails.application.configure do
   config.active_record.attributes_for_inspect = [ :id ]
 
   # Enable DNS rebinding protection and other `Host` header attacks.
-  # config.hosts = [
-  #   "example.com",     # Allow requests from example.com
-  #   /.*\.example\.com/ # Allow requests from subdomains like `www.example.com`
-  # ]
-  #
+  config.hosts = [
+    ENV.fetch('APP_HOST'), # Canonical domain (forwarded by CloudFront via X-Forwarded-Host)
+    ENV['ORIGIN_HOST']     # Origin hostname (kamal-proxy health checks, ACME challenges)
+  ].compact
+
   # Skip DNS rebinding protection for the default health check endpoint.
-  # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+  config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
   config.exceptions_app = routes
 

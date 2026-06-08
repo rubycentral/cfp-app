@@ -1,0 +1,9 @@
+#!/bin/bash -e
+
+# Prepare the database only when booting the web role (puma).
+# The job role (bin/jobs) skips this; db:prepare's advisory lock guards concurrent boots.
+if echo "$*" | grep -q "puma"; then
+  ./bin/rails db:prepare
+fi
+
+exec "${@}"

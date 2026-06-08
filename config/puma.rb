@@ -28,6 +28,11 @@
 threads_count = ENV.fetch("RAILS_MAX_THREADS", 3)
 threads threads_count, threads_count
 
+# Fork worker processes when WEB_CONCURRENCY is set to 2 or more.
+# Stays in single mode (no fork) when unset or 1.
+web_concurrency = Integer(ENV.fetch("WEB_CONCURRENCY", 1))
+workers web_concurrency if web_concurrency > 1
+
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
 port ENV.fetch("PORT", 3000)
 

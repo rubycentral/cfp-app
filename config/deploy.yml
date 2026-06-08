@@ -21,6 +21,7 @@ proxy:
   ssl: true
   host: origin-cfp.kaigionrails.org
   app_port: 3000
+  forward_headers: true
   healthcheck:
     path: /up
 

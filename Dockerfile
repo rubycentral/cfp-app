@@ -18,6 +18,8 @@ RUN npm install -g yarn \
 COPY . /app/
 RUN RAILS_ENV=production SECRET_KEY_BASE=sample bin/rails assets:precompile
 
+LABEL service="cfp-app"
+
 ENV PORT 3000
 ENTRYPOINT ["bin/docker-entrypoint"]
 CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]

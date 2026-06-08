@@ -57,8 +57,8 @@ env:
     MAIL_HOST: cfp.kaigionrails.org
     APP_HOST: cfp.kaigionrails.org
     ORIGIN_HOST: origin-cfp.kaigionrails.org
-    AWS_REGION: us-east-1
-    AWS_S3_BUCKET: <S3_BUCKET>
+    AWS_REGION: ap-northeast-1
+    AWS_S3_BUCKET: sample
     REDIS_URL: redis://<%= ENV.fetch("KAMAL_WEB_SERVER_PRIVATE_ADDRESS") %>:6379/1
   secret:
     - DATABASE_URL

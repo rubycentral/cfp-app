@@ -38,7 +38,7 @@ en:
       closes: "CFP closes:"
       form: "Proposal Form"
       preview: "Preview"
-      instruction: Read the <strong>%{guideline}</strong> to maximize your chance of approval. Refrain from including any information that would allow a reviewer to identify you.
+      instruction: Read the <strong>%{guideline}</strong> to maximize your chance of approval.
       guidelines: guidelines
       gfm_html: All fields support <a href="https://help.github.com/articles/github-flavored-markdown"><strong>GitHub Flavored Markdown</strong></a>
     form:

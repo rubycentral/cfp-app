@@ -2,6 +2,7 @@ on:
   push:
     branches:
       - kaigionrails
+      - kamal # temporary: verify deploy from the migration branch, remove later
 jobs:
   build:
     runs-on: ubuntu-latest

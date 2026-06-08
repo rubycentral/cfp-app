@@ -2,7 +2,7 @@ on:
   push:
     branches:
       - kaigionrails
-      - kamal # temporary: verify deploy from the migration branch, remove later
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -38,7 +38,9 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    environment: production
+    environment:
+      name: production
+      url: https://cfp.kaigionrails.org
     concurrency:
       group: "deploy"
       cancel-in-progress: false

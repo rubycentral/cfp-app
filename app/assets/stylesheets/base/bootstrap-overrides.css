@@ -35,7 +35,7 @@ a {
 }
 
 .navbar-default {
-  background-color: var(--brand-primary);
+  background-color: #000;  /* --nav_background_color? */
   border-color: #751317;
 
   .navbar-brand {
@@ -67,12 +67,12 @@ a {
   .navbar-nav .nav-item.active .nav-link,
   .navbar-nav .nav-item .nav-link.active {
     color: var(--white);
-    background-color: #ad1d21;
+    background-color: #5a5a5a;
   }
 
   .navbar-nav .nav-item.show .nav-link {
     color: var(--white);
-    background-color: #ad1d21;
+    background-color: #5a5a5a;
   }
 
   .navbar-nav .dropdown-menu {

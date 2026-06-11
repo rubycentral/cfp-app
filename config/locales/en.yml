@@ -48,7 +48,7 @@ en:
       for_review_committee: "For Review Committee"
       for_review_committee_description_html: "This content will <strong> only</strong> be visible to the review committee."
       speaker_information: "Speaker Information"
-      speaker_information_description_html: "This information is <strong>not visible</strong> during the review process. Name and bio will be used publicly in the program if this proposal is selected."
+      speaker_information_description_html: "Name and bio will be used publicly in the program if this proposal is selected."
       submit: "Submit"
       cancel: "Cancel"
   simple_form:

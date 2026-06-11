@@ -17,7 +17,7 @@ ja:
       for_review_committee: "レビュー委員会向け"
       for_review_committee_description_html: "以下の記入事項はレビュー委員会に<strong>のみ</strong>公開されます。"
       speaker_information: "発表者情報"
-      speaker_information_description_html: "この情報は、審査の過程では<strong>表示されません</strong>。このプロポーザルが採択された場合、名前と詳細は公開されます。"
+      speaker_information_description_html: "このプロポーザルが採択された場合、名前と詳細は公開されます。"
       submit: 送信
       cancel: キャンセル
   simple_form:

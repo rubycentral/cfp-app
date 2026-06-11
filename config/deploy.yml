@@ -61,6 +61,7 @@ env:
     AWS_REGION: ap-northeast-1
     AWS_S3_BUCKET: sample
     REDIS_URL: redis://<%= ENV.fetch("KAMAL_WEB_SERVER_PRIVATE_ADDRESS") %>:6379/1
+    TIMEZONE: "Asia/Tokyo"
   secret:
     - DATABASE_URL
     - SECRET_KEY_BASE

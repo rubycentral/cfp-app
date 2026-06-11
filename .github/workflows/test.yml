@@ -2,7 +2,11 @@ name: Test
 
 on:
   push:
+    branches:
+      - kaigionrails
   pull_request:
+    branches:
+      - "*"
 
 jobs:
   test:

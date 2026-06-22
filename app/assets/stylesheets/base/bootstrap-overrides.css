@@ -41,13 +41,21 @@ a {
   .navbar-brand {
     color: var(--white);
     height: var(--navbar-height);
-    padding: 12px 15px;
+    padding: 8px 15px;
     line-height: 20px;
+    display: flex;
+    align-items: center;
 
     &:hover,
     &:focus {
       color: #e6e6e6;
       background-color: transparent;
+    }
+
+    .navbar-logo {
+      height: 28px;
+      width: auto;
+      display: block;
     }
   }
 

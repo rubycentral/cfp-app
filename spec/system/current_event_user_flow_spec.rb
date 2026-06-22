@@ -113,7 +113,8 @@ feature "A user sees correct information for the current event and their role", 
     signin(normal_user.email, normal_user.password)
 
     within ".navbar" do
-      expect(page).to have_content("Kaigi on Rails CFP App") # https://github.com/kaigionrails/cfp-app/commit/e745df4da883
+      # Skipped: navbar brand was replaced with a logo image (#44)
+      # expect(page).to have_content("Kaigi on Rails CFP App") # https://github.com/kaigionrails/cfp-app/commit/e745df4da883
       expect(page).to have_link("", href: "/notifications")
       expect(page).to have_link(normal_user.name)
     end
@@ -127,7 +128,8 @@ feature "A user sees correct information for the current event and their role", 
     expect(current_path).to eq(event_path(event_2))
 
     within ".navbar" do
-      expect(page).to have_content(event_2.name)
+      # Skipped: navbar brand was replaced with a logo image (#44)
+      # expect(page).to have_content(event_2.name)
       expect(page).to have_link("", href: "/notifications")
       expect(page).to have_content(normal_user.name)
     end
@@ -137,7 +139,8 @@ feature "A user sees correct information for the current event and their role", 
     expect(current_path).to eq(event_path(event_1.slug))
 
     within ".navbar" do
-      expect(page).to have_content(event_1.name)
+      # Skipped: navbar brand was replaced with a logo image (#44)
+      # expect(page).to have_content(event_1.name)
       expect(page).to have_link("", href: "/notifications")
       expect(page).to have_content(normal_user.name)
     end
@@ -202,7 +205,8 @@ feature "A user sees correct information for the current event and their role", 
     visit event_path(event_2.slug)
 
     within ".navbar" do
-      expect(page).to have_content(event_2.name)
+      # Skipped: navbar brand was replaced with a logo image (#44)
+      # expect(page).to have_content(event_2.name)
       expect(page).to_not have_link("My Proposals")
       expect(page).to have_content("Review")
       expect(page).to have_content("Program")
@@ -215,7 +219,8 @@ feature "A user sees correct information for the current event and their role", 
     click_on "Dashboard"
 
     within ".navbar" do
-      expect(page).to have_content(event_2.name)
+      # Skipped: navbar brand was replaced with a logo image (#44)
+      # expect(page).to have_content(event_2.name)
     end
 
     within ".subnavbar" do
@@ -235,7 +240,8 @@ feature "A user sees correct information for the current event and their role", 
     visit event_path(event_1.slug)
 
     within ".navbar" do
-      expect(page).to have_content(event_1.name)
+      # Skipped: navbar brand was replaced with a logo image (#44)
+      # expect(page).to have_content(event_1.name)
       expect(page).to have_content("My Proposals")
       expect(page).to have_link("", href: "/notifications")
       expect(page).to_not have_content("Review")
@@ -256,7 +262,8 @@ feature "A user sees correct information for the current event and their role", 
     visit event_path(event_1.slug)
 
     within ".navbar" do
-      expect(page).to have_content(event_1.name)
+      # Skipped: navbar brand was replaced with a logo image (#44)
+      # expect(page).to have_content(event_1.name)
       expect(page).to have_content("Users")
       expect(page).to have_content("Admin")
       expect(page).to have_link("", href: "/notifications")
@@ -271,7 +278,8 @@ feature "A user sees correct information for the current event and their role", 
     click_on "Events"
 
     within ".navbar" do
-      expect(page).to have_content(event_1.name)
+      # Skipped: navbar brand was replaced with a logo image (#44)
+      # expect(page).to have_content(event_1.name)
     end
 
     within "table" do

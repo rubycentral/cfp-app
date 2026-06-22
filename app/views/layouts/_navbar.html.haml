@@ -1,9 +1,9 @@
 .navbar.navbar-expand-lg.navbar-default.fixed-top
   .container-fluid
-    - if current_event
-      = link_to "#{current_event.name} CFP", event_path(current_event), class: 'navbar-brand'
-    - else
-      = link_to "Kaigi on Rails CFP App", events_path, class: 'navbar-brand'
+    - brand_path = current_event ? event_path(current_event) : events_path
+    - brand_alt = current_event ? "#{current_event.name} CFP" : "Kaigi on Rails CFP App"
+    = link_to brand_path, class: 'navbar-brand' do
+      %img.navbar-logo{src: '/images/logo-header.svg', alt: brand_alt}
     %button.navbar-toggler{ type: "button", data: { bs_toggle: "collapse", bs_target: ".navbar-collapse" }, aria: { controls: "navbarNav", expanded: "false", label: "Toggle navigation" } }
       %span.navbar-toggler-icon
 

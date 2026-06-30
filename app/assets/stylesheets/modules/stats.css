@@ -4,7 +4,7 @@
 
 .stats {
   width: 100%;
-  display: table;
+  display: block;
   padding: 0 0 0 10px;
   margin-top: .5em;
   margin-bottom: 1.9em;

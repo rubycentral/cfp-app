@@ -24,7 +24,7 @@
         CFP
 
 .row.margin-top
-  .col-md-4.col-md-push-8
+  .col-md-4.order-md-2
     .event-info.event-info-block.callout
       .call-header
         .label.badge.text-bg-success.label-large.inline-block
@@ -59,6 +59,6 @@
         = pluralize(proposals_count, "proposal")
         = event.line_chart
 
-  .col-md-8.col-md-pull-4
+  .col-md-8.order-md-1
     .markdown
       = markdown(event.guidelines)

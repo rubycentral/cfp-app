@@ -44,4 +44,14 @@
   ul {
     list-style-type: disc;
   }
+  blockquote {
+    padding: 5px 20px;
+    margin: 0 0 20px;
+    border-left: 5px solid var(--gray-lighter);
+
+    /* Redcarpet wraps quote content in <p>; drop the doubled bottom gap */
+    > :last-child {
+      margin-bottom: 0;
+    }
+  }
 }

@@ -33,13 +33,20 @@ class Staff::ProposalReviewsController < Staff::ApplicationController
     current_user.notifications.mark_as_read_for_proposal(request.url)
     track_and_format_edit = current_user.reviewer_for_event?(current_event)
     visit_program_view = current_user.program_team_for_event?(current_event) && current_event.closed?
+    same_tag_proposals_per_event =
+      Proposal.joins(:review_taggings).preload(:event).where(
+        review_taggings: {
+          tag: @proposal.review_tags
+        }
+      ).where.not(id: @proposal.id).distinct.group_by { |pro| pro.event }
 
     @mention_names = current_event.mention_names
 
     render locals: {
       rating: rating,
       track_and_format_edit: track_and_format_edit,
-      visit_program_view: visit_program_view
+      visit_program_view: visit_program_view,
+      same_tag_proposals_per_event: same_tag_proposals_per_event,
     }
   end
 

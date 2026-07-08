@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
     elsif !user.confirmed?
       redirect_to new_session_path, flash: {danger: 'You have to confirm your email address before continuing.'}
     else
-      start_new_session_for user
+      start_authenticated_session user
       redirect_to after_sign_in_path_for(user), notice: 'Signed in successfully.'
     end
   end

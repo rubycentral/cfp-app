@@ -12,6 +12,11 @@ class ProfilesController < ApplicationController
 
   def update
     if current_user.update(user_params)
+      if user_params[:password].present?
+        # Restore Devise's revoke-on-password-change property: keep the
+        # current session alive, destroy every other live session.
+        current_user.sessions.where.not(id: Current.session.id).destroy_all
+      end
 
       if current_user.unconfirmed_email.present?
         flash[:danger] = 'Your account has been updated, but we need to verify your new email address. Please check your email and follow the confirmation link.'

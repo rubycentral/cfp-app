@@ -60,6 +60,27 @@ RSpec.describe 'Sessions', type: :request do
       expect(response.body).to include('Sign Out')
       expect(response.body).not_to include('>Log in<')
     end
+
+    it 'rotates the Rails session cookie on successful sign-in' do
+      get new_session_path
+      pre_auth_cookie = cookies['_cfp_app_session']
+
+      post session_path, params: {user: {email: user.email, password: '12345678'}}
+
+      expect(cookies['_cfp_app_session']).to be_present
+      expect(cookies['_cfp_app_session']).not_to eq(pre_auth_cookie)
+    end
+
+    it 'redirects back to the originally-requested page after signing in (session[:target])' do
+      get proposals_path
+
+      expect(response).to redirect_to(new_user_session_url)
+      expect(flash[:danger]).to be_present
+
+      post session_path, params: {user: {email: user.email, password: '12345678'}}
+
+      expect(response).to redirect_to(proposals_path)
+    end
   end
 
   describe 'DELETE /users/sign_out (legacy alias)' do

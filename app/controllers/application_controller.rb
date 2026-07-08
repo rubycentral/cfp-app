@@ -62,6 +62,17 @@ class ApplicationController < ActionController::Base
     @current_event ||= set_current_event(session[:current_event_id]) if session[:current_event_id]
   end
 
+  # Rotate the Rails session at privilege elevation (Devise did this via
+  # clean_up_csrf_token_on_authentication + session renewal), preserving the
+  # keys the post-sign-in flow legitimately needs.
+  def start_authenticated_session(user)
+    preserved = [:target, :pending_invite_accept_url, :pending_invite_email, :current_event_id]
+      .index_with { |key| session[key] }
+    reset_session
+    preserved.each { |key, value| session[key] = value unless value.nil? }
+    start_new_session_for(user)
+  end
+
   def current_website
     @current_website ||= begin
       if current_event

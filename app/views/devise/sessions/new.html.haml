@@ -3,7 +3,7 @@
     %h2 Sign In With
 
 .row
-  = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+  = simple_form_for(resource, as: resource_name, url: user_session_path) do |f|
 
     .form-inputs
       .col-sm-5.col-centered

@@ -149,10 +149,10 @@ class ProposalsController < ApplicationController
 
   def setup_flash_message
     message = "<h2 class='text-center'>Thank you!</h2>"
-    message << "<p>Your proposal has been submitted and may be reviewed at any time while the CFP is open.  You are welcome to update your proposal or leave a comment at any time, just please be sure to preserve your anonymity."
+    message << "<p>Your proposal has been submitted and may be reviewed at any time while the CFP is open. You are welcome to update your proposal or leave a comment at any time."
 
     if @event.closes_at
-      message << "  Expect a response regarding acceptance after the CFP closes on #{@event.closes_at.to_fs(:long)}."
+      message << " Expect a response regarding acceptance after the CFP closes on #{@event.closes_at.to_fs(:long)}."
     end
 
     message << "</p>"

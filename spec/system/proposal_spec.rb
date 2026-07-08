@@ -104,7 +104,7 @@ feature "Proposals", type: :system do
       end
 
       it "submits successfully" do
-        expect(page).to have_text("Your proposal has been submitted and may be reviewed at any time while the CFP is open.")
+        expect(page).to have_text("Your proposal has been submitted and may be reviewed at any time while the CFP is open. You are welcome to update your proposal or leave a comment at any time.")
       end
     end
 
@@ -157,7 +157,7 @@ feature "Proposals", type: :system do
       before :each do
         go_to_new_proposal
         create_proposal
-        expect(page).to have_text("Your proposal has been submitted and may be reviewed at any time while the CFP is open.")
+        expect(page).to have_text("Your proposal has been submitted and may be reviewed at any time while the CFP is open. You are welcome to update your proposal or leave a comment at any time.")
       end
 
       it "submits successfully" do

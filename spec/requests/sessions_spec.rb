@@ -83,6 +83,34 @@ RSpec.describe 'Sessions', type: :request do
     end
   end
 
+  describe 'POST /session rate limiting' do
+    # `rate_limit to:, within:, ..., store: cache_store` resolves `cache_store`
+    # to a concrete store object exactly once, when the controller class body
+    # is evaluated at boot (test env's :null_store, whose #increment always
+    # no-ops). Reassigning Rails.cache or SessionsController.cache_store
+    # afterwards has no effect on the already-captured object, so swap out
+    # the captured local variable directly on the before_action closure.
+    around do |example|
+      rate_limit_callback = SessionsController._process_action_callbacks.find { |c| c.filter.is_a?(Proc) }
+      binding = rate_limit_callback.filter.binding
+      original_store = binding.local_variable_get(:store)
+      binding.local_variable_set(:store, ActiveSupport::Cache::MemoryStore.new)
+      example.run
+      binding.local_variable_set(:store, original_store)
+    end
+
+    it 'redirects with a rate limit message after 10 attempts' do
+      10.times do
+        post session_path, params: {user: {email: user.email, password: 'wrongpass'}}
+      end
+
+      post session_path, params: {user: {email: user.email, password: 'wrongpass'}}
+
+      expect(response).to redirect_to(new_session_path)
+      expect(flash[:alert]).to eq('Try again later.')
+    end
+  end
+
   describe 'DELETE /users/sign_out (legacy alias)' do
     it 'terminates the session' do
       post session_path, params: {user: {email: user.email, password: '12345678'}}

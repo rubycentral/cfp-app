@@ -23,6 +23,8 @@ module SystemAuthenticationHelpers
   # Warden-compatible signature; scope is ignored
   def login_as(user, scope: nil)
     session_record = user.sessions.create!
+    @__auth_sessions ||= []
+    @__auth_sessions << session_record
     value = signed_session_cookie(session_record)
 
     if page.driver.is_a?(Capybara::RackTest::Driver)
@@ -34,7 +36,13 @@ module SystemAuthenticationHelpers
     end
   end
 
+  # Warden-compatible signature; positional scope args are ignored
   def logout(*)
+    # Mirror real sign-out: destroy the session row(s) created by login_as,
+    # not just the browser cookie.
+    @__auth_sessions&.each { |session_record| session_record.destroy if session_record.persisted? }
+    @__auth_sessions = []
+
     if page.driver.is_a?(Capybara::RackTest::Driver)
       page.driver.browser.clear_cookies
     else

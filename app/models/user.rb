@@ -1,10 +1,11 @@
 class User < ApplicationRecord
   normalizes :email, with: ->(e) { e.strip.downcase }
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable
-  devise :database_authenticatable, :registerable,
-         :rememberable, :trackable, :confirmable #:validatable,
+  # Remaining Devise modules; replaced by hand-rolled equivalents in PR 2
+  # of the Rails 8 auth migration (see docs/superpowers/specs/).
+  # :database_authenticatable no longer authenticates sessions but is kept
+  # because :registerable/:confirmable depend on its Authenticatable base.
+  devise :database_authenticatable, :registerable, :confirmable
 
   has_secure_password
 

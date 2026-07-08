@@ -69,7 +69,7 @@ class Users::OmniauthCallbacksController < ApplicationController
       logger.info "Signing in user #{@user.inspect}"
 
       @user.confirmed_at = Time.current
-      sign_in @user
+      start_new_session_for @user
 
       redirect_to after_sign_in_path_for(@user)
     else

@@ -52,6 +52,14 @@ RSpec.describe 'Sessions', type: :request do
       expect(unconfirmed.sessions.count).to eq(0)
       expect(flash[:danger]).to eq('You have to confirm your email address before continuing.')
     end
+
+    it 'keeps the user signed in on subsequent requests (lazy session resume)' do
+      post session_path, params: {user: {email: user.email, password: '12345678'}}
+      get events_path
+
+      expect(response.body).to include('Sign Out')
+      expect(response.body).not_to include('>Log in<')
+    end
   end
 
   describe 'DELETE /users/sign_out (legacy alias)' do

@@ -1,12 +1,27 @@
-= tag.div(flash[:alert], style: "color:red") if flash[:alert]
-= tag.div(flash[:notice], style: "color:green") if flash[:notice]
+.row
+  .col-sm-12.text-center
+    %h2 Sign In With
 
-= form_with url: session_path do |form|
-  = form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address]
-  %br
-  = form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72
-  %br
-  = form.submit "Sign in"
-%br
+.row
+  = simple_form_for(User.new, as: :user, url: session_path) do |f|
 
-= link_to "Forgot password?", new_password_path
+    .form-inputs
+      .col-sm-5.col-centered
+        .card
+          .card-body
+            = f.error_notification
+            = f.input :email, required: false, autofocus: true, wrapper_html: {class: 'col-sm-12'}
+            = f.input :password, required: false, wrapper_html: {class: 'col-sm-12'}
+
+            .form-group.col-sm-12
+              = f.button :submit, 'Log in', class: 'btn btn-primary'
+
+  .col-sm-5.col-centered
+    .form-group= render 'devise/shared/links'
+
+- unless Rails.env.production?
+  .col-sm-5.col-centered.mt-3
+    .card
+      .card-body
+        .form-group
+          = button_to 'Developer Login', '/users/auth/developer', class: 'btn btn-danger', method: :post

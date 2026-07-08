@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  resource :session
+  resource :session, only: [:new, :create, :destroy]
+  # Legacy Devise URL + helper-name aliases (removed in PR 3)
+  get    'users/sign_in',  to: 'sessions#new',     as: :new_user_session
+  delete 'users/sign_out', to: 'sessions#destroy', as: :destroy_user_session
   resources :passwords, param: :token
   # OmniAuth
   get  '/users/auth/:provider/callback', to: 'users/omniauth_callbacks#callback', as: :omniauth_callback
@@ -7,7 +10,7 @@ Rails.application.routes.draw do
   get  '/users/auth/failure', to: 'users/omniauth_callbacks#failure', as: :omniauth_failure
 
   root 'home#show'
-  devise_for :users
+  devise_for :users, skip: [:sessions]
   mount ActionCable.server => '/cable'
 
   resource :profile, only: [:show, :edit, :update] do

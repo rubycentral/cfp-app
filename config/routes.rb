@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   get  '/users/auth/failure', to: 'users/omniauth_callbacks#failure', as: :omniauth_failure
 
   root 'home#show'
-  devise_for :users, skip: [:sessions]
+  devise_for :users, skip: [:sessions], controllers: {registrations: 'users/registrations'}
   mount ActionCable.server => '/cable'
 
   resource :profile, only: [:show, :edit, :update] do

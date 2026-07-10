@@ -21,7 +21,6 @@ class ApplicationController < ActionController::Base
 
   before_action :set_paper_trail_whodunnit
   before_action :current_event
-  before_action :configure_permitted_parameters, if: :devise_controller?
 
   layout 'application'
   private decorates_assigned :event
@@ -110,10 +109,6 @@ class ApplicationController < ActionController::Base
 
   def pundit_user
     @pundit_user ||= CurrentEventContext.new(current_user, current_event)
-  end
-
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:pending_invite_email])
   end
 
   def event_staff?(event)

@@ -1,12 +1,6 @@
 class User < ApplicationRecord
   normalizes :email, with: ->(e) { e.strip.downcase }
 
-  # Remaining Devise modules, until registration and confirmation are
-  # replaced by hand-rolled equivalents.
-  # :database_authenticatable no longer authenticates sessions but is kept
-  # because :registerable/:confirmable depend on its Authenticatable base.
-  devise :database_authenticatable, :registerable, :confirmable
-
   has_secure_password
 
   PASSWORD_LENGTH = 6..128
@@ -15,8 +9,18 @@ class User < ApplicationRecord
     unconfirmed_email || email
   end
 
-  # Map password_digest to encrypted_password for has_secure_password compatibility
-  undef_method :password_digest
+  before_update :postpone_email_change, if: :postpone_email_change?
+  # Distinct method names are load-bearing: after_*_commit callbacks share
+  # one :commit chain deduped by [kind, filter], so two declarations with
+  # the same symbol silently merge and drop the first one's conditions.
+  after_create_commit :send_creation_confirmation_instructions, if: -> { !confirmed? && email.present? }
+  after_update_commit :send_reconfirmation_instructions, if: -> { saved_change_to_unconfirmed_email? && unconfirmed_email.present? }
+
+  # Map password_digest to encrypted_password for has_secure_password compatibility.
+  # undef_method :password_digest used to precede this (removing Devise
+  # database_authenticatable's protected password_digest(password) hashing
+  # method so this reader could take over); with the devise directive gone
+  # in PR 2, that method is never defined and undef_method would raise.
   alias_attribute :password_digest, :encrypted_password
   def password_digest
     encrypted_password
@@ -102,6 +106,11 @@ class User < ApplicationRecord
     generate_token_for(:email_confirmation)
   end
 
+  # The invitation specs and any lingering callers read confirmation_token;
+  # the Devise column of that name stops being consulted as of PR 2 and is
+  # dropped in PR 3.
+  alias_method :confirmation_token, :email_confirmation_token
+
   def self.find_by_email_confirmation_token(token)
     find_by_token_for(:email_confirmation, token)
   end
@@ -132,6 +141,13 @@ class User < ApplicationRecord
 
   def send_confirmation_instructions
     ConfirmationsMailer.confirmation_instructions(self).deliver_later
+  end
+
+  # Devise confirmable equivalent: let an email change apply immediately on
+  # the next save, bypassing the postpone-to-unconfirmed_email dance (used by
+  # admin user edits, which should not require the admin's own reconfirmation).
+  def skip_reconfirmation!
+    @skip_email_change_postpone = true
   end
 
   def pending_invitations
@@ -241,6 +257,27 @@ class User < ApplicationRecord
       # Clear legacy OAuth fields so the old user can't be found via from_omniauth
       other_user.update_columns(provider: nil, uid: nil)
     end
+  end
+
+  private
+
+  def send_creation_confirmation_instructions
+    send_confirmation_instructions
+  end
+
+  def send_reconfirmation_instructions
+    send_confirmation_instructions
+  end
+
+  # Devise reconfirmable equivalent: a confirmed user's email change is
+  # written to unconfirmed_email and applied by confirm! instead.
+  def postpone_email_change?
+    will_save_change_to_email? && confirmed? && email_in_database.present? && !@skip_email_change_postpone
+  end
+
+  def postpone_email_change
+    self.unconfirmed_email = email
+    self.email = email_in_database
   end
 end
 

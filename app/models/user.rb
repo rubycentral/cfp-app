@@ -9,6 +9,12 @@ class User < ApplicationRecord
 
   has_secure_password
 
+  PASSWORD_LENGTH = 6..128
+
+  generates_token_for :email_confirmation, expires_in: 3.days do
+    unconfirmed_email || email
+  end
+
   # Map password_digest to encrypted_password for has_secure_password compatibility
   undef_method :password_digest
   alias_attribute :password_digest, :encrypted_password
@@ -39,7 +45,7 @@ class User < ApplicationRecord
   validates_presence_of :email, on: :update, if: -> { provider.blank? || unconfirmed_email.blank? }
   validates_presence_of :password, on: :create
   validates_confirmation_of :password, on: :create
-  validates_length_of :password, within: 6..128, allow_blank: true
+  validates_length_of :password, within: PASSWORD_LENGTH, allow_blank: true
 
   before_create :check_pending_invite_email
 
@@ -86,6 +92,46 @@ class User < ApplicationRecord
     if pending_invite_email.present? && pending_invite_email == email
       self.confirmed_at = Time.current
     end
+  end
+
+  # Hand-rolled replacements for Devise :confirmable (tokens are stateless
+  # generates_token_for; the legacy confirmation_token column dies in PR 3).
+  # Named email_confirmation_token until Task 2: Devise's confirmation_token
+  # column reader must survive while Devise still owns the confirmations flow.
+  def email_confirmation_token
+    generate_token_for(:email_confirmation)
+  end
+
+  def self.find_by_email_confirmation_token(token)
+    find_by_token_for(:email_confirmation, token)
+  end
+
+  def confirmed?
+    confirmed_at.present?
+  end
+
+  def confirm!
+    # @bypass_confirmation_postpone silences Devise reconfirmable's own
+    # postpone hook (active until Task 2 removes the devise directive;
+    # the ivar becomes harmless dead weight then and leaves with PR 3).
+    @bypass_confirmation_postpone = true
+    @skip_email_change_postpone = true
+    promoting_pending_email = unconfirmed_email.present?
+    if promoting_pending_email
+      self.email = unconfirmed_email
+      self.unconfirmed_email = nil
+    end
+    self.confirmed_at ||= Time.current
+    # Mirrors Devise confirmable: validate only when promoting a pending
+    # email (uniqueness must hold); plain confirmation must succeed even for
+    # users who fail validation (e.g. OAuth users with a blank email).
+    save!(validate: promoting_pending_email)
+  ensure
+    @bypass_confirmation_postpone = @skip_email_change_postpone = nil
+  end
+
+  def send_confirmation_instructions
+    ConfirmationsMailer.confirmation_instructions(self).deliver_later
   end
 
   def pending_invitations

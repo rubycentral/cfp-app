@@ -6,7 +6,6 @@ class PasswordsController < ApplicationController
   rate_limit to: 10, within: 3.minutes, only: :create, with: -> { redirect_to new_password_path, alert: "Try again later." }
 
   def new
-    render 'devise/passwords/new'
   end
 
   def create
@@ -17,12 +16,11 @@ class PasswordsController < ApplicationController
     else
       @user = User.new.tap { it.errors.add(:email, :not_found) }
 
-      render 'devise/passwords/new'
+      render :new, status: :unprocessable_entity
     end
   end
 
   def edit
-    render 'devise/passwords/edit'
   end
 
   def update

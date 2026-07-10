@@ -16,11 +16,8 @@ class User < ApplicationRecord
   after_create_commit :send_creation_confirmation_instructions, if: -> { !confirmed? && email.present? }
   after_update_commit :send_reconfirmation_instructions, if: -> { saved_change_to_unconfirmed_email? && unconfirmed_email.present? }
 
-  # Map password_digest to encrypted_password for has_secure_password compatibility.
-  # undef_method :password_digest used to precede this (removing Devise
-  # database_authenticatable's protected password_digest(password) hashing
-  # method so this reader could take over); with the devise directive gone
-  # in PR 2, that method is never defined and undef_method would raise.
+  # has_secure_password expects a password_digest attribute; this app's
+  # column is the Devise-era encrypted_password (renamed in PR 3).
   alias_attribute :password_digest, :encrypted_password
   def password_digest
     encrypted_password
@@ -100,15 +97,14 @@ class User < ApplicationRecord
 
   # Hand-rolled replacements for Devise :confirmable (tokens are stateless
   # generates_token_for; the legacy confirmation_token column dies in PR 3).
-  # Named email_confirmation_token until Task 2: Devise's confirmation_token
-  # column reader must survive while Devise still owns the confirmations flow.
+  # Stateless confirmation token; also reachable through the
+  # confirmation_token alias below for legacy callers.
   def email_confirmation_token
     generate_token_for(:email_confirmation)
   end
 
-  # The invitation specs and any lingering callers read confirmation_token;
-  # the Devise column of that name stops being consulted as of PR 2 and is
-  # dropped in PR 3.
+  # Legacy name. The same-named Devise column is no longer consulted
+  # anywhere and is dropped in PR 3.
   alias_method :confirmation_token, :email_confirmation_token
 
   def self.find_by_email_confirmation_token(token)
@@ -120,10 +116,6 @@ class User < ApplicationRecord
   end
 
   def confirm!
-    # @bypass_confirmation_postpone silences Devise reconfirmable's own
-    # postpone hook (active until Task 2 removes the devise directive;
-    # the ivar becomes harmless dead weight then and leaves with PR 3).
-    @bypass_confirmation_postpone = true
     @skip_email_change_postpone = true
     promoting_pending_email = unconfirmed_email.present?
     if promoting_pending_email
@@ -136,7 +128,7 @@ class User < ApplicationRecord
     # users who fail validation (e.g. OAuth users with a blank email).
     save!(validate: promoting_pending_email)
   ensure
-    @bypass_confirmation_postpone = @skip_email_change_postpone = nil
+    @skip_email_change_postpone = nil
   end
 
   def send_confirmation_instructions

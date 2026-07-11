@@ -21,6 +21,7 @@ class PasswordsController < ApplicationController
   end
 
   def edit
+    @minimum_password_length = User::PASSWORD_LENGTH.min
   end
 
   def update

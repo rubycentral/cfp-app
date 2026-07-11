@@ -3,6 +3,14 @@ require 'rails_helper'
 RSpec.describe 'Passwords', type: :request do
   let!(:user) { create(:user) } # factory password is '12345678', confirmed via after(:create)
 
+  describe 'GET /passwords/:token/edit' do
+    it 'shows the password-length hint' do
+      get edit_password_path(user.password_reset_token)
+
+      expect(response.body).to include('characters minimum')
+    end
+  end
+
   describe 'PATCH /passwords/:token (reset)' do
     it 'destroys all of the user sessions on a successful reset' do
       user.sessions.create!

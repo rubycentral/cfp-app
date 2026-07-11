@@ -138,6 +138,10 @@ class User < ApplicationRecord
   # Devise confirmable equivalent: let an email change apply immediately on
   # the next save, bypassing the postpone-to-unconfirmed_email dance (used by
   # admin user edits, which should not require the admin's own reconfirmation).
+  # Request-scoped by design: the flag is sticky on this in-memory instance
+  # until it's discarded at the end of the request, which matches its single
+  # call site (Admin::UsersController#update, called once per request on a
+  # freshly loaded record).
   def skip_reconfirmation!
     @skip_email_change_postpone = true
   end

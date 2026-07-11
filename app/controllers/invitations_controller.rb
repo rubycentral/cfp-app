@@ -28,6 +28,7 @@ class InvitationsController < ApplicationController
 
   def decline
     @invitation.decline
+    clear_session_invite
 
     flash[:info] = "You have declined this invitation."
     redirect_to root_url

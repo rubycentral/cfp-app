@@ -415,6 +415,15 @@ describe User do
       expect(user.email).to eq('admin-edited@person.com')
       expect(user.unconfirmed_email).to be_nil
     end
+
+    it 'allows validated updates for identity-backed users with a pending first email' do
+      user = User.new(email: '', password: '12345678', password_confirmation: '12345678')
+      user.identities.build(provider: 'github', uid: '999', account_name: 'x')
+      user.save!(validate: false)
+      user.update(email: 'first@addr.com') # postponed to unconfirmed_email
+
+      expect(user.update(bio: 'hello')).to be true
+    end
   end
 
   describe 'password storage' do

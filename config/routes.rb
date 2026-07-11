@@ -7,11 +7,11 @@ Rails.application.routes.draw do
   # (confirmation links stay valid for 3 days). Name-less on purpose —
   # in-app code uses the canonical session/registration/confirmations
   # helpers. Remove after one release.
-  get 'users/sign_in', to: redirect('/session/new')
-  get 'users/sign_up', to: redirect('/registration/new')
-  get 'users/confirmation/new', to: redirect('/confirmations/new')
-  get 'users/confirmation', to: 'confirmations#show'
-  delete 'users/sign_out', to: 'sessions#destroy'
+  get 'users/sign_in', to: redirect('/session/new'), as: false
+  get 'users/sign_up', to: redirect('/registration/new'), as: false
+  get 'users/confirmation/new', to: redirect('/confirmations/new'), as: false
+  get 'users/confirmation', to: 'confirmations#show', as: false
+  delete 'users/sign_out', to: 'sessions#destroy', as: false
   # OmniAuth
   get  '/users/auth/:provider/callback', to: 'users/omniauth_callbacks#callback', as: :omniauth_callback
   post '/users/auth/:provider', to: 'users/omniauth_callbacks#passthru', as: :omniauth_authorize

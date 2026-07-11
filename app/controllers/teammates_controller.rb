@@ -21,6 +21,7 @@ class TeammatesController < ApplicationController
 
   def decline
     @teammate_invitation.decline
+    clear_session_invite
 
     redirect_to root_url,
       flash: { danger: "You declined the invitation to #{current_event.name}." }

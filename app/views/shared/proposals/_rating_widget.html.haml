@@ -1,6 +1,5 @@
 = turbo_frame_tag dom_id(proposal, :rating_widget) do
-  .widget-content
-    = render partial: 'shared/proposals/rating_form', locals: {event: event, proposal: proposal, rating: rating}
+  = render partial: 'shared/proposals/rating_form_frame', locals: {event: event, proposal: proposal, rating: rating}
 
   .internal-comments{class: !rating.persisted? ? 'hidden' : nil}
     .widget-header

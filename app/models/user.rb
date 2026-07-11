@@ -16,13 +16,6 @@ class User < ApplicationRecord
   after_create_commit :send_creation_confirmation_instructions, if: -> { !confirmed? && email.present? }
   after_update_commit :send_reconfirmation_instructions, if: -> { saved_change_to_unconfirmed_email? && unconfirmed_email.present? }
 
-  # has_secure_password expects a password_digest attribute; this app's
-  # column is still the Devise-era encrypted_password.
-  alias_attribute :password_digest, :encrypted_password
-  def password_digest
-    encrypted_password
-  end
-
   has_many :sessions,     dependent: :destroy
   has_many :identities,   dependent: :destroy
   has_many :invitations,  dependent: :destroy
@@ -96,7 +89,7 @@ class User < ApplicationRecord
   end
 
   # Hand-rolled replacements for Devise :confirmable (tokens are stateless
-  # generates_token_for; the legacy confirmation_token column is unused).
+  # generates_token_for; the legacy confirmation_token column dies in PR 3).
   # Stateless confirmation token; also reachable through the
   # confirmation_token alias below for legacy callers.
   def email_confirmation_token
@@ -104,7 +97,7 @@ class User < ApplicationRecord
   end
 
   # Legacy name. The same-named Devise column is no longer consulted
-  # anywhere.
+  # anywhere and is dropped in PR 3.
   alias_method :confirmation_token, :email_confirmation_token
 
   def self.find_by_email_confirmation_token(token)
@@ -284,33 +277,21 @@ end
 #
 # Table name: users
 #
-#  id                     :integer          not null, primary key
-#  name                   :string
-#  email                  :string           default(""), not null
-#  bio                    :text
-#  admin                  :boolean          default(FALSE)
-#  provider               :string
-#  uid                    :string
-#  encrypted_password     :string           default(""), not null
-#  reset_password_token   :string
-#  reset_password_sent_at :datetime
-#  sign_in_count          :integer          default(0), not null
-#  current_sign_in_at     :datetime
-#  current_sign_in_ip     :inet
-#  last_sign_in_at        :datetime
-#  last_sign_in_ip        :inet
-#  confirmation_token     :string
-#  confirmed_at           :datetime
-#  confirmation_sent_at   :datetime
-#  unconfirmed_email      :string
-#  remember_created_at    :datetime
-#  created_at             :datetime
-#  updated_at             :datetime
+#  id                :integer          not null, primary key
+#  name              :string
+#  email             :string           default(""), not null
+#  bio               :text
+#  admin             :boolean          default(FALSE)
+#  provider          :string
+#  uid               :string
+#  password_digest   :string           default(""), not null
+#  confirmed_at      :datetime
+#  unconfirmed_email :string
+#  created_at        :datetime
+#  updated_at        :datetime
 #
 # Indexes
 #
-#  index_users_on_confirmation_token    (confirmation_token)
-#  index_users_on_email                 (email)
-#  index_users_on_reset_password_token  (reset_password_token)
-#  index_users_on_uid                   (uid)
+#  index_users_on_email  (email)
+#  index_users_on_uid    (uid)
 #

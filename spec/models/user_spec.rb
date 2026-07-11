@@ -416,4 +416,14 @@ describe User do
       expect(user.unconfirmed_email).to be_nil
     end
   end
+
+  describe 'password storage' do
+    it 'stores the bcrypt digest in the password_digest column' do
+      user = create(:user, password: 'secret99', password_confirmation: 'secret99')
+
+      expect(user.read_attribute(:password_digest)).to start_with('$2a$')
+      expect(user.authenticate('secret99')).to eq(user)
+      expect(User.column_names).not_to include('encrypted_password')
+    end
+  end
 end

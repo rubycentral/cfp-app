@@ -261,10 +261,13 @@ class User < ApplicationRecord
     send_confirmation_instructions
   end
 
-  # Devise reconfirmable equivalent: a confirmed user's email change is
-  # written to unconfirmed_email and applied by confirm! instead.
+  # Devise reconfirmable equivalent: every persisted change to a present
+  # email (confirmed or not, including an OAuth user's first email) is
+  # written to unconfirmed_email and applied by confirm! instead. Mirrors
+  # Devise's own postpone_email_change?, which has no confirmed?/blank-email
+  # guards.
   def postpone_email_change?
-    will_save_change_to_email? && confirmed? && email_in_database.present? && !@skip_email_change_postpone
+    will_save_change_to_email? && email.present? && !@skip_email_change_postpone
   end
 
   def postpone_email_change

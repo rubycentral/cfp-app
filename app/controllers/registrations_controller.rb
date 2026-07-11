@@ -8,6 +8,7 @@ class RegistrationsController < ApplicationController
 
   def create
     @user = User.new(sign_up_params)
+    @user.pending_invite_email = session[:pending_invite_email]
 
     if @user.save
       if @user.confirmed?
@@ -25,6 +26,6 @@ class RegistrationsController < ApplicationController
   private
 
   def sign_up_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :pending_invite_email)
+    params.require(:user).permit(:email, :password, :password_confirmation)
   end
 end

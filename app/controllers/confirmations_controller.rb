@@ -1,10 +1,15 @@
 class ConfirmationsController < ApplicationController
   allow_unauthenticated_access
+  rate_limit to: 10, within: 3.minutes, only: :create, with: -> { redirect_to new_user_confirmation_path, alert: 'Try again later.' }
 
   def show
     if (user = User.find_by_email_confirmation_token(params[:token] || params[:confirmation_token]))
-      user.confirm!
-      redirect_to new_user_session_path, notice: 'Your email address has been successfully confirmed.'
+      begin
+        user.confirm!
+        redirect_to new_user_session_path, notice: 'Your email address has been successfully confirmed.'
+      rescue ActiveRecord::RecordInvalid
+        redirect_to new_user_confirmation_path, flash: {danger: "Confirmation failed: #{user.errors.full_messages.to_sentence}."}
+      end
     else
       redirect_to new_user_confirmation_path, flash: {danger: 'Confirmation token is invalid or has expired.'}
     end
@@ -16,7 +21,7 @@ class ConfirmationsController < ApplicationController
 
   def create
     email = params.dig(:user, :email).to_s
-    user = User.find_by(unconfirmed_email: email) || User.find_by(email: email)
+    user = User.find_by(unconfirmed_email: email) || User.find_by(email: email) if email.present?
 
     if user.nil?
       @user = User.new(email: email).tap { it.errors.add(:email, :not_found, message: 'not found') }

@@ -367,4 +367,53 @@ describe User do
       expect { user.confirm! }.to change { user.reload.confirmed_at.present? }.from(false).to(true)
     end
   end
+
+  describe 'reconfirmable email changes (postpone_email_change?)' do
+    it "postpones an unconfirmed user's email change to unconfirmed_email and mails a confirmation" do
+      user = build(:user, email: 'original@person.com')
+      user.confirmed_at = nil
+      user.save!(validate: false)
+
+      expect {
+        expect { user.update!(email: 'changed@person.com') }
+          .to have_enqueued_mail(ConfirmationsMailer, :confirmation_instructions)
+      }.to change { user.reload.unconfirmed_email }.from(nil).to('changed@person.com')
+
+      expect(user.email).to eq('original@person.com')
+    end
+
+    it "postpones an oauth user's first email (blank -> present) instead of applying it directly" do
+      user = User.new(email: '', provider: 'twitter', password: '12345678', password_confirmation: '12345678')
+      user.save(validate: false)
+
+      expect {
+        expect { user.update(email: 'first@person.com') }
+          .to have_enqueued_mail(ConfirmationsMailer, :confirmation_instructions)
+      }.to change { user.reload.unconfirmed_email }.from(nil).to('first@person.com')
+
+      expect(user.email).to eq('')
+    end
+
+    it 'still promotes the pending email via confirm!' do
+      user = create(:user, email: 'original@person.com')
+      user.update_columns(unconfirmed_email: 'changed@person.com')
+
+      user.confirm!
+
+      user.reload
+      expect(user.email).to eq('changed@person.com')
+      expect(user.unconfirmed_email).to be_nil
+    end
+
+    it 'applies the change directly when skip_reconfirmation! has been called (admin flow)' do
+      user = create(:user, email: 'original@person.com')
+
+      user.skip_reconfirmation!
+      user.update!(email: 'admin-edited@person.com')
+
+      user.reload
+      expect(user.email).to eq('admin-edited@person.com')
+      expect(user.unconfirmed_email).to be_nil
+    end
+  end
 end

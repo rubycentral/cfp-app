@@ -44,6 +44,18 @@ RSpec.describe 'Confirmations', type: :request do
       expect(user.reload.confirmed?).to be false
       expect(flash[:danger]).to eq('Confirmation token is invalid or has expired.')
     end
+
+    it 'does not 500 when the pending email was taken by another user before the link was clicked' do
+      user.confirm!
+      user.update_columns(unconfirmed_email: 'taken@person.com')
+      create(:user, email: 'taken@person.com')
+
+      get user_confirmation_path(confirmation_token: user.confirmation_token)
+
+      expect(response).to redirect_to(new_user_confirmation_path)
+      expect(flash[:danger]).to include('taken')
+      expect(user.reload.email).to eq('pending@person.com')
+    end
   end
 
   describe 'POST /confirmations (resend)' do
@@ -77,11 +89,48 @@ RSpec.describe 'Confirmations', type: :request do
       expect(response.body).to include('was already confirmed, please try signing in')
     end
 
+    it 'does not latch onto an oauth user with a blank email when the submitted email is blank' do
+      create(:user, email: '', provider: 'twitter', uid: '99999')
+
+      expect { post confirmations_path, params: {user: {email: ''}} }
+        .not_to have_enqueued_mail
+
+      expect(response.body).to include('not found')
+    end
+
     it 'errors for an unknown email' do
       expect { post confirmations_path, params: {user: {email: 'nobody@nowhere.com'}} }
         .not_to have_enqueued_mail
 
       expect(response.body).to include('not found')
+    end
+  end
+
+  describe 'POST /confirmations rate limiting' do
+    # Same store-swap technique as SessionsController's rate-limit spec (see
+    # spec/requests/sessions_spec.rb): the `rate_limit` before_action captures
+    # a concrete cache store object at class-load time, so reassigning
+    # Rails.cache afterwards has no effect. Swap the captured local directly.
+    around do |example|
+      rate_limit_callback = ConfirmationsController._process_action_callbacks.find { |c| c.filter.is_a?(Proc) }
+      binding = rate_limit_callback.filter.binding
+      original_store = binding.local_variable_get(:store)
+      binding.local_variable_set(:store, ActiveSupport::Cache::MemoryStore.new)
+      example.run
+      binding.local_variable_set(:store, original_store)
+    end
+
+    it 'redirects with a rate limit message after 10 attempts' do
+      email = user.email
+
+      10.times do
+        post confirmations_path, params: {user: {email: email}}
+      end
+
+      post confirmations_path, params: {user: {email: email}}
+
+      expect(response).to redirect_to(new_user_confirmation_path)
+      expect(flash[:alert]).to eq('Try again later.')
     end
   end
 

@@ -26,7 +26,16 @@ RSpec.describe 'Registrations', type: :request do
     end
 
     it 'auto-confirms and signs in an invited user whose email matches, without a confirmation email' do
-      invited = params.deep_merge(user: {email: 'invited@person.com', pending_invite_email: 'invited@person.com'})
+      proposal = create(:proposal_with_track)
+      invitation = create(:invitation, proposal: proposal, email: 'invited@person.com')
+
+      # Drive the real flow: visiting the invitation-accept URL while signed
+      # out sets session[:pending_invite_email] (via InvitationsController's
+      # set_session_invite before_action) before bouncing to sign-in.
+      get accept_invitation_path(invitation.slug)
+      expect(response).to redirect_to(new_user_session_url)
+
+      invited = params.deep_merge(user: {email: 'invited@person.com'})
 
       expect {
         expect { post registration_path, params: invited }
@@ -37,6 +46,17 @@ RSpec.describe 'Registrations', type: :request do
       expect(user.confirmed?).to be true
       expect(user.sessions.count).to eq(1)
       expect(flash[:notice]).to eq('Welcome! You have signed up successfully.')
+    end
+
+    it 'does not auto-confirm from a client-supplied pending_invite_email without a matching session' do
+      spoofed = params.deep_merge(user: {email: 'x@y.z', pending_invite_email: 'x@y.z'})
+
+      post registration_path, params: spoofed
+
+      user = User.find_by(email: 'x@y.z')
+      expect(user).to be_present
+      expect(user.confirmed?).to be false
+      expect(user.sessions.count).to eq(0)
     end
 
     it 're-renders on validation failure' do

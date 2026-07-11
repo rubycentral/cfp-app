@@ -7,7 +7,7 @@ module ApplicationHelper
   end
 
   MARKDOWN_RENDERER = Redcarpet::Markdown.new(
-    MarkdownRenderer.new(filter_html: true, hard_wrap: true),
+    MarkdownRenderer.new(filter_html: true, hard_wrap: true, link_attributes: { 'data-turbo' => 'false' }),
     fenced_code_blocks: true,
     no_intra_emphasis: true,
     autolink: true,

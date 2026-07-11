@@ -31,4 +31,6 @@ if ('scrollRestoration' in history) {
 // Custom Turbo Stream actions for DataTables
 import "./turbo_stream_actions"
 
+import "./double_submit_protection"
+
 import "./controllers"

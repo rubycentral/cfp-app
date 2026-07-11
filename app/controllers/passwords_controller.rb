@@ -14,7 +14,7 @@ class PasswordsController < ApplicationController
 
       redirect_to new_user_session_path, notice: 'Password reset instructions sent (if user with that email address exists).'
     else
-      @user = User.new.tap { it.errors.add(:email, :not_found) }
+      @user = User.new.tap { it.errors.add(:email, :not_found, message: 'not found') }
 
       render :new, status: :unprocessable_entity
     end

@@ -41,7 +41,7 @@ class User < ApplicationRecord
   validates :bio, length: { maximum: 500 }
   validates :name, presence: true, allow_nil: true
   validates_uniqueness_of :email, allow_blank: true
-  validates_format_of :email, with: /\A[^@\s]+@[^@\s]+\z/, allow_blank: true, if: :email_changed?  # equivalent to Devise.email_regexp
+  validates_format_of :email, with: /\A[^@\s]+@[^@\s]+\z/, allow_blank: true, if: :email_changed?  # permissive anything@anything format (inherited from the Devise era)
   validates_presence_of :email, on: :create, if: -> { provider.blank? && identities.blank? }
   validates_presence_of :email, on: :update, if: -> { provider.blank? || unconfirmed_email.blank? }
   validates_presence_of :password, on: :create

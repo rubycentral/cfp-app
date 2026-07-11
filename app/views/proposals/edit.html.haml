@@ -28,7 +28,7 @@
                 %a{href: 'https://help.github.com/articles/github-flavored-markdown'}
                   %strong GitHub Flavored Markdown.
 
-              = simple_form_for [event, proposal], url: event_proposal_path(event.slug, proposal), html: {'data-proposal-preview-target' => 'form'} do |f|
+              = simple_form_for [event, proposal], url: event_proposal_path(event.slug, proposal), html: {data: {proposal_preview_target: 'form', controller: 'disable-submit', action: 'submit->disable-submit#disable'}} do |f|
                 = render partial: 'form', locals: {f: f}
         #preview.tab-pane
           = render partial: 'preview', locals: { proposal: proposal }

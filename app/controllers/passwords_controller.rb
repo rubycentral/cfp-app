@@ -12,7 +12,7 @@ class PasswordsController < ApplicationController
     if (user = User.find_by(email: params[:user][:email]))
       PasswordsMailer.reset(user).deliver_later
 
-      redirect_to new_user_session_path, notice: 'Password reset instructions sent (if user with that email address exists).'
+      redirect_to new_session_path, notice: 'Password reset instructions sent (if user with that email address exists).'
     else
       @user = User.new.tap { it.errors.add(:email, :not_found, message: 'not found') }
 
@@ -30,7 +30,7 @@ class PasswordsController < ApplicationController
       # implicitly via authenticatable_salt checks; the new stack doesn't).
       @user.sessions.destroy_all
 
-      redirect_to new_user_session_path, notice: 'Password has been reset.'
+      redirect_to new_session_path, notice: 'Password has been reset.'
     else
       redirect_to edit_password_path(params[:token]), alert: "Passwords did not match."
     end

@@ -45,7 +45,7 @@ class TeammatesController < ApplicationController
   def require_user_for_accept
     unless current_user
       flash[:info] = "To accept your invitation, you must log in or create an account."
-      redirect_to new_user_session_url
+      redirect_to new_session_url
     end
   end
 

@@ -5,7 +5,7 @@ RSpec.describe 'Sessions', type: :request do
 
   describe 'GET /users/sign_in (legacy alias)' do
     it 'renders the sign in form' do
-      get new_user_session_path
+      get new_session_path
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to include('user_email')
@@ -74,7 +74,7 @@ RSpec.describe 'Sessions', type: :request do
     it 'redirects back to the originally-requested page after signing in (session[:target])' do
       get proposals_path
 
-      expect(response).to redirect_to(new_user_session_url)
+      expect(response).to redirect_to(new_session_url)
       expect(flash[:danger]).to be_present
 
       post session_path, params: {user: {email: user.email, password: '12345678'}}
@@ -114,7 +114,7 @@ RSpec.describe 'Sessions', type: :request do
   describe 'DELETE /users/sign_out (legacy alias)' do
     it 'terminates the session' do
       post session_path, params: {user: {email: user.email, password: '12345678'}}
-      delete destroy_user_session_path
+      delete session_path
 
       expect(user.sessions.count).to eq(0)
       expect(response).to redirect_to(root_path)
@@ -122,7 +122,7 @@ RSpec.describe 'Sessions', type: :request do
     end
 
     it 'is a no-op when not signed in' do
-      delete destroy_user_session_path
+      delete session_path
 
       expect(response).to redirect_to(root_path)
     end

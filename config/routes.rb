@@ -1,14 +1,17 @@
 Rails.application.routes.draw do
   resource :session, only: [:new, :create, :destroy]
-  # Legacy Devise URL + helper-name aliases, kept until in-app callers move to the session helpers
-  get    'users/sign_in',  to: 'sessions#new',     as: :new_user_session
-  delete 'users/sign_out', to: 'sessions#destroy', as: :destroy_user_session
   resources :passwords, param: :token
   resource :registration, only: [:new, :create]
   resources :confirmations, param: :token, only: [:new, :create, :show]
-  get 'users/sign_up', to: 'registrations#new', as: :new_user_registration
-  get 'users/confirmation/new', to: 'confirmations#new', as: :new_user_confirmation
-  get 'users/confirmation', to: 'confirmations#show', as: :user_confirmation
+  # Legacy Devise-era URLs: bookmarks and emails sent before this deploy
+  # (confirmation links stay valid for 3 days). Name-less on purpose —
+  # in-app code uses the canonical session/registration/confirmations
+  # helpers. Remove after one release.
+  get 'users/sign_in', to: redirect('/session/new')
+  get 'users/sign_up', to: redirect('/registration/new')
+  get 'users/confirmation/new', to: redirect('/confirmations/new')
+  get 'users/confirmation', to: 'confirmations#show'
+  delete 'users/sign_out', to: 'sessions#destroy'
   # OmniAuth
   get  '/users/auth/:provider/callback', to: 'users/omniauth_callbacks#callback', as: :omniauth_callback
   post '/users/auth/:provider', to: 'users/omniauth_callbacks#passthru', as: :omniauth_authorize

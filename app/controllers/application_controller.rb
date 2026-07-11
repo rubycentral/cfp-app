@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   helper_method :program_mode?
   helper_method :schedule_mode?
   helper_method :program_tracks
-  helper_method :current_user, :user_signed_in?
+  helper_method :current_user
 
   before_action :set_paper_trail_whodunnit
   before_action :current_event
@@ -27,15 +27,11 @@ class ApplicationController < ActionController::Base
 
   private
 
-  # Shims over the Rails 8 authentication stack. current_user is permanent
-  # (idiomatic); user_signed_in? is temporary and will migrate to authenticated?.
+  # Shim over the Rails 8 authentication stack. current_user is permanent
+  # (idiomatic).
   def current_user
     resume_session
     Current.user
-  end
-
-  def user_signed_in?
-    authenticated?
   end
 
   def after_sign_in_path_for(user)
@@ -43,7 +39,7 @@ class ApplicationController < ActionController::Base
       session[:pending_invite_accept_url]
     elsif !user.complete?
       edit_profile_path
-    elsif (referer = request.referer).present? && (URI.parse(referer).host == request.host) && (referer != new_user_session_url) && !referer.start_with?(edit_password_url(current_user)) && (referer != omniauth_authorize_url(provider: :developer))
+    elsif (referer = request.referer).present? && (URI.parse(referer).host == request.host) && (referer != new_session_url) && !referer.start_with?(edit_password_url(current_user)) && (referer != omniauth_authorize_url(provider: :developer))
       referer
     elsif session[:target]
       session.delete(:target)
@@ -118,9 +114,9 @@ class ApplicationController < ActionController::Base
   end
 
   def require_user
-    unless user_signed_in?
+    unless authenticated?
       session[:target] = request.path
-      redirect_to new_user_session_url, flash: {danger: "You must be signed in to access this page. If you haven't created an account, please create one."}
+      redirect_to new_session_url, flash: {danger: "You must be signed in to access this page. If you haven't created an account, please create one."}
     end
   end
 

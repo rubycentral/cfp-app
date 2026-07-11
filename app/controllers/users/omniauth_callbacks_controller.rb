@@ -32,7 +32,7 @@ class Users::OmniauthCallbacksController < ApplicationController
   end
 
   def failure
-    redirect_to new_user_session_path, flash: {danger: 'There was an error authenticating you. Please try again.'}
+    redirect_to new_session_path, flash: {danger: 'There was an error authenticating you. Please try again.'}
   end
 
   private
@@ -73,7 +73,7 @@ class Users::OmniauthCallbacksController < ApplicationController
 
       redirect_to after_sign_in_path_for(@user)
     else
-      redirect_to new_user_session_path, flash: {danger: "There was an error authenticating via Auth provider: #{params[:provider]}."}
+      redirect_to new_session_path, flash: {danger: "There was an error authenticating via Auth provider: #{params[:provider]}."}
     end
   end
 

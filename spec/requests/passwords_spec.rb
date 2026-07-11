@@ -21,7 +21,7 @@ RSpec.describe 'Passwords', type: :request do
         user: {password: 'newpassword123', password_confirmation: 'newpassword123'}
       }
 
-      expect(response).to redirect_to(new_user_session_path)
+      expect(response).to redirect_to(new_session_path)
       expect(flash[:notice]).to eq('Password has been reset.')
       expect(user.sessions.count).to eq(0)
     end

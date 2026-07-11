@@ -14,7 +14,7 @@ feature "Teammate Invitation received", type: :system do
       it "is redirected to the login page with a message" do
         visit accept_teammate_path(knownguy_invitation.token)
         expect(page).to have_content("To accept your invitation, you must log in or create an account.")
-        expect(current_path).to eq(new_user_session_path)
+        expect(current_path).to eq(new_session_path)
       end
 
       describe "signs in to complete the process" do
@@ -108,7 +108,7 @@ feature "Teammate Invitation received", type: :system do
           click_link "Sign up"
           sign_up_with("new57@per.son", "apples", "apples")
           user = User.find_by!(email: "new57@per.son")
-          visit user_confirmation_path(confirmation_token: user.confirmation_token)
+          visit confirmation_path(user.confirmation_token)
           signin("new57@per.son", "apples")
 
           expect(page).to have_content("Congrats! You are now an official team member of My Event! Before continuing, please take a moment to make sure your profile is complete.")

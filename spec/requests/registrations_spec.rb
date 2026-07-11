@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Registrations', type: :request do
   describe 'GET /users/sign_up (legacy alias)' do
     it 'renders the sign up form' do
-      get new_user_registration_path
+      get new_registration_path
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to include('user_email').and include('user_password_confirmation')
@@ -33,7 +33,7 @@ RSpec.describe 'Registrations', type: :request do
       # out sets session[:pending_invite_email] (via InvitationsController's
       # set_session_invite before_action) before bouncing to sign-in.
       get accept_invitation_path(invitation.slug)
-      expect(response).to redirect_to(new_user_session_url)
+      expect(response).to redirect_to(new_session_url)
 
       invited = params.deep_merge(user: {email: 'invited@person.com'})
 

@@ -1,17 +1,17 @@
 class ConfirmationsController < ApplicationController
   allow_unauthenticated_access
-  rate_limit to: 10, within: 3.minutes, only: :create, with: -> { redirect_to new_user_confirmation_path, alert: 'Try again later.' }
+  rate_limit to: 10, within: 3.minutes, only: :create, with: -> { redirect_to new_confirmation_path, alert: 'Try again later.' }
 
   def show
     if (user = User.find_by_email_confirmation_token(params[:token] || params[:confirmation_token]))
       begin
         user.confirm!
-        redirect_to new_user_session_path, notice: 'Your email address has been successfully confirmed.'
+        redirect_to new_session_path, notice: 'Your email address has been successfully confirmed.'
       rescue ActiveRecord::RecordInvalid
-        redirect_to new_user_confirmation_path, flash: {danger: "Confirmation failed: #{user.errors.full_messages.to_sentence}."}
+        redirect_to new_confirmation_path, flash: {danger: "Confirmation failed: #{user.errors.full_messages.to_sentence}."}
       end
     else
-      redirect_to new_user_confirmation_path, flash: {danger: 'Confirmation token is invalid or has expired.'}
+      redirect_to new_confirmation_path, flash: {danger: 'Confirmation token is invalid or has expired.'}
     end
   end
 
@@ -31,7 +31,7 @@ class ConfirmationsController < ApplicationController
       render :new, status: :unprocessable_entity
     else
       user.send_confirmation_instructions
-      redirect_to new_user_session_path, notice: 'You will receive an email with instructions for how to confirm your email address in a few minutes.'
+      redirect_to new_session_path, notice: 'You will receive an email with instructions for how to confirm your email address in a few minutes.'
     end
   end
 end

@@ -19,7 +19,7 @@
     "chart.js": "^4.5.1",
     "chartkick": "^5.0.1",
     "datatables.net": "^2",
-    "datatables.net-bs5": "^2",
+    "datatables.net-bs5": "^3",
     "dayjs": "^1.11.21",
     "google-palette": "^1.1.1",
     "highlight.js": "^11.11.1",

@@ -3,6 +3,18 @@
   margin-bottom: 1em;
 }
 
+/* Section headings (Abstract, Details, Pitch, ...) on proposal pages. */
+/* Scoped to direct children so form labels and key-value labels */
+/* elsewhere keep the plain .control-label style. */
+.proposal-section > .control-label {
+  /* Beat `div.col-md-4 h3 { display: inline-block }` below so the */
+  /* border spans the full column width on the staff review page */
+  display: block;
+  font-size: calc(var(--font-size-base) * 1.35);
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--legend-border-color);
+}
+
 .speaker {
   > h1, > h2, > h3, > h4 {
     margin-top: 0;

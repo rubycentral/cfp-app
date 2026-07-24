@@ -264,4 +264,9 @@ div.col-md-4 {
   margin-bottom: 10px;
   padding-bottom: 10px;
   border-bottom: 1px solid grey;
+
+  summary {
+    cursor: pointer;
+    font-weight: bold;
+  }
 }

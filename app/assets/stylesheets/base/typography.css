@@ -41,6 +41,11 @@
   h1:first-child, h2:first-child {
     margin-top: 0;
   }
+  /* Keep user-authored headings subordinate to the page structure */
+  h1 { font-size: 1.3em; }
+  h2 { font-size: 1.2em; }
+  h3 { font-size: 1.1em; }
+  h4, h5, h6 { font-size: 1em; }
   ul {
     list-style-type: disc;
   }
@@ -53,5 +58,9 @@
     > :last-child {
       margin-bottom: 0;
     }
+  }
+  img {
+    max-width: 100%;
+    height: auto;
   }
 }

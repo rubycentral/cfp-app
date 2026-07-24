@@ -25,8 +25,9 @@
 
 - unless proposal.changeset_fields.blank?
   %h2.fieldset-legend Proposal Diff...
-  - proposal.versions.each do |version|
-    #diff-view
+  - proposal.versions.each.with_index(1) do |version, index|
+    %details.diff-view{ open: index == proposal.versions.size }
+      %summary= version.created_at.to_fs(:day_at_time)
       - version.changeset.each do |k, (old, new)|
         %h3.control-label= k.titleize
         %div= diff old, new

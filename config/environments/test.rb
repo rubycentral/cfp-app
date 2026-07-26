@@ -32,6 +32,10 @@ Rails.application.configure do
 
   config.active_job.queue_adapter = :test
 
+  # The jobs dashboard cannot query the :test adapter, so point it at the real
+  # backend. The solid_queue tables are part of db/schema.rb.
+  config.mission_control.jobs.adapters = [:solid_queue]
+
   # Store uploaded files on the local file system in a temporary directory.
   config.active_storage.service = :test
 

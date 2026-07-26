@@ -8,6 +8,7 @@ gem 'puma'
 gem 'rails', '~> 8.1.3'
 gem 'turbo-rails'
 gem 'solid_queue'
+gem 'mission_control-jobs'
 
 gem 'rexml'
 

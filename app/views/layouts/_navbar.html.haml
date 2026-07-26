@@ -59,6 +59,10 @@
                   = link_to admin_events_path, class: "dropdown-item #{'active' if request.path == admin_events_path}" do
                     %i.bi.bi-calendar
                     %span Events
+                %li
+                  = link_to mission_control_jobs_path, class: 'dropdown-item' do
+                    %i.bi.bi-list-task
+                    %span Jobs
 
           %li.nav-item.dropdown{class: nav_item_class(:notifications)}
             - unread_notifications = current_user.notifications.recent_unread.records

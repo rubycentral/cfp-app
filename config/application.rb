@@ -45,6 +45,14 @@ module CfpApp
     config.active_record.time_zone_aware_types = [:datetime]
 
     config.active_job.queue_adapter = :solid_queue
+
+    # Authorize the mounted jobs dashboard with the app's own admin check
+    # instead of the engine's HTTP basic auth. Must be set here rather than in
+    # an initializer: the engine copies these into MissionControl::Jobs from a
+    # before_initialize hook, which runs before config/initializers.
+    config.mission_control.jobs.base_controller_class = 'MissionControlJobsController'
+    config.mission_control.jobs.http_basic_auth_enabled = false
+
     config.active_record.yaml_column_permitted_classes =
       [Symbol, Hash, Array, ActiveSupport::HashWithIndifferentAccess, ActionController::Parameters]
   end

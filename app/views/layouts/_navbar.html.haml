@@ -63,6 +63,11 @@
                   = link_to mission_control_jobs_path, class: 'dropdown-item' do
                     %i.bi.bi-list-task
                     %span Jobs
+                - if Rails.env.local?
+                  %li
+                    = link_to letter_opener_web_path, class: 'dropdown-item' do
+                      %i.bi.bi-envelope
+                      %span letter_opener
 
           %li.nav-item.dropdown{class: nav_item_class(:notifications)}
             - unread_notifications = current_user.notifications.recent_unread.records

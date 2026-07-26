@@ -74,6 +74,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'debug'
   gem 'faker'
+  gem 'letter_opener_web'
 end
 
 gem "bcrypt", "~> 3.1"

@@ -28,9 +28,11 @@
   - proposal.versions.each.with_index(1) do |version, index|
     %details.diff-view{ open: index == proposal.versions.size }
       %summary= version.created_at.to_fs(:day_at_time)
-      - version.changeset.each do |k, (old, new)|
-        %h3.control-label= k.titleize
-        %div= diff old, new
+      -# Versions are immutable, so the rendered diff can be cached forever.
+      - cache version do
+        - version.changeset.each do |k, (old, new)|
+          %h3.control-label= k.titleize
+          %div= diff old, new
 
   :css
     = #{Diffy::CSS}

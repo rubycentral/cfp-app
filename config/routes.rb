@@ -135,6 +135,12 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :show, :edit, :update, :destroy]
   end
 
+  mount MissionControl::Jobs::Engine, at: '/admin/jobs'
+
+  if Rails.env.local?
+    mount LetterOpenerWeb::Engine, at: '/letter_opener'
+  end
+
   draw :website # => config/routes/website.rb
 
   get '/404', :to => 'errors#not_found', as: :not_found

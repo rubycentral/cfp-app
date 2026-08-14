@@ -674,10 +674,10 @@ hasown@^2.0.2:
   dependencies:
     function-bind "^1.1.2"
 
-highlight.js@^11.11.1:
-  version "11.11.1"
-  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-11.11.1.tgz#fca06fa0e5aeecf6c4d437239135fabc15213585"
-  integrity sha512-Xwwo44whKBVCYoliBQwaPvtd/2tYFkRQtXDWj1nackaV2JPXx3L0+Jvd8/qCJ2p+ML0/XVkJ2q+Mr+UVdpJK5w==
+highlight.js@^11.11.2:
+  version "11.11.2"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-11.11.2.tgz#f53a9178171212014ae428a9771749dd2cc65847"
+  integrity sha512-oaXMACAU0kzOMXBjWpNcX+vlwSBCIAiZ9BHa7gA15NOTtT2L/l8OSZDuqS2XppOhZBPJ7hm4o8ep2kyuip2uEQ==
 
 is-binary-path@~2.1.0:
   version "2.1.0"

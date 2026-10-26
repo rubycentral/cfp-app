@@ -95,7 +95,7 @@ class Proposal < ApplicationRecord
   serialize :last_change, coder: YAML
   serialize :proposal_data, type: Hash, coder: YAML
 
-  has_paper_trail only: %i[title abstract details pitch]
+  has_paper_trail only: %i[title abstract details pitch], versions: { inverse_of: :item }
 
   attr_accessor :updating_user
   attr_writer :tags, :review_tags

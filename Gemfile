@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 ruby file: '.ruby-version'
 
 gem 'puma'
-gem 'rails', '~> 8.1.3'
+gem 'rails', '~> 8.1.4'
 gem 'turbo-rails'
 gem 'solid_queue'
 gem 'mission_control-jobs'

@@ -14,7 +14,7 @@
   = f.hidden_field :proposal_id
   .form-group
     - if internal?(f.object)
-      = f.text_area :body, class: 'form-control', placeholder: 'Add your comment', rows: 5, data: { controller: 'mention', mention_names: @mention_names }
+      = f.text_area :body, class: 'form-control', placeholder: 'Add your comment', rows: 5, data: { controller: 'mention comment-draft', mention_names: @mention_names, action: 'input->comment-draft#save', 'comment-draft-key-value': "internal_comment_draft_#{proposal.id}" }
     - else
       = f.text_area :body, class: 'form-control', placeholder: 'Add your comment', rows: 5
   .form-group

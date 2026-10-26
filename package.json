@@ -26,7 +26,7 @@
     "postcss": "^8.5.26",
     "postcss-cli": "^11.0.1",
     "postcss-import": "^16.1.1",
-    "postcss-nesting": "^14.0.1",
+    "postcss-nesting": "^14.0.3",
     "tom-select": "^2.6.2",
     "tributejs": "^5.1.3"
   },

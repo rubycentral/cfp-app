@@ -10,8 +10,6 @@ gem 'turbo-rails'
 gem 'solid_queue'
 gem 'mission_control-jobs'
 
-gem 'rexml'
-
 gem 'propshaft'
 gem 'jsbundling-rails'
 gem 'cssbundling-rails'

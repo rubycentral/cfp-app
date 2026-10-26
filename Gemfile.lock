@@ -527,7 +527,6 @@ DEPENDENCIES
   rack-timeout (~> 0.7)
   rails (~> 8.1.4)
   redcarpet (~> 3.6)
-  rexml
   rspec
   rspec-rails
   selenium-webdriver

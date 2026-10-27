@@ -23,7 +23,7 @@
     "dayjs": "^1.11.21",
     "google-palette": "^1.1.1",
     "highlight.js": "^11.12.0",
-    "postcss": "^8.5.26",
+    "postcss": "^8.5.31",
     "postcss-cli": "^12.0.0",
     "postcss-import": "^16.1.1",
     "postcss-nesting": "^14.0.3",

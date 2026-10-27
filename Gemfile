@@ -40,7 +40,7 @@ gem 'nokogiri'
 gem 'pundit'
 gem 'redcarpet', '~> 3.6'
 gem 'simple_form'
-gem 'image_processing', '~> 2.0'
+gem 'image_processing', '~> 2.2'
 
 gem 'diffy'
 gem 'paper_trail'

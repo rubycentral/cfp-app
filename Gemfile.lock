@@ -212,7 +212,7 @@ GEM
       ostruct
     i18n (1.15.2)
       concurrent-ruby (~> 1.0)
-    image_processing (2.0.3)
+    image_processing (2.2.0)
     importmap-rails (2.2.3)
       actionpack (>= 6.0.0)
       activesupport (>= 6.0.0)
@@ -508,7 +508,7 @@ DEPENDENCIES
   groupdate
   haml-rails
   honeybadger (~> 6.10)
-  image_processing (~> 2.0)
+  image_processing (~> 2.2)
   jsbundling-rails
   launchy
   letter_opener_web

@@ -16,7 +16,7 @@
     "autoprefixer": "^10.6.1",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.13.2",
-    "chart.js": "^4.5.1",
+    "chart.js": "^4.6.1",
     "chartkick": "^5.0.1",
     "datatables.net": "^3",
     "datatables.net-bs5": "^2",

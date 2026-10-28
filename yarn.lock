@@ -768,10 +768,10 @@ postcss-cli@^12.0.0:
     tinyglobby "^0.2.12"
     yargs "^18.0.0"
 
-postcss-import@^16.1.1:
-  version "16.1.1"
-  resolved "https://registry.yarnpkg.com/postcss-import/-/postcss-import-16.1.1.tgz#cfbe79e6c9232b0dbbe1c18f35308825cfe8ff2a"
-  integrity sha512-2xVS1NCZAfjtVdvXiyegxzJ447GyqCeEI5V7ApgQVOWnros1p5lGNovJNapwPpMombyFBfqDwt7AD3n2l0KOfQ==
+postcss-import@^17.0.1:
+  version "17.0.1"
+  resolved "https://registry.yarnpkg.com/postcss-import/-/postcss-import-17.0.1.tgz#0029c412a7468bf65a12f8d40c623fd95cca3d29"
+  integrity sha512-lthLZRa+sMc/xo+lG7TMUvOviwP9ngR0VULnvfXTyOE3JIc0mFrbjcubI6Jx52X+B3IKt9yfp6wwVWE768JezA==
   dependencies:
     postcss-value-parser "^4.0.0"
     read-cache "^1.0.0"

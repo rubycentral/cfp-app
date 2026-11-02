@@ -88,17 +88,11 @@ class User < ApplicationRecord
     end
   end
 
-  # Hand-rolled replacements for Devise :confirmable (tokens are stateless
-  # generates_token_for; the legacy confirmation_token column dies in PR 3).
-  # Stateless confirmation token; also reachable through the
-  # confirmation_token alias below for legacy callers.
+  # Hand-rolled replacement for Devise :confirmable, using a stateless
+  # generates_token_for token instead of a stored confirmation_token column.
   def email_confirmation_token
     generate_token_for(:email_confirmation)
   end
-
-  # Legacy name. The same-named Devise column is no longer consulted
-  # anywhere and is dropped in PR 3.
-  alias_method :confirmation_token, :email_confirmation_token
 
   def self.find_by_email_confirmation_token(token)
     find_by_token_for(:email_confirmation, token)

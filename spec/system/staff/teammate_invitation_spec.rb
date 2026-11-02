@@ -108,7 +108,7 @@ feature "Teammate Invitation received", type: :system do
           click_link "Sign up"
           sign_up_with("new57@per.son", "apples", "apples")
           user = User.find_by!(email: "new57@per.son")
-          visit confirmation_path(user.confirmation_token)
+          visit confirmation_path(user.email_confirmation_token)
           signin("new57@per.son", "apples")
 
           expect(page).to have_content("Congrats! You are now an official team member of My Event! Before continuing, please take a moment to make sure your profile is complete.")

@@ -493,9 +493,9 @@ datatables.net@2.3.8:
     jquery ">=1.7"
 
 datatables.net@^3:
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/datatables.net/-/datatables.net-3.1.4.tgz#b737343bef9ec0acfd4c6a3b5774a0925f83411f"
-  integrity sha512-tnk14y/AOr0Z1d7avIUvCcOGgqZpeo7B6g6RQiycMQckEMq2FaaZTG1Q1xD6Kci5gpAvdjZInDmbscoiVSTyGw==
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/datatables.net/-/datatables.net-3.1.5.tgz#aea72d23adb015ff2b98e35fc38e1d23f2fd7a57"
+  integrity sha512-phu9fVz1cOhD7kZDO5Ztj15qwghCkmdwX5AezLi+PxfMtnFAq0itpewvXzdwdr6bOwPqO2zuXsXWUU5x3wQptw==
 
 date-fns@>=2:
   version "4.1.0"

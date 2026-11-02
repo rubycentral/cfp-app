@@ -3,8 +3,8 @@ class ApplicationController < ActionController::Base
   include Authentication
   # Authorization is opt-in per controller (require_user etc.); most pages are public.
   # Because this always skips require_authentication, the Authentication concern's
-  # request_authentication/after_authentication_url are dead paths app-wide until
-  # this posture tightens (PR 3) — don't wire require_user (or anything else) to them.
+  # request_authentication/after_authentication_url are dead paths app-wide —
+  # don't wire require_user (or anything else) to them.
   allow_unauthenticated_access(if: -> { true })
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 

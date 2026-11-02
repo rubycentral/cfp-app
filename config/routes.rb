@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resource :session, only: [:new, :create, :destroy]
-  # Legacy Devise URL + helper-name aliases (removed in PR 3)
+  # Legacy Devise URL + helper-name aliases, kept until in-app callers move to the session helpers
   get    'users/sign_in',  to: 'sessions#new',     as: :new_user_session
   delete 'users/sign_out', to: 'sessions#destroy', as: :destroy_user_session
   resources :passwords, param: :token

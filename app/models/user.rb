@@ -1,8 +1,8 @@
 class User < ApplicationRecord
   normalizes :email, with: ->(e) { e.strip.downcase }
 
-  # Remaining Devise modules; replaced by hand-rolled equivalents in PR 2
-  # of the Rails 8 auth migration (see docs/superpowers/specs/).
+  # Remaining Devise modules, until registration and confirmation are
+  # replaced by hand-rolled equivalents.
   # :database_authenticatable no longer authenticates sessions but is kept
   # because :registerable/:confirmable depend on its Authenticatable base.
   devise :database_authenticatable, :registerable, :confirmable

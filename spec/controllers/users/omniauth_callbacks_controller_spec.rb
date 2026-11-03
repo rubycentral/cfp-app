@@ -15,7 +15,6 @@ describe Users::OmniauthCallbacksController, type: :controller do
     before :each do
       session[:invitation_slug] = invitation.slug
       request.env['omniauth.auth'] = twitter_auth_hash
-      request.env['devise.mapping'] = Devise.mappings[:user]
       allow(controller).to receive(:current_user).and_return(User.last)
     end
 
@@ -29,7 +28,6 @@ describe Users::OmniauthCallbacksController, type: :controller do
   describe 'signing in' do
     before :each do
       request.env['omniauth.auth'] = github_auth_hash
-      request.env['devise.mapping'] = Devise.mappings[:user]
     end
 
     context 'when user exists with identity' do
@@ -55,7 +53,6 @@ describe Users::OmniauthCallbacksController, type: :controller do
   describe 'linking identity to logged-in user' do
     before :each do
       request.env['omniauth.auth'] = github_auth_hash
-      request.env['devise.mapping'] = Devise.mappings[:user]
     end
 
     context 'when connecting a new provider' do

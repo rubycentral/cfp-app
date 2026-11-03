@@ -28,6 +28,7 @@ class InvitationsController < ApplicationController
 
   def decline
     @invitation.decline
+    clear_session_invite
 
     flash[:info] = "You have declined this invitation."
     redirect_to root_url
@@ -71,7 +72,7 @@ class InvitationsController < ApplicationController
   def require_speaker
     unless current_user && @proposal.has_speaker?(current_user)
       flash[:danger] = "You must be a speaker for this proposal in order to invite other speakers."
-      redirect_to new_user_session_url
+      redirect_to new_session_url
     end
   end
 
@@ -92,7 +93,7 @@ class InvitationsController < ApplicationController
   def require_user_for_accept
     unless current_user
       flash[:info] = "To accept your invitation, you must log in or create an account."
-      redirect_to new_user_session_url
+      redirect_to new_session_url
     end
   end
 

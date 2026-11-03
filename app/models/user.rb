@@ -16,13 +16,6 @@ class User < ApplicationRecord
   after_create_commit :send_creation_confirmation_instructions, if: -> { !confirmed? && email.present? }
   after_update_commit :send_reconfirmation_instructions, if: -> { saved_change_to_unconfirmed_email? && unconfirmed_email.present? }
 
-  # has_secure_password expects a password_digest attribute; this app's
-  # column is still the Devise-era encrypted_password.
-  alias_attribute :password_digest, :encrypted_password
-  def password_digest
-    encrypted_password
-  end
-
   has_many :sessions,     dependent: :destroy
   has_many :identities,   dependent: :destroy
   has_many :invitations,  dependent: :destroy
@@ -41,9 +34,9 @@ class User < ApplicationRecord
   validates :bio, length: { maximum: 500 }
   validates :name, presence: true, allow_nil: true
   validates_uniqueness_of :email, allow_blank: true
-  validates_format_of :email, with: /\A[^@\s]+@[^@\s]+\z/, allow_blank: true, if: :email_changed?  # equivalent to Devise.email_regexp
+  validates_format_of :email, with: /\A[^@\s]+@[^@\s]+\z/, allow_blank: true, if: :email_changed?  # permissive anything@anything format (inherited from the Devise era)
   validates_presence_of :email, on: :create, if: -> { provider.blank? && identities.blank? }
-  validates_presence_of :email, on: :update, if: -> { provider.blank? || unconfirmed_email.blank? }
+  validates_presence_of :email, on: :update, if: -> { (provider.blank? && identities.blank?) || unconfirmed_email.blank? }
   validates_presence_of :password, on: :create
   validates_confirmation_of :password, on: :create
   validates_length_of :password, within: PASSWORD_LENGTH, allow_blank: true
@@ -95,17 +88,11 @@ class User < ApplicationRecord
     end
   end
 
-  # Hand-rolled replacements for Devise :confirmable (tokens are stateless
-  # generates_token_for; the legacy confirmation_token column is unused).
-  # Stateless confirmation token; also reachable through the
-  # confirmation_token alias below for legacy callers.
+  # Hand-rolled replacement for Devise :confirmable, using a stateless
+  # generates_token_for token instead of a stored confirmation_token column.
   def email_confirmation_token
     generate_token_for(:email_confirmation)
   end
-
-  # Legacy name. The same-named Devise column is no longer consulted
-  # anywhere.
-  alias_method :confirmation_token, :email_confirmation_token
 
   def self.find_by_email_confirmation_token(token)
     find_by_token_for(:email_confirmation, token)
@@ -284,33 +271,21 @@ end
 #
 # Table name: users
 #
-#  id                     :integer          not null, primary key
-#  name                   :string
-#  email                  :string           default(""), not null
-#  bio                    :text
-#  admin                  :boolean          default(FALSE)
-#  provider               :string
-#  uid                    :string
-#  encrypted_password     :string           default(""), not null
-#  reset_password_token   :string
-#  reset_password_sent_at :datetime
-#  sign_in_count          :integer          default(0), not null
-#  current_sign_in_at     :datetime
-#  current_sign_in_ip     :inet
-#  last_sign_in_at        :datetime
-#  last_sign_in_ip        :inet
-#  confirmation_token     :string
-#  confirmed_at           :datetime
-#  confirmation_sent_at   :datetime
-#  unconfirmed_email      :string
-#  remember_created_at    :datetime
-#  created_at             :datetime
-#  updated_at             :datetime
+#  id                :integer          not null, primary key
+#  name              :string
+#  email             :string           default(""), not null
+#  bio               :text
+#  admin             :boolean          default(FALSE)
+#  provider          :string
+#  uid               :string
+#  password_digest   :string           default(""), not null
+#  confirmed_at      :datetime
+#  unconfirmed_email :string
+#  created_at        :datetime
+#  updated_at        :datetime
 #
 # Indexes
 #
-#  index_users_on_confirmation_token    (confirmation_token)
-#  index_users_on_email                 (email)
-#  index_users_on_reset_password_token  (reset_password_token)
-#  index_users_on_uid                   (uid)
+#  index_users_on_email  (email)
+#  index_users_on_uid    (uid)
 #

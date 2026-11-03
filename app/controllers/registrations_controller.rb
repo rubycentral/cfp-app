@@ -13,7 +13,9 @@ class RegistrationsController < ApplicationController
     if @user.save
       if @user.confirmed?
         start_authenticated_session @user
-        redirect_to after_sign_in_path_for(@user), notice: 'Welcome! You have signed up successfully.'
+        target = after_sign_in_path_for(@user)
+        session.delete(:pending_invite_email)
+        redirect_to target, notice: 'Welcome! You have signed up successfully.'
       else
         redirect_to root_path, notice: 'A message with a confirmation link has been sent to your email address. Please follow the link to activate your account.'
       end

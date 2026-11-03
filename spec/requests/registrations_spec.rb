@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Registrations', type: :request do
   describe 'GET /users/sign_up (legacy alias)' do
     it 'renders the sign up form' do
-      get new_user_registration_path
+      get new_registration_path
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to include('user_email').and include('user_password_confirmation')
@@ -33,7 +33,7 @@ RSpec.describe 'Registrations', type: :request do
       # out sets session[:pending_invite_email] (via InvitationsController's
       # set_session_invite before_action) before bouncing to sign-in.
       get accept_invitation_path(invitation.slug)
-      expect(response).to redirect_to(new_user_session_url)
+      expect(response).to redirect_to(new_session_url)
 
       invited = params.deep_merge(user: {email: 'invited@person.com'})
 
@@ -64,6 +64,31 @@ RSpec.describe 'Registrations', type: :request do
 
       expect(response).to have_http_status(:unprocessable_entity)
       expect(User.find_by(email: 'bad')).to be_nil
+    end
+
+    it 'consumes the pending-invite session keys after a successful confirmed signup' do
+      proposal = create(:proposal_with_track)
+      invitation = create(:invitation, proposal: proposal, email: 'invited@person.com')
+
+      get accept_invitation_path(invitation.slug)
+      expect(response).to redirect_to(new_session_url)
+
+      invited = params.deep_merge(user: {email: 'invited@person.com'})
+      post registration_path, params: invited
+
+      user = User.find_by(email: 'invited@person.com')
+      expect(user.confirmed?).to be true
+      user.destroy
+
+      # A second registration in the same session, with the SAME email as
+      # the (now-stale) pending invite, must NOT auto-confirm: the invite
+      # session keys should have been consumed by the first signup.
+      expect { post registration_path, params: invited }
+        .to have_enqueued_mail(ConfirmationsMailer, :confirmation_instructions)
+
+      second_user = User.find_by(email: 'invited@person.com')
+      expect(second_user.confirmed?).to be false
+      expect(second_user.sessions.count).to eq(0)
     end
   end
 end

@@ -9,12 +9,12 @@ RSpec.describe 'Confirmations', type: :request do
     u
   end
 
-  describe 'GET /users/confirmation?confirmation_token= (legacy alias, emailed link shape)' do
+  describe 'GET /confirmations/:token' do
     it 'confirms with a valid token' do
-      get user_confirmation_path(confirmation_token: user.confirmation_token)
+      get confirmation_path(user.email_confirmation_token)
 
       expect(user.reload.confirmed?).to be true
-      expect(response).to redirect_to(new_user_session_path)
+      expect(response).to redirect_to(new_session_path)
       expect(flash[:notice]).to eq('Your email address has been successfully confirmed.')
     end
 
@@ -22,24 +22,24 @@ RSpec.describe 'Confirmations', type: :request do
       user.confirm!
       user.update_columns(unconfirmed_email: 'changed@person.com')
 
-      get user_confirmation_path(confirmation_token: user.confirmation_token)
+      get confirmation_path(user.email_confirmation_token)
 
       expect(user.reload.email).to eq('changed@person.com')
     end
 
     it 'rejects expired tokens' do
-      token = user.confirmation_token
+      token = user.email_confirmation_token
       travel 4.days do
-        get user_confirmation_path(confirmation_token: token)
+        get confirmation_path(token)
 
         expect(user.reload.confirmed?).to be false
-        expect(response).to redirect_to(new_user_confirmation_path)
+        expect(response).to redirect_to(new_confirmation_path)
         expect(flash[:danger]).to eq('Confirmation token is invalid or has expired.')
       end
     end
 
     it 'rejects tampered tokens' do
-      get user_confirmation_path(confirmation_token: "#{user.confirmation_token}x")
+      get confirmation_path("#{user.email_confirmation_token}x")
 
       expect(user.reload.confirmed?).to be false
       expect(flash[:danger]).to eq('Confirmation token is invalid or has expired.')
@@ -50,9 +50,9 @@ RSpec.describe 'Confirmations', type: :request do
       user.update_columns(unconfirmed_email: 'taken@person.com')
       create(:user, email: 'taken@person.com')
 
-      get user_confirmation_path(confirmation_token: user.confirmation_token)
+      get confirmation_path(user.email_confirmation_token)
 
-      expect(response).to redirect_to(new_user_confirmation_path)
+      expect(response).to redirect_to(new_confirmation_path)
       expect(flash[:danger]).to include('taken')
       expect(user.reload.email).to eq('pending@person.com')
     end
@@ -68,7 +68,7 @@ RSpec.describe 'Confirmations', type: :request do
       expect { post confirmations_path, params: {user: {email: email}} }
         .to have_enqueued_mail(ConfirmationsMailer, :confirmation_instructions)
 
-      expect(response).to redirect_to(new_user_session_path)
+      expect(response).to redirect_to(new_session_path)
       expect(flash[:notice]).to eq('You will receive an email with instructions for how to confirm your email address in a few minutes.')
     end
 
@@ -129,7 +129,7 @@ RSpec.describe 'Confirmations', type: :request do
 
       post confirmations_path, params: {user: {email: email}}
 
-      expect(response).to redirect_to(new_user_confirmation_path)
+      expect(response).to redirect_to(new_confirmation_path)
       expect(flash[:alert]).to eq('Try again later.')
     end
   end

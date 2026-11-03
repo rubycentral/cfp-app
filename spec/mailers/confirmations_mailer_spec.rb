@@ -10,7 +10,7 @@ RSpec.describe ConfirmationsMailer, type: :mailer do
 
       expect(mail.to).to eq(['pending@addr.com'])
       expect(mail.subject).to eq('Confirmation instructions')
-      token = mail.body.encoded.match(%r{confirmation\?confirmation_token=([^"&]+)})[1]
+      token = mail.body.encoded.match(%r{confirmations/([^"&]+)})[1]
       expect(User.find_by_email_confirmation_token(CGI.unescape(token))).to eq(user)
     end
 

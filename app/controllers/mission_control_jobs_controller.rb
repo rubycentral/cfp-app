@@ -11,10 +11,10 @@ class MissionControlJobsController < ApplicationController
   private
 
   def require_user
-    return if user_signed_in?
+    return if authenticated?
 
     session[:target] = request.path
-    redirect_to main_app.new_user_session_url,
+    redirect_to main_app.new_session_url,
                 flash: { danger: "You must be signed in to access this page. If you haven't created an account, please create one." }
   end
 

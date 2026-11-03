@@ -32,7 +32,7 @@ RSpec.describe 'Jobs Admin Dashboard', type: :request do
     it 'is redirected to the sign in page' do
       get mission_control_jobs_path
 
-      expect(response).to redirect_to('/users/sign_in')
+      expect(response).to redirect_to('/session/new')
     end
   end
 end

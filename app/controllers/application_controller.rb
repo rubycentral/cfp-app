@@ -1,5 +1,11 @@
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
+  include Authentication
+  # Authorization is opt-in per controller (require_user etc.); most pages are public.
+  # Because this always skips require_authentication, the Authentication concern's
+  # request_authentication/after_authentication_url are dead paths app-wide —
+  # don't wire require_user (or anything else) to them.
+  allow_unauthenticated_access(if: -> { true })
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   # Prevent CSRF attacks by raising an exception.
@@ -11,6 +17,7 @@ class ApplicationController < ActionController::Base
   helper_method :program_mode?
   helper_method :schedule_mode?
   helper_method :program_tracks
+  helper_method :current_user, :user_signed_in?
 
   before_action :set_paper_trail_whodunnit
   before_action :current_event
@@ -20,6 +27,17 @@ class ApplicationController < ActionController::Base
   private decorates_assigned :event
 
   private
+
+  # Shims over the Rails 8 authentication stack. current_user is permanent
+  # (idiomatic); user_signed_in? is temporary and will migrate to authenticated?.
+  def current_user
+    resume_session
+    Current.user
+  end
+
+  def user_signed_in?
+    authenticated?
+  end
 
   def after_sign_in_path_for(user)
     if session[:pending_invite_accept_url]
@@ -45,6 +63,17 @@ class ApplicationController < ActionController::Base
 
   def current_event
     @current_event ||= set_current_event(session[:current_event_id]) if session[:current_event_id]
+  end
+
+  # Rotate the Rails session at privilege elevation (Devise did this via
+  # clean_up_csrf_token_on_authentication + session renewal), preserving the
+  # keys the post-sign-in flow legitimately needs.
+  def start_authenticated_session(user)
+    preserved = [:target, :pending_invite_accept_url, :pending_invite_email, :current_event_id]
+      .index_with { |key| session[key] }
+    reset_session
+    preserved.each { |key, value| session[key] = value unless value.nil? }
+    start_new_session_for(user)
   end
 
   def current_website

@@ -57,12 +57,12 @@ describe ProposalsController, type: :controller do
       }
     }
 
-    before { allow(controller).to receive(:current_user).and_return(user) }
+    before { sign_in(user) }
 
     it "sets the user's bio if not is present" do
-      user.bio = nil
+      user.update!(bio: nil)
       post :create, params: params
-      expect(user.bio).to eq('my bio')
+      expect(user.reload.bio).to eq('my bio')
     end
   end
 
@@ -70,7 +70,7 @@ describe ProposalsController, type: :controller do
     it "confirms a proposal" do
       proposal = create(:proposal_with_track, state: :accepted, confirmed_at: nil)
       ProgramSession.create_from_proposal(proposal)
-      allow_any_instance_of(ProposalsController).to receive(:current_user) { create(:speaker) }
+      sign_in(create(:speaker).user)
       allow(controller).to receive(:require_speaker).and_return(nil)
       post :confirm, params: {event_slug: proposal.event.slug, uuid: proposal.uuid}
       expect(proposal.reload).to be_confirmed
@@ -81,7 +81,7 @@ describe ProposalsController, type: :controller do
   describe "POST #update_notes" do
     it "sets confirmation_notes" do
       proposal = create(:proposal_with_track, confirmation_notes: nil)
-      allow_any_instance_of(ProposalsController).to receive(:current_user) { create(:speaker) }
+      sign_in(create(:speaker).user)
       allow(controller).to receive(:require_speaker).and_return(nil)
       post :update_notes, params: {event_slug: proposal.event.slug, uuid: proposal.uuid,
            proposal: {confirmation_notes: 'notes'}}
@@ -92,7 +92,7 @@ describe ProposalsController, type: :controller do
   describe 'POST #withdraw' do
     let(:user) { create(:user) }
     let(:proposal) { create(:proposal_with_track, event: event) }
-    before { allow(controller).to receive(:current_user).and_return(user) }
+    before { sign_in(user) }
     before { allow(controller).to receive(:require_speaker).and_return(nil) }
 
     it "sets the state to withdrawn for unconfirmed proposals" do
@@ -117,7 +117,7 @@ describe ProposalsController, type: :controller do
   describe 'POST #decline' do
     let!(:proposal) { create(:proposal_with_track, state: :accepted, confirmed_at: nil) }
     before { ProgramSession.create_from_proposal(proposal) }
-    before { allow_any_instance_of(ProposalsController).to receive(:current_user) { create(:speaker) } }
+    before { sign_in(create(:speaker).user) }
     before { allow(controller).to receive(:require_speaker).and_return(nil) }
 
     it "sets the state to withdrawn for unconfirmed proposals" do

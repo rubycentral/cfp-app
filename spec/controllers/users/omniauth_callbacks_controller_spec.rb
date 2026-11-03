@@ -38,7 +38,7 @@ describe Users::OmniauthCallbacksController, type: :controller do
 
       it 'finds user via identity and signs in' do
         expect { post :callback, params: {provider: 'github'} }.not_to change { User.count }
-        expect(controller.current_user).to eq(user)
+        expect(user.sessions.count).to eq(1)
       end
     end
 
@@ -47,7 +47,7 @@ describe Users::OmniauthCallbacksController, type: :controller do
 
       it 'finds user via legacy lookup and signs in' do
         expect { post :callback, params: {provider: 'github'} }.not_to change { User.count }
-        expect(controller.current_user).to eq(user)
+        expect(user.sessions.count).to eq(1)
       end
     end
   end

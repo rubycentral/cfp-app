@@ -1,10 +1,11 @@
 class User < ApplicationRecord
   normalizes :email, with: ->(e) { e.strip.downcase }
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable
-  devise :database_authenticatable, :registerable,
-         :rememberable, :trackable, :confirmable #:validatable,
+  # Remaining Devise modules, until registration and confirmation are
+  # replaced by hand-rolled equivalents.
+  # :database_authenticatable no longer authenticates sessions but is kept
+  # because :registerable/:confirmable depend on its Authenticatable base.
+  devise :database_authenticatable, :registerable, :confirmable
 
   has_secure_password
 
@@ -15,6 +16,7 @@ class User < ApplicationRecord
     encrypted_password
   end
 
+  has_many :sessions,     dependent: :destroy
   has_many :identities,   dependent: :destroy
   has_many :invitations,  dependent: :destroy
   has_many :teammates, dependent: :destroy
@@ -188,6 +190,7 @@ class User < ApplicationRecord
       other_user.ratings.update_all(user_id: id)
       other_user.comments.update_all(user_id: id)
       other_user.notifications.update_all(user_id: id)
+      other_user.sessions.destroy_all
 
       # Clear legacy OAuth fields so the old user can't be found via from_omniauth
       other_user.update_columns(provider: nil, uid: nil)

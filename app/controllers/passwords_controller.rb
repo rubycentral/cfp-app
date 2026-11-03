@@ -27,6 +27,10 @@ class PasswordsController < ApplicationController
 
   def update
     if @user.update(params.require(:user).permit(:password, :password_confirmation))
+      # A password reset must invalidate every live session (Devise did this
+      # implicitly via authenticatable_salt checks; the new stack doesn't).
+      @user.sessions.destroy_all
+
       redirect_to new_user_session_path, notice: 'Password has been reset.'
     else
       redirect_to edit_password_path(params[:token]), alert: "Passwords did not match."

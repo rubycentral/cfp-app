@@ -5,7 +5,7 @@ RSpec.describe 'Jobs Admin Dashboard', type: :request do
   let(:non_admin_user) { create(:user) }
 
   context 'An admin' do
-    before { login_as(admin_user) }
+    before { sign_in(admin_user) }
 
     it 'can see the jobs dashboard' do
       get mission_control_jobs_path
@@ -19,7 +19,7 @@ RSpec.describe 'Jobs Admin Dashboard', type: :request do
   # script_name and would themselves expand to /admin/jobs/... -- which is the
   # very mistake these examples exist to catch.
   context 'A non-admin user' do
-    before { login_as(non_admin_user) }
+    before { sign_in(non_admin_user) }
 
     it 'is redirected to the events page' do
       get mission_control_jobs_path

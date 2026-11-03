@@ -11,7 +11,7 @@ describe NotificationsController, type: :controller do
     end
 
     it "redirects an unauthenticated user" do
-      sign_out(user)
+      request.cookie_jar.delete(:session_id)
       get :index
       expect(response).to redirect_to(new_user_session_url)
     end

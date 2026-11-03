@@ -13,7 +13,7 @@ FactoryBot.define do
     password { "12345678" }
     password_confirmation { "12345678" }
     bio { "A great Bio" }
-    after(:create) { |user| user.confirm }
+    after(:create) { |user| user.confirm! }
 
     trait :reviewer do
       name { "John Doe Reviewer" }

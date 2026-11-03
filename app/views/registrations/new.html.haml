@@ -1,0 +1,22 @@
+.row
+  .col-sm-12.text-center
+    %h2 Sign up
+
+.row
+  = simple_form_for(@user, as: :user, url: registration_path) do |f|
+
+    .form-inputs
+      .col-sm-5.col-centered
+        .card
+          .card-body
+            = f.error_notification
+
+            = f.input :email, required: true, autofocus: true, wrapper_html: {class: 'col-sm-12'}
+            = f.input :password, required: true, wrapper_html: {class: 'col-sm-12'}, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length)
+            = f.input :password_confirmation, required: true, wrapper_html: {class: 'col-sm-12'}
+
+            .form-group.col-sm-12
+              = f.button :submit, 'Sign up', class: 'btn btn-success'
+
+  .col-sm-5.col-centered
+    .form-group= render 'shared/authentication_links'

@@ -14,6 +14,7 @@ import AlertController from "./alert_controller"
 import BannerAdsController from "./banner_ads_controller"
 import CardDisplayToggleController from "./card_display_toggle_controller"
 import DisableSubmitController from "./disable_submit_controller"
+import CommentDraftController from "./comment_draft_controller"
 import GridModalController from "./grid_modal_controller"
 import CfpDatatableController from "./cfp_datatable_controller"
 import ContentController from "./content_controller"
@@ -55,6 +56,7 @@ application.register("alert", AlertController)
 application.register("banner-ads", BannerAdsController)
 application.register("card-display-toggle", CardDisplayToggleController)
 application.register("disable-submit", DisableSubmitController)
+application.register("comment-draft", CommentDraftController)
 application.register("grid-modal", GridModalController)
 application.register("cfp-datatable", CfpDatatableController)
 application.register("content", ContentController)

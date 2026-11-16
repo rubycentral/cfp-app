@@ -201,7 +201,7 @@ GEM
       railties (>= 5.1)
     hashie (5.1.0)
       logger
-    honeybadger (6.10.1)
+    honeybadger (6.10.2)
       logger
       ostruct
     i18n (1.15.2)

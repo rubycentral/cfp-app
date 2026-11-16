@@ -33,8 +33,12 @@ module CfpWebsite
     end
 
     # The engine owns ActiveStorage: core has no storage config of its own.
+    # If the app grows one (config/storage.yml or config/storage/<env>.yml),
+    # Rails reads it as usual and the engine keeps out of the way.
     initializer 'cfp_website.active_storage', before: 'active_storage.services' do |app|
-      app.config.active_storage.service_configurations ||= ActiveSupport::ConfigurationFile.parse(root.join('config/storage.yml'))
+      unless ["config/storage/#{Rails.env}.yml", 'config/storage.yml'].any? {|path| app.root.join(path).exist? }
+        app.config.active_storage.service_configurations ||= ActiveSupport::ConfigurationFile.parse(root.join('config/storage.yml'))
+      end
       app.config.active_storage.service ||= CfpWebsite::STORAGE_SERVICES.fetch(Rails.env)
     end
 

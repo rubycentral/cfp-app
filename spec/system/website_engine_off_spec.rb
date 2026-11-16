@@ -29,6 +29,11 @@ RSpec.describe 'With the website engine switched off', type: :system do
     expect(defined?(Features::FormHelpers)).to be_nil
   end
 
+  it 'does not load ActiveStorage' do
+    expect(defined?(ActiveStorage)).to be_nil
+    expect(Rails.application.routes.url_helpers).not_to respond_to(:rails_blob_path)
+  end
+
   it 'leaves no sponsor methods on the time slot decorator' do
     expect(Staff::TimeSlotDecorator.instance_methods).not_to include(:sponsored?, :display_sponsor_star)
   end

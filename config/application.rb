@@ -1,7 +1,6 @@
 require_relative "boot"
 
 require 'active_record/railtie'
-require 'active_storage/engine'
 require 'action_controller/railtie'
 require 'action_view/railtie'
 require 'action_mailer/railtie'
@@ -20,13 +19,15 @@ Bundler.require(*Rails.groups)
 
 module CfpApp
   class Application < Rails::Application
+    # The beta website feature lives in engines/cfp_website and is opt-in
+    # (ENABLE_WEBSITE=1/true; 0/false/unset leave it off). It sits inside the
+    # class body so dotenv (before_configuration) has run, and before
+    # load_defaults so the defaults also cover the frameworks the engine
+    # loads (ActiveStorage).
+    require 'cfp_website' if ActiveModel::Type::Boolean.new.cast(ENV['ENABLE_WEBSITE'])
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.1
-
-    # The beta website feature lives in engines/cfp_website and is opt-in
-    # (ENABLE_WEBSITE=1/true; 0/false/unset leave it off).
-    # This sits inside the class body so dotenv (before_configuration) has run.
-    require 'cfp_website' if ActiveModel::Type::Boolean.new.cast(ENV['ENABLE_WEBSITE'])
 
     # View hook registry: point name => partial paths (see ExtensionPointsHelper).
     config.x.extension_points = Hash.new { |h, k| h[k] = [] }

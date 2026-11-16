@@ -3,28 +3,22 @@ require 'rails_helper'
 describe CommentsController, type: :controller do
   describe "POST #create" do
     let(:proposal) { create(:proposal_with_track, uuid: 'abc123') }
-    let(:user) { create(:user) }
     let(:referer_path) { event_proposal_path(proposal.event, proposal) }
     let(:mailer) { double("CommentNotificationMailer.speaker_notification") }
 
     before do
-      allow(Proposal).to receive(:find).and_return(proposal)
       request.env['HTTP_REFERER'] =  referer_path
     end
 
     context "Public comments" do
-      let(:comment_user) { create(:user) }
-      let(:comment) { create(:comment, type: "PublicComment", user: comment_user) }
+      let(:comment_user) { create(:reviewer, event: proposal.event) }
       let(:params) { { public_comment: { body: 'foo', proposal_id: proposal.id }, type: "PublicComment" } }
 
       before do
-        allow(comment_user).to receive(:reviewer?).and_return(true)
-        allow(comment_user).to receive(:reviewer_for_event?).and_return(true)
-        allow_any_instance_of(CommentsController).to receive(:current_user) { comment_user }
+        sign_in comment_user
       end
 
       it "adds a comment to the proposal" do
-        # expect(PublicComment).to receive(:create).and_return(comment)
         expect {
           post :create, params: params
         }.to change {PublicComment.count}.by(1)
@@ -43,10 +37,9 @@ describe CommentsController, type: :controller do
 
       it "sends an email notification to all speakers" do
         speakers = build_list(:speaker, 3)
-        proposal = create(:proposal_with_track, speakers: speakers)
-        allow(Proposal).to receive(:find).and_return(proposal)
+        proposal = create(:proposal_with_track, event: self.proposal.event, speakers: speakers)
         expect {
-          post :create, params: params
+          post :create, params: { public_comment: { body: 'foo', proposal_id: proposal.id }, type: "PublicComment" }
         }.to change(ActionMailer::Base.deliveries, :count).by(1)
 
         email = ActionMailer::Base.deliveries.last
@@ -55,16 +48,14 @@ describe CommentsController, type: :controller do
     end
 
     context "Internal comments" do
-      let(:comment) { build(:comment, type: "InternalComment") }
       let(:params) { { internal_comment: { body: 'foo', proposal_id: proposal.id }, type: "InternalComment" } }
-      let(:reviewer) { build(:reviewer)}
+      let(:reviewer) { create(:reviewer, event: proposal.event) }
 
       before do
-        allow_any_instance_of(CommentsController).to receive(:current_user) { reviewer }
+        sign_in reviewer
       end
 
       it "adds the comment to the proposal" do
-        # expect(InternalComment).to receive(:create).and_return(comment)
         expect {
           post :create, params: params
         }.to change {InternalComment.count}.by(1)

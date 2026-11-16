@@ -23,9 +23,10 @@ module CfpApp
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.1
 
-    # The beta website feature lives in engines/cfp_website and is opt-in.
+    # The beta website feature lives in engines/cfp_website and is opt-in
+    # (ENABLE_WEBSITE=1/true; 0/false/unset leave it off).
     # This sits inside the class body so dotenv (before_configuration) has run.
-    require 'cfp_website' if ENV['ENABLE_WEBSITE'].present?
+    require 'cfp_website' if ActiveModel::Type::Boolean.new.cast(ENV['ENABLE_WEBSITE'])
 
     # View hook registry: point name => partial paths (see ExtensionPointsHelper).
     config.x.extension_points = Hash.new { |h, k| h[k] = [] }

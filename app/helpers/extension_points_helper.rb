@@ -2,6 +2,6 @@
 # engines register partial paths under `config.x.extension_points[:point]`.
 module ExtensionPointsHelper
   def render_extensions(point, **locals)
-    safe_join(Rails.application.config.x.extension_points[point].map { |partial| render(partial:, locals:) })
+    safe_join(Rails.application.config.x.extension_points.fetch(point, []).map { |partial| render(partial:, locals:) })
   end
 end

@@ -145,8 +145,8 @@ Colors](#customizing-colors)...
 
 Colors in the app are currently set with css variables which can be easily
 overridden in a style tag in a head content block. The css variables in the
-default theme can be viewed in the [colors.scss
-file](../app/assets/stylesheets/themes/default/colors.scss)
+default theme can be viewed in the [colors.css
+file](app/assets/stylesheets/themes/default/colors.css)
 
 As an example, if you wanted to change the colors for the main content
 background and navigation you could add the following content block:
@@ -232,7 +232,7 @@ SSL certificates as well.
 DNS](https://devcenter.heroku.com/articles/custom-domains#configuring-dns-for-root-domains)
 to point to the heroku DNS target for your app.
 
-There is a section in the [routes file](/config/routes.rb/) wrapped with a
+There is a section in the [routes file](config/routes/website.rb) wrapped with a
 `DomainConstraint` that allows the most recent active website to be accessed at
 the root of your domain. So, with the example from above, Rubconf 2022 can be
 found at `https://rubyconf.org`. Older conferences that share the same domain

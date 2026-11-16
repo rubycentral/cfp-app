@@ -117,7 +117,6 @@ Rails.application.routes.draw do
 
       resources :session_formats, except: :show
       resources :tracks, except: [:show]
-      draw :staff_website  # => config/routes/staff_website.rb
     end
   end
   resources :events, only: [:index]
@@ -152,8 +151,6 @@ Rails.application.routes.draw do
   if Rails.env.local?
     mount LetterOpenerWeb::Engine, at: '/letter_opener'
   end
-
-  draw :website # => config/routes/website.rb
 
   get '/404', :to => 'errors#not_found', as: :not_found
   get '/422', :to => 'errors#unacceptable'

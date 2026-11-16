@@ -19,6 +19,7 @@
     = stylesheet_link_tag "//fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600"
 
     = javascript_include_tag 'application', 'data-turbo-track': 'reload', type: 'module'
+    = render_extensions(:head)
 
     = csrf_meta_tags
 

@@ -18,9 +18,9 @@ feature 'Event Sponsors', type: :system do
       fill_in 'sponsor_description', with: "Brief Description"
       select Sponsor::TIERS.first, from: "sponsor_tier"
 
-      attach_file('sponsor_primary_logo', Rails.root.join('spec/fixtures/files/ruby1.png'))
-      attach_file('sponsor_footer_logo', Rails.root.join('spec/fixtures/files/ruby2.jpeg'))
-      attach_file('sponsor_banner_ad', Rails.root.join('spec/fixtures/files/ruby3.png'))
+      attach_file('sponsor_primary_logo', CfpWebsite::Engine.root.join('spec/fixtures/files/ruby1.png'))
+      attach_file('sponsor_footer_logo', CfpWebsite::Engine.root.join('spec/fixtures/files/ruby2.jpeg'))
+      attach_file('sponsor_banner_ad', CfpWebsite::Engine.root.join('spec/fixtures/files/ruby3.png'))
 
       click_on 'Save'
 
@@ -38,7 +38,7 @@ feature 'Event Sponsors', type: :system do
       visit edit_event_staff_sponsor_path(event, sponsor)
 
       fill_in 'sponsor_name', with: 'New Sponsor Name'
-      attach_file('sponsor_primary_logo', Rails.root.join('spec/fixtures/files/ruby1.png'))
+      attach_file('sponsor_primary_logo', CfpWebsite::Engine.root.join('spec/fixtures/files/ruby1.png'))
 
       click_on 'Save'
       expect(Sponsor.last.name).to eq('New Sponsor Name')

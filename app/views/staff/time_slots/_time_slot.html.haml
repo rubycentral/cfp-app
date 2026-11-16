@@ -13,7 +13,7 @@
 
   %td= time_slot.room_name
 
-  %td= time_slot.display_sponsor_star
+  = render_extensions(:time_slot_index_cells, time_slot: time_slot)
 
   %td= time_slot.display_track_name
 

@@ -114,10 +114,6 @@ module ApplicationHelper
     roles.any?
   end
 
-  def website_nav?
-    policy(Website).show?
-  end
-
   def admin_nav?
     current_user.admin?
   end
@@ -132,14 +128,6 @@ module ApplicationHelper
       'bg-secondary'
     else
       'bg-secondary'
-    end
-  end
-
-  def new_or_edit_website_path
-    if current_website
-      edit_event_staff_website_path(current_event)
-    else
-      new_event_staff_website_path(current_event)
     end
   end
 end

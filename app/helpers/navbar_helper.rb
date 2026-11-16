@@ -32,10 +32,6 @@ module NavbarHelper
       event_staff_guidelines: ->(p) { p == path_for(current_event, :staff, :guidelines) },
       event_staff_speaker_emails: ->(p) { p.start_with?(path_for(current_event, :staff, :speaker_email_templates)) }
     },
-    event_website: {
-      event_website_configuration: ->(p) { p.start_with?(path_for(current_event, :staff, :website)) },
-      event_pages: ->(p) { p == path_for(current_event, :staff, Page) }
-    },
     admin: {
       admin_users: ->(p) { p == path_for(:admin, User) },
       admin_events: ->(p) { p == path_for(:admin, Event) }
@@ -81,9 +77,5 @@ module NavbarHelper
 
   def display_staff_program_subnav?
     @display_program_subnav
-  end
-
-  def display_website_subnav?
-    @display_website_subnav
   end
 end

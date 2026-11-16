@@ -1,0 +1,134 @@
+/* Staff-side styles for the website engine: CodeMirror editor, page
+   editor layout and the website subnav. Served raw by Propshaft (plain CSS
+   plus native nesting); the variables resolve against the core bundle. */
+
+.CodeMirror {
+  /* Bootstrap Settings */
+  min-height: 60vh;
+  box-sizing: border-box;
+  margin: 0;
+  font: inherit;
+  overflow: auto;
+  font-family: inherit;
+  display: block;
+  width: 100%;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: var(--text-secondary);
+  background-color: var(--surface-bg-raised);
+  background-image: none;
+  border: 1px solid var(--border-color-strong);
+  border-radius: 4px;
+  box-shadow: none; /* Bootstrap 4 */
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  /* Code Mirror Settings */
+  font-family: monospace;
+  position: relative;
+  overflow: hidden;
+}
+
+.CodeMirror-focused {
+  /* Bootstrap Settings */
+  border-color: var(--input-focus-border);
+  outline: 0;
+  box-shadow: 0 0 0 .2rem var(--input-focus-ring); /* Bootstrap 4 */
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+.page-preview-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.preview-flex {
+  display: flex;
+  width: 100%;
+
+  .resize {
+    flex-grow: 1;
+    display: flex;
+    margin: 10px;
+    padding: 10px;
+    overflow: scroll;
+    resize: both;
+    border: 1px solid black;
+    height: 70vh;
+    max-width: 70vw;
+    .inner {
+      flex-grow: 1;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      display: block;
+    }
+  }
+  iframe {
+    border: 0;
+    width: 100%;
+    height: 100vh;
+  }
+}
+
+/* Website subnav: mirrors the program/schedule subnav rules in modules/navbar.css */
+body:has(.fixed-top.website-subnav) {
+  padding-top: calc(var(--navbar-height) * 2);
+
+  /* Reduce default page-header margin (40px) since body already has padding */
+  .main .page-header {
+    margin-top: 20px;
+  }
+}
+
+.fixed-top.website-subnav {
+  border-radius: 0;
+  background-color: var(--dark-blue);
+  border-color: var(--dark-blue);
+  top: var(--navbar-height);
+  height: var(--navbar-height);
+  padding-top: 0;
+  padding-bottom: 0;
+  z-index: var(--zindex-subnavbar);
+
+  .navbar-nav {
+    height: 100%;
+    margin: 0;
+  }
+
+  .navbar-nav .nav-item {
+    height: 100%;
+  }
+
+  .navbar-nav .nav-link {
+    color: var(--white);
+    padding: 0 16px;
+    line-height: var(--navbar-height);
+    height: 100%;
+  }
+
+  .navbar-nav .nav-link:hover {
+    background-color: hsl(from var(--dark-blue) h s calc(l + 10));
+    color: hsl(from var(--white) h s calc(l - 10));
+  }
+
+  .nav-item.active {
+    box-shadow: inset 0 -3px 0 hsl(from var(--dark-blue) h s calc(l - 10));
+
+    .nav-link,
+    .nav-link:hover,
+    .nav-link:focus {
+      color: hsl(from var(--white) h s calc(l - 10));
+      background-color: hsl(from var(--dark-blue) h s calc(l + 10));
+    }
+  }
+
+  li.download-link a {
+    color: var(--white);
+    padding-left: 0;
+    &:focus {
+      background-color: var(--dark-blue);
+    }
+  }
+}

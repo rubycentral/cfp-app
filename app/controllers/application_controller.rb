@@ -13,7 +13,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   helper_method :current_event
-  helper_method :current_website
   helper_method :program_mode?
   helper_method :schedule_mode?
   helper_method :program_tracks
@@ -71,31 +70,6 @@ class ApplicationController < ActionController::Base
     start_new_session_for(user)
   end
 
-  def current_website
-    @current_website ||= begin
-      if current_event
-        current_event.website
-      elsif params[:slug]
-        Website.joins(:event).find_by(events: { slug: params[:slug] })
-      else
-        older_domain_website || latest_domain_website
-      end
-    end&.decorate
-  end
-
-  def older_domain_website
-    @older_domain_website ||=
-      domain_websites.find_by(events: { slug: params[:domain_page_or_slug] })
-  end
-
-  def latest_domain_website
-    @latest_domain_website ||= domain_websites.first
-  end
-
-  def domain_websites
-    Website.domain_match(request.domain).joins(:event).order(created_at: :desc)
-  end
-
   def set_current_event(event_or_event_id)
     event_or_event_id = Event.find_by(id: event_or_event_id) unless Event === event_or_event_id
     @current_event = event_or_event_id.try(:decorate)
@@ -132,10 +106,6 @@ class ApplicationController < ActionController::Base
     else
       redirect_to events_path, flash: {danger: 'Your event could not be found, please check the url.'}
     end
-  end
-
-  def require_website
-    redirect_to not_found_path and return unless current_website
   end
 
   def require_proposal
@@ -178,10 +148,6 @@ class ApplicationController < ActionController::Base
     @display_schedule_subnav = true
   end
 
-  def enable_website_subnav
-    @display_website_subnav = true
-  end
-
   def program_mode?
     @display_program_subnav || @display_selection_subnav
   end
@@ -192,23 +158,5 @@ class ApplicationController < ActionController::Base
 
   def program_tracks
     @program_tracks ||= current_event && current_event.tracks.any? ? current_event.tracks : []
-  end
-
-  def set_cache_headers
-    return unless Rails.configuration.action_controller.perform_caching
-
-    server_cache_age =
-      current_website.caching_off? ? 0 : ENV.fetch('CACHE_CONTROL_S_MAXAGE', 1.week)
-
-    expires_in(
-      ENV.fetch('CACHE_CONTROL_MAX_AGE', 0).to_i,
-      public: !current_website.caching_off?,
-      's-maxage': server_cache_age.to_i
-    )
-    response.headers['Surrogate-Key'] = current_website.event.slug if FastlyService.service
-    fresh_when(
-      current_website,
-      last_modified: current_website.purged_at || current_website.updated_at
-    ) unless current_website.caching_off?
   end
 end

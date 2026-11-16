@@ -25,3 +25,7 @@ module Features
     end
   end
 end
+
+RSpec.configure do |config|
+  config.include Features::FormHelpers, type: :system
+end

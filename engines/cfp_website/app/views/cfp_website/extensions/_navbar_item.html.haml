@@ -1,0 +1,5 @@
+- if website_nav?
+  %li.nav-item{class: ('active' if request.path.start_with?(event_staff_website_path(current_event)) || request.path == event_staff_pages_path(current_event))}
+    = link_to new_or_edit_website_path, class: 'nav-link' do
+      %span Website
+      %sup Beta

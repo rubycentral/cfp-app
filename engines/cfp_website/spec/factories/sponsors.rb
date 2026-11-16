@@ -7,11 +7,11 @@ FactoryBot.define do
     tier { 'platinum' }
 
     description { Faker::Hipster.paragraph }
-    primary_logo_path = Rails.root.join('spec/fixtures/files/ruby1.png')
+    primary_logo_path = CfpWebsite::Engine.root.join('spec/fixtures/files/ruby1.png')
     primary_logo { Rack::Test::UploadedFile.new primary_logo_path, "image/png" }
 
     trait :with_footer_logo do
-      footer_logo_path = Rails.root.join('spec/fixtures/files/ruby2.jpeg')
+      footer_logo_path = CfpWebsite::Engine.root.join('spec/fixtures/files/ruby2.jpeg')
       footer_logo { Rack::Test::UploadedFile.new footer_logo_path, "image/jpeg" }
     end
 

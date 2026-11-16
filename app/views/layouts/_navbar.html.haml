@@ -40,11 +40,7 @@
               = link_to event_staff_path(current_event), class: 'nav-link' do
                 %span Dashboard
 
-          - if !ENV['DISABLE_WEBSITE'] && website_nav?
-            %li.nav-item{class: nav_item_class(:event_website)}
-              = link_to new_or_edit_website_path, class: 'nav-link' do
-                %span Website
-                %sup Beta
+          = render_extensions(:navbar_items)
 
           - if admin_nav?
             %li.nav-item.dropdown{class: nav_item_class(:admin)}
@@ -135,5 +131,5 @@
 - elsif schedule_mode?
   = render partial: "layouts/nav/staff/schedule_subnav"
 
-- elsif display_website_subnav?
-  = render "layouts/nav/staff/website_subnav"
+- else
+  = render_extensions(:staff_subnav)

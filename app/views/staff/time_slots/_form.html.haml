@@ -32,4 +32,4 @@
   = f.input :presenter, as: :string
   = f.input :description, as: :text
 
-= f.association :sponsor, as: :select, collection: current_event.sponsors, include_blank: true
+= render_extensions(:time_slot_form_fields, f: f)

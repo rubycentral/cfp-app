@@ -1,3 +1,11 @@
+PATH
+  remote: engines/cfp_website
+  specs:
+    cfp_website (0.0.1)
+      fastly
+      image_processing (~> 2.2)
+      nokogiri
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -480,6 +488,7 @@ DEPENDENCIES
   bcrypt (~> 3.1)
   bootsnap (~> 1.26)
   capybara (~> 3.37)
+  cfp_website!
   chartkick
   cssbundling-rails
   csv
@@ -489,18 +498,15 @@ DEPENDENCIES
   draper (~> 4.0)
   factory_bot_rails
   faker
-  fastly
   foreman
   groupdate
   haml-rails
   honeybadger (~> 6.10)
-  image_processing (~> 2.2)
   jsbundling-rails
   launchy
   letter_opener_web
   matrix
   mission_control-jobs
-  nokogiri
   omniauth-github
   omniauth-rails_csrf_protection (~> 2.0)
   omniauth-twitter

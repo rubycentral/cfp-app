@@ -104,7 +104,7 @@ nav.schedule-nav {
     }
 
     &.active {
-      color: var(--ruby-central-red);
+      color: var(--brand-primary-text);
       border: 1px solid var(--surface-bg-muted);
       border-bottom: 1px solid var(--surface-bg-raised);
       border-radius: 2px 2px 0px 0px;

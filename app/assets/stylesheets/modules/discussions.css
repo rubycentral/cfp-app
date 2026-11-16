@@ -50,7 +50,7 @@ textarea.mention {
 
     .speaker-comment &    { color: var(--bright-blue); }
     .reviewer-comment &   { color: var(--gray); }
-    .organizer-comment &  { color: var(--brand-primary); }
+    .organizer-comment &  { color: var(--brand-primary-text); }
   }
 
   .time {

@@ -74,3 +74,19 @@ textarea.mention {
 ul.messages_layout .dropdown-menu li {
   width:100%; font-size:11px;
 }
+
+/* tribute.js @mention menu ships light-only colours; follow the theme */
+[data-bs-theme="dark"] .tribute-container {
+  ul,
+  li {
+    background-color: var(--surface-bg-raised);
+    color: var(--text-color);
+    border-color: var(--border-color);
+  }
+
+  li.highlight,
+  .menu-highlighted {
+    background-color: var(--surface-bg-alt);
+    color: var(--text-color);
+  }
+}

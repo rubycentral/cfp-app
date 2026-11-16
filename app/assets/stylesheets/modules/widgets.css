@@ -145,6 +145,6 @@
   &.widget-card-alt,
   &.widget-card-alt .widget-header,
   &.widget-card-alt .widget-content {
-    background: hsl(from var(--brand-info) h s calc(l + 45));
+    background: var(--widget-info-bg);
   }
 }

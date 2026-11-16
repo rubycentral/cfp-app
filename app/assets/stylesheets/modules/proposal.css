@@ -204,7 +204,7 @@ div.col-md-4 {
 
   .proposal-meta {
     font-size: var(--font-size-base);
-    color: var(--black);
+    color: var(--text-strong);
 
     .proposal-meta-item {
       display: inline-block;

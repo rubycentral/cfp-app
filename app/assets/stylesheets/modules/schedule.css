@@ -106,12 +106,12 @@ nav.schedule-nav {
     &.active {
       color: var(--ruby-central-red);
       border: 1px solid var(--surface-bg-muted);
-      border-bottom: 1px solid var(--white);
+      border-bottom: 1px solid var(--surface-bg-raised);
       border-radius: 2px 2px 0px 0px;
     }
 
     &.active:hover {
-      background-color: var(--white);
+      background-color: var(--surface-bg-raised);
       cursor: default;
     }
 
@@ -309,7 +309,7 @@ body .custom-session-card {
     text-align: center;
     color: var(--white);
     background: var(--schedule-header-bg);
-    border-right: 1px solid var(--white);
+    border-right: 1px solid var(--surface-bg-raised);
   }
 
   .time-slots, .time-slots .time-slot {
@@ -366,11 +366,11 @@ input[type=number]::-webkit-outer-spin-button {
 .schedule-ruler {
   position: sticky;
   border-right: 1px solid var(--schedule-border);
-  color: var(--black);
+  color: var(--text-strong);
   font-size: 11px;
   margin: -3px 0 0 -3px;
   white-space: nowrap;
-  background-color: #FFFFFF95;
+  background-color: var(--ruler-bg);
   z-index: 14;
   padding: 0px 5px;
   display: inline-block;
@@ -400,7 +400,7 @@ input[type=number]::-webkit-outer-spin-button {
   height: calc(100vh - 150px);
   margin-top: -40px;
   margin-left: 0px;
-  background: var(--white);
+  background: var(--surface-bg-raised);
   border-left: 1px solid var(--schedule-border);
   z-index: 500;
   overflow: auto;

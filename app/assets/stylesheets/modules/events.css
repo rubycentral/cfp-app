@@ -15,7 +15,7 @@
       background-color: var(--brand-danger);
     }
     .optional a {
-      color: var(--black);
+      color: var(--text-strong);
     }
   }
 

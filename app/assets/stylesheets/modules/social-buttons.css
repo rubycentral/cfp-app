@@ -26,7 +26,7 @@
 }
 
 .btn-github {
-  color: var(--black);
+  color: var(--btn-github-text);
   text-shadow: 0 0.7px 0 rgba(0, 0, 0, 0.1);
   background-color: var(--btn-github-bg);
   background-image: linear-gradient(to bottom, var(--btn-github-bg-light), var(--btn-github-bg-dark));
@@ -40,7 +40,7 @@
 .btn-github.active,
 .btn-github.disabled,
 .btn-github[disabled] {
-  color: var(--black);
+  color: var(--btn-github-text);
   background-color: var(--btn-github-bg-dark);
 }
 

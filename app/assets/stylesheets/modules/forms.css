@@ -94,3 +94,28 @@ input[type="checkbox"].boolean {
 .form-group span.radio {
   margin-right: 1rem;
 }
+
+/* tom-select's bootstrap5 skin keeps some hard-coded light colours; follow the theme */
+[data-bs-theme="dark"] {
+  .ts-control,
+  .ts-wrapper.form-control,
+  .ts-wrapper.form-select,
+  .ts-dropdown,
+  .ts-dropdown .option,
+  .ts-dropdown .create {
+    background-color: var(--surface-bg-raised);
+    color: var(--text-color);
+    border-color: var(--border-color);
+  }
+
+  .ts-dropdown .active,
+  .ts-dropdown .option:hover {
+    background-color: var(--surface-bg-alt);
+    color: var(--text-color);
+  }
+
+  .ts-control > .item {
+    background-color: var(--surface-bg-alt);
+    color: var(--text-color);
+  }
+}

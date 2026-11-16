@@ -100,8 +100,8 @@ span.disabled-state {
 }
 
 .callout {
-  border-left: solid hsl(from #dff0d8 h s calc(l - 10)) 5px;
-  background-color: hsl(from #dff0d8 h s calc(l + 5));
+  border-left: solid hsl(from var(--accepted-bg) h s calc(l - 10)) 5px;
+  background-color: hsl(from var(--accepted-bg) h s calc(l + 5));
   padding: var(--padding-base-horizontal);
 
   .callout-title {

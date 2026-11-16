@@ -11,7 +11,7 @@
 }
 
 .stats .stat {
-  color: #999;
+  color: var(--text-stat-label);
   display: table-cell;
   font-size: 11px;
   font-weight: bold;
@@ -26,7 +26,7 @@
   font-weight: bold;
   line-height: 1.2;
   letter-spacing: -2px;
-  color: #444;
+  color: var(--text-stat-value);
 }
 
 .stat-time {
@@ -35,7 +35,7 @@
 }
 
 .stat-time .stat-value {
-  color: #19bc9c;
+  color: var(--stat-accent);
   font-size: 40px;
 }
 
@@ -57,12 +57,12 @@
   padding: 0;
   position: relative;
 
-  border-right: 1px solid #CCC;
-  border-left: 1px solid #FFF;
+  border-right: 1px solid var(--stat-divider);
+  border-left: 1px solid var(--stat-divider-light);
 }
 
 #big_stats i {
-  color: #b2afaa;
+  color: var(--gray-light);
   font-size:30px;
   display:block;
   line-height: 40px;
@@ -71,7 +71,7 @@
 #big_stats .stat:hover i {color: var(--brand-primary);}
 
 h6.bigstats{margin: 20px;
-border-bottom: 1px solid #eee;
+border-bottom: 1px solid var(--hr-color);
 padding-bottom: 20px;
 margin-bottom: 26px;}
 
@@ -87,7 +87,7 @@ margin-bottom: 26px;}
 {
   font-size: 11px;
   font-weight: bold;
-  color: #777;
+  color: var(--muted-text);
   margin-bottom: 1.5em;
 }
 
@@ -95,7 +95,7 @@ margin-bottom: 26px;}
 {
   font-size: 45px;
   font-weight: bold;
-  color: #545454;
+  color: var(--text-stat-dark);
   line-height: 1em;
 }
 

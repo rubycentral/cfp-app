@@ -1,6 +1,6 @@
 .custom-list-group-item-danger {
-  color: #a94442;
-  background-color: #f2dede;
+  color: var(--state-danger-text);
+  background-color: var(--time-slot-error-bg);
 }
 
 #organizer-time-slots {
@@ -11,8 +11,8 @@
 
 .modal-dialog {
   .errors {
-    background-color: #edd1d1;
-    color: hsl(from #edd1d1 h s calc(l - 50));
+    background-color: var(--form-error-bg);
+    color: var(--form-error-text);
     border-radius: .25em;
     padding-left: .25em;
   }

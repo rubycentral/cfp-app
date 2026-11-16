@@ -33,7 +33,7 @@
 
 .label-primary {
   --label-bg: var(--bright-blue);
-  --label-text: #fff;
+  --label-text: var(--white);
 }
 
 .label-success {

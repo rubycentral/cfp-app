@@ -51,15 +51,63 @@
 /* Surfaces */
   --body-bg: #fff;
   --surface-bg: #f5f5f5;
+  --surface-bg-raised: #fff;
   --surface-bg-alt: #f4efe6;
+  --surface-bg-muted: #efefef;
+  --surface-bg-drop: #e0e0e0;
+  --drop-dashed-border: #999;
   --border-color: #ddd;
   --border-color-light: #e3e3e3;
+  --border-color-strong: #ccc;
+  --hr-color: #eee;
+  --shadow-color: rgba(0, 0, 0, .2);
+  --shadow-color-soft: rgba(0, 0, 0, .1);
+  --card-shadow: 0 1px 2px rgba(0, 0, 0, .6);
+  --tooltip-bg: rgba(0, 0, 0, .8);
 
 /* Text and link colors */
   --text-color: var(--gray-dark);
+  --text-secondary: #555;
+  --text-subtle: #888;
   --muted-text: #777;
   --link-color: var(--bright-blue);
   --link-hover-color: #126799;
+
+/* Stats */
+  --text-stat-label: #999;
+  --text-stat-value: #444;
+  --text-stat-dark: #545454;
+  --stat-accent: #19bc9c;
+  --stat-divider: #ccc;
+  --stat-divider-light: #fff;
+
+/* Widgets */
+  --widget-border: #d6d6d6;
+  --widget-content-border: #d5d5d5;
+  --widget-header-gradient-end: #f2efea;
+  --widget-heading-text: #525252;
+  --widget-heading-shadow: rgba(255, 255, 255, .5);
+
+/* Schedule grid */
+  --grid-column-bg: rgb(230, 230, 230);
+  --grid-column-nogrid-bg: rgb(220, 220, 220);
+  --grid-nogrid-slots-bg: rgb(240, 240, 240);
+
+/* Social icon colors (brand colors of each network) */
+  --icon-facebook: #23386a;
+  --icon-twitter: #0098d0;
+  --icon-google: #b6362d;
+  --icon-linkedin: #0073b2;
+  --icon-pinterest: #ab171e;
+  --icon-github: #333;
+
+/* Proposal states and form errors */
+  --accepted-bg: #dff0d8;
+  --time-slot-error-bg: #f2dede;
+
+/* Inputs */
+  --input-focus-border: #66afe9;
+  --input-focus-ring: rgba(0, 123, 255, .25);
 
 /* Navbar chrome (brand red in both themes) */
   --navbar-border: #751317;

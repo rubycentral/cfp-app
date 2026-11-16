@@ -21,7 +21,7 @@ textarea.mention {
 }
 
 .message_wrap {
-  background: #fefefe;
+  background: var(--surface-bg-raised);
   border-width: 1px;
   border-style: solid;
   float: left;
@@ -30,7 +30,7 @@ textarea.mention {
   padding: 10px;
   position: relative;
   border-radius: 3px;
-  box-shadow: rgba(0,0,0,0.1) 0 1px 0px;
+  box-shadow: var(--shadow-color-soft) 0 1px 0px;
 
   .speaker-comment &    { border-color: var(--bright-blue); }
   .reviewer-comment &   { border-color: var(--gray-light); }
@@ -39,7 +39,7 @@ textarea.mention {
 /* comment info bar */
   .info {
     width: 100%;
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid var(--surface-bg-raised);
     line-height: 23px;
     display: flow-root;
   }

@@ -23,8 +23,8 @@
     bottom: 100%;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
+    background: var(--tooltip-bg);
+    color: var(--white);
     padding: 4px 8px;
     border-radius: 4px;
     font-size: 12px;
@@ -73,14 +73,14 @@
 }
 
 nav.schedule-nav {
-  border-bottom: 1px solid #efefef;
+  border-bottom: 1px solid var(--surface-bg-muted);
   padding: 0 0 0 6%;
   position: fixed;
   padding-top: 50px;
   top: 77.8px;
   left: 0px;
   width: 100%;
-  background: #fff;
+  background: var(--surface-bg-raised);
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -105,7 +105,7 @@ nav.schedule-nav {
 
     &.active {
       color: var(--ruby-central-red);
-      border: 1px solid #efefef;
+      border: 1px solid var(--surface-bg-muted);
       border-bottom: 1px solid var(--white);
       border-radius: 2px 2px 0px 0px;
     }
@@ -171,8 +171,8 @@ nav.schedule-nav {
   min-height: 500px;
 
   &.draggable-hover {
-    background-color: #e0e0e0;
-    border: 2px dashed #999;
+    background-color: var(--surface-bg-drop);
+    border: 2px dashed var(--drop-dashed-border);
   }
 
   .draggable-session-card {
@@ -183,7 +183,7 @@ nav.schedule-nav {
 /* Highlight animation for moved session cards */
 @keyframes session-highlight {
   0% { box-shadow: 0 0 0 4px var(--ruby-central-red); }
-  100% { box-shadow: 0 1px 2px rgba(0,0,0,.6); }
+  100% { box-shadow: var(--card-shadow); }
 }
 
 .draggable-session-card.highlight {
@@ -197,11 +197,11 @@ body .draggable-session-card,
 body .custom-session-card {
   position: relative;
   width: 240px;
-  box-shadow: 0 1px 2px rgba(0,0,0,.6);
+  box-shadow: var(--card-shadow);
   height: 90px;
   text-align: center;
   cursor: move;
-  background-color: white;
+  background-color: var(--surface-bg-raised);
   z-index: 10;
   opacity: .5;
 
@@ -214,7 +214,7 @@ body .custom-session-card {
 
   .track {
     width: 100%;
-    color: white;
+    color: var(--white);
     padding: .25em .5em;
     font-size: .75em;
   }
@@ -289,11 +289,11 @@ body .custom-session-card {
     margin: 0;
 
     &.no-grid-position {
-      background: rgb(220, 220, 220);
+      background: var(--grid-column-nogrid-bg);
     }
 
     &.no-grid-position .time-slots {
-      background: rgb(240, 240, 240);
+      background: var(--grid-nogrid-slots-bg);
     }
   }
 
@@ -321,7 +321,7 @@ body .custom-session-card {
     position: relative;
     height: 100%;
     width: 240px;
-    background: rgb(230, 230, 230);
+    background: var(--grid-column-bg);
     margin-top: 4px;
     border-width: 0 1px 0 0;
     display: flex;
@@ -337,21 +337,21 @@ body .custom-session-card {
     width: calc(100% - 6px);
     text-align: left;
     font-size: var(--font-size-small);
-    background: #FFF;
+    background: var(--surface-bg-raised);
     cursor: pointer;
     z-index: 10;
     border-width: 1px .5px .5px 0;
 
     &.draggable-hover {
-      background: #e0e0e0;
-      border: 2px dashed #999;
+      background: var(--surface-bg-drop);
+      border: 2px dashed var(--drop-dashed-border);
     }
 
     &.preview {
       cursor: default;
       background: var(--brand-info);
       .title {
-        color: #fff;
+        color: var(--white);
       }
     }
   }
@@ -444,7 +444,7 @@ input[type=number]::-webkit-outer-spin-button {
     transition: .1s;
 
     &:hover {
-      color: #000
+      color: var(--text-color)
     }
   }
 }

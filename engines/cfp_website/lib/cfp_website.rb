@@ -1,3 +1,4 @@
+require 'aws-sdk-s3'
 require 'fastly'
 require 'image_processing'
 require 'nokogiri'

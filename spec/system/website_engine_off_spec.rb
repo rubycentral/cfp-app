@@ -25,6 +25,10 @@ RSpec.describe 'With the website engine switched off', type: :system do
     expect(page).not_to have_select('time_slot_sponsor_id')
   end
 
+  it 'leaves no sponsor methods on the time slot decorator' do
+    expect(Staff::TimeSlotDecorator.instance_methods).not_to include(:sponsored?, :display_sponsor_star)
+  end
+
   it 'lists time slots that still carry a sponsor_id' do
     room = create(:room, event: event)
     create(:time_slot, event: event, room: room).update_column(:sponsor_id, 42)

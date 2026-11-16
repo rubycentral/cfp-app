@@ -30,18 +30,18 @@
 }
 
 .shortcuts .shortcut:hover span{
-  color: #fff;
+  color: var(--white);
 }
 
 .shortcuts .shortcut:hover .shortcut-icon {
-  color: #fff;
+  color: var(--white);
 }
 
 .shortcuts .shortcut-label {
   display: block;
 
   font-weight: 400;
-  color: #545454;
+  color: var(--text-stat-dark);
 }
 
 

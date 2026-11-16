@@ -31,28 +31,110 @@
   --brand-danger: hsl(from var(--dark-red) h s calc(l + 30));
   --brand-accent: var(--gold);
 
-/* State colors - using relative color syntax (Baseline 2024) */
-/* Note: l is 0-100, so calc(l + 50) adds 50 to lightness */
+/* State colors (alerts, labels, panels, progress bars) */
   --state-success-text: #3c763d;
-  --state-success-bg: hsl(from var(--brand-success) h s calc(l + 50));
-  --state-success-border: hsl(from var(--state-success-bg) h s calc(l - 5));
+  --state-success-bg: #b5f3c5;
+  --state-success-border: #9fefa7;
 
   --state-info-text: #31708f;
-  --state-info-bg: hsl(from var(--brand-info) h s calc(l + 35));
-  --state-info-border: hsl(from var(--state-info-bg) h s calc(l - 7));
+  --state-info-bg: #b3ddf6;
+  --state-info-border: #93dff2;
 
   --state-warning-text: #8a6d3b;
-  --state-warning-bg: hsl(from var(--brand-warning) h s calc(l + 15));
-  --state-warning-border: hsl(from var(--state-warning-bg) h s calc(l - 5));
+  --state-warning-bg: #e3e197;
+  --state-warning-border: #decc83;
 
   --state-danger-text: #a94442;
-  --state-danger-bg: hsl(from var(--brand-danger) h s calc(l + 50));
-  --state-danger-border: hsl(from var(--state-danger-bg) h s calc(l - 5));
+  --state-danger-bg: #ffe1e2;
+  --state-danger-border: #ffc8d3;
+
+/* Surfaces */
+  --body-bg: #fff;
+  --surface-bg: #f5f5f5;
+  --surface-bg-raised: #fff;
+  --surface-bg-alt: #f4efe6;
+  --surface-bg-muted: #efefef;
+  --surface-bg-drop: #e0e0e0;
+  --drop-dashed-border: #999;
+  --border-color: #ddd;
+  --border-color-light: #e3e3e3;
+  --border-color-strong: #ccc;
+  --hr-color: #eee;
+  --shadow-color: rgba(0, 0, 0, .2);
+  --shadow-color-soft: rgba(0, 0, 0, .1);
+  --card-shadow: 0 1px 2px rgba(0, 0, 0, .6);
+  --tooltip-bg: rgba(0, 0, 0, .8);
 
 /* Text and link colors */
   --text-color: var(--gray-dark);
+  --text-strong: var(--black);
+  --text-secondary: #555;
+  --text-subtle: #888;
+  --muted-text: #777;
   --link-color: var(--bright-blue);
-  --link-hover-color: hsl(from var(--bright-blue) h s calc(l - 15));
+  --link-hover-color: #126799;
+  --brand-primary-text: var(--brand-primary);
+  --dark-red-text: var(--dark-red);
+  --help-text: hsl(from var(--brand-success) h s calc(l - 5));
+
+/* Stats */
+  --text-stat-label: #999;
+  --text-stat-value: #444;
+  --text-stat-dark: #545454;
+  --stat-accent: #19bc9c;
+  --stat-divider: #ccc;
+  --stat-divider-light: #fff;
+
+/* Widgets */
+  --widget-border: #d6d6d6;
+  --widget-content-border: #d5d5d5;
+  --widget-header-gradient-end: #f2efea;
+  --widget-heading-text: #525252;
+  --widget-heading-shadow: rgba(255, 255, 255, .5);
+  --widget-info-bg: hsl(from var(--brand-info) h s calc(l + 45));
+
+/* Schedule grid */
+  --grid-column-bg: rgb(230, 230, 230);
+  --grid-column-nogrid-bg: rgb(220, 220, 220);
+  --grid-nogrid-slots-bg: rgb(240, 240, 240);
+  --ruler-bg: #FFFFFF95;
+
+/* Social icon colors (brand colors of each network) */
+  --icon-facebook: #23386a;
+  --icon-twitter: #0098d0;
+  --icon-google: #b6362d;
+  --icon-linkedin: #0073b2;
+  --icon-pinterest: #ab171e;
+  --icon-github: #333;
+
+/* Proposal states and form errors */
+  --accepted-bg: #dff0d8;
+  --time-slot-error-bg: #f2dede;
+
+/* Inputs */
+  --input-focus-border: #66afe9;
+  --input-focus-ring: rgba(0, 123, 255, .25);
+
+/* Navbar chrome (brand red in both themes) */
+  --navbar-border: #751317;
+  --navbar-active-bg: #ad1d21;
+  --navbar-brand-hover: #e6e6e6;
+  --navbar-link-hover: #ccc;
+
+/* Button borders and active states */
+  --btn-primary-border: #042e46;
+  --btn-primary-active-bg: #052d44;
+  --btn-primary-active-border: #031d2d;
+  --btn-success-border: #147b30;
+  --btn-success-active-border: #106328;
+  --btn-info-border: #1786c6;
+  --btn-info-active-border: #1472a8;
+  --btn-warning-bg: #d3d05b;
+  --btn-warning-border: #ceca47;
+  --btn-warning-active-border: #c4c03d;
+  --btn-danger-bg: #e1000b;
+  --btn-danger-border: #c80009;
+  --btn-danger-active-border: #af0008;
 
 /* Typography base values */
   --font-size-base: 14px;
@@ -92,12 +174,14 @@
 /* Buttons */
   --btn-gray-color: #000;
   --btn-gray-border: #bfbfbf;
+  --btn-gray-bg: var(--brand-gray);
 
 /* Social buttons */
   --btn-twitter-bg: #1c95d0;
   --btn-twitter-bg-light: #2daddc;
   --btn-twitter-bg-dark: #0271bf;
   --btn-twitter-bg-active: #01538d;
+  --btn-github-text: var(--black);
   --btn-github-bg: #f2f2f2;
   --btn-github-bg-light: #fafafa;
   --btn-github-bg-dark: #e6e6e6;
@@ -113,4 +197,114 @@
   --schedule-accent-hover: #126799;
   --schedule-border: rgba(204, 204, 204, 0.5);
   --schedule-tab-inactive: var(--gray-light);
+}
+
+/* Dark palette. Switched by data-bs-theme="dark" on <html>, which Bootstrap,
+   DataTables and tom-select also read. Only surfaces, text and borders change;
+   brand colours (navbar red, subnav blue, buttons, track colours) keep their
+   values. Dark values start from Bootstrap 5.3's own dark palette so app rules
+   and Bootstrap components agree. */
+[data-bs-theme="dark"] {
+/* Surfaces */
+  --body-bg: #212529;
+  --surface-bg: #2b3035;
+  --surface-bg-raised: #2b3035;
+  --surface-bg-alt: #343a40;
+  --surface-bg-muted: #343a40;
+  --surface-bg-drop: #3d444b;
+  --drop-dashed-border: #6c757d;
+  --beige: #302d2a;
+  --border-color: #495057;
+  --border-color-light: #495057;
+  --border-color-strong: #495057;
+  --hr-color: #495057;
+  --shadow-color: rgba(0, 0, 0, .6);
+  --shadow-color-soft: rgba(0, 0, 0, .4);
+  --card-shadow: 0 1px 2px rgba(0, 0, 0, .9);
+  --tooltip-bg: rgba(0, 0, 0, .85);
+
+/* Gray scale: roles invert so text reads light and "light" surfaces read dark */
+  --gray-darker: #f8f9fa;
+  --gray-dark: #dee2e6;
+  --gray: #adb5bd;
+  --gray-light: #6c757d;
+  --gray-lighter: #343a40;
+
+/* Text and links */
+  --text-color: #dee2e6;
+  --text-strong: #f8f9fa;
+  --text-secondary: #ced4da;
+  --text-subtle: #adb5bd;
+  --muted-text: #adb5bd;
+  --link-color: #6ea8fe;
+  --link-hover-color: #8bb9fe;
+  --legend-color: var(--gray-dark);
+  --legend-border-color: var(--border-color);
+
+/* State triples: dark background, light text, same hue */
+  --state-success-bg: #0f3d1f;
+  --state-success-border: #1f6a36;
+  --state-success-text: #9fefa7;
+  --state-info-bg: #0f2f45;
+  --state-info-border: #1d5a80;
+  --state-info-text: #93dff2;
+  --state-warning-bg: #3d3a12;
+  --state-warning-border: #6d6720;
+  --state-warning-text: #e3e197;
+  --state-danger-bg: #45141a;
+  --state-danger-border: #7a2630;
+  --state-danger-text: #ffc8d3;
+
+/* Stats */
+  --text-stat-label: #adb5bd;
+  --text-stat-value: #dee2e6;
+  --text-stat-dark: #ced4da;
+  --stat-divider: #495057;
+  --stat-divider-light: #212529;
+
+/* Widgets */
+  --widget-border: #495057;
+  --widget-content-border: #495057;
+  --widget-header-gradient-end: #2a2825;
+  --widget-heading-text: #dee2e6;
+  --widget-heading-shadow: rgba(0, 0, 0, .5);
+  --widget-info-bg: #0f2f45;
+
+/* Schedule grid */
+  --grid-column-bg: #2b3035;
+  --grid-column-nogrid-bg: #343a40;
+  --grid-nogrid-slots-bg: #3d444b;
+  --ruler-bg: #21252995;
+  --schedule-header-bg: #343a40;
+  --schedule-border: rgba(73, 80, 87, .7);
+  --schedule-tab-inactive: #6c757d;
+
+/* Icons, states, forms */
+  --icon-github: #dee2e6;
+  --accepted-bg: #1a3d26;
+  --time-slot-error-bg: #45141a;
+  --form-error-bg: #5c2a2a;
+  --input-focus-border: #6ea8fe;
+  --input-focus-ring: rgba(110, 168, 254, .25);
+  --btn-gray-color: #dee2e6;
+  --btn-gray-border: #495057;
+  --form-error-text: #f1aeb5;
+  --help-text: #75b798;
+  --brand-primary-text: #ea868f;
+  --dark-red-text: #ea868f;
+  --btn-gray-bg: #495057;
+
+/* GitHub sign-in button: dark surface, light text (Twitter keeps its blue) */
+  --btn-github-text: #dee2e6;
+  --btn-github-bg: #343a40;
+  --btn-github-bg-light: #3d444b;
+  --btn-github-bg-dark: #2b3035;
+  --btn-github-bg-active: #1f2429;
+
+/* Bootstrap tokens the app overrides, so components and app rules agree */
+  --bs-body-bg: var(--body-bg);
+  --bs-body-color: var(--text-color);
+  --bs-border-color: var(--border-color);
+  --bs-link-color: var(--link-color);
+  --bs-link-hover-color: var(--link-hover-color);
 }

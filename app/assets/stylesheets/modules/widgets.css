@@ -17,20 +17,20 @@
 
   .widget-header {
     background: var(--beige);
-    border: 1px solid #d6d6d6;
+    border: 1px solid var(--widget-border);
     height: 40px;
     line-height: 40px;
-    background: linear-gradient(to bottom, var(--beige) 0%, #f2efea 100%);
+    background: linear-gradient(to bottom, var(--beige) 0%, var(--widget-header-gradient-end) 100%);
     background-clip: padding-box;
 
     h2, h3 {
-      color: #525252;
+      color: var(--widget-heading-text);
       display: inline-block;
       font-weight: 800;
       margin: 0 3em 10px 0;
       position: relative;
       top: -8px;
-      text-shadow: 1px 1px 2px rgba(255,255,255,.5);
+      text-shadow: 1px 1px 2px var(--widget-heading-shadow);
     }
 
     h3 {
@@ -49,7 +49,7 @@
     }
 
     > .bi {
-      color: #555;
+      color: var(--text-secondary);
       font-size: 16px;
       margin-left: 10px;
       margin-right: -2px;
@@ -63,8 +63,8 @@
   }
 
   .widget-content {
-    background: #FFF;
-    border: 1px solid #D5D5D5;
+    background: var(--surface-bg-raised);
+    border: 1px solid var(--widget-content-border);
     padding: 20px 15px 15px;
     border-radius: 5px;
     display: flow-root;
@@ -109,7 +109,7 @@
 /* Widget Box */
 .widget-box {
   .widget-content {
-    background: #FFF;
+    background: var(--surface-bg-raised);
   }
 }
 
@@ -126,7 +126,7 @@
   }
 
   .widget-header {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--border-color-strong);
     height: auto;
     line-height: 1;
 
@@ -145,6 +145,6 @@
   &.widget-card-alt,
   &.widget-card-alt .widget-header,
   &.widget-card-alt .widget-content {
-    background: hsl(from var(--brand-info) h s calc(l + 45));
+    background: var(--widget-info-bg);
   }
 }

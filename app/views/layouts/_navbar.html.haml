@@ -113,9 +113,12 @@
                   %i.bi.bi-box-arrow-right
                   %span Sign Out
 
+          = render 'layouts/theme_toggle'
+
       - else
         %ul.navbar-nav.ms-auto
           %li.nav-item= link_to "Log in", new_session_path, class: 'nav-link'
+          = render 'layouts/theme_toggle'
 
 - if display_staff_event_subnav?
   = render partial: "layouts/nav/staff/event_subnav"

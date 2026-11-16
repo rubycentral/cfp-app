@@ -6,7 +6,7 @@
 .navbar-nav {
   &.session-counts {
     .title {
-      color: #fff;
+      color: var(--white);
     }
 
     .track-select {
@@ -40,7 +40,7 @@
     height: var(--navbar-height);
     display: inline-flex;
     align-items: center;
-    color: #ccc;
+    color: var(--navbar-link-hover);
     padding-left: 15px;
 
     .track-select {
@@ -81,7 +81,7 @@ body:has(.subnavbar.fixed-top) {
   padding-top: var(--navbar-height);
   z-index: var(--zindex-subnavbar);
   .subnavbar-inner {
-    background: #fff;
+    background: var(--surface-bg-raised);
     border-bottom: 1px solid var(--gray-light);
     height: 60px;
   }
@@ -148,8 +148,8 @@ body:has(.subnavbar.fixed-top) {
         display: inline-block;
         border-left: 7px solid transparent;
         border-right: 7px solid transparent;
-        border-bottom: 7px solid #CCC;
-        border-bottom-color: rgba(0, 0, 0, 0.2);
+        border-bottom: 7px solid var(--border-color-strong);
+        border-bottom-color: var(--shadow-color);
         position: absolute;
         top: -7px;
         left: 9px;
@@ -159,7 +159,7 @@ body:has(.subnavbar.fixed-top) {
         display: inline-block;
         border-left: 6px solid transparent;
         border-right: 6px solid transparent;
-        border-bottom: 6px solid white;
+        border-bottom: 6px solid var(--surface-bg-raised);
         position: absolute;
         top: -6px;
         left: 10px;
@@ -167,8 +167,8 @@ body:has(.subnavbar.fixed-top) {
     }
   }
   .caret {
-    border-top-color: white;
-    border-bottom-color: white;
+    border-top-color: var(--white);
+    border-bottom-color: var(--white);
     margin-top: 4px;
   }
   .dropdown.open .caret {

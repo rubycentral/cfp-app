@@ -15,7 +15,7 @@
       background-color: var(--brand-danger);
     }
     .optional a {
-      color: var(--black);
+      color: var(--text-strong);
     }
   }
 
@@ -151,7 +151,7 @@
   padding-bottom: 1em;
 
   .notice {
-    color: var(--dark-red);
+    color: var(--dark-red-text);
     font-style: italic;
     margin: .5em 0;
   }
@@ -165,11 +165,11 @@
 
     .btn-gray {
       color: var(--btn-gray-color);
-      background-color: var(--brand-gray);
+      background-color: var(--btn-gray-bg);
       border: 1px solid var(--btn-gray-border);
 
       &:hover, &:active {
-        background-color: hsl(from var(--brand-gray) h s calc(l - 10));
+        background-color: hsl(from var(--btn-gray-bg) h s calc(l - 10));
       }
     }
   }

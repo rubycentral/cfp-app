@@ -1,20 +1,20 @@
 .btn-facebook-alt i {
-  color: #23386a;
+  color: var(--icon-facebook);
 }
 .btn-twitter-alt i {
-  color: #0098d0;
+  color: var(--icon-twitter);
 }
 .btn-google-alt i {
-  color: #b6362d;
+  color: var(--icon-google);
 }
 .btn-linkedin-alt i {
-  color: #0073b2;
+  color: var(--icon-linkedin);
 }
 .btn-pinterest-alt i {
-  color: #ab171e;
+  color: var(--icon-pinterest);
 }
 .btn-github-alt i {
-  color: #333;
+  color: var(--icon-github);
 }
 
 .icon-twitter,

@@ -4,6 +4,17 @@
     %title= title
     %meta(name="viewport" content="width=device-width, initial-scale=1.0")
 
+    -# Apply the stored theme before the stylesheet loads so there is no flash of the wrong scheme.
+    -# Mirrors theme_controller.js; idempotent, so re-running it is harmless.
+    :javascript
+      (function () {
+        var pref = 'auto';
+        try { pref = localStorage.getItem('theme') || 'auto' } catch (e) {}
+        if (pref !== 'light' && pref !== 'dark') pref = 'auto';
+        var dark = pref === 'dark' || (pref === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.dataset.bsTheme = dark ? 'dark' : 'light';
+      })();
+
     = stylesheet_link_tag 'application', media: 'all'
     = stylesheet_link_tag "//fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600"
 

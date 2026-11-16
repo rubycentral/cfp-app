@@ -21,7 +21,7 @@ textarea.mention {
 }
 
 .message_wrap {
-  background: #fefefe;
+  background: var(--surface-bg-raised);
   border-width: 1px;
   border-style: solid;
   float: left;
@@ -30,7 +30,7 @@ textarea.mention {
   padding: 10px;
   position: relative;
   border-radius: 3px;
-  box-shadow: rgba(0,0,0,0.1) 0 1px 0px;
+  box-shadow: var(--shadow-color-soft) 0 1px 0px;
 
   .speaker-comment &    { border-color: var(--bright-blue); }
   .reviewer-comment &   { border-color: var(--gray-light); }
@@ -39,7 +39,7 @@ textarea.mention {
 /* comment info bar */
   .info {
     width: 100%;
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid var(--surface-bg-raised);
     line-height: 23px;
     display: flow-root;
   }
@@ -50,7 +50,7 @@ textarea.mention {
 
     .speaker-comment &    { color: var(--bright-blue); }
     .reviewer-comment &   { color: var(--gray); }
-    .organizer-comment &  { color: var(--brand-primary); }
+    .organizer-comment &  { color: var(--brand-primary-text); }
   }
 
   .time {
@@ -73,4 +73,20 @@ textarea.mention {
 
 ul.messages_layout .dropdown-menu li {
   width:100%; font-size:11px;
+}
+
+/* tribute.js @mention menu ships light-only colours; follow the theme */
+[data-bs-theme="dark"] .tribute-container {
+  ul,
+  li {
+    background-color: var(--surface-bg-raised);
+    color: var(--text-color);
+    border-color: var(--border-color);
+  }
+
+  li.highlight,
+  .menu-highlighted {
+    background-color: var(--surface-bg-alt);
+    color: var(--text-color);
+  }
 }

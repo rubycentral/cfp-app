@@ -14,7 +14,6 @@
 @import "./base/typography.css";
 
 @import "./modules/buttons.css";
-@import "./modules/code-mirror.css";
 @import "./modules/data_tables.css";
 @import "./modules/discussions.css";
 @import "./modules/events.css";
@@ -33,6 +32,5 @@
 @import "./modules/shortcuts.css";
 @import "./modules/stats.css";
 @import "./modules/widgets.css";
-@import "./modules/staff-website-page.css";
 
 @import "tailwindcss/utilities";

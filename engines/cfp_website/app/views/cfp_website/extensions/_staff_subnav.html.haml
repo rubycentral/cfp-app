@@ -1,0 +1,13 @@
+- if display_website_subnav?
+  .navbar.navbar-expand-lg.fixed-top.website-subnav
+    .container-fluid
+      %ul.navbar-nav.ms-auto
+        %li.nav-item{class: ('active' if request.path.start_with?(event_staff_website_path(current_event)))}
+          = link_to edit_event_staff_website_path(current_event), class: 'nav-link' do
+            %span Configuration
+        %li.nav-item{class: ('active' if request.path == event_staff_pages_path(current_event))}
+          = link_to event_staff_pages_path(current_event), class: 'nav-link' do
+            %span Pages
+        %li.nav-item
+          = link_to event_staff_sponsors_path, class: 'nav-link' do
+            %span Sponsors

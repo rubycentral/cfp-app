@@ -238,7 +238,6 @@ describe ProgramSession do
   describe "#destroy" do
     let(:proposal) { create(:proposal_with_track, :with_speaker) }
     let(:ps) { create(:program_session, proposal: proposal, track: proposal.track) }
-    let(:sponsor) { create(:sponsor) }
     subject { ps.destroy }
 
     it "removes program_session_id from speaker if speaker has proposal_id" do
@@ -250,7 +249,7 @@ describe ProgramSession do
     end
 
     it "removes program_session_id from time_slot if session was scheduled" do
-      time_slot = create(:time_slot_with_program_session, program_session: ps, track: proposal.track, sponsor: sponsor)
+      time_slot = create(:time_slot_with_program_session, program_session: ps, track: proposal.track)
       subject
 
       expect(time_slot.reload.program_session_id).to be_nil

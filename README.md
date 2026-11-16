@@ -213,9 +213,10 @@ This is a major upgrade from the original CFP App that is not backwards compatib
 
 ### Website Hosting <sup>beta</sup>
 
-CFP App can now host a website for your actual conference including managing the
-static content pages and dynamic schedule program pages. See [Website
-Documentation](/docs/website_documentation.md) for more details.
+The beta website feature (static content pages plus dynamic schedule, program
+and sponsor pages for your conference) lives in an optional engine under
+[`engines/cfp_website`](/engines/cfp_website/README.md) and is not loaded unless
+`ENABLE_WEBSITE=1` is set in the environment.
 
 
 ## Customizing and Contributing

@@ -31,15 +31,13 @@ gem 'stateful_enum'
 gem 'actionview-encoded_mail_to'
 gem 'active_model_serializers', '~> 0.10.16'
 gem 'bootsnap', '~> 1.26', require: false
+gem 'cfp_website', path: 'engines/cfp_website', require: false # beta website feature, loaded by ENABLE_WEBSITE
 gem 'chartkick'
 gem 'draper', '~> 4.0'
-gem 'fastly'
 gem 'groupdate'
-gem 'nokogiri'
 gem 'pundit'
 gem 'redcarpet', '~> 3.6'
 gem 'simple_form'
-gem 'image_processing', '~> 2.2'
 
 gem 'diffy'
 gem 'paper_trail'

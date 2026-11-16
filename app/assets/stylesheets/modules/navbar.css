@@ -176,10 +176,9 @@ body:has(.subnavbar.fixed-top) {
   }
 }
 
-/* Add extra body padding when fixed program/schedule/website subnav is present */
+/* Add extra body padding when fixed program/schedule subnav is present */
 body:has(.fixed-top.program-subnav),
-body:has(.fixed-top.schedule-subnav),
-body:has(.fixed-top.website-subnav) {
+body:has(.fixed-top.schedule-subnav) {
   padding-top: calc(var(--navbar-height) * 2);
 
   /* Reduce default page-header margin (40px) since body already has padding */
@@ -189,8 +188,7 @@ body:has(.fixed-top.website-subnav) {
 }
 
 .fixed-top.program-subnav,
-.fixed-top.schedule-subnav,
-.fixed-top.website-subnav {
+.fixed-top.schedule-subnav {
   border-radius: 0;
   background-color: var(--dark-blue);
   border-color: var(--dark-blue);

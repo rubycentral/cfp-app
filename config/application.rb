@@ -23,6 +23,13 @@ module CfpApp
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.1
 
+    # The beta website feature lives in engines/cfp_website and is opt-in.
+    # This sits inside the class body so dotenv (before_configuration) has run.
+    require 'cfp_website' if ENV['ENABLE_WEBSITE'].present?
+
+    # View hook registry: point name => partial paths (see ExtensionPointsHelper).
+    config.x.extension_points = Hash.new { |h, k| h[k] = [] }
+
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.

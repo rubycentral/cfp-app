@@ -2,8 +2,6 @@ class SessionFormat < ApplicationRecord
   belongs_to :event
   has_many :proposals
 
-  has_one :session_format_config
-
   validates_presence_of :event
   validates :description, length: { maximum: 250 }
   validates :name, uniqueness: {scope: :event}, presence: true

@@ -7,6 +7,11 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        website: ['off', 'on']
+    name: test (website ${{ matrix.website }})
 
     services:
       postgres:
@@ -31,10 +36,19 @@ jobs:
           cache: 'yarn'
 
       - name: Run tests
+        if: matrix.website == 'off'
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres@localhost:5432/cfp_app_test
         run: bundle e rails db:create db:schema:load assets:precompile spec
+
+      - name: Run tests with the website engine
+        if: matrix.website == 'on'
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres@localhost:5432/cfp_app_test
+          ENABLE_WEBSITE: '1'
+        run: bundle e rails db:create db:schema:load assets:precompile && bundle e rspec spec engines/cfp_website/spec
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v7

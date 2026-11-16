@@ -1,5 +1,5 @@
 module WebsiteHelper
-  DOCS_PAGE = "https://github.com/rubycentral/cfp-app/blob/main/docs/website_documentation.md".freeze
+  DOCS_PAGE = "https://github.com/rubycentral/cfp-app/blob/main/engines/cfp_website/README.md".freeze
   def website_event_slug
     params[:slug] || (@older_domain_website && @older_domain_website.event.slug)
   end

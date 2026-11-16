@@ -11,8 +11,11 @@ caching). It is **not loaded by default**.
 - The engine owns ActiveStorage, which nothing else in the app uses: it
   requires the framework, ships `config/storage.yml` (Disk in development and
   test, S3 via the `AWS_*` variables in production), the SVG initializer and
-  the `*.active_storage.rb` migrations under `db/migrate`. With the engine off,
-  ActiveStorage is not loaded at all.
+  the `*.active_storage.rb` migrations under `db/migrate`. An app-level
+  `config/storage.yml` or `config/storage/<env>.yml` takes precedence, and an
+  environment outside development/test/production sets
+  `config.active_storage.service` itself. With the engine off, ActiveStorage is
+  not loaded at all.
 - Every migration the feature ever added (the website tables and the
   `active_storage_*` ones) lives in the engine's `db/migrate`. That
   directory is listed in `config/database.yml` under `migrations_paths` for

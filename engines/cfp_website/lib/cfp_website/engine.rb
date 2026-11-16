@@ -38,11 +38,6 @@ module CfpWebsite
       app.config.active_storage.service ||= CfpWebsite::STORAGE_SERVICES.fetch(Rails.env)
     end
 
-    # Rails only picks up an engine's migrations from inside the engine itself.
-    initializer 'cfp_website.migrations' do |app|
-      app.config.paths['db/migrate'] << root.join('db/migrate').to_s unless app.root == root
-    end
-
     initializer 'cfp_website.factories', before: 'factory_bot.set_factory_paths' do |app|
       app.config.factory_bot.definition_file_paths << root.join('spec/factories').to_s if app.config.respond_to?(:factory_bot)
     end

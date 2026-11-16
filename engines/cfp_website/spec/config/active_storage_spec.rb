@@ -16,13 +16,6 @@ RSpec.describe 'ActiveStorage in the website engine' do
     expect(CfpWebsite::STORAGE_SERVICES).to eq('development' => :local, 'test' => :test, 'production' => :amazon)
   end
 
-  it 'contributes its migrations to the app' do
-    paths = ActiveRecord::Tasks::DatabaseTasks.migrations_paths.map(&:to_s)
-    expect(paths).to include(CfpWebsite::Engine.root.join('db/migrate').to_s)
-    versions = ActiveRecord::MigrationContext.new(paths).migrations.map(&:version)
-    expect(versions).to include(20220418061215)
-  end
-
   it 'serves SVG inline' do
     expect(ActiveStorage.content_types_to_serve_as_binary).not_to include('image/svg+xml')
   end

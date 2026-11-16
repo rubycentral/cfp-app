@@ -28,7 +28,7 @@
                 = f.check_box :score, {id: false, class: "star-rating-select delete"}, "", nil
   #show-ratings{ class: !show_ratings?(proposal, rating) ? "hidden" : nil }
     .col-lg-7
-      - if proposal.ratings.any?
+      - if proposal.ratings.records.any?
         %dl.dl-horizontal.ratings_list
           %dt.avg-rating.text-success
             %strong Average rating:

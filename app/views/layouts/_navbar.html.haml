@@ -92,7 +92,10 @@
                 = link_to notifications_path, class: 'dropdown-item' do
                   %i.bi.bi-eye
                   %span
-                    = (more_unread_count = current_user.notifications.more_unread_count) > 0 ? "#{more_unread_count} More Unread" : "View all notifications"
+                    - if unread_notifications.length < Notification::UNREAD_LIMIT
+                      View all notifications
+                    - else
+                      = (more_unread_count = current_user.notifications.more_unread_count) > 0 ? "#{more_unread_count} More Unread" : 'View all notifications'
 
           %li.nav-item.dropdown{class: nav_item_class(:user)}
             %a.nav-link.dropdown-toggle.gravatar-container{href: '#', role: 'button', data: {bs_toggle: 'dropdown'}, aria: {expanded: 'false'}}

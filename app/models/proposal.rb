@@ -206,13 +206,13 @@ class Proposal < ApplicationRecord
   end
 
   def average_rating
-    return nil if ratings.empty?
+    return nil if ratings.records.empty?
 
     ratings.map(&:score).inject(:+).to_f / ratings.size
   end
 
   def standard_deviation
-    unless ratings.empty?
+    unless ratings.records.empty?
       scores = ratings.map(&:score)
 
       squared_reducted_total = 0.0
@@ -238,11 +238,11 @@ class Proposal < ApplicationRecord
   end
 
   def tags
-    proposal_taggings.to_a.map(&:tag)
+    proposal_taggings.records.map(&:tag)
   end
 
   def review_tags
-    review_taggings.to_a.map(&:tag)
+    review_taggings.records.map(&:tag)
   end
 
   def has_reviewer_comments?

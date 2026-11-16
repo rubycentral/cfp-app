@@ -18,11 +18,9 @@ class Notification < ApplicationRecord
   end
 
   def self.mark_as_read_for_proposal(proposal_url)
-    all.unread.where(target_path: proposal_url).update_all(read_at: Time.current)
-  end
-
-  def self.more_unread_count
-    [unread.count - UNREAD_LIMIT, 0].max
+    if (unread_notifications = unread.where(target_path: proposal_url)).exists?
+      unread_notifications.update_all(read_at: Time.current)
+    end
   end
 
   def mark_as_read

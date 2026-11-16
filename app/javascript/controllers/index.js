@@ -43,6 +43,7 @@ import ScheduleTabsController from "./schedule_tabs_controller"
 import SponsorsFooterController from "./sponsors_footer_controller"
 import StatusToggleController from "./status_toggle_controller"
 import SubNavController from "./sub_nav_controller"
+import ThemeController from "./theme_controller"
 import TimeSelectController from "./time_select_controller"
 import TimeSlotDialogController from "./time_slot_dialog_controller"
 import TimeSlotsController from "./time_slots_controller"
@@ -84,6 +85,7 @@ application.register("schedule-tabs", ScheduleTabsController)
 application.register("sponsors-footer", SponsorsFooterController)
 application.register("status-toggle", StatusToggleController)
 application.register("sub-nav", SubNavController)
+application.register("theme", ThemeController)
 application.register("time-select", TimeSelectController)
 application.register("time-slot-dialog", TimeSlotDialogController)
 application.register("time-slots", TimeSlotsController)

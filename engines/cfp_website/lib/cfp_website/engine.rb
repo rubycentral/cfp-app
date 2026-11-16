@@ -23,6 +23,7 @@ module CfpWebsite
 
     initializer 'cfp_website.extension_points' do |app|
       points = app.config.x.extension_points
+      points[:head] << 'cfp_website/extensions/head'
       points[:navbar_items] << 'cfp_website/extensions/navbar_item'
       points[:staff_subnav] << 'cfp_website/extensions/staff_subnav'
       points[:time_slot_form_fields] << 'cfp_website/extensions/time_slot_form_fields'

@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   get  '/users/auth/failure', to: 'users/omniauth_callbacks#failure', as: :omniauth_failure
 
   root 'home#show'
+  get '/current-styleguide', to: 'styleguide#show', as: :current_styleguide
   mount ActionCable.server => '/cable'
 
   resource :profile, only: [:show, :edit, :update] do

@@ -4,9 +4,6 @@ class PagesController < ApplicationController
 
   after_action :set_cache_headers, only: :show
 
-  def current_styleguide
-  end
-
   def show
     @body = @page.published_body
     render layout: "themes/#{current_website.theme}"

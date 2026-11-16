@@ -16,8 +16,6 @@ end
 
 resources :image_uploads, only: :create
 
-get '/current-styleguide', :to => 'pages#current_styleguide'
-
 get '/(:slug)', to: 'pages#show', as: :landing
 get '/(:slug)/program', to: 'programs#show', as: :program
 get '/(:slug)/schedule', to: 'schedule#show', as: :schedule

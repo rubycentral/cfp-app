@@ -25,6 +25,10 @@ RSpec.describe 'With the website engine switched off', type: :system do
     expect(page).not_to have_select('time_slot_sponsor_id')
   end
 
+  it 'loads no engine spec support files' do
+    expect(defined?(Features::FormHelpers)).to be_nil
+  end
+
   it 'leaves no sponsor methods on the time slot decorator' do
     expect(Staff::TimeSlotDecorator.instance_methods).not_to include(:sponsored?, :display_sponsor_star)
   end

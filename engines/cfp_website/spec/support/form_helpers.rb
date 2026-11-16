@@ -1,3 +1,7 @@
+# rails_helper requires every engine's spec/support; these helpers are only
+# meaningful (and only used) when the engine is loaded.
+return unless defined?(CfpWebsite)
+
 module Features
   module FormHelpers
     def fill_in_tinymce(resource, field, content)

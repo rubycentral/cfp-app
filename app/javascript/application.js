@@ -3,6 +3,7 @@
 import * as Popper from "@popperjs/core"
 import * as bootstrap from "bootstrap"
 import "chartkick/chart.js"
+import "./chart_theme"
 
 // Initialize Bootstrap components
 document.addEventListener('DOMContentLoaded', () => {

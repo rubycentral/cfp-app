@@ -97,6 +97,21 @@ RSpec.describe 'Theme toggle', type: :system, js: true do
     expect(theme_attribute).to eq('dark')
   end
 
+  it 'retunes Chart.js defaults to the active theme' do
+    visit root_path
+    chart_color = -> { page.evaluate_script('window.Chartkick.adapters[0].library.defaults.color') }
+    expect(chart_color.call).to eq('#666')  # Chart.js's own default, untouched in light mode
+
+    toggle.click
+    toggle.click
+    expect(theme_attribute).to eq('dark')
+    expect(chart_color.call).to eq('#dee2e6')
+
+    toggle.click
+    expect(theme_attribute).to eq('light')
+    expect(chart_color.call).to eq('#666')
+  end
+
   it 'keeps flash alerts visible in dark mode' do
     visit root_path
     page.execute_script("localStorage.setItem('theme', 'dark')")

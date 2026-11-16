@@ -13,9 +13,13 @@ caching). It is **not loaded by default**.
   test, S3 via the `AWS_*` variables in production), the SVG initializer and
   the `*.active_storage.rb` migrations under `db/migrate`. With the engine off,
   ActiveStorage is not loaded at all.
-- The website tables, the website migrations and the `active_storage_*`
-  tables in `db/schema.rb` stay in the main app, so enabling or disabling the
-  engine needs no migration.
+- Every migration the feature ever added (the website tables and the
+  `active_storage_*` ones) lives in the engine's `db/migrate`. That
+  directory is listed in `config/database.yml` under `migrations_paths` for
+  every environment, because the tables are in `db/schema.rb` whether or not
+  the engine is loaded: schema loads record the versions and `db:migrate`
+  runs them in both states, so enabling or disabling the engine needs no
+  migration.
 - Run its specs together with the core suite:
   `ENABLE_WEBSITE=1 bin/rspec spec engines/cfp_website/spec`.
 - Known limit: the public theme stylesheet (`default.css`) still uses

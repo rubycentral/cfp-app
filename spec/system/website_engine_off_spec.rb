@@ -34,6 +34,14 @@ RSpec.describe 'With the website engine switched off', type: :system do
     expect(Rails.application.routes.url_helpers).not_to respond_to(:rails_blob_path)
   end
 
+  # The website tables are in db/schema.rb whether or not the engine is loaded,
+  # so a schema load must record the engine's migration versions too; otherwise
+  # switching the engine on later reports them all as pending.
+  it 'still sees the website migrations, so schema loads record their versions' do
+    versions = ActiveRecord::Base.connection_pool.migration_context.migrations.map(&:version)
+    expect(versions).to include(20220412104802, 20220418061215)
+  end
+
   it 'leaves no sponsor methods on the time slot decorator' do
     expect(Staff::TimeSlotDecorator.instance_methods).not_to include(:sponsored?, :display_sponsor_star)
   end

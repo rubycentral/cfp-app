@@ -2,6 +2,12 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: 5
+  # The website engine's migrations live under engines/, but their tables are
+  # in db/schema.rb whether or not the engine is loaded, so every boot (and
+  # every schema load, which records migration versions) must see them.
+  migrations_paths: &migrations_paths
+    - db/migrate
+    - engines/cfp_website/db/migrate
 
 development:
   <<: *default
@@ -14,3 +20,4 @@ test:
 production:
   url:  <%= ENV["DATABASE_URL"] %>
   pool: <%= ENV["DB_POOL"] || ENV['MAX_THREADS'] || 5 %>
+  migrations_paths: *migrations_paths

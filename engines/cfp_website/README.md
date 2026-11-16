@@ -8,8 +8,14 @@ caching). It is **not loaded by default**.
   flag is read after dotenv runs). Without it, none of the engine's models,
   controllers, views, routes, JavaScript or stylesheets are loaded or built
   into the core bundles.
-- The database tables and migrations stay in the main app, so enabling or
-  disabling the engine needs no migration.
+- The engine owns ActiveStorage, which nothing else in the app uses: it
+  requires the framework, ships `config/storage.yml` (Disk in development and
+  test, S3 via the `AWS_*` variables in production), the SVG initializer and
+  the `*.active_storage.rb` migrations under `db/migrate`. With the engine off,
+  ActiveStorage is not loaded at all.
+- The website tables, the website migrations and the `active_storage_*`
+  tables in `db/schema.rb` stay in the main app, so enabling or disabling the
+  engine needs no migration.
 - Run its specs together with the core suite:
   `ENABLE_WEBSITE=1 bin/rspec spec engines/cfp_website/spec`.
 - Known limit: the public theme stylesheet (`default.css`) still uses

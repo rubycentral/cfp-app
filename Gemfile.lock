@@ -2,6 +2,7 @@ PATH
   remote: engines/cfp_website
   specs:
     cfp_website (0.0.1)
+      aws-sdk-s3
       fastly
       image_processing (~> 2.2)
       nokogiri
@@ -484,7 +485,6 @@ DEPENDENCIES
   actionview-encoded_mail_to
   active_model_serializers (~> 0.10.16)
   annotate
-  aws-sdk-s3
   bcrypt (~> 3.1)
   bootsnap (~> 1.26)
   capybara (~> 3.37)

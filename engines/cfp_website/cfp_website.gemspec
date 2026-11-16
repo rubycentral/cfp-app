@@ -8,6 +8,7 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir['{app,config,lib}/**/*', 'README.md']
 
+  spec.add_dependency 'aws-sdk-s3' # ActiveStorage S3 service for the website's uploads
   spec.add_dependency 'fastly'
   spec.add_dependency 'image_processing', '~> 2.2'
   spec.add_dependency 'nokogiri'

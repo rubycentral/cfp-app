@@ -54,6 +54,6 @@ jobs:
         uses: actions/upload-artifact@v7
         if: failure()
         with:
-          name: screenshots
+          name: screenshots-${{ matrix.website }}
           path: ${{ github.workspace }}/tmp/capybara
           if-no-files-found: ignore

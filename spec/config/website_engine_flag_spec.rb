@@ -33,7 +33,7 @@ RSpec.describe 'ENABLE_WEBSITE' do
 
   it 'loads the engine and ActiveStorage when set to 1' do
     # Only installable with the flag on (install_if), so the engine-off CI leg lacks the gems.
-    skip "the engine's gems are not installed" unless system({'ENABLE_WEBSITE' => '1'}, 'bundle', 'check', out: File::NULL, err: File::NULL, chdir: Rails.root.to_s)
+    skip "the engine's gems are not installed" unless system({'ENABLE_WEBSITE' => '1'}, 'bundle', 'check', '--dry-run', out: File::NULL, err: File::NULL, chdir: Rails.root.to_s)
     expect(loaded_with('1')).to eq(['constant', 'constant'])
   end
 

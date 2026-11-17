@@ -34,6 +34,12 @@ describe ProposalDecorator do
       expect(html).to include(speaker.name)
       expect(html).to include(decorated.h.event_staff_program_speaker_path(proposal.event, speaker))
     end
+
+    it "trusts a program team check passed in instead of asking the current user" do
+      allow(decorated.h).to receive(:current_user).and_return(create(:reviewer, event: proposal.event))
+      expect(decorated.reviewer_speaker_names(program_team: true)).to include(decorated.h.event_staff_program_speaker_path(proposal.event, speaker))
+      expect(decorated.reviewer_speaker_names(program_team: false)).to eq(speaker.name)
+    end
   end
 
   describe "#speaker_emails" do

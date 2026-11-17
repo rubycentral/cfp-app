@@ -4,6 +4,8 @@ source 'https://rubygems.org'
 
 ruby file: '.ruby-version'
 
+require_relative 'config/website_flag'
+
 gem 'puma'
 gem 'rails', '~> 8.1.4'
 gem 'turbo-rails'
@@ -31,7 +33,13 @@ gem 'stateful_enum'
 gem 'actionview-encoded_mail_to'
 gem 'active_model_serializers', '~> 0.10.16'
 gem 'bootsnap', '~> 1.26', require: false
-gem 'cfp_website', path: 'engines/cfp_website', require: false # beta website feature, loaded by ENABLE_WEBSITE
+# The beta website feature. Its gems (aws-sdk-s3, fastly, image_processing) are
+# resolved into Gemfile.lock either way but only installed, and put on the load
+# path, when ENABLE_WEBSITE is set in the environment at `bundle install` and
+# boot time (see config/website_flag.rb and engines/cfp_website/README.md).
+install_if -> { CfpApp.website_enabled? } do
+  gem 'cfp_website', path: 'engines/cfp_website', require: false
+end
 gem 'chartkick'
 gem 'draper', '~> 4.0'
 gem 'groupdate'

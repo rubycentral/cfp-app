@@ -7,6 +7,7 @@
         hint: "The slug will be used in public facing URLs. If you leave this field blank, a slug will be generated based on the name."
       = f.input :url, label: "URL", placeholder: 'Event\'s URL'
       = f.input :contact_email, class: 'form-control', placeholder: 'Event email'
+      = f.input :blind_review, as: :boolean, label: 'Blind review', hint: 'Hide speaker names from reviewers. Speakers are asked to keep their proposals anonymous.'
 
   .col-md-3
     %fieldset

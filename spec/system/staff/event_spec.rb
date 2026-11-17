@@ -45,6 +45,15 @@ feature "Event Dashboard", type: :system do
       expect(current_path).to eq(info_event_staff_path(organizer_teammate.event))
     end
 
+    it "can turn blind review off" do
+      organizer_teammate.event.update!(blind_review: true)
+      visit edit_event_staff_path(organizer_teammate.event)
+      uncheck "Blind review"
+      click_button "Save"
+      expect(page).to have_text("Blind review: No")
+      expect(organizer_teammate.event.reload.blind_review?).to be(false)
+    end
+
     it "can change event status if checklist complete" do
       event = organizer_teammate.event
       visit info_event_staff_path(event)

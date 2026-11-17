@@ -3,7 +3,8 @@
 As a reviewer viewing an individual proposal
 I want to see an info bar with all pertinent CFP information
 And the full submitted proposal with the speaker for the proposal
-listed as 'Blind' so that I may review the proposal without bias.
+listed as 'Blind' when the event uses blind review, so that I may review the proposal without bias,
+or by name otherwise.
 
 I want to see an area for 'Public Comments'
 So that I may leave comments for the speaker(s) of the proposal

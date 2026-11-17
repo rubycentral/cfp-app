@@ -99,4 +99,33 @@ feature "Review Proposals", type: :system do
       expect(page).to have_content('Internal Comments')
     end
   end
+
+  context "when the event uses blind review" do
+    before { event.update!(blind_review: true) }
+
+    it "hides the speaker from the list and the proposal page" do
+      visit event_staff_proposals_path(event)
+      expect(page).not_to have_css("th", text: "Speakers")
+      expect(page).not_to have_text(user.name)
+      visit event_staff_proposal_path(event, proposal)
+      expect(page).to have_text("Blind")
+      expect(page).not_to have_text(user.name)
+    end
+  end
+
+  context "when the event does not use blind review" do
+    it "lists speakers and shows their names without links to the program area" do
+      visit event_staff_proposals_path(event)
+      within("table .proposal-#{proposal.id}") { expect(page).to have_text(user.name) }
+      visit event_staff_proposal_path(event, proposal)
+      expect(page).to have_text(user.name)
+      expect(page).not_to have_link(user.name)
+    end
+
+    it "links speaker names for program team" do
+      create(:teammate, :program_team, user: reviewer_user, event: event)
+      visit event_staff_proposal_path(event, proposal)
+      expect(page).to have_link(user.name, href: event_staff_program_speaker_path(event, speaker))
+    end
+  end
 end

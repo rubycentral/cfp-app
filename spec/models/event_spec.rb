@@ -144,4 +144,14 @@ describe Event do
       expect(event.current?).to eq(true)
     end
   end
+
+  describe "#blind_review?" do
+    it "is off for a new event" do
+      expect(Event.new.blind_review?).to be(false)
+    end
+
+    it "can be turned on" do
+      expect(create(:event, blind_review: true).blind_review?).to be(true)
+    end
+  end
 end

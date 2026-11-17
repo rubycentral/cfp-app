@@ -60,7 +60,7 @@ class Staff::EventsController < Staff::ApplicationController
     params.require(:event).permit(
         :name, :contact_email, :slug, :url, :state, :guidelines,
         :closes_at, :speaker_notification_emails, :accept, :reject,
-        :waitlist, :opens_at, :start_date, :end_date)
+        :waitlist, :opens_at, :start_date, :end_date, :blind_review)
   end
 
   def authorize_update

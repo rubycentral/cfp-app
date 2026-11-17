@@ -3,7 +3,10 @@
   = f.simple_fields_for :speakers, f.object.speakers do |speaker_fields|
     - speaker = speaker_fields.object.decorate
 
-    %p This information is <strong>not visible</strong> during the review process. Name and bio will be used publicly in the program if this proposal is selected.
+    %p
+      - if f.object.event.blind_review?
+        This information is <strong>not visible</strong> during the review process.
+      Name and bio will be used publicly in the program if this proposal is selected.
 
     = speaker_fields.input :name, disabled: true, tooltip: ["right", "Edit your profile to update"]
 

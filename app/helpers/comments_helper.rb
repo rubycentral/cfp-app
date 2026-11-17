@@ -13,7 +13,8 @@ module CommentsHelper
     if program_mode?
       comment.user.name
     else
-      comment.proposal.has_speaker?(comment.user) ? 'speaker' : comment.user.name
+      proposal = comment.proposal
+      proposal.event.blind_review? && proposal.has_speaker?(comment.user) ? 'speaker' : comment.user.name
     end
   end
 

@@ -79,6 +79,22 @@ class ProposalDecorator < Draper::Decorator
     object.speakers.map(&:name).join(', ')
   end
 
+  def speaker_names_with_links
+    links = object.speakers.map {|speaker| h.link_to(speaker.name, h.event_staff_program_speaker_path(object.event, speaker)) }
+    h.safe_join(links, ', ')
+  end
+
+  # What a staff member reviewing the proposal sees as its speakers
+  def reviewer_speaker_names
+    if object.event.blind_review?
+      'Blind'
+    elsif h.current_user.program_team_for_event?(object.event)
+      speaker_names_with_links
+    else
+      speaker_names
+    end
+  end
+
   def speaker_emails
     object.speakers.map(&:email).join(', ')
   end

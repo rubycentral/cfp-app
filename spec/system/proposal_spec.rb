@@ -158,6 +158,48 @@ feature "Proposals", type: :system do
     end
   end
 
+  context "previewing a new proposal", js: true do
+    before do
+      go_to_new_proposal
+      fill_in 'Abstract', with: 'Refreshed abstract'
+      click_on 'Preview'
+    end
+
+    it "keeps showing the speaker's name when the event is not blind" do
+      within('#preview') do
+        expect(page).to have_text('Refreshed abstract')
+        expect(page).to have_text("Speaker: #{user.name}")
+      end
+    end
+
+    context "on a blind event" do
+      let!(:event) { create(:event, state: 'open', blind_review: true) }
+
+      it "labels the speaker as Blind" do
+        within('#preview') do
+          expect(page).to have_text('Refreshed abstract')
+          expect(page).to have_text('Speaker: Blind')
+        end
+      end
+    end
+  end
+
+  context "previewing an existing proposal", js: true do
+    let(:proposal) { create(:proposal_with_track, event: event) }
+    let!(:speaker) { create(:speaker, proposal: proposal, user: user) }
+    let!(:co_speaker) { create(:speaker, proposal: proposal) }
+
+    it "keeps showing every speaker's name when the event is not blind" do
+      visit edit_event_proposal_path(event, proposal)
+      fill_in 'Abstract', with: 'Refreshed abstract'
+      click_on 'Preview'
+      within('#preview') do
+        expect(page).to have_text('Refreshed abstract')
+        expect(page).to have_text("Speakers: #{speaker.name}, #{co_speaker.name}")
+      end
+    end
+  end
+
   context "when commenting" do
     before :each do
       go_to_new_proposal
@@ -170,10 +212,44 @@ feature "Proposals", type: :system do
       expect(page).to have_text("Here's a comment for you!")
     end
 
-    it "it does not show the speaker's name" do
+    it "shows the speaker's name when the event is not blind" do
       within(:css, '.speaker-comment') do
-        expect(page).to have_text("speaker")
+        expect(page).to have_text(user.name)
       end
+    end
+
+    context "on a blind event" do
+      let!(:event) { create(:event, state: 'open', blind_review: true) }
+
+      it "does not show the speaker's name" do
+        within(:css, '.speaker-comment') do
+          expect(page).to have_text("speaker")
+          expect(page).not_to have_text(user.name)
+        end
+      end
+    end
+  end
+
+  context "anonymity guidance", js: true do
+    it "is shown on a blind event" do
+      event.update!(blind_review: true)
+      go_to_new_proposal
+      expect(page).to have_text("would allow a reviewer to identify you")
+      expect(page).to have_text("not visible during the review process")
+      create_proposal
+      expect(page).to have_text("preserve your anonymity")
+      expect(page).to have_text("anonymously converse")
+    end
+
+    it "is absent otherwise" do
+      go_to_new_proposal
+      expect(page).to have_text("maximize your chance of approval")
+      expect(page).not_to have_text("identify you")
+      expect(page).not_to have_text("not visible")
+      create_proposal
+      expect(page).to have_text("Your proposal has been submitted")
+      expect(page).not_to have_text("anonymity")
+      expect(page).not_to have_text("anonymously")
     end
   end
 

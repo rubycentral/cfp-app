@@ -12,13 +12,16 @@
   .col-sm-6.text-end
     %small.text-end <em>Hint:</em> Hold <kbd>shift</kbd> to sort by multiple columns
 
+- column_types = ['number', nil, 'number', *('text' unless event.blind_review?), 'text', 'text', 'text', 'text', 'text', 'number', 'text', 'text']
 %div{data: {controller: 'proposals-table'}}
-  %table.datatable.table.table-striped{data: {proposals_table_target: 'table', cfp_column_types: '["number", null, "number", "text", "text", "text", "text", "text", "number", "text", "text"]'}}
+  %table.datatable.table.table-striped{data: {proposals_table_target: 'table', cfp_column_types: column_types.to_json}}
     %thead
       %tr
         %th
         %th
         %th
+        - unless event.blind_review?
+          %th
         %th
         %th
         %th
@@ -31,6 +34,8 @@
         %th Score
         %th Your<br/>Score
         %th Ratings
+        - unless event.blind_review?
+          %th Speakers
         %th Title
         %th Session Format
         %th Track
@@ -48,6 +53,9 @@
             = proposal.your_score
           %td.ratings-count
             = proposal.ratings_count
+          - unless event.blind_review?
+            %td.speakers
+              = proposal.reviewer_speaker_names
           %td.title
             = proposal.title_link_for_review
             = state_label(small: true) if proposal.withdrawn?

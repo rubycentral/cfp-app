@@ -12,6 +12,30 @@ describe ProposalDecorator do
     end
   end
 
+  describe "#reviewer_speaker_names" do
+    let(:proposal) { create(:proposal_with_track) }
+    let!(:speaker) { create(:speaker, proposal: proposal) }
+    let(:decorated) { proposal.decorate }
+
+    it "is Blind when the event uses blind review" do
+      proposal.event.update!(blind_review: true)
+      allow(decorated.h).to receive(:current_user).and_return(create(:user))
+      expect(decorated.reviewer_speaker_names).to eq("Blind")
+    end
+
+    it "is the plain names for a reviewer" do
+      allow(decorated.h).to receive(:current_user).and_return(create(:reviewer, event: proposal.event))
+      expect(decorated.reviewer_speaker_names).to eq(speaker.name)
+    end
+
+    it "links the names for program team" do
+      allow(decorated.h).to receive(:current_user).and_return(create(:program_team, event: proposal.event))
+      html = decorated.reviewer_speaker_names
+      expect(html).to include(speaker.name)
+      expect(html).to include(decorated.h.event_staff_program_speaker_path(proposal.event, speaker))
+    end
+  end
+
   describe "#speaker_emails" do
     it "returns speaker emails as a comma separated string" do
       proposal = create(:proposal_with_track)

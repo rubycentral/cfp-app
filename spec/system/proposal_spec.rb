@@ -158,6 +158,22 @@ feature "Proposals", type: :system do
     end
   end
 
+  context "previewing a new proposal", js: true do
+    it "labels the speaker as Blind on a blind event" do
+      event.update!(blind_review: true)
+      go_to_new_proposal
+      click_on "Preview"
+      expect(page).to have_text("Speakers: Blind")
+    end
+
+    it "shows the Speaker row without a name when the event is not blind" do
+      go_to_new_proposal
+      click_on "Preview"
+      expect(page).to have_css(".proposal-meta-item", text: "Speakers:")
+      expect(page).not_to have_text("Blind")
+    end
+  end
+
   context "when commenting" do
     before :each do
       go_to_new_proposal

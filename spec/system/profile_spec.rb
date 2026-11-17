@@ -34,6 +34,14 @@ feature 'User Profile', type: :system do
     expect(page).to have_content("Unable to save profile. Please correct the following: Email can't be blank")
   end
 
+  scenario 'mentions the review committee only while a live event is blind' do
+    visit edit_profile_path
+    expect(page).not_to have_text('review committee')
+    create(:event, state: 'open', blind_review: true)
+    visit edit_profile_path
+    expect(page).to have_text('hidden from the review committee')
+  end
+
   scenario 'A user updates their event email preference' do
     teammate = create(:teammate, role: 'organizer', user: user, state: :accepted)
     visit(event_path(teammate.event))

@@ -21,8 +21,9 @@
             .col-md-8
               %p
                 Read the <strong>#{link_to 'guidelines', event_path(event.slug)}</strong> to maximize
-                your chance of approval. Refrain from including any information that
-                would allow a reviewer to identify you.
+                your chance of approval.
+                - if event.blind_review?
+                  Refrain from including any information that would allow a reviewer to identify you.
               %p
                 All fields support
                 %a{href: 'https://help.github.com/articles/github-flavored-markdown'}

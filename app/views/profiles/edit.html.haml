@@ -15,10 +15,11 @@
           - unless current_user.complete?
             %p
               Please make sure your name and email address are present and correct.
-          %p
-            This information will be
-            %strong hidden
-            from the review committee during the review process.
+          - if Event.live.exists?(blind_review: true)
+            %p
+              This information will be
+              %strong hidden
+              from the review committee during the review process.
           .form-group
             = f.label :name
             = f.text_field :name, class: 'form-control', placeholder: 'Your name', autofocus: true

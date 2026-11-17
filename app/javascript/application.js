@@ -1,6 +1,5 @@
 // Entry point for the build script in your package.json
 
-import * as Popper from "@popperjs/core"
 import * as bootstrap from "bootstrap"
 import "chartkick/chart.js"
 import "./chart_theme"

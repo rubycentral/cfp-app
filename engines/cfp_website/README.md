@@ -13,7 +13,9 @@ caching). It is **not loaded by default**.
   stops at boot with a message saying so. On Heroku, turning the flag on also
   needs a new build (`heroku builds:create`, or push any commit): a config
   change alone leaves the gems out of the slug and the release phase fails in
-  Bundler. Turning it off needs no rebuild. Without the flag, none of the
+  Bundler. Turning it off needs no rebuild. Image variants are processed with
+  vips (`ruby-vips`), so the machine needs libvips (`brew install vips`,
+  `apt-get install libvips`). Without the flag, none of the
   engine's gems, models, controllers, views, routes, JavaScript or stylesheets
   are installed, loaded or built into the core bundles.
 - The engine owns ActiveStorage, which nothing else in the app uses: it

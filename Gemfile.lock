@@ -6,6 +6,7 @@ PATH
       fastly
       image_processing (~> 2.2)
       nokogiri
+      ruby-vips
 
 GEM
   remote: https://rubygems.org/
@@ -427,6 +428,9 @@ GEM
       rspec-mocks (>= 3.13.0, < 5.0.0)
       rspec-support (>= 3.13.0, < 5.0.0)
     rspec-support (3.13.8)
+    ruby-vips (2.3.0)
+      ffi (~> 1.12)
+      logger
     ruby2_keywords (0.0.5)
     ruby_http_client (3.5.5)
     rubyzip (3.7.0)

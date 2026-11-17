@@ -18,12 +18,12 @@ feature "Organizers can manage program sessions", type: :system do
 
     scenario "from program session index", js: true do
       visit event_staff_program_sessions_path(event)
+      page.find('#waitlist').click
       within("##{ActionView::RecordIdentifier.dom_id(waitlisted_session)}") do
         expect(page).to have_content 'CONFIRMED WAITLISTED'
       end
 
       page.accept_confirm do
-        page.find('#waitlist').click
         find('tr', text: waitlisted_session.title).click_link("Promote")
       end
 

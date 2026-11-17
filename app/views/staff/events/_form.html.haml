@@ -1,3 +1,6 @@
+- if f.object.errors[:base].any?
+  .alert.alert-danger= f.object.errors[:base].to_sentence
+
 .row
   .col-md-6
     %fieldset

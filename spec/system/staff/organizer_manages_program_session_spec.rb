@@ -13,6 +13,25 @@ feature "Organizers can manage program sessions", type: :system do
     login_as(organizer_user)
   end
 
+  context "filtering the index by track" do
+    let!(:other_track) { create(:track, event: event, name: "Hardware") }
+    let!(:other_session) { create(:program_session_with_proposal, event: event, session_format: session_format, track: other_track) }
+
+    scenario "shows only that track, and everything again after choosing All", js: true do
+      visit event_staff_program_sessions_path(event)
+      expect(page).to have_css("##{ActionView::RecordIdentifier.dom_id(program_session)}")
+      expect(page).to have_css("##{ActionView::RecordIdentifier.dom_id(other_session)}")
+
+      select "Hardware", from: "track"
+      expect(page).to have_css("##{ActionView::RecordIdentifier.dom_id(other_session)}")
+      expect(page).not_to have_css("##{ActionView::RecordIdentifier.dom_id(program_session)}")
+
+      select "All", from: "track"
+      expect(page).to have_css("##{ActionView::RecordIdentifier.dom_id(program_session)}")
+      expect(page).to have_css("##{ActionView::RecordIdentifier.dom_id(other_session)}")
+    end
+  end
+
   context "organizer can promote a waitlisted program session" do
     let!(:waitlisted_session) { create(:program_session_with_proposal, event: event, session_format: session_format, state: :confirmed_waitlisted) }
 

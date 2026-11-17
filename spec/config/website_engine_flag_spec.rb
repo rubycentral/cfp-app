@@ -5,6 +5,24 @@ require 'open3'
 # ENABLE_WEBSITE is read while config/application.rb loads, so each value
 # needs a fresh boot; this spec boots a `rails runner` per value.
 RSpec.describe 'ENABLE_WEBSITE' do
+  describe 'CfpApp.website_enabled?' do
+    def enabled_with(value)
+      original = ENV['ENABLE_WEBSITE']
+      ENV['ENABLE_WEBSITE'] = value
+      CfpApp.website_enabled?
+    ensure
+      ENV['ENABLE_WEBSITE'] = original
+    end
+
+    it 'is on for 1 or true in any case' do
+      expect(%w[1 true TRUE yes]).to all(satisfy {|value| enabled_with(value) })
+    end
+
+    it 'is off for 0, false, off, blank or unset' do
+      expect(['0', 'false', 'FALSE', 'f', 'off', '', ' ', nil]).to all(satisfy {|value| !enabled_with(value) })
+    end
+  end
+
   # Which of CfpWebsite and ActiveStorage are defined after booting with the flag.
   def loaded_with(value)
     env = {'ENABLE_WEBSITE' => value, 'RAILS_ENV' => 'test'}

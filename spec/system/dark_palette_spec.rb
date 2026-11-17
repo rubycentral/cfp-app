@@ -15,6 +15,7 @@ RSpec.describe 'Dark palette', type: :system, js: true do
         <div class="template-actions"><a class="btn btn-gray" id="fx-btn-gray">Cancel</a></div>
       </div>
       <div class="subnavbar"><div class="dropdown"><div class="dropdown-menu" id="fx-dropdown"></div></div></div>
+      <pre><code class="hljs" id="fx-code">x = <span class="hljs-string" id="fx-code-string">'y'</span></code></pre>
     </div>
   HTML
 
@@ -41,6 +42,11 @@ RSpec.describe 'Dark palette', type: :system, js: true do
       expect(computed('fx-notice', 'color')).to eq('rgb(68, 4, 7)')
       expect(computed('fx-btn-gray', 'backgroundColor')).to eq('rgb(204, 204, 204)')
     end
+
+    it 'gives code blocks the GitHub light theme' do
+      expect(computed('fx-code', 'backgroundColor')).to eq('rgb(255, 255, 255)')
+      expect(computed('fx-code-string', 'color')).to eq('rgb(3, 47, 98)')
+    end
   end
 
   context 'in dark mode' do
@@ -61,6 +67,12 @@ RSpec.describe 'Dark palette', type: :system, js: true do
     it 'darkens the gray button and the subnav dropdown notch' do
       expect(computed('fx-btn-gray', 'backgroundColor')).to eq('rgb(73, 80, 87)')
       expect(computed('fx-dropdown', 'borderBottomColor', '::after')).to eq('rgb(43, 48, 53)')
+    end
+
+    it 'gives code blocks a dark surface and the GitHub dark token colours' do
+      expect(computed('fx-code', 'backgroundColor')).to eq('rgb(52, 58, 64)')  # --surface-bg-alt
+      expect(computed('fx-code', 'color')).to eq('rgb(222, 226, 230)')  # --text-color
+      expect(computed('fx-code-string', 'color')).to eq('rgb(165, 214, 255)')
     end
   end
 end

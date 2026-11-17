@@ -1,0 +1,87 @@
+/* highlight.js ships the GitHub light theme (imported in application.postcss.css) with
+   hard-coded light colours; in dark mode use the app's surfaces and the token colours
+   from highlight.js/styles/github-dark.css */
+[data-bs-theme="dark"] {
+  .hljs {
+    color: var(--text-color);
+    background: var(--surface-bg-alt);
+  }
+
+  .hljs-doctag,
+  .hljs-keyword,
+  .hljs-meta .hljs-keyword,
+  .hljs-template-tag,
+  .hljs-template-variable,
+  .hljs-type,
+  .hljs-variable.language_ {
+    color: #ff7b72;
+  }
+
+  .hljs-title,
+  .hljs-title.class_,
+  .hljs-title.class_.inherited__,
+  .hljs-title.function_ {
+    color: #d2a8ff;
+  }
+
+  .hljs-attr,
+  .hljs-attribute,
+  .hljs-literal,
+  .hljs-meta,
+  .hljs-number,
+  .hljs-operator,
+  .hljs-variable,
+  .hljs-selector-attr,
+  .hljs-selector-class,
+  .hljs-selector-id {
+    color: #79c0ff;
+  }
+
+  .hljs-regexp,
+  .hljs-string,
+  .hljs-meta .hljs-string {
+    color: #a5d6ff;
+  }
+
+  .hljs-built_in,
+  .hljs-symbol {
+    color: #ffa657;
+  }
+
+  .hljs-comment,
+  .hljs-code,
+  .hljs-formula {
+    color: #8b949e;
+  }
+
+  .hljs-name,
+  .hljs-quote,
+  .hljs-selector-tag,
+  .hljs-selector-pseudo {
+    color: #7ee787;
+  }
+
+  .hljs-subst,
+  .hljs-emphasis,
+  .hljs-strong {
+    color: var(--text-color);
+  }
+
+  .hljs-section {
+    color: #1f6feb;
+  }
+
+  .hljs-bullet {
+    color: #f2cc60;
+  }
+
+  .hljs-addition {
+    color: #aff5b4;
+    background-color: #033a16;
+  }
+
+  .hljs-deletion {
+    color: #ffdcd7;
+    background-color: #67060c;
+  }
+}

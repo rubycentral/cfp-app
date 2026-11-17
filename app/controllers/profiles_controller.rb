@@ -1,5 +1,6 @@
 class ProfilesController < ApplicationController
   before_action :require_user
+  before_action :check_for_blind_review, only: [:edit, :update]
 
   def show
     redirect_to edit_profile_path
@@ -73,6 +74,12 @@ class ProfilesController < ApplicationController
   end
 
   private
+
+  # The profile form tells speakers their details are hidden from reviewers, which
+  # is only true while a live event uses blind review
+  def check_for_blind_review
+    @blind_review_in_progress = Event.live.exists?(blind_review: true)
+  end
 
   def user_params
     params.require(:user).permit(:bio, :gender, :ethnicity, :country, :name,

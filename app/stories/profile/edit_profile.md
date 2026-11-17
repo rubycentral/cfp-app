@@ -7,7 +7,7 @@ So that I may edit my profile.
 
 When visiting this page
 I want to see a profile area where I may edit my name and bio
-And be informed that this information is hidden from the review committee.
+And be informed, when a live event uses blind review, that this information is hidden from the review committee.
 
 And I want to see an 'Identity Services' area
 So that I may edit my email and password.

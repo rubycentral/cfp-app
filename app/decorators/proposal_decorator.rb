@@ -84,11 +84,12 @@ class ProposalDecorator < Draper::Decorator
     h.safe_join(links, ', ')
   end
 
-  # What a staff member reviewing the proposal sees as its speakers
-  def reviewer_speaker_names
+  # What a staff member reviewing the proposal sees as its speakers. Views listing many
+  # proposals of one event can check program team membership once and pass it in.
+  def reviewer_speaker_names(program_team: h.current_user.program_team_for_event?(object.event))
     if object.event.blind_review?
       'Blind'
-    elsif h.current_user.program_team_for_event?(object.event)
+    elsif program_team
       speaker_names_with_links
     else
       speaker_names

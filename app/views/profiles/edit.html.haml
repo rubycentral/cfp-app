@@ -15,7 +15,7 @@
           - unless current_user.complete?
             %p
               Please make sure your name and email address are present and correct.
-          - if Event.live.exists?(blind_review: true)
+          - if @blind_review_in_progress
             %p
               This information will be
               %strong hidden

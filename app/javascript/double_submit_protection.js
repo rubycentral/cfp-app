@@ -26,6 +26,18 @@ document.addEventListener('submit', (event) => {
   setTimeout(() => {
     form.querySelectorAll('button[type="submit"], input[type="submit"]').forEach((button) => {
       button.disabled = true
+      button.dataset.doubleSubmitDisabled = ''
     })
+  })
+})
+
+// A page restored from the back/forward cache comes back exactly as it was left,
+// disabled buttons included. Re-enable the ones disabled above so the form can be
+// submitted again.
+window.addEventListener('pageshow', (event) => {
+  if (!event.persisted) return
+  document.querySelectorAll('[data-double-submit-disabled]').forEach((button) => {
+    button.disabled = false
+    delete button.dataset.doubleSubmitDisabled
   })
 })

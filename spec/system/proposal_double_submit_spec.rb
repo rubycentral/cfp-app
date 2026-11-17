@@ -42,6 +42,20 @@ feature 'Proposal submission double-click protection', type: :system, js: true d
     expect(page).to have_button('Save', disabled: true, match: :first)
   end
 
+  scenario 'the button is usable again when the page comes back from the back/forward cache' do
+    page.execute_script(<<~JS)
+      document.addEventListener('submit', function(e) { e.preventDefault() })
+    JS
+    click_button 'Submit'
+    expect(page).to have_button('Submit', disabled: true)
+
+    # Browsers restore a bfcached page as it was left, disabled buttons included, and
+    # announce it with a persisted pageshow event; that is all we can simulate here.
+    page.execute_script("window.dispatchEvent(new PageTransitionEvent('pageshow', {persisted: true}))")
+
+    expect(page).to have_button('Submit', disabled: false)
+  end
+
   scenario 'a double click creates exactly one proposal' do
     button = find('.form-submit button[type="submit"]')
     button.click

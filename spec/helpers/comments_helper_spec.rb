@@ -5,7 +5,8 @@ describe CommentsHelper, type: :helper do
   let(:speaker) { create(:speaker, proposal: proposal) }
   let(:comment) { create(:comment, proposal: proposal, user: speaker.user) }
 
-  before { helper.singleton_class.define_method(:program_mode?) { false } }
+  # program_mode? is a controller helper_method, so it is not on the helper object here
+  before { without_partial_double_verification { allow(helper).to receive(:program_mode?).and_return(false) } }
 
   it 'labels the speaker as speaker on a blind event' do
     proposal.event.update!(blind_review: true)

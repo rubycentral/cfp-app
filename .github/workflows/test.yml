@@ -12,6 +12,10 @@ jobs:
       matrix:
         website: ['off', 'on']
     name: test (website ${{ matrix.website }})
+    env:
+      # Read by the Gemfile too (install_if), so it must be set before
+      # setup-ruby runs `bundle install`, not only on the rspec step.
+      ENABLE_WEBSITE: ${{ matrix.website == 'on' && '1' || '0' }}
 
     services:
       postgres:
@@ -30,6 +34,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+          cache-version: website-${{ matrix.website }} # the two legs install different gem sets
 
       - uses: actions/setup-node@v7
         with:
@@ -47,7 +52,6 @@ jobs:
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres@localhost:5432/cfp_app_test
-          ENABLE_WEBSITE: '1'
         run: bundle e rails db:create db:schema:load assets:precompile && bundle e rspec spec engines/cfp_website/spec
 
       - name: Keep screenshots from failed system tests

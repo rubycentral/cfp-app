@@ -39,4 +39,11 @@ RSpec.describe 'ENABLE_WEBSITE' do
     expect(loaded_with('0')).to eq([nil, nil])
     expect(loaded_with('false')).to eq([nil, nil])
   end
+
+  it 'says what to do when the flag appears only after Bundler ran, as from .env' do
+    env = {'ENABLE_WEBSITE' => nil, 'RAILS_ENV' => 'test'}
+    out, status = Open3.capture2e(env, 'bundle', 'exec', 'ruby', '-e', 'ENV["ENABLE_WEBSITE"] = "1"; require "./config/application"', chdir: Rails.root.to_s)
+    expect(status).not_to be_success
+    expect(out).to include('ENABLE_WEBSITE is set but the website engine is not in the bundle')
+  end
 end

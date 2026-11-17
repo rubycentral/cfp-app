@@ -24,7 +24,14 @@ module CfpApp
     # (ENABLE_WEBSITE, see config/website_flag.rb). It sits inside the class
     # body so dotenv (before_configuration) has run, and before load_defaults
     # so the defaults also cover the frameworks the engine loads (ActiveStorage).
-    require 'cfp_website' if CfpApp.website_enabled?
+    begin
+      require 'cfp_website' if CfpApp.website_enabled?
+    rescue LoadError => e
+      raise unless e.path == 'cfp_website'
+      raise LoadError, 'ENABLE_WEBSITE is set but the website engine is not in the bundle. ' \
+                       'Bundler reads the flag from the environment, not from .env: ' \
+                       'export ENABLE_WEBSITE=1 and run `bundle install`.'
+    end
 
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.1

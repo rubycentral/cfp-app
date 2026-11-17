@@ -21,7 +21,7 @@
           .col-sm-6.no-pad-left
             .proposal-meta-item
               .info-item-heading #{ 'Speaker'.pluralize(proposal.speakers.count) }
-              = proposal.speakers.collect { |speaker| speaker.name }.join(', ')
+              = proposal.speaker_names_with_links
           .col-sm-6
             - if proposal.tags.present?
               .proposal-meta-item

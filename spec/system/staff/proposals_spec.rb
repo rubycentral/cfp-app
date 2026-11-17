@@ -64,6 +64,12 @@ feature "Organizers can manage proposals", type: :system do
       visit event_staff_program_proposal_path(event, proposal)
     end
 
+    it "links each speaker to their program speaker page from the info bar" do
+      within(".proposal-info-bar.clearfix") do
+        expect(page).to have_link(speaker_user.name, href: event_staff_program_speaker_path(event, speaker))
+      end
+    end
+
     it "links back button to the proposals page" do
       back = find("a", :text => "« Return to Proposals")
       expect(back[:href]).to eq(event_staff_program_proposals_path(event))

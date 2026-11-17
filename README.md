@@ -4,7 +4,7 @@
 
 This is a Ruby on Rails application that lets you manage your conference's call for proposals (CFP), program and schedule.  It was written by Ruby Central to run the CFPs for RailsConf and RubyConf.
 
-At a high level the CFP App allows speakers to submit and manage their proposals for your event.  Organizers can create a group of reviewers that blindly review and rate talks.  Organizers can then select talks to be accepted into the program including a waitlist of proposals.  Finally, organizers can create a schedule and slot confirmed talks.  Down below, I'll give a detailed description of the features and workflows of the CFP App under the section ['How to use the CFP App'](#how-to-use-the-cfp-app)
+At a high level the CFP App allows speakers to submit and manage their proposals for your event.  Organizers can create a group of reviewers that review and rate talks, blind to the speakers' identities if the event asks for it.  Organizers can then select talks to be accepted into the program including a waitlist of proposals.  Finally, organizers can create a schedule and slot confirmed talks.  Down below, I'll give a detailed description of the features and workflows of the CFP App under the section ['How to use the CFP App'](#how-to-use-the-cfp-app)
 
 The CFP App does not provide a public facing website for your conference, though we have a sister project that does integration with the CFP App's export data to give you a starting place for your website.  If you have interest in running a similar website, please reach out to Ruby Central directly at [rubycentral.org](http://rubycentral.org/).
 
@@ -137,7 +137,7 @@ Once done you should land on your event's organizers page.  This is the hub of m
 
 3. 'Edit Tags' will keep a list of tags that can be used by speakers (proposal tags) and by reviewers (review tags).  Above the 'Edit Tags' button is the list of both tag groups.  Speakers and Reviewers can only tag their proposals from these choices.
 
-4. 'Edit Event' allows you to change any of the details you initially set when creating the event.  If you didn't set the opening and closing dates on your event, you can do that under 'CFP Dates'.  Additionally, you will want to indicate the dates for your conference under 'Event Dates'.  These dates are required to create a schedule.  Finally, the status of the CFP, such as open or closed, is listed under 'State'.  It must be in the open state to accept proposals.  If you need to delete your event, you can do it on the edit page.
+4. 'Edit Event' allows you to change any of the details you initially set when creating the event.  If you didn't set the opening and closing dates on your event, you can do that under 'CFP Dates'.  Additionally, you will want to indicate the dates for your conference under 'Event Dates'.  These dates are required to create a schedule.  Finally, the status of the CFP, such as open or closed, is listed under 'State'.  It must be in the open state to accept proposals.  The 'Blind review' checkbox hides speaker names from reviewers; it is off for new events, so tick it if you want anonymous reviewing.  If you need to delete your event, you can do it on the edit page.
 
 5. 'Edit Speaker Notifications' allows you to craft the email content that goes out to speakers when their talks are accepted, waitlisted or rejected. The app does have defaults but we recommend you draft your own email bodies.  On the right side there is a markup legend with some custom tags for making the emails dynamic such as including proposal title and confirmation link.
 
@@ -161,7 +161,7 @@ The primary way to submit a talk is to visit the public guidelines page and clic
 
 The heart of the proposal is the title and abstract.  These two will show up in your program and schedule.  They are required fields and have limits on how long they can be.  The details field is for reviewers/organizers only and is there to allow the speaker to show 'what's behind the curtain' like an outline or other explanations that don't belong in the abstract.  The pitch is there to allow the speaker to sell you on why this talk should be in your event.
 
-On the right column there is a section for the speaker to select what tags they feel are appropriate, assuming your event is using tags.  Next it will show the speaker's name, email and bio.  The bio can be modified per proposal in case the speaker wants to tweak the bio to sound better for the specific topic.  Name, email and bio are hidden from reviewers and only visible to organizers at a later stage of the CFP.
+On the right column there is a section for the speaker to select what tags they feel are appropriate, assuming your event is using tags.  Next it will show the speaker's name, email and bio.  The bio can be modified per proposal in case the speaker wants to tweak the bio to sound better for the specific topic.  On an event with blind review, name, email and bio are hidden from reviewers and only visible to organizers at a later stage of the CFP.
 
 Finally there is a preview on the bottom right of the page.  Assuming everything looks good go ahead and hit 'Submit Proposal' at the bottom right.
 
@@ -171,7 +171,7 @@ Returning to your proposal page, you will see both an 'Edit' and either 'Delete 
 
 Another feature on the proposal page is the ability to invite additional speakers.  If your talk has more than one speaker, you would now invite them via their email to your talk.  They will get an email with instructions on how to accept your invitation. This is important so that their information will be associated with the talk.
 
-Additionally, you can make comments to the reviewers on your talk.  You will remain anonymous, identified only as 'speaker', though any replies from the reviewers will indicate which reviewer made the comment.
+Additionally, you can make comments to the reviewers on your talk.  On an event with blind review you will remain anonymous, identified only as 'speaker'; otherwise your name is shown. Any replies from the reviewers will indicate which reviewer made the comment.
 
 You can see how many reviews your talk has received but not details on what sort of rating it received.  Finally, you can see if your talk status has changed from 'submitted'.
 

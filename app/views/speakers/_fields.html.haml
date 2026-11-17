@@ -4,7 +4,7 @@
     - speaker = speaker_fields.object.decorate
 
     %p
-      - if f.object.event.blind_review?
+      - if event.blind_review?
         This information is <strong>not visible</strong> during the review process.
       Name and bio will be used publicly in the program if this proposal is selected.
 

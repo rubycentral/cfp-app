@@ -27,7 +27,11 @@ jobs:
         options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
-      - run: sudo apt-get update && sudo apt-get install --no-install-recommends -y curl libvips postgresql-client libpq-dev imagemagick
+      - run: sudo apt-get update && sudo apt-get install --no-install-recommends -y curl postgresql-client libpq-dev
+
+      # Image libraries are only for the website engine's ActiveStorage variants.
+      - run: sudo apt-get install --no-install-recommends -y libvips imagemagick
+        if: matrix.website == 'on'
 
       - uses: actions/checkout@v7
 

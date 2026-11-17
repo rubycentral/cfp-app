@@ -29,8 +29,8 @@ jobs:
     steps:
       - run: sudo apt-get update && sudo apt-get install --no-install-recommends -y curl postgresql-client libpq-dev
 
-      # Image libraries are only for the website engine's ActiveStorage variants.
-      - run: sudo apt-get install --no-install-recommends -y libvips imagemagick
+      # libvips backs the website engine's ActiveStorage variants (ruby-vips).
+      - run: sudo apt-get install --no-install-recommends -y libvips
         if: matrix.website == 'on'
 
       - uses: actions/checkout@v7

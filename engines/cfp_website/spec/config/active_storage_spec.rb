@@ -12,6 +12,12 @@ RSpec.describe 'ActiveStorage in the website engine' do
     expect(blob.download).to eq('hi')
   end
 
+  it 'processes image variants with vips' do
+    png = Base64.decode64('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==')
+    blob = ActiveStorage::Blob.create_and_upload!(io: StringIO.new(png), filename: 'dot.png', content_type: 'image/png')
+    expect(blob.variant(resize_to_fit: [1, 1]).processed.download).to start_with("\x89PNG".b)
+  end
+
   it 'maps every environment to a service' do
     expect(CfpWebsite::STORAGE_SERVICES).to eq('development' => :local, 'test' => :test, 'production' => :amazon)
   end

@@ -12,4 +12,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'fastly'
   spec.add_dependency 'image_processing', '~> 2.2'
   spec.add_dependency 'nokogiri'
+  spec.add_dependency 'ruby-vips' # image_processing's vips backend, ActiveStorage's default variant processor
 end

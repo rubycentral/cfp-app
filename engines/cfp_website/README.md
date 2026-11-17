@@ -4,10 +4,15 @@ This engine holds cfp-app's beta conference-website feature (CMS pages, themed
 public program/schedule/sponsor pages, sponsors, custom domains, Fastly
 caching). It is **not loaded by default**.
 
-- Enable it with `ENABLE_WEBSITE=1` in the environment (or in `.env`; the
-  flag is read after dotenv runs). Without it, none of the engine's models,
-  controllers, views, routes, JavaScript or stylesheets are loaded or built
-  into the core bundles.
+- Enable it with `ENABLE_WEBSITE=1` in the environment, then run
+  `bundle install`. The same flag tells the Gemfile (`install_if`) to install
+  the engine's gems (aws-sdk-s3, fastly, image_processing) and put them on the
+  load path, so it has to be in the real environment at `bundle install` and
+  boot time: a shell `export`, a Heroku config var, the CI job env. Setting it
+  only in `.env` is not enough, since Bundler runs before dotenv; the app then
+  stops at boot with a message saying so. Without the flag, none of the
+  engine's gems, models, controllers, views, routes, JavaScript or stylesheets
+  are installed, loaded or built into the core bundles.
 - The engine owns ActiveStorage, which nothing else in the app uses: it
   requires the framework, ships `config/storage.yml` (Disk in development and
   test, S3 via the `AWS_*` variables in production), the SVG initializer and

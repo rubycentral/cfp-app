@@ -66,6 +66,33 @@ describe ProposalsController, type: :controller do
     end
   end
 
+  describe 'POST #preview' do
+    render_views
+
+    let(:user) { create(:user) }
+
+    before { sign_in(user) }
+
+    it 'shows the current user as the speaker of a new proposal' do
+      post :preview, params: {event_slug: event.slug, proposal: {speakers_attributes: {'0' => {bio: 'my bio'}}}}
+      expect(response.body).to include(user.name)
+    end
+
+    it "shows the proposal's speakers when editing" do
+      proposal = create(:proposal_with_track, event: event)
+      speaker = create(:speaker, proposal: proposal, user: user)
+      co_speaker = create(:speaker, proposal: proposal)
+      post :preview, params: {event_slug: event.slug, proposal: {speakers_attributes: {'0' => {id: speaker.id}, '1' => {id: co_speaker.id}}}}
+      expect(response.body).to include(speaker.name, co_speaker.name)
+    end
+
+    it "does not reveal speakers of other people's proposals" do
+      other = create(:speaker, proposal: create(:proposal_with_track, event: event))
+      post :preview, params: {event_slug: event.slug, proposal: {speakers_attributes: {'0' => {id: other.id}}}}
+      expect(response.body).not_to include(other.name)
+    end
+  end
+
   describe "POST #confirm" do
     it "confirms a proposal" do
       proposal = create(:proposal_with_track, state: :accepted, confirmed_at: nil)

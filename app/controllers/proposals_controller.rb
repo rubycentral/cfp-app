@@ -104,7 +104,9 @@ class ProposalsController < ApplicationController
   end
 
   def preview
-    @proposal = @event.proposals.new(preview_params).decorate
+    @proposal = @event.proposals.new(preview_params)
+    @proposal.speakers = preview_speakers
+    @proposal = @proposal.decorate
     render partial: 'preview', locals: { proposal: @proposal }
   end
 
@@ -118,6 +120,17 @@ class ProposalsController < ApplicationController
 
   def preview_params
     params.fetch(:proposal, {}).permit(:title, {tags: []}, :session_format_id, :track_id, :abstract, :details, :pitch, custom_fields: @event.custom_fields)
+  end
+
+  # The previewed proposal is never saved, so its speakers are looked up here instead of through
+  # nested attributes: the proposal's own speakers when editing, or the current user for a new one
+  def preview_speakers
+    ids = Array(params.dig(:proposal, :speakers_attributes)&.values).filter_map {|attrs| attrs[:id].presence }
+    if ids.any?
+      Speaker.where(id: ids, proposal: current_user.proposals)
+    else
+      [Speaker.new(user: current_user)]
+    end
   end
 
   def notes_params

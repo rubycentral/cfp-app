@@ -4,7 +4,7 @@
       .proposal-info-bar
         .proposal-meta.proposal-description
           .proposal-meta-item
-            %strong #{ 'Speaker'.pluralize(proposal.speakers.count) }:
+            %strong #{ 'Speaker'.pluralize(proposal.speakers.size) }:
             %span= proposal.reviewer_speaker_names
           .proposal-meta-item
             %strong Format:

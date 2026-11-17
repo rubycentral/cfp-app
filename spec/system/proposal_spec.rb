@@ -159,18 +159,44 @@ feature "Proposals", type: :system do
   end
 
   context "previewing a new proposal", js: true do
-    it "labels the speaker as Blind on a blind event" do
-      event.update!(blind_review: true)
+    before do
       go_to_new_proposal
-      click_on "Preview"
-      expect(page).to have_text("Speakers: Blind")
+      fill_in 'Abstract', with: 'Refreshed abstract'
+      click_on 'Preview'
     end
 
-    it "shows the Speaker row without a name when the event is not blind" do
-      go_to_new_proposal
-      click_on "Preview"
-      expect(page).to have_css(".proposal-meta-item", text: "Speakers:")
-      expect(page).not_to have_text("Blind")
+    it "keeps showing the speaker's name when the event is not blind" do
+      within('#preview') do
+        expect(page).to have_text('Refreshed abstract')
+        expect(page).to have_text("Speaker: #{user.name}")
+      end
+    end
+
+    context "on a blind event" do
+      let!(:event) { create(:event, state: 'open', blind_review: true) }
+
+      it "labels the speaker as Blind" do
+        within('#preview') do
+          expect(page).to have_text('Refreshed abstract')
+          expect(page).to have_text('Speaker: Blind')
+        end
+      end
+    end
+  end
+
+  context "previewing an existing proposal", js: true do
+    let(:proposal) { create(:proposal_with_track, event: event) }
+    let!(:speaker) { create(:speaker, proposal: proposal, user: user) }
+    let!(:co_speaker) { create(:speaker, proposal: proposal) }
+
+    it "keeps showing every speaker's name when the event is not blind" do
+      visit edit_event_proposal_path(event, proposal)
+      fill_in 'Abstract', with: 'Refreshed abstract'
+      click_on 'Preview'
+      within('#preview') do
+        expect(page).to have_text('Refreshed abstract')
+        expect(page).to have_text("Speakers: #{speaker.name}, #{co_speaker.name}")
+      end
     end
   end
 

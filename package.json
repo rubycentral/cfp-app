@@ -5,7 +5,7 @@
     "build:css:compile": "postcss ./app/assets/stylesheets/application.postcss.css -o ./app/assets/builds/application.css",
     "build:css:fonts": "mkdir -p app/assets/builds/fonts && cp node_modules/bootstrap-icons/font/fonts/* app/assets/builds/fonts/",
     "build:css": "yarn build:css:fonts && yarn build:css:compile",
-    "build": "esbuild app/javascript/*.* engines/cfp_website/app/javascript/cfp_website.js --bundle --sourcemap --format=esm --outdir=app/assets/builds --entry-names=[name] --public-path=/assets"
+    "build": "esbuild app/javascript/application.js engines/cfp_website/app/javascript/cfp_website.js --bundle --sourcemap --format=esm --outdir=app/assets/builds --entry-names=[name] --public-path=/assets"
   },
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",

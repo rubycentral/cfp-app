@@ -1,6 +1,5 @@
 import { Controller } from '@hotwired/stimulus'
 import hljs from 'highlight.js/lib/core'
-import 'highlight.js/styles/github.css'
 
 /* Import only common languages */
 import bash from 'highlight.js/lib/languages/bash'

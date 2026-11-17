@@ -5,6 +5,7 @@
 @import "tributejs/dist/tribute.css";
 @import "datatables.net-bs5/css/dataTables.bootstrap5.css";
 @import "tom-select/dist/css/tom-select.bootstrap5.css";
+@import "highlight.js/styles/github.css";
 
 @import "./base/css-colors.css";
 @import "./base/bootstrap-overrides.css";
@@ -32,4 +33,5 @@
 @import "./modules/shortcuts.css";
 @import "./modules/stats.css";
 @import "./modules/widgets.css";
+@import "./modules/code.css";
 

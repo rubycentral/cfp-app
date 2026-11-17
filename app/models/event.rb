@@ -227,6 +227,7 @@ end
 #
 #  id                          :integer          not null, primary key
 #  archived                    :boolean          default(FALSE)
+#  blind_review                :boolean          default(FALSE), not null
 #  closes_at                   :datetime
 #  contact_email               :string
 #  created_at                  :datetime

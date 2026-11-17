@@ -12,6 +12,7 @@ require 'rails/test_unit/railtie'
 
 require 'digest/sha1'
 require 'digest/md5'
+require_relative 'website_flag'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -20,11 +21,17 @@ Bundler.require(*Rails.groups)
 module CfpApp
   class Application < Rails::Application
     # The beta website feature lives in engines/cfp_website and is opt-in
-    # (ENABLE_WEBSITE=1/true; 0/false/unset leave it off). It sits inside the
-    # class body so dotenv (before_configuration) has run, and before
-    # load_defaults so the defaults also cover the frameworks the engine
-    # loads (ActiveStorage).
-    require 'cfp_website' if ActiveModel::Type::Boolean.new.cast(ENV['ENABLE_WEBSITE'])
+    # (ENABLE_WEBSITE, see config/website_flag.rb). It sits inside the class
+    # body so dotenv (before_configuration) has run, and before load_defaults
+    # so the defaults also cover the frameworks the engine loads (ActiveStorage).
+    begin
+      require 'cfp_website' if CfpApp.website_enabled?
+    rescue LoadError => e
+      raise unless e.path == 'cfp_website'
+      raise LoadError, 'ENABLE_WEBSITE is set but the website engine is not in the bundle. ' \
+                       'Bundler reads the flag from the environment, not from .env: ' \
+                       'export ENABLE_WEBSITE=1 and run `bundle install`.'
+    end
 
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.1

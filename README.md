@@ -215,8 +215,9 @@ This is a major upgrade from the original CFP App that is not backwards compatib
 
 The beta website feature (static content pages plus dynamic schedule, program
 and sponsor pages for your conference) lives in an optional engine under
-[`engines/cfp_website`](/engines/cfp_website/README.md) and is not loaded unless
-`ENABLE_WEBSITE=1` is set in the environment.
+[`engines/cfp_website`](/engines/cfp_website/README.md). Its gems are not
+installed and it is not loaded unless `ENABLE_WEBSITE=1` is set in the
+environment when you run `bundle install` and start the app.
 
 
 ## Customizing and Contributing

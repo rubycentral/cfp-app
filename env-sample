@@ -8,4 +8,5 @@ TWITTER_KEY=123123
 TWITTER_SECRET=123123
 SENDGRID_USERNAME=123123
 SENDGRID_PASSWORD=123123
-# ENABLE_WEBSITE=1   # load the optional website engine (engines/cfp_website); 0/false/unset keep it off
+# ENABLE_WEBSITE=1   # install (bundle install) and load the optional website engine (engines/cfp_website); 0/false/unset keep it off.
+                     # Bundler reads it from the shell environment, not from .env, so export it rather than setting it here.

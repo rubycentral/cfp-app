@@ -1,5 +1,5 @@
 import { Controller } from '@hotwired/stimulus'
-import palette from 'google-palette'
+import { trackColors } from '../helpers/track_colors'
 import { turboStreamFetch } from '../helpers/turbo_fetch'
 
 export default class extends Controller {
@@ -24,7 +24,7 @@ export default class extends Controller {
 
   initTrackColors() {
     if (this.hasTracksCssValue) {
-      this.trackColors = palette('tol-rainbow', this.tracksCssValue.length)
+      this.trackColors = trackColors(this.tracksCssValue.length)
     }
   }
 
@@ -41,7 +41,7 @@ export default class extends Controller {
     if (i >= 0 && this.trackColors[i]) {
       const trackElement = session.querySelector('.track')
       if (trackElement) {
-        trackElement.style.backgroundColor = '#' + this.trackColors[i]
+        trackElement.style.backgroundColor = this.trackColors[i]
       }
     }
 

@@ -8,7 +8,7 @@
       .modal-body
         .selected-session-info
           - {'Format': 'session_format_name',
-              'Track': 'track_name',
+              **({'Track': 'track_name'} if tracks_enabled?).to_h,
               'Presenter':'speaker_names',
               'Abstract': 'abstract',
               'Suggested Duration': 'suggested_duration',

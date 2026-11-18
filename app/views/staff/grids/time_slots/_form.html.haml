@@ -4,9 +4,10 @@
   .session-meta-item
     %strong Title:
     %p.title= time_slot.session_title
-  .session-meta-item
-    %strong Track:
-    %p.track= time_slot.session_track_name
+  - if tracks_enabled?
+    .session-meta-item
+      %strong Track:
+      %p.track= time_slot.session_track_name
   .session-meta-item
     %strong Presenter:
     %p.speaker= time_slot.session_presenter
@@ -19,6 +20,7 @@
 
 %fieldset.supplemental-fields{class: time_slot.supplemental_fields_visibility_css }
   = f.input :title, as: :string
-  = f.association :track, as: :select, collection: current_event.tracks, include_blank: true
+  - if tracks_enabled?
+    = f.association :track, as: :select, collection: current_event.tracks, include_blank: true
   = f.input :presenter, as: :string
   = f.input :description, as: :text

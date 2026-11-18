@@ -15,7 +15,8 @@
 
   = render_extensions(:time_slot_index_cells, time_slot: time_slot)
 
-  %td= time_slot.display_track_name
+  - if tracks_enabled?
+    %td= time_slot.display_track_name
 
   %td.actions
     = link_to 'Edit', edit_event_staff_schedule_time_slot_path(time_slot.event, time_slot), class: 'btn btn-primary btn-sm', data: {turbo: true, turbo_frame: 'time-slot-edit-dialog'}

@@ -2,7 +2,7 @@ class ApplicationPolicy
   attr_reader :user, :record, :current_event
 
   def initialize(context, record)
-    raise Pundit::NotAuthorizedError, "must be logged in" unless context.try(:user)
+    raise Pundit::NotAuthorizedError, "must be logged in" unless context&.user
     @user   = context.user
     @current_event = context.current_event
     @record = record

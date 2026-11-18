@@ -60,11 +60,11 @@ class TimeSlot < ApplicationRecord
   end
 
   def track_name
-    track.try(:name)
+    track&.name
   end
 
   def room_name
-    room.try(:name)
+    room&.name
   end
 
   def session_title
@@ -100,7 +100,7 @@ class TimeSlot < ApplicationRecord
   end
 
   def session_format_name
-    program_session && program_session.session_format.try(:name)
+    program_session&.session_format&.name
   end
 
   def session_confirmation_notes

@@ -5,7 +5,7 @@
   - elsif ts.new_record?
     .title Preview
   - elsif ts.configured?
-    .custom-session-card{data: { track_css: ts.track_name.try(:parameterize)} }
+    .custom-session-card{data: { track_css: ts.track_name&.parameterize} }
       - if tracks_enabled?
         .track
           %span=truncate(ts.track_name, length: 18)

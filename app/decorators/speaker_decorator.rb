@@ -4,6 +4,6 @@ class SpeakerDecorator < Draper::Decorator
   decorates_association :program_sessions
 
   def bio
-    object.bio.present? ? object.bio : object.user.try(:bio)
+    object.bio.present? ? object.bio : object.user&.bio
   end
 end

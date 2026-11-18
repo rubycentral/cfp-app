@@ -34,7 +34,7 @@
         %td= speaker.email
         %td= link_to speaker.program_session.title, event_staff_program_session_path(current_event, speaker.program_session)
         - if tracks_enabled?
-          %td= speaker.program_session.track.try(:name)
+          %td= speaker.program_session.track&.name
         %td= speaker.program_session.session_format.name
         - if is_organizer
           %td{ id: "speaker-action-buttons-#{speaker.id}" }

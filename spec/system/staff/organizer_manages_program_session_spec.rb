@@ -77,7 +77,11 @@ feature "Organizers can manage program sessions", type: :system do
 
     scenario "from program session index", js: true do
       visit event_staff_program_sessions_path(event)
+      expect(page).to have_css("##{ActionView::RecordIdentifier.dom_id(program_session)}")
+      expect(page).not_to have_css("##{ActionView::RecordIdentifier.dom_id(waitlisted_session)}")
+
       page.find('#waitlist').click
+      expect(page).not_to have_css("##{ActionView::RecordIdentifier.dom_id(program_session)}")
       within("##{ActionView::RecordIdentifier.dom_id(waitlisted_session)}") do
         expect(page).to have_content 'CONFIRMED WAITLISTED'
       end

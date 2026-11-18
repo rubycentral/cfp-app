@@ -93,24 +93,6 @@
   &.widget-table .table tr th:first-child {
     border-left: none;
   }
-
-  /* Widget Plain */
-  .widget-plain {
-    background: transparent;
-    border: none;
-    .widget-content {
-      background: transparent;
-      border: none;
-      padding: 0;
-    }
-  }
-}
-
-/* Widget Box */
-.widget-box {
-  .widget-content {
-    background: var(--surface-bg-raised);
-  }
 }
 
 .widget-card {

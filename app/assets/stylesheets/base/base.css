@@ -39,12 +39,3 @@ h3.tags {
   margin: 0 0 0.75em 0;
 }
 
-/* datepicker */
-.ui-datepicker {
-  z-index: 10000 !important;
-}
-
-.guidelines-link {
-  font-style: italic;
-  margin-left: 5px;
-}

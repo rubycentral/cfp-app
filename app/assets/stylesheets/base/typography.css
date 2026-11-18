@@ -1,10 +1,5 @@
 /* Text modules */
 /* Include any overrides to Bootstrap typography here */
-.meta-text {
-  font-size: var(--font-size-small);
-  color: var(--gray);
-}
-
 .help-block {
   color: var(--help-text);
   font-size: 0.9em;
@@ -26,15 +21,6 @@
 .brand-warning { color: var(--brand-warning); }
 .brand-danger { color: var(--brand-danger); }
 .brand-accent { color: var(--brand-accent); }
-
-/* Responsive text: */
-/* Reset to left-align on smaller screens */
-.text-right-responsive,
-.text-center-responsive {
-  @media (max-width: 767px) {
-    text-align: left;
-  }
-}
 
 /* Markdown display */
 .markdown {

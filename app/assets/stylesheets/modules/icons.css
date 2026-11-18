@@ -4,9 +4,6 @@
 .btn-twitter-alt i {
   color: var(--icon-twitter);
 }
-.btn-google-alt i {
-  color: var(--icon-google);
-}
 .btn-linkedin-alt i {
   color: var(--icon-linkedin);
 }
@@ -15,23 +12,4 @@
 }
 .btn-github-alt i {
   color: var(--icon-github);
-}
-
-.icon-twitter,
-.icon-github {
-  background-size: 25px 25px;
-  background-repeat: no-repeat;
-  display: inline-block;
-  height: 25px;
-  vertical-align: middle;
-  width: 25px;
-  margin-right: 2px;
-}
-
-.icon-twitter {
-  background-image: url("twitter_32.png");
-}
-
-.icon-github {
-  background-image: url("github_32.png");
 }

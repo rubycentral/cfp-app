@@ -32,10 +32,6 @@ body {
     margin-bottom: var(--padding-base-vertical);
     vertical-align: middle;
   }
-
-  .meta-text {
-    margin-bottom: var(--padding-base-vertical);
-  }
 }
 
 .main {
@@ -56,10 +52,6 @@ body {
 /* Flexbox module */
 .flex-container {
   display: flex;
-}
-
-.flex-column  {
-  flex-direction: column
 }
 
 .flex-wrap {

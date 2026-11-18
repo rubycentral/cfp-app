@@ -162,16 +162,6 @@
 
   .template-actions {
     float: right;
-
-    .btn-gray {
-      color: var(--btn-gray-color);
-      background-color: var(--btn-gray-bg);
-      border: 1px solid var(--btn-gray-border);
-
-      &:hover, &:active {
-        background-color: hsl(from var(--btn-gray-bg) h s calc(l - 10));
-      }
-    }
   }
 
   .template-preview .contents,

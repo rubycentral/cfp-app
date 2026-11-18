@@ -26,6 +26,6 @@
       = f.input :offer_url
       = f.input :offer_text
 
-    .col-sm-12
-      = submit_tag("Save", class: "btn btn-success", type: "submit")
+    .col-sm-12.form-submit.text-end
       = link_to "Cancel", event_staff_sponsors_path, class: "btn btn-secondary"
+      %button.btn.btn-success{type: "submit"} Save

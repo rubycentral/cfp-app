@@ -28,12 +28,9 @@
         %iframe{ src: "#{event_staff_page_path(current_event, @page, params.to_unsafe_hash)}",
                  id: "page-preview", name: "page-preview" }
   .row
-    .col-sm-12
-      = submit_tag("Save",
-        class: "btn btn-success",
-        type: "submit",
-        data: { action: "editor#allowFormSubmission" })
-      = link_to "Cancel", event_staff_pages_path(current_event), {:class=>"cancel-form btn btn-danger"}
+    .col-sm-12.form-submit.text-end
+      = link_to "Cancel", event_staff_pages_path(current_event), class: "btn btn-secondary"
+      = button_tag "Save", type: "submit", class: "btn btn-success", data: {action: "editor#allowFormSubmission"}
 = form_with url: event_staff_page_path(current_event, @page),
   html: { target: "page-preview", id: "preview-form" } do |f|
   = f.hidden_field :preview, id: "hidden-preview"

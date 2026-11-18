@@ -24,6 +24,6 @@
           = speaker.input :bio, maxlength: :lookup, input_html: {class: 'watched', rows: 5, data: {controller: 'maxlength-alert', action: 'keyup->maxlength-alert#check'}}
 
   .row
-    .col-sm-12
-      =submit_tag("Save", class: "float-end btn btn-success", type: "submit")
-      = link_to "Cancel", event_staff_program_sessions_path(current_event), {:class=>"cancel-form float-end btn btn-danger"}
+    .col-sm-12.form-submit.text-end
+      = link_to "Cancel", event_staff_program_sessions_path(current_event), class: "btn btn-secondary"
+      %button.btn.btn-success{type: "submit"} Save

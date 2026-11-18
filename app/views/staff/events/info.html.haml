@@ -15,7 +15,7 @@
               .status-dropdown.float-end{data: {status_toggle_target: 'dropdown'}}
                 = form_for(event, url: update_status_event_staff_path(event)) do |f|
                   = f.select(:state, options_for_select(Event.states.keys, f.object.state))
-                  = link_to "Cancel", '#', class: "btn btn-danger", data: {action: 'click->status-toggle#hide'}
+                  = link_to "Cancel", '#', class: "btn btn-secondary", data: {action: 'click->status-toggle#hide'}
                   = f.submit "Update Status", class: "btn btn-success"
         %h1 Event Info
 

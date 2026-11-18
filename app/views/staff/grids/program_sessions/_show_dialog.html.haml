@@ -13,7 +13,7 @@
               'Abstract': 'abstract',
               'Suggested Duration': 'suggested_duration',
             }.each do |attr, getter_method|
-            - value = session.try(getter_method)
+            - value = session.public_send(getter_method)
             - if value != "" && value != nil
               .session-meta-item
                 %strong= "#{attr}:"

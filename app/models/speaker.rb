@@ -48,11 +48,11 @@ class Speaker < ApplicationRecord
   scope :a_to_z, -> { order(:speaker_name) }
 
   def name
-    speaker_name.present? ? speaker_name : user.try(:name)
+    speaker_name.present? ? speaker_name : user&.name
   end
 
   def email
-    speaker_email.present? ? speaker_email : user.try(:email)
+    speaker_email.present? ? speaker_email : user&.email
   end
 
   def gravatar_hash

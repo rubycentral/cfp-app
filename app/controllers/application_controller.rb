@@ -73,8 +73,8 @@ class ApplicationController < ActionController::Base
 
   def set_current_event(event_or_event_id)
     event_or_event_id = Event.find_by(id: event_or_event_id) unless Event === event_or_event_id
-    @current_event = event_or_event_id.try(:decorate)
-    session[:current_event_id] = @current_event.try(:id)
+    @current_event = event_or_event_id&.decorate
+    session[:current_event_id] = @current_event&.id
     @current_event
   end
 

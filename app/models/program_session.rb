@@ -95,11 +95,11 @@ class ProgramSession < ApplicationRecord
   end
 
   def session_format_name
-    session_format.try(:name)
+    session_format&.name
   end
 
   def track_name
-    track.try(:name)
+    track&.name
   end
 
   def group_name
@@ -107,11 +107,11 @@ class ProgramSession < ApplicationRecord
   end
 
   def confirmation_notes?
-    proposal.try(:confirmation_notes?)
+    proposal&.confirmation_notes?
   end
 
   def confirmation_notes
-    proposal.try(:confirmation_notes)
+    proposal&.confirmation_notes
   end
 
   def scheduled?

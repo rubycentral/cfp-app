@@ -46,7 +46,7 @@ class Staff::ProgramSessionDecorator < Draper::Decorator
 
   def ps_data
     data = {
-      track_css: track_name.try(:parameterize),
+      track_css: track_name.parameterize,
       id: object.id,
       show_path: h.event_staff_schedule_grid_program_session_url(object.event.slug, object.id),
     }

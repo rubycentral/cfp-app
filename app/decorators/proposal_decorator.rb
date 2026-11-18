@@ -38,11 +38,11 @@ class ProposalDecorator < Draper::Decorator
   end
 
   def session_format_name
-    object.session_format.try(:name)
+    object.session_format&.name
   end
 
   def track_name
-    object.track.try(:name) || Track::NO_TRACK
+    object.track&.name || Track::NO_TRACK
   end
 
   def no_track_name_for_speakers
@@ -50,7 +50,7 @@ class ProposalDecorator < Draper::Decorator
   end
 
   def track_name_for_speakers
-    object.track.try(:name) || no_track_name_for_speakers
+    object.track&.name || no_track_name_for_speakers
   end
 
   def review_tags_labels

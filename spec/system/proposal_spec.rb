@@ -145,6 +145,40 @@ feature "Proposals", type: :system do
     end
   end
 
+  context "tracks" do
+    let!(:proposal) { create(:proposal, event: event) }
+    let!(:speaker) { create(:speaker, proposal: proposal, user: user) }
+
+    context "when the event has no tracks" do
+      it "does not mention tracks on the proposal form" do
+        go_to_new_proposal
+        expect(page).not_to have_content('Track')
+      end
+
+      it "does not mention tracks on the proposal page or list" do
+        visit event_proposal_path(event, proposal)
+        expect(page).not_to have_content('Track')
+
+        visit proposals_path
+        expect(page).not_to have_content('Track')
+      end
+    end
+
+    context "when the event has a track" do
+      let!(:track) { create(:track, event: event, name: 'Hardware') }
+
+      it "offers the track dropdown on the proposal form" do
+        go_to_new_proposal
+        expect(page).to have_select('Track', with_options: ['Hardware'])
+      end
+
+      it "shows the track on the proposal page" do
+        visit event_proposal_path(event, proposal)
+        expect(page).to have_content('Track')
+      end
+    end
+  end
+
   context "when editing" do
     scenario "User edits their proposal" do
       go_to_new_proposal

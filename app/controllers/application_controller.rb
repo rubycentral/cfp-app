@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
   helper_method :program_mode?
   helper_method :schedule_mode?
   helper_method :program_tracks
+  helper_method :tracks_enabled?
   helper_method :current_user
 
   before_action :set_paper_trail_whodunnit
@@ -158,5 +159,12 @@ class ApplicationController < ActionController::Base
 
   def program_tracks
     @program_tracks ||= current_event && current_event.tracks.any? ? current_event.tracks : []
+  end
+
+  # Track UI is shown only when the current event has registered at least one track
+  def tracks_enabled?
+    return @tracks_enabled if defined?(@tracks_enabled)
+
+    @tracks_enabled = current_event.present? && current_event.tracks.any?
   end
 end

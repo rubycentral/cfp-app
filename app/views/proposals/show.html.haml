@@ -44,10 +44,11 @@
             .proposal-meta-item.text-start
               .info-item-heading Format
               #{proposal.session_format_name}
-          .col-sm-6
-            .proposal-meta-item.text-start
-              .info-item-heading Track
-              #{proposal.track_name}
+          - if tracks_enabled?
+            .col-sm-6
+              .proposal-meta-item.text-start
+                .info-item-heading Track
+                #{proposal.track_name}
 
 .row
   .col-md-8

@@ -46,9 +46,10 @@
                         %h4.proposal-title= link_to invitation.proposal.title, invitation_path(invitation.slug)
 
                         .proposal-meta.proposal-description
-                          .proposal-meta-item
-                            %strong Track:
-                            = invitation.proposal.track_name
+                          - if tracks_enabled?
+                            .proposal-meta-item
+                              %strong Track:
+                              = invitation.proposal.track_name
                           .proposal-meta-item
                             %strong #{ 'Speaker'.pluralize(invitation.proposal.speakers.count) }:
                             = invitation.proposal.speakers.collect { |speaker| speaker.name }.join(', ')
@@ -78,9 +79,10 @@
                           %strong Format:
                           %span #{proposal.session_format_name}
 
-                        .proposal-meta-item
-                          %strong Track:
-                          %span #{proposal.track_name}
+                        - if tracks_enabled?
+                          .proposal-meta-item
+                            %strong Track:
+                            %span #{proposal.track_name}
                       .proposal-meta.margin-top
                         %strong Updated:
                         %span #{proposal.updated_in_words}

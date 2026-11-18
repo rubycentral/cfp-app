@@ -1,14 +1,5 @@
-.btn-facebook-alt i {
-  color: var(--icon-facebook);
-}
 .btn-twitter-alt i {
   color: var(--icon-twitter);
-}
-.btn-linkedin-alt i {
-  color: var(--icon-linkedin);
-}
-.btn-pinterest-alt i {
-  color: var(--icon-pinterest);
 }
 .btn-github-alt i {
   color: var(--icon-github);

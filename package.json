@@ -1,6 +1,10 @@
 {
   "name": "app",
   "private": true,
+  "engines": {
+    "node": "26.13.1",
+    "yarn": "1.22.22"
+  },
   "scripts": {
     "build:css:compile": "postcss ./app/assets/stylesheets/application.postcss.css -o ./app/assets/builds/application.css",
     "build:css:fonts": "mkdir -p app/assets/builds/fonts && cp node_modules/bootstrap-icons/font/fonts/* app/assets/builds/fonts/",

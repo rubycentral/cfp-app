@@ -18,17 +18,42 @@ feature 'Proposal submission double-click protection', type: :system, js: true d
   end
 
   scenario 'the submit button is disabled as soon as the form is submitted' do
-    # Keep the page around after submit so the button state can be inspected:
-    # this listener runs after the disable-submit controller's (registered at
-    # connect time), so the disable still happens first.
+    # Keep the page around after submit so the button state can be inspected.
+    # Registered on document AFTER the protection module's own document
+    # listener, so it cancels the navigation without the module seeing a
+    # defaultPrevented event (an element-level preventDefault would instead
+    # exercise the module's leave-canceled-submissions-alone guard).
     page.execute_script(<<~JS)
-      document.querySelector('[data-proposal-preview-target="form"]')
-        .addEventListener('submit', function(e) { e.preventDefault() })
+      document.addEventListener('submit', function(e) { e.preventDefault() })
     JS
     click_button 'Submit'
 
     expect(page).to have_button('Submit', disabled: true)
     expect(Proposal.count).to eq(0)
+  end
+
+  scenario 'the protection is global: an unrelated plain form disables its button too' do
+    visit edit_profile_path
+    page.execute_script(<<~JS)
+      document.addEventListener('submit', function(e) { e.preventDefault() })
+    JS
+    click_button 'Save', match: :first
+
+    expect(page).to have_button('Save', disabled: true, match: :first)
+  end
+
+  scenario 'the button is usable again when the page comes back from the back/forward cache' do
+    page.execute_script(<<~JS)
+      document.addEventListener('submit', function(e) { e.preventDefault() })
+    JS
+    click_button 'Submit'
+    expect(page).to have_button('Submit', disabled: true)
+
+    # Browsers restore a bfcached page as it was left, disabled buttons included, and
+    # announce it with a persisted pageshow event; that is all we can simulate here.
+    page.execute_script("window.dispatchEvent(new PageTransitionEvent('pageshow', {persisted: true}))")
+
+    expect(page).to have_button('Submit', disabled: false)
   end
 
   scenario 'a double click creates exactly one proposal' do

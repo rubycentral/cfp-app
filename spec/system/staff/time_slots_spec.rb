@@ -30,6 +30,23 @@ feature 'Staff Organizers can manage time slots', type: :system do
       end
     end
 
+    context 'when the event has several tracks' do
+      let!(:tracks) { %w[Hardware Software Community].map { |name| create(:track, event: event, name: name) } }
+      let!(:program_sessions) do
+        tracks.map { |track| create(:program_session, event: event, session_format: session_format, track: track) }
+      end
+
+      scenario 'colours each track badge on the schedule grid from the fixed palette', js: true do
+        visit event_staff_schedule_grid_path(event)
+        expect(page).to have_css('.draggable-session-card .track', count: 3)
+
+        colours = page.evaluate_script(
+          "Array.from(document.querySelectorAll('.draggable-session-card .track')).map(el => el.style.backgroundColor)"
+        )
+        expect(colours).to match_array(['rgb(120, 28, 129)', 'rgb(131, 186, 109)', 'rgb(217, 33, 32)'])
+      end
+    end
+
     context 'when the event has a track' do
       let!(:track) { create(:track, event: event, name: 'Hardware') }
       let!(:program_session) { create(:program_session, event: event, session_format: session_format, track: track) }

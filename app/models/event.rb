@@ -92,10 +92,6 @@ class Event < ApplicationRecord
     self.proposals.column_names.join(', ')
   end
 
-  def multiple_tracks?
-    tracks.any?
-  end
-
   def multiple_public_session_formats?
     session_formats.publicly_viewable.count > 1
   end

@@ -19,16 +19,9 @@ export default class extends Controller {
     const dataTable = new DataTable(tableElement)
     const track = this.selectTarget.options[this.selectTarget.selectedIndex].text
 
-    // Clear the global search and every column search first. Since DataTables 3,
-    // columns().search() sets one grouped search instead of touching each column.
-    dataTable.search('')
-    dataTable.columns().every(function () { this.search('') })
-    dataTable.draw()
-
-    if (track !== 'All') {
-      const trackColumn = dataTable.column('Track:title')
-      trackColumn.search(track).draw()
-    }
+    // Only touch the Track column: other column searches (the program/waitlist
+    // tab filter, the per-column filter inputs) belong to other controllers.
+    dataTable.column('Track:title').search(track === 'All' ? '' : track).draw()
 
     this.updateBadgeCounts()
   }

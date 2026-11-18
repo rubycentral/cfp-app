@@ -6,14 +6,15 @@
     Speakers
 
 - is_organizer = current_user.organizer_for_event?(current_event)
-- column_types = is_organizer ? '["text", "text", "text", "text", "text", null]' : '["text", "text", "text", "text", "text"]'
-%table.datatable.table.table-striped{data: {controller: 'cfp-datatable', cfp_column_types: column_types}}
+- column_types = ['text', 'text', 'text', *(['text'] if tracks_enabled?), 'text', *([nil] if is_organizer)]
+%table.datatable.table.table-striped{data: {controller: 'cfp-datatable', cfp_column_types: column_types.to_json}}
   %thead
     %tr
       %th
       %th
       %th
-      %th
+      - if tracks_enabled?
+        %th
       %th
       - if is_organizer
         %th
@@ -21,7 +22,8 @@
       %th Name
       %th Email
       %th Session
-      %th Track
+      - if tracks_enabled?
+        %th Track
       %th Format
       - if is_organizer
         %th Actions
@@ -31,7 +33,8 @@
         %td= link_to speaker.name, event_staff_program_speaker_path(current_event, speaker)
         %td= speaker.email
         %td= link_to speaker.program_session.title, event_staff_program_session_path(current_event, speaker.program_session)
-        %td= speaker.program_session.track.try(:name)
+        - if tracks_enabled?
+          %td= speaker.program_session.track.try(:name)
         %td= speaker.program_session.session_format.name
         - if is_organizer
           %td{ id: "speaker-action-buttons-#{speaker.id}" }

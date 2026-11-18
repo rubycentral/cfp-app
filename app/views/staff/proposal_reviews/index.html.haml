@@ -13,7 +13,7 @@
     %small.text-end <em>Hint:</em> Hold <kbd>shift</kbd> to sort by multiple columns
 
 - program_team = current_user.program_team_for_event?(event) unless event.blind_review?
-- column_types = ['number', nil, 'number', *('text' unless event.blind_review?), 'text', 'text', 'text', 'text', 'text', 'number', 'text', 'text']
+- column_types = ['number', nil, 'number', *('text' unless event.blind_review?), 'text', 'text', *('text' if tracks_enabled?), 'text', 'text', 'number', 'text', 'text']
 %div{data: {controller: 'proposals-table'}}
   %table.datatable.table.table-striped{data: {proposals_table_target: 'table', cfp_column_types: column_types.to_json}}
     %thead
@@ -25,7 +25,8 @@
           %th
         %th
         %th
-        %th
+        - if tracks_enabled?
+          %th
         %th
         %th
         %th
@@ -39,7 +40,8 @@
           %th Speakers
         %th Title
         %th Session Format
-        %th Track
+        - if tracks_enabled?
+          %th Track
         %th Proposal<br/>Tags
         %th Reviewer<br/>Tags
         %th Comments
@@ -62,8 +64,9 @@
             = state_label(small: true) if proposal.withdrawn?
           %td.session-format
             = proposal.session_format_name
-          %td.track
-            = proposal.track_name
+          - if tracks_enabled?
+            %td.track
+              = proposal.track_name
           %td.tags
             = proposal.tags_labels
           %td.review-tags

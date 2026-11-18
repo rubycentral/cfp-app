@@ -11,7 +11,9 @@
   %ul#missing-prereq-messages.list-group
     = unmet_requirements(event)
 
-%table#organizer-time-slots.datatable.table.table-striped{data: {controller: 'time-slots'}}
+- extension_columns = Rails.application.config.x.extension_points.fetch(:time_slot_index_headers, []).size
+- column_types = ['number', 'date', 'date', 'text', 'text', 'text', *(['text'] * extension_columns), *(['text'] if tracks_enabled?), nil]
+%table#organizer-time-slots.datatable.table.table-striped{data: {controller: 'time-slots', cfp_column_types: column_types.to_json}}
   %thead
     %tr
       %th
@@ -21,7 +23,8 @@
       %th
       %th
       = render_extensions(:time_slot_index_filter_headers)
-      %th
+      - if tracks_enabled?
+        %th
       %th
     %tr
       %th Conference Day
@@ -31,7 +34,8 @@
       %th Presenter
       %th Room
       = render_extensions(:time_slot_index_headers)
-      %th Track
+      - if tracks_enabled?
+        %th Track
       %th.actions Actions
   %tbody
     = render time_slots

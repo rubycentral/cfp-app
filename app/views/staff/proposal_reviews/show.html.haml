@@ -45,18 +45,19 @@
                   %span
                     = render 'shared/proposals/inline_format_edit', proposal: proposal
                   %i.bi.bi-arrow-counterclockwise.inline-edit-icon{data: {action: 'click->inline-edit#cancel'}}
-            .col-sm-6
-              .proposal-meta-item.full-width{data: {controller: 'inline-edit'}}
-                #current-track{data: {inline_edit_target: 'display'}}
-                  .info-item-heading Track
-                  #track-name.float-start
-                    #{proposal.track_name}
-                  - if track_and_format_edit
-                    %i.bi.bi-pencil-fill.inline-edit-icon{data: {action: 'click->inline-edit#show'}}
-                #edit-track-wrapper{data: {inline_edit_target: 'edit'}}
-                  %span
-                    = render 'shared/proposals/inline_track_edit', proposal: proposal
-                  %i.bi.bi-arrow-counterclockwise.inline-edit-icon{data: {action: 'click->inline-edit#cancel'}}
+            - if tracks_enabled?
+              .col-sm-6
+                .proposal-meta-item.full-width{data: {controller: 'inline-edit'}}
+                  #current-track{data: {inline_edit_target: 'display'}}
+                    .info-item-heading Track
+                    #track-name.float-start
+                      #{proposal.track_name}
+                    - if track_and_format_edit
+                      %i.bi.bi-pencil-fill.inline-edit-icon{data: {action: 'click->inline-edit#show'}}
+                  #edit-track-wrapper{data: {inline_edit_target: 'edit'}}
+                    %span
+                      = render 'shared/proposals/inline_track_edit', proposal: proposal
+                    %i.bi.bi-arrow-counterclockwise.inline-edit-icon{data: {action: 'click->inline-edit#cancel'}}
           .col-sm-4
             .proposal-meta-item.col-sm-8
               .info-item-heading Reviewer Tags

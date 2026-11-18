@@ -57,6 +57,39 @@ feature "Organizers can manage proposals", type: :system do
     end
   end
 
+  context "tracks" do
+    context "when the event has no tracks" do
+      let(:proposal) { create(:proposal, event: event) }
+
+      it "shows no track column or field on the program proposal pages" do
+        visit event_staff_program_proposals_path(event)
+        expect(page).to have_css('th', text: 'Speakers')
+        expect(page).not_to have_css('th', text: 'Track')
+
+        visit selection_event_staff_program_proposals_path(event)
+        expect(page).to have_css('th', text: 'Speakers')
+        expect(page).not_to have_css('th', text: 'Track')
+
+        visit event_staff_program_proposal_path(event, proposal)
+        expect(page).to have_content('Format')
+        expect(page).not_to have_content('Track')
+      end
+    end
+
+    context "when the event has a track" do
+      it "shows the track column and field on the program proposal pages" do
+        visit event_staff_program_proposals_path(event)
+        expect(page).to have_css('th', text: 'Track')
+
+        visit selection_event_staff_program_proposals_path(event)
+        expect(page).to have_css('th', text: 'Track')
+
+        visit event_staff_program_proposal_path(event, proposal)
+        expect(page).to have_content('Track')
+      end
+    end
+  end
+
   context "Viewing a proposal" do
     it_behaves_like "a proposal page", :event_staff_proposal_path
 

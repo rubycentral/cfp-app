@@ -18,9 +18,10 @@
     .program-session-item
       %h3.control-label Format
       %p #{program_session.session_format_name}
-    .program-session-item
-      %h3.control-label Track
-      %p #{program_session.track_name}
+    - if tracks_enabled?
+      .program-session-item
+        %h3.control-label Track
+        %p #{program_session.track_name}
     .program-session-item
       %h3.control-label Abstract
       .markdown{ data: { 'field-id' => 'program_session_abstract' } }

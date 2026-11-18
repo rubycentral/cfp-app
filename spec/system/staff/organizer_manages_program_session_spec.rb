@@ -32,12 +32,56 @@ feature "Organizers can manage program sessions", type: :system do
     end
   end
 
+  context "tracks" do
+    context "when the event has no tracks" do
+      let!(:program_session) { create(:program_session, event: event, session_format: session_format) }
+
+      scenario "no track column or field on the program pages" do
+        visit event_staff_program_sessions_path(event)
+        expect(page).to have_css('th', text: 'Format')
+        expect(page).not_to have_css('th', text: 'Track')
+
+        visit event_staff_program_session_path(event, program_session)
+        expect(page).to have_content('Format')
+        expect(page).not_to have_content('Track')
+
+        visit new_event_staff_program_session_path(event)
+        expect(page).to have_select('Format')
+        expect(page).not_to have_select('Track')
+
+        visit event_staff_program_speakers_path(event)
+        expect(page).to have_css('th', text: 'Format')
+        expect(page).not_to have_css('th', text: 'Track')
+      end
+    end
+
+    context "when the event has a track" do
+      scenario "track column and field on the program pages" do
+        visit event_staff_program_sessions_path(event)
+        expect(page).to have_css('th', text: 'Track')
+
+        visit event_staff_program_session_path(event, program_session)
+        expect(page).to have_content('Track')
+
+        visit new_event_staff_program_session_path(event)
+        expect(page).to have_select('Track')
+
+        visit event_staff_program_speakers_path(event)
+        expect(page).to have_css('th', text: 'Track')
+      end
+    end
+  end
+
   context "organizer can promote a waitlisted program session" do
     let!(:waitlisted_session) { create(:program_session_with_proposal, event: event, session_format: session_format, state: :confirmed_waitlisted) }
 
     scenario "from program session index", js: true do
       visit event_staff_program_sessions_path(event)
+      expect(page).to have_css("##{ActionView::RecordIdentifier.dom_id(program_session)}")
+      expect(page).not_to have_css("##{ActionView::RecordIdentifier.dom_id(waitlisted_session)}")
+
       page.find('#waitlist').click
+      expect(page).not_to have_css("##{ActionView::RecordIdentifier.dom_id(program_session)}")
       within("##{ActionView::RecordIdentifier.dom_id(waitlisted_session)}") do
         expect(page).to have_content 'CONFIRMED WAITLISTED'
       end

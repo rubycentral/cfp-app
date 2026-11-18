@@ -3,7 +3,8 @@
     %fieldset.form-group.col-md-6
       = f.input :title, maxlength: 60, input_html: {class: 'watched', rows: 1, data: {controller: 'maxlength-alert', action: 'keyup->maxlength-alert#check'}}
       = f.association :session_format, as: :select, collection: current_event.session_formats, label: "Format", required: true
-      = f.association :track, as: :select, collection: current_event.tracks, label: "Track", include_blank: true
+      - if tracks_enabled?
+        = f.association :track, as: :select, collection: current_event.tracks, label: "Track", include_blank: true
       - unless @program_session.new_record?
         = f.input :state, as: :select, collection: session_states_collection, label: "State", required: true
       = f.input :abstract, maxlength: 1205, input_html: {class: 'watched', rows: 5, data: {controller: 'maxlength-alert', action: 'keyup->maxlength-alert#check'}}

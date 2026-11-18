@@ -15,7 +15,8 @@
 
   .row
     .col-md-12
-      %table.datatable.table.table-striped.proposal-list{data: {proposals_table_target: 'table', cfp_column_types: '["number", "number", "number", "text", "text", null, "text", "text", "select", null]'}}
+      - column_types = ['number', 'number', 'number', 'text', 'text', *([nil] if tracks_enabled?), 'text', *(['text'] if event.public_tags?), 'text', 'select', nil]
+      %table.datatable.table.table-striped.proposal-list{data: {proposals_table_target: 'table', cfp_column_types: column_types.to_json}}
         %thead
           %tr
             %th
@@ -23,7 +24,8 @@
             %th
             %th
             %th
-            %th
+            - if tracks_enabled?
+              %th
             %th
             - if event.public_tags?
               %th
@@ -36,7 +38,8 @@
             %th Standard Deviation
             %th Speakers
             %th Talk Title
-            %th Track
+            - if tracks_enabled?
+              %th Track
             %th Session Format
             - if event.public_tags?
               %th Proposal Tags

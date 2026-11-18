@@ -6,8 +6,9 @@
     .title Preview
   - elsif ts.configured?
     .custom-session-card{data: { track_css: ts.track_name.try(:parameterize)} }
-      .track
-        %span=truncate(ts.track_name, length: 18)
+      - if tracks_enabled?
+        .track
+          %span=truncate(ts.track_name, length: 18)
       .session-card-body
         %p=truncate(ts.display_title, length: 50)
         %p.presenter=truncate(ts.display_presenter, length: 30)

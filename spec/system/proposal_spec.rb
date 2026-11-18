@@ -164,6 +164,25 @@ feature "Proposals", type: :system do
       end
     end
 
+    context "when another event has a track" do
+      let!(:tracked_event) { create(:event, state: 'open') }
+      let!(:track) { create(:track, event: tracked_event, name: 'Hardware') }
+      let!(:tracked_proposal) { create(:proposal, event: tracked_event, track: track, title: 'Tracked talk') }
+      let!(:tracked_speaker) { create(:speaker, proposal: tracked_proposal, user: user) }
+
+      it "shows the track only for that event's proposal on My Proposals" do
+        visit event_proposal_path(event, proposal)
+        visit proposals_path
+
+        within('li.proposal', text: 'Tracked talk') do
+          expect(page).to have_content('Track: Hardware')
+        end
+        within('li.proposal', text: proposal.title) do
+          expect(page).not_to have_content('Track')
+        end
+      end
+    end
+
     context "when the event has a track" do
       let!(:track) { create(:track, event: event, name: 'Hardware') }
 

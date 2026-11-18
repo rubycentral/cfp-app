@@ -1,6 +1,5 @@
 import { Controller } from '@hotwired/stimulus'
 import palette from 'google-palette'
-import dayjs from 'dayjs'
 import { turboStreamFetch } from '../helpers/turbo_fetch'
 
 export default class extends Controller {
@@ -227,16 +226,21 @@ export default class extends Controller {
   }
 
   initRuler(ruler) {
-    let m = dayjs().startOf('day').add(this.dayStartValue - this.stepValue, 'minute')
-
     ruler.innerHTML = ''
     for (let i = this.dayStartValue; i <= this.dayEndValue; i += this.stepValue) {
-      m = m.add(this.stepValue, 'minute')
       const li = document.createElement('li')
       li.className = 'ruler-tick'
-      li.textContent = m.format('hh:mma')
+      li.textContent = this.formatTick(i)
       ruler.appendChild(li)
     }
+  }
+
+  // Minutes since midnight -> "hh:mmam"/"hh:mmpm" (e.g. 540 -> "09:00am", 780 -> "01:00pm")
+  formatTick(minutes) {
+    const hour24 = Math.floor(minutes / 60) % 24
+    const hour12 = hour24 % 12 || 12
+    const pad = n => String(n).padStart(2, '0')
+    return `${pad(hour12)}:${pad(minutes % 60)}${hour24 < 12 ? 'am' : 'pm'}`
   }
 
   updateTimeSlot(slot, draggedSession) {

@@ -12,7 +12,6 @@ RSpec.describe 'Dark palette', type: :system, js: true do
       <nav class="schedule-nav"><ul><li class="active" id="fx-day-tab">Day 1</li></ul></nav>
       <div class="template-section">
         <p class="notice" id="fx-notice">Notice</p>
-        <div class="template-actions"><a class="btn btn-gray" id="fx-btn-gray">Cancel</a></div>
       </div>
       <div class="subnavbar"><div class="dropdown"><div class="dropdown-menu" id="fx-dropdown"></div></div></div>
       <pre><code class="hljs" id="fx-code">x = <span class="hljs-string" id="fx-code-string">'y'</span></code></pre>
@@ -40,7 +39,6 @@ RSpec.describe 'Dark palette', type: :system, js: true do
       expect(computed('fx-organizer', 'color')).to eq('rgb(145, 24, 28)')
       expect(computed('fx-day-tab', 'color')).to eq('rgb(145, 24, 28)')
       expect(computed('fx-notice', 'color')).to eq('rgb(68, 4, 7)')
-      expect(computed('fx-btn-gray', 'backgroundColor')).to eq('rgb(204, 204, 204)')
     end
 
     it 'gives code blocks the GitHub light theme' do
@@ -64,8 +62,7 @@ RSpec.describe 'Dark palette', type: :system, js: true do
       expect(computed('fx-hint', 'color')).to eq('rgb(117, 183, 152)')
     end
 
-    it 'darkens the gray button and the subnav dropdown notch' do
-      expect(computed('fx-btn-gray', 'backgroundColor')).to eq('rgb(73, 80, 87)')
+    it 'darkens the subnav dropdown notch' do
       expect(computed('fx-dropdown', 'borderBottomColor', '::after')).to eq('rgb(43, 48, 53)')
     end
 

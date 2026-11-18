@@ -171,11 +171,6 @@
 /* Labels */
   --label-color: #fff;
 
-/* Buttons */
-  --btn-gray-color: #000;
-  --btn-gray-border: #bfbfbf;
-  --btn-gray-bg: var(--brand-gray);
-
 /* Social buttons */
   --btn-twitter-bg: #1c95d0;
   --btn-twitter-bg-light: #2daddc;
@@ -286,13 +281,10 @@
   --form-error-bg: #5c2a2a;
   --input-focus-border: #6ea8fe;
   --input-focus-ring: rgba(110, 168, 254, .25);
-  --btn-gray-color: #dee2e6;
-  --btn-gray-border: #495057;
   --form-error-text: #f1aeb5;
   --help-text: #75b798;
   --brand-primary-text: #ea868f;
   --dark-red-text: #ea868f;
-  --btn-gray-bg: #495057;
 
 /* GitHub sign-in button: dark surface, light text (Twitter keeps its blue) */
   --btn-github-text: #dee2e6;

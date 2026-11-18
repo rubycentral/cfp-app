@@ -5,7 +5,8 @@
     %td= proposal.standard_deviation
     %td= proposal.speaker_names
     %td= proposal.title_link
-    %td= proposal.track_name
+    - if tracks_enabled?
+      %td= proposal.track_name
     %td= proposal.session_format_name
     - if event.public_tags?
       %td= proposal.tags_labels

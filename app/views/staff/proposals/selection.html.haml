@@ -19,13 +19,15 @@
 
 .row
   .col-md-12
-    %table.datatable.table.table-striped.proposal-list{data: {controller: 'cfp-datatable', cfp_column_types: '["text", "text", "text", null, "text", "text", "text", "text"]'}}
+    - column_types = ['text', 'text', 'text', *([nil] if tracks_enabled?), 'text', 'text', 'text', 'text']
+    %table.datatable.table.table-striped.proposal-list{data: {controller: 'cfp-datatable', cfp_column_types: column_types.to_json}}
       %thead
         %tr
           %th
           %th
           %th
-          %th
+          - if tracks_enabled?
+            %th
           %th
           %th
           %th
@@ -34,7 +36,8 @@
           %th Score
           %th Speakers
           %th Talk Title
-          %th Track
+          - if tracks_enabled?
+            %th Track
           %th Session Format
           %th Reviewer Tags
           %th Status
@@ -45,7 +48,8 @@
             %td= proposal.average_rating
             %td= proposal.speaker_names
             %td= proposal.title_link
-            %td= proposal.track_name
+            - if tracks_enabled?
+              %td= proposal.track_name
             %td= proposal.session_format_name
             %td= proposal.review_tags_labels
             %td

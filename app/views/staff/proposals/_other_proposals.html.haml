@@ -13,9 +13,10 @@
           .other-proposal-format
             %b Format:
             = proposal.session_format_name
-        .other-proposal-track
-          %b Track:
-          = proposal.track_name
+        - if tracks_enabled?
+          .other-proposal-track
+            %b Track:
+            = proposal.track_name
         .other-proposal-review-tags
           = proposal.review_tags_labels
   -else

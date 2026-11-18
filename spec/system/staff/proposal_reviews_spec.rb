@@ -63,6 +63,33 @@ feature "Review Proposals", type: :system do
     end
   end
 
+  context "tracks" do
+    context "when the event has no tracks" do
+      let(:proposal) { create(:proposal, title: 'First Proposal', event: event) }
+      let(:proposal2) { create(:proposal, title: 'Second Proposal', event: event) }
+
+      it "shows no track column or field on the review pages" do
+        visit event_staff_proposals_path(event)
+        expect(page).to have_css('th', text: 'Title')
+        expect(page).not_to have_css('th', text: 'Track')
+
+        visit event_staff_proposal_path(event, proposal)
+        expect(page).to have_content('Format')
+        expect(page).not_to have_content('Track')
+      end
+    end
+
+    context "when the event has a track" do
+      it "shows the track column and field on the review pages" do
+        visit event_staff_proposals_path(event)
+        expect(page).to have_css('th', text: 'Track')
+
+        visit event_staff_proposal_path(event, proposal)
+        expect(page).to have_content('Track')
+      end
+    end
+  end
+
   context "When the reviewer submits a proposal" do
     let!(:reviewer_proposal) { create(:proposal_with_track,
                                       title: 'Reviewer Proposal',

@@ -30,13 +30,15 @@
       .indicator{data: {program_sessions_target: 'indicator'}}
 
   .col-md-12
-    %table#program-sessions.datatable.table.table-striped{data: {program_sessions_target: 'table', cfp_column_types: '["text", "text", "text", null, "text", "text", null, "text", null]'}}
+    - column_types = ['text', 'text', 'text', *([nil] if tracks_enabled?), 'text', 'text', nil, 'text', nil]
+    %table#program-sessions.datatable.table.table-striped{data: {program_sessions_target: 'table', cfp_column_types: column_types.to_json}}
       %thead
         %tr
           %th
           %th
           %th
-          %th
+          - if tracks_enabled?
+            %th
           %th
           %th
           %th
@@ -46,7 +48,8 @@
           %th Title
           %th Speaker
           %th Format
-          %th Track
+          - if tracks_enabled?
+            %th Track
           %th Scheduled
           %th Status
           %th Actions

@@ -5,6 +5,9 @@ export default class extends CfpDatatableController {
 
   get options() {
     return {
+      // The hidden last column holds the program/waitlist/declined group; name it so
+      // filterBy does not depend on how many columns precede it (Track is optional).
+      columnDefs: [{targets: -1, name: 'group'}],
       layout: {
         topStart: null,
         topEnd: () => this.createResetSortButton(),
@@ -32,6 +35,6 @@ export default class extends CfpDatatableController {
     this.indicatorTarget.style.left = position + 'px'
     this.indicatorTarget.style.width = width + 'px'
 
-    this.dataTable.column(8).search(type).draw()
+    this.dataTable.column('group:name').search(type).draw()
   }
 }

@@ -58,10 +58,6 @@
     }
   }
 
-  &.widget-nopad .widget-content {
-    padding: 0;
-  }
-
   .widget-content {
     background: var(--surface-bg-raised);
     border: 1px solid var(--widget-content-border);

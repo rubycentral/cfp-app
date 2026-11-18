@@ -69,8 +69,6 @@
   --text-color: var(--gray-dark);
   --text-strong: var(--black);
   --text-secondary: #555;
-  --text-subtle: #888;
-  --muted-text: #777;
   --link-color: var(--bright-blue);
   --link-hover-color: #126799;
   --brand-primary-text: var(--brand-primary);
@@ -78,12 +76,6 @@
   --help-text: hsl(from var(--brand-success) h s calc(l - 5));
 
 /* Stats */
-  --text-stat-label: #999;
-  --text-stat-value: #444;
-  --text-stat-dark: #545454;
-  --stat-accent: #19bc9c;
-  --stat-divider: #ccc;
-  --stat-divider-light: #fff;
 
 /* Widgets */
   --widget-border: #d6d6d6;
@@ -100,11 +92,7 @@
   --ruler-bg: #FFFFFF95;
 
 /* Social icon colors (brand colors of each network) */
-  --icon-facebook: #23386a;
   --icon-twitter: #0098d0;
-  --icon-google: #b6362d;
-  --icon-linkedin: #0073b2;
-  --icon-pinterest: #ab171e;
   --icon-github: #333;
 
 /* Proposal states and form errors */
@@ -229,8 +217,6 @@
   --text-color: #dee2e6;
   --text-strong: #f8f9fa;
   --text-secondary: #ced4da;
-  --text-subtle: #adb5bd;
-  --muted-text: #adb5bd;
   --link-color: #6ea8fe;
   --link-hover-color: #8bb9fe;
   --legend-color: var(--gray-dark);
@@ -251,11 +237,6 @@
   --state-danger-text: #ffc8d3;
 
 /* Stats */
-  --text-stat-label: #adb5bd;
-  --text-stat-value: #dee2e6;
-  --text-stat-dark: #ced4da;
-  --stat-divider: #495057;
-  --stat-divider-light: #212529;
 
 /* Widgets */
   --widget-border: #495057;

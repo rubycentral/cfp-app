@@ -226,12 +226,8 @@ a {
 .has-error .control-label,
 .has-error .radio,
 .has-error .checkbox,
-.has-error .radio-inline,
-.has-error .checkbox-inline,
 .has-error.radio label,
-.has-error.checkbox label,
-.has-error.radio-inline label,
-.has-error.checkbox-inline label {
+.has-error.checkbox label {
   color: var(--state-danger-text);
 }
 
@@ -270,38 +266,6 @@ a {
 .pagination > li > a:focus,
 .pagination > li > span:focus {
   color: var(--link-hover-color);
-}
-
-/* Panels */
-.panel-success {
-  border-color: var(--state-success-border);
-
-  > .panel-heading {
-    background-color: var(--state-success-bg);
-    border-color: var(--state-success-border);
-    color: var(--state-success-text);
-  }
-}
-
-/* Progress bars */
-.progress-bar {
-  background-color: var(--brand-primary);
-}
-
-.progress-bar-success {
-  background-color: var(--green);
-}
-
-.progress-bar-info {
-  background-color: var(--bright-blue);
-}
-
-.progress-bar-warning {
-  background-color: var(--btn-warning-bg);
-}
-
-.progress-bar-danger {
-  background-color: var(--btn-danger-bg);
 }
 
 /* List groups */

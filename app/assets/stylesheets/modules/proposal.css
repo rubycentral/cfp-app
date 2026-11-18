@@ -24,12 +24,8 @@
   }
 }
 
-.speaker img, .speaker-image {
+.speaker img {
   margin: 0 0.5em 0.8em 0;
-}
-
-.proposal-actions-bar {
-  padding: 3px 0 3px 0;
 }
 
 ul.invitation {
@@ -62,14 +58,8 @@ ul.invitation {
   font-size: var(--font-size-small);
 }
 
-.other_proposal_tags {
-  padding-left: 10px;
-  margin-bottom: 7px;
-}
-
 .proposal-list {
   .actions { white-space: nowrap; }
-  .date_range_filter, .text_filter { width: 100px !important; }
 }
 
 ul {
@@ -131,13 +121,6 @@ div.col-md-4 {
   margin-top: 10px;
 }
 
-.speaker-invite-form {
-  display: none;
-  form {
-    margin-top: 0px;
-  }
-}
-
 #edit-tags-icon,
 .inline-edit-icon {
   color: var(--bright-blue);
@@ -173,18 +156,6 @@ div.col-md-4 {
 #review-tags-form-wrapper {
   padding: 0;
   text-align: left;
-  .selectize-input.items .item {
-    background: var(--state-success-bg);
-    border: 1px solid hsl(from var(--state-success-bg) h s calc(l - 30));
-    color: var(--state-success-text);
-    text-shadow: none;
-    .remove {
-      border-left: 1px solid hsl(from var(--state-success-bg) h s calc(l - 30));
-    }
-  }
-  .selectize-dropdown-content > .option.active {
-    background: var(--state-success-bg);
-  }
 }
 
 /* Refactored proposals list items */

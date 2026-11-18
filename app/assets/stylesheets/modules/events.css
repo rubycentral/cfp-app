@@ -163,24 +163,6 @@
   .template-actions {
     float: right;
   }
-
-  .template-preview .contents,
-  .template-short .contents  {
-    background-color: var(--beige);
-    border: 1px solid hsl(from var(--beige) h s calc(l - 10));
-    border-radius: 5px;
-    margin: 1em 0;
-    padding: 10px;
-
-    ul {
-      list-style-type: disc;
-    }
-  }
-
-  .template-short .contents {
-    height: 55px;
-    overflow: hidden;
-  }
 }
 
 /* Teammates */

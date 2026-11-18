@@ -288,7 +288,7 @@ datatables.net-bs5@^3:
   dependencies:
     datatables.net "3.1.5"
 
-datatables.net@3.1.5, datatables.net@^3:
+datatables.net@3.1.5:
   version "3.1.5"
   resolved "https://registry.yarnpkg.com/datatables.net/-/datatables.net-3.1.5.tgz#aea72d23adb015ff2b98e35fc38e1d23f2fd7a57"
   integrity sha512-phu9fVz1cOhD7kZDO5Ztj15qwghCkmdwX5AezLi+PxfMtnFAq0itpewvXzdwdr6bOwPqO2zuXsXWUU5x3wQptw==

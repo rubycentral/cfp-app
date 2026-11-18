@@ -49,6 +49,32 @@ feature 'Staff Organizers can manage time slots', type: :system do
     end
   end
 
+  scenario 'shows the slot length as the start and end times change', js: true do
+    visit event_staff_schedule_time_slots_path(event)
+
+    click_link 'Add Time Slot'
+
+    within('#time-slot-new-dialog') do
+      select '09:00', from: 'Start time'
+      select '09:45', from: 'End time'
+      expect(page).to have_css('.length', text: '45 minutes')
+
+      select '11:05', from: 'End time'
+      expect(page).to have_css('.length', text: '125 minutes')
+    end
+  end
+
+  scenario 'labels the schedule grid ruler with 12-hour times', js: true do
+    visit event_staff_schedule_grid_path(event)
+
+    within('.schedule-ruler') do
+      expect(page).to have_css('.ruler-tick', count: 11)
+      expect(page).to have_css('.ruler-tick:first-child', text: '09:00am')
+      expect(page).to have_css('.ruler-tick', text: '12:00pm')
+      expect(page).to have_css('.ruler-tick:last-child', text: '07:00pm')
+    end
+  end
+
   scenario 'creates a time slot via the "Save and Add" button', js: true do
     visit event_staff_schedule_time_slots_path(event)
 

@@ -1,10 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
 import { Modal } from "bootstrap"
-import dayjs from 'dayjs'
-import customParseFormat from 'dayjs/plugin/customParseFormat'
-
-dayjs.extend(customParseFormat)
-
 export default class extends Controller {
   static targets = ['proposals', 'supplementalFields', 'sessionInfo', 'startTime', 'endTime', 'length',
                     'infoTitle', 'infoTrack', 'infoSpeaker', 'infoAbstract', 'infoDuration']
@@ -56,10 +51,14 @@ export default class extends Controller {
     const end = this.endTimeTarget.value
 
     if (start && end) {
-      const s = dayjs(start, 'HH:mm')
-      const e = dayjs(end, 'HH:mm')
-      const diff = e.diff(s, 'minute')
+      const diff = this.minutesOfDay(end) - this.minutesOfDay(start)
       this.lengthTarget.textContent = diff + ' minutes'
     }
+  }
+
+  // "HH:mm" -> minutes since midnight
+  minutesOfDay(time) {
+    const [hours, minutes] = time.split(':').map(Number)
+    return hours * 60 + minutes
   }
 }

@@ -42,6 +42,32 @@ feature "Proposals", type: :system do
     end
   end
 
+  context "when the profile is incomplete" do
+    let(:lead_in) { 'Before submitting a proposal your profile needs completing. Please correct the following:' }
+    let(:trailing) { '. Visit My Profile to update.' }
+
+    def visit_page
+      go_to_new_proposal
+    end
+
+    it_behaves_like 'an incomplete profile warning'
+
+    it "shows no warning once the profile is complete" do
+      go_to_new_proposal
+      expect(page).not_to have_text(lead_in)
+    end
+  end
+
+  context "when the profile has no bio yet" do
+    before { user.update!(bio: nil) }
+
+    it "copies the bio typed into the proposal onto the profile" do
+      go_to_new_proposal
+      create_proposal
+      expect(user.reload.bio).to eq('I am awesome.')
+    end
+  end
+
   context "when submitting", js: true do
     context "with invalid proposal" do
       before :each do
@@ -205,8 +231,20 @@ feature "Proposals", type: :system do
 
       expect(page).to_not have_text("A new title")
       fill_in 'Title', with: "A new title"
+      fill_in 'Pitch', with: "A new pitch"
       click_button 'Submit'
       expect(page).to have_text("A new title")
+      expect(Proposal.last).to have_attributes(title: 'A new title', pitch: 'A new pitch')
+    end
+
+    scenario "Reviewers who rated the proposal are notified of the edit" do
+      go_to_new_proposal
+      create_proposal
+      create(:rating, proposal: Proposal.last, user: create(:organizer, event: event))
+      click_link 'Edit'
+
+      fill_in 'Title', with: "A new title"
+      expect { click_button 'Submit' }.to change(Notification, :count).by(1)
     end
   end
 
@@ -343,6 +381,13 @@ feature "Proposals", type: :system do
       it "does not show the confirmation link" do
         expect(page).not_to have_link('Confirm my participation')
       end
+
+      it "lets the speaker leave notes for the organizers" do
+        fill_in 'proposal_confirmation_notes', with: 'Nothing before noon, please'
+        click_button 'Update'
+        expect(page).to have_text('Confirmation notes successfully updated.')
+        expect(proposal.reload.confirmation_notes).to eq('Nothing before noon, please')
+      end
     end
 
   end
@@ -371,6 +416,10 @@ feature "Proposals", type: :system do
       expect(page).to have_content("As requested, your talk has been removed for consideration.")
     end
 
+    it "marks the proposal as withdrawn" do
+      expect(proposal.reload).to be_withdrawn
+    end
+
     it "sends a notification to reviewers" do
       expect(Notification.count).to eq(1)
     end
@@ -397,6 +446,10 @@ feature "Proposals", type: :system do
 
     it "marks the proposal as confirmed" do
       expect(@proposal.reload.confirmed?).to be_truthy
+    end
+
+    it "declines the program session" do
+      expect(@proposal.program_session.reload.state).to eq('declined')
     end
 
     it "redirects the user to the proposal page" do

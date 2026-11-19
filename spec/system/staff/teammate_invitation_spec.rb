@@ -143,12 +143,15 @@ feature "Teammate Invitation received", type: :system do
         visit accept_teammate_path(knownguy_invitation.token)
         expect(page).to have_content("Congrats! You are now an official team member of #{knownguy_invitation.event.name}!")
         expect(current_path).to eq(edit_profile_path)
+        expect(knownguy_invitation.reload).to be_accepted
+        expect(known_user).to be_reviewer_for_event(event)
       end
     end
 
     it "can decline the invitation" do
       visit decline_teammate_path(knownguy_invitation.token)
-      expect(page).to have_content("You declined the invitation to #{newguy_invitation.event.name}.")
+      expect(page).to have_content("You declined the invitation to #{knownguy_invitation.event.name}.")
+      expect(knownguy_invitation.reload).to be_declined
     end
   end
 

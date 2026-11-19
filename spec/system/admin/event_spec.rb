@@ -13,6 +13,16 @@ feature "Event Dashboard", type: :system do
   context "An admin" do
     before { login_as(admin_user) }
 
+    it "can archive an event", js: true do
+      visit admin_events_path
+
+      within('tr', text: 'My Event') do
+        accept_confirm { click_on 'Archive' }
+        expect(page).to have_link('Unarchive')
+      end
+      expect(event.reload).to be_archived
+    end
+
     it "can create a new event and becomes an organizer" do
       visit new_admin_event_path
       fill_in "Name", with: "My Other Event"

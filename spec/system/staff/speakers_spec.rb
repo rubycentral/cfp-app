@@ -53,6 +53,23 @@ feature "Organizers can manage speakers for Program Sessions", type: :system do
       expect(page).to_not have_content(speaker_2.email)
     end
 
+    it "Sees a speaker's demographic answers when the event asks for them" do
+      event.update!(speaker_demographics: true)
+      speaker_3.update!(pronouns: 'they/them/theirs', age_range: '25-34 years old')
+      visit event_staff_program_speaker_path(event, speaker_3)
+      expect(page).to have_text('Pronouns')
+      expect(page).to have_text('they/them/theirs')
+      expect(page).to have_text('25-34 years old')
+    end
+
+    it "Sees no demographic section when the event does not ask for them" do
+      speaker_3.update!(pronouns: 'they/them/theirs')
+      visit event_staff_program_speaker_path(event, speaker_3)
+      expect(page).not_to have_text('Pronouns')
+      expect(page).not_to have_text('they/them/theirs')
+      expect(page).not_to have_text('Ethnicity')
+    end
+
     it "Can edit a program sessions speaker" do
       row = find("tr#speaker-#{speaker_3.id}")
       old_name = speaker_3.name

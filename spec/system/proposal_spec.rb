@@ -170,6 +170,49 @@ feature "Proposals", type: :system do
     end
   end
 
+  context "speaker demographics" do
+    context "when the event asks for them" do
+      before { event.update!(speaker_demographics: true) }
+
+      it "asks the optional questions on the proposal form and shows the answers on the proposal page" do
+        go_to_new_proposal
+        select 'Yes', from: 'First time speaker'
+        select '25-34 years old', from: 'How old are you?'
+        select 'they/them/theirs', from: 'What are your pronouns?'
+        select 'Decline to say', from: 'What is your ethnicity?'
+        create_proposal
+
+        speaker = Proposal.last.speakers.first
+        expect(speaker.first_time_speaker).to be(true)
+        expect(speaker.age_range).to eq('25-34 years old')
+        expect(speaker.pronouns).to eq('they/them/theirs')
+        expect(speaker.ethnicity).to eq('Decline to say')
+
+        expect(page).to have_text('Pronouns:')
+        expect(page).to have_text('they/them/theirs')
+      end
+    end
+
+    context "when the event does not ask for them" do
+      it "leaves the questions off the proposal form and the proposal page" do
+        go_to_new_proposal
+        expect(page).not_to have_field('What is your ethnicity?')
+        expect(page).not_to have_text('demographic')
+        create_proposal
+
+        expect(page).not_to have_text('Pronouns:')
+        expect(page).not_to have_text('Ethnicity:')
+      end
+
+      it "keeps previously stored answers off the proposal page" do
+        proposal = create(:proposal, event: event)
+        create(:speaker, proposal: proposal, user: user, pronouns: 'she/her/hers')
+        visit event_proposal_path(event, proposal)
+        expect(page).not_to have_text('she/her/hers')
+      end
+    end
+  end
+
   context "tracks" do
     let!(:proposal) { create(:proposal, event: event) }
     let!(:speaker) { create(:speaker, proposal: proposal, user: user) }

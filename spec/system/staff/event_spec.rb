@@ -54,6 +54,15 @@ feature "Event Dashboard", type: :system do
       expect(organizer_teammate.event.reload.blind_review?).to be(false)
     end
 
+    it "can turn speaker demographics off" do
+      organizer_teammate.event.update!(speaker_demographics: true)
+      visit edit_event_staff_path(organizer_teammate.event)
+      uncheck "Speaker demographics"
+      click_button "Save"
+      expect(page).to have_text("Speaker demographics: No")
+      expect(organizer_teammate.event.reload.speaker_demographics?).to be(false)
+    end
+
     it "is told why an open event could not be saved" do
       organizer_teammate.event.update_columns(state: 'open', guidelines: nil)
       visit edit_event_staff_path(organizer_teammate.event)

@@ -82,8 +82,7 @@ class ProfilesController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:bio, :gender, :ethnicity, :country, :name,
-                                 :email, :password, :password_confirmation)
+    params.require(:user).permit(:bio, :name, :email, :password, :password_confirmation)
   end
 
   def notifications_params

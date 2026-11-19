@@ -184,10 +184,12 @@ GEM
       railties (>= 6.1.0)
     faker (3.8.0)
       i18n (>= 1.8.11, < 2)
-    faraday (2.7.4)
-      faraday-net_http (>= 2.0, < 3.1)
-      ruby2_keywords (>= 0.0.4)
-    faraday-net_http (3.0.2)
+    faraday (2.15.1)
+      faraday-net_http (>= 2.0, < 3.6)
+      json
+      logger
+    faraday-net_http (3.5.0)
+      net-http (~> 0.5)
     fastly (18.0.0)
       typhoeus (~> 1.0, >= 1.0.1)
     ffi (1.17.4)
@@ -209,7 +211,7 @@ GEM
       activesupport (>= 5.1)
       haml (>= 4.0.6)
       railties (>= 5.1)
-    hashie (5.1.0)
+    hashie (5.2.0)
       logger
     honeybadger (6.10.2)
       logger
@@ -232,7 +234,8 @@ GEM
       railties (>= 6.0.0)
     json (3.1.0)
     jsonapi-renderer (0.2.2)
-    jwt (2.7.0)
+    jwt (3.3.0)
+      base64
     launchy (3.1.1)
       addressable (~> 2.8)
       childprocess (~> 5.0)
@@ -272,7 +275,11 @@ GEM
       stimulus-rails
       turbo-rails
     msgpack (1.8.7)
-    multi_xml (0.6.0)
+    multi_xml (0.9.1)
+      bigdecimal (>= 3.1, < 5)
+    net-http (0.10.0)
+      net-protocol (>= 0.3.0)
+      uri (>= 0.11.1)
     net-imap (0.6.8)
       date
       net-protocol
@@ -296,13 +303,14 @@ GEM
       anonymous_loader (~> 0.1, >= 0.1.1)
       auth-sanitizer (~> 0.2, >= 0.2.2)
       version_gem (~> 1.1, >= 1.1.12)
-    oauth2 (2.0.9)
-      faraday (>= 0.17.3, < 3.0)
-      jwt (>= 1.0, < 3.0)
+    oauth2 (2.0.10)
+      faraday (>= 0.17.3, < 4.0)
+      jwt (>= 1.0, < 4.0)
+      logger (~> 1.2)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 4)
       snaky_hash (~> 2.0)
-      version_gem (~> 1.1)
+      version_gem (>= 1.1.8, < 3)
     omniauth (2.1.4)
       hashie (>= 3.4.6)
       logger
@@ -445,9 +453,9 @@ GEM
     simple_form (5.4.1)
       actionpack (>= 7.0)
       activemodel (>= 7.0)
-    snaky_hash (2.0.6)
+    snaky_hash (2.0.9)
       hashie (>= 0.1.0, < 6)
-      version_gem (>= 1.1.8, < 3)
+      version_gem (~> 1.1, >= 1.1.16)
     solid_queue (1.7.2)
       activejob (>= 7.1)
       activerecord (>= 7.1)

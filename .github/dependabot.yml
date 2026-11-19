@@ -1,19 +1,31 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all configuration options:
-# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+# Dependabot version updates. Options: https://docs.github.com/code-security/dependabot/working-with-dependabot/dependabot-options-reference
+#
+# Two defaults are overridden for gems and npm packages:
+# - Dependabot waits three days after a release before proposing it; cooldown 0 removes the wait.
+# - Only dependencies named in the manifest are updated; "all" includes transitive ones, which
+#   is where most of `bundle outdated` comes from. Each still gets its own PR.
 
 version: 2
 updates:
-  - package-ecosystem: "bundler" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: "bundler"
+    directory: "/"
     schedule:
       interval: "daily"
+    cooldown:
+      default-days: 0
+    allow:
+      - dependency-type: "all"
+    open-pull-requests-limit: 10
 
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "daily"
+    cooldown:
+      default-days: 0
+    allow:
+      - dependency-type: "all"
+    open-pull-requests-limit: 10
 
   - package-ecosystem: "github-actions"
     directory: "/"

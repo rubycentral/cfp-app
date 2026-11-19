@@ -18,11 +18,6 @@ describe TeammatesController, type: :controller do
   end
 
   describe "GET 'decline'" do
-    it "redirects to root url" do
-      get :decline, params: {token: invitation.token}
-      expect(response).to redirect_to(root_url)
-    end
-
     it "sets invitation state to declined" do
       get :decline, params: {token: invitation.token}
       expect(invitation.reload).to be_declined

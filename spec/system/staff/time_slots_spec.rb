@@ -92,6 +92,49 @@ feature 'Staff Organizers can manage time slots', type: :system do
     end
   end
 
+  context 'with an existing time slot' do
+    # Round times, so the edit dialog's time selects can show the slot's current values
+    let!(:time_slot) { create(:time_slot, event: event, room: room, conference_day: 1, start_time: '10:00', end_time: '11:00') }
+
+    scenario 'removes it', js: true do
+      visit event_staff_schedule_time_slots_path(event)
+
+      within("#time_slot_#{time_slot.id}") do
+        accept_confirm { click_on 'Remove' }
+      end
+
+      expect(page).not_to have_css("#time_slot_#{time_slot.id}")
+      expect(TimeSlot.exists?(time_slot.id)).to be false
+    end
+
+    scenario 'moves it to another day', js: true do
+      visit event_staff_schedule_time_slots_path(event)
+      within("#time_slot_#{time_slot.id}") { click_on 'Edit' }
+
+      within('#time-slot-edit-dialog') do
+        select '3', from: 'Day'
+        click_button 'Save'
+      end
+
+      within("#time_slot_#{time_slot.id}") { expect(page).to have_css('td', text: '3') }
+      expect(time_slot.reload.conference_day).to eq(3)
+    end
+
+    scenario 'schedules a program session into it', js: true do
+      program_session = create(:program_session_with_proposal, event: event)
+      visit event_staff_schedule_time_slots_path(event)
+      within("#time_slot_#{time_slot.id}") { click_on 'Edit' }
+
+      within('#time-slot-edit-dialog') do
+        select program_session.title, from: 'Program session'
+        click_button 'Save'
+      end
+
+      within("#time_slot_#{time_slot.id}") { expect(page).to have_text(program_session.title) }
+      expect(time_slot.reload.program_session).to eq(program_session)
+    end
+  end
+
   scenario 'creates a time slot via the "Save and Add" button', js: true do
     visit event_staff_schedule_time_slots_path(event)
 

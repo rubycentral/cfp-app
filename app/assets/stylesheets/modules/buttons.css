@@ -1,7 +1,4 @@
 .btn-nav {
-  .page-header & {
-    margin-top: 30px;
-  }
   .btn {
     margin-right: var(--padding-xs-horizontal);
     &:last-child {

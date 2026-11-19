@@ -14,10 +14,11 @@ feature 'Sign out', type: :system do
     expect(page).to have_content 'Signed in successfully.'
 
     find('.gravatar-container').click
+    within('.dropdown-menu.show') { click_on 'Sign Out' }
 
-    find('.dropdown-menu').find('a', text: 'Sign Out').click
-
+    # Signing out is a Turbo-submitted DELETE followed by two redirects, which
+    # a loaded CI runner does not always finish within Capybara's default wait.
+    expect(page).to have_content 'Signed out successfully.', wait: 10
     expect(page).to have_no_content 'Signed in successfully.'
-    expect(page).to have_content 'Signed out successfully.'
   end
 end

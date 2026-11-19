@@ -22,7 +22,5 @@ RSpec.describe 'Responsive text alignment', type: :system, js: true do
 
     page.driver.browser.manage.window.resize_to(600, 900)
     expect(status_column_alignment).to eq('start')
-  ensure
-    page.driver.browser.manage.window.resize_to(1400, 900)
   end
 end

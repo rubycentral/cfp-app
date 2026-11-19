@@ -98,13 +98,15 @@ RSpec.configure do |config|
     driven_by :rack_test
   end
 
+  chrome_window_size = [1400, 1400]
+
   Capybara.register_driver :headless_chrome do |app|
     options = Selenium::WebDriver::Chrome::Options.new
     options.add_argument('--headless=new')
     options.add_argument('--disable-gpu')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
-    options.add_argument('--window-size=1400,1400')
+    options.add_argument("--window-size=#{chrome_window_size.join(',')}")
     Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
   end
 
@@ -113,14 +115,12 @@ RSpec.configure do |config|
   end
 
   config.after type: :system, js: true do
-    # Force a fresh browser session for each test to prevent state bleeding
-    Capybara.send(:session_pool).delete_if do |k, session|
-      next false unless k.include?('headless_chrome')
-
-      # Quit the browser before dropping the session, otherwise Chrome processes leak until the suite exits
-      session.quit
-      true
-    end
+    # One headless Chrome serves every JS example: launching a fresh one each time
+    # used to cost about a second per example. Capybara's own session reset clears
+    # cookies and web storage, but not the browser-level state below.
+    browser = page.driver.browser
+    browser.execute_cdp('Emulation.setEmulatedMedia', features: [{name: 'prefers-color-scheme', value: ''}])
+    browser.manage.window.resize_to(*chrome_window_size)
   end
 
   Capybara.disable_animation = true

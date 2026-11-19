@@ -271,7 +271,7 @@ GEM
       railties (>= 7.1)
       stimulus-rails
       turbo-rails
-    msgpack (1.8.6)
+    msgpack (1.8.7)
     multi_xml (0.6.0)
     net-imap (0.6.8)
       date

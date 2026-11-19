@@ -106,8 +106,9 @@ feature "Organizers can manage speakers for Program Sessions", type: :system do
       expect(page).to have_content "There was a problem updating this speaker."
     end
 
-    it "Can't update a speaker to have no email" do
-      pending "Currently you *can* update a speaker associated with a user to have no email - investigating"
+    # A speaker's own name and email are overrides: when either is blank, the
+    # speaker falls back to the account it belongs to.
+    it "Falls back to the user's email when the speaker's email is cleared" do
       row = find("tr#speaker-#{speaker_3.id}")
       within row do
         click_on "Edit"
@@ -117,11 +118,11 @@ feature "Organizers can manage speakers for Program Sessions", type: :system do
       fill_in "speaker[speaker_email]", with: ""
       click_on "Save"
 
-      expect(page).to have_content "There was a problem updating this speaker."
+      expect(page).to have_content "Penny was successfully updated"
+      within("tr#speaker-#{speaker_3.id}") { expect(page).to have_content speaker_user_3.email }
     end
 
-    it "Can't update a speaker to have no name" do
-      pending "Currently you *can* update a speaker associated with a user to have no name - investigating"
+    it "Falls back to the user's name when the speaker's name is cleared" do
       row = find("tr#speaker-#{speaker_3.id}")
       within row do
         click_on "Edit"
@@ -131,7 +132,8 @@ feature "Organizers can manage speakers for Program Sessions", type: :system do
       fill_in "speaker[speaker_email]", with: "goodemail@example.com"
       click_on "Save"
 
-      expect(page).to have_content "There was a problem updating this speaker."
+      expect(page).to have_content "#{speaker_user_3.name} was successfully updated"
+      within("tr#speaker-#{speaker_3.id}") { expect(page).to have_content "goodemail@example.com" }
     end
   end
 end

@@ -97,11 +97,10 @@ feature "Proposals", type: :system do
       end
 
       it "shows Session Format validation if two session formats" do
-        skip "Address after session format change"
         session_format2.save!
         go_to_new_proposal
         create_invalid_proposal
-        expect(page).to have_text("Session format *None selected Only format 2nd formatcan't be blank")
+        within('.proposal_session_format') { expect(page).to have_text("must exist") }
       end
     end
 

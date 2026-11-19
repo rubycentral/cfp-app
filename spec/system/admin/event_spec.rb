@@ -54,7 +54,6 @@ feature "Event Dashboard", type: :system do
     end
 
     it "can delete events" do
-      skip "pending admin delete permissions discussion"
       visit edit_event_staff_path(event)
       click_link "Delete Event"
       expect(page).not_to have_text("My Event")

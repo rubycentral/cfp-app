@@ -38,7 +38,7 @@ feature "Organizers can manage speakers for Program Sessions", type: :system do
     it "Only sees speakers of program sessions" do
       expect(page).to have_content(speaker_3.name)
       expect(page).to have_content(speaker_3.email)
-      # check for program session title linking to ?program session show page?
+      expect(page).to have_link(program_session_1.title, href: event_staff_program_session_path(event, program_session_1))
 
       expect(page).to have_content(speaker_4.name)
       expect(page).to have_content(speaker_4.email)

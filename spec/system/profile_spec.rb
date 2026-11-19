@@ -34,6 +34,22 @@ feature 'User Profile', type: :system do
     expect(page).to have_content("Unable to save profile. Please correct the following: Email can't be blank")
   end
 
+  context 'when the profile is incomplete' do
+    let(:lead_in) { 'Your profile is incomplete. Please correct the following:' }
+    let(:trailing) { '.' }
+
+    def visit_page
+      visit edit_profile_path
+    end
+
+    it_behaves_like 'an incomplete profile warning'
+
+    it 'shows no warning once the profile is complete' do
+      visit edit_profile_path
+      expect(page).not_to have_text(lead_in)
+    end
+  end
+
   scenario 'mentions the review committee only while a live event is blind' do
     visit edit_profile_path
     expect(page).not_to have_text('review committee')

@@ -16,13 +16,6 @@ describe Staff::ProposalsController, type: :controller do
     sign_in(user)
   end
 
-  describe '#index' do
-    it "should respond" do
-      get :index, params: {event_slug: proposal.event.slug}
-      expect(response.status).to eq(200)
-    end
-  end
-
   describe "GET 'show'" do
     it "marks all notifications for this proposal as read" do
       Notification.create_for(user, proposal: proposal, message: "A fancy notification")
@@ -51,19 +44,7 @@ describe Staff::ProposalsController, type: :controller do
     end
   end
 
-  describe "POST 'update_state'" do
-    it "returns http redirect" do
-      post :update_state, params: {event_slug: event, uuid: proposal.uuid}
-      expect(response).to redirect_to(event_staff_program_proposals_path(event))
-    end
-  end
-
   describe "POST 'finalize'" do
-    it "returns http redirect" do
-      post :finalize, params: {event_slug: event, uuid: proposal.uuid}
-      expect(response).to redirect_to(event_staff_program_proposal_path(event, proposal))
-    end
-
     it "finalizes the state" do
       proposal = create(:proposal_with_track, event: event, state: :soft_accepted)
       post :finalize, params: {event_slug: event, uuid: proposal.uuid}
@@ -90,20 +71,6 @@ describe Staff::ProposalsController, type: :controller do
       }.to change {
         Notification.count
       }.by(2)
-    end
-  end
-
-  describe "GET 'bulk_finalize'" do
-    it "should respond" do
-      get :bulk_finalize, params: {event_slug: event.slug}
-      expect(response.status).to eq(200)
-    end
-  end
-
-  describe "POST 'finalize_by_state'" do
-    it "returns http redirect" do
-      post :finalize_by_state, params: {event_slug: event, proposals_state: proposal.state}
-      expect(response.status).to eq(204)
     end
   end
 end

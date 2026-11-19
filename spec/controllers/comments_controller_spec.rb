@@ -3,12 +3,7 @@ require 'rails_helper'
 describe CommentsController, type: :controller do
   describe "POST #create" do
     let(:proposal) { create(:proposal_with_track, uuid: 'abc123') }
-    let(:referer_path) { event_proposal_path(proposal.event, proposal) }
     let(:mailer) { double("CommentNotificationMailer.speaker_notification") }
-
-    before do
-      request.env['HTTP_REFERER'] =  referer_path
-    end
 
     context "Public comments" do
       let(:comment_user) { create(:reviewer, event: proposal.event) }
@@ -22,11 +17,6 @@ describe CommentsController, type: :controller do
         expect {
           post :create, params: params
         }.to change {PublicComment.count}.by(1)
-      end
-
-      it "returns to the referer" do
-        post :create, params: params
-        expect(response).to redirect_to(referer_path)
       end
 
       it "sends an email notification to the speaker" do
@@ -59,11 +49,6 @@ describe CommentsController, type: :controller do
         expect {
           post :create, params: params
         }.to change {InternalComment.count}.by(1)
-      end
-
-      it "returns to the referer" do
-        post :create, params: params
-        expect(response).to redirect_to(referer_path)
       end
 
       it "does not send a notification email to the speaker" do

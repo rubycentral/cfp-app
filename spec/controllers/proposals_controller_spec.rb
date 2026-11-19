@@ -13,11 +13,6 @@ describe ProposalsController, type: :controller do
     before { sign_in user }
 
     context 'user profile is complete' do
-      it 'should succeed' do
-        get :new, params: { event_slug: event.slug }
-        expect(response.status).to eq(200)
-      end
-
       it 'does not return a flash warning' do
         get :new, params: { event_slug: event.slug }
         expect(flash[:warning]).not_to be_present

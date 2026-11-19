@@ -32,18 +32,21 @@ feature "Event Dashboard", type: :system do
       fill_in "End date", with: 15.days.from_now
       fill_in "Closes at", with: 15.days.from_now
       check "Blind review"
+      check "Speaker demographics"
       click_button "Save"
 
       event = Event.last
       expect(admin_user.organizer_for_event?(event)).to be(true)
       expect(event.blind_review?).to be(true)
+      expect(event.speaker_demographics?).to be(true)
     end
 
-    it "creates a non-blind event when the box is left unchecked" do
+    it "creates a non-blind event without demographic questions when the boxes are left unchecked" do
       visit new_admin_event_path
       fill_in "Name", with: "Open Review Event"
       click_button "Save"
       expect(Event.last.blind_review?).to be(false)
+      expect(Event.last.speaker_demographics?).to be(false)
     end
 
     it "must provide correct url syntax if a url is given" do

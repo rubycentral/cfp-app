@@ -9,15 +9,16 @@
 
   = simple_format speaker.bio
 
-  %strong First time speaker:
-  = simple_format boolean_to_words(speaker.first_time_speaker)
+  - if speaker.event.speaker_demographics?
+    %strong First time speaker:
+    = simple_format boolean_to_words(speaker.first_time_speaker)
 
-  %strong Age:
-  = simple_format speaker.age_range
+    %strong Age:
+    = simple_format speaker.age_range
 
-  %strong Pronouns:
-  = simple_format speaker.pronouns
+    %strong Pronouns:
+    = simple_format speaker.pronouns
 
-  %strong Ethnicity:
-  = simple_format speaker.ethnicity
+    %strong Ethnicity:
+    = simple_format speaker.ethnicity
 %hr

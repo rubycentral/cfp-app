@@ -154,4 +154,14 @@ describe Event do
       expect(create(:event, blind_review: true).blind_review?).to be(true)
     end
   end
+
+  describe "#speaker_demographics?" do
+    it "is off for a new event" do
+      expect(Event.new.speaker_demographics?).to be(false)
+    end
+
+    it "can be turned on" do
+      expect(create(:event, speaker_demographics: true).speaker_demographics?).to be(true)
+    end
+  end
 end

@@ -237,6 +237,7 @@ end
 #  review_tags                 :text
 #  settings                    :text
 #  slug                        :string
+#  speaker_demographics        :boolean          default(FALSE), not null
 #  speaker_notification_emails :text
 #  start_date                  :datetime
 #  state                       :string           default("draft")

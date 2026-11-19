@@ -28,6 +28,8 @@ class Speaker < ApplicationRecord
     "Two or more races", "Other", "Decline to say"
   ].freeze
 
+  DEMOGRAPHIC_ATTRIBUTES = [:age_range, :pronouns, :ethnicity, :first_time_speaker].freeze
+
   belongs_to :user, optional: true
   belongs_to :event
   belongs_to :proposal, optional: true

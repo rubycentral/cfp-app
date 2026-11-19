@@ -122,7 +122,7 @@ class ApplicationController < ActionController::Base
         :name, :contact_email, :slug, :url, :valid_proposal_tags,
         :valid_review_tags, :custom_fields_string, :state, :guidelines,
         :closes_at, :speaker_notification_emails, :accept, :reject,
-        :waitlist, :opens_at, :start_date, :end_date, :blind_review)
+        :waitlist, :opens_at, :start_date, :end_date, :blind_review, :speaker_demographics)
   end
 
   def render_json(object, options={})

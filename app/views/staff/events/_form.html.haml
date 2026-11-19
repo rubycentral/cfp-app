@@ -11,6 +11,7 @@
       = f.input :url, label: "URL", placeholder: 'Event\'s URL'
       = f.input :contact_email, class: 'form-control', placeholder: 'Event email'
       = f.input :blind_review, as: :boolean, label: 'Blind review', hint: 'Hide speaker names from reviewers. Speakers are asked to keep their proposals anonymous.'
+      = f.input :speaker_demographics, as: :boolean, label: 'Speaker demographics', hint: 'Ask speakers the optional age, pronouns, ethnicity and first-time speaker questions on the proposal form.'
 
   .col-md-3
     %fieldset

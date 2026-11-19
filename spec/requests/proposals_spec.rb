@@ -16,6 +16,18 @@ RSpec.describe 'Proposals', type: :request do
     end
   end
 
+  describe 'POST create' do
+    it 'ignores demographic answers when the event does not ask for them' do
+      create(:session_format)
+      post event_proposals_path(event), params: {proposal: {
+        title: 'A talk', abstract: 'About things', session_format_id: SessionFormat.last.id,
+        speakers_attributes: {'0' => {bio: 'Me', age_range: '25-34 years old', pronouns: 'they/them/theirs',
+                                      ethnicity: 'Asian', first_time_speaker: true}}}}
+      speaker = Proposal.last.speakers.first
+      expect([speaker.age_range, speaker.pronouns, speaker.ethnicity, speaker.first_time_speaker]).to all(be_nil)
+    end
+  end
+
   describe 'POST withdraw' do
     it 'leaves a confirmed proposal alone' do
       proposal = create(:proposal_with_track, event: event, state: :accepted, confirmed_at: Time.current)

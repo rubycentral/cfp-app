@@ -97,6 +97,35 @@ feature "Organizers can manage proposals", type: :system do
       visit event_staff_program_proposal_path(event, proposal)
     end
 
+    it "marks the organizer's notifications about the proposal as read" do
+      # Notifications are matched to the page by full URL, so build it for the host Capybara browses
+      Notification.create_for(organizer_user, proposal: proposal, message: 'A fancy notification',
+                              target_path: Capybara.default_host + event_staff_proposal_path(event, proposal))
+      visit event_staff_proposal_path(event, proposal)
+      expect(organizer_user.notifications.unread).to be_empty
+    end
+
+    context "editing the format and track inline", js: true do
+      let!(:workshop) { create(:session_format, event: event, name: 'Workshop') }
+      let!(:hardware) { create(:track, event: event, name: 'Hardware') }
+
+      it "changes the session format" do
+        visit event_staff_program_proposal_path(event, proposal)
+        within('#current-format') { find('.inline-edit-icon').click }
+        select 'Workshop', from: 'proposal_session_format_id'
+        within('#format-name') { expect(page).to have_text('Workshop') }
+        expect(proposal.reload.session_format).to eq(workshop)
+      end
+
+      it "changes the track" do
+        visit event_staff_program_proposal_path(event, proposal)
+        within('#current-track') { find('.inline-edit-icon').click }
+        select 'Hardware', from: 'proposal_track_id'
+        within('#track-name') { expect(page).to have_text('Hardware') }
+        expect(proposal.reload.track).to eq(hardware)
+      end
+    end
+
     it "links each speaker to their program speaker page from the info bar" do
       within(".proposal-info-bar.clearfix") do
         expect(page).to have_link(speaker_user.name, href: event_staff_program_speaker_path(event, speaker))
@@ -119,8 +148,16 @@ feature "Organizers can manage proposals", type: :system do
         expect(proposal.reload).to be_accepted
       end
 
+      it "creates a draft program session" do
+        expect(proposal.reload.program_session).to be_unconfirmed_accepted
+      end
+
       it "sends an email notification to the speaker" do
         expect(ActionMailer::Base.deliveries.last.to).to include(speaker_user.email)
+      end
+
+      it "notifies the speaker in the app" do
+        expect(speaker_user.notifications.count).to eq(1)
       end
     end
 

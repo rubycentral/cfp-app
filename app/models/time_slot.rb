@@ -6,7 +6,6 @@ class TimeSlot < ApplicationRecord
 
   DEFAULT_TIME = Time.current.beginning_of_day.change(hour: 9)
   DEFAULT_DURATION = 60 # minutes
-  STANDARD_LENGTH = 40.minutes
 
   before_save :clear_fields_if_session
 
@@ -53,10 +52,6 @@ class TimeSlot < ApplicationRecord
       self.description = ''
       self.track_id = nil
     end
-  end
-
-  def takes_two_time_slots?
-    (end_time - start_time) > STANDARD_LENGTH
   end
 
   def track_name

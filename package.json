@@ -16,7 +16,7 @@
     "@hotwired/turbo-rails": "^8.0.23",
     "@popperjs/core": "^2.11.8",
     "@rails/actioncable": "^8.1.401",
-    "autoprefixer": "^10.6.2",
+    "autoprefixer": "^10.7.0",
     "bootstrap": "^5.3.9",
     "bootstrap-icons": "^1.13.2",
     "chart.js": "^4.6.1",

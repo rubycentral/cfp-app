@@ -3,7 +3,6 @@ class Room < ApplicationRecord
   has_many :time_slots
 
   validates :name, uniqueness: {scope: :event_id}, presence: true
-  scope :by_grid_position, -> {where.not(grid_position: nil).order(:grid_position)}
   scope :grid_order, -> { order(:grid_position) }
 end
 

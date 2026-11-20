@@ -435,7 +435,7 @@ GEM
       ffi (~> 1.12)
       logger
     ruby2_keywords (0.0.5)
-    ruby_http_client (3.5.5)
+    ruby_http_client (3.6.0)
     rubyzip (3.7.0)
     securerandom (0.4.1)
     selenium-webdriver (4.53.0)

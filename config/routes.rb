@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resource :session, only: [:new, :create, :destroy]
-  resources :passwords, param: :token
+  resources :passwords, param: :token, only: [:new, :create, :edit, :update]
   resource :registration, only: [:new, :create]
   resources :confirmations, param: :token, only: [:new, :create, :show]
   # Legacy Devise-era URLs: bookmarks and emails sent before this deploy

@@ -435,6 +435,36 @@ feature "Proposals", type: :system do
 
   end
 
+  context "with a co-speaker" do
+    let(:proposal) { create(:proposal_with_track, event: event) }
+    let!(:speaker) { create(:speaker, proposal: proposal, user: user) }
+    let!(:co_speaker) { create(:speaker, proposal: proposal) }
+
+    before { visit event_proposal_path(event, proposal) }
+
+    it "lets the speaker withdraw themselves" do
+      within('.speaker', text: speaker.name) { click_link 'Withdraw' }
+
+      expect(page).to have_text("You have withdrawn from #{proposal.title}.")
+      expect(page).to have_current_path(event_path(event))
+      expect(proposal.reload.speakers).to eq([co_speaker])
+    end
+
+    it "lets the speaker remove the co-speaker" do
+      within('.speaker', text: co_speaker.name) { click_link 'Withdraw' }
+
+      expect(page).to have_text("#{co_speaker.email} has been withdrawn from #{proposal.title}.")
+      expect(current_path).to eq(event_proposal_path(event, proposal))
+      expect(proposal.reload.speakers).to eq([speaker])
+    end
+
+    it "offers no speaker withdrawal once the proposal is finalized" do
+      proposal.update!(state: :accepted)
+      visit event_proposal_path(event, proposal)
+      expect(page).not_to have_css('.speaker a', text: 'Withdraw')
+    end
+  end
+
   context "when deleted" do
     let(:proposal) { create(:proposal_with_track, event: event, state: :submitted) }
     let!(:speaker) { create(:speaker, proposal: proposal, user: user) }

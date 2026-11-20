@@ -39,5 +39,8 @@
 
 /node_modules
 
+# SimpleCov output
+/coverage
+
 # Ignore Heroku DB dump files.
 latest.dump*

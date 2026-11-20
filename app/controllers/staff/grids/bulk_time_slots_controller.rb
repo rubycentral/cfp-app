@@ -10,7 +10,7 @@ class Staff::Grids::BulkTimeSlotsController < Staff::ApplicationController
     @bulk = BulkTimeSlot.new(bulk_time_slot_params)
 
     unless @bulk.valid?
-      render :create and return
+      render :create, status: :unprocessable_entity and return
     end
 
     slots = @bulk.build_time_slots

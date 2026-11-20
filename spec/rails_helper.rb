@@ -1,6 +1,22 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
+
+# COVERAGE=1 bin/rspec writes an HTML report to coverage/index.html.
+# Coverage must start before the application is loaded.
+if ENV['COVERAGE']
+  require 'simplecov'
+  SimpleCov.start 'rails' do
+    enable_coverage :branch
+    command_name "rspec website #{ENV['ENABLE_WEBSITE'] == '1' ? 'on' : 'off'}"
+    add_filter %r{/spec/}
+    add_group 'Decorators', 'app/decorators'
+    add_group 'Policies', 'app/policies'
+    add_group 'Serializers', 'app/serializers'
+    add_group 'Website engine', 'engines/cfp_website'
+  end
+end
+
 require_relative '../config/environment'
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?

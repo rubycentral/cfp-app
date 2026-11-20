@@ -67,6 +67,7 @@ group :test do
   gem 'capybara', '~> 3.37'
   gem 'matrix'
   gem 'selenium-webdriver'
+  gem 'simplecov', require: false
 end
 
 group :development, :test do

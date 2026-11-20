@@ -98,15 +98,15 @@ class Staff::ProposalsController < Staff::ApplicationController
   def bulk_finalize
     authorize Proposal, :bulk_finalize?
 
-    @remaining_by_state = Proposal.soft_states.group_by(&:state)
+    @remaining_by_state = current_event.proposals.soft_states.group_by(&:state)
   end
 
   def finalize_by_state
     state = params[:proposals_state]
-    remaining = Proposal.where(state: state)
+    remaining = current_event.proposals.where(state: state)
     authorize remaining, :finalize?
 
-    BulkFinalizeJob.perform_later(state)
+    BulkFinalizeJob.perform_later(current_event, state)
 
     ActionCable.server.broadcast "notifications", {
       message: "#{state} queued for finalization"

@@ -1,8 +1,8 @@
 class BulkFinalizeJob < ApplicationJob
   queue_as :default
 
-  def perform(proposals_state)
-    proposals = Proposal.where(state: proposals_state)
+  def perform(event, proposals_state)
+    proposals = event.proposals.where(state: proposals_state)
 
     ActionCable.server.broadcast "notifications", {
       message: "Finalizing #{proposals.size} #{proposals_state} proposals..."

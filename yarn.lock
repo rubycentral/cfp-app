@@ -277,16 +277,16 @@ cliui@^9.0.1:
     wrap-ansi "^9.0.0"
 
 datatables.net-bs5@^3:
-  version "3.1.5"
-  resolved "https://registry.yarnpkg.com/datatables.net-bs5/-/datatables.net-bs5-3.1.5.tgz#660fd3b6fcc386d9717c3f023ad02fe44e81b200"
-  integrity sha512-eGSe7DVcqqI0RKtrjgzFVqqCZoltJSahAKLCJ0nH0WzSfVclhD8maoGbbz/JJQXky1H9c+vzAnbmAevYRBjxOw==
+  version "3.1.6"
+  resolved "https://registry.yarnpkg.com/datatables.net-bs5/-/datatables.net-bs5-3.1.6.tgz#ab4f6f1b4ff5fdc2e6c8440bf6ecb0bcd64df6ad"
+  integrity sha512-1ajIPTG2t7SdKh4ggd1hPtfpjubDDor2V2g3tunQ1fN9VYIQV7hyBQcy1p8DOF5JwXUAAe/iiPRBvNMJaNS9uw==
   dependencies:
-    datatables.net "3.1.5"
+    datatables.net "3.1.6"
 
-datatables.net@3.1.5:
-  version "3.1.5"
-  resolved "https://registry.yarnpkg.com/datatables.net/-/datatables.net-3.1.5.tgz#aea72d23adb015ff2b98e35fc38e1d23f2fd7a57"
-  integrity sha512-phu9fVz1cOhD7kZDO5Ztj15qwghCkmdwX5AezLi+PxfMtnFAq0itpewvXzdwdr6bOwPqO2zuXsXWUU5x3wQptw==
+datatables.net@3.1.6:
+  version "3.1.6"
+  resolved "https://registry.yarnpkg.com/datatables.net/-/datatables.net-3.1.6.tgz#6f2991dfebf03fc35b225d0c284af59c94bc5cfa"
+  integrity sha512-gHQ2TCiDmN7t5FajFAnCiT8AYxLOtmVaDZELedy79mStrRqxJM7yIU/suknM77b5FeqXrHEYDsitAz8jZGJ1Dw==
 
 date-fns@>=2:
   version "4.4.0"

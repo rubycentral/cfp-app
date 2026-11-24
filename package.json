@@ -19,7 +19,7 @@
     "autoprefixer": "^10.7.0",
     "bootstrap": "^5.3.9",
     "bootstrap-icons": "^1.13.2",
-    "chart.js": "^4.6.1",
+    "chart.js": "^4.6.2",
     "chartkick": "^5.0.1",
     "datatables.net-bs5": "^3",
     "highlight.js": "^11.12.0",

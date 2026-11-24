@@ -202,7 +202,8 @@ GEM
       activesupport (>= 6.1)
     groupdate (6.8.0)
       activesupport (>= 7.2)
-    haml (7.2.0)
+    haml (7.5.2)
+      prism (>= 1.1.0)
       temple (>= 0.8.2)
       thor
       tilt

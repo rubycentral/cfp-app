@@ -235,7 +235,7 @@ GEM
       railties (>= 6.0.0)
     json (3.2.0)
     jsonapi-renderer (0.2.2)
-    jwt (3.3.0)
+    jwt (3.3.1)
       base64
     launchy (3.1.1)
       addressable (~> 2.8)

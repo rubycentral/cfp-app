@@ -166,9 +166,9 @@
   integrity sha512-Bd1NjGyoe27ExXRIBu13YymFP6k/wFxpUkX97Z3RlofLFV43nECB2G8vETZzcZzz2Ct2oRzwYElX65lxyi5UNg==
 
 "@orchidjs/sifter@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.npmjs.org/@orchidjs/sifter/-/sifter-1.1.0.tgz"
-  integrity sha512-mYwHCfr736cIWWdhhSZvDbf90AKt2xyrJspKFC3qyIJG1LtrJeJunYEqCGG4Aq2ijENbc4WkOjszcvNaIAS/pQ==
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@orchidjs/sifter/-/sifter-1.2.0.tgz#4beb546a50ee900f6a972118fefe2a899c0900e1"
+  integrity sha512-8dj5FwOUzJJc/RhuQKQq8t4XPKcyuqU6RAL3N2C/o22EnvKY/wGWwBQSXrpFrpvCsINhScSzDiQx9ebrPG1A2A==
   dependencies:
     "@orchidjs/unicode-variants" "^1.1.2"
 
